@@ -212,4 +212,5 @@ not_found_handling = "404-page"
 - web/worker/CLI가 같은 engine fixture 결과를 생성하고, desktop 활성 후 동일 fixture gate에 포함
 - 정적 단계에 Worker main·DB·session·auth·payment dependency 0개
 - 성능 예산과 privacy gate가 CI에서 실패를 차단
+- PWA cache는 same-origin static shell만 다루고 query URL·payload-like route를 write하지 않는다. worker update는 `skipWaiting`·`clients.claim` 없이 browser lifecycle을 따른다.
 - staging URL에서 hard refresh·offline·404·CSP 검증 통과

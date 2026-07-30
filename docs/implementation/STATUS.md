@@ -18,6 +18,7 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for route, version, HTTP, browser, privacy-
 
 - 2026-07-30 DC-UP-02: recursive decode chain의 단계·detector label·입력 크기를 `tree/treeitem/group`과 roving keyboard로 노출하고, ambiguous 입력은 자동 확정 없이 상태 텍스트와 후보를 표시한다. lint/type/unit 및 desktop/mobile Playwright fixture를 다시 통과했다.
 - 2026-07-30 DC-UP-01: 성공한 explicit Copy 뒤에만 local Web Audio 확인음을 내고, 0.3 기본 볼륨/영속 토글/무음 시각 폴백을 추가했다. raw payload egress·storage는 여전히 0이며 실제 OS mute/AT 청취는 외부 검증 gate다.
+- 2026-07-30 DC-UP-03: code-native SVG에서 install/share-compatible PNG를 파생하고 manifest·OG metadata·query-safe PWA cache를 검증했다. worker는 기존 화면의 강제 update를 하지 않으며, production crawler/install observation은 아직 주장하지 않는다.
 - 8 detector families, recursive chain, confidence/margin selection, cycle and resource limits
 - 20 positive + 10 edge + 20 negative public fixtures per detector; official specification registry and per-format public quality gate
 - 47/47 DevUtils-audited tools, route/search/help/runtime parity, valid fixture for every operation, parser/preview malicious fixtures

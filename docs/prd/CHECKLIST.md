@@ -266,7 +266,7 @@
 
 - [x] 2026-07-30 — DC-UP-02: chain 단계 badge의 semantic 순서·근거·low-confidence/limit/error·narrow viewport a11y fixture를 추가했다. `tree/treeitem/group` roving keyboard와 단계·detector·입력 크기 배지, ambiguous no-auto-select fixture를 `DecoderWorkbench`의 기존 depth/evidence 보존 상태로 구현했다. (`pnpm lint && pnpm typecheck && pnpm test && pnpm --filter @decoding/web build && pnpm exec playwright test tests/e2e/product.spec.ts tests/e2e/responsive.spec.ts`)
 - [x] 2026-07-30 — DC-UP-01: Copy 성공에만 Web Audio 두 톤을 재생하고 기본 0.3 local control, disabled/reduced-motion/unavailable no-op, clipboard-success·privacy fixture를 구현했다. 외부 audio asset/provider/요청은 없다. (`packages/workbench-ui/src/copy-feedback.ts`, [audio contract](12-copy-feedback-audio.md), `pnpm test`, browser product/privacy fixture) 실제 OS mute·보조기기 청취는 대기.
-- [ ] DC-UP-03 — favicon/icon/OG/manifest/service worker의 search/share/install presentation과 offline core를 local/preview smoke로 확인한다. production 도메인·Search Console·사용 지표는 별도 gate다.
+- [x] 2026-07-30 — DC-UP-03: source SVG에서 PNG favicon/192·512 maskable/Apple/1200×630 OG 파생물을 만들고 manifest·social metadata·query-safe non-forced service worker를 연결했다. browser fixture가 dimensions/headers/OG/0 sponsor request/no forced update와 offline core를 확인했다. ([asset contract](13-pwa-presentation-assets.md), `pnpm --filter @decoding/web build`, `pnpm exec playwright test tests/e2e/pwa.spec.ts`) production crawler/Search Console/install cohort는 별도 gate다.
 
 **Gate P4**
 
