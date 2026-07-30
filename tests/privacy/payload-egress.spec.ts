@@ -1,6 +1,9 @@
 import { expect, test } from '@playwright/test'
 
-test('synthetic canary never enters requests or browser storage', async ({ page }) => {
+test('synthetic canary never enters requests or browser storage after an explicit copy', async ({
+  page,
+  context,
+}) => {
   const canary = 'DECODING_CANARY_8f31b7b7_secret'
   const leaks: string[] = []
   page.on('request', (request) => {
@@ -12,9 +15,12 @@ test('synthetic canary never enters requests or browser storage', async ({ page 
     if (material.includes(canary) || material.includes(encodeURIComponent(canary)))
       leaks.push(`${request.method()} ${request.url()}`)
   })
+  await context.grantPermissions(['clipboard-read', 'clipboard-write'])
   await page.goto('/')
   await page.getByLabel('Paste text or drop a file').fill(btoa(JSON.stringify({ secret: canary })))
   await expect(page.getByText('JSON', { exact: false }).first()).toBeVisible()
+  await page.getByRole('button', { name: 'Copy' }).click()
+  await expect(page.getByText('Selected result copied.')).toBeVisible()
   await page.waitForTimeout(500)
 
   const storage = await page.evaluate(async () => {

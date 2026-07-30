@@ -265,6 +265,51 @@ pre {
   background: var(--mint);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--mint) 14%, transparent);
 }
+.copy-feedback-settings {
+  margin: 10px 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+}
+.copy-feedback-settings summary {
+  padding: 8px 12px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+}
+.copy-feedback-controls {
+  display: grid;
+  gap: 10px;
+  padding: 0 12px 12px;
+  border-top: 1px solid var(--line);
+}
+.copy-feedback-controls p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.copy-feedback-toggle,
+.copy-feedback-volume {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 650;
+}
+.copy-feedback-volume input {
+  flex: 1;
+  min-width: 80px;
+  accent-color: var(--accent);
+}
+.copy-feedback-volume output {
+  min-width: 34px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  text-align: right;
+}
 
 .hero {
   min-height: 520px;

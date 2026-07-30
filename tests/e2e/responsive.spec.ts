@@ -11,7 +11,9 @@ test('home and catalog remain usable without horizontal overflow', async ({ page
   }
 })
 
-test('recursive chain stage badges remain readable without horizontal overflow', async ({ page }) => {
+test('recursive chain stage badges remain readable without horizontal overflow', async ({
+  page,
+}) => {
   await page.goto('/')
   await page.getByLabel('Paste text or drop a file').fill('eyJsb2NhbCI6dHJ1ZSwidG9vbHMiOjQ3fQ==')
   const chain = page.getByRole('tree', { name: 'Decode chain' })

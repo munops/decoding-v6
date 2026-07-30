@@ -21,7 +21,9 @@ test('auto-detects a nested Base64 JSON payload locally', async ({ page }) => {
   await expect(page.getByText('0 bytes uploaded')).toBeVisible()
 })
 
-test('keeps ambiguous formats explicit instead of auto-selecting a chain stage', async ({ page }) => {
+test('keeps ambiguous formats explicit instead of auto-selecting a chain stage', async ({
+  page,
+}) => {
   await page.goto('/')
   await page.getByLabel('Paste text or drop a file').fill('deadbeef')
   await expect(page.getByRole('status')).toContainText('More than one format is plausible')
@@ -32,6 +34,61 @@ test('keeps ambiguous formats explicit instead of auto-selecting a chain stage',
   const options = page.getByRole('listbox', { name: 'Possible formats' }).getByRole('option')
   await expect(options).toHaveCount(2)
   await expect(options.first()).toContainText(/Hexadecimal bytes|Base64/)
+})
+
+test('plays a local copy cue only after an explicit successful copy and persists its control', async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    type FeedbackWindow = Window & { __copyFeedbackStarts?: number }
+    const feedbackWindow = window as FeedbackWindow
+    feedbackWindow.__copyFeedbackStarts = 0
+    class FakeAudioContext {
+      currentTime = 0
+      destination = {}
+      resume = async () => undefined
+      createGain = () => ({
+        gain: { setValueAtTime: () => undefined, linearRampToValueAtTime: () => undefined },
+        connect: () => undefined,
+      })
+      createOscillator = () => ({
+        frequency: { setValueAtTime: () => undefined },
+        type: 'sine',
+        connect: () => undefined,
+        start: () => {
+          feedbackWindow.__copyFeedbackStarts = (feedbackWindow.__copyFeedbackStarts ?? 0) + 1
+        },
+        stop: () => undefined,
+      })
+    }
+    Object.defineProperty(window, 'AudioContext', { configurable: true, value: FakeAudioContext })
+  })
+  await page.goto('/')
+  await page.getByLabel('Paste text or drop a file').fill('dGVzdA==')
+  await page.getByRole('button', { name: 'Copy' }).click()
+  await expect(page.getByText('Selected result copied.')).toBeVisible()
+  await expect
+    .poll(() =>
+      page.evaluate(
+        () => (window as Window & { __copyFeedbackStarts?: number }).__copyFeedbackStarts,
+      ),
+    )
+    .toBe(2)
+
+  await page.locator('.copy-feedback-settings summary').click()
+  const enabled = page.getByRole('checkbox', { name: 'Play a sound after copying' })
+  await enabled.uncheck()
+  await page.getByRole('button', { name: 'Copy' }).click()
+  await expect
+    .poll(() =>
+      page.evaluate(
+        () => (window as Window & { __copyFeedbackStarts?: number }).__copyFeedbackStarts,
+      ),
+    )
+    .toBe(2)
+  await expect(page.evaluate(() => localStorage.getItem('decoding-copy-feedback'))).resolves.toBe(
+    '{"enabled":false,"volume":0.3}',
+  )
 })
 
 test('lists exactly 47 searchable tools', async ({ page }) => {

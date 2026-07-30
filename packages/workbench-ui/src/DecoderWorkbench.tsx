@@ -1,5 +1,11 @@
 import type { ChainNode, DecodeInput, DecodeResult, Detection } from '@decoding/engine'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
+import {
+  playCopyFeedback,
+  readCopyFeedback,
+  writeCopyFeedback,
+  type CopyFeedbackPreferences,
+} from './copy-feedback'
 import type { DecoderMessages } from './messages'
 
 export type DecoderWorkbenchProps = {
@@ -139,6 +145,9 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
   const [message, setMessage] = useState('')
   const [showCandidates, setShowCandidates] = useState(false)
   const [activeChainNode, setActiveChainNode] = useState<string | null>(null)
+  const [copyFeedback, setCopyFeedback] = useState<CopyFeedbackPreferences>(() =>
+    readCopyFeedback(),
+  )
   const requestId = useRef(0)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -195,8 +204,25 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
 
   const copySelected = async () => {
     if (!selected) return
-    await navigator.clipboard.writeText(outputText(selected.value))
-    setMessage(messages.copied)
+    try {
+      await navigator.clipboard.writeText(outputText(selected.value))
+      setMessage(messages.copied)
+      void playCopyFeedback(copyFeedback)
+    } catch {
+      setMessage(messages.copyFailed)
+    }
+  }
+
+  const updateCopyFeedback = (next: CopyFeedbackPreferences) => {
+    const saved = writeCopyFeedback(next)
+    setCopyFeedback(saved)
+  }
+
+  const previewCopyFeedback = async () => {
+    const outcome = await playCopyFeedback(copyFeedback)
+    setMessage(
+      outcome === 'played' ? messages.copyFeedbackPreviewed : messages.copyFeedbackVisualOnly,
+    )
   }
 
   const exportRedacted = () => {
@@ -247,7 +273,9 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
       event.preventDefault()
       focus(items.at(-1))
     } else if (event.key === 'ArrowRight') {
-      const child = current.querySelector<HTMLElement>(':scope > [role="group"] > [role="treeitem"]')
+      const child = current.querySelector<HTMLElement>(
+        ':scope > [role="group"] > [role="treeitem"]',
+      )
       if (child) {
         event.preventDefault()
         focus(child)
@@ -283,6 +311,46 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
         <span class="privacy-dot" aria-hidden="true" />
         {messages.privacy}
       </div>
+      <details class="copy-feedback-settings">
+        <summary>{messages.copyFeedback}</summary>
+        <div class="copy-feedback-controls">
+          <p>{messages.copyFeedbackDescription}</p>
+          <label class="copy-feedback-toggle">
+            <input
+              type="checkbox"
+              checked={copyFeedback.enabled}
+              onChange={(event) =>
+                updateCopyFeedback({ ...copyFeedback, enabled: event.currentTarget.checked })
+              }
+            />
+            {messages.copyFeedbackEnabled}
+          </label>
+          <label class="copy-feedback-volume" for="copy-feedback-volume">
+            <span>{messages.copyFeedbackVolume}</span>
+            <input
+              id="copy-feedback-volume"
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              value={copyFeedback.volume}
+              disabled={!copyFeedback.enabled}
+              onInput={(event) =>
+                updateCopyFeedback({ ...copyFeedback, volume: Number(event.currentTarget.value) })
+              }
+            />
+            <output>{Math.round(copyFeedback.volume * 100)}%</output>
+          </label>
+          <button
+            class="button ghost small"
+            type="button"
+            onClick={() => void previewCopyFeedback()}
+            disabled={!copyFeedback.enabled}
+          >
+            {messages.copyFeedbackPreview}
+          </button>
+        </div>
+      </details>
       <div
         class="paste-surface"
         onDragOver={(event) => event.preventDefault()}
@@ -365,13 +433,17 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
                     <ChainStage node={result.root} messages={messages} />
                   </li>
                 </ol>
-                <p class="notice warning" role="status">{messages.ambiguousStep}</p>
+                <p class="notice warning" role="status">
+                  {messages.ambiguousStep}
+                </p>
                 <div class="candidate-list" role="listbox" aria-label={messages.possibleFormats}>
                   {result.root.candidates.map((candidate) => (
                     <button
                       type="button"
                       class={
-                        selected?.detector === candidate.detector ? 'candidate selected' : 'candidate'
+                        selected?.detector === candidate.detector
+                          ? 'candidate selected'
+                          : 'candidate'
                       }
                       role="option"
                       aria-selected={selected?.detector === candidate.detector}

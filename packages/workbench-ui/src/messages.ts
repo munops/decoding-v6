@@ -30,6 +30,14 @@ export type DecoderMessages = {
   ambiguousStep: string
   unsupportedStep: string
   limitStep: string
+  copyFeedback: string
+  copyFeedbackDescription: string
+  copyFeedbackEnabled: string
+  copyFeedbackVolume: string
+  copyFeedbackPreview: string
+  copyFeedbackPreviewed: string
+  copyFeedbackVisualOnly: string
+  copyFailed: string
 }
 
 export type ToolMessages = {
@@ -100,6 +108,14 @@ export const decoderMessages = {
     ambiguousStep: 'More than one format is plausible',
     unsupportedStep: 'No format selected',
     limitStep: 'Stopped at a local safety limit',
+    copyFeedback: 'Copy feedback',
+    copyFeedbackDescription: 'A quiet local sound only after a successful copy.',
+    copyFeedbackEnabled: 'Play a sound after copying',
+    copyFeedbackVolume: 'Sound level',
+    copyFeedbackPreview: 'Preview sound',
+    copyFeedbackPreviewed: 'A local preview played.',
+    copyFeedbackVisualOnly: 'Sound is unavailable, so this stays visual only.',
+    copyFailed: 'Unable to copy the selected result.',
   },
   ko: {
     ariaLabel: '범용 디코더',
@@ -133,6 +149,14 @@ export const decoderMessages = {
     ambiguousStep: '둘 이상의 형식이 가능해요',
     unsupportedStep: '선택된 형식이 없어요',
     limitStep: '로컬 안전 제한에서 중단했어요',
+    copyFeedback: '복사 피드백',
+    copyFeedbackDescription: '복사에 성공했을 때만 이 기기에서 조용한 소리를 냅니다.',
+    copyFeedbackEnabled: '복사 후 소리 재생',
+    copyFeedbackVolume: '소리 크기',
+    copyFeedbackPreview: '소리 미리 듣기',
+    copyFeedbackPreviewed: '이 기기에서 미리 듣기 소리를 재생했어요.',
+    copyFeedbackVisualOnly: '소리를 사용할 수 없어 시각 알림만 표시합니다.',
+    copyFailed: '선택한 결과를 복사하지 못했습니다.',
   },
   ja: {
     ariaLabel: 'ユニバーサルデコーダー',
@@ -166,6 +190,14 @@ export const decoderMessages = {
     ambiguousStep: '複数の形式が考えられます',
     unsupportedStep: '選択された形式はありません',
     limitStep: 'ローカルの安全制限で停止しました',
+    copyFeedback: 'コピーのフィードバック',
+    copyFeedbackDescription: 'コピー成功時だけ、このデバイスで静かな音を再生します。',
+    copyFeedbackEnabled: 'コピー後に音を再生',
+    copyFeedbackVolume: '音量',
+    copyFeedbackPreview: '音を試聴',
+    copyFeedbackPreviewed: 'このデバイスで試聴音を再生しました。',
+    copyFeedbackVisualOnly: '音を利用できないため、視覚的な通知のみ表示します。',
+    copyFailed: '選択した結果をコピーできませんでした。',
   },
   'zh-cn': {
     ariaLabel: '通用解码器',
@@ -199,6 +231,14 @@ export const decoderMessages = {
     ambiguousStep: '可能匹配多种格式',
     unsupportedStep: '未选择格式',
     limitStep: '已在本地安全限制处停止',
+    copyFeedback: '复制反馈',
+    copyFeedbackDescription: '仅在复制成功后在此设备播放轻柔提示音。',
+    copyFeedbackEnabled: '复制后播放声音',
+    copyFeedbackVolume: '音量',
+    copyFeedbackPreview: '试听声音',
+    copyFeedbackPreviewed: '已在此设备播放试听声音。',
+    copyFeedbackVisualOnly: '声音不可用，因此仅显示视觉提示。',
+    copyFailed: '无法复制所选结果。',
   },
   es: {
     ariaLabel: 'Decodificador universal',
@@ -232,6 +272,14 @@ export const decoderMessages = {
     ambiguousStep: 'Es posible más de un formato',
     unsupportedStep: 'No hay un formato seleccionado',
     limitStep: 'Se detuvo en un límite de seguridad local',
+    copyFeedback: 'Respuesta al copiar',
+    copyFeedbackDescription: 'Un sonido local y discreto solo después de copiar correctamente.',
+    copyFeedbackEnabled: 'Reproducir un sonido después de copiar',
+    copyFeedbackVolume: 'Volumen',
+    copyFeedbackPreview: 'Probar sonido',
+    copyFeedbackPreviewed: 'Se reprodujo una vista previa local.',
+    copyFeedbackVisualOnly: 'El sonido no está disponible; solo se muestra la confirmación visual.',
+    copyFailed: 'No se pudo copiar el resultado seleccionado.',
   },
   'pt-br': {
     ariaLabel: 'Decodificador universal',
@@ -265,6 +313,14 @@ export const decoderMessages = {
     ambiguousStep: 'Mais de um formato é possível',
     unsupportedStep: 'Nenhum formato foi selecionado',
     limitStep: 'Interrompido em um limite de segurança local',
+    copyFeedback: 'Feedback de cópia',
+    copyFeedbackDescription: 'Um som local discreto somente após uma cópia bem-sucedida.',
+    copyFeedbackEnabled: 'Tocar som depois de copiar',
+    copyFeedbackVolume: 'Volume',
+    copyFeedbackPreview: 'Testar som',
+    copyFeedbackPreviewed: 'Uma prévia local foi reproduzida.',
+    copyFeedbackVisualOnly: 'O som não está disponível; apenas a confirmação visual é mostrada.',
+    copyFailed: 'Não foi possível copiar o resultado selecionado.',
   },
   de: {
     ariaLabel: 'Universeller Decoder',
@@ -299,6 +355,14 @@ export const decoderMessages = {
     ambiguousStep: 'Mehr als ein Format ist möglich',
     unsupportedStep: 'Kein Format ausgewählt',
     limitStep: 'Am lokalen Sicherheitslimit gestoppt',
+    copyFeedback: 'Kopierfeedback',
+    copyFeedbackDescription: 'Ein leiser lokaler Ton nur nach erfolgreichem Kopieren.',
+    copyFeedbackEnabled: 'Nach dem Kopieren Ton abspielen',
+    copyFeedbackVolume: 'Lautstärke',
+    copyFeedbackPreview: 'Ton testen',
+    copyFeedbackPreviewed: 'Eine lokale Vorschau wurde abgespielt.',
+    copyFeedbackVisualOnly: 'Ton ist nicht verfügbar; nur die visuelle Bestätigung wird gezeigt.',
+    copyFailed: 'Das ausgewählte Ergebnis konnte nicht kopiert werden.',
   },
   fr: {
     ariaLabel: 'Décodeur universel',
@@ -332,6 +396,15 @@ export const decoderMessages = {
     ambiguousStep: 'Plusieurs formats sont possibles',
     unsupportedStep: 'Aucun format sélectionné',
     limitStep: 'Arrêté à une limite de sécurité locale',
+    copyFeedback: 'Retour de copie',
+    copyFeedbackDescription: 'Un son local discret uniquement après une copie réussie.',
+    copyFeedbackEnabled: 'Jouer un son après la copie',
+    copyFeedbackVolume: 'Volume',
+    copyFeedbackPreview: 'Tester le son',
+    copyFeedbackPreviewed: 'Un aperçu local a été joué.',
+    copyFeedbackVisualOnly:
+      'Le son est indisponible ; seule la confirmation visuelle est affichée.',
+    copyFailed: 'Impossible de copier le résultat sélectionné.',
   },
 } as const satisfies Record<WorkbenchLocale, DecoderMessages>
 
