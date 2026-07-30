@@ -16,6 +16,7 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for route, version, HTTP, browser, privacy-
 
 ## Code-complete scope
 
+- 2026-07-30 DC-UP-02: recursive decode chain의 단계·detector label·입력 크기를 `tree/treeitem/group`과 roving keyboard로 노출하고, ambiguous 입력은 자동 확정 없이 상태 텍스트와 후보를 표시한다. lint/type/unit 및 desktop/mobile Playwright fixture를 다시 통과했다.
 - 8 detector families, recursive chain, confidence/margin selection, cycle and resource limits
 - 20 positive + 10 edge + 20 negative public fixtures per detector; official specification registry and per-format public quality gate
 - 47/47 DevUtils-audited tools, route/search/help/runtime parity, valid fixture for every operation, parser/preview malicious fixtures

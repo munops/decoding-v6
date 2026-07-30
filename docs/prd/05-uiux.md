@@ -103,6 +103,7 @@
 ```
 
 - chain tree와 inspector의 master-detail 구조
+- 각 단계는 `Step N`·detector label·원본 입력 크기를 같은 읽기 순서로 표시한다. DOM은 `tree/treeitem/group`과 roving tabindex를 사용하며, ↑/↓/Home/End는 단계 이동, →/←는 자식/부모 단계 이동이다.
 - 첫 노드는 자동 선택, 키보드로 이동
 - raw, formatted, bytes 탭은 필요한 포맷에만
 - 경고는 색·아이콘·텍스트·rule ID로 표현
@@ -112,6 +113,7 @@
 
 - 제목: `We found a few possible formats`
 - confidence와 근거를 카드로 비교
+- 모호한 루트도 `Step 1`과 입력 크기를 먼저 보이고, "More than one format is plausible" 텍스트와 후보 목록을 함께 제공한다.
 - 자동으로 하나를 정답처럼 펼치지 않음
 - 사용자가 선택하면 tree 생성
 - 선택 결과는 aggregate correction event만 전송 가능

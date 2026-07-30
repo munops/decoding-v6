@@ -9,6 +9,8 @@ export default tseslint.config(
       '**/target/**',
       '**/.astro/**',
       '**/coverage/**',
+      '**/playwright-report/**',
+      '**/test-results/**',
       '**/*.astro',
       '**/public/sw.js',
     ],

@@ -25,6 +25,11 @@ export type DecoderMessages = {
   chooseCandidate: string
   bytes: string
   stopped: string
+  chainStep: string
+  inputSize: string
+  ambiguousStep: string
+  unsupportedStep: string
+  limitStep: string
 }
 
 export type ToolMessages = {
@@ -90,6 +95,11 @@ export const decoderMessages = {
     chooseCandidate: 'Choose another candidate. No report or payload is sent.',
     bytes: 'bytes',
     stopped: 'Stopped',
+    chainStep: 'Step {step}',
+    inputSize: 'Input: {size} bytes',
+    ambiguousStep: 'More than one format is plausible',
+    unsupportedStep: 'No format selected',
+    limitStep: 'Stopped at a local safety limit',
   },
   ko: {
     ariaLabel: '범용 디코더',
@@ -118,6 +128,11 @@ export const decoderMessages = {
     chooseCandidate: '다른 후보를 선택하세요. 신고나 입력 데이터는 전송되지 않습니다.',
     bytes: '바이트',
     stopped: '중단됨',
+    chainStep: '{step}단계',
+    inputSize: '입력: {size}바이트',
+    ambiguousStep: '둘 이상의 형식이 가능해요',
+    unsupportedStep: '선택된 형식이 없어요',
+    limitStep: '로컬 안전 제한에서 중단했어요',
   },
   ja: {
     ariaLabel: 'ユニバーサルデコーダー',
@@ -146,6 +161,11 @@ export const decoderMessages = {
     chooseCandidate: '別の候補を選択できます。報告や入力データは送信されません。',
     bytes: 'バイト',
     stopped: '停止',
+    chainStep: 'ステップ {step}',
+    inputSize: '入力: {size} バイト',
+    ambiguousStep: '複数の形式が考えられます',
+    unsupportedStep: '選択された形式はありません',
+    limitStep: 'ローカルの安全制限で停止しました',
   },
   'zh-cn': {
     ariaLabel: '通用解码器',
@@ -174,6 +194,11 @@ export const decoderMessages = {
     chooseCandidate: '请选择其他候选项。不会发送报告或输入数据。',
     bytes: '字节',
     stopped: '已停止',
+    chainStep: '第 {step} 步',
+    inputSize: '输入：{size} 字节',
+    ambiguousStep: '可能匹配多种格式',
+    unsupportedStep: '未选择格式',
+    limitStep: '已在本地安全限制处停止',
   },
   es: {
     ariaLabel: 'Decodificador universal',
@@ -202,6 +227,11 @@ export const decoderMessages = {
     chooseCandidate: 'Elige otro candidato. No se envían informes ni datos de entrada.',
     bytes: 'bytes',
     stopped: 'Detenido',
+    chainStep: 'Paso {step}',
+    inputSize: 'Entrada: {size} bytes',
+    ambiguousStep: 'Es posible más de un formato',
+    unsupportedStep: 'No hay un formato seleccionado',
+    limitStep: 'Se detuvo en un límite de seguridad local',
   },
   'pt-br': {
     ariaLabel: 'Decodificador universal',
@@ -230,6 +260,11 @@ export const decoderMessages = {
     chooseCandidate: 'Escolha outro candidato. Nenhum relatório ou dado de entrada é enviado.',
     bytes: 'bytes',
     stopped: 'Interrompido',
+    chainStep: 'Etapa {step}',
+    inputSize: 'Entrada: {size} bytes',
+    ambiguousStep: 'Mais de um formato é possível',
+    unsupportedStep: 'Nenhum formato foi selecionado',
+    limitStep: 'Interrompido em um limite de segurança local',
   },
   de: {
     ariaLabel: 'Universeller Decoder',
@@ -259,6 +294,11 @@ export const decoderMessages = {
       'Wählen Sie einen anderen Kandidaten. Es werden keine Berichte oder Eingaben gesendet.',
     bytes: 'Bytes',
     stopped: 'Gestoppt',
+    chainStep: 'Schritt {step}',
+    inputSize: 'Eingabe: {size} Bytes',
+    ambiguousStep: 'Mehr als ein Format ist möglich',
+    unsupportedStep: 'Kein Format ausgewählt',
+    limitStep: 'Am lokalen Sicherheitslimit gestoppt',
   },
   fr: {
     ariaLabel: 'Décodeur universel',
@@ -287,6 +327,11 @@ export const decoderMessages = {
     chooseCandidate: "Choisissez un autre candidat. Aucun rapport ni donnée d'entrée n'est envoyé.",
     bytes: 'octets',
     stopped: 'Arrêté',
+    chainStep: 'Étape {step}',
+    inputSize: 'Entrée : {size} octets',
+    ambiguousStep: 'Plusieurs formats sont possibles',
+    unsupportedStep: 'Aucun format sélectionné',
+    limitStep: 'Arrêté à une limite de sécurité locale',
   },
 } as const satisfies Record<WorkbenchLocale, DecoderMessages>
 

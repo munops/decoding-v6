@@ -550,6 +550,14 @@ textarea {
   color: var(--muted);
   font-family: var(--mono);
 }
+.chain-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.chain-list .chain-list {
+  margin-top: 12px;
+}
 .chain-node {
   margin-left: calc(var(--depth) * 10px);
   padding: 14px;
@@ -557,17 +565,38 @@ textarea {
   background: var(--surface-2);
   border-radius: 0 12px 12px 0;
 }
-.chain-node + .chain-node,
-.chain-node .chain-node {
+.chain-list > .chain-node + .chain-node {
   margin-top: 12px;
 }
-.chain-node-heading {
-  display: flex;
-  justify-content: space-between;
+.chain-stage {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
   gap: 12px;
-  font-weight: 750;
 }
-.chain-node-heading small {
+.chain-step-badge,
+.chain-size-badge {
+  padding: 3px 8px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  background: var(--surface);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.chain-step-badge {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.chain-detector-label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-weight: 780;
+}
+.chain-size-badge {
   color: var(--muted);
   font-weight: 500;
 }
@@ -1260,6 +1289,17 @@ textarea {
   .inspector-panel,
   .operation-pane {
     padding: 13px;
+  }
+  .chain-node {
+    margin-left: min(calc(var(--depth) * 8px), 32px);
+    padding: 12px;
+  }
+  .chain-stage {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .chain-size-badge {
+    grid-column: 2;
+    justify-self: start;
   }
   .tool-grid {
     grid-template-columns: 1fr;

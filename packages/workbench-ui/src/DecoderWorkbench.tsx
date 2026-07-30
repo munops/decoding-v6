@@ -61,25 +61,73 @@ function EvidenceList({ detection }: { detection: Detection }) {
   )
 }
 
-function ChainView({ node, messages }: { node: ChainNode; messages: DecoderMessages }) {
+function interpolate(template: string, values: Record<string, string | number>): string {
+  return template.replace(/\{(\w+)\}/g, (_, key) => String(values[key] ?? ''))
+}
+
+function chainLabel(node: ChainNode, messages: DecoderMessages): string {
+  if (node.selected) return node.selected.label
+  if (node.status === 'ambiguous') return messages.ambiguousStep
+  if (node.status === 'limit') return messages.limitStep
+  return messages.unsupportedStep
+}
+
+function ChainStage({ node, messages }: { node: ChainNode; messages: DecoderMessages }) {
+  const step = interpolate(messages.chainStep, { step: node.depth + 1 })
+  const inputSize = interpolate(messages.inputSize, { size: node.inputSize.toLocaleString() })
+  const label = chainLabel(node, messages)
   return (
-    <div class="chain-node" style={{ '--depth': node.depth }}>
-      <div class="chain-node-heading">
-        <span>{node.selected?.label ?? node.status}</span>
-        <small>
-          {node.inputSize.toLocaleString()} {messages.bytes}
-        </small>
-      </div>
+    <div class="chain-stage" aria-label={`${step}: ${label}. ${inputSize}`}>
+      <span class="chain-step-badge">{step}</span>
+      <strong class="chain-detector-label">{label}</strong>
+      <span class="chain-size-badge">{inputSize}</span>
+    </div>
+  )
+}
+
+type ChainViewProps = {
+  node: ChainNode
+  messages: DecoderMessages
+  activeNodeId: string | null
+  onActivate: (nodeId: string) => void
+  onKeyDown: (event: KeyboardEvent) => void
+}
+
+function ChainView({ node, messages, activeNodeId, onActivate, onKeyDown }: ChainViewProps) {
+  return (
+    <li
+      class="chain-node"
+      style={{ '--depth': node.depth }}
+      role="treeitem"
+      aria-level={node.depth + 1}
+      aria-expanded={node.children.length ? true : undefined}
+      tabIndex={activeNodeId === node.id ? 0 : -1}
+      data-chain-node-id={node.id}
+      onFocus={() => onActivate(node.id)}
+      onKeyDown={onKeyDown}
+    >
+      <ChainStage node={node} messages={messages} />
       {node.selected ? <EvidenceList detection={node.selected} /> : null}
       {node.limitReason ? (
-        <div class="notice warning">
+        <div class="notice warning" role="status">
           {messages.stopped}: {node.limitReason}
         </div>
       ) : null}
-      {node.children.map((child) => (
-        <ChainView node={child} messages={messages} key={child.id} />
-      ))}
-    </div>
+      {node.children.length ? (
+        <ol class="chain-list" role="group">
+          {node.children.map((child) => (
+            <ChainView
+              node={child}
+              messages={messages}
+              activeNodeId={activeNodeId}
+              onActivate={onActivate}
+              onKeyDown={onKeyDown}
+              key={child.id}
+            />
+          ))}
+        </ol>
+      ) : null}
+    </li>
   )
 }
 
@@ -90,6 +138,7 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
   const [status, setStatus] = useState<'idle' | 'processing' | 'done' | 'error'>('idle')
   const [message, setMessage] = useState('')
   const [showCandidates, setShowCandidates] = useState(false)
+  const [activeChainNode, setActiveChainNode] = useState<string | null>(null)
   const requestId = useRef(0)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -104,6 +153,7 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
         setResult(next)
         setSelected(next.root.selected ?? next.root.candidates[0] ?? null)
         setShowCandidates(next.root.status === 'ambiguous')
+        setActiveChainNode(next.root.id)
         setStatus('done')
         setMessage(next.root.status === 'unsupported' ? messages.unsupported : '')
       } catch (error) {
@@ -124,6 +174,7 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
       setStatus('idle')
       setMessage('')
       setShowCandidates(false)
+      setActiveChainNode(null)
       return
     }
     void run(value)
@@ -170,6 +221,44 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
     link.click()
     URL.revokeObjectURL(link.href)
     setMessage(messages.exported)
+  }
+
+  const handleChainKeyDown = (event: KeyboardEvent) => {
+    const current = event.currentTarget as HTMLElement
+    const tree = current.closest<HTMLElement>('[role="tree"]')
+    if (!tree) return
+    const items = [...tree.querySelectorAll<HTMLElement>('[role="treeitem"]')]
+    const index = items.indexOf(current)
+    const focus = (item?: HTMLElement) => {
+      if (!item) return
+      setActiveChainNode(item.dataset.chainNodeId ?? null)
+      item.focus()
+    }
+    if (event.key === 'ArrowDown') {
+      event.preventDefault()
+      focus(items[index + 1] ?? items[0])
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault()
+      focus(items[index - 1] ?? items.at(-1))
+    } else if (event.key === 'Home') {
+      event.preventDefault()
+      focus(items[0])
+    } else if (event.key === 'End') {
+      event.preventDefault()
+      focus(items.at(-1))
+    } else if (event.key === 'ArrowRight') {
+      const child = current.querySelector<HTMLElement>(':scope > [role="group"] > [role="treeitem"]')
+      if (child) {
+        event.preventDefault()
+        focus(child)
+      }
+    } else if (event.key === 'ArrowLeft') {
+      const parent = current.parentElement?.closest<HTMLElement>('[role="treeitem"]')
+      if (parent) {
+        event.preventDefault()
+        focus(parent)
+      }
+    }
   }
 
   useEffect(() => {
@@ -261,25 +350,50 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
               <small>{result.elapsedMs.toFixed(1)} ms</small>
             </div>
             {showCandidates ? (
-              <div class="candidate-list" role="listbox" aria-label={messages.possibleFormats}>
-                {result.root.candidates.map((candidate) => (
-                  <button
-                    type="button"
-                    class={
-                      selected?.detector === candidate.detector ? 'candidate selected' : 'candidate'
-                    }
-                    role="option"
-                    aria-selected={selected?.detector === candidate.detector}
-                    onClick={() => setSelected(candidate)}
-                    key={candidate.detector}
+              <>
+                <ol class="chain-list" role="tree" aria-label={messages.decodeChain}>
+                  <li
+                    class="chain-node"
+                    style={{ '--depth': result.root.depth }}
+                    role="treeitem"
+                    aria-level={result.root.depth + 1}
+                    tabIndex={activeChainNode === result.root.id ? 0 : -1}
+                    data-chain-node-id={result.root.id}
+                    onFocus={() => setActiveChainNode(result.root.id)}
+                    onKeyDown={handleChainKeyDown}
                   >
-                    <span>{candidate.label}</span>
-                    <strong>{Math.round(candidate.confidence * 100)}%</strong>
-                  </button>
-                ))}
-              </div>
+                    <ChainStage node={result.root} messages={messages} />
+                  </li>
+                </ol>
+                <p class="notice warning" role="status">{messages.ambiguousStep}</p>
+                <div class="candidate-list" role="listbox" aria-label={messages.possibleFormats}>
+                  {result.root.candidates.map((candidate) => (
+                    <button
+                      type="button"
+                      class={
+                        selected?.detector === candidate.detector ? 'candidate selected' : 'candidate'
+                      }
+                      role="option"
+                      aria-selected={selected?.detector === candidate.detector}
+                      onClick={() => setSelected(candidate)}
+                      key={candidate.detector}
+                    >
+                      <span>{candidate.label}</span>
+                      <strong>{Math.round(candidate.confidence * 100)}%</strong>
+                    </button>
+                  ))}
+                </div>
+              </>
             ) : (
-              <ChainView node={result.root} messages={messages} />
+              <ol class="chain-list" role="tree" aria-label={messages.decodeChain}>
+                <ChainView
+                  node={result.root}
+                  messages={messages}
+                  activeNodeId={activeChainNode}
+                  onActivate={setActiveChainNode}
+                  onKeyDown={handleChainKeyDown}
+                />
+              </ol>
             )}
           </div>
           <aside class="inspector-panel">
