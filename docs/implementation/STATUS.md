@@ -8,8 +8,9 @@ Updated: 2026-08-01
 - Source: <https://github.com/whoo3474/decoding-v6>
 - Fallback: <https://decoding-v6.wjstks3474.workers.dev>
 - Staging: <https://decoding-v6-staging.wjstks3474.workers.dev>
-- Cloudflare production version: `65608571-01c1-4746-989e-7de0dd3b554f`
-- Cloudflare staging version: `ae7932de-ff68-4d00-974d-ca87adde05ff`
+- Released source revision: `6281e935d418559e607361823beaf447e74a41e4`
+- Cloudflare production version: `46340612-e1f2-49f3-a075-6d94305bfa69`
+- Cloudflare staging version: `89002ee4-6b4f-48c2-97d6-f984d8601df8`
 - Rollback and restore drill: passed on staging
 
 See [DEPLOYMENT.md](./DEPLOYMENT.md) for route, version, HTTP, browser, privacy-canary, and rollback evidence.
@@ -35,10 +36,10 @@ The user explicitly requested implementation of the complete 47-tool, desktop, a
 ## Verified
 
 - `pnpm verify`: format, lint, strict types, unit/fixture/CLI tests, benchmark, content/link/network/parity/extension checks, all builds, bundle budget
-- GitHub Actions hosted CI: [`verify` and `test:e2e` passed](https://github.com/whoo3474/decoding-v6/actions/runs/29361506397)
+- GitHub Actions hosted CI: [`verify` and `test:e2e` passed](https://github.com/whoo3474/decoding-v6/actions/runs/30693517307)
 - Playwright: desktop/mobile UI, local worker operations, PWA offline reload, same-origin request audit, privacy canary, IndexedDB raw-secret absence, and axe
 - public fixture quality: at least 95% precision and 90% recall for each detector family
-- 1 MiB engine benchmark: first candidate p75 1.5 ms, complete p75 14.7 ms
+- 1 MiB engine benchmark: first candidate p75 1.9 ms, complete p75 15.2 ms
 - initial application JavaScript: 20.2 KiB gzip; heavy operation categories remain lazy
 - Tauri: Rust `cargo check`, native release bundle, updater signing, checksums, code-sign verification, capability allowlist, and two-minute no-socket runtime observation
 - Cloudflare: staging, production, custom-domain cutover, external Chromium smoke/privacy gate, and rollback/restore drill

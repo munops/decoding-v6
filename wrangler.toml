@@ -13,6 +13,7 @@ not_found_handling = "404-page"
 
 [env.staging]
 name = "decoding-v6-staging"
+routes = []
 
 [env.staging.assets]
 directory = "apps/web/dist"
