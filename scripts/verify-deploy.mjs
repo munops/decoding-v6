@@ -31,10 +31,17 @@ page.on('request', (request) => {
 
 try {
   await page.goto(`${baseURL}/`, { waitUntil: 'networkidle' })
+  const launchpad = page.getByRole('group', { name: 'Try a safe synthetic case' })
+  if ((await launchpad.getByRole('button').count()) !== 3) {
+    throw new Error('Expected exactly three synthetic triage cases')
+  }
+  await launchpad.getByRole('button', { name: 'Nested Base64 → JSON' }).click()
+  await page.getByRole('tree', { name: 'Decode chain' }).getByRole('treeitem').nth(1).waitFor()
+
   await page.getByLabel('Paste text or drop a file').fill(btoa(JSON.stringify({ secret: canary })))
   await page.getByText('Base64', { exact: false }).first().waitFor()
   await page.getByText('JSON', { exact: false }).first().waitFor()
-  await page.getByText('0 bytes uploaded').waitFor()
+  await page.getByText('0 input bytes uploaded').waitFor()
 
   const storage = await page.evaluate(async () => {
     const databases = 'databases' in indexedDB ? await indexedDB.databases() : []
@@ -70,6 +77,7 @@ try {
     JSON.stringify(
       {
         baseURL,
+        syntheticTriageCases: 3,
         autoDetection: 'passed',
         toolCount: 47,
         localOperation: 'passed',
