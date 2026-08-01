@@ -18,7 +18,35 @@ test('auto-detects a nested Base64 JSON payload locally', async ({ page }) => {
   await expect(stages.nth(1)).toBeFocused()
   await page.keyboard.press('ArrowLeft')
   await expect(stages.first()).toBeFocused()
-  await expect(page.getByText('0 bytes uploaded')).toBeVisible()
+  await expect(page.getByText('0 input bytes uploaded')).toBeVisible()
+})
+
+test('lets a visitor experience three evidence-first synthetic triage cases', async ({ page }) => {
+  await page.goto('/')
+  const launchpad = page.getByRole('group', { name: 'Try a safe synthetic case' })
+  await expect(launchpad.getByRole('button')).toHaveCount(3)
+  await expect(page.locator('.hero-proof')).not.toContainText('47')
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+    'content',
+    /rank plausible formats/i,
+  )
+
+  await launchpad.getByRole('button', { name: 'Nested Base64 → JSON' }).click()
+  await expect(page.getByLabel('Paste text or drop a file')).toHaveValue(
+    'eyJsb2NhbCI6dHJ1ZSwidG9vbHMiOjQ3fQ==',
+  )
+  await expect(page.getByRole('tree', { name: 'Decode chain' }).getByRole('treeitem')).toHaveCount(
+    2,
+  )
+
+  await launchpad.getByRole('button', { name: 'Ambiguous Hex or Base64' }).click()
+  await expect(page.getByRole('status')).toContainText('More than one format is plausible')
+  await expect(
+    page.getByRole('listbox', { name: 'Possible formats' }).getByRole('option'),
+  ).toHaveCount(2)
+
+  await launchpad.getByRole('button', { name: 'Expired JWT warning' }).click()
+  await expect(page.locator('.result-chain .notice.danger')).toContainText('JWT-EXPIRED')
 })
 
 test('keeps ambiguous formats explicit instead of auto-selecting a chain stage', async ({
@@ -38,7 +66,9 @@ test('keeps ambiguous formats explicit instead of auto-selecting a chain stage',
 
 test('plays a local copy cue only after an explicit successful copy and persists its control', async ({
   page,
+  context,
 }) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write'])
   await page.addInitScript(() => {
     type FeedbackWindow = Window & { __copyFeedbackStarts?: number }
     const feedbackWindow = window as FeedbackWindow

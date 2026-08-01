@@ -87,6 +87,7 @@
 - [x] 2026-07-15 — tree + inspector + candidate list
 - [x] 2026-07-15 — paste·file drop·keyboard shortcuts
 - [x] 2026-07-15 — system theme·responsive·reduced motion
+- [x] 2026-08-01 DC-UX-01 — 홈에서 중첩 체인·모호한 후보·결정적 JWT 경고의 합성 사례 3개를 직접 실행하고, 47-tool count 대신 unknown-value triage 근거를 첫 화면 proof로 제시한다. `pnpm verify`와 desktop/mobile `pnpm test:e2e` 24개에서 keyboard·axe·responsive·payload egress/storage gate를 통과했다.
 - [ ] 자동 axe serious-impact gate는 통과; full manual WCAG 2.2 AA/AT 검증은 외부 audit 필요
 - [x] 2026-07-15 — “Your input stays in this browser” 상세 설명
 - [x] 2026-07-15 — 광고·login·price·upgrade DOM 0개

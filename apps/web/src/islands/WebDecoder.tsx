@@ -1,11 +1,24 @@
 import type { DecodeInput, DecodeResult } from '@decoding/engine'
 import { DecoderWorkbench } from '@decoding/workbench-ui'
 import type { DecoderMessages } from '@decoding/workbench-ui'
-import { useEffect, useMemo } from 'preact/hooks'
+import { useEffect, useMemo, useState } from 'preact/hooks'
 
 type Pending = { resolve: (result: DecodeResult) => void; reject: (error: Error) => void }
 
-export default function WebDecoder({ messages }: { messages: DecoderMessages }) {
+export type WebDecoderSample = {
+  id: string
+  label: string
+  value: string
+}
+
+type Props = {
+  messages: DecoderMessages
+  sampleLabel?: string
+  samples?: WebDecoderSample[]
+}
+
+export default function WebDecoder({ messages, sampleLabel, samples = [] }: Props) {
+  const [externalInput, setExternalInput] = useState<{ id: number; value: string }>()
   const client = useMemo(() => {
     const worker = new Worker(new URL('../workers/decoder.worker.ts', import.meta.url), {
       type: 'module',
@@ -33,5 +46,37 @@ export default function WebDecoder({ messages }: { messages: DecoderMessages }) 
     }
   }, [])
   useEffect(() => () => client.worker.terminate(), [client])
-  return <DecoderWorkbench decodeInput={client.decodeInput} messages={messages} />
+  return (
+    <>
+      {sampleLabel && samples.length ? (
+        <div class="triage-launchpad" role="group" aria-label={sampleLabel}>
+          <span class="eyebrow">{sampleLabel}</span>
+          <div class="triage-sample-grid">
+            {samples.map((sample, index) => (
+              <button
+                key={sample.id}
+                class="triage-sample"
+                type="button"
+                data-sample-id={sample.id}
+                onClick={() =>
+                  setExternalInput((previous) => ({
+                    id: (previous?.id ?? 0) + 1,
+                    value: sample.value,
+                  }))
+                }
+              >
+                <span aria-hidden="true">0{index + 1}</span>
+                <strong>{sample.label}</strong>
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : null}
+      <DecoderWorkbench
+        decodeInput={client.decodeInput}
+        externalInput={externalInput}
+        messages={messages}
+      />
+    </>
+  )
 }

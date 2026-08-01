@@ -1,6 +1,6 @@
 # v6 implementation status
 
-Updated: 2026-07-15
+Updated: 2026-08-01
 
 ## Released
 
@@ -16,6 +16,7 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for route, version, HTTP, browser, privacy-
 
 ## Code-complete scope
 
+- 2026-08-01 DC-UX-01: 홈의 primary proof를 tool count에서 unknown-value triage로 전환하고, 중첩 Base64 → JSON·ambiguous Hex/Base64·expired JWT 경고를 실제 workbench에서 실행하는 합성 사례 3개를 추가했다. 사례 payload는 URL·storage·analytics·외부 request로 전달되지 않으며 47-tool catalog는 보조 탐색으로 유지한다.
 - 2026-07-30 DC-UP-02: recursive decode chain의 단계·detector label·입력 크기를 `tree/treeitem/group`과 roving keyboard로 노출하고, ambiguous 입력은 자동 확정 없이 상태 텍스트와 후보를 표시한다. lint/type/unit 및 desktop/mobile Playwright fixture를 다시 통과했다.
 - 2026-07-30 DC-UP-01: 성공한 explicit Copy 뒤에만 local Web Audio 확인음을 내고, 0.3 기본 볼륨/영속 토글/무음 시각 폴백을 추가했다. raw payload egress·storage는 여전히 0이며 실제 OS mute/AT 청취는 외부 검증 gate다.
 - 2026-07-30 DC-UP-03: code-native SVG에서 install/share-compatible PNG를 파생하고 manifest·OG metadata·query-safe PWA cache를 검증했다. worker는 기존 화면의 강제 update를 하지 않으며, production crawler/install observation은 아직 주장하지 않는다.
@@ -37,8 +38,8 @@ The user explicitly requested implementation of the complete 47-tool, desktop, a
 - GitHub Actions hosted CI: [`verify` and `test:e2e` passed](https://github.com/whoo3474/decoding-v6/actions/runs/29361506397)
 - Playwright: desktop/mobile UI, local worker operations, PWA offline reload, same-origin request audit, privacy canary, IndexedDB raw-secret absence, and axe
 - public fixture quality: at least 95% precision and 90% recall for each detector family
-- 1 MiB engine benchmark: first candidate p75 2.9 ms, complete p75 29.8 ms
-- initial application JavaScript: 18.8 KiB gzip; heavy operation categories remain lazy
+- 1 MiB engine benchmark: first candidate p75 1.5 ms, complete p75 14.7 ms
+- initial application JavaScript: 20.2 KiB gzip; heavy operation categories remain lazy
 - Tauri: Rust `cargo check`, native release bundle, updater signing, checksums, code-sign verification, capability allowlist, and two-minute no-socket runtime observation
 - Cloudflare: staging, production, custom-domain cutover, external Chromium smoke/privacy gate, and rollback/restore drill
 - Cloudflare immutable i18n preview: `f9ad317e-1204-42b9-82ad-d9afd1ff8c74` at `https://codex-i18n-decoding-v6.wjstks3474.workers.dev`

@@ -2,6 +2,7 @@
 import WebDecoder from '../islands/WebDecoder'
 import Layout from '../layouts/Layout.astro'
 import { homeMessages, localePath, type Locale } from '../i18n/catalog'
+import { triageSamples } from '../lib/triage-samples'
 import { decoderMessages } from '@decoding/workbench-ui'
 
 interface Props {
@@ -10,6 +11,15 @@ interface Props {
 const { locale } = Astro.props
 const messages = homeMessages[locale]
 const [heading, accentHeading] = messages.heading.split('\n')
+const samples = triageSamples.map((sample) => ({
+  ...sample,
+  label:
+    sample.id === 'nested'
+      ? messages.sampleNested
+      : sample.id === 'ambiguous'
+        ? messages.sampleAmbiguous
+        : messages.sampleExpired,
+}))
 ---
 
 <Layout locale={locale} title={messages.title} description={messages.description} alternatePath="/">
@@ -19,8 +29,6 @@ const [heading, accentHeading] = messages.heading.split('\n')
       <h1>{heading}<br /><span>{accentHeading}</span></h1>
       <p>{messages.intro}</p>
       <div class="hero-proof">
-        <span><strong>8</strong> {messages.detectorCount}</span>
-        <span><strong>47</strong> {messages.utilityCount}</span>
         <span><strong>0</strong> {messages.uploaded}</span>
       </div>
     </div>
@@ -33,7 +41,12 @@ const [heading, accentHeading] = messages.heading.split('\n')
     </div>
   </section>
   <div class="container workbench-wrap">
-    <WebDecoder messages={decoderMessages[locale]} client:only="preact" />
+    <WebDecoder
+      messages={decoderMessages[locale]}
+      sampleLabel={messages.examplesLabel}
+      samples={samples}
+      client:only="preact"
+    />
   </div>
   <section class="container value-section">
     <div class="section-heading">

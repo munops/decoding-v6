@@ -2,11 +2,13 @@
 
 ## Title
 
-Show HN: decod.ing – 47 local developer tools that never upload your input
+Show HN: decod.ing – Paste unknown developer data, see ranked formats locally
 
 ## Post
 
-I built <https://decod.ing>, a free universal decoder and 47-tool developer workbench. You can paste a JWT, Base64, JSON, hex, URL, Unix timestamp, UUID/ULID, or compressed file; it detects plausible formats, shows the evidence and competing candidates, and follows nested layers such as Base64 → gzip → JSON.
+I built <https://decod.ing> for the moment when you have a value but do not yet know which decoder to choose. Paste a JWT, Base64, JSON, hex, URL, Unix timestamp, UUID/ULID, or compressed file; it ranks plausible formats, shows the evidence and competing candidates, and follows nested layers such as Base64 → gzip → JSON. Three built-in synthetic cases demonstrate a nested chain, an intentionally ambiguous value, and a deterministic expired-JWT warning without requiring real data.
+
+After the initial diagnosis, 47 focused format, conversion, inspection, generation, and encoding operations are available in the same local workbench.
 
 The privacy boundary is the main product constraint: decoding and tool operations run in dedicated Web Workers, raw input never enters a URL or server request, and there is no account, payment, product telemetry, generative AI, or ad network. The PWA works offline. The CLI contains no network code, and the Tauri desktop shell is available for engineering review while signed public builds are still gated.
 

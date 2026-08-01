@@ -2,7 +2,7 @@
 
 > Paste anything. See what it is — instantly, locally, safely.
 
-decod.ing is a zero-account universal decoder and private developer workbench. It detects eight format families, follows recursive decode chains, exposes evidence and deterministic warnings, and provides 47 local format/convert/inspect/generate/encode tools.
+decod.ing is a zero-account triage tool for unknown developer data. Paste a value without choosing a format first; it ranks plausible formats, keeps ambiguous candidates visible, follows recursive decode chains, and explains deterministic warnings on your device. A 47-operation local workbench is available after the first diagnosis.
 
 Production: <https://decod.ing> · Source: <https://github.com/whoo3474/decoding-v6> · Staging: <https://decoding-v6-staging.wjstks3474.workers.dev>
 
@@ -17,7 +17,7 @@ Production: <https://decod.ing> · Source: <https://github.com/whoo3474/decoding
 ## Implemented surfaces
 
 ```text
-apps/web             Astro SSG, Preact workers, 64 static pages, PWA, local workspace
+apps/web             Astro SSG, Preact workers, 484 static pages, PWA, local workspace
 apps/cli             stdin/file auto-decoder and all 47 operation IDs
 apps/desktop         Tauri 2 workbench, global shortcut, explicit clipboard, tray, windows
 apps/extension       MV3 selection decoder with minimum permissions and no host access

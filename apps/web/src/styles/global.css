@@ -398,6 +398,55 @@ pre {
 .workbench-wrap {
   margin-bottom: 104px;
 }
+.triage-launchpad {
+  margin-bottom: 14px;
+  padding: 18px;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--accent-soft), var(--surface));
+}
+.triage-launchpad > .eyebrow {
+  margin: 0 0 12px;
+}
+.triage-sample-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.triage-sample {
+  min-width: 0;
+  padding: 14px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+.triage-sample:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+}
+.triage-sample > span {
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+}
+.triage-sample > strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
 .sponsor-slot {
   max-width: 760px;
   margin-top: -70px;
@@ -1256,6 +1305,9 @@ textarea {
     grid-template-columns: repeat(2, 1fr);
   }
   .value-grid {
+    grid-template-columns: 1fr;
+  }
+  .triage-sample-grid {
     grid-template-columns: 1fr;
   }
   .tool-hero {

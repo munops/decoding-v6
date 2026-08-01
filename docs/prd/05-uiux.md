@@ -79,6 +79,8 @@
 - 예시는 synthetic이며 실제 secret처럼 보이지 않게 `example.invalid` 사용
 - 배지 문구는 “0 bytes of your input sent” 또는 “Your input stays in this browser”
 
+`DC-UX-01`은 빈 상태에서 실제 차별화를 바로 체험시키는 구현 단위다. 홈 decoder 위에만 `Base64 → JSON` 중첩 체인, Hex/Base64 모호성, 만료 JWT 결정적 경고의 합성 사례 세 개를 action button으로 제공한다. 선택은 입력을 로컬 workbench에 명시적으로 채울 뿐 자동 clipboard read, payload URL, 저장, analytics, 외부 요청을 만들지 않는다. 47개 도구 수는 홈의 주된 proof가 아니며 catalog와 하단 보조 설명에서만 유지한다.
+
 ### B. 판별 중
 
 - 100ms 이하는 spinner를 보이지 않음

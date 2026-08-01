@@ -170,9 +170,11 @@ export type HomeMessages = {
   eyebrow: string
   heading: string
   intro: string
-  detectorCount: string
-  utilityCount: string
   uploaded: string
+  examplesLabel: string
+  sampleNested: string
+  sampleAmbiguous: string
+  sampleExpired: string
   principles: string
   autoTitle: string
   autoBody: string
@@ -193,16 +195,18 @@ export type HomeMessages = {
 
 export const homeMessages: Record<Locale, HomeMessages> = {
   en: {
-    title: 'decod.ing — Universal decoder that runs on your device',
+    title: 'decod.ing — Identify unknown developer data locally',
     description:
-      'Detect, decode, inspect, and convert developer data on your device. 47 tools, no account or upload.',
-    eyebrow: 'Zero-account universal decoder',
+      'Paste an unknown value, rank plausible formats, and follow nested layers without uploading your input.',
+    eyebrow: 'Local triage for unknown developer data',
     heading: 'Paste anything.\nSee what it is.',
     intro:
-      'Detect opaque values, follow nested encoding layers, and inspect deterministic warnings. Everything runs on this device.',
-    detectorCount: 'smart detectors',
-    utilityCount: 'local utilities',
-    uploaded: 'bytes uploaded',
+      'Start with the value, not a format picker. decod.ing ranks plausible formats, follows nested layers, and shows the evidence and warnings on this device.',
+    uploaded: 'input bytes uploaded',
+    examplesLabel: 'Try a safe synthetic case',
+    sampleNested: 'Nested Base64 → JSON',
+    sampleAmbiguous: 'Ambiguous Hex or Base64',
+    sampleExpired: 'Expired JWT warning',
     principles: 'Product principles',
     autoTitle: 'Auto-detect',
     autoBody: 'No format picker before you start.',
@@ -229,9 +233,11 @@ export const homeMessages: Record<Locale, HomeMessages> = {
     heading: '무엇이든 붙여넣고,\n형식을 확인하세요.',
     intro:
       '불투명한 값을 감지하고 중첩 인코딩을 따라가며 규칙 기반 경고를 확인합니다. 모든 처리는 이 기기에서 실행됩니다.',
-    detectorCount: '스마트 감지기',
-    utilityCount: '로컬 도구',
     uploaded: '업로드된 바이트',
+    examplesLabel: '안전한 합성 예시로 시작',
+    sampleNested: '중첩 Base64 → JSON',
+    sampleAmbiguous: '모호한 Hex 또는 Base64',
+    sampleExpired: '만료된 JWT 경고',
     principles: '제품 원칙',
     autoTitle: '자동 감지',
     autoBody: '시작 전에 형식을 고를 필요가 없습니다.',
@@ -257,9 +263,11 @@ export const homeMessages: Record<Locale, HomeMessages> = {
     heading: '何でも貼り付けて、\n中身を確認。',
     intro:
       '不透明な値を検出し、多重エンコードを追跡し、決定論的な警告を検査します。すべてこのデバイス上で実行されます。',
-    detectorCount: 'スマート検出器',
-    utilityCount: 'ローカルツール',
     uploaded: '送信バイト',
+    examplesLabel: '安全な合成サンプルを試す',
+    sampleNested: '多重 Base64 → JSON',
+    sampleAmbiguous: '曖昧な Hex または Base64',
+    sampleExpired: '期限切れ JWT の警告',
     principles: '製品原則',
     autoTitle: '自動検出',
     autoBody: '開始前の形式選択は不要です。',
@@ -283,9 +291,11 @@ export const homeMessages: Record<Locale, HomeMessages> = {
     eyebrow: '无需账户的通用解码器',
     heading: '粘贴任意内容，\n立即识别格式。',
     intro: '检测不透明值、跟踪嵌套编码层并检查确定性警告。所有处理均在此设备上完成。',
-    detectorCount: '智能检测器',
-    utilityCount: '本地工具',
     uploaded: '上传字节',
+    examplesLabel: '尝试安全的合成示例',
+    sampleNested: '嵌套 Base64 → JSON',
+    sampleAmbiguous: '有歧义的 Hex 或 Base64',
+    sampleExpired: '过期 JWT 警告',
     principles: '产品原则',
     autoTitle: '自动检测',
     autoBody: '开始前无需选择格式。',
@@ -311,9 +321,11 @@ export const homeMessages: Record<Locale, HomeMessages> = {
     heading: 'Pega cualquier cosa.\nDescubre qué es.',
     intro:
       'Detecta valores opacos, sigue capas de codificación anidadas y revisa advertencias deterministas. Todo se ejecuta en este dispositivo.',
-    detectorCount: 'detectores inteligentes',
-    utilityCount: 'utilidades locales',
     uploaded: 'bytes subidos',
+    examplesLabel: 'Prueba un caso sintético seguro',
+    sampleNested: 'Base64 → JSON anidado',
+    sampleAmbiguous: 'Hex o Base64 ambiguo',
+    sampleExpired: 'Advertencia de JWT caducado',
     principles: 'Principios del producto',
     autoTitle: 'Detección automática',
     autoBody: 'No necesitas elegir un formato antes de empezar.',
@@ -340,9 +352,11 @@ export const homeMessages: Record<Locale, HomeMessages> = {
     heading: 'Cole qualquer coisa.\nDescubra o formato.',
     intro:
       'Detecte valores opacos, siga camadas de codificação e veja alertas determinísticos. Tudo roda neste dispositivo.',
-    detectorCount: 'detectores inteligentes',
-    utilityCount: 'utilitários locais',
     uploaded: 'bytes enviados',
+    examplesLabel: 'Teste um caso sintético seguro',
+    sampleNested: 'Base64 → JSON aninhado',
+    sampleAmbiguous: 'Hex ou Base64 ambíguo',
+    sampleExpired: 'Alerta de JWT expirado',
     principles: 'Princípios do produto',
     autoTitle: 'Detecção automática',
     autoBody: 'Não é preciso escolher o formato antes de começar.',
@@ -368,9 +382,11 @@ export const homeMessages: Record<Locale, HomeMessages> = {
     heading: 'Alles einfügen.\nFormat erkennen.',
     intro:
       'Undurchsichtige Werte erkennen, verschachtelte Codierungen verfolgen und regelbasierte Warnungen prüfen. Alles läuft auf diesem Gerät.',
-    detectorCount: 'intelligente Detektoren',
-    utilityCount: 'lokale Tools',
     uploaded: 'hochgeladene Bytes',
+    examplesLabel: 'Sicheren synthetischen Fall testen',
+    sampleNested: 'Verschachteltes Base64 → JSON',
+    sampleAmbiguous: 'Mehrdeutiges Hex oder Base64',
+    sampleExpired: 'Warnung bei abgelaufenem JWT',
     principles: 'Produktprinzipien',
     autoTitle: 'Automatisch erkennen',
     autoBody: 'Vor dem Start muss kein Format gewählt werden.',
@@ -396,9 +412,11 @@ export const homeMessages: Record<Locale, HomeMessages> = {
     heading: "Collez n'importe quoi.\nIdentifiez le format.",
     intro:
       "Détectez les valeurs opaques, suivez les couches d'encodage et examinez les avertissements déterministes. Tout s'exécute sur cet appareil.",
-    detectorCount: 'détecteurs intelligents',
-    utilityCount: 'outils locaux',
     uploaded: 'octets transférés',
+    examplesLabel: 'Essayer un cas synthétique sûr',
+    sampleNested: 'Base64 → JSON imbriqué',
+    sampleAmbiguous: 'Hex ou Base64 ambigu',
+    sampleExpired: 'Avertissement JWT expiré',
     principles: 'Principes du produit',
     autoTitle: 'Détection automatique',
     autoBody: 'Aucun format à choisir avant de commencer.',

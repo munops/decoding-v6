@@ -4,9 +4,9 @@ Check each community's current rules immediately before posting. These are inten
 
 ## r/webdev — architecture and browser UX
 
-**Title:** I built a 47-tool developer workbench where every operation stays in the browser
+**Title:** I built a local decoder that ranks plausible formats before asking you to choose one
 
-I rebuilt decod.ing as an Astro static app with Preact islands and dedicated Web Workers. The universal input detects eight format families and follows nested encoding, while 47 focused tools are lazy-loaded by category. There is no login, API decoder, analytics SDK, AI endpoint, or ad request.
+I rebuilt decod.ing as an Astro static app with Preact islands and dedicated Web Workers. Paste an unknown value and it ranks eight format families, keeps ambiguous candidates visible, and follows nested encoding. Three synthetic examples make those behaviors testable immediately; 47 focused tools are lazy-loaded by category after the first diagnosis. There is no login, API decoder, analytics SDK, AI endpoint, or ad request.
 
 I am looking for concrete feedback on keyboard navigation, responsive layout, format ambiguity, and whether the locale selector and Japanese UI read naturally. Source and threat model are public. Please test only with synthetic payloads.
 
