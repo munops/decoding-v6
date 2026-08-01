@@ -28,7 +28,7 @@ const examples: Record<string, string> = {
   'regex-tester': 'one two 123 four 456',
   'text-diff': 'first line\nsecond line',
   'cron-parser': '*/15 * * * *',
-  'color-converter': '#6D5EF7',
+  'color-converter': '#e24a28',
   'yaml-to-json': 'project: decod.ing\nlocal: true\ntools: 47',
   'csv-to-json': 'name,value\nlocal,true\ntools,47',
   'html-preview': '<main><h1>Safe preview</h1><p>Scripts and network are blocked.</p></main>',
@@ -36,7 +36,7 @@ const examples: Record<string, string> = {
   'curl-to-code': "curl 'https://example.invalid/api' -H 'Accept: application/json'",
   'json-to-code': '{"name":"decod.ing","local":true,"count":47}',
   'svg-to-css':
-    '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><circle cx="16" cy="16" r="12" fill="#6D5EF7"/></svg>',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><circle cx="16" cy="16" r="12" fill="#e24a28"/></svg>',
 }
 
 function defaultOptions(operation: OperationDescriptor): OperationOptions {

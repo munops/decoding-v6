@@ -47,7 +47,7 @@ export default function WebDecoder({ messages, sampleLabel, samples = [] }: Prop
   }, [])
   useEffect(() => () => client.worker.terminate(), [client])
   return (
-    <>
+    <div class="decoder-frame">
       {sampleLabel && samples.length ? (
         <div class="triage-launchpad" role="group" aria-label={sampleLabel}>
           <span class="eyebrow">{sampleLabel}</span>
@@ -77,6 +77,6 @@ export default function WebDecoder({ messages, sampleLabel, samples = [] }: Prop
         externalInput={externalInput}
         messages={messages}
       />
-    </>
+    </div>
   )
 }

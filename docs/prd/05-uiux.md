@@ -168,15 +168,40 @@
 
 하나의 `DecoderWorkbench` island 안에서 상태를 소유하고 작은 island를 남발하지 않는다. 결과 값은 전역 store나 DOM attribute에 직렬화하지 않는다.
 
-## 6. 시각 디자인
+## 6. 브랜드·시각 디자인 — Reveal Ledger
 
-- 기본 테마는 OS 설정, 사용자가 light/dark 선택 가능
-- 외부 폰트 없음: system sans + system monospace
-- 본문 최대폭 72rem, decoder 최대폭 96rem
-- 밀도 높은 데이터와 읽기 쉬운 설명 콘텐츠의 typography 분리
-- confidence는 숫자+라벨(`High`, `Possible`, `Low`)로 표시
-- depth 색상은 보조 수단이며 색만으로 계층을 표현하지 않음
-- motion 150ms 이하, `prefers-reduced-motion` 존중
+아트디렉션과 비교 근거는 [2026-08-01 product-design benchmark](../research/2026-08-01-product-design-benchmark.md)가 소유한다. 핵심 인상은 “해커 도구”나 범용 SaaS가 아니라 **불투명한 값이 근거 있는 단계로 정리되는 로컬 판독 장부**다.
+
+### 브랜드 코어
+
+- 로고: lowercase `d`와 이를 가르는 signal slash를 결합한 수제 SVG 심볼 + `decod.ing` 워드마크. slash는 decode/reveal을, 점은 현재 판독 위치를 뜻한다.
+- palette: warm paper + blue-black ink를 기본으로 하고, decode orange는 현재 action/selection에만, verified green은 local/privacy/success에만 사용한다. warning/danger는 별도 semantic color와 text/icon을 함께 쓴다.
+- 외부 폰트 없음: display/body는 system sans, evidence/metadata/input/output은 system monospace를 사용한다. display 800, body 450~600, mono 500~700의 weight 차이를 보장한다.
+- voice: 짧고 직접적이며 기술적으로 정직하다. “secure/verified/valid”를 단순 decode 성공에 사용하지 않고, local 처리·confidence·signature 미검증·limit을 각각 정확히 말한다.
+- favicon, Apple touch icon, PWA icon, OG는 같은 vector geometry와 palette에서 파생한다. raster derivative를 새 브랜드 원본으로 취급하지 않는다.
+
+### 토큰과 표면
+
+- 토큰 owner는 `apps/web/src/styles/global.css`의 semantic color/type/space/radius/elevation/motion 변수다. route나 component에서 임의 hex와 임의 shadow를 추가하지 않는다.
+- 본문 최대폭 72rem, decoder 최대폭 76rem, 읽기 문서 최대폭 50rem이다.
+- page background의 ledger grid는 낮은 대비의 정적 구조선일 뿐이며 콘텐츠 대비나 성능을 해치지 않는다.
+- 결과 chain은 단계 번호·detector label·input size를 같은 baseline에서 읽게 하고, selected edge와 connector는 색 외에 위치·border·label로도 구분한다.
+- confidence는 숫자와 format label을 함께 표시한다. depth·warning·success도 색만으로 의미를 전달하지 않는다.
+
+### 시그니처 작업면과 상태
+
+- 홈의 universal decoder와 `Decode chain + Inspector`를 시그니처 화면으로 지정한다.
+- desktop 첫 viewport에서 headline, local proof, synthetic examples, 실제 paste surface의 label과 입력 시작 영역이 보여야 한다. 설명 카드가 paste action보다 우선하지 않는다.
+- empty/processing/confident/ambiguous/unsupported/limit/error와 copy success 상태가 같은 panel anatomy를 사용한다.
+- catalog, dedicated tool, workspace, info/download page는 같은 header, surface, button, metadata, focus, responsive token을 소비한다.
+- light/dark는 OS 설정을 기본으로 하고 header control에서 명시적으로 전환할 수 있다. 선택은 `decoding-theme` 하나만 localStorage에 저장한다.
+
+### 모션
+
+- `fast 120ms`, `base 180ms`, easing `cubic-bezier(.2,.8,.2,1)`을 중앙 토큰으로 사용한다.
+- 진입은 8px 이하 정착, 전환은 1px 이하 응답, 성공은 local status 강조에 한정한다.
+- 무한 반복 배경 motion, parallax, 장식 particle을 금지한다.
+- `prefers-reduced-motion`에서는 이동과 smooth scroll을 제거하고 상태·focus 변화는 즉시 유지한다.
 
 ## 7. 반응형
 
@@ -216,3 +241,12 @@
 - manifest·route·search·help·lazy chunk parity 100%
 - 선택하지 않은 heavy tool chunk가 초기 decoder bundle에 포함되지 않음
 - 광고 도입 후 첫 viewport와 decoder action 영역의 시각적 변화 없음
+
+## 11. 2026-08-01 디자인 개선 ID
+
+| ID | 구현 단위 | acceptance | readiness |
+|---|---|---|---|
+| DC-DESIGN-01 | Reveal Ledger 브랜드 코어와 중앙 token, 수제 SVG 심볼·wordmark·favicon/PWA/OG 계열 | light/dark semantic token, 16/32/180/192/512/1200×630 asset read-back, 외부 font/image request 0 | item_ready |
+| DC-DESIGN-02 | 홈 hierarchy와 시그니처 universal decoder 작업면 | desktop 첫 viewport에서 입력 시작 영역 노출, synthetic 3 case·local proof·결과 chain 보존, mobile horizontal overflow 0 | item_ready |
+| DC-DESIGN-03 | catalog, tool, detector, workspace, info/download surface의 일관된 component anatomy | 공통 header/button/panel/type/focus token 소비, 47 tool route/parity 유지, 기능 제거 0 | item_ready |
+| DC-DESIGN-04 | visual/accessibility/performance/privacy 검증과 presentation derivative 갱신 | desktop/mobile/dark screenshot inspection, axe/keyboard/200% zoom, `pnpm verify`, payload/network/storage gate 통과 | item_ready_with_constraints — 실제 사용자·AT·social crawler 평가는 data_pending |

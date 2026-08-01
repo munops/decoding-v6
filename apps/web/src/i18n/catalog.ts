@@ -41,6 +41,7 @@ export const layoutMessages = {
     skip: 'Skip to content',
     primary: 'Primary',
     home: 'decod.ing home',
+    theme: 'Toggle color theme',
     translationBeta: 'Translation beta',
   },
   ko: {
@@ -58,6 +59,7 @@ export const layoutMessages = {
     skip: '본문으로 건너뛰기',
     primary: '주 탐색',
     home: 'decod.ing 홈',
+    theme: '색상 테마 전환',
     translationBeta: '번역 베타',
   },
   ja: {
@@ -75,6 +77,7 @@ export const layoutMessages = {
     skip: '本文へ移動',
     primary: 'メインナビゲーション',
     home: 'decod.ing ホーム',
+    theme: 'カラーテーマを切り替え',
     translationBeta: '翻訳ベータ',
   },
   'zh-cn': {
@@ -92,6 +95,7 @@ export const layoutMessages = {
     skip: '跳至正文',
     primary: '主导航',
     home: 'decod.ing 首页',
+    theme: '切换颜色主题',
     translationBeta: '翻译测试版',
   },
   es: {
@@ -109,6 +113,7 @@ export const layoutMessages = {
     skip: 'Saltar al contenido',
     primary: 'Navegación principal',
     home: 'Inicio de decod.ing',
+    theme: 'Cambiar tema de color',
     translationBeta: 'Traducción beta',
   },
   'pt-br': {
@@ -126,6 +131,7 @@ export const layoutMessages = {
     skip: 'Ir para o conteúdo',
     primary: 'Navegação principal',
     home: 'Início do decod.ing',
+    theme: 'Alternar tema de cores',
     translationBeta: 'Tradução beta',
   },
   de: {
@@ -143,6 +149,7 @@ export const layoutMessages = {
     skip: 'Zum Inhalt springen',
     primary: 'Hauptnavigation',
     home: 'decod.ing Startseite',
+    theme: 'Farbschema wechseln',
     translationBeta: 'Übersetzung Beta',
   },
   fr: {
@@ -160,6 +167,7 @@ export const layoutMessages = {
     skip: 'Aller au contenu',
     primary: 'Navigation principale',
     home: 'Accueil decod.ing',
+    theme: 'Changer le thème de couleur',
     translationBeta: 'Traduction bêta',
   },
 } as const satisfies Record<Locale, Record<string, string>>

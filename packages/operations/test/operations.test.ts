@@ -118,7 +118,7 @@ describe('47-tool operation registry', () => {
     await expect(executeOperation('base64-string', 'hello')).resolves.toMatchObject({
       output: 'aGVsbG8=',
     })
-  })
+  }, 20_000)
 
   it('has and executes a valid fixture for every registered operation', async () => {
     expect(Object.keys(smoke).sort()).toEqual(operations.map((operation) => operation.id).sort())

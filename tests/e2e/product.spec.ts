@@ -49,6 +49,24 @@ test('lets a visitor experience three evidence-first synthetic triage cases', as
   await expect(page.locator('.result-chain .notice.danger')).toContainText('JWT-EXPIRED')
 })
 
+test('ships the Reveal Ledger mark and persists an explicit theme choice locally', async ({
+  page,
+}) => {
+  await page.goto('/')
+  await expect(page.locator('.site-header .brand-symbol')).toBeVisible()
+  await expect(page.locator('.site-header .brand-name')).toContainText('decod.ing')
+  const toggle = page.getByRole('button', { name: 'Toggle color theme' })
+  const initialPressed = await toggle.getAttribute('aria-pressed')
+  await toggle.click()
+  const expectedTheme = initialPressed === 'true' ? 'light' : 'dark'
+  await expect(page.locator('html')).toHaveAttribute('data-theme', expectedTheme)
+  await expect(page.evaluate(() => localStorage.getItem('decoding-theme'))).resolves.toBe(
+    expectedTheme,
+  )
+  await page.reload()
+  await expect(page.locator('html')).toHaveAttribute('data-theme', expectedTheme)
+})
+
 test('keeps ambiguous formats explicit instead of auto-selecting a chain stage', async ({
   page,
 }) => {

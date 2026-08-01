@@ -82,6 +82,10 @@
 
 ### UI
 
+- [x] 2026-08-01 DC-DESIGN-01 — `Reveal Ledger` warm-paper/ink/signal/local semantic token과 light/dark/forced-color, 수제 `d/` SVG symbol·wordmark, 32/180/192/512/1200×630 raster derivative를 구현했다. 외부 font/image 요청은 없다. ([benchmark](../research/2026-08-01-product-design-benchmark.md), [asset contract](13-pwa-presentation-assets.md))
+- [x] 2026-08-01 DC-DESIGN-02 — desktop 첫 viewport에 실제 textarea 시작 영역을 노출하고 synthetic 3 case, local proof, 연결선·단계·근거·Inspector가 있는 시그니처 decode 작업면을 구현했다. Playwright가 첫 viewport, nested result, mobile/200% equivalent overflow 0을 확인했다.
+- [x] 2026-08-01 DC-DESIGN-03 — header/theme control·button·panel·type·focus·trust badge를 catalog·47 tool route·8 detector·workspace·info/download에 중앙 적용했다. 기능·route·lazy chunk·i18n parity는 유지했다.
+- [x] 2026-08-01 DC-DESIGN-04 — local desktop/mobile light, forced dark, nested result, tool, workspace, OG/icon을 렌더·검수하고 `pnpm verify` 계층과 Playwright 28 passed/1 desktop-only skip을 통과했다. real user/AT/social crawler/production은 `data_pending` 또는 배포 전 상태다. ([work record](../work/completed/2026-08-01-reveal-ledger-design.md))
 - [x] 2026-07-15 — `DecoderWorkbench` 단일 island + dedicated Web Worker
 - [x] 2026-07-15 — empty/processing/confident/ambiguous/unsupported/limit/error 상태
 - [x] 2026-07-15 — tree + inspector + candidate list

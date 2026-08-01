@@ -1,1 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#0c0d18"/><circle cx="1030" cy="100" r="260" fill="#6657e8" opacity=".35"/><text x="90" y="170" fill="#9c8cff" font-family="ui-monospace,monospace" font-size="26">LOCAL TRIAGE FOR UNKNOWN DEVELOPER DATA</text><text x="90" y="310" fill="#f7f7fb" font-family="system-ui,sans-serif" font-size="88" font-weight="750">Paste anything.</text><text x="90" y="408" fill="#9c8cff" font-family="system-ui,sans-serif" font-size="88" font-weight="750">See what it is.</text><text x="90" y="510" fill="#a8a9c1" font-family="system-ui,sans-serif" font-size="30">Evidence-ranked · nested layers · 0 input bytes uploaded</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#263348" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="#0c1423"/>
+  <rect width="1200" height="630" fill="url(#grid)" opacity=".55"/>
+  <rect x="72" y="62" width="76" height="76" rx="20" fill="#111d30" stroke="#3a4960"/>
+  <path d="M91 109c0-13 7-22 19-22 4 0 8 2 11 5V76h10v50h-10v-6c-3 5-8 7-13 7-10 0-17-7-17-18zm30-1c0-7-4-12-10-12s-10 5-10 12 4 12 10 12 10-5 10-12z" fill="#f7f4ea"/>
+  <path d="M87 126 135 78" stroke="#ff6440" stroke-width="7" stroke-linecap="round"/>
+  <text x="170" y="111" fill="#f7f4ea" font-family="system-ui,sans-serif" font-size="38" font-weight="760" letter-spacing="-1">decod<tspan fill="#ff6440">.</tspan>ing</text>
+  <text x="76" y="222" fill="#ff8264" font-family="ui-monospace,monospace" font-size="22" font-weight="700" letter-spacing="3">LOCAL TRIAGE / UNKNOWN DATA</text>
+  <text x="72" y="330" fill="#f7f4ea" font-family="system-ui,sans-serif" font-size="82" font-weight="800" letter-spacing="-4">Paste anything.</text>
+  <text x="72" y="418" fill="#ff6440" font-family="system-ui,sans-serif" font-size="82" font-weight="800" letter-spacing="-4">See what it is.</text>
+  <path d="M82 504H1118" stroke="#34445b" stroke-width="2"/>
+  <circle cx="88" cy="552" r="7" fill="#55d6b6"/>
+  <text x="109" y="560" fill="#aeb8c8" font-family="ui-monospace,monospace" font-size="24">LOCAL</text>
+  <circle cx="285" cy="552" r="7" fill="#ff6440"/>
+  <text x="306" y="560" fill="#aeb8c8" font-family="ui-monospace,monospace" font-size="24">DETERMINISTIC</text>
+  <circle cx="557" cy="552" r="7" fill="#55d6b6"/>
+  <text x="578" y="560" fill="#aeb8c8" font-family="ui-monospace,monospace" font-size="24">ZERO INPUT UPLOAD</text>
+  <g transform="translate(930 194)">
+    <rect width="188" height="58" rx="12" fill="#111d30" stroke="#34445b"/>
+    <text x="22" y="37" fill="#aeb8c8" font-family="ui-monospace,monospace" font-size="18">01 / INPUT</text>
+    <rect y="76" width="188" height="58" rx="12" fill="#111d30" stroke="#ff6440" stroke-width="2"/>
+    <text x="22" y="113" fill="#f7f4ea" font-family="ui-monospace,monospace" font-size="18">02 / FORMAT</text>
+    <rect y="152" width="188" height="58" rx="12" fill="#111d30" stroke="#34445b"/>
+    <text x="22" y="189" fill="#aeb8c8" font-family="ui-monospace,monospace" font-size="18">03 / LAYER</text>
+    <path d="M94 58V76M94 134v18" stroke="#ff6440" stroke-width="3"/>
+  </g>
+</svg>

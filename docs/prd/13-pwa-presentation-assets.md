@@ -2,9 +2,11 @@
 
 상태: `in_progress` — local build·browser smoke·offline core는 검증 대상으로 두고, production crawler/install/recurrence 결과는 외부 관측 gate로 남긴다.
 
+> 2026-08-01 DC-DESIGN-01에서 baseline geometry와 palette를 `Reveal Ledger` 브랜드로 교체했다. 최초 작성 시점의 “이름·도메인·문구를 새로 결정하지 않는 기계적 파생” 설명은 2026-07-30 derivative에 대한 이력이며, 현재 source와 derivative는 [UI/UX brand contract](05-uiux.md#6-브랜드시각-디자인--reveal-ledger)와 [benchmark](../research/2026-08-01-product-design-benchmark.md)를 따른다.
+
 ## Asset lineage
 
-브랜드 원본은 저장소 소유의 code-native SVG다. 새 PNG는 이름·도메인·문구를 새로 결정하지 않고 설치와 공유 호환성을 위해 해당 SVG를 기계적으로 rasterize한 파생물이다. AI 이미지 생성이나 외부 asset/provider는 사용하지 않았다.
+브랜드 원본은 저장소 소유의 code-native SVG다. PNG는 설치와 공유 호환성을 위해 해당 SVG를 기계적으로 rasterize한 파생물이다. AI 이미지 생성이나 외부 asset/provider는 사용하지 않았다.
 
 | source | derivative | dimensions | role |
 |---|---|---:|---|

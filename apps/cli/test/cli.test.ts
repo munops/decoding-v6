@@ -37,11 +37,11 @@ describe('CLI process contract', () => {
     expect(result.root.children[0]?.selected?.detector).toBe(
       direct.root.children[0]?.selected?.detector,
     )
-  }, 15_000)
+  }, 30_000)
 
   it('rejects positional payloads before reading or processing them', async () => {
     const cli = await runCli(['secret-on-command-line'])
     expect(cli.code).toBe(1)
     expect(cli.stderr).toContain('Positional payloads are disabled')
-  }, 15_000)
+  }, 30_000)
 })

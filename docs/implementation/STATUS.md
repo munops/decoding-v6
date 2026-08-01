@@ -17,6 +17,8 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for route, version, HTTP, browser, privacy-
 
 ## Code-complete scope
 
+- 2026-08-01 DC-DESIGN-01~04: `Reveal Ledger` 브랜드 방향과 중앙 semantic token, 수제 `d/` symbol·wordmark·favicon/PWA/OG, 명시적 light/dark theme control을 구현했다. 홈의 실제 paste surface를 desktop 첫 viewport 안으로 올리고 Decode chain + Inspector를 시그니처 화면으로 재구성했으며 catalog·47 tool·8 detector·workspace·info/download가 같은 component anatomy를 소비한다. local desktop/mobile/dark/result/tool/workspace/OG/icon render inspection, 200% desktop-equivalent overflow, keyboard, axe, privacy, PWA, lazy-bundle gate를 통과했다. 이 디자인 revision은 아직 staging/production에 배포하지 않았다.
+- 2026-08-01 validation harness: 전체 검증의 병렬 부하에서 실제 작업이 기존 operation 5초·spawned CLI 15초 상한을 근소하게 넘는 현상을 확인했다. assertion을 유지하고 해당 integration ceiling만 20초·30초로 조정해 unit 21/21을 통과했다. engine 1 MiB 예산 100ms/300ms는 변경하지 않았고, quiet isolated 측정 first p75 18.9ms·complete p75 96.7ms를 유지한다.
 - 2026-08-01 DC-UX-01: 홈의 primary proof를 tool count에서 unknown-value triage로 전환하고, 중첩 Base64 → JSON·ambiguous Hex/Base64·expired JWT 경고를 실제 workbench에서 실행하는 합성 사례 3개를 추가했다. 사례 payload는 URL·storage·analytics·외부 request로 전달되지 않으며 47-tool catalog는 보조 탐색으로 유지한다.
 - 2026-07-30 DC-UP-02: recursive decode chain의 단계·detector label·입력 크기를 `tree/treeitem/group`과 roving keyboard로 노출하고, ambiguous 입력은 자동 확정 없이 상태 텍스트와 후보를 표시한다. lint/type/unit 및 desktop/mobile Playwright fixture를 다시 통과했다.
 - 2026-07-30 DC-UP-01: 성공한 explicit Copy 뒤에만 local Web Audio 확인음을 내고, 0.3 기본 볼륨/영속 토글/무음 시각 폴백을 추가했다. raw payload egress·storage는 여전히 0이며 실제 OS mute/AT 청취는 외부 검증 gate다.
@@ -40,7 +42,8 @@ The user explicitly requested implementation of the complete 47-tool, desktop, a
 - Playwright: desktop/mobile UI, local worker operations, PWA offline reload, same-origin request audit, privacy canary, IndexedDB raw-secret absence, and axe
 - public fixture quality: at least 95% precision and 90% recall for each detector family
 - 1 MiB engine benchmark: first candidate p75 1.9 ms, complete p75 15.2 ms
-- initial application JavaScript: 20.2 KiB gzip; heavy operation categories remain lazy
+- initial application JavaScript: 20.3 KiB gzip; heavy operation categories remain lazy
+- DC-DESIGN-01~04 local validation: 484 static pages, 20.3 KiB initial JavaScript gzip, 9 heavy chunks lazy; Playwright 28 passed and 1 intentionally skipped mobile execution of a desktop-only first-viewport assertion
 - Tauri: Rust `cargo check`, native release bundle, updater signing, checksums, code-sign verification, capability allowlist, and two-minute no-socket runtime observation
 - Cloudflare: staging, production, custom-domain cutover, external Chromium smoke/privacy gate, and rollback/restore drill
 - Cloudflare immutable i18n preview: `f9ad317e-1204-42b9-82ad-d9afd1ff8c74` at `https://codex-i18n-decoding-v6.wjstks3474.workers.dev`

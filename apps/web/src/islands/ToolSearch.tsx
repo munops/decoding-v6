@@ -2,6 +2,14 @@ import type { OperationDescriptor } from '@decoding/operations'
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
 import type { CatalogMessages } from '../i18n/catalog'
 
+const categoryGlyph: Record<string, string> = {
+  format: '{ }',
+  convert: '↔',
+  inspect: '⌁',
+  generate: '+',
+  encode: '/%',
+}
+
 export default function ToolSearch({
   tools,
   messages,
@@ -112,10 +120,10 @@ export default function ToolSearch({
           </div>
           <div class="tool-grid">
             {items.map((tool) => (
-              <article class="tool-card" key={tool.id}>
+              <article class="tool-card" data-category={tool.category} key={tool.id}>
                 <div class="tool-card-top">
                   <span class="tool-glyph" aria-hidden="true">
-                    {tool.name.slice(0, 2).toUpperCase()}
+                    {categoryGlyph[tool.category] ?? tool.name.slice(0, 2).toUpperCase()}
                   </span>
                   <div class="tool-card-actions">
                     <span class={`pack-badge pack-${tool.pack}`}>
