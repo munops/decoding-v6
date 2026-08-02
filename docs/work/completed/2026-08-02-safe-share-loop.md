@@ -49,3 +49,10 @@ PRD-02 §6 safe sharing loop
 
 - 완료: 결과 inspector에 safe summary copy와 local SVG share card download를 추가했다. 공유 결과는 public detector label, 실제 실행된 chain shape, deterministic warning rule ID, local footer만 포함한다. alternate candidate는 실행하지 않은 child chain을 공유하지 않는다.
 - 보류: release, public share/posting, telemetry, account/social API, payload URL은 이 작업에 포함하지 않았으며 production deploy에는 별도 승인이 필요하다.
+
+## Release evidence
+
+- 2026-08-03에 사용자 배포 승인 후 source `97862d85d825b27a0e869575e9f4497bbd028b20`를 staging `e551ad7d-51c9-4e8e-aa2f-d74064b9f582`과 production `ec414b51-040c-4331-ba29-6243cd2b722f`에 배포했다.
+- GitHub Actions [`30754058374`](https://github.com/whoo3474/decoding-v6/actions/runs/30754058374)의 `pnpm verify`와 `pnpm test:e2e`가 통과했다.
+- staging 및 `decod.ing`·`www.decod.ing`·Workers fallback에서 remote browser smoke를 통과했다. Base64 → JSON 탐지, 47-tool catalog, local JSON operation, safe-summary의 raw/decoded synthetic canary 부재, request/storage 무유출을 확인했다. Staging에서는 explicit SVG card download의 파일명 `decoding-safe-share-card.svg`도 확인했다.
+- 즉시 rollback 대상은 production `9e8118e6-10c5-4da2-9b6f-f9f30025fa63`, staging `d69c1127-91bc-4eee-8fa4-010f260b4473`이다.

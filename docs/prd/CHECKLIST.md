@@ -132,6 +132,7 @@
 - [x] 2026-07-15 — `decod.ing/*`와 `www.decod.ing/*`를 새 정적 앱으로 전환 ([deployment](../implementation/DEPLOYMENT.md))
 - [x] 2026-08-01 — DC-UX-01을 Cloudflare production version `46340612-e1f2-49f3-a075-6d94305bfa69`로 100% 배포하고 `decod.ing`·`www`·Workers fallback에서 합성 사례·local operation·privacy canary smoke를 통과했다. ([deployment](../implementation/DEPLOYMENT.md))
 - [x] 2026-08-02 — DC-DESIGN-01~04와 첫-viewport decode action 보정을 source `2fe88c752b5ca8b83fde12432df34330b1688e70`, production version `9e8118e6-10c5-4da2-9b6f-f9f30025fa63`으로 100% 배포했다. GitHub CI와 staging·`decod.ing`·`www`·Workers fallback의 browser/privacy smoke를 통과했다. ([deployment](../implementation/DEPLOYMENT.md))
+- [x] 2026-08-03 — DC-GR-01 local-safe share를 source `97862d85d825b27a0e869575e9f4497bbd028b20`, production version `ec414b51-040c-4331-ba29-6243cd2b722f`으로 100% 배포했다. staging과 `decod.ing`·`www`·Workers fallback에서 safe summary의 raw/decoded canary 부재, 47-tool catalog, local operation, request/storage 무유출을 확인했다. ([deployment](../implementation/DEPLOYMENT.md))
 - [ ] Show HN 게시·회고
 - [x] 2026-07-15 — [GitHub engine 공개](https://github.com/whoo3474/decoding-v6), MIT·SECURITY·CONTRIBUTING·Private Vulnerability Reporting 구성
 - [ ] r/webdev → r/devops → r/netsec 순차, 동일 글 복제 금지
@@ -140,6 +141,7 @@
 ### 로컬 공유 루프
 
 - [x] 2026-08-02 DC-GR-01 — 명시적 local Markdown copy와 SVG share card download를 추가했다. 포맷명·실행된 chain shape·warning rule ID·local footer만 포함하며 raw/decoded 값·입력 크기·파일명·network/storage/event는 없다. ([work record](../work/completed/2026-08-02-safe-share-loop.md))
+- [x] 2026-08-03 DC-GR-01 release — staging과 production deployment 및 세 공개 entrypoint의 safe-share/privacy browser smoke를 통과했다. ([deployment](../implementation/DEPLOYMENT.md))
 
 ### 수요 기반 detector/content
 
