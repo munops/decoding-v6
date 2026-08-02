@@ -113,7 +113,7 @@ test('plays a local copy cue only after an explicit successful copy and persists
   })
   await page.goto('/')
   await page.getByLabel('Paste text or drop a file').fill('dGVzdA==')
-  await page.getByRole('button', { name: 'Copy' }).click()
+  await page.getByRole('button', { name: 'Copy', exact: true }).click()
   await expect(page.getByText('Selected result copied.')).toBeVisible()
   await expect
     .poll(() =>
@@ -126,7 +126,7 @@ test('plays a local copy cue only after an explicit successful copy and persists
   await page.locator('.copy-feedback-settings summary').click()
   const enabled = page.getByRole('checkbox', { name: 'Play a sound after copying' })
   await enabled.uncheck()
-  await page.getByRole('button', { name: 'Copy' }).click()
+  await page.getByRole('button', { name: 'Copy', exact: true }).click()
   await expect
     .poll(() =>
       page.evaluate(

@@ -137,6 +137,10 @@
 - [ ] r/webdev → r/devops → r/netsec 순차, 동일 글 복제 금지
 - [ ] Search Console 색인·query·page completion 주간 검토
 
+### 로컬 공유 루프
+
+- [x] 2026-08-02 DC-GR-01 — 명시적 local Markdown copy와 SVG share card download를 추가했다. 포맷명·실행된 chain shape·warning rule ID·local footer만 포함하며 raw/decoded 값·입력 크기·파일명·network/storage/event는 없다. ([work record](../work/completed/2026-08-02-safe-share-loop.md))
+
 ### 수요 기반 detector/content
 
 - [ ] unsupported·ambiguous aggregate 상위 포맷 리포트

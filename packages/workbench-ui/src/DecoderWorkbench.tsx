@@ -7,6 +7,7 @@ import {
   type CopyFeedbackPreferences,
 } from './copy-feedback'
 import type { DecoderMessages } from './messages'
+import { safeShareCardSvg, safeShareMarkdown, safeShareProjection } from './safe-share'
 
 export type DecoderWorkbenchProps = {
   decodeInput: (input: DecodeInput) => Promise<DecodeResult>
@@ -211,6 +212,35 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
     } catch {
       setMessage(messages.copyFailed)
     }
+  }
+
+  const copySafeSummary = async () => {
+    if (!result || !selected) return
+    const projection = safeShareProjection(result.root, selected, messages)
+    if (!projection) return
+    try {
+      await navigator.clipboard.writeText(safeShareMarkdown(projection, messages))
+      setMessage(messages.shareCopied)
+      void playCopyFeedback(copyFeedback)
+    } catch {
+      setMessage(messages.copyFailed)
+    }
+  }
+
+  const downloadSafeShareCard = () => {
+    if (!result || !selected) return
+    const projection = safeShareProjection(result.root, selected, messages)
+    if (!projection) return
+    const blob = new Blob([safeShareCardSvg(projection, messages)], { type: 'image/svg+xml' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = 'decoding-safe-share-card.svg'
+    document.body.append(link)
+    link.click()
+    link.remove()
+    setTimeout(() => URL.revokeObjectURL(url), 0)
+    setMessage(messages.shareCardDownloaded)
   }
 
   const updateCopyFeedback = (next: CopyFeedbackPreferences) => {
@@ -501,6 +531,35 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
                 <pre class="output-view">
                   <code>{outputText(selected.value)}</code>
                 </pre>
+                <div
+                  class="safe-share"
+                  role="group"
+                  aria-label={messages.shareTitle}
+                  data-safe-share
+                >
+                  <div>
+                    <span class="eyebrow">{messages.shareTitle}</span>
+                    <p>{messages.shareOmitted}</p>
+                  </div>
+                  <div class="safe-share-actions">
+                    <button
+                      class="button small secondary"
+                      type="button"
+                      data-safe-share-action="copy"
+                      onClick={() => void copySafeSummary()}
+                    >
+                      {messages.copySafeSummary}
+                    </button>
+                    <button
+                      class="button small ghost"
+                      type="button"
+                      data-safe-share-action="download"
+                      onClick={downloadSafeShareCard}
+                    >
+                      {messages.downloadShareCard}
+                    </button>
+                  </div>
+                </div>
               </>
             ) : (
               <p>{messages.trySupported}</p>

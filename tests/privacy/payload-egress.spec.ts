@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-test('synthetic canary never enters requests or browser storage after an explicit copy', async ({
+test('synthetic canary never enters requests or browser storage after explicit copy actions', async ({
   page,
   context,
 }) => {
@@ -19,8 +19,20 @@ test('synthetic canary never enters requests or browser storage after an explici
   await page.goto('/')
   await page.getByLabel('Paste text or drop a file').fill(btoa(JSON.stringify({ secret: canary })))
   await expect(page.getByText('JSON', { exact: false }).first()).toBeVisible()
-  await page.getByRole('button', { name: 'Copy' }).click()
+  await page.getByRole('button', { name: 'Copy', exact: true }).click()
   await expect(page.getByText('Selected result copied.')).toBeVisible()
+  const safeShare = page.locator('[data-safe-share]')
+  await safeShare.getByRole('button', { name: 'Copy safe summary' }).click()
+  await expect(
+    page.getByText('Safe summary copied. It contains no input or decoded values.'),
+  ).toBeVisible()
+  const copiedSummary = await page.evaluate(() => navigator.clipboard.readText())
+  expect(copiedSummary).not.toContain(canary)
+  expect(copiedSummary).not.toContain(btoa(JSON.stringify({ secret: canary })))
+  const downloadPromise = page.waitForEvent('download')
+  await safeShare.getByRole('button', { name: 'Download share card' }).click()
+  const download = await downloadPromise
+  expect(download.suggestedFilename()).toBe('decoding-safe-share-card.svg')
   await page.waitForTimeout(500)
 
   const storage = await page.evaluate(async () => {
@@ -41,7 +53,7 @@ test('all network destinations remain same-origin before ads', async ({ page }) 
   await expect(page.locator('.tool-workbench')).toHaveAttribute('data-hydrated', 'true')
   await page.getByRole('button', { name: 'Run locally' }).click()
   await expect(page.locator('.output-view')).toContainText('fetch')
-  expect([...origins]).toEqual(['http://127.0.0.1:4321'])
+  expect([...origins]).toEqual([new URL(page.url()).origin])
 })
 
 test('workspace stores only redacted structure and clear deletes it', async ({ page }) => {

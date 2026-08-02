@@ -1,5 +1,8 @@
 import { defineConfig, devices } from '@playwright/test'
 
+const host = '127.0.0.1'
+const port = Number(process.env.PLAYWRIGHT_PORT ?? 4321)
+
 export default defineConfig({
   testDir: './tests',
   timeout: 30_000,
@@ -10,7 +13,7 @@ export default defineConfig({
   reporter: [['list'], ['html', { open: 'never' }]],
   workers: process.env.CI ? 2 : 2,
   use: {
-    baseURL: 'http://127.0.0.1:4321',
+    baseURL: `http://${host}:${port}`,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
@@ -19,8 +22,8 @@ export default defineConfig({
     { name: 'mobile', use: { ...devices['Pixel 7'] }, testMatch: /responsive\.spec\.ts/ },
   ],
   webServer: {
-    command: 'pnpm --filter @decoding/web preview --host 127.0.0.1',
-    url: 'http://127.0.0.1:4321',
+    command: `pnpm --filter @decoding/web preview --host ${host} --port ${port}`,
+    url: `http://${host}:${port}`,
     reuseExistingServer: false,
     timeout: 120_000,
   },
