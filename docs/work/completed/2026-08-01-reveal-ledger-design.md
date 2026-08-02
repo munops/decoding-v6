@@ -1,6 +1,6 @@
 # DC-DESIGN-01~04 — Reveal Ledger product design
 
-상태: `done` (local implementation and validation)
+상태: `done` (implementation, validation, staging, and production deployment)
 
 기준: `main@ccd0ed76f2b28f6f735c6c98af90f1aaee2220ee`에서 시작
 
@@ -13,7 +13,7 @@
 ## In scope / Out of scope
 
 - In: benchmark, art direction, semantic tokens, code-native symbol/wordmark, favicon/PWA/OG derivatives, light/dark control, responsive hierarchy, chain signature surface, catalog/tool/workspace/info consistency, visual/a11y/privacy/performance regression.
-- Out: engine/detector behavior change, analytics/ads/account/payment, 외부 font/image, production deploy, social crawler, real-user/AT approval.
+- Out: engine/detector behavior change, analytics/ads/account/payment, 외부 font/image, social crawler, real-user/AT approval. Production deployment was executed separately after explicit owner approval on 2026-08-02.
 - 시작 시 존재한 `docs/prd/README.md` 변경은 사용자 소유로 보존했고 이 작업에서 편집하거나 완료 범위에 포함하지 않았다.
 
 ## Impact map
@@ -45,6 +45,6 @@ DC-DESIGN-01~04
 
 - DC-DESIGN-01~04의 local implementation, test, build 상태는 `done`이다.
 - 전체 검증 중 발견된 integration harness 변동성은 operation 대표 테스트 20초, spawned CLI process 테스트 30초의 명시적 상한으로 정리했다. 기능 assertion이나 1 MiB 100ms/300ms 성능 예산은 완화하지 않았다.
-- staging/production은 외부 mutation 전 승인 대상이며 아직 실행하지 않았다.
+- 2026-08-02에 explicit owner approval 뒤 source `2fe88c752b5ca8b83fde12432df34330b1688e70`을 staging version `d69c1127-91bc-4eee-8fa4-010f260b4473`과 production version `9e8118e6-10c5-4da2-9b6f-f9f30025fa63`으로 배포했다. [GitHub Actions run 30736136902](https://github.com/whoo3474/decoding-v6/actions/runs/30736136902)의 `pnpm verify`와 `pnpm test:e2e`가 통과했고 staging, `decod.ing`, `www.decod.ing`, Workers fallback에서 합성 triage 3개, nested Base64 → JSON, 47 tools, local operation, privacy canary smoke가 모두 통과했다.
 - 실제 사용자 10명, manual WCAG/AT, social crawler/PWA install, production runtime은 기존 gate대로 `data_pending`이다.
-- rollback 기준은 현재 production source `6281e935d418559e607361823beaf447e74a41e4`, Cloudflare version `46340612-e1f2-49f3-a075-6d94305bfa69`이다. 새 deployment version은 승인·배포 뒤에만 기록한다.
+- rollback 기준은 pre-release production version `46340612-e1f2-49f3-a075-6d94305bfa69`과 pre-release staging version `fe1ab27f-3d9f-4e55-af36-85f1c9c9272f`이다. 새 deployment version은 provider read-back으로 기록했다.
