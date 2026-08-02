@@ -32,6 +32,7 @@ page.on('request', (request) => {
 try {
   await page.goto(`${baseURL}/`, { waitUntil: 'networkidle' })
   const launchpad = page.getByRole('group', { name: 'Try a safe synthetic case' })
+  await launchpad.waitFor()
   if ((await launchpad.getByRole('button').count()) !== 3) {
     throw new Error('Expected exactly three synthetic triage cases')
   }

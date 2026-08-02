@@ -424,8 +424,8 @@ pre {
 }
 
 .hero {
-  min-height: 390px;
-  padding-block: 70px 42px;
+  min-height: 312px;
+  padding-block: 30px 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 350px;
   gap: clamp(40px, 6vw, 82px);
@@ -447,7 +447,7 @@ pre {
 .prose h1 {
   margin: 0;
   max-width: 850px;
-  font-size: clamp(48px, 6.3vw, 82px);
+  font-size: clamp(46px, 5.7vw, 72px);
   line-height: 0.94;
   letter-spacing: -0.072em;
 }
@@ -468,7 +468,7 @@ pre {
 }
 .hero-copy > p {
   max-width: 670px;
-  margin: 24px 0 20px;
+  margin: 16px 0;
   color: var(--muted);
   font-size: clamp(17px, 1.7vw, 20px);
   line-height: 1.55;
@@ -507,7 +507,7 @@ pre {
   content: '';
 }
 .hero-aside > div {
-  padding: 18px 20px;
+  padding: 14px 18px;
   border-top: 1px solid #263348;
   background: transparent;
   color: var(--workbench-text);
