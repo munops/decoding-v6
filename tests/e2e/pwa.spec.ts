@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-test('ships raster install and share presentation without an ad request or forced update', async ({
+test('ships raster install and share presentation with a no-reload worker update', async ({
   page,
 }) => {
   const origins = new Set<string>()
@@ -73,10 +73,31 @@ test('ships raster install and share presentation without an ad request or force
       height: 630,
     }),
   ])
-  expect(presentation.worker).not.toContain('skipWaiting')
-  expect(presentation.worker).not.toContain('clients.claim')
+  expect(presentation.worker).toContain('sw.skipWaiting()')
+  expect(presentation.worker).toContain('sw.clients.claim()')
+  expect(presentation.worker).not.toContain('location.reload')
+  expect(presentation.worker).toContain('networkFirst(event.request)')
   expect(presentation.worker).toContain('!url.search')
   expect([...origins]).toEqual(['http://127.0.0.1:4321'])
+})
+
+test('an online navigation replaces a stale cached document before rendering', async ({ page }) => {
+  await page.goto('/')
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.register('/sw.js')
+    await navigator.serviceWorker.ready
+    const cache = await caches.open('decoding-v6-shell-v3')
+    await cache.put(
+      '/',
+      new Response('<h1>stale shell must not render</h1>', {
+        headers: { 'Content-Type': 'text/html' },
+      }),
+    )
+  })
+  await page.reload()
+  await expect(page.getByRole('heading', { name: /Paste anything/i })).toBeVisible()
+  await expect(page.getByText('stale shell must not render')).toHaveCount(0)
+  await expect(page.getByLabel('Paste text or drop a file')).toBeVisible()
 })
 
 test('core shell and decoder reload offline after explicit service worker install', async ({

@@ -27,9 +27,12 @@ Updated: 2026-07-15
 ## Privacy and support
 
 - [x] public privacy page states storage and network boundaries
+- [ ] DC-AUD-01 local terms/support/data inventory implemented; production route deployment and read-back pending
 - [x] no account, payment, server decode, generative AI, product telemetry, or ad code
 - [x] issue template forbids real tokens, credentials, private keys, and customer payloads
 - [x] deployed synthetic secret appears in neither requests nor browser storage
 - [x] enable GitHub Private Vulnerability Reporting and publish the response schedule in `SECURITY.md`
 
 Launch communication and monetization metrics remain evidence gates; deployment alone does not mark them complete.
+
+2026-08-08 returning-profile audit found a stale service-worker shell referencing a removed CSS hash. DC-AUD-02 is implemented locally; the public launch remains blocked until the owner-lane release wave, provider read-back, fresh/returning-profile smoke, and linked-asset MIME verification pass.

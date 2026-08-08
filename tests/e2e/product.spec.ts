@@ -189,6 +189,30 @@ test('renders HTML preview inside a locked sandbox', async ({ page }) => {
   await expect(frame).toHaveAttribute('srcdoc', /default-src 'none'/)
 })
 
+test('publishes reachable terms and safe support routes from the global footer', async ({
+  page,
+}) => {
+  await page.goto('/')
+  const footer = page.locator('.site-footer')
+  await expect(footer.getByRole('link', { name: 'Terms' })).toHaveAttribute('href', '/terms/')
+  await expect(footer.getByRole('link', { name: 'Support' })).toHaveAttribute('href', '/support/')
+
+  await page.goto('/terms/')
+  await expect(page.getByRole('heading', { name: /Use the tool responsibly/i })).toBeVisible()
+  await expect(page.getByText(/Effective 8 August 2026/)).toBeVisible()
+  await expect(page.locator('#locale-suggestion')).toHaveCount(0)
+  await expect(page.locator('link[rel="alternate"]')).toHaveCount(0)
+
+  await page.goto('/support/')
+  await expect(page.getByRole('heading', { name: /Describe the behavior/i })).toBeVisible()
+  await expect(page.getByText(/Never attach production payloads/i)).toBeVisible()
+  await expect(page.locator('#locale-suggestion')).toHaveCount(0)
+  await expect(page.getByRole('link', { name: /GitHub issue tracker/i })).toHaveAttribute(
+    'href',
+    'https://github.com/whoo3474/decoding-v6/issues',
+  )
+})
+
 test.describe('Japanese locale', () => {
   test.use({ locale: 'ja-JP' })
 

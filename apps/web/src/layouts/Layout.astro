@@ -163,9 +163,11 @@ const localizedPrivacy = localePath(locale, '/privacy/')
       <div class="footer-links">
         <a href={localizedTools}>47 {messages.tools}</a><a href={localizedPrivacy}
           >{messages.privacy}</a
-        ><a href={localizedMethod}>{messages.method}</a><a href="/changelog/"
-          >{messages.changelog}</a
-        ><a href={localePath(locale, '/about/')}>{messages.about}</a>
+        ><a href="/terms/">{messages.terms}</a><a href="/support/">{messages.support}</a><a
+          href={localizedMethod}>{messages.method}</a
+        ><a href="/changelog/">{messages.changelog}</a><a href={localePath(locale, '/about/')}
+          >{messages.about}</a
+        >
       </div>
       <p class="footer-note">{messages.footerNote}</p>
     </footer>

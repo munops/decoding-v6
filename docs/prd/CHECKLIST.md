@@ -292,6 +292,22 @@
 
 ## 상시 운영
 
+## 2026-08-08 production readiness closure
+
+- [x] 2026-08-08 — DC-AUD-01: English-first `/terms/`·`/support/`, footer reachability, operator/data/support copy, data inventory와 safe reporting contract를 중앙 구현했다. local build·browser·a11y가 통과했고 존재하지 않는 locale alternate 제안은 0이다. production route는 release wave 전까지 `wait_external`이다. ([audit](../audit/2026-08-08-product-readiness.md))
+- [x] 2026-08-08 — DC-AUD-02: returning PWA profile이 삭제된 asset hash를 가진 stale HTML을 영구 cache하는 live blocker를 재현했다. navigation/stable resource network-first, fingerprinted asset cache-first, cache v3, no-page-reload worker activation, non-navigation offline 503를 중앙 구현하고 stale-shell fixture와 deploy linked-asset MIME 검사를 추가했다. production은 release wave 전까지 기존 동작이다. ([audit](../audit/2026-08-08-product-readiness.md#live-production-blocker))
+- [x] 2026-08-08 — DC-AUD-03: 현재 경쟁 4개와 저점 7건·고점 7건·원문·역대조 `미커버 0건`, 실제 evidence/ambiguity/warning/safe-share 차별 기능을 대사했다. ([research](../research/2026-08-08-competitor-review-audit.md))
+- [x] 2026-08-08 — DC-AUD-04: 보호된 product operations v3를 변경하지 않고 별도 `docs/trust` data/support owner와 public web·Apps in Toss·native·CLI·extension 상태를 named central artifacts로 고정했다. build/release/field evidence를 분리하고 미선택 앱 채널은 구현·등록하지 않았다. ([channel plan](../platforms/channel-plan.md))
+
+**Release gate DC-AUD**
+
+- [ ] owner-lane Cloudflare staging deploy + fresh/returning-profile trust/PWA/asset smoke
+- [ ] exact source SHA·production Worker·rollback version을 고정한 `RW-DC-20260808-TRUST-SW` 승인
+- [ ] production deploy/provider read-back 후 `/privacy`·`/terms`·`/support`, negative routes, linked asset MIME, decoder/privacy canary, stale-cache recovery smoke
+- [ ] discovery/activation/D1·D7·D30/support cohort는 release 뒤 `data_pending`
+
+**Local validation DC-AUD**: own-scope Prettier, lint/typecheck, unit 23, benchmark, content/network/parity/i18n, 486-page build, 21.6 KiB initial gzip budget, Playwright 32 pass/1 intentional skip, privacy 3, a11y 6 route, channel validator warning 0, workspace S-1~S-6가 통과했다. 시작 전 사용자 소유 operations manifest의 기존 format 차이 때문에 aggregate `pnpm verify` 명령 자체는 format 단계에서 중단되며 그 파일은 변경하지 않았다.
+
 - 매 PR: `pnpm verify`, network/bundle/detector/page delta
 - 매주: unsupported/confusion·검색·CWV·dependency review
 - 매 릴리스: blind 품질·privacy·content parity·rollback 확인

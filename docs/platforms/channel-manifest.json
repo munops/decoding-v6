@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "product": {
+    "name": "decod.ing",
+    "type": "non_game",
+    "repository": ".",
+    "consumerEntrypoint": "apps/web/src/pages/index.astro",
+    "assessmentVerdict": "direct_adapter"
+  },
+  "shared": {
+    "domainSource": "packages/engine",
+    "apiContractSource": "not_applicable_local_only",
+    "entitlementSource": "not_applicable_zero_account_free_core",
+    "analyticsSchemaSource": "docs/prd/09-security-privacy.md",
+    "contentSource": "packages/spec-registry",
+    "gameDataSource": "not_applicable_non_game",
+    "ownershipRule": "shared_first"
+  },
+  "channels": {
+    "web": {
+      "planned": true,
+      "strategy": "existing_static_web_pwa",
+      "entrypoint": "apps/web",
+      "status": "released",
+      "version": "cloudflare-worker-version-19bcc66a-5357-40b8-b240-8ed5766b1059",
+      "evidence": [
+        "docs/implementation/DEPLOYMENT.md",
+        "docs/audit/2026-08-08-product-readiness.md#live-production-blocker"
+      ]
+    },
+    "appsInToss": {
+      "planned": false,
+      "appType": "non_game",
+      "strategy": "not_selected_target_and_workflow_mismatch",
+      "sdk": "not_selected",
+      "appName": null,
+      "entrypoint": "not_applicable",
+      "status": "assessed",
+      "version": null,
+      "officialDocsCheckedAt": null,
+      "evidence": ["docs/platforms/channel-plan.md#channel-decision"]
+    },
+    "native": {
+      "planned": true,
+      "strategy": "tauri_desktop_after_demand_gate",
+      "platforms": ["macos", "windows", "linux"],
+      "entrypoint": "apps/desktop",
+      "status": "built",
+      "version": "6.0.0-engineering-build",
+      "evidence": ["docs/prd/10-desktop.md", "docs/implementation/STATUS.md"]
+    }
+  },
+  "auxiliaryChannels": {
+    "cli": {
+      "entrypoint": "apps/cli",
+      "status": "built",
+      "releaseEvidence": "data_pending"
+    },
+    "browserExtension": {
+      "entrypoint": "apps/extension",
+      "status": "built",
+      "releaseEvidence": "data_pending"
+    }
+  },
+  "capabilities": [
+    {
+      "id": "unknown-value-triage",
+      "sourceOfTruth": "packages/engine",
+      "web": "required",
+      "appsInToss": "not_planned",
+      "native": "required",
+      "acceptance": "Ranks plausible formats, preserves ambiguity, and follows bounded recursive chains locally.",
+      "intentionalDifferences": [
+        "Web accepts paste/drop; desktop clipboard read requires an explicit shortcut or action."
+      ]
+    },
+    {
+      "id": "local-operations-catalog",
+      "sourceOfTruth": "packages/operations",
+      "web": "required",
+      "appsInToss": "not_planned",
+      "native": "required",
+      "acceptance": "All 47 operation manifests run locally with matching fixtures and no startup-bundle widening.",
+      "intentionalDifferences": []
+    },
+    {
+      "id": "payload-local-only",
+      "sourceOfTruth": "docs/prd/09-security-privacy.md",
+      "web": "required",
+      "appsInToss": "not_planned",
+      "native": "required",
+      "acceptance": "Raw input and decoded values never enter URL, network, analytics, logs, or persistent storage by default.",
+      "intentionalDifferences": [
+        "Desktop may fetch a signed update only after an explicit update action."
+      ]
+    },
+    {
+      "id": "offline-reentry",
+      "sourceOfTruth": "apps/web/public/sw.js",
+      "web": "required",
+      "appsInToss": "not_planned",
+      "native": "required",
+      "acceptance": "Visited core routes reopen offline while online navigation refreshes stale documents before render.",
+      "intentionalDifferences": [
+        "Desktop packages local assets and does not use the web service worker."
+      ]
+    },
+    {
+      "id": "trust-and-support",
+      "sourceOfTruth": "docs/trust/data-inventory.md",
+      "web": "required",
+      "appsInToss": "not_planned",
+      "native": "required",
+      "acceptance": "Privacy, terms, support, safe-reporting, and local deletion guidance remain reachable without an account.",
+      "intentionalDifferences": [
+        "Web canonical policy URLs are reused by future packaged listings; no store listing is implied."
+      ]
+    }
+  ],
+  "externalGates": [
+    "web: owner_lane production deploy and provider read-back for DC-AUD-01/DC-AUD-02",
+    "desktop: demand gate, Developer ID signing/notarization, device smoke, and public distribution approval",
+    "appsInToss/iOS/Android: not selected; a new target-fit decision is required before implementation or console work"
+  ],
+  "nextAction": "validate local trust and stale-shell fixes, then request the exact owner_lane Cloudflare production release wave"
+}

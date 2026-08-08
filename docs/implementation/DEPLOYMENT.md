@@ -2,6 +2,13 @@
 
 Updated: 2026-08-03 00:31 (Asia/Seoul)
 
+## 2026-08-08 read-only drift and blocker
+
+- Cloudflare read-back reports current production deployment version `19bcc66a-5357-40b8-b240-8ed5766b1059` at 100%. This is newer than the version previously recorded below; provider state wins and source/release attribution must be re-frozen at the next wave.
+- fresh `https://decod.ing/` HTML matched the pre-audit local `apps/web/dist/index.html`; its linked CSS/JS assets returned 200 with correct MIME.
+- a returning Chrome profile reproduced `decoding-v6-shell-v2` cache-first HTML with removed CSS `/_astro/_detector_.BN8Cdp6a.css`; that request returned 404 HTML, leaving the page unstyled and decoder island absent.
+- DC-AUD-02 is a local implementation only. No staging/production deployment or rollback occurred during this audit.
+
 ## Active endpoints
 
 | Surface          | URL                                                  | Worker                | Version                                | Result |

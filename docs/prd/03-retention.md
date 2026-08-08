@@ -25,7 +25,7 @@
 
 - 첫 방문 후 핵심 shell·engine·MVP detector 오프라인 사용
 - 설치 후 standalone mode에서는 광고 요청 자체를 만들지 않음
-- 새 버전은 작업 중 강제 갱신하지 않고 다음 실행 시 적용
+- 새 worker는 즉시 활성화할 수 있지만 현재 page를 reload하지 않는다. navigation은 network-first로 새 HTML을 받고, offline일 때만 마지막 정상 shell로 fallback한다. fingerprinted asset은 cache-first이며 삭제된 hash 요청을 HTML shell로 대체하지 않는다.
 - 오프라인 상태·엔진 버전을 명확히 표시
 
 ## 3. 로컬 워크스페이스

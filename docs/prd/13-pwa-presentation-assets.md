@@ -22,7 +22,8 @@
 - `Layout.astro`는 SVG와 PNG favicon fallback, Apple icon, PNG OG image dimensions, `summary_large_image`를 함께 선언한다.
 - `manifest.webmanifest`는 install-capable 192/512 PNG를 정확한 `sizes/type/purpose`와 함께 선언한다.
 - `sw.js`는 query가 있는 URL을 cache write에서 제외해 payload-like URL을 영속화하지 않는다. core shell과 이미 방문한 same-origin static route만 cache한다.
-- 새 worker는 `skipWaiting`과 `clients.claim`을 호출하지 않는다. 기존 화면을 강제로 바꾸지 않고 browser lifecycle에서 활성화된다.
+- 2026-08-08 live audit에서 이전 cache-first HTML이 삭제된 CSS hash를 영구 참조해 returning profile의 decoder/UI를 깨뜨리는 결함을 확인했다. navigation과 stable resource는 network-first, fingerprinted `/_astro/` asset은 cache-first로 분리하고 non-navigation miss를 HTML로 fallback하지 않는다.
+- 새 worker는 `skipWaiting`과 `clients.claim`으로 활성화하되 현재 page를 reload하지 않는다. 열린 작업을 강제로 교체하지 않고 다음 navigation에 fresh HTML을 적용한다.
 - sponsor data가 비어 있으므로 web/PWA route에서 sponsor DOM·광고 request는 0이다. domain, Search Console, store/install release는 이 항목의 범위가 아니다.
 
 ## Evidence still needed

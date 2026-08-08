@@ -15,6 +15,15 @@ Updated: 2026-08-03
 
 See [DEPLOYMENT.md](./DEPLOYMENT.md) for route, version, HTTP, browser, privacy-canary, and rollback evidence.
 
+## 2026-08-08 readiness audit
+
+- `implemented`: DC-AUD-01 trust routes/data inventory/support contract and DC-AUD-02 PWA stale-shell repair plus regression tests.
+- `documented`: current competitor/review 역대조 and channel/operations central manifests.
+- `production_blocker`: current production can serve an obsolete cache-first HTML shell to returning PWA profiles; that shell references a removed CSS asset and the decoder does not hydrate. Current production also lacks `/terms/` and `/support/`.
+- `test_passed/built`: own-scope verify ladder, 486-page build, full Playwright 32 pass/1 intentional skip, privacy/a11y/PWA stale-cache regression과 local in-app browser trust smoke가 통과했다.
+- `wait_external`: staging과 production은 모두 external/public mutation이다. `RW-DC-20260808-TRUST-SW`에 exact source SHA·account·Worker/routes·cost/impact·rollback을 고정한 사용자 승인이 필요하다.
+- `data_pending`: Search Console/acquisition, activation/retention cohort, support delivery canary, real AT/device and user value.
+
 ## Code-complete scope
 
 - 2026-08-02 DC-GR-01: result inspector에 explicit safe summary copy와 local SVG share card download를 추가했다. 두 공유 결과에는 detector label, 실제 실행된 decode-chain shape, deterministic warning rule ID, `Decoded locally at decod.ing` footer만 포함하며 raw input·decoded value·fragment·digest·input size·filename은 포함하지 않는다. 선택 candidate가 실제로 재귀 실행된 체인과 다르면 그 candidate만 기록해 미실행 child chain을 꾸며내지 않는다. Playwright는 synthetic canary의 clipboard·storage·network 부재와 explicit card download를 검증했다. parallel workspace 검증을 위해 `PLAYWRIGHT_PORT` isolation도 제공한다.

@@ -63,6 +63,10 @@ export const infoMessages: Record<Locale, Record<InfoKey, InfoContent>> = {
           heading: 'Desktop and CLI',
           body: 'The CLI has no network code. The desktop app reads the clipboard only after an explicit action and uses the network only when you manually request a signed update.',
         },
+        {
+          heading: 'Operator and your choices',
+          body: 'MUNOPS (문옵스) operates decod.ing. Clear site data to remove local settings and redacted workspace records, or use the support page for a private question. Never send real tokens, credentials, private keys, or customer payloads to support.',
+        },
       ],
       link: 'Read the detection and safety methodology →',
     },
@@ -132,6 +136,10 @@ export const infoMessages: Record<Locale, Record<InfoKey, InfoContent>> = {
         {
           heading: '데스크톱과 CLI',
           body: 'CLI에는 네트워크 코드가 없습니다. 데스크톱은 명시적 동작 후에만 클립보드를 읽고 사용자가 서명 업데이트를 요청할 때만 네트워크를 사용합니다.',
+        },
+        {
+          heading: '운영자와 사용자 선택권',
+          body: '문옵스가 decod.ing을 운영합니다. 사이트 데이터를 지우면 로컬 설정과 리댁션된 작업공간 기록을 제거할 수 있습니다. 문의 시 실제 토큰·자격증명·개인키·고객 페이로드를 보내지 마세요.',
         },
       ],
       link: '감지·안전 방법론 읽기 →',

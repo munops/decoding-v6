@@ -31,6 +31,29 @@ page.on('request', (request) => {
 
 try {
   await page.goto(`${baseURL}/`, { waitUntil: 'networkidle' })
+  const linkedAssets = await page.evaluate(async () => {
+    const paths = [...document.querySelectorAll('link[rel="stylesheet"][href], script[src]')].map(
+      (element) => element.getAttribute(element.tagName === 'LINK' ? 'href' : 'src'),
+    )
+    return Promise.all(
+      paths.filter(Boolean).map(async (path) => {
+        const response = await fetch(path)
+        return {
+          path,
+          status: response.status,
+          contentType: response.headers.get('content-type') ?? '',
+        }
+      }),
+    )
+  })
+  const brokenAssets = linkedAssets.filter(
+    (asset) =>
+      asset.status !== 200 ||
+      (asset.path.endsWith('.css') && !asset.contentType.includes('text/css')) ||
+      (asset.path.endsWith('.js') && !asset.contentType.includes('javascript')),
+  )
+  if (brokenAssets.length > 0)
+    throw new Error(`Broken linked assets: ${JSON.stringify(brokenAssets)}`)
   const launchpad = page.getByRole('group', { name: 'Try a safe synthetic case' })
   await launchpad.waitFor()
   if ((await launchpad.getByRole('button').count()) !== 3) {
@@ -70,6 +93,13 @@ try {
     .getByText(/"answer": 42/)
     .waitFor()
 
+  for (const route of ['/privacy/', '/terms/', '/support/']) {
+    const response = await page.goto(`${baseURL}${route}`, { waitUntil: 'networkidle' })
+    if (response?.status() !== 200) throw new Error(`Expected 200 for ${route}`)
+    if ((await page.locator('main h1').count()) !== 1)
+      throw new Error(`Expected one h1 for ${route}`)
+  }
+
   if (externalOrigins.size > 0) {
     throw new Error(`Unexpected external request origins: ${[...externalOrigins].join(', ')}`)
   }
@@ -85,6 +115,8 @@ try {
         canaryEgress: 'none',
         canaryStorage: 'none',
         externalRequestOrigins: [],
+        linkedAssets: 'passed',
+        trustRoutes: ['privacy', 'terms', 'support'],
       },
       null,
       2,
