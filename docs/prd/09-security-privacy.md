@@ -194,6 +194,44 @@ payload egress 가능성이 발견되면:
 
 Desktop privacy suite는 explicit action 밖 clipboard read, file scope 밖 access, update check OFF 상태의 request가 모두 0건임을 검증한다.
 
+## 13. `/e` aggregate open counter — privacy review (2026-08-12)
+
+`apps/edge/README.md`가 요구한 review다. 이 절이 없으면 `/e` Worker는 존재할 수 없다.
+
+**왜 열었나.** 첫 방문이 한 건도 측정되지 않아 퍼널의 **분모가 없었다**. 분모가 없으면 어떤
+개선도 판정할 수 없고, 포트폴리오 판정자(`check-production-readiness` R-5)도 이 제품을
+`not_ready`로 둔다. 2026-08-11 실측: 첫 방문 계측 요청 0건.
+
+**무엇을 보내나.** 고정된 이벤트 이름 하나뿐이다.
+
+```json
+{ "name": "app_open" }   // 또는 { "name": "landing_view" }
+```
+
+**무엇을 보내지 않나.** raw input, decoded result, hash, file name, payload 길이, tool slug,
+쿠키, 식별자, cohort token, Referer 기반 경로. 본문에 이름 외의 **필드 자체가 없다.**
+
+**서버가 저장하는 것.** Analytics Engine에 이벤트 이름당 건수 1. `user_id`·IP·User-Agent를
+읽지도 기록하지도 않는다. allowlist 밖 이름은 저장하지 않고, 어떤 경우에도 204를 돌려준다 —
+계측이 막히거나 실패해도 제품 동작이 달라지지 않는다.
+
+**동의가 필요한가.** 이 카운터는 식별자가 없어 개인을 특정하지 않는다. 서버가 이미 받는
+요청 한 건을 세는 것과 같은 수준이다. 반면 `03-retention.md` §8의 **30일 회전 cohort token은
+동의 게이트가 필요하고 지금 구현하지 않았다.** 리텐션 측정을 열 때 opt-out UI·token 삭제와
+함께 별도로 review한다.
+
+**기계적 보증.**
+- `scripts/check-network-allowlist.ts`가 UI 소스에서 network primitive를 쓰는 파일을
+  `apps/web/src/lib/telemetry.ts` **하나로 제한**하고, 그 파일이 payload를 가리킬 수 있는
+  식별자(`input`·`result`·`decoded`·`payload`·`clipboard`·`value`·`slug`·`file`)를 포함하면
+  실패시킨다.
+- `tests/privacy/payload-egress.spec.ts`의 canary suite가 **모든 요청**을 검사하므로 이
+  경로로 payload가 새면 런타임에서 잡힌다.
+- CSP `connect-src 'self'`는 그대로다. 이 요청은 same-origin이라 경계가 넓어지지 않는다.
+
+**되돌리는 법.** `apps/web/src/layouts/Layout.astro`의 `countOpen` 호출을 지우고 재배포하면
+요청이 0건이 된다. Worker의 `/e`는 저장을 멈춘다. 외부 제3자에게 남는 흔적이 없다.
+
 ## 14. 완료 조건
 
 - 데이터 분류·흐름·allowlist가 코드 config와 1:1 대응

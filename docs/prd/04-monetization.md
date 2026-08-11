@@ -40,6 +40,11 @@ decod.ing은 로그인·계정·구독·사용자 결제·유료 API를 만들�
 
 게이트 미달 시 placeholder도 표시하지 않는다. 광고 없는 화면이 정상 제품이다.
 
+코드 경계도 같은 결정을 강제한다. 활성 campaign이 `sponsors.json`에 있더라도
+`PUBLIC_SPONSOR_RELEASE_APPROVED=true`가 별도 승인 release wave에 명시되지 않으면
+`SponsorSlot`은 DOM을 만들지 않는다. 이 플래그는 위 4주·트래픽·활성·CWV·privacy/CSP
+근거를 사람이 검토했다는 결과이지, campaign 파일이나 배포 환경에서 자동 추론하는 값이 아니다.
+
 ## 4. 수익 방식
 
 ### A. 자체 호스팅 정적 스폰서 — 우선
@@ -55,11 +60,11 @@ decod.ing은 로그인·계정·구독·사용자 결제·유료 API를 만들�
 
 ### B. 비추적 문맥 광고 네트워크 — 현재 승인 후보 없음
 
-2026-07-15 공식 정책 기준 감사:
+2026-08-09 공식 정책 재확인:
 
 | 네트워크 | 장점 | 현재 충돌 | 판정 |
 |---|---|---|---|
-| [EthicalAds](https://www.ethicalads.io/publishers/) | 개발자 문맥 타게팅, behavioral tracking 없음, 한 페이지 한 광고 | 월 50K+ PV를 찾고 있으며 첫 방문 desktop/mobile above-the-fold 배치를 요구 | 보류 — 본 PRD의 첫 viewport 금지와 충돌 |
+| [EthicalAds](https://www.ethicalads.io/publishers/) | 개발자 문맥 타게팅, behavioral tracking 없음, 한 페이지 한 광고, 공개 benchmark 약 $2.50/1K pageviews | 월 50K+ PV를 찾고 있으며 첫 방문 desktop/mobile above-the-fold 배치를 요구 | 보류 — 본 PRD의 첫 viewport 금지와 충돌 |
 | [Carbon Ads](https://www.carbonads.net/join) | 기술 독자·수동 publisher 심사·비침투형 형식 | pixel-based tracking을 명시 | 보류 — 현행 no-tracking 계약과 충돌 |
 | Google AdSense | 큰 수요·자동 fill | 지역별 CMP·ad-tech provider·세금 프로필 운영 표면 | 사용하지 않음 |
 
@@ -91,6 +96,11 @@ EthicalAds가 공개한 약 `$2.50 / 1,000 pageviews`는 EU·북미 트래픽 �
 - 운영자 payout 계정 하나와 월별 정산서/PDF·입금 기록만 보관
 - 첫 수익 전 한국 사업·세무 전문가에게 신고 형태를 한 번 확인
 - 최종 사용자 결제·영수증·환불·VAT 계산은 제품에 존재하지 않음
+
+첫 유료 스폰서의 절대 가격은 지금 확정하지 않는다. 4주간 실측한 eligible web pageview에
+공개 개발자 광고 benchmark와 실제 제안 조건을 적용해 gross를 산출하고, invoice tax·결제/환전
+수수료·credit/refund·hosting/domain/tooling을 차감한 net을 오너가 승인한다. CyberChef와 DevToys가
+무료이고 DevUtils도 $29부터인 시장에서 디코더 기능을 유료화해 스폰서 부족을 보전하지 않는다.
 
 광고 수익도 사업 소득과 플랫폼 세금 정보 제출 가능성이 있으므로 회계·세무가 완전히 0이 되지는 않는다. 이 모델의 목적은 이를 **월 단위 광고 정산 한 줄**로 줄이는 것이지 법적 의무를 없애는 것이 아니다.
 

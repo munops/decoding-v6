@@ -172,6 +172,13 @@ const localizedPrivacy = localePath(locale, '/privacy/')
       <p class="footer-note">{messages.footerNote}</p>
     </footer>
     <script>
+      import { countOpen } from '../lib/telemetry'
+
+      // 진입 즉시 1회. 라우트·동의·상호작용 뒤로 미루면 퍼널의 분모가 통째로 사라진다.
+      // 보내는 것은 고정된 이벤트 이름 하나뿐이다 (apps/edge/src/index.ts 계약 참고).
+      countOpen('app_open')
+      if (/^\/([a-z]{2}\/)?$/.test(location.pathname)) countOpen('landing_view')
+
       if ('serviceWorker' in navigator && location.protocol === 'https:') {
         addEventListener('load', () => navigator.serviceWorker.register('/sw.js'))
       }

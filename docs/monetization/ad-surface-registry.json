@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "project": "decoding-v6",
+  "track": "ad_monetization",
+  "productType": "non_game",
+  "checkedAt": "2026-08-10",
+  "research": {
+    "policyCheckedAt": "2026-08-10",
+    "sources": [
+      {
+        "owner": "Google AdSense",
+        "scope": "web placement and accidental-click policy",
+        "url": "https://support.google.com/adsense/answer/1346295"
+      },
+      {
+        "owner": "Google AdMob",
+        "scope": "native natural-transition and frequency policy",
+        "url": "https://support.google.com/admob/answer/6066980"
+      },
+      {
+        "owner": "Apps in Toss",
+        "scope": "mini-app ad formats and UX policy",
+        "url": "https://developers-apps-in-toss.toss.im/ads/develop.html"
+      }
+    ]
+  },
+  "strategy": {
+    "status": "selected",
+    "rationale": "A single clearly labeled direct sponsor can follow a completed local tool result without transmitting payloads, changing tool or result ranking, or occupying the first viewport. Direct self-sold sponsorship is isolated from network advertising and paid acquisition.",
+    "firstValueEvent": "local_decode_completed_not_transmitted",
+    "productionActivated": false,
+    "activationGate": "owner-approved release wave after a direct sponsor contract, release flag and campaign read-back, privacy review, route QA, impression reconciliation and rollback drill"
+  },
+  "futureSurfaceReview": {
+    "defaultPolicy": "prohibited_until_reviewed",
+    "reviewTriggers": [
+      "route_added",
+      "feature_added",
+      "first_value_event_changed",
+      "channel_added",
+      "provider_policy_changed"
+    ],
+    "ownerPaths": [
+      "apps/web/src/components/ToolPage.astro",
+      "apps/web/src/components/SponsorSlot.astro",
+      "apps/web/src/islands/WebTool.tsx",
+      "packages/workbench-ui/src/monetization.ts"
+    ],
+    "sourceDigest": "sha256:d45030f738445461761636810d2feace653575246c239846476afbf53eaa21fa",
+    "requiredBeforeRelease": true
+  },
+  "globalNoAdMoments": [
+    "first_visit",
+    "onboarding",
+    "authentication",
+    "input",
+    "core_action",
+    "payment",
+    "permission",
+    "safety",
+    "emergency",
+    "error_recovery"
+  ],
+  "channels": {
+    "web": {
+      "decision": "selected",
+      "provider": "Direct self-sold contextual sponsor",
+      "allowedFormats": ["responsive_display"],
+      "productionActivated": false
+    },
+    "appsInToss": {
+      "decision": "not_applicable",
+      "provider": null,
+      "allowedFormats": [],
+      "productionActivated": false
+    },
+    "ios": {
+      "decision": "not_applicable",
+      "provider": null,
+      "allowedFormats": [],
+      "productionActivated": false
+    },
+    "android": {
+      "decision": "not_applicable",
+      "provider": null,
+      "allowedFormats": [],
+      "productionActivated": false
+    }
+  },
+  "surfaces": [
+    {
+      "id": "web_tool_below_fold",
+      "routePattern": "/:tool",
+      "moment": "post_value_result",
+      "classification": "conditional",
+      "impressionCommit": "provider_confirmed_callback_only",
+      "noFillBehavior": "collapse_zero_gap",
+      "formatByChannel": { "web": "responsive_display" },
+      "trigger": "successful_local_operation_then_below_fold_viewability",
+      "frequencyCap": {
+        "maxPerSession": 1,
+        "minOrganicActionsBetweenFullScreenAds": null,
+        "cooldownSeconds": 0
+      },
+      "firstValueRequired": true,
+      "excludedStates": [
+        "first_viewport",
+        "input",
+        "loading",
+        "error",
+        "offline",
+        "empty",
+        "workspace",
+        "cli",
+        "desktop",
+        "extension"
+      ],
+      "rationale": "The hidden slot has zero layout footprint until a successful local operation, reads real session and local timestamp state, labels the sponsor, sends no payload targeting, does not affect tool or output ranking, and persists the cap only after the direct provider impression callback acknowledges viewability.",
+      "codeOwner": "apps/web/src/components/SponsorSlot.astro",
+      "testOwner": "packages/workbench-ui/test/monetization.test.ts"
+    },
+    {
+      "id": "first_value_and_sensitive_surfaces_prohibited",
+      "routePattern": "/*",
+      "moment": "core_action",
+      "classification": "prohibited",
+      "formatByChannel": {},
+      "trigger": "never",
+      "frequencyCap": {
+        "maxPerSession": 0,
+        "minOrganicActionsBetweenFullScreenAds": null,
+        "cooldownSeconds": null
+      },
+      "firstValueRequired": true,
+      "excludedStates": ["all_first_value_input_result_ranking_and_non_web_surfaces"],
+      "rationale": "Input, the first local result, result ordering, and every non-web channel remain sponsor-free.",
+      "codeOwner": null,
+      "testOwner": "packages/workbench-ui/test/monetization.test.ts"
+    }
+  ],
+  "telemetry": {
+    "namespace": "ad_monetization",
+    "events": [
+      "ad_request",
+      "ad_fill",
+      "ad_impression",
+      "ad_click",
+      "ad_dismiss",
+      "ad_reward_verified",
+      "ad_revenue_gross",
+      "ad_revenue_fee",
+      "ad_revenue_net"
+    ],
+    "forbiddenMarketingMetrics": ["campaign_spend", "campaign_cac"]
+  },
+  "reconciliation": {
+    "window": "previous_calendar_day_Asia_Seoul",
+    "status": "data_pending",
+    "killSwitchOnMismatch": true
+  },
+  "releaseGate": {
+    "testAdsOnlyBeforeApproval": true,
+    "unclassifiedSurfaceRequests": 0,
+    "providerActivationRequiresSeparateWave": true,
+    "evidenceStatus": "implementation_verified"
+  }
+}

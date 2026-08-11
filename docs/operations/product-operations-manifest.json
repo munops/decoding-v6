@@ -1,0 +1,286 @@
+{
+  "schemaVersion": 3,
+  "productId": "decoding-v6",
+  "productType": "non_game",
+  "checkedAt": "2026-08-09T14:40:00+09:00",
+  "operations": {
+    "legalEntityRef": "../../../hq/bootstrap/identity.yaml",
+    "executionLane": "owner_lane",
+    "operator": "human_owner",
+    "billingLedgerTag": "company_a_owner_operated",
+    "approvalAuthority": "human_owner",
+    "workQueueRef": "../prd/CHECKLIST.md",
+    "evidenceRoot": "docs",
+    "ownerDelegationRefs": [],
+    "hqAccess": "denied_without_owner_delegation"
+  },
+  "sources": {
+    "prd": "docs/prd/README.md",
+    "masterChecklist": "docs/prd/CHECKLIST.md",
+    "decisions": "docs/10-decisions/ADR-003-zero-account-ad-supported-greenfield.md",
+    "traceability": "docs/prd/CHECKLIST.md",
+    "releaseEvidence": "docs/research/2026-08-09-free-first-monetization.md"
+  },
+  "connections": {
+    "registry": "../../../docs/munops/ops/provider-registry.yaml",
+    "cloudflareAccountRef": null,
+    "authOwner": null,
+    "oauthClients": [],
+    "appsInTossAppRef": null,
+    "appleAppRef": null,
+    "googlePlayAppRef": null,
+    "paymentAccountRef": null,
+    "paidAcquisitionAccountRefs": [],
+    "publisherAdvertisingAccountRefs": [],
+    "credentialRefs": [],
+    "legalAccountRef": null,
+    "channelAccountRefs": {},
+    "runtimeResourceRefs": []
+  },
+  "experience": {
+    "status": "done",
+    "benchmarkRef": "docs/research/2026-08-01-product-design-benchmark.md",
+    "brandThesis": "Paste anything; see what it plausibly is in under ten seconds without sending it away.",
+    "logoOwner": "apps/web/public/icon.svg",
+    "designTokenOwner": "apps/web/src/styles/global.css",
+    "signatureMoment": "ranked local detection expands into a bounded recursive chain with explicit evidence and warnings",
+    "assetProvenance": "docs/prd/13-pwa-presentation-assets.md"
+  },
+  "journey": {
+    "acquisition": {
+      "ownerId": null,
+      "status": "todo",
+      "wedge": null,
+      "events": []
+    },
+    "activation": {
+      "ownerId": "Phase-1-first-complete-decode",
+      "status": "done",
+      "firstValue": "paste an opaque value and receive a ranked local candidate plus evidence and deterministic warning without login, payment, or network egress",
+      "events": ["local_decode_completed_not_transmitted"]
+    },
+    "retention": {
+      "ownerId": null,
+      "status": "todo",
+      "returnTrigger": null,
+      "events": []
+    }
+  },
+  "marketing": {
+    "status": "todo",
+    "channels": [],
+    "campaignRegistry": null,
+    "attributionOwner": null,
+    "budgetLedgerTag": "company_a_owner_operated",
+    "publishApprovalRef": "../../../docs/munops/ops/decision-queue.md",
+    "lastCampaignReadbackAt": null
+  },
+  "analytics": {
+    "status": "todo",
+    "providerRefs": [],
+    "eventCatalog": null,
+    "dashboardRefs": [],
+    "dimensions": ["productId", "channel", "buildVersion", "cohort", "occurredAt"],
+    "dailyMetrics": [
+      "sessions",
+      "uniqueUsers",
+      "activationRate",
+      "eligibleD1D7D30",
+      "purchaseConversion",
+      "refundRate",
+      "adRevenue",
+      "netRevenue"
+    ],
+    "lastSuccessfulReadbackAt": null
+  },
+  "trust": {
+    "status": "in_progress",
+    "dataInventory": "docs/trust/data-inventory.md",
+    "privacyUrl": "https://decod.ing/privacy",
+    "termsUrl": "https://decod.ing/terms",
+    "supportUrl": "https://decod.ing/support",
+    "accountDeletion": "See docs/prd/README.md and docs/operations/support.md when present.",
+    "policyVersion": "draft-2026-08-08"
+  },
+  "monetization": {
+    "status": "data_pending",
+    "model": "무료 zero-account local developer utility forever; only a future self-hosted contextual sponsor on one below-fold public-web slot after field and owner release gates",
+    "freeFirst": {
+      "firstValueFree": true,
+      "firstValueEvent": "local_decode_completed_not_transmitted",
+      "paywallAfterEvent": "never; user payments and paid features are forbidden",
+      "freeRights": [
+        "automatic local detection and recursive decode chain",
+        "all decoder and utility operations",
+        "deterministic evidence and warnings",
+        "copy, export, and safe-share projection",
+        "offline PWA, CLI, desktop, workspace, and extension use"
+      ],
+      "cardRequiredForTrial": false,
+      "existingFreeRightsMayBeRevoked": false
+    },
+    "pricingBenchmark": {
+      "status": "data_pending",
+      "checkedAt": "2026-08-09",
+      "directCompetitorRefs": [
+        "https://cyberchef.org/",
+        "https://devtoys.app/",
+        "https://devutils.com/pricing/",
+        "https://www.ethicalads.io/publishers/"
+      ],
+      "references": [
+        {
+          "name": "CyberChef",
+          "observedGross": "free and open source",
+          "role": "direct browser-local free floor"
+        },
+        {
+          "name": "DevToys",
+          "observedGross": "free and open source",
+          "role": "direct cross-platform offline free floor"
+        },
+        {
+          "name": "DevUtils",
+          "observedGross": "USD 29 Basic / USD 39 Personal / USD 24 per Team device perpetual license with one year updates",
+          "role": "paid polished native utility upper anchor, not a decod.ing offer"
+        },
+        {
+          "name": "EthicalAds",
+          "observedGross": "about USD 2.50 per 1,000 pageviews reference and 50K+ monthly pageview publisher target",
+          "role": "developer sponsor revenue benchmark; placement policy currently conflicts"
+        }
+      ],
+      "grossPriceBasis": "consumer price is permanently USD 0; future sponsor gross is fixed invoice or verified eligible pageviews times contracted CPM only after field evidence",
+      "channelFeeBasis": "no app market, IAP, payment, or consumer checkout fee; actual sponsor payment, FX, or network payout fee is data_pending until contract read-back",
+      "vatBasis": "B2B sponsor invoice, VAT, and withholding classification require actual contract and Korean tax review; no consumer digital-goods VAT",
+      "refundBasis": "no consumer refund; only confirmed sponsor credit, cancellation, or provider adjustment may reduce recognized revenue",
+      "netRevenueBasis": "collected sponsor or network gross minus actual payment and FX fee, confirmed credits, hosting, domain, tooling, tax, and accounting; no profitability claim before payout read-back"
+    },
+    "offers": [],
+    "channelRouting": {
+      "web": "disabled self-hosted sponsor adapter; exact PUBLIC_SPONSOR_RELEASE_APPROVED=true plus active campaign required",
+      "appsInToss": "not_applicable_not_selected",
+      "ios": "not_applicable_not_selected",
+      "android": "not_applicable_not_selected"
+    },
+    "entitlementOwner": "not_applicable_no_paid_rights; free contract packages/workbench-ui/src/monetization.ts",
+    "paymentProvider": "not_applicable_no_user_payment",
+    "adProvider": "direct_self_sold_contextual_sponsor_disabled",
+    "adPolicy": "current sponsor list empty and release approval unset; all functionality free; web below-fold one slot only after gates; first viewport, PWA standalone, workspace, CLI, desktop, and extension always ad-free; payload targeting forbidden",
+    "failClosed": true,
+    "receiptRestoreRefund": "not_applicable_no_user_purchase_or_paid_entitlement",
+    "reconciliation": "previous calendar day Asia/Seoul after activation: sponsor invoice or network aggregate payout, credits, payment and FX fees, hosting, domain, tooling, tax, and accounting; currently data_pending",
+    "settlementAccountRef": null,
+    "dailyReconciliation": {
+      "status": "data_pending",
+      "window": "previous_calendar_day_Asia_Seoul",
+      "lastSuccessfulAt": null,
+      "evidenceRef": null
+    },
+    "productionActivated": false,
+    "productionRevenueEvidence": "data_pending",
+    "adMonetization": {
+      "selected": true,
+      "surfaceRegistry": "docs/monetization/ad-surface-registry.json",
+      "providersByChannel": {
+        "web": "direct_self_sold_contextual_sponsor",
+        "appsInToss": null,
+        "ios": null,
+        "android": null
+      },
+      "placements": ["web_tool_below_fold"],
+      "productionActivated": false
+    }
+  },
+  "domains": [
+    {
+      "domain": "decod.ing",
+      "status": "data_pending",
+      "registrar": "data_pending",
+      "registeredAt": null,
+      "expiresAt": null,
+      "autoRenew": "data_pending",
+      "renewalCost": null,
+      "currency": "data_pending",
+      "dnsResourceRef": null,
+      "tlsStatus": "data_pending",
+      "canonicalFor": ["web"],
+      "evidenceRef": "../../../docs/munops/ops/live-surface.json"
+    }
+  ],
+  "infrastructure": {
+    "status": "todo",
+    "runtimeProviders": [],
+    "resources": [],
+    "aiProviders": [],
+    "usageCaps": [],
+    "providerReadbackAt": null
+  },
+  "costs": {
+    "status": "data_pending",
+    "ledgerTag": "company_a_owner_operated",
+    "fixed": [],
+    "variable": [],
+    "aiSubscriptions": [],
+    "monthlyBudget": null,
+    "alertThresholds": [],
+    "lastInvoiceReadbackAt": null
+  },
+  "channels": {
+    "web": {
+      "decision": "selected",
+      "status": "done",
+      "stage": "released",
+      "evidence": []
+    },
+    "appsInToss": {
+      "decision": "not_applicable",
+      "status": "not_applicable",
+      "stage": "assessed",
+      "evidence": ["docs/platforms/channel-plan.md#channel-decision"]
+    },
+    "ios": {
+      "decision": "not_applicable",
+      "status": "not_applicable",
+      "stage": "assessed",
+      "evidence": ["docs/platforms/channel-plan.md#channel-decision"]
+    },
+    "android": {
+      "decision": "not_applicable",
+      "status": "not_applicable",
+      "stage": "assessed",
+      "evidence": ["docs/platforms/channel-plan.md#channel-decision"]
+    },
+    "desktop": {
+      "decision": "later",
+      "status": "in_progress",
+      "stage": "built",
+      "evidence": [
+        "docs/platforms/channel-plan.md#channel-decision",
+        "docs/implementation/STATUS.md"
+      ]
+    }
+  },
+  "recurringOperations": {
+    "timezone": "Asia/Seoul",
+    "daily": [
+      "availability_and_critical_errors",
+      "traffic_activation_and_eligible_retention",
+      "orders_refunds_ads_entitlements_and_settlement_reconciliation",
+      "provider_and_ai_infrastructure_cost_anomaly"
+    ],
+    "weekly": ["channel_campaign_offer_and_placement_add_modify_delete_wait"],
+    "monthly": ["invoice_payout_tax_domain_store_sdk_privacy_and_cost_audit"],
+    "quarterly": ["unit_economics_policy_data_lifecycle_channel_and_rollback_review"],
+    "lastSuccessful": {},
+    "nextDue": {}
+  },
+  "fieldTest": {
+    "preReleaseHumanGate": false,
+    "liveReleaseRequired": true,
+    "cohort": "First attributable non-operator live cohort by channel and build.",
+    "window": "D0 activation, then eligible D1, D7 and D30 in Asia/Seoul.",
+    "status": "data_pending"
+  },
+  "externalGates": []
+}

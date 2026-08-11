@@ -6,6 +6,8 @@
 > **실행 순서**: [CHECKLIST.md](./CHECKLIST.md)
 > **제품 언어**: 영어 우선, 내부 문서는 한국어
 
+> **2026-07-30 experience uplift**: [PRD-11 handoff](11-uplift-handoff-2026-07-30.md)는 copy feedback·chain badge·PWA presentation을 v6 privacy/ads-last 계약 안에서 인계한다.
+
 ---
 
 ## 1. 제품 정의

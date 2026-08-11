@@ -172,9 +172,9 @@
 
 ### 계측
 
-- [ ] telemetry 필요성이 승인되지 않아 `/e` Worker와 Analytics Engine을 의도적으로 추가하지 않음
-- [ ] analytics 구현 시 allowlist schema·2KiB limit·forbidden key rejection 필요
-- [ ] analytics 구현 시 opt-out와 30일 회전 cohort 필요
+- [x] 2026-08-12 — 첫 방문 분모가 없어 어떤 개선도 판정할 수 없었다(실측: 첫 방문 계측 0건). `/e` aggregate open counter와 Analytics Engine을 PRD-09 §13 privacy review와 allowlist schema를 먼저 기록한 뒤 추가했다
+- [x] 2026-08-12 — allowlist schema는 `apps/edge/src/index.ts`의 `ALLOWED_EVENTS` 2개가 전부다. 본문에서 `name` 외 필드를 파싱하지 않으므로 2KiB limit·forbidden key rejection이 구조적으로 성립한다
+- [ ] 리텐션 측정(30일 회전 cohort token)은 opt-out UI와 함께 별도 review 후에만 연다. open counter는 식별자가 없어 여기 포함되지 않는다
 - [x] 2026-07-15 — 광고 데이터·제품 event 모두 0개로 결합 경로 없음
 
 **Gate P2**
@@ -255,6 +255,7 @@
 - [x] 2026-07-15 — `sponsors.json` schema·기간·HTTPS·asset 검사
 - [x] 2026-07-15 — same-origin raster asset, active SVG/HTML/JS 금지
 - [x] 2026-07-15 — below-the-fold 1자리·Sponsored 라벨·`rel=sponsored` 코드 게이트; active campaign 0개
+- [x] 2026-08-09 — 중앙 영구 무료 권리·판매 금지 계약 + active campaign과 독립된 `PUBLIC_SPONSOR_RELEASE_APPROVED` AND 게이트; unset/false면 DOM·request 0개
 - [ ] 10% → 50% → 100% 품질 실험
 
 ### 네트워크 광고는 필요할 때만

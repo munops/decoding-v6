@@ -14,3 +14,27 @@ export {
   writeCopyFeedback,
 } from './copy-feedback'
 export type { CopyFeedbackEnvironment, CopyFeedbackPreferences } from './copy-feedback'
+export {
+  decideSponsorSurface,
+  decideSponsorReveal,
+  FORBIDDEN_MONETIZATION_OUTCOMES,
+  isSponsorReleaseApproved,
+  PERMANENT_FREE_RIGHTS,
+  readSponsorFrequencyState,
+  recordSponsorImpression,
+  requestConfirmedSponsorImpression,
+  SPONSOR_FIRST_VALUE_EVENT,
+  SPONSOR_FREQUENCY_POLICY,
+  SPONSOR_LAST_IMPRESSION_KEY,
+  SPONSOR_SESSION_COUNT_KEY,
+} from './monetization'
+export type {
+  SponsorDecision,
+  SponsorDecisionReason,
+  SponsorFrequencyState,
+  SponsorImpressionCallbacks,
+  SponsorImpressionConfirmation,
+  SponsorImpressionProvider,
+  SponsorImpressionRequest,
+  SponsorSurface,
+} from './monetization'

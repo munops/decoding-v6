@@ -42,5 +42,6 @@ PRD-01~10과 CHECKLIST의 구현 가능한 범위를 독립 저장소에서 구�
 - staging: <https://decoding-v6-staging.wjstks3474.workers.dev>, rollback/restore drill passed
 - deployed Chromium smoke: detection, 47 tools, local operation, canary egress/storage 0, external origin 0
 - public source: <https://github.com/whoo3474/decoding-v6>, hosted `verify` + `test:e2e` CI passed
+- 2026-08-09 free-first preflight: shared policy keeps every decoder/operation free, forbids payment/account/payload targeting, and requires an exact sponsor release approval flag in addition to a configured campaign; focused 4 tests and sponsor validator pass. Price/revenue evidence: `docs/research/2026-08-09-free-first-monetization.md`.
 
 Independent blind data, real-user beta/traffic/retention/ad observations, Apple notarization, cross-platform release artifacts, and public Git hosting remain external gates and are not represented as complete.

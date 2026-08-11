@@ -2,18 +2,32 @@
 import sponsorData from '../content/sponsors.json'
 import type { Locale } from '../i18n/catalog'
 import { selectSponsor } from '../lib/sponsors'
+import { decideSponsorSurface, isSponsorReleaseApproved } from '@decoding/workbench-ui'
 
 interface Props {
   locale: Locale
   category: string
 }
 const { locale, category } = Astro.props
-const sponsor = selectSponsor(sponsorData, locale, category)
+const releaseApproved = isSponsorReleaseApproved(import.meta.env.PUBLIC_SPONSOR_RELEASE_APPROVED)
+const candidate = releaseApproved ? selectSponsor(sponsorData, locale, category) : undefined
+const decision = decideSponsorSurface({
+  releaseApproved,
+  campaignConfigured: Boolean(candidate),
+  surface: 'web_tool_below_fold',
+})
+const sponsor = decision.visible ? candidate : undefined
 ---
 
 {
   sponsor ? (
-    <aside class="sponsor-slot container" aria-label={sponsor.label} data-sponsor={sponsor.id}>
+    <aside
+      class="sponsor-slot container"
+      aria-label={sponsor.label}
+      data-sponsor={sponsor.id}
+      data-sponsor-surface="web_tool_below_fold"
+      hidden
+    >
       <span class="sponsor-label">{sponsor.label}</span>
       <a href={sponsor.targetUrl} rel="sponsored noopener noreferrer" target="_blank">
         <img src={sponsor.imagePath} alt={sponsor.imageAlt} width="96" height="64" loading="lazy" />
@@ -27,3 +41,56 @@ const sponsor = selectSponsor(sponsorData, locale, category)
     </aside>
   ) : null
 }
+
+<script>
+  import {
+    decideSponsorReveal,
+    readSponsorFrequencyState,
+    requestConfirmedSponsorImpression,
+    SPONSOR_FIRST_VALUE_EVENT,
+  } from '@decoding/workbench-ui'
+
+  const slot = document.querySelector<HTMLElement>('[data-sponsor-surface="web_tool_below_fold"]')
+
+  if (slot && 'IntersectionObserver' in window) {
+    const frequency = readSponsorFrequencyState(window.sessionStorage, window.localStorage)
+    const reveal = () => {
+      const decision = decideSponsorReveal({
+        firstValueCompleted: true,
+        frequency,
+        now: Date.now(),
+      })
+      if (!decision.visible) return
+      const provider = window.__DECODING_DIRECT_SPONSOR_PROVIDER__
+      const sponsorId = slot.dataset.sponsor
+      if (!provider || !sponsorId) {
+        slot.hidden = true
+        window.removeEventListener(SPONSOR_FIRST_VALUE_EVENT, reveal)
+        return
+      }
+      slot.hidden = false
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((entry) => entry.isIntersecting && entry.intersectionRatio >= 0.5))
+            return
+          observer.disconnect()
+          requestConfirmedSponsorImpression({
+            provider,
+            request: { placementId: 'web_tool_below_fold', sponsorId },
+            sessionStore: window.sessionStorage,
+            localStore: window.localStorage,
+            previous: frequency,
+            now: () => Date.now(),
+            collapse: () => {
+              slot.hidden = true
+            },
+          })
+        },
+        { threshold: 0.5 },
+      )
+      observer.observe(slot)
+      window.removeEventListener(SPONSOR_FIRST_VALUE_EVENT, reveal)
+    }
+    window.addEventListener(SPONSOR_FIRST_VALUE_EVENT, reveal, { once: true })
+  }
+</script>

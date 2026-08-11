@@ -53,7 +53,7 @@ export const infoMessages: Record<Locale, Record<InfoKey, InfoContent>> = {
         },
         {
           heading: 'Network boundary',
-          body: 'The initial product serves same-origin static assets only. There is no server decoder, database, authentication, payment, AI endpoint, crash reporter, or advertising network.',
+          body: 'The product serves same-origin static assets, plus one same-origin request that counts a page open. That request carries a single fixed event name and nothing else — no input, no decoded value, no hash, no file name, no tool name, no cookie, no identifier. There is no server decoder, database, authentication, payment, AI endpoint, crash reporter, or advertising network.',
         },
         {
           heading: 'Local limitations',
@@ -127,7 +127,7 @@ export const infoMessages: Record<Locale, Record<InfoKey, InfoContent>> = {
         },
         {
           heading: '네트워크 경계',
-          body: '동일 출처 정적 자산만 제공합니다. 서버 디코더·DB·로그인·결제·AI endpoint·충돌 보고기·광고 네트워크가 없습니다.',
+          body: '동일 출처 정적 자산과, 페이지 열림을 세는 동일 출처 요청 하나를 사용합니다. 그 요청에는 고정된 이벤트 이름 하나만 담기며 입력·디코딩 결과·해시·파일명·도구명·쿠키·식별자는 담기지 않습니다. 서버 디코더·DB·로그인·결제·AI endpoint·충돌 보고기·광고 네트워크가 없습니다.',
         },
         {
           heading: '로컬 환경의 한계',
@@ -201,7 +201,7 @@ export const infoMessages: Record<Locale, Record<InfoKey, InfoContent>> = {
         },
         {
           heading: 'ネットワーク境界',
-          body: '同一オリジンの静的アセットのみを配信します。サーバーデコーダー、DB、認証、決済、AI、クラッシュレポーター、広告ネットワークはありません。',
+          body: '同一オリジンの静的アセットに加えて、ページを開いた回数を数える同一オリジンのリクエストを1つ送信します。そのリクエストには固定のイベント名だけが含まれ、入力・デコード結果・ハッシュ・ファイル名・ツール名・Cookie・識別子は含まれません。サーバーデコーダー、DB、認証、決済、AI、クラッシュレポーター、広告ネットワークはありません。',
         },
         {
           heading: 'ローカル環境の限界',

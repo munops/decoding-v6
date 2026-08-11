@@ -4,7 +4,7 @@ import type {
   OperationOptions,
   OperationResult,
 } from '@decoding/operations'
-import { ToolWorkbench } from '@decoding/workbench-ui'
+import { SPONSOR_FIRST_VALUE_EVENT, ToolWorkbench } from '@decoding/workbench-ui'
 import type { ToolMessages } from '@decoding/workbench-ui'
 import { useEffect, useMemo } from 'preact/hooks'
 
@@ -30,7 +30,10 @@ export default function WebTool({
       if (!request) return
       pending.delete(event.data.id)
       if (event.data.error) request.reject(new Error(event.data.error))
-      else if (event.data.result) request.resolve(event.data.result)
+      else if (event.data.result) {
+        request.resolve(event.data.result)
+        window.dispatchEvent(new Event(SPONSOR_FIRST_VALUE_EVENT))
+      }
     }
     return {
       worker,

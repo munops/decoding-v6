@@ -78,7 +78,7 @@ test('ships raster install and share presentation with a no-reload worker update
   expect(presentation.worker).not.toContain('location.reload')
   expect(presentation.worker).toContain('networkFirst(event.request)')
   expect(presentation.worker).toContain('!url.search')
-  expect([...origins]).toEqual(['http://127.0.0.1:4321'])
+  expect([...origins]).toEqual([new URL(page.url()).origin])
 })
 
 test('an online navigation replaces a stale cached document before rendering', async ({ page }) => {

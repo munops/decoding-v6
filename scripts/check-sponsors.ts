@@ -1,6 +1,10 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { validateSponsor } from '../apps/web/src/lib/sponsors'
+import {
+  decideSponsorSurface,
+  isSponsorReleaseApproved,
+} from '../packages/workbench-ui/src/monetization'
 
 const path = resolve('apps/web/src/content/sponsors.json')
 const values = JSON.parse(readFileSync(path, 'utf8')) as unknown
@@ -27,6 +31,18 @@ const validFixture = {
   endsAt: '2027-01-01T00:00:00Z',
 }
 validateSponsor(validFixture)
+if (isSponsorReleaseApproved(undefined) || isSponsorReleaseApproved('false')) {
+  throw new Error('Sponsor release flag must fail closed')
+}
+if (
+  decideSponsorSurface({
+    releaseApproved: false,
+    campaignConfigured: true,
+    surface: 'web_tool_below_fold',
+  }).visible
+) {
+  throw new Error('Configured sponsor bypassed release approval')
+}
 for (const invalid of [
   { ...validFixture, targetUrl: 'http://example.invalid/' },
   { ...validFixture, targetUrl: 'https://example.invalid/?payload=secret' },
@@ -43,8 +59,26 @@ for (const invalid of [
 }
 
 const component = readFileSync(resolve('apps/web/src/components/SponsorSlot.astro'), 'utf8')
-for (const contract of ['rel="sponsored noopener noreferrer"', 'loading="lazy"', 'sponsor-label']) {
+for (const contract of [
+  'PUBLIC_SPONSOR_RELEASE_APPROVED',
+  'rel="sponsored noopener noreferrer"',
+  'loading="lazy"',
+  'sponsor-label',
+  'hidden',
+  'SPONSOR_FIRST_VALUE_EVENT',
+  '__DECODING_DIRECT_SPONSOR_PROVIDER__',
+  'requestConfirmedSponsorImpression',
+  'collapse:',
+]) {
   if (!component.includes(contract)) throw new Error(`Sponsor component is missing ${contract}`)
+}
+if (component.includes('CustomEvent') || component.includes('dispatchEvent')) {
+  throw new Error('Sponsor component may not self-confirm an impression through a DOM event')
+}
+
+const toolPage = readFileSync(resolve('apps/web/src/components/ToolPage.astro'), 'utf8')
+if (toolPage.indexOf('<SponsorSlot') < toolPage.indexOf('<WebTool')) {
+  throw new Error('Sponsor slot must remain after the first-value workbench')
 }
 
 console.log(`sponsors: ${values.length} configured; none fallback and safety contract OK`)
