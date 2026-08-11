@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "product": "decoding-v6",
+  "note": "이 파일은 작업 단위의 정본이 아니다. 실행 순서 SSOT는 docs/prd/CHECKLIST.md이고, 여기에는 포트폴리오 provenance 판정(scripts/check-release-provenance.mjs)이 요구하는 '지금 무엇이 배포돼 있는가'만 둔다. 값은 provider read-back과 실서비스 /healthz 실측으로만 갱신한다.",
+  "workUnitOwner": "docs/prd/CHECKLIST.md",
+  "sourceRevision": "cd224fd91a5ca160ba2084c1f78d7a3f9eb8e100",
+  "environments": [
+    {
+      "name": "production",
+      "status": "released",
+      "url": "https://decod.ing",
+      "revision": "cd224fd91a5ca160ba2084c1f78d7a3f9eb8e100",
+      "workerVersionId": "30ec9154-5192-4f07-97a1-ddce09b476b9",
+      "verifiedAt": "2026-08-12T01:46:00+09:00",
+      "evidence": [
+        "live /healthz revision=cd224fd91a5ca160ba2084c1f78d7a3f9eb8e100 (실서비스 read-back)",
+        "check-production-readiness --url https://decod.ing = ready, findings 0 (R-1~R-7)",
+        "POST /e/events → 200 {\"ok\":true}; 첫 방문 계측 요청이 브라우저에서 실제로 성공",
+        "배포 전 pnpm verify 전량 통과(format·lint·typecheck·unit·benchmark·content·links·network·parity·extension·i18n·sponsors·486페이지 build·21.6 KiB 초기 gzip 예산)",
+        "tests/privacy canary suite 3/3, e2e 32 passed / 1 intentional skip",
+        "공개 표면 CSP·X-Frame-Options: DENY는 이번 wave 이전부터 응답에 실려 있었다"
+      ]
+    }
+  ],
+  "externalGates": [
+    "Analytics Engine에 실제 행이 쌓였는지는 SQL API 조회 권한이 필요해 data_pending. 지금 증명된 것은 전송 성공(200)과 binding 연결이다",
+    "리텐션 측정(30일 회전 cohort token)은 동의 게이트가 필요해 미구현 — docs/prd/09-security-privacy.md §13-A"
+  ]
+}
