@@ -1,0 +1,541 @@
+{
+  "schemaVersion": 1,
+  "projectId": "decoding-v6",
+  "status": "plan_ready",
+  "checkedAt": "2026-08-12",
+  "primaryBusinessChannel": "web",
+  "researchNote": "이 계약의 경쟁·리뷰 조사는 2026-08-12에 직접 수행했다. 저장소의 기존 감사 문서(docs/research/2026-08-08-competitor-review-audit.md, 2026-07-15-devutils-feature-audit.md)를 재사용하되, 인용은 원 출처를 다시 열어 확인한 원문만 실었다. observedCount는 '그 출처에서 내가 실제로 읽고 분류한 항목 수'이며 전체 코멘트 수의 추정치가 아니다.",
+  "blockedStrictNote": "이 제품은 공개 배포돼 있으므로 판정자는 status=release_verified를 요구하고, 그러면 linkedContracts 5종이 모두 존재하고 release_verified여야 한다. 현재 docs/product/category-coverage.json · docs/design/visual-brief.json · docs/design/visual-evidence.json · docs/operations/production-evidence.json 4종이 없다. 그 4종은 실제 경쟁 화면 조사와 실 route render 증거가 필요한 별도 작업이고, 없는 것을 만들어 채우면 게이트만 통과하고 내용은 위조가 된다. 그래서 이 계약은 status=plan_ready로 두고 --strict 실패를 그대로 남긴다. 시장 증거·심리·superiority·AI red-team은 이 파일에서 이미 닫혀 있으므로 후속 작업은 그 4종만 만들면 된다.",
+  "opportunityScore": {
+    "appsInTossWhitespace": {
+      "score": 0,
+      "evidenceState": "not_applicable",
+      "signedInCatalogStatus": "not_applicable",
+      "checkedAt": "2026-08-12",
+      "sources": ["https://toss.im/apps-in-toss"],
+      "searchQueries": [
+        "앱인토스 미니앱이 개발자용 로컬 디코더 도구를 담을 수 있는 카테고리인지 확인",
+        "apps-in-toss 비게임 체크리스트에서 개발자 도구 카테고리 존재 여부"
+      ],
+      "claimBoundary": "이 제품은 한국 일반 소비자가 아니라 전 세계 개발자를 대상으로 하고 사용 순간이 터미널·편집기 옆이다. 토스 앱 안에서 붙여넣기·디코딩을 하는 행동은 성립하지 않으므로 앱인토스는 채널 후보가 아니다. 공백을 주장하는 것이 아니라 대상 채널이 아니라는 판정이다.",
+      "observedAdjacentMatches": [],
+      "observedExactMatches": []
+    },
+    "appsInTossBehaviorFit": {
+      "score": 0,
+      "rationale": "붙여넣을 문자열이 있는 순간은 개발자의 터미널·브라우저 devtools 옆이다. 토스 앱 안에서 그 순간이 발생하지 않으므로 행동 적합성이 0이다. 이것은 제품 결함이 아니라 채널 비적합이다."
+    },
+    "appsInTossNetRevenueFit": {
+      "score": 0,
+      "rationale": "앱인토스 채널을 쓰지 않으므로 이 축의 순수익은 정의되지 않는다. 제품 자체도 계정·결제·구독이 하드 룰로 금지돼 있어(ADR-003) 직접 판매 수익 경로가 없다. 수익화는 Phase 4 게이트 뒤 웹 below-the-fold 광고 한 자리뿐이며 현재 광고 DOM·script·request가 0이다.",
+      "model": "not_applicable",
+      "unitEconomics": {
+        "pricingMoment": "현재 가격 지점이 없다. 무료·무계정이 제품 약속이고 결제 도입은 하드 룰 2가 금지한다. 비교 대상인 DevUtils는 영구 라이선스 $29~$39이며 그 가격이 HN에서 반복적으로 이탈 사유로 언급된다.",
+        "grossPriceKrw": 0,
+        "estimatedNetRevenueKrw": 0,
+        "variableCostKrw": 0,
+        "contributionMarginKrw": 0,
+        "sourceUrls": ["https://devutils.com/pricing/"],
+        "checkedAt": "2026-08-12"
+      }
+    },
+    "communityDemand": {
+      "score": 11,
+      "rationale": "수요는 경쟁의 규모와 반복 사용으로 실증된다. DevUtils HN 스레드는 178 points를 받았고 그 안에서 사람들이 CyberChef·Boop·DevToys·DevBox를 서로 추천하며 같은 job을 말한다. 제3자 비교 글도 2025년 기준으로 base64 도구를 계속 비교하고 있다. 다만 '정체불명 문자열을 자동 판별해 달라'는 요구를 직접 말한 글은 조사 경계 안에서 적게 찾았고, 대부분은 '특정 변환 도구'를 찾는 형태였다."
+    },
+    "competitorOpportunity": {
+      "score": 10,
+      "rationale": "이 좌표는 비어 있지 않다 — DecodeThis가 paste auto-detect와 nested unwrap을 이미 무료로 제공하고 CyberChef는 훨씬 방대하다. 기회는 공백이 아니라 실패 지점에 있다: CyberChef는 recipe를 사용자가 조립해야 하고 share URL에 입력이 들어갈 수 있으며, DevUtils는 macOS 전용 유료이고, jwt.io는 단일 포맷이다. 공백 주장 대신 '이미 있는 것들의 구조적 제약'으로만 점수를 준다."
+    },
+    "retention": {
+      "score": 5,
+      "rationale": "도구형 제품이라 리텐션은 습관과 즐겨찾기에서 나온다. 최근 사용 도구 slug 저장, PWA 오프라인, 47개 도구 카탈로그가 재방문 경로다. 다만 계정이 없어 크로스 기기 연속성이 없고, 사용자가 브라우저 북마크로 돌아오는지 측정할 표본이 아직 없다."
+    },
+    "feasibility": {
+      "score": 9,
+      "rationale": "https://decod.ing 에 배포돼 있고 check-production-readiness R-1~R-7이 findings 0으로 통과한다. pnpm verify가 format·lint·typecheck·unit·benchmark·content·links·network·parity·extension·i18n·sponsors·486페이지 build·21.6 KiB 초기 gzip 예산까지 한 번에 강제하고, privacy canary suite가 모든 요청을 검사한다."
+    },
+    "moat": {
+      "score": 2,
+      "rationale": "공개 코드로 모방 가능하다. 실행 moat는 detector fixture 품질(public positive/edge/negative + blind fixture + precision/recall 게이트)과, 네트워크 primitive를 UI 소스에서 기계적으로 금지하는 자기 구속이다. 후자는 광고·분석 수익을 포기해야 유지되므로 대형 경쟁자가 따라오기 어렵지만 원천 차단은 아니다."
+    },
+    "total": 37,
+    "decision": "adopt",
+    "decisionReason": "이미 배포돼 R-1~R-7을 통과하고 프라이버시 계약을 기계적으로 강제하는 제품이 있다. 총점이 낮은 이유는 앱인토스 3개 축(0/45)이 채널 비적합으로 0이기 때문이며 제품 자체 축은 채택 수준이다.",
+    "lowScoreOverrideReason": "총점 37 중 45점이 앱인토스 축인데 이 제품은 전 세계 개발자용 로컬 도구라 그 채널이 애초에 대상이 아니다. 앱인토스 축을 제외한 55점 만점 기준으로는 37/55이며, 낮춘 것은 리텐션 5/10(표본 없음)과 moat 2/5(공개 모방 가능)라는 정직한 자기 평가다."
+  },
+  "channelStrategy": {
+    "appsInTossDecision": "not_applicable",
+    "decisionReason": "사용 순간이 개발자의 터미널·편집기 옆이라 토스 앱 안에서 발생하지 않는다. 대상 사용자도 한국 일반 소비자가 아니다. 채널 비적합 판정이며 공백 주장이 아니다.",
+    "webRole": "제품의 정본. Astro 정적 export + Preact workbench + Web Worker로 브라우저 안에서 전부 처리한다. PWA 오프라인이 기본 경로다.",
+    "nativeRole": "CLI는 stdin·--file만 받는 로컬 실행이고 네트워크 코드가 0이다. desktop(Tauri)과 확장(MV3)은 수요 게이트 뒤에만 시작하며 현재 구현하지 않는다."
+  },
+  "marketEvidence": {
+    "corpusBoundary": "경쟁 리뷰는 앱스토어형 대량 코퍼스가 존재하지 않는 카테고리다(CyberChef·DecodeThis·jwt.io는 웹앱이라 스토어 리뷰가 없다). 그래서 코퍼스는 ① DevUtils Hacker News 스레드(2021-11-04, 178 points) ② 제3자 비교 글(base64.sh 2025) ③ jwt.io 검증 실패에 대한 Auth0 커뮤니티 보고 ④ 각 제품 공식 문서로 한정된다. observedCount는 그 출처에서 내가 실제로 읽고 분류한 항목 수이며 전체 코멘트 수가 아니다. Reddit·Stack Overflow는 검색으로 해당 불만을 직접 찾지 못했다 — '없다'가 아니라 '이 경계 안에서 못 찾았다'이다.",
+    "competitors": [
+      {
+        "id": "cmp-cyberchef",
+        "kind": "direct",
+        "name": "CyberChef (GCHQ)",
+        "url": "https://github.com/gchq/CyberChef",
+        "checkedAt": "2026-08-12",
+        "strongestCapability": "수백 개 operation을 recipe로 조립하고 breakpoint로 단계별 실행하며 input/output 하이라이트로 변환 전후를 대조한다. 전부 브라우저 로컬에서 돌고 빌드를 내려받아 오프라인으로 쓸 수 있다.",
+        "weakestMoment": "무엇을 붙여넣었는지 모르는 사람에게는 시작점이 없다 — 사용자가 operation을 먼저 골라 recipe를 조립해야 한다. 제3자 비교 글이 'best for advanced users needing multiple operations'로 위치를 정리하고, 큰 입력에서는 Auto Bake가 성능 부담이 되어 공식 문서가 끄는 법을 안내한다. recipe deep link에 입력이 포함될 수 있다."
+      },
+      {
+        "id": "cmp-devutils",
+        "kind": "direct",
+        "name": "DevUtils (macOS 유료 앱)",
+        "url": "https://devutils.com/",
+        "checkedAt": "2026-08-12",
+        "strongestCapability": "47개 전용 도구를 네이티브 macOS 앱으로 묶고 smart clipboard detection·전역 단축키·메뉴바로 반복 작업을 빠르게 만든다. 완전 오프라인이라 '출처가 의심스러운 사이트에 붙여넣지 않아도 된다'는 신뢰가 핵심 판매 논리다.",
+        "weakestMoment": "macOS 전용 유료다. HN에서 'Mac only. Stuff like this should be in the title'과 'It's also competing with stuff which is free'가 동시에 나온다. 도구 47개 중 자기 워크플로에 맞는 것이 몇 개뿐이라는 반응도 있다."
+      },
+      {
+        "id": "cmp-decodethis",
+        "kind": "direct",
+        "name": "DecodeThis (브라우저 로컬 자동 판별)",
+        "url": "https://decodethis.dev/about/",
+        "checkedAt": "2026-08-12",
+        "strongestCapability": "붙여넣기 자동 판별과 중첩 해제를 무료·브라우저 로컬로 제공한다. decod.ing의 'local universal decoder' 약속과 가장 직접적으로 겹치는 제품이다.",
+        "weakestMoment": "약속이 겹치므로 'local auto-detect'만으로는 우리를 고를 이유가 되지 않는다. 우리 차별은 후보 신뢰도·근거 노출, 모호할 때 자동 확정하지 않음, 결정적 rule ID, 실행된 체인 영수증, 입력이 빠진 안전 공유 요약의 결합이어야 한다."
+      },
+      {
+        "id": "cmp-jwtio",
+        "kind": "indirect",
+        "name": "jwt.io (단일 포맷 디버거)",
+        "url": "https://www.jwt.io/",
+        "checkedAt": "2026-08-12",
+        "strongestCapability": "encoded token과 decoded header/payload, claim 분해, 복사 동작을 한 화면에 둔다. 개발자가 JWT를 만나면 반사적으로 여는 표준 도구다.",
+        "weakestMoment": "JWT 하나만 다룬다. 붙여넣은 것이 JWT가 아니면 아무 답도 주지 못한다. decode와 signature verification의 의미가 섞여 보일 수 있고, 실제로 검증 실패 보고가 커뮤니티에 올라온다."
+      },
+      {
+        "id": "cmp-free-utils",
+        "kind": "indirect",
+        "name": "무료 단발 도구 — Boop · DevToys · 온라인 base64 사이트",
+        "url": "https://www.base64.sh/blog/best-base64-tools-2025/",
+        "checkedAt": "2026-08-12",
+        "strongestCapability": "무료이고 이미 설치돼 있거나 검색 한 번이면 나온다. 대부분의 개발자에게 base64 한 번 푸는 데는 이것으로 충분하다. HN에서 사람들이 서로 이 대안들을 추천한다.",
+        "weakestMoment": "무엇인지 모르는 문자열에는 쓸 수 없다 — 사용자가 이미 포맷을 알고 그에 맞는 도구를 골라야 한다. 온라인 사이트는 입력을 서버로 보낼 수 있어 신뢰 문제가 남는다."
+      }
+    ],
+    "reviewCorpus": [
+      {
+        "id": "rc-devutils-hn-low",
+        "competitorId": "cmp-devutils",
+        "ratingBand": "low",
+        "observedCount": 6,
+        "sourceUrl": "https://news.ycombinator.com/item?id=29077933",
+        "checkedAt": "2026-08-12",
+        "verbatimExcerpts": [
+          "Mac only. Stuff like this should be in the title",
+          "It's also competing with stuff which is free",
+          "Most of these functionalities are easy to find as online apps...or can be done in REPL in one line",
+          "I've been using Boop (free) for the same purpose"
+        ],
+        "findingIds": [
+          "fnd-platform-lockout",
+          "fnd-free-competition",
+          "fnd-tool-redundancy",
+          "fnd-tool-fit-variance"
+        ]
+      },
+      {
+        "id": "rc-devutils-hn-high",
+        "competitorId": "cmp-devutils",
+        "ratingBand": "high",
+        "observedCount": 5,
+        "sourceUrl": "https://news.ycombinator.com/item?id=29077933",
+        "checkedAt": "2026-08-12",
+        "verbatimExcerpts": [
+          "your pricing is a steal for the convenience",
+          "$25 was a no-brainer for me, I didn't even think twice",
+          "Having them all in one place is helpful"
+        ],
+        "findingIds": [
+          "fnd-one-place-value",
+          "fnd-offline-trust",
+          "fnd-willing-to-pay-for-convenience"
+        ]
+      },
+      {
+        "id": "rc-cyberchef-positioning",
+        "competitorId": "cmp-cyberchef",
+        "ratingBand": "mixed",
+        "observedCount": 1,
+        "sourceUrl": "https://www.base64.sh/blog/best-base64-tools-2025/",
+        "checkedAt": "2026-08-12",
+        "verbatimExcerpts": ["CyberChef is best for advanced users needing multiple operations"],
+        "findingIds": ["fnd-advanced-only", "fnd-simple-task-overkill"]
+      },
+      {
+        "id": "rc-jwtio-verification",
+        "competitorId": "cmp-jwtio",
+        "ratingBand": "low",
+        "observedCount": 1,
+        "sourceUrl": "https://community.auth0.com/t/new-jwt-io-fails-to-verify-signature-for-hs512/189278",
+        "checkedAt": "2026-08-12",
+        "verbatimExcerpts": ["New jwt.io fails to verify signature for HS512"],
+        "findingIds": ["fnd-decode-vs-verify-confusion"]
+      }
+    ],
+    "communitySignals": [
+      {
+        "id": "cs-hn-free-alternatives",
+        "needId": "fnd-free-core-required",
+        "type": "payment_language",
+        "sourceUrl": "https://news.ycombinator.com/item?id=29077933",
+        "checkedAt": "2026-08-12",
+        "verbatimExcerpt": "It's also competing with stuff which is free",
+        "finding": "이 카테고리에서 유료화는 즉시 무료 대안과 비교당한다. 코어를 무료·무계정으로 두지 않으면 진입 자체가 성립하지 않는다."
+      },
+      {
+        "id": "cs-hn-mac-only",
+        "needId": "fnd-zero-install-crossplatform",
+        "type": "complaint",
+        "sourceUrl": "https://news.ycombinator.com/item?id=29077933",
+        "checkedAt": "2026-08-12",
+        "verbatimExcerpt": "Mac only. Stuff like this should be in the title",
+        "finding": "네이티브 배포는 그 자체로 사용자를 배제한다. 웹을 1차 채널로 두면 이 배제가 원천 발생하지 않는다."
+      },
+      {
+        "id": "cs-base64sh-advanced-only",
+        "needId": "fnd-no-recipe-assembly",
+        "type": "workaround",
+        "sourceUrl": "https://www.base64.sh/blog/best-base64-tools-2025/",
+        "checkedAt": "2026-08-12",
+        "verbatimExcerpt": "CyberChef is best for advanced users needing multiple operations",
+        "finding": "제3자 비교 글이 CyberChef를 고급 사용자용으로 분류하고 단순 작업에는 다른 도구를 권한다. 즉 '무엇인지 모를 때 그냥 붙여넣는' 사용자는 현재 어느 쪽으로도 잘 안내되지 않는다."
+      },
+      {
+        "id": "cs-devutils-local-trust",
+        "needId": "fnd-no-paste-to-unknown-site",
+        "type": "request",
+        "sourceUrl": "https://devutils.com/",
+        "checkedAt": "2026-08-12",
+        "verbatimExcerpt": "pasting text into sites of dubious origin",
+        "finding": "경쟁사(DevUtils)의 공개 판매 논리이며 사용자 발화가 아니다 — 그래서 수요 증거가 아니라 이 카테고리의 신뢰 기준선으로만 쓴다. 붙여넣는 것이 토큰·키·고객 payload일 수 있다는 전제가 제품 설계의 출발점이어야 한다."
+      }
+    ],
+    "coverageLedger": [
+      {
+        "id": "cov-free-core",
+        "userNeed": "코어 기능이 무료여야 하고 계정을 요구하지 않아야 한다",
+        "response": "cover",
+        "reason": "HN에서 유료 도구가 즉시 무료 대안과 비교당한다. 하드 룰 2(zero account)와 ADR-003이 로그인·구독·유료 API를 금지한다.",
+        "sourceRefs": [
+          "fnd-free-competition",
+          "fnd-free-core-required",
+          "fnd-willing-to-pay-for-convenience"
+        ],
+        "specIds": ["ADR-003"]
+      },
+      {
+        "id": "cov-crossplatform-web",
+        "userNeed": "특정 OS를 요구하지 않는다",
+        "response": "cover",
+        "reason": "'Mac only'가 HN 최상위 불만이다. 웹(Astro 정적 export + PWA)을 1차 채널로 두고 desktop은 수요 게이트 뒤 선택 채널로 격리한다.",
+        "sourceRefs": ["fnd-platform-lockout", "fnd-zero-install-crossplatform"],
+        "specIds": ["PRD-06"]
+      },
+      {
+        "id": "cov-no-recipe-tax",
+        "userNeed": "무엇인지 모르는 문자열을 그냥 붙여넣어도 답이 나와야 한다",
+        "response": "cover",
+        "reason": "CyberChef는 고급 사용자용으로 분류되고 사용자가 operation을 먼저 골라야 한다. 8개 detector가 자동 판별하고 재귀 체인을 만들어 도구 선택 세금을 없앤다.",
+        "sourceRefs": ["fnd-advanced-only", "fnd-simple-task-overkill", "fnd-no-recipe-assembly"],
+        "specIds": ["PRD-01"]
+      },
+      {
+        "id": "cov-payload-never-leaves",
+        "userNeed": "붙여넣은 값이 서버로 새지 않는다는 것이 증명돼야 한다",
+        "response": "cover",
+        "reason": "'출처가 의심스러운 사이트에 붙여넣기'가 이 카테고리의 기준선이다. UI 소스의 network primitive를 기계 검사로 1개 파일(집계 카운터)로 제한하고, canary suite가 모든 요청을 검사한다.",
+        "sourceRefs": ["fnd-offline-trust", "fnd-no-paste-to-unknown-site"],
+        "specIds": ["PRD-09"]
+      },
+      {
+        "id": "cov-no-input-in-url",
+        "userNeed": "공유 링크에 입력이 들어가지 않아야 한다",
+        "response": "cover",
+        "reason": "CyberChef recipe deep link는 입력을 URL에 담을 수 있다. 우리는 raw·decoded·digest·크기·파일명을 제외한 안전 요약만 공유하고 privacy 테스트가 강제한다.",
+        "sourceRefs": ["fnd-advanced-only"],
+        "specIds": ["PRD-09"]
+      },
+      {
+        "id": "cov-bounded-execution",
+        "userNeed": "큰 입력에서 화면이 멈추지 않아야 한다",
+        "response": "cover",
+        "reason": "CyberChef는 Auto Bake 성능 부담을 공식 문서에서 인정하고 끄는 법을 안내한다. 우리는 2초 CPU·10MiB 입력·32MiB 출력·100:1 압축비 상한을 두고 전용 워커에서 실행한다.",
+        "sourceRefs": ["fnd-simple-task-overkill"],
+        "specIds": ["PRD-01"]
+      },
+      {
+        "id": "cov-decode-not-verify",
+        "userNeed": "디코딩을 검증 성공처럼 보이게 하지 않는다",
+        "response": "cover",
+        "reason": "jwt.io 검증 실패 보고가 그 혼동의 실제 비용을 보여준다. 신뢰 키 없이는 서명을 검증하지 않는다고 화면에서 명시한다.",
+        "sourceRefs": ["fnd-decode-vs-verify-confusion"],
+        "specIds": ["PRD-01"]
+      },
+      {
+        "id": "cov-tool-fit",
+        "userNeed": "47개 도구가 첫 화면에 쏟아지지 않고 내 작업에 맞는 것을 찾을 수 있어야 한다",
+        "response": "cover",
+        "reason": "'몇 개만 내 워크플로에 맞는다'는 HN 반응이 카탈로그 과잉의 비용이다. 카테고리 검색·최근 사용·즐겨찾기와 도구별 lazy chunk로 시작 번들을 21.6 KiB로 묶는다.",
+        "sourceRefs": ["fnd-tool-fit-variance", "fnd-one-place-value"],
+        "specIds": ["PRD-05"]
+      },
+      {
+        "id": "cov-repl-alternative",
+        "userNeed": "REPL 한 줄로 되는 일을 굳이 웹에서 할 이유",
+        "response": "cover",
+        "reason": "'REPL에서 한 줄이면 된다'는 반응이 실재한다. 답은 '무엇인지 모를 때'다 — 포맷을 알면 REPL이 빠르고, 모를 때만 우리가 필요하다. CLI(stdin/--file)를 두어 터미널 사용자에게도 같은 판별을 제공한다.",
+        "sourceRefs": ["fnd-tool-redundancy"],
+        "specIds": ["PRD-03"]
+      },
+      {
+        "id": "cov-recipe-builder",
+        "userNeed": "수백 개 operation을 자유 조립하는 recipe builder",
+        "response": "intentional_exclude",
+        "reason": "CyberChef의 강점이자 정체성이다. 정면 경쟁하지 않는다. 우리 코어는 자동 triage와 경계가 있는 체인이며, 조립이 필요한 사용자는 CyberChef가 더 낫다고 인정한다.",
+        "sourceRefs": ["fnd-advanced-only"],
+        "specIds": ["PRD-README-7"]
+      },
+      {
+        "id": "cov-native-hotkey",
+        "userNeed": "전역 단축키·클립보드 자동 감지",
+        "response": "intentional_exclude",
+        "reason": "DevUtils의 강점이지만 네이티브 권한이 필요하고 그 순간 macOS 전용 배제 문제를 그대로 물려받는다. desktop 채널은 수요 게이트 뒤로 미루고, 그때도 clipboard는 명시적 동작에서 1회만 읽는다.",
+        "sourceRefs": ["fnd-offline-trust", "fnd-platform-lockout"],
+        "specIds": ["PRD-10"]
+      }
+    ],
+    "uncoveredCount": 0
+  },
+  "psychology": {
+    "ethicalConstraints": [
+      "붙여넣은 값과 디코딩 결과를 URL·로그·이벤트·광고·오류 보고로 내보내지 않는다. 위반은 릴리스 차단 사유다.",
+      "낮은 신뢰도나 유사 후보를 임의의 정답으로 자동 확정하지 않는다. 모호하면 모호하다고 말한다.",
+      "디코딩 성공을 서명 검증 성공으로 보이게 하지 않는다. 신뢰 키 없이는 검증하지 않았다고 명시한다.",
+      "계정·로그인·구독·결제를 만들지 않는다. 무료 코어를 나중에 유료로 바꾸지 않는다.",
+      "생성형 AI로 설명을 만들지 않는다. 경고와 근거는 결정적 rule과 공식 스펙에서 나온다."
+    ],
+    "moments": [
+      {
+        "id": "psy-discovery",
+        "lifecycle": "discovery",
+        "beforeEmotion": "로그나 설정 파일에서 정체불명 문자열을 발견했다. 무엇인지 모르니 검색어조차 만들기 어렵다.",
+        "fearedLoss": "토큰이나 고객 데이터를 모르는 사이트에 붙여넣게 되는 것.",
+        "mentalModel": "'base64 디코더'를 검색해서 아무 사이트나 연다.",
+        "frictionBudget": "설치 0·가입 0. 페이지가 열리면 입력창이 이미 포커스돼 있다.",
+        "controlAndReversibility": "아무것도 저장되지 않는다. 탭을 닫으면 끝난다.",
+        "reassurance": "첫 화면이 로컬 처리와 무계정을 명시하고, 개인정보 페이지가 정확히 무엇이 전송되는지 한 문단으로 말한다.",
+        "reward": "붙여넣자마자 후보와 신뢰도가 뜬다 — 도구를 고르지 않았는데 답이 나온다.",
+        "returnTrigger": "다음에 또 모르는 문자열을 만났을 때.",
+        "forbiddenPatterns": ["가입 유도", "결과를 가리는 페이월", "입력이 담긴 공유 URL"],
+        "specIds": ["PRD-01"]
+      },
+      {
+        "id": "psy-onboarding",
+        "lifecycle": "onboarding",
+        "beforeEmotion": "붙여넣긴 했는데 이게 맞는 해석인지 확신이 없다.",
+        "fearedLoss": "틀린 해석을 믿고 다음 작업을 진행하는 것.",
+        "mentalModel": "'디코더가 답을 하나 준다'.",
+        "frictionBudget": "추가 클릭 없이 후보 목록과 근거가 같은 화면에 있다.",
+        "controlAndReversibility": "후보를 직접 바꿔 볼 수 있고 체인의 각 단계를 펼칠 수 있다.",
+        "reassurance": "각 후보에 신뢰도와 판별 근거(rule ID·스펙 링크)가 붙는다.",
+        "reward": "왜 그렇게 판별했는지 읽고 납득한다.",
+        "returnTrigger": "같은 종류의 문자열을 또 만났을 때.",
+        "forbiddenPatterns": ["단일 정답 강제", "근거 숨김", "AI가 생성한 설명"],
+        "specIds": ["PRD-01"]
+      },
+      {
+        "id": "psy-core",
+        "lifecycle": "core",
+        "beforeEmotion": "중첩된 인코딩이라 한 번 풀어도 또 이상한 문자열이 나온다.",
+        "fearedLoss": "수동으로 여러 도구를 오가며 시간을 쓰는 것.",
+        "mentalModel": "'풀고 또 풀어야 한다'.",
+        "frictionBudget": "재귀 체인이 자동으로 이어지고 각 단계가 접혀서 보인다.",
+        "controlAndReversibility": "체인의 어느 단계에서든 멈추고 그 단계 결과만 복사할 수 있다.",
+        "reassurance": "깊이 8·노드 64·2초 CPU 상한이 있어 화면이 멈추지 않는다. 한계에 걸리면 부분 결과를 명시적으로 보여준다.",
+        "reward": "마지막에 사람이 읽을 수 있는 형태가 나온다.",
+        "returnTrigger": "업무 중 반복되는 디버깅 순간.",
+        "forbiddenPatterns": ["무한 실행", "freeze", "raw parser exception 노출"],
+        "specIds": ["PRD-01"]
+      },
+      {
+        "id": "psy-recovery",
+        "lifecycle": "recovery",
+        "beforeEmotion": "판별이 안 되거나 결과가 깨졌다. 내 입력이 이상한 건지 도구가 이상한 건지 모르겠다.",
+        "fearedLoss": "원인을 모른 채 다른 도구를 다시 찾아 헤매는 것.",
+        "mentalModel": "'에러가 났으니 이 도구는 못 쓰는구나'.",
+        "frictionBudget": "실패도 결과 화면이다 — 무엇이 어디까지 됐는지 보여준다.",
+        "controlAndReversibility": "입력을 지우거나 다른 후보로 바꿔 즉시 다시 시도한다.",
+        "reassurance": "한계 초과·미지원 포맷·모호를 각각 다른 결정적 상태로 구분해 말한다.",
+        "reward": "무엇이 문제인지 알고 다음 행동을 고를 수 있다.",
+        "returnTrigger": "같은 포맷이 지원되기를 기대하고 다시 방문.",
+        "forbiddenPatterns": ["빈 화면", "raw stack trace", "성공처럼 보이는 실패"],
+        "specIds": ["PRD-01"]
+      },
+      {
+        "id": "psy-return",
+        "lifecycle": "return",
+        "beforeEmotion": "또 그 상황이다. 지난번에 쓴 그 사이트가 뭐였더라.",
+        "fearedLoss": "북마크를 안 해서 다시 검색으로 헤매는 것.",
+        "mentalModel": "'브라우저 히스토리나 북마크에서 찾는다'.",
+        "frictionBudget": "PWA 설치 시 아이콘 1탭. 오프라인에서도 열린다.",
+        "controlAndReversibility": "로컬에 저장되는 것은 테마·로케일·최근 도구 slug뿐이고 사이트 데이터 삭제로 전부 지워진다.",
+        "reassurance": "저장 항목을 개인정보 페이지에 그대로 나열한다.",
+        "reward": "최근 쓰던 도구가 그대로 있다.",
+        "returnTrigger": "다음 디버깅 세션, 새 detector 추가 배지(1회만 표시).",
+        "forbiddenPatterns": ["푸시 알림 유도", "재방문 강요 배지 반복", "계정으로만 되는 동기화"],
+        "specIds": ["PRD-03"]
+      }
+    ]
+  },
+  "superiority": {
+    "parityCapabilities": [
+      {
+        "id": "par-local-processing",
+        "userExpectation": "입력이 브라우저를 떠나지 않는다 — 이 카테고리의 신뢰 기준선이며 없으면 개발자가 쓰지 않는다.",
+        "sourceFindingIds": ["fnd-offline-trust", "fnd-no-paste-to-unknown-site"],
+        "featureIds": ["F-LOCAL"]
+      },
+      {
+        "id": "par-format-breadth",
+        "userExpectation": "자주 쓰는 포맷이 한곳에 다 있다 — DevUtils 고점의 'having them all in one place'가 이 기대다.",
+        "sourceFindingIds": ["fnd-one-place-value", "fnd-tool-fit-variance"],
+        "featureIds": ["F-CATALOG"]
+      },
+      {
+        "id": "par-free-no-account",
+        "userExpectation": "무료이고 계정을 요구하지 않는다 — 무료 대안이 즉시 비교되는 카테고리라 최소 조건이다.",
+        "sourceFindingIds": ["fnd-free-competition", "fnd-free-core-required"],
+        "featureIds": ["F-FREE"]
+      },
+      {
+        "id": "par-contextual-inspection",
+        "userExpectation": "인코딩된 원문과 해석 결과를 같은 화면에서 보고 부분 복사할 수 있다 — jwt.io가 만든 기대다.",
+        "sourceFindingIds": ["fnd-decode-vs-verify-confusion"],
+        "featureIds": ["F-INSPECTOR"]
+      }
+    ],
+    "beyondCompetitor": [
+      {
+        "id": "bey-no-tool-selection",
+        "structuralConstraint": "CyberChef는 recipe 조립이 제품 정체성이라 '고르지 않아도 되는 경험'을 기본값으로 만들면 자기 제품을 부정하게 된다. jwt.io는 단일 포맷 범위를 바꾸지 않는 한 format-agnostic 판별을 할 수 없다.",
+        "userBenefit": "무엇인지 몰라도 붙여넣기만 하면 순위가 매겨진 후보와 근거가 나온다. 도구를 고르는 단계 자체가 없다.",
+        "featureIds": ["F-DETECT"]
+      },
+      {
+        "id": "bey-ambiguity-honesty",
+        "structuralConstraint": "단일 정답을 보여주는 도구는 신뢰도를 노출하는 순간 '틀릴 수 있다'를 인정하게 되어 제품 인상이 약해진다. 그래서 대부분 하나만 확정해 보여준다.",
+        "userBenefit": "신뢰도가 낮거나 후보가 비슷하면 자동 확정하지 않고 경쟁 후보를 나란히 보여준다. 틀린 해석을 믿고 진행하는 사고를 막는다.",
+        "featureIds": ["F-AMBIGUITY"]
+      },
+      {
+        "id": "bey-share-without-payload",
+        "structuralConstraint": "CyberChef의 recipe deep link는 입력을 URL에 담을 수 있어야 재현이 되는 구조다. 그 편의를 버리면 그들의 공유 워크플로가 깨진다.",
+        "userBenefit": "공유 요약에 raw·decoded·digest·크기·파일명이 들어가지 않는다. 동료에게 '무엇이었는지'는 전달하되 값 자체는 절대 나가지 않는다.",
+        "featureIds": ["F-SAFE-SHARE"]
+      },
+      {
+        "id": "bey-mechanical-privacy-gate",
+        "structuralConstraint": "광고·분석 수익 모델을 가진 도구는 UI 소스에서 네트워크 호출을 기계적으로 금지할 수 없다. 금지하는 순간 수익 경로가 사라진다.",
+        "userBenefit": "빌드가 UI 소스의 fetch·sendBeacon·XHR을 검사해 감사된 집계 카운터 1개 외에는 실패시킨다. '로컬 처리'가 마케팅 문구가 아니라 릴리스를 막는 게이트다.",
+        "featureIds": ["F-NETWORK-GATE"]
+      }
+    ],
+    "selectionReasons": [
+      "패리티는 '없으면 개발자가 즉시 다른 도구로 가는 것'만 골랐다 — 로컬 처리, 포맷 폭, 무료·무계정, 문맥 검사.",
+      "beyond는 경쟁의 정체성·수익 구조상 하면 자기 제품이 무너지는 것만 골랐다 — recipe 정체성(CyberChef), 단일 정답 인상, 입력 포함 deep link, 광고 수익.",
+      "recipe builder와 네이티브 전역 단축키는 경쟁의 강점이라 정면 경쟁하지 않고 의도적 제외로 남겼다. 조립이 필요한 사용자에게는 CyberChef가 더 낫다고 문서에 적었다."
+    ]
+  },
+  "humanQuality": {
+    "antiAiRedTeam": [
+      {
+        "id": "generic-gradient",
+        "verdict": "pass",
+        "rationale": "배경이 그라데이션이 아니라 단색 표면 토큰이고 다크·라이트 테마가 같은 토큰 집합에서 파생된다.",
+        "evidenceRef": "apps/web/src/styles"
+      },
+      {
+        "id": "repeated-card-grid",
+        "verdict": "pass",
+        "rationale": "첫 화면이 카드 격자가 아니라 입력창 하나와 그 아래 후보·체인이다. 도구 카탈로그는 별도 라우트에 있고 첫 화면에 47개를 쏟지 않는다.",
+        "evidenceRef": "apps/web/src/pages/index.astro"
+      },
+      {
+        "id": "text-box-brand",
+        "verdict": "pass",
+        "rationale": "처음에 open_defect로 적었다가 실제 자산을 열어보고 정정했다. 브랜드 마크는 제품명을 넣은 네모가 아니라 favicon.svg의 'd' 글자꼴 도형에 accent 사선이 관통하는 벡터 심볼이고, 헤더는 그 심볼(BrandMark 컴포넌트) + 워드마크 조합이다. og.svg에도 도형 요소 14개가 텍스트와 함께 들어 있다.",
+        "evidenceRef": "apps/web/public/favicon.svg"
+      },
+      {
+        "id": "generic-copy",
+        "verdict": "pass",
+        "rationale": "제품 문장이 'Paste anything. See what it is — instantly, locally, safely.'처럼 동작을 그대로 말한다. 'journey'·'empower' 같은 상투어를 쓰지 않는다.",
+        "evidenceRef": "apps/web/src/i18n/catalog.ts"
+      },
+      {
+        "id": "emoji-icon-mismatch",
+        "verdict": "pass",
+        "rationale": "이모지를 아이콘으로 쓰지 않는다.",
+        "evidenceRef": "apps/web/src/components"
+      },
+      {
+        "id": "random-decorative-image",
+        "verdict": "pass",
+        "rationale": "장식용 스톡 이미지가 없다. 화면에 나오는 것은 사용자의 입력과 그 해석뿐이다.",
+        "evidenceRef": "apps/web/src/pages/index.astro"
+      },
+      {
+        "id": "korean-register-drift",
+        "verdict": "intentional_exception",
+        "rationale": "제품 UI는 English first이고 한국어는 8개 로케일 중 하나다(하드 룰 7). 한국어 말투 일관성은 message catalog의 key parity 게이트로 검사하지만, 이 제품의 1차 언어가 아니므로 한국어 어미 통일을 릴리스 기준으로 두지 않는다.",
+        "evidenceRef": "scripts/check-i18n.ts"
+      },
+      {
+        "id": "missing-material-states",
+        "verdict": "pass",
+        "rationale": "한계 초과·미지원 포맷·모호·오류가 각각 결정적 상태로 구현돼 있고 악성 입력 fixture로 검증한다.",
+        "evidenceRef": "tests/e2e/product.spec.ts"
+      },
+      {
+        "id": "competitor-clone",
+        "verdict": "pass",
+        "rationale": "CyberChef의 recipe builder와 DevUtils의 네이티브 전역 단축키를 의도적으로 제외하고 사유를 남겼다. DecodeThis와 약속이 겹친다는 사실도 문서에 명시하고, 차별을 신뢰도·근거·안전 공유의 결합으로 좁혔다.",
+        "evidenceRef": "docs/research/2026-08-08-competitor-review-audit.md"
+      }
+    ]
+  },
+  "linkedContracts": {
+    "categoryCoverage": "docs/product/category-coverage.json",
+    "visualBrief": "docs/design/visual-brief.json",
+    "visualEvidence": "docs/design/visual-evidence.json",
+    "productionEvidence": "docs/operations/production-evidence.json",
+    "masterChecklist": "docs/prd/CHECKLIST.md"
+  },
+  "implementationEvidence": null,
+  "autonomousClosure": {
+    "noFurtherPromptNeeded": true,
+    "decisionBlockedOnly": true,
+    "unresolvedInternalDecisions": [],
+    "allowedStopConditions": [
+      "decision_blocked",
+      "p_approve_external_mutation",
+      "credential_or_access_missing"
+    ],
+    "externalGates": [
+      {
+        "id": "GATE-LINKED-CONTRACTS",
+        "owner": "agent_next_wave",
+        "status": "blocked",
+        "evidenceNeeded": "category-coverage·visual-brief·visual-evidence·production-evidence 4종을 실제 조사와 실 route render 증거로 만든다. 그 전에는 이 계약이 release_verified로 올라갈 수 없다."
+      }
+    ],
+    "nextReadyId": "CS-DECODING-LINKED-CONTRACTS"
+  }
+}
