@@ -194,9 +194,9 @@ payload egress 가능성이 발견되면:
 
 Desktop privacy suite는 explicit action 밖 clipboard read, file scope 밖 access, update check OFF 상태의 request가 모두 0건임을 검증한다.
 
-## 13. `/e` aggregate open counter — privacy review (2026-08-12)
+## 13-A. `/e/events` aggregate open counter — privacy review (2026-08-12)
 
-`apps/edge/README.md`가 요구한 review다. 이 절이 없으면 `/e` Worker는 존재할 수 없다.
+`apps/edge/README.md`가 요구한 review다. 이 절이 없으면 `/e` Worker는 존재할 수 없다. `/e`가 예약된 경계이고 `/e/events`가 그 안의 이벤트 경로다.
 
 **왜 열었나.** 첫 방문이 한 건도 측정되지 않아 퍼널의 **분모가 없었다**. 분모가 없으면 어떤
 개선도 판정할 수 없고, 포트폴리오 판정자(`check-production-readiness` R-5)도 이 제품을
@@ -212,8 +212,9 @@ Desktop privacy suite는 explicit action 밖 clipboard read, file scope 밖 acce
 쿠키, 식별자, cohort token, Referer 기반 경로. 본문에 이름 외의 **필드 자체가 없다.**
 
 **서버가 저장하는 것.** Analytics Engine에 이벤트 이름당 건수 1. `user_id`·IP·User-Agent를
-읽지도 기록하지도 않는다. allowlist 밖 이름은 저장하지 않고, 어떤 경우에도 204를 돌려준다 —
-계측이 막히거나 실패해도 제품 동작이 달라지지 않는다.
+읽지도 기록하지도 않는다. allowlist 밖 이름은 저장하지 않고, 어떤 경우에도 200 `{"ok":true}`를 돌려준다 —
+계측이 막히거나 실패해도 제품 동작이 달라지지 않는다. 본문 없는 204로 답하면 Chromium이
+완료된 요청을 뒤이어 `ERR_ABORTED`로 보고해 실패처럼 보이므로 아주 작은 본문을 싣는다.
 
 **동의가 필요한가.** 이 카운터는 식별자가 없어 개인을 특정하지 않는다. 서버가 이미 받는
 요청 한 건을 세는 것과 같은 수준이다. 반면 `03-retention.md` §8의 **30일 회전 cohort token은

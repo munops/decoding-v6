@@ -21,7 +21,7 @@ export function countOpen(name: 'app_open' | 'landing_view'): void {
   if (SENT.has(name)) return
   SENT.add(name)
   try {
-    void fetch('/e', {
+    void fetch('/e/events', {
       method: 'POST',
       credentials: 'omit',
       keepalive: true,

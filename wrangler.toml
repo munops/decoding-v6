@@ -15,7 +15,7 @@ binding = "ASSETS"
 not_found_handling = "404-page"
 # Worker는 이 두 경로에서만 실행된다. 나머지 자산 요청은 Worker를 거치지 않는다 —
 # 정적 전달 비용과 지연을 계측 때문에 늘리지 않는다.
-run_worker_first = ["/e", "/healthz"]
+run_worker_first = ["/e", "/e/*", "/healthz"]
 
 # aggregate-only. 이벤트 이름당 건수만 쌓이며 payload·식별자·IP는 들어가지 않는다.
 [[analytics_engine_datasets]]
@@ -30,4 +30,4 @@ routes = []
 directory = "apps/web/dist"
 binding = "ASSETS"
 not_found_handling = "404-page"
-run_worker_first = ["/e", "/healthz"]
+run_worker_first = ["/e", "/e/*", "/healthz"]
