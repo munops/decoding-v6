@@ -314,3 +314,40 @@
 - 매 릴리스: blind 품질·privacy·content parity·rollback 확인
 - 보안 경계·스택·수익 모델 변경: 새 ADR
 - 같은 접근 3회 실패: failure pattern 기록 후 접근 전환
+
+## 2026-08-12 경쟁 실측이 만든 항목
+
+GitHub Issues raw JSON 직독(등급 A)으로 얻은 결과를 제품 작업으로 되돌린 항목이다.
+근거 계약: [`docs/product/complete-service.json`](../product/complete-service.json)
+
+- [ ] **DC-AUTODETECT-01** `todo` — 자동 판별의 신뢰성을 수치로 고정한다.
+  (1) 입력별 판별 시간 상한과 재귀 깊이 상한을 계약으로 정하고 초과 시 예외가 아니라
+  "판별하지 못했습니다" 결과로 표시한다. (2) 결정론적 변환군(ROT13·Rail Fence 등)을 회귀
+  fixture로 고정해 놓치면 테스트가 실패하게 한다. (3) 수동으로 포맷을 고른 뒤 자동 판별로
+  되돌아가는 경로가 화면에 있는지 확인한다. 통과 기준은 fixture 전량 통과 + 상한 초과 입력에서
+  프리즈 0건이다.
+  근거: 이 도구군의 표준인 CyberChef(35,556 stars)의 `Magic`이 정확히 여기서 무너진다 —
+  *"When running the Magic function on certain inputs, the function will hold indefinitely and
+  use up compute resources, then at times errors out."*(#1190), *"bug(Magic): Unhandled Internal
+  Recursion Exception"*(#2698), *"The Magic function is unable to identify ROT13 ciphertext."*(#1095),
+  *"once you set a specific encoding in the out pane, you [can't go back]"*(#1939).
+  **우리 제품의 정체성("Paste anything. See what it is")이 곧 그들의 실패 지점이다.**
+- [ ] **DC-LOCALPROOF-01** `todo` — "0 input bytes uploaded"를 문구가 아니라 관측 가능한 증거로 만든다.
+  붙여넣기부터 결과 표시까지의 네트워크 요청을 사용자가 직접 확인할 수 있는 경로를 제공하고,
+  회귀 테스트로 코어 흐름의 입력 전송 요청 0건을 고정한다. 통과 기준은 (1) 실브라우저에서 코어
+  흐름 중 입력값이 포함된 아웃바운드 요청 0건 (2) 그 사실을 사용자가 제품 안에서 확인할 수 있음이다.
+  근거: it-tools 사용자가 웹 도구를 스스로 Tauri 실행 파일로 감싸 쓰고 있다 —
+  *"Local (offline) executable — I've been using the tool as a Tauri executab[le]"*(#1237, 오프라인
+  관련 미해결 이슈 10건). 로컬 처리는 이 제품의 유일한 구조적 차별점이고, 증명하지 못하면
+  사용자는 같은 우회를 한다.
+- [ ] **DC-I18N-01** `todo` — 언어 전환 시 문자열 커버리지를 검사로 고정한다.
+  8개 언어 각각에 대해 미번역 키 0건을 CI에서 확인하고, 신규 문자열이 번역 없이 배포되지 않게 막는다.
+  근거: it-tools *"[BUG] local deploy language can not fully switch — When I switch the language to
+  Chinese, only a part of context converted."*(#996). 다국어를 표방하고 부분 번역이 남으면
+  신뢰가 먼저 깨진다.
+- [ ] **DC-SCOPE-01** `data_pending` — CLI·에디터 확장은 **의도적 제외**이며 재검토 조건을 고정한다.
+  근거: CyberChef의 반응 수 상위 요청이 기능이 아니라 워크플로 통합이다 —
+  CLI *"performing CyberChef operations on local files without the need for a GUI web app"*(👍15),
+  VSCode Extension *"Currently one has to copy tex[t]"*(👍20). 만족한 사용자가 원하는 다음 단계이지만
+  설치형으로 가면 DevToys와 같은 자리로 이동한다. **웹 사용자가 같은 값을 반복 붙여넣는 행동이
+  관측되면** 재검토한다.
