@@ -5,7 +5,7 @@
   "checkedAt": "2026-08-12",
   "primaryBusinessChannel": "web",
   "researchNote": "이 계약의 경쟁·리뷰 조사는 2026-08-12에 직접 수행했다. 저장소의 기존 감사 문서(docs/research/2026-08-08-competitor-review-audit.md, 2026-07-15-devutils-feature-audit.md)를 재사용하되, 인용은 원 출처를 다시 열어 확인한 원문만 실었다. observedCount는 '그 출처에서 내가 실제로 읽고 분류한 항목 수'이며 전체 코멘트 수의 추정치가 아니다.",
-  "blockedStrictNote": "이 제품은 공개 배포돼 있으므로 판정자는 status=release_verified를 요구하고, 그러면 linkedContracts 5종이 모두 존재하고 release_verified여야 한다. 현재 docs/product/category-coverage.json · docs/design/visual-brief.json · docs/design/visual-evidence.json · docs/operations/production-evidence.json 4종이 없다. 그 4종은 실제 경쟁 화면 조사와 실 route render 증거가 필요한 별도 작업이고, 없는 것을 만들어 채우면 게이트만 통과하고 내용은 위조가 된다. 그래서 이 계약은 status=plan_ready로 두고 --strict 실패를 그대로 남긴다. 시장 증거·심리·superiority·AI red-team은 이 파일에서 이미 닫혀 있으므로 후속 작업은 그 4종만 만들면 된다.",
+  "blockedStrictNote": "공개 배포 제품이라 판정자는 status=release_verified를 요구하고, 그러면 linkedContracts 5종이 모두 존재+release_verified+동일 sourceRevision이어야 한다. 이 저장소에는 category-coverage·visual-brief·visual-evidence·production-evidence 4종이 없다. 계약 연쇄 순서(docs/engineering/product-quality-bar.md §3)는 ① docs/design/visual-brief.json → ② docs/product/category-coverage.json → ③ docs/operations/production-evidence.json → ④ docs/design/visual-evidence.json → ⑤ docs/product/complete-service.json 이고, complete-service는 마지막이다. 즉 이 파일은 연쇄의 끝이며 앞의 4종을 만드는 별도 wave가 선행돼야 한다. 그 4종은 실제 경쟁 화면 조사와 실 route render 증거가 필요하고, 없는 것을 지어내면 게이트만 통과하고 내용은 위조가 된다. 그래서 status=plan_ready로 두고 --strict 실패를 그대로 남긴다. 시장 증거·심리·superiority·AI red-team은 이 파일에서 이미 닫혀 있다. chueokham에서 같은 연쇄를 끝까지 닫아 본 실측 비용: 라이브 3화면 재캡처 + 해시 재계산 + 4개 파일 revision 정렬 + 그 과정에서 발견된 UI 결함 1건 수정·재배포.",
   "opportunityScore": {
     "appsInTossWhitespace": {
       "score": 0,
@@ -537,5 +537,6 @@
       }
     ],
     "nextReadyId": "CS-DECODING-LINKED-CONTRACTS"
-  }
+  },
+  "unmetGateReason": "linked contract 4종 부재 — visual-brief→category-coverage→production-evidence→visual-evidence 순으로 별도 wave 필요"
 }
