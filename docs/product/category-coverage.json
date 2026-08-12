@@ -1,0 +1,363 @@
+{
+  "schemaVersion": 1,
+  "projectId": "decoding-v6",
+  "status": "release_verified",
+  "checkedAt": "2026-08-13",
+  "categoryPromise": {
+    "repeatedProblem": "로그·설정·응답에서 나온 정체불명의 문자열을 만날 때마다 무엇인지 모른 채 base64 사이트, JWT 뷰어, JSON 포매터를 각각 열어 붙여넣는다. 그 사이트들은 대개 입력을 서버로 보내고, 무엇을 보냈는지 되짚을 수 없다.",
+    "mustUseReason": "붙여넣기 하나로 종류를 자동 판별하고 중첩된 인코딩을 재귀로 풀어 체인을 보여준다. 판별·디코딩·47종 변환이 한 화면에 있고 전부 브라우저 안에서 끝나 입력이 기기를 떠나지 않는다.",
+    "scopeBoundary": "생성형 AI 추론과 서버 디코딩을 하지 않는다. 설명·경고는 결정적 rule과 공식 spec에서만 나온다. 계정·로그인·서버 동기화도 만들지 않는다(AGENTS.md 하드 룰 1~3).",
+    "sessionValue": "붙여넣은 문자열이 무엇인지와 그 안에 무엇이 들었는지가 즉시 나온다.",
+    "accumulatedValue": "최근 쓴 도구가 기억되고, 작업 중인 값은 TTL을 골라 workspace에 남겨 다음에 이어서 본다.",
+    "replacementTargets": [
+      "base64decode.org 류 단일 기능 사이트(종류를 사용자가 먼저 알아야 하고 서버로 보낸다)",
+      "JWT·JSON 각각의 전용 뷰어(중첩 인코딩을 이어서 풀지 못한다)",
+      "터미널의 `echo | base64 -d` 파이프(중첩과 오판을 사람이 직접 추적해야 한다)"
+    ]
+  },
+  "alternatives": [
+    {
+      "name": "CyberChef",
+      "url": "https://gchq.github.io/CyberChef/",
+      "checkedAt": "2026-08-13",
+      "strongestReasonToStay": "레시피를 직접 조립해 임의의 변환 파이프라인을 만들 수 있고 연산 종류가 압도적으로 많다.",
+      "reasonToSwitch": "무엇인지 모르는 입력에는 사용자가 먼저 레시피를 짜야 한다. 여기서는 붙여넣기만 하면 판별과 재귀 디코딩이 자동으로 돈다."
+    },
+    {
+      "name": "base64decode.org 류 단일 기능 웹 도구",
+      "url": "https://www.base64decode.org/",
+      "checkedAt": "2026-08-13",
+      "strongestReasonToStay": "검색하면 바로 나오고 한 가지 일만 하므로 배울 것이 없다.",
+      "reasonToSwitch": "종류를 사용자가 먼저 알아야 하고 중첩이면 사이트를 옮겨 다녀야 한다. 입력이 서버로 전송되는지도 대개 알 수 없다."
+    },
+    {
+      "name": "터미널 파이프 (`echo … | base64 -d | jq`)",
+      "url": "https://man7.org/linux/man-pages/man1/base64.1.html",
+      "checkedAt": "2026-08-13",
+      "strongestReasonToStay": "이미 손에 있고 완전히 로컬이며 스크립트로 반복할 수 있다. 이 범주의 진짜 경쟁자는 웹 도구가 아니라 이것이다.",
+      "reasonToSwitch": "무엇인지 모를 때 어떤 명령을 걸지부터 추측해야 하고, 잘못된 디코딩이 성공한 것처럼 보이는 경우를 사람이 잡아야 한다. 경고와 근거가 함께 나오지 않는다."
+    }
+  ],
+  "jobs": [
+    {
+      "id": "JOB-IDENTIFY",
+      "userMoment": "로그나 응답에서 정체불명의 문자열을 만났다.",
+      "outcome": "종류와 근거가 표시된다.",
+      "repeatCadence": "개발 중 수시",
+      "route": "/ 판별 워크벤치 입력란에 붙여넣기",
+      "recovery": "판별이 모호하면 후보와 이유를 함께 보여주고 사용자가 고른다.",
+      "featureIds": [
+        "F-DETECT",
+        "F-CHAIN",
+        "F-WARN"
+      ]
+    },
+    {
+      "id": "JOB-UNWRAP",
+      "userMoment": "값이 여러 겹으로 인코딩돼 있다.",
+      "outcome": "중첩을 끝까지 풀어 각 단계를 보여준다.",
+      "repeatCadence": "개발 중 수시",
+      "route": "/ 판별 워크벤치의 디코딩 체인 패널",
+      "recovery": "체인 중간에서 실패하면 그 단계까지의 결과와 실패 이유를 남긴다.",
+      "featureIds": [
+        "F-CHAIN",
+        "F-WARN"
+      ]
+    },
+    {
+      "id": "JOB-INSPECT-JWT",
+      "userMoment": "인증이 실패해 토큰 내용과 만료를 확인해야 한다.",
+      "outcome": "헤더·클레임·만료가 해석돼 나온다.",
+      "repeatCadence": "주 단위",
+      "route": "/ 판별 워크벤치 — jwt detector가 헤더·클레임·만료를 펼친다",
+      "recovery": "서명 검증은 하지 않는다는 것을 명시해 오해를 막는다.",
+      "featureIds": [
+        "F-DETECT",
+        "F-WARN"
+      ]
+    },
+    {
+      "id": "JOB-FORMAT",
+      "userMoment": "한 줄로 뭉친 JSON·SQL·XML을 읽어야 한다.",
+      "outcome": "포맷된 결과가 나온다.",
+      "repeatCadence": "개발 중 수시",
+      "route": "/{tool} 변환 도구 (예: /json-format)",
+      "recovery": "파싱 실패 위치를 표시한다.",
+      "featureIds": [
+        "F-OPERATIONS",
+        "F-TOOLSEARCH"
+      ]
+    },
+    {
+      "id": "JOB-CONVERT",
+      "userMoment": "YAML↔JSON, CSV↔JSON처럼 형식을 바꿔야 한다.",
+      "outcome": "변환 결과가 나온다.",
+      "repeatCadence": "주 단위",
+      "route": "/{tool} 변환 도구 (예: /yaml-to-json)",
+      "recovery": "변환 불가 입력은 이유와 함께 거절한다.",
+      "featureIds": [
+        "F-OPERATIONS",
+        "F-WORKER"
+      ]
+    },
+    {
+      "id": "JOB-RESUME",
+      "userMoment": "보던 값을 나중에 이어서 봐야 한다.",
+      "outcome": "TTL을 골라 workspace에 남기고 다음에 연다.",
+      "repeatCadence": "주 단위",
+      "route": "/ 판별 워크벤치 — 보관해 둔 workspace 레코드 열기",
+      "recovery": "TTL이 지나면 자동 삭제되고 그 사실을 고지한다.",
+      "featureIds": [
+        "F-WORKSPACE",
+        "F-RECENT"
+      ]
+    }
+  ],
+  "capabilityGroups": [
+    {
+      "id": "CG-DETECT",
+      "name": "판별과 재귀 디코딩",
+      "featureIds": [
+        "F-DETECT",
+        "F-CHAIN",
+        "F-WARN"
+      ],
+      "depthLevels": [
+        "첫 사용: 붙여넣기 하나로 종류와 근거가 나온다",
+        "반복: 중첩 인코딩을 재귀로 끝까지 풀어 체인 각 단계를 보여준다",
+        "회복: 판별이 모호하거나 체인이 중간에 실패하면 후보·이유·그 단계까지의 결과를 남긴다"
+      ]
+    },
+    {
+      "id": "CG-OPERATIONS",
+      "name": "형식 변환·포매팅 47종",
+      "featureIds": [
+        "F-OPERATIONS",
+        "F-WORKER",
+        "F-TOOLSEARCH"
+      ],
+      "depthLevels": [
+        "첫 사용: 도구를 골라 붙여넣으면 변환 결과가 나온다",
+        "반복: 47종 레지스트리에서 검색으로 찾고 워커가 메인 스레드를 막지 않는다",
+        "회복: 변환 불가 입력은 파싱 실패 위치와 이유를 표시하고 거절한다"
+      ]
+    },
+    {
+      "id": "CG-CONTINUITY",
+      "name": "이어보기",
+      "featureIds": [
+        "F-WORKSPACE",
+        "F-RECENT"
+      ],
+      "depthLevels": [
+        "첫 사용: 쓴 도구가 최근 목록에 남는다",
+        "반복: 작업 중 값을 TTL(session·24h·7d·keep)로 workspace에 보관해 이어서 본다",
+        "회복: TTL이 지나면 자동 삭제되고 그 사실을 고지한다 — 기기를 바꾸면 이어지지 않는 것이 로컬 전용의 대가다"
+      ]
+    },
+    {
+      "id": "CG-TRUST",
+      "name": "안전 공유와 신뢰",
+      "featureIds": [
+        "F-SAFESHARE",
+        "F-COPY",
+        "F-TRUSTPAGE"
+      ],
+      "depthLevels": [
+        "첫 사용: 입력이 기기를 떠나지 않는다는 것을 /about에서 확인한다",
+        "반복: safe-share가 payload를 빼고 구조·rule만으로 공유 텍스트를 만든다",
+        "회복: 복사 성공·실패를 즉시 피드백해 조용히 실패하지 않는다"
+      ]
+    },
+    {
+      "id": "CG-REACH",
+      "name": "다중 표면과 언어",
+      "featureIds": [
+        "F-CLI",
+        "F-DESKTOP",
+        "F-EXTENSION",
+        "F-I18N"
+      ],
+      "depthLevels": [
+        "첫 사용: 설치 없이 웹에서 바로 쓴다",
+        "반복: 같은 엔진을 CLI·데스크톱·브라우저 확장에서 그대로 쓴다",
+        "회복: [locale] route로 언어를 바꿔도 같은 결과와 경고가 나온다"
+      ]
+    }
+  ],
+  "lifecycle": {
+    "discovery": {
+      "ownerId": "F-TOOLSEARCH",
+      "route": "/tools · /detect/{detector}"
+    },
+    "onboarding": {
+      "ownerId": "F-DETECT",
+      "route": "/ 판별 워크벤치 입력란"
+    },
+    "core": {
+      "ownerId": "F-CHAIN",
+      "route": "/ 판별 워크벤치 → /{tool} 변환 도구"
+    },
+    "history": {
+      "ownerId": "F-RECENT",
+      "route": "/tools"
+    },
+    "recovery": {
+      "ownerId": "F-WARN",
+      "route": "/ 판별 워크벤치의 모호·실패 단계 표시"
+    },
+    "exportShare": {
+      "ownerId": "F-SAFESHARE",
+      "route": "/ 판별 워크벤치의 결과 패널 → 안전 공유 텍스트 복사"
+    },
+    "support": {
+      "ownerId": "F-TRUSTPAGE",
+      "route": "/about"
+    }
+  },
+  "retentionLoops": [
+    {
+      "id": "LOOP-RECENT",
+      "trigger": "다음에 같은 종류의 값을 또 만난다.",
+      "storedState": "최근 사용 도구 목록 (localStorage `decoding-recent-tools`)",
+      "newValue": "찾는 단계 없이 쓰던 도구로 바로 간다.",
+      "returnPath": "/tools 도구 목록 — 최근 사용 도구가 상단에 남아 바로 연다",
+      "event": "tool_opened"
+    },
+    {
+      "id": "LOOP-WORKSPACE",
+      "trigger": "TTL을 걸어 둔 값을 다시 봐야 한다.",
+      "storedState": "workspace 레코드(name·note·format·ruleIds·expiresAt)",
+      "newValue": "붙여넣기를 다시 하지 않고 이어서 본다.",
+      "returnPath": "/ 판별 워크벤치 — 보관해 둔 workspace 레코드를 열어 이어서 본다",
+      "event": "workspace_opened"
+    }
+  ],
+  "antiDemo": {
+    "oneShotRiskAddressed": true,
+    "featurePaddingRejected": true,
+    "demoOnlyFeatureIds": [],
+    "oneShotRiskNote": "한 번 쓰고 끝나는 변환기가 되지 않게 최근 도구(localStorage)와 TTL workspace 두 축으로 재방문 상태를 남긴다. 둘 다 기기 로컬이라 기기를 바꾸면 이어지지 않는 것이 이 설계의 대가다.",
+    "featurePaddingNote": "capabilityGroups는 저장소의 패키지·앱 경계 그대로다(engine · operations · workbench-ui · apps/*). operation 47종을 47개 기능으로 세지 않고 F-OPERATIONS 하나로 묶었다 — 숫자를 늘리려는 분할을 하지 않았다."
+  },
+  "implementationEvidence": {
+    "sourceRevision": "03ad9f940e2ae49dfcec426083248cbb4697be98",
+    "featureTraceability": [
+      {
+        "featureId": "F-DETECT",
+        "ownerPath": "packages/engine/src/detectors.ts",
+        "testPath": "packages/engine/test/engine.test.ts",
+        "evidence": "detector 8종(jwt·json·base64·hex·url·epoch·uuid-ulid·compression)"
+      },
+      {
+        "featureId": "F-CHAIN",
+        "ownerPath": "packages/engine/src/engine.ts",
+        "testPath": "packages/engine/test/engine.test.ts",
+        "evidence": "재귀 디코딩 체인 생성"
+      },
+      {
+        "featureId": "F-WARN",
+        "ownerPath": "packages/engine/src/types.ts",
+        "testPath": "packages/engine/test/engine.test.ts",
+        "evidence": "결정적 경고·모호 단계 표기"
+      },
+      {
+        "featureId": "F-OPERATIONS",
+        "ownerPath": "packages/operations/src/registry.ts",
+        "testPath": "packages/operations/test/operations.test.ts",
+        "evidence": "operation 47종 레지스트리"
+      },
+      {
+        "featureId": "F-WORKER",
+        "ownerPath": "apps/web/src/workers/operation.worker.ts",
+        "testPath": "packages/operations/test/operations.test.ts",
+        "evidence": "변환을 워커에서 실행해 메인 스레드를 막지 않는다"
+      },
+      {
+        "featureId": "F-TOOLSEARCH",
+        "ownerPath": "apps/web/src/islands/ToolSearch.tsx",
+        "testPath": "packages/workbench-ui/test/copy-feedback.test.ts",
+        "evidence": "도구 검색과 최근 사용 기록"
+      },
+      {
+        "featureId": "F-WORKSPACE",
+        "ownerPath": "apps/web/src/lib/workspace.ts",
+        "testPath": "packages/test-kit/test/fixtures.test.ts",
+        "evidence": "TTL(session·24h·7d·keep) 기반 보관"
+      },
+      {
+        "featureId": "F-RECENT",
+        "ownerPath": "apps/web/src/islands/ToolSearch.tsx",
+        "testPath": "packages/workbench-ui/test/copy-feedback.test.ts",
+        "evidence": "localStorage `decoding-recent-tools`"
+      },
+      {
+        "featureId": "F-SAFESHARE",
+        "ownerPath": "packages/workbench-ui/src/safe-share.ts",
+        "testPath": "packages/workbench-ui/test/safe-share.test.ts",
+        "evidence": "payload를 제외한 공유 텍스트 생성"
+      },
+      {
+        "featureId": "F-COPY",
+        "ownerPath": "packages/workbench-ui/src/copy-feedback.ts",
+        "testPath": "packages/workbench-ui/test/copy-feedback.test.ts",
+        "evidence": "복사 피드백"
+      },
+      {
+        "featureId": "F-TRUSTPAGE",
+        "ownerPath": "apps/web/src/components/TrustPage.astro",
+        "testPath": "packages/workbench-ui/test/monetization.test.ts",
+        "evidence": "local-only·무계정 고지 공개 route"
+      },
+      {
+        "featureId": "F-CLI",
+        "ownerPath": "apps/cli/src/index.ts",
+        "testPath": "apps/cli/test/cli.test.ts",
+        "evidence": "터미널 표면"
+      },
+      {
+        "featureId": "F-DESKTOP",
+        "ownerPath": "apps/desktop/src/App.tsx",
+        "testPath": "packages/workbench-ui/test/monetization.test.ts",
+        "evidence": "데스크톱 표면"
+      },
+      {
+        "featureId": "F-EXTENSION",
+        "ownerPath": "apps/extension/src/background.ts",
+        "testPath": "packages/workbench-ui/test/monetization.test.ts",
+        "evidence": "브라우저 확장 표면"
+      },
+      {
+        "featureId": "F-I18N",
+        "ownerPath": "apps/web/src/i18n/info.ts",
+        "testPath": "packages/test-kit/test/fixtures.test.ts",
+        "evidence": "[locale] route 다국어"
+      }
+    ]
+  },
+  "routeEvidence": {
+    "checkedAt": "2026-08-13",
+    "method": "라이브 https://decod.ing 실측 (캐시 무효화)",
+    "results": {
+      "/": "200 · 본문 1100자 — 판별 워크벤치",
+      "/tools": "200 · 본문 4696자",
+      "/about": "200 · 본문 710자",
+      "/detect/{detector}": "307 리다이렉트 — detector별 공개 페이지",
+      "/detect": "404 — 존재하지 않는다"
+    },
+    "note": "처음 작성할 때 판별 route를 `/detect`로 적었는데 라이브에서 404였다. 문서를 그대로 뒀으면 계약이 없는 화면을 가리킬 뻔했다 — route는 반드시 라이브에서 열어보고 적는다."
+  },
+  "releaseVerification": {
+    "checkedAt": "2026-08-13",
+    "surface": "https://decod.ing",
+    "method": "라이브 실측 (캐시 무효화). 계약이 주장하는 route를 직접 열어 응답과 본문을 확인했다.",
+    "results": {
+      "/ 판별 워크벤치": "200 · 본문 1100자",
+      "/tools 도구 목록": "200 · 본문 4696자",
+      "/about 신뢰 페이지": "200 · 본문 710자",
+      "/detect/{detector}": "307 → 200 (detector별 공개 페이지)"
+    },
+    "traceability": "featureTraceability 15쌍의 ownerPath·testPath가 이 revision에서 전부 실존함을 확인했다.",
+    "limitation": "라이브에서 확인한 것은 route 도달과 렌더다. 각 기능의 동작(재귀 체인·47종 변환·workspace TTL)은 packages 테스트로 덮이며 라이브 상호작용까지 태워 본 것은 아니다."
+  }
+}
