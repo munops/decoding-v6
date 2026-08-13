@@ -46,8 +46,10 @@
       "apps/web/src/islands/WebTool.tsx",
       "packages/workbench-ui/src/monetization.ts"
     ],
-    "sourceDigest": "sha256:d45030f738445461761636810d2feace653575246c239846476afbf53eaa21fa",
-    "requiredBeforeRelease": true
+    "sourceDigest": "sha256:807c8484a0d31b2e1bccaba4931497c058e255e19786069783a7f50caebf808a",
+    "requiredBeforeRelease": true,
+    "rejudgedAt": "2026-08-13",
+    "rejudgeNote": "owner 파일이 바뀌었으나 diff에 route 추가·화면 추가·첫 가치 event 변경 신호가 0줄이라 지면 판정이 그대로 유효하다. 이 회차 변경은 canonical 도메인 전환과 보안 헤더가 중심이며 광고 지면의 위치·빈도·금지 순간을 건드리지 않는다. 해시를 맞추려고 올린 것이 아니라 재판정 결과가 '변화 없음'이어서 올렸다."
   },
   "globalNoAdMoments": [
     "first_visit",
@@ -65,7 +67,9 @@
     "web": {
       "decision": "selected",
       "provider": "Direct self-sold contextual sponsor",
-      "allowedFormats": ["responsive_display"],
+      "allowedFormats": [
+        "responsive_display"
+      ],
       "productionActivated": false
     },
     "appsInToss": {
@@ -95,7 +99,9 @@
       "classification": "conditional",
       "impressionCommit": "provider_confirmed_callback_only",
       "noFillBehavior": "collapse_zero_gap",
-      "formatByChannel": { "web": "responsive_display" },
+      "formatByChannel": {
+        "web": "responsive_display"
+      },
       "trigger": "successful_local_operation_then_below_fold_viewability",
       "frequencyCap": {
         "maxPerSession": 1,
@@ -132,7 +138,9 @@
         "cooldownSeconds": null
       },
       "firstValueRequired": true,
-      "excludedStates": ["all_first_value_input_result_ranking_and_non_web_surfaces"],
+      "excludedStates": [
+        "all_first_value_input_result_ranking_and_non_web_surfaces"
+      ],
       "rationale": "Input, the first local result, result ordering, and every non-web channel remain sponsor-free.",
       "codeOwner": null,
       "testOwner": "packages/workbench-ui/test/monetization.test.ts"
@@ -151,7 +159,10 @@
       "ad_revenue_fee",
       "ad_revenue_net"
     ],
-    "forbiddenMarketingMetrics": ["campaign_spend", "campaign_cac"]
+    "forbiddenMarketingMetrics": [
+      "campaign_spend",
+      "campaign_cac"
+    ]
   },
   "reconciliation": {
     "window": "previous_calendar_day_Asia_Seoul",
