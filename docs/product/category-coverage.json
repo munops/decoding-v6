@@ -240,6 +240,151 @@
     "oneShotRiskNote": "한 번 쓰고 끝나는 변환기가 되지 않게 최근 도구(localStorage)와 TTL workspace 두 축으로 재방문 상태를 남긴다. 둘 다 기기 로컬이라 기기를 바꾸면 이어지지 않는 것이 이 설계의 대가다.",
     "featurePaddingNote": "capabilityGroups는 저장소의 패키지·앱 경계 그대로다(engine · operations · workbench-ui · apps/*). operation 47종을 47개 기능으로 세지 않고 F-OPERATIONS 하나로 묶었다 — 숫자를 늘리려는 분할을 하지 않았다."
   },
+  "adjacentJobs": {
+    "checkedAt": "2026-08-20",
+    "seedFeature": "정체불명의 문자열을 워크벤치 입력란에 붙여넣어 무엇인지 판별한다 (F-DETECT · /)",
+    "windows": [
+      {
+        "window": "before_30min",
+        "jobs": [
+          {
+            "job": "회사 토큰이나 고객 데이터를 붙여넣기 직전 망설이며 이 값이 어디로도 나가지 않는지 확인한다",
+            "verdict": "covered",
+            "featureIds": ["F-TRUSTPAGE"],
+            "reason": ""
+          },
+          {
+            "job": "지금 필요한 변환이 이 도구에 있는지 47종 목록에서 찾아 연다",
+            "verdict": "covered",
+            "featureIds": ["F-TOOLSEARCH"],
+            "reason": ""
+          },
+          {
+            "job": "터미널이나 로그에서 값을 복사한 직후 탭을 찾지 않고 단축키 한 번으로 판별 화면을 띄운다",
+            "verdict": "intentionally_excluded",
+            "featureIds": [],
+            "reason": "코드는 있는데 약속하지 않는다. apps/desktop·apps/extension·apps/cli 표면이 저장소에 실재하지만(F-DESKTOP·F-EXTENSION·F-CLI) PRD-10 데스크톱 수요 게이트와 확장 별도 수요 게이트가 미측정이라 /download 지면이 이들을 「엔지니어링 빌드」로 명시하고 공개 릴리스를 약속하지 않는다. 여기서 covered를 주장하면 사용자가 받을 수 없는 것을 카테고리 커버리지로 세는 것이 된다. 게다가 클립보드 상시 감지는 AGENTS.md 하드 룰 10(desktop least privilege — clipboard는 명시적 단축키/액션에서만)의 경계에 바로 닿아 권한 범위를 먼저 확정해야 한다. 수요 게이트가 닫히면 selected로 승격한다. later: KCAP-CLIPBOARD-WATCH · KCAP-CLI-PIPE."
+          }
+        ]
+      },
+      {
+        "window": "after_30min",
+        "jobs": [
+          {
+            "job": "한 번 풀었더니 또 인코딩된 값이 나와 Base64 → gzip → JSON처럼 겹마다 끝까지 따라간다",
+            "verdict": "covered",
+            "featureIds": ["F-CHAIN", "F-WARN"],
+            "reason": ""
+          },
+          {
+            "job": "판별 결과가 예상과 달라 어떤 증거가 몇 점을 주었는지 보고 후보를 직접 고른다",
+            "verdict": "covered",
+            "featureIds": ["F-DETECT", "F-WARN"],
+            "reason": ""
+          },
+          {
+            "job": "붙여넣었는데 아무 후보도 나오지 않아 이 값이 Base32인지 ROT13인지 확인한다",
+            "verdict": "intentionally_excluded",
+            "featureIds": [],
+            "reason": "공급 공백이고, 라이브 문구가 그 공백보다 넓다. packages/engine/src/detectors.ts의 detector는 8종(jwt·json·base64·hex·url·epoch·uuid-ulid·compression)인데 공식 규격 RFC 4648 하나만 대 봐도 정의된 5종 중 Base32·Base32hex 2종이 없고, 이 카테고리가 표준으로 세는 Base85·ROT13/Caesar·Morse·이진은 0종이다. 그런데 / 의 h1은 전칭 「Paste anything. See what it is.」다. 기능을 하나 더해서 닫히지 않는 이유는 하드 룰 5다 — public positive/edge/negative + blind fixture + cross-negative + precision/recall 게이트 없이는 detector를 merge하지 않는다. 알파벳마다 그 fixture 세트가 공급돼야 열린다. 그때까지 화면은 「판별하지 못했습니다」를 정직하게 표시하는 쪽으로 좁힌다(DC-AUTODETECT-01). later: KCAP-ALPHABET-WIDEN · KCAP-CLASSIC-CIPHER."
+          },
+          {
+            "job": "만료된 토큰·비정규 Base64 경고를 받고 그게 어느 규격의 어느 조항에서 나왔는지 확인해 팀에 근거로 제시한다",
+            "verdict": "intentionally_excluded",
+            "featureIds": [],
+            "reason": "재료를 엔진이 이미 만들고 화면이 버린다. packages/engine/src/types.ts가 LintWarning.specUrl과 Detection.metadata를 선언하고 detectors.ts가 실제로 채우는데(rfc7519 링크, jwt algorithm, uuid version/variant 'RFC 4122', compression ratio) packages/workbench-ui/src와 apps/web/src 전수 grep에서 이 둘을 읽는 파일이 각각 0건이다. 즉 근거의 절반이 렌더 경로 없이 폐기된다. 배선만 하면 될 것 같지만 먼저 정할 것이 있다 — 경고마다 어느 조항까지를 정본으로 걸지(spec-registry의 anchor 단위)와 metadata 중 무엇이 사용자에게 의미 있는 속성인지다. 아무거나 다 펼치면 결정적 근거가 아니라 디버그 덤프가 된다. later: KCAP-WARNING-SPEC-LINK · KCAP-METADATA-READ."
+          }
+        ]
+      },
+      {
+        "window": "same_day",
+        "jobs": [
+          {
+            "job": "한 줄로 뭉친 JSON·SQL·XML을 읽으려 포맷하고 파싱이 깨진 위치를 찾는다",
+            "verdict": "covered",
+            "featureIds": ["F-OPERATIONS", "F-TOOLSEARCH"],
+            "reason": ""
+          },
+          {
+            "job": "YAML↔JSON, CSV↔JSON처럼 형식을 바꾸고 변환 불가 입력은 이유와 함께 거절받는다",
+            "verdict": "covered",
+            "featureIds": ["F-OPERATIONS", "F-WORKER"],
+            "reason": ""
+          },
+          {
+            "job": "판별 결과를 동료나 이슈에 붙이되 값 자체는 빼고 구조·경고·근거만 담는다",
+            "verdict": "covered",
+            "featureIds": ["F-SAFESHARE", "F-COPY"],
+            "reason": ""
+          },
+          {
+            "job": "인증 실패를 쫓다가 이 토큰이 위조된 것은 아닌지 서명을 검증한다",
+            "verdict": "intentionally_excluded",
+            "featureIds": [],
+            "reason": "영구 제외다. 서명 검증은 신뢰된 키가 있어야 성립하고, 키 관리와 신뢰 판단은 로컬 전용·무계정 제품이 책임질 수 있는 영역이 아니다(하드 룰 2 zero account). 무엇보다 틀린 「검증됨」은 틀린 「모르겠음」보다 훨씬 비싸다 — 사용자가 위조 토큰을 통과시킨다. 대체 경로는 각 언어의 표준 라이브러리와 팀의 키 인프라이고, 제품은 검증하지 않는다는 사실을 결과 화면 경고 JWT-SIGNATURE-UNVERIFIED(「The signature is decoded but not verified without a trusted key.」)로 매번 고지한다. KCAP-SIGNATURE-VERIFY intentional_exclude."
+          }
+        ]
+      },
+      {
+        "window": "same_week",
+        "jobs": [
+          {
+            "job": "보던 값을 나중에 이어서 봐야 해 TTL을 골라 로컬에 남기고 다음 세션에 연다",
+            "verdict": "covered",
+            "featureIds": ["F-WORKSPACE", "F-RECENT"],
+            "reason": ""
+          },
+          {
+            "job": "같은 종류의 값을 또 만나 지난번에 쓰던 도구로 찾는 단계 없이 바로 간다",
+            "verdict": "covered",
+            "featureIds": ["F-RECENT", "F-TOOLSEARCH"],
+            "reason": ""
+          },
+          {
+            "job": "정말 아무것도 안 보내는지 말이 아니라 증거로 확인하고 싶어 스스로 네트워크를 들여다본다",
+            "verdict": "intentionally_excluded",
+            "featureIds": [],
+            "reason": "현재 답은 / 상단의 「0 input bytes uploaded」 카운터와 /about 신뢰 페이지다. 둘 다 우리가 우리를 세는 자기증명이라, 의심하는 사용자가 원하는 것을 주지 못한다 — 로컬 처리는 이 제품의 유일한 구조적 차별점이므로 그 증거만은 우리 말이 아니어야 한다. 브라우저가 준 사실(요청 관측·CSP 보고 같은 제3자 신호)로 세는 형태와, 그 지면이 광고 로드 같은 정당한 비-payload 요청을 어떻게 구분해 보여 줄지를 확정하기 전에는 카운터를 증거라고 부르지 않는다. later: KCAP-NETWORK-PROOF."
+          },
+          {
+            "job": "키가 없는 암호문을 풀어 내용을 본다",
+            "verdict": "intentionally_excluded",
+            "featureIds": [],
+            "reason": "제품 범위 밖이다. 「decoding」이라는 이름 때문에 복호화를 기대할 수 있지만, 인코딩 해독(가역 변환)과 암호 해독(키 또는 취약점 필요)은 성립 조건이 다르다. 하드 룰 3(deterministic only — 생성형 추론 없이 결정적 rule만)에서 키 없는 해독은 추측이 되고, 추측 결과를 결과 카드에 올리는 순간 이 제품이 파는 신뢰가 무너진다. 사용자는 /methodology의 범위 절에서 이 경계를 읽고 다른 도구로 간다. KCAP-CIPHER-BREAK intentional_exclude."
+          }
+        ]
+      },
+      {
+        "window": "same_month",
+        "jobs": [
+          {
+            "job": "새 동료나 보안 담당에게 이 도구를 왜 사내에서 써도 되는지 설명하고 채택 여부를 정한다",
+            "verdict": "covered",
+            "featureIds": ["F-TRUSTPAGE"],
+            "reason": ""
+          },
+          {
+            "job": "TTL이 지나 보관해 둔 값이 사라진 것을 확인하고 다시 남길지 정한다",
+            "verdict": "covered",
+            "featureIds": ["F-WORKSPACE"],
+            "reason": ""
+          },
+          {
+            "job": "영어가 아닌 화면으로 팀과 함께 쓴다",
+            "verdict": "covered",
+            "featureIds": ["F-I18N"],
+            "reason": ""
+          },
+          {
+            "job": "예전에 아무 후보도 못 얻었던 값을 다시 붙여넣어 그동안 판별 폭이 늘었는지 본다",
+            "verdict": "intentionally_excluded",
+            "featureIds": [],
+            "reason": "두 가지가 함께 없다. 하나는 폭 자체다 — 알파벳별 fixture·정밀도 게이트가 서기 전에는 detector 8종이 그대로다(위 after_30min 항목과 같은 공급 축, KCAP-ALPHABET-WIDEN·KCAP-CLASSIC-CIPHER). 다른 하나는 무엇이 늘었는지 알려 줄 자리다 — 지금 /detect/{detector}는 현재 8개 지면만 보여 주고 언제 무엇이 추가됐는지의 이력이 없어, 재시도할 이유를 사용자가 스스로 만들 수 없다. 판별 폭이 늘기 전에 변경 이력 지면만 먼저 만들면 빈 목록을 공개하는 것이라 순서를 뒤집지 않는다."
+          }
+        ]
+      }
+    ]
+  },
   "implementationEvidence": {
     "sourceRevision": "03ad9f940e2ae49dfcec426083248cbb4697be98",
     "featureTraceability": [
