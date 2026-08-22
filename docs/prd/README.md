@@ -12,7 +12,7 @@
 
 ## 1. 제품 정의
 
-> **Paste anything. See what it is — instantly, locally, safely.**
+> **Trace the value. Keep the evidence — instantly, locally, safely.**
 
 정체불명의 문자열·바이너리(JWT, Base64, Hex, timestamp, certificate 등)를 붙여넣거나 파일로 놓으면 브라우저가 포맷을 자동 판별하고, 중첩된 인코딩을 재귀적으로 풀어 구조·위험·다음 행동을 보여준다.
 

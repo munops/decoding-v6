@@ -95,7 +95,7 @@ test('an online navigation replaces a stale cached document before rendering', a
     )
   })
   await page.reload()
-  await expect(page.getByRole('heading', { name: /Paste anything/i })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /Trace the value/i })).toBeVisible()
   await expect(page.getByText('stale shell must not render')).toHaveCount(0)
   await expect(page.getByLabel('Paste text or drop a file')).toBeVisible()
 })

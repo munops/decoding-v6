@@ -81,6 +81,8 @@
 
 `DC-UX-01`은 빈 상태에서 실제 차별화를 바로 체험시키는 구현 단위다. 홈 decoder 위에만 `Base64 → JSON` 중첩 체인, Hex/Base64 모호성, 만료 JWT 결정적 경고의 합성 사례 세 개를 action button으로 제공한다. 선택은 입력을 로컬 workbench에 명시적으로 채울 뿐 자동 clipboard read, payload URL, 저장, analytics, 외부 요청을 만들지 않는다. 47개 도구 수는 홈의 주된 proof가 아니며 catalog와 하단 보조 설명에서만 유지한다.
 
+`DC-LANDING-05`는 홈을 기능 소개 페이지가 아니라 **첫 판독을 시작하는 작업면**으로 고정한다. 첫 화면에는 한 줄의 구체적인 promise, local 처리 증거, 실제 textarea와 실행 가능한 합성 사례만 둔다. 자동 감지·중첩 체인·confidence·47개 도구를 각각 다시 설명하는 feature matrix, 장식 SVG, 같은 결론을 반복하는 card section은 두지 않는다. 각각의 상세 근거는 입력 뒤의 decode chain/inspector, `/method/`, `/tools/`에서 맥락에 맞게 보여 준다. 따라서 첫 가치 경로는 `도착 → 붙여넣기 또는 안전 사례 선택 → 후보/근거 확인`이며, 기능을 더 소개하기 위해 별도 랜딩 block을 추가하지 않는다. 구현 전 실제 화면·동종 도구 비교·재검토 근거는 [DC-LANDING-05 작업 기록](../work/completed/2026-08-21-object-first-home.md)에 남긴다.
+
 ### B. 판별 중
 
 - 100ms 이하는 spinner를 보이지 않음

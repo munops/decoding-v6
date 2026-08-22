@@ -199,22 +199,6 @@ export type HomeMessages = {
   sampleNested: string
   sampleAmbiguous: string
   sampleExpired: string
-  principles: string
-  autoTitle: string
-  autoBody: string
-  chainTitle: string
-  chainBody: string
-  confidenceTitle: string
-  confidenceBody: string
-  sensitive: string
-  workbench: string
-  evidenceTitle: string
-  evidenceBody: string
-  warningTitle: string
-  warningBody: string
-  toolsTitle: string
-  toolsBody: string
-  toolsLink: string
 }
 
 export const homeMessages: Record<Locale, HomeMessages> = {
@@ -223,7 +207,7 @@ export const homeMessages: Record<Locale, HomeMessages> = {
     description:
       'Paste an unknown value, rank plausible formats, and follow nested layers without uploading your input.',
     eyebrow: 'Local triage for unknown developer data',
-    heading: 'Paste anything.\nSee what it is.',
+    heading: 'Trace the value.\nKeep the evidence.',
     intro:
       'Start with the value, not a format picker. decod.ing ranks plausible formats, follows nested layers, and shows the evidence and warnings on this device.',
     uploaded: 'input bytes uploaded',
@@ -231,30 +215,13 @@ export const homeMessages: Record<Locale, HomeMessages> = {
     sampleNested: 'Nested Base64 → JSON',
     sampleAmbiguous: 'Ambiguous Hex or Base64',
     sampleExpired: 'Expired JWT warning',
-    principles: 'Product principles',
-    autoTitle: 'Auto-detect',
-    autoBody: 'No format picker before you start.',
-    chainTitle: 'Recursive chain',
-    chainBody: 'Base64 → gzip → JSON in one view.',
-    confidenceTitle: 'Honest confidence',
-    confidenceBody: 'Ambiguous candidates stay visible.',
-    sensitive: 'Built for sensitive debugging',
-    workbench: 'A local workbench, not another upload form.',
-    evidenceTitle: 'Format evidence',
-    evidenceBody: 'Every candidate shows confidence and the evidence that produced it.',
-    warningTitle: 'Deterministic warnings',
-    warningBody:
-      'Rules explain expired tokens, unverified signatures, and safety limits without an LLM.',
-    toolsTitle: 'Purpose-built tools',
-    toolsBody: 'Format, convert, inspect, generate, and encode with 47 dedicated local operations.',
-    toolsLink: 'Explore all tools →',
   },
   ko: {
     title: 'decod.ing — 기기에서 실행되는 범용 디코더',
     description:
       '개발자 데이터를 기기에서 감지·디코딩·검사·변환하세요. 47개 도구, 계정과 업로드 없음.',
     eyebrow: '계정 없는 범용 디코더',
-    heading: '무엇이든 붙여넣고,\n형식을 확인하세요.',
+    heading: '값을 추적하고,\n근거를 남기세요.',
     intro:
       '불투명한 값을 감지하고 중첩 인코딩을 따라가며 규칙 기반 경고를 확인합니다. 모든 처리는 이 기기에서 실행됩니다.',
     uploaded: '업로드된 바이트',
@@ -262,29 +229,13 @@ export const homeMessages: Record<Locale, HomeMessages> = {
     sampleNested: '중첩 Base64 → JSON',
     sampleAmbiguous: '모호한 Hex 또는 Base64',
     sampleExpired: '만료된 JWT 경고',
-    principles: '제품 원칙',
-    autoTitle: '자동 감지',
-    autoBody: '시작 전에 형식을 고를 필요가 없습니다.',
-    chainTitle: '재귀 체인',
-    chainBody: 'Base64 → gzip → JSON을 한 화면에서 확인합니다.',
-    confidenceTitle: '정직한 신뢰도',
-    confidenceBody: '모호한 후보도 숨기지 않습니다.',
-    sensitive: '민감한 디버깅을 위해 설계됨',
-    workbench: '또 하나의 업로드 폼이 아닌 로컬 작업대입니다.',
-    evidenceTitle: '형식 근거',
-    evidenceBody: '각 후보의 신뢰도와 판정 근거를 표시합니다.',
-    warningTitle: '결정론적 경고',
-    warningBody: 'LLM 없이 만료 토큰, 미검증 서명, 안전 제한을 규칙으로 설명합니다.',
-    toolsTitle: '용도별 도구',
-    toolsBody: '47개 로컬 작업으로 포맷·변환·검사·생성·인코딩을 처리합니다.',
-    toolsLink: '모든 도구 보기 →',
   },
   ja: {
     title: 'decod.ing — デバイスで動くユニバーサルデコーダー',
     description:
       '開発者データをデバイス上で検出、デコード、検査、変換。47 ツール、アカウントもアップロードも不要です。',
     eyebrow: 'アカウント不要のユニバーサルデコーダー',
-    heading: '何でも貼り付けて、\n中身を確認。',
+    heading: '値をたどり、\n根拠を残す。',
     intro:
       '不透明な値を検出し、多重エンコードを追跡し、決定論的な警告を検査します。すべてこのデバイス上で実行されます。',
     uploaded: '送信バイト',
@@ -292,57 +243,25 @@ export const homeMessages: Record<Locale, HomeMessages> = {
     sampleNested: '多重 Base64 → JSON',
     sampleAmbiguous: '曖昧な Hex または Base64',
     sampleExpired: '期限切れ JWT の警告',
-    principles: '製品原則',
-    autoTitle: '自動検出',
-    autoBody: '開始前の形式選択は不要です。',
-    chainTitle: '再帰チェーン',
-    chainBody: 'Base64 → gzip → JSON を 1 画面で追跡します。',
-    confidenceTitle: '正直な信頼度',
-    confidenceBody: '曖昧な候補も隠さず表示します。',
-    sensitive: '機密データのデバッグのために',
-    workbench: 'アップロードフォームではなく、ローカルの作業台です。',
-    evidenceTitle: '形式の根拠',
-    evidenceBody: 'すべての候補に信頼度と判定根拠を表示します。',
-    warningTitle: '決定論的な警告',
-    warningBody: 'LLM を使わず、期限切れトークン、未検証の署名、安全上限をルールで説明します。',
-    toolsTitle: '用途別ツール',
-    toolsBody: '47 個のローカル処理で、整形、変換、検査、生成、エンコードを実行します。',
-    toolsLink: 'すべてのツールを見る →',
   },
   'zh-cn': {
     title: 'decod.ing — 在您设备上运行的通用解码器',
     description: '在设备上检测、解码、检查和转换开发者数据。47 个工具，无需账户或上传。',
     eyebrow: '无需账户的通用解码器',
-    heading: '粘贴任意内容，\n立即识别格式。',
+    heading: '追溯这个值，\n保留判定依据。',
     intro: '检测不透明值、跟踪嵌套编码层并检查确定性警告。所有处理均在此设备上完成。',
     uploaded: '上传字节',
     examplesLabel: '尝试安全的合成示例',
     sampleNested: '嵌套 Base64 → JSON',
     sampleAmbiguous: '有歧义的 Hex 或 Base64',
     sampleExpired: '过期 JWT 警告',
-    principles: '产品原则',
-    autoTitle: '自动检测',
-    autoBody: '开始前无需选择格式。',
-    chainTitle: '递归链',
-    chainBody: '在一个视图中跟踪 Base64 → gzip → JSON。',
-    confidenceTitle: '诚实的置信度',
-    confidenceBody: '始终显示有歧义的候选项。',
-    sensitive: '专为敏感调试而设计',
-    workbench: '这是本地工作台，而不是另一个上传表单。',
-    evidenceTitle: '格式证据',
-    evidenceBody: '每个候选项都会显示置信度和判定依据。',
-    warningTitle: '确定性警告',
-    warningBody: '无需 LLM，通过规则解释过期令牌、未验证签名和安全限制。',
-    toolsTitle: '专用工具',
-    toolsBody: '47 项本地操作，用于格式化、转换、检查、生成和编码。',
-    toolsLink: '查看所有工具 →',
   },
   es: {
     title: 'decod.ing — Decodificador universal en tu dispositivo',
     description:
       'Detecta, decodifica, inspecciona y convierte datos de desarrollo en tu dispositivo. 47 herramientas, sin cuenta ni subidas.',
     eyebrow: 'Decodificador universal sin cuenta',
-    heading: 'Pega cualquier cosa.\nDescubre qué es.',
+    heading: 'Sigue el valor.\nConserva la evidencia.',
     intro:
       'Detecta valores opacos, sigue capas de codificación anidadas y revisa advertencias deterministas. Todo se ejecuta en este dispositivo.',
     uploaded: 'bytes subidos',
@@ -350,30 +269,13 @@ export const homeMessages: Record<Locale, HomeMessages> = {
     sampleNested: 'Base64 → JSON anidado',
     sampleAmbiguous: 'Hex o Base64 ambiguo',
     sampleExpired: 'Advertencia de JWT caducado',
-    principles: 'Principios del producto',
-    autoTitle: 'Detección automática',
-    autoBody: 'No necesitas elegir un formato antes de empezar.',
-    chainTitle: 'Cadena recursiva',
-    chainBody: 'Base64 → gzip → JSON en una sola vista.',
-    confidenceTitle: 'Confianza honesta',
-    confidenceBody: 'Los candidatos ambiguos permanecen visibles.',
-    sensitive: 'Diseñado para depuración sensible',
-    workbench: 'Un banco de trabajo local, no otro formulario de subida.',
-    evidenceTitle: 'Evidencia del formato',
-    evidenceBody: 'Cada candidato muestra su confianza y las evidencias que lo produjeron.',
-    warningTitle: 'Advertencias deterministas',
-    warningBody:
-      'Las reglas explican tokens caducados, firmas no verificadas y límites de seguridad sin un LLM.',
-    toolsTitle: 'Herramientas especializadas',
-    toolsBody: 'Formatea, convierte, inspecciona, genera y codifica con 47 operaciones locales.',
-    toolsLink: 'Ver todas las herramientas →',
   },
   'pt-br': {
     title: 'decod.ing — Decodificador universal no seu dispositivo',
     description:
       'Detecte, decodifique, inspecione e converta dados de desenvolvimento no seu dispositivo. 47 ferramentas, sem conta ou upload.',
     eyebrow: 'Decodificador universal sem conta',
-    heading: 'Cole qualquer coisa.\nDescubra o formato.',
+    heading: 'Rastreie o valor.\nGuarde as evidências.',
     intro:
       'Detecte valores opacos, siga camadas de codificação e veja alertas determinísticos. Tudo roda neste dispositivo.',
     uploaded: 'bytes enviados',
@@ -381,29 +283,13 @@ export const homeMessages: Record<Locale, HomeMessages> = {
     sampleNested: 'Base64 → JSON aninhado',
     sampleAmbiguous: 'Hex ou Base64 ambíguo',
     sampleExpired: 'Alerta de JWT expirado',
-    principles: 'Princípios do produto',
-    autoTitle: 'Detecção automática',
-    autoBody: 'Não é preciso escolher o formato antes de começar.',
-    chainTitle: 'Cadeia recursiva',
-    chainBody: 'Base64 → gzip → JSON em uma única tela.',
-    confidenceTitle: 'Confiança honesta',
-    confidenceBody: 'Candidatos ambíguos continuam visíveis.',
-    sensitive: 'Feito para depuração sensível',
-    workbench: 'Uma bancada local, não outro formulário de upload.',
-    evidenceTitle: 'Evidência de formato',
-    evidenceBody: 'Cada candidato mostra a confiança e as evidências usadas.',
-    warningTitle: 'Alertas determinísticos',
-    warningBody: 'Regras explicam tokens expirados, assinaturas não verificadas e limites sem LLM.',
-    toolsTitle: 'Ferramentas especializadas',
-    toolsBody: 'Formate, converta, inspecione, gere e codifique com 47 operações locais.',
-    toolsLink: 'Ver todas as ferramentas →',
   },
   de: {
     title: 'decod.ing — Universeller Decoder auf Ihrem Gerät',
     description:
       'Entwicklerdaten auf Ihrem Gerät erkennen, decodieren, prüfen und konvertieren. 47 Tools, kein Konto oder Upload.',
     eyebrow: 'Universeller Decoder ohne Konto',
-    heading: 'Alles einfügen.\nFormat erkennen.',
+    heading: 'Wert verfolgen.\nNachweise behalten.',
     intro:
       'Undurchsichtige Werte erkennen, verschachtelte Codierungen verfolgen und regelbasierte Warnungen prüfen. Alles läuft auf diesem Gerät.',
     uploaded: 'hochgeladene Bytes',
@@ -411,29 +297,13 @@ export const homeMessages: Record<Locale, HomeMessages> = {
     sampleNested: 'Verschachteltes Base64 → JSON',
     sampleAmbiguous: 'Mehrdeutiges Hex oder Base64',
     sampleExpired: 'Warnung bei abgelaufenem JWT',
-    principles: 'Produktprinzipien',
-    autoTitle: 'Automatisch erkennen',
-    autoBody: 'Vor dem Start muss kein Format gewählt werden.',
-    chainTitle: 'Rekursive Kette',
-    chainBody: 'Base64 → gzip → JSON in einer Ansicht.',
-    confidenceTitle: 'Ehrliche Konfidenz',
-    confidenceBody: 'Mehrdeutige Kandidaten bleiben sichtbar.',
-    sensitive: 'Für sensible Fehlersuche entwickelt',
-    workbench: 'Eine lokale Werkbank statt eines weiteren Upload-Formulars.',
-    evidenceTitle: 'Formatnachweise',
-    evidenceBody: 'Jeder Kandidat zeigt Konfidenz und die zugrunde liegenden Nachweise.',
-    warningTitle: 'Deterministische Warnungen',
-    warningBody: 'Regeln erklären abgelaufene Token, ungeprüfte Signaturen und Limits ohne LLM.',
-    toolsTitle: 'Spezialisierte Tools',
-    toolsBody: 'Formatieren, konvertieren, prüfen, erzeugen und codieren mit 47 lokalen Vorgängen.',
-    toolsLink: 'Alle Tools ansehen →',
   },
   fr: {
     title: 'decod.ing — Décodeur universel sur votre appareil',
     description:
       'Détectez, décodez, inspectez et convertissez des données de développement sur votre appareil. 47 outils, sans compte ni transfert.',
     eyebrow: 'Décodeur universel sans compte',
-    heading: "Collez n'importe quoi.\nIdentifiez le format.",
+    heading: 'Suivez la valeur.\nGardez les preuves.',
     intro:
       "Détectez les valeurs opaques, suivez les couches d'encodage et examinez les avertissements déterministes. Tout s'exécute sur cet appareil.",
     uploaded: 'octets transférés',
@@ -441,23 +311,6 @@ export const homeMessages: Record<Locale, HomeMessages> = {
     sampleNested: 'Base64 → JSON imbriqué',
     sampleAmbiguous: 'Hex ou Base64 ambigu',
     sampleExpired: 'Avertissement JWT expiré',
-    principles: 'Principes du produit',
-    autoTitle: 'Détection automatique',
-    autoBody: 'Aucun format à choisir avant de commencer.',
-    chainTitle: 'Chaîne récursive',
-    chainBody: 'Base64 → gzip → JSON dans une seule vue.',
-    confidenceTitle: 'Confiance transparente',
-    confidenceBody: 'Les candidats ambigus restent visibles.',
-    sensitive: 'Conçu pour le débogage sensible',
-    workbench: 'Un atelier local, pas un formulaire de transfert de plus.',
-    evidenceTitle: 'Preuves de format',
-    evidenceBody: 'Chaque candidat affiche son niveau de confiance et les preuves utilisées.',
-    warningTitle: 'Avertissements déterministes',
-    warningBody:
-      'Des règles expliquent les jetons expirés, signatures non vérifiées et limites sans LLM.',
-    toolsTitle: 'Outils spécialisés',
-    toolsBody: 'Formatez, convertissez, inspectez, générez et encodez avec 47 opérations locales.',
-    toolsLink: 'Voir tous les outils →',
   },
 }
 

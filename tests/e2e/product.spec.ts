@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 
 test('auto-detects a nested Base64 JSON payload locally', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: /Paste anything/i })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /Trace the value/i })).toBeVisible()
   const input = page.getByLabel('Paste text or drop a file')
   await input.fill('eyJsb2NhbCI6dHJ1ZSwidG9vbHMiOjQ3fQ==')
   await expect(page.getByText('Base64', { exact: false }).first()).toBeVisible()

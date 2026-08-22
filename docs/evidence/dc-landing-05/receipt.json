@@ -1,0 +1,61 @@
+{
+  "id": "DC-LANDING-05",
+  "capturedAt": "2026-08-21",
+  "baseRevision": "31d57c34847009a8ba61b07a250ebdb778f600aa",
+  "scope": {
+    "route": "/",
+    "change": "object-first landing: remove duplicate principle panel and feature-card matrix while preserving the live decoder and synthetic triage cases",
+    "excluded": [
+      "engine or detector behavior",
+      "payload, storage, analytics, or network boundary",
+      "provider mutation, deployment, or public release"
+    ]
+  },
+  "captures": [
+    {
+      "path": "home-chromium.png",
+      "viewport": "Desktop Chrome",
+      "width": 1280,
+      "height": 1241,
+      "sha256": "e21b8634d442ac848056dcad41bcd85dc79b8d5f0424f5f5fd3b2d29a16e0703"
+    },
+    {
+      "path": "home-mobile.png",
+      "viewport": "Pixel 7",
+      "width": 1082,
+      "height": 3560,
+      "sha256": "5dcfdf9c21de42e8b841afa8854d0aa343ac182429c6de7245b9cf04a9e1c4a2"
+    },
+    {
+      "path": "tools-chromium.png",
+      "viewport": "Desktop Chrome",
+      "width": 1280,
+      "height": 5426,
+      "sha256": "a644ebb78e526a81f1750b52e558aa46f9762f6b0e92d783caeb8ea0d324a54c"
+    },
+    {
+      "path": "tools-mobile.png",
+      "viewport": "Pixel 7",
+      "width": 1082,
+      "height": 31959,
+      "sha256": "0a2748bec21af7cb6f942721547195d5cf79635f6bcb14748ee085adaae80ea8"
+    }
+  ],
+  "commands": [
+    "pnpm test",
+    "pnpm --filter @decoding/web build",
+    "DECODING_LANDING_EVIDENCE_DIR=docs/evidence/dc-landing-05 PLAYWRIGHT_PORT=4328 node ../scripts/run-agent-browser.mjs --timeout-ms 90000 -- pnpm exec playwright test tests/e2e/product.spec.ts tests/e2e/responsive.spec.ts --project=chromium --project=mobile",
+    "PLAYWRIGHT_PORT=4329 node ../scripts/run-agent-browser.mjs --timeout-ms 120000 -- pnpm exec playwright test",
+    "pnpm typecheck",
+    "pnpm lint",
+    "pnpm --filter @decoding/extension build",
+    "pnpm check:extension",
+    "node ../scripts/check-portfolio-distinctiveness.mjs --project decoding-v6"
+  ],
+  "result": {
+    "browser": "32 passed, 1 mobile-only skip",
+    "productTests": "30 passed",
+    "production": "not deployed",
+    "userValue": "not measured"
+  }
+}

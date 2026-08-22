@@ -1,7 +1,7 @@
 ---
 import WebDecoder from '../islands/WebDecoder'
 import Layout from '../layouts/Layout.astro'
-import { homeMessages, localePath, type Locale } from '../i18n/catalog'
+import { homeMessages, type Locale } from '../i18n/catalog'
 import { triageSamples } from '../lib/triage-samples'
 import { decoderMessages } from '@decoding/workbench-ui'
 
@@ -32,13 +32,6 @@ const samples = triageSamples.map((sample) => ({
         <span><strong>0</strong> {messages.uploaded}</span>
       </div>
     </div>
-    <div class="hero-aside" aria-label={messages.principles}>
-      <div><span>01</span><strong>{messages.autoTitle}</strong><p>{messages.autoBody}</p></div>
-      <div><span>02</span><strong>{messages.chainTitle}</strong><p>{messages.chainBody}</p></div>
-      <div>
-        <span>03</span><strong>{messages.confidenceTitle}</strong><p>{messages.confidenceBody}</p>
-      </div>
-    </div>
   </section>
   <div class="container workbench-wrap">
     <WebDecoder
@@ -48,26 +41,4 @@ const samples = triageSamples.map((sample) => ({
       client:only="preact"
     />
   </div>
-  <section class="container value-section">
-    <div class="section-heading">
-      <span class="eyebrow">{messages.sensitive}</span>
-      <h2>{messages.workbench}</h2>
-    </div>
-    <div class="value-grid">
-      <article>
-        <span class="value-index">A</span><h3>{messages.evidenceTitle}</h3><p>
-          {messages.evidenceBody}
-        </p>
-      </article>
-      <article>
-        <span class="value-index">B</span><h3>{messages.warningTitle}</h3><p>
-          {messages.warningBody}
-        </p>
-      </article>
-      <article>
-        <span class="value-index">C</span><h3>{messages.toolsTitle}</h3><p>{messages.toolsBody}</p>
-        <a href={localePath(locale, '/tools/')}>{messages.toolsLink}</a>
-      </article>
-    </div>
-  </section>
 </Layout>

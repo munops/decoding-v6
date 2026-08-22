@@ -1,4 +1,13 @@
-import { expect, test } from '@playwright/test'
+import { expect, test, type TestInfo } from '@playwright/test'
+import { mkdirSync } from 'node:fs'
+import { resolve } from 'node:path'
+
+function screenshotPath(testInfo: TestInfo, filename: string) {
+  const evidenceDir = process.env.DECODING_LANDING_EVIDENCE_DIR
+  if (!evidenceDir) return testInfo.outputPath(filename)
+  mkdirSync(evidenceDir, { recursive: true })
+  return resolve(evidenceDir, filename)
+}
 
 test('home and catalog remain usable without horizontal overflow', async ({ page }) => {
   for (const route of ['/', '/tools/', '/json-format/']) {
@@ -55,14 +64,14 @@ test('a 200 percent desktop-equivalent viewport keeps core routes within the can
 
 test('captures representative desktop and mobile visual evidence', async ({ page }, testInfo) => {
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: /Paste anything/i })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /Trace the value/i })).toBeVisible()
   await page.screenshot({
-    path: testInfo.outputPath(`home-${testInfo.project.name}.png`),
+    path: screenshotPath(testInfo, `home-${testInfo.project.name}.png`),
     fullPage: true,
   })
   await page.goto('/tools/')
   await page.screenshot({
-    path: testInfo.outputPath(`tools-${testInfo.project.name}.png`),
+    path: screenshotPath(testInfo, `tools-${testInfo.project.name}.png`),
     fullPage: true,
   })
 })
