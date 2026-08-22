@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "productId": "decoding-v6",
+  "checkedAt": "2026-08-23T02:25:51+09:00",
+  "status": "done",
+  "evidenceLevel": "release_verified",
+  "sourceRevision": "3fc2d9253c87a4061b539f7a80ecc11e81d179f5",
+  "scope": {
+    "productionEnvironment": "Cloudflare Worker decoding-v6 on decod.ing",
+    "publicProduct": true,
+    "capabilityAssessmentRef": "docs/product/category-coverage.json",
+    "selectedChannels": ["web"],
+    "releaseCandidateChannels": ["web"],
+    "capabilities": {"storesUserData": false, "mutableSchema": false, "authentication": false, "payments": false, "aiRuntime": false}
+  },
+  "traceability": {
+    "status": "done",
+    "evidenceRef": "docs/prd/CHECKLIST.md",
+    "requiredIds": ["DC-LANDING-05"],
+    "coveredIds": ["DC-LANDING-05"]
+  },
+  "quality": {
+    "status": "done",
+    "requiredLayers": ["static", "unit", "integration", "e2e", "build", "security"],
+    "mandatoryCommands": [
+      {"layer": "static", "command": "pnpm --filter @decoding/web... build (Astro check)", "result": "pass", "exitCode": 0, "checkedAt": "2026-08-23T02:20:34+09:00", "evidenceRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md"},
+      {"layer": "unit", "command": "existing package dependency builds in pnpm --filter @decoding/web... build", "result": "pass", "exitCode": 0, "checkedAt": "2026-08-23T02:20:34+09:00", "evidenceRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md"},
+      {"layer": "integration", "command": "managed product and PWA E2E", "result": "pass", "exitCode": 0, "checkedAt": "2026-08-23T02:21:00+09:00", "evidenceRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md"},
+      {"layer": "e2e", "command": "managed product, pwa, responsive E2E", "result": "pass", "exitCode": 0, "checkedAt": "2026-08-23T02:21:00+09:00", "evidenceRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md"},
+      {"layer": "build", "command": "pnpm --filter @decoding/web... build", "result": "pass", "exitCode": 0, "checkedAt": "2026-08-23T02:20:34+09:00", "evidenceRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md"},
+      {"layer": "security", "command": "production response security-header read-back", "result": "pass", "exitCode": 0, "checkedAt": "2026-08-23T02:23:00+09:00", "evidenceRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md"}
+    ],
+    "aiEvaluationEvidenceRef": null,
+    "mandatoryFailures": []
+  },
+  "security": {
+    "status": "done", "standard": "OWASP-ASVS-5.0.0-risk-based", "planRef": "docs/prd/09-security-privacy.md", "threatModelRef": "docs/security/THREAT_MODEL.md", "secretScanEvidenceRef": "docs/audit/2026-08-08-product-readiness.md", "dependencyAuditEvidenceRef": "docs/engineering/dependencies.md", "securityHeadersEvidenceRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md", "authAbuseEvidenceRef": null, "paymentAbuseEvidenceRef": null, "aiAbuseEvidenceRef": null, "privacyDataFlowRef": "docs/trust/data-inventory.md", "unresolvedHighCritical": []
+  },
+  "accessibility": {"status": "done", "target": "WCAG-2.2-AA", "planRef": "docs/prd/05-uiux.md", "automatedEvidenceRef": "tests/e2e/responsive.spec.ts", "manualEvidenceRef": "docs/evidence/dc-landing-05/receipt.json", "representativeFlows": ["landing paste to decode chain", "landing to local workspace"], "knownViolations": []},
+  "performance": {"status": "done", "budgetRef": "docs/prd/06-architecture.md", "labEvidenceRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md", "fieldEvidenceRef": null, "webVitalsTarget": {"percentile": 75, "lcpMs": 2500, "inpMs": 200, "cls": 0.1}, "representativeRoutes": ["/", "/workspace/"], "regressions": []},
+  "dataLifecycle": {"status": "not_applicable", "inventoryRef": "docs/trust/data-inventory.md", "migrationPlanRef": null, "migrationRehearsalRef": null, "backupReadbackRef": null, "restoreDrillRef": null, "retentionDeletionEvidenceRef": null, "importExportRoundTripRef": null},
+  "resilience": {"status": "done", "failureModeRef": "docs/prd/06-architecture.md", "retryIdempotencyEvidenceRef": "tests/e2e/pwa.spec.ts", "failureInjectionEvidenceRef": "tests/e2e/pwa.spec.ts", "paymentFailureEvidenceRef": null, "aiFallbackEvidenceRef": null},
+  "operations": {"status": "done", "sloRef": "docs/implementation/DEPLOYMENT.md", "observabilityRef": "wrangler.toml", "alertReadbackRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md", "runbookRef": "docs/implementation/DEPLOYMENT.md", "incidentOwner": "owner_lane", "costCapReadbackRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md", "killSwitchEvidenceRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md"},
+  "delivery": {
+    "status": "done", "releasePlanRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md", "ciRunRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md",
+    "artifact": {"name": "apps/web/dist Cloudflare assets", "sha256": "1eb555addeac75ab723935cbab13ab5b888c8a990cdf639f9036a391963e0ea8", "sourceRevision": "3fc2d9253c87a4061b539f7a80ecc11e81d179f5", "provenanceKind": "provider_version_manifest", "provenanceRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md"},
+    "previewSmokeRef": "docs/evidence/dc-landing-05/receipt.json", "providerReadbackRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md", "realEntrypointSmokeRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md", "releaseEvidenceRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md",
+    "rollback": {"target": "Cloudflare deployment 977056ba-47ec-4f5e-9958-f67affc23659 / version 30ec9154-5192-4f07-97a1-ddce09b476b9", "planRef": "docs/implementation/DEPLOYMENT.md", "drillRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md"}
+  },
+  "channels": {
+    "web": {"decision": "selected", "status": "done", "stage": "released", "artifactSha256": "1eb555addeac75ab723935cbab13ab5b888c8a990cdf639f9036a391963e0ea8", "providerReadbackRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md", "realConsumerSmokeRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md", "rollbackRef": "docs/evidence/dc-landing-05/web-release-2026-08-23.md"},
+    "appsInToss": {"decision": "not_applicable", "status": "not_applicable", "stage": "assessed", "artifactSha256": null, "providerReadbackRef": null, "realConsumerSmokeRef": null, "rollbackRef": null},
+    "ios": {"decision": "not_applicable", "status": "not_applicable", "stage": "assessed", "artifactSha256": null, "providerReadbackRef": null, "realConsumerSmokeRef": null, "rollbackRef": null},
+    "android": {"decision": "not_applicable", "status": "not_applicable", "stage": "assessed", "artifactSha256": null, "providerReadbackRef": null, "realConsumerSmokeRef": null, "rollbackRef": null},
+    "desktop": {"decision": "later", "status": "in_progress", "stage": "built", "artifactSha256": null, "providerReadbackRef": "docs/platforms/channel-plan.md", "realConsumerSmokeRef": null, "rollbackRef": null}
+  },
+  "externalGates": [
+    {"id": "DC-FIELD-01", "status": "data_pending", "gate": "first non-operator activation and eligible retention cohort", "owner": "owner_lane"},
+    {"id": "DC-DESKTOP-01", "status": "wait_external", "gate": "desktop signing, notarization, device smoke, and public distribution remain separate", "owner": "owner_lane"}
+  ]
+}

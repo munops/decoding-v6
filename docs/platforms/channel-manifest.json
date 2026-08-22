@@ -22,8 +22,9 @@
       "strategy": "existing_static_web_pwa",
       "entrypoint": "apps/web",
       "status": "released",
-      "version": "cloudflare-worker-version-19bcc66a-5357-40b8-b240-8ed5766b1059",
+      "version": "cloudflare-worker-version-7fa42c37-88f0-4f07-b039-a1b4341faca3",
       "evidence": [
+        "docs/evidence/dc-landing-05/web-release-2026-08-23.md",
         "docs/implementation/DEPLOYMENT.md",
         "docs/audit/2026-08-08-product-readiness.md#live-production-blocker"
       ]
