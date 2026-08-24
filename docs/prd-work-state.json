@@ -3,24 +3,23 @@
   "product": "decoding-v6",
   "note": "이 파일은 작업 단위의 정본이 아니다. 실행 순서 SSOT는 docs/prd/CHECKLIST.md이고, 여기에는 포트폴리오 provenance 판정(scripts/check-release-provenance.mjs)이 요구하는 '지금 무엇이 배포돼 있는가'만 둔다. 값은 provider read-back과 실서비스 /healthz 실측으로만 갱신한다.",
   "workUnitOwner": "docs/prd/CHECKLIST.md",
-  "sourceRevision": "3fc2d9253c87a4061b539f7a80ecc11e81d179f5",
+  "sourceRevision": "06564f552efbb63f46d4c1926dc6b360b2c057e2",
   "environments": [
     {
       "name": "production",
       "status": "released",
       "url": "https://decod.ing",
-      "revision": "3fc2d9253c87a4061b539f7a80ecc11e81d179f5",
-      "workerVersionId": "7fa42c37-88f0-4f07-b039-a1b4341faca3",
-      "verifiedAt": "2026-08-23T02:25:51+09:00",
+      "revision": "06564f552efbb63f46d4c1926dc6b360b2c057e2",
+      "workerVersionId": "0d7b792a-fece-4889-99b9-c24875ba64c7",
+      "verifiedAt": "2026-08-24T19:09:47+09:00",
       "evidence": [
-        "live /healthz revision=3fc2d9253c87a4061b539f7a80ecc11e81d179f5 (실서비스 read-back)",
-        "Cloudflare Worker deployment=11b32e4e-6bdc-4283-b123-75677b5e6bd1, version=7fa42c37-88f0-4f07-b039-a1b4341faca3 (100%)",
-        "canonical/technical /, /workspace/, /healthz 모두 200; managed 390/1440 first-value 및 continuation 통과",
-        "check-production-readiness --url https://decod.ing = ready, findings 0 (R-1~R-7)",
-        "POST /e/events → 200 {\"ok\":true}; 첫 방문 계측 요청이 브라우저에서 실제로 성공",
-        "배포 전 pnpm verify 전량 통과(format·lint·typecheck·unit·benchmark·content·links·network·parity·extension·i18n·sponsors·486페이지 build·21.6 KiB 초기 gzip 예산)",
-        "tests/privacy canary suite 3/3, e2e 32 passed / 1 intentional skip",
-        "공개 표면 CSP·X-Frame-Options: DENY는 이번 wave 이전부터 응답에 실려 있었다"
+        "live /healthz revision=06564f552efbb63f46d4c1926dc6b360b2c057e2 (실서비스 read-back)",
+        "Cloudflare Worker deployment=4f7a89e6-f827-4431-8fa2-483b8ad6aacf, version=0d7b792a-fece-4889-99b9-c24875ba64c7 (100%)",
+        "canonical/www/technical root와 health 200; linked immutable asset 200",
+        "managed browser b2193a67-3900-4321-8b20-a3d2ff411b6e: 320/390/1440 × Korean 4 routes, overflow/clipping/mid-word/orphan 0, local JSON operation 통과",
+        "배포 전 check:i18n·lint·typecheck·37 unit tests·486-page build 통과",
+        "provider version binding BUILD_SHA exact match; ASSETS·기존 EVENTS 외 새 resource/binding 0",
+        "release evidence: docs/evidence/web-product-language-release-2026-08-24.md"
       ]
     }
   ],

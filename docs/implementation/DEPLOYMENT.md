@@ -1,6 +1,14 @@
 # Cloudflare deployment evidence
 
-Updated: 2026-08-03 00:31 (Asia/Seoul)
+Updated: 2026-08-24 19:09 (Asia/Seoul)
+
+## 2026-08-24 Korean product-language web release
+
+- Runtime source `06564f552efbb63f46d4c1926dc6b360b2c057e2` was built from a clean detached worktree and activated only on the existing public-web Worker.
+- Current production deployment is `4f7a89e6-f827-4431-8fa2-483b8ad6aacf`; version `0d7b792a-fece-4889-99b9-c24875ba64c7` receives 100% traffic.
+- Provider version read-back and both canonical and Workers-fallback `/healthz` return the exact runtime source. Canonical, www, Workers fallback, and a linked immutable asset return 200.
+- Managed browser run `b2193a67-3900-4321-8b20-a3d2ff411b6e` passed `/ko/`, `/ko/tools/`, `/ko/json-format/`, and `/ko/methodology/` at 320, 390, and 1440 pixels with no document overflow, clipped/out-of-bounds text, mid-word split, or one-character orphan line. All three widths also completed a real local JSON operation.
+- The first activation was automatically rolled back when the legacy `networkidle` deploy verifier timed out. The same timeout reproduced on the previous production version, while the DOM/function-specific smoke detected the previous version's actual Korean typography defects and passed the new version. Full chronology is in [the release evidence](../evidence/web-product-language-release-2026-08-24.md).
 
 ## 2026-08-08 read-only drift and blocker
 
@@ -13,7 +21,7 @@ Updated: 2026-08-03 00:31 (Asia/Seoul)
 
 | Surface          | URL                                                  | Worker                | Version                                | Result |
 | ---------------- | ---------------------------------------------------- | --------------------- | -------------------------------------- | ------ |
-| Production       | <https://decod.ing>                                  | `decoding-v6`         | `ec414b51-040c-4331-ba29-6243cd2b722f` | active |
+| Production       | <https://decod.ing>                                  | `decoding-v6`         | `0d7b792a-fece-4889-99b9-c24875ba64c7` | active |
 | Production alias | <https://www.decod.ing>                              | `decoding-v6`         | same deployment                        | active |
 | Workers fallback | <https://decoding-v6.wjstks3474.workers.dev>         | `decoding-v6`         | same deployment                        | active |
 | Staging          | <https://decoding-v6-staging.wjstks3474.workers.dev> | `decoding-v6-staging` | `e551ad7d-51c9-4e8e-aa2f-d74064b9f582` | active |
@@ -39,8 +47,8 @@ HTTP checks also confirmed 200 responses for the home, catalog, workspace, opera
 
 ## Rollback drill
 
-The immediate production rollback target is version `9e8118e6-10c5-4da2-9b6f-f9f30025fa63`. The immediate staging rollback target is `d69c1127-91bc-4eee-8fa4-010f260b4473`. Both remain available through `wrangler rollback <version-id>`; no rollback was needed for this release.
+The immediate production rollback target is deployment `d30e7aea-ebd4-4031-82f2-b5be1a47ff6c`, version `7fa42c37-88f0-4f07-b039-a1b4341faca3`. The immediate staging rollback target is `d69c1127-91bc-4eee-8fa4-010f260b4473`. Both versions remain available through `wrangler rollback <version-id>`.
 
 The staging Worker was rolled back from `ae7932de-ff68-4d00-974d-ca87adde05ff` to previous version `66bf1109-cee4-4ee2-8fa0-491fde74c0ce`. The external Chromium deployment verification passed on the rolled-back version. Staging was then restored to `ae7932de-ff68-4d00-974d-ca87adde05ff` at 100% traffic and the same verification passed again.
 
-No database, KV, Worker main handler, authentication, payment, analytics, or server-side decode binding exists in either deployment.
+No database, KV, authentication, payment, or server-side decode binding exists in either deployment. Production keeps the existing aggregate-only Analytics Engine binding described in `wrangler.toml`; this release did not change its schema or data.
