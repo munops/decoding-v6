@@ -424,7 +424,7 @@ pre {
 }
 
 .hero {
-  padding-block: 22px 4px;
+  padding-block: 16px 0;
 }
 .eyebrow {
   display: block;
@@ -433,7 +433,7 @@ pre {
   font-family: var(--mono);
   font-size: 12px;
   font-weight: 760;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 .hero h1,
@@ -443,8 +443,8 @@ pre {
   margin: 0;
   max-width: 850px;
   font-size: clamp(46px, 5.7vw, 72px);
-  line-height: 0.94;
-  letter-spacing: -0.072em;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
 }
 .hero h1 span {
   position: relative;
@@ -463,7 +463,7 @@ pre {
 }
 .hero-copy > p {
   max-width: 670px;
-  margin: 16px 0;
+  margin: 12px 0;
   color: var(--muted);
   font-size: clamp(17px, 1.7vw, 20px);
   line-height: 1.55;
@@ -551,7 +551,7 @@ pre {
 }
 .triage-sample > strong {
   min-width: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   font-size: 13px;
 }
 .sponsor-slot {
@@ -888,7 +888,7 @@ textarea {
 }
 .chain-detector-label {
   min-width: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   font-weight: 780;
 }
 .chain-size-badge {
@@ -962,8 +962,8 @@ textarea {
 .section-heading h2 {
   margin: 0;
   font-size: clamp(32px, 5vw, 52px);
-  line-height: 1.05;
-  letter-spacing: -0.055em;
+  line-height: 1.18;
+  letter-spacing: -0.035em;
 }
 .section-heading.compact h2 {
   font-size: 28px;
@@ -1489,6 +1489,34 @@ textarea {
   border-top: 1px solid #28364a;
 }
 
+html:lang(ko) body :where(h1, h2, h3, p, li, label, button, a, span, summary, small, strong) {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+html:lang(ko) body :where(h1, h2, h3) {
+  letter-spacing: -0.025em;
+  line-height: 1.24;
+  text-wrap: balance;
+}
+html:lang(ko) body :where(p, li) {
+  text-wrap: pretty;
+}
+html:lang(ko) body :where(.hero, .page-hero, .tool-hero, .prose) h1 {
+  line-height: 1.16;
+  letter-spacing: -0.025em;
+}
+html:lang(ko) body .eyebrow,
+html:lang(ko) body .translation-status,
+html:lang(ko) body .sponsor-label {
+  font-family: var(--sans);
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
+}
+html:lang(ko) body .translation-status {
+  font-size: 11px;
+}
+
 @keyframes workbench-in {
   from {
     opacity: 0;
@@ -1579,6 +1607,9 @@ textarea {
   }
   .hero h1 {
     font-size: clamp(43px, 13vw, 54px);
+  }
+  html:lang(ko) body .hero h1 {
+    font-size: clamp(38px, 11vw, 50px);
   }
   .hero-copy > p {
     font-size: 17px;

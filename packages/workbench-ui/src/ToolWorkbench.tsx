@@ -39,6 +39,75 @@ const examples: Record<string, string> = {
     '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><circle cx="16" cy="16" r="12" fill="#e24a28"/></svg>',
 }
 
+const koreanExamples: Partial<Record<string, string>> = {
+  'base64-string': 'decod.ing에서 확인',
+  'regex-tester': '하나 둘 123 셋 456',
+  'text-diff': '첫째 줄\n둘째 줄',
+  'html-preview':
+    '<main><h1>안전한 미리보기</h1><p>스크립트와 네트워크 연결을 막았습니다.</p></main>',
+  'markdown-preview': '# 기기에서 보는 Markdown\n\n**HTML 원문은 문자로 표시합니다.**',
+}
+
+function initialExample(operationId: string, messages: ToolMessages): string {
+  if (messages.locale === 'ko' && koreanExamples[operationId])
+    return koreanExamples[operationId] ?? ''
+  return examples[operationId] ?? ''
+}
+
+function directionLabel(direction: string, messages: ToolMessages): string {
+  if (messages.locale !== 'ko') return direction
+  const labels: Record<string, string> = {
+    format: '읽기 좋게 정리',
+    minify: '공백 줄이기',
+    validate: '문법 확인',
+    encode: '다른 표기로 바꾸기',
+    decode: '원래 값으로 되돌리기',
+    escape: '특수문자 표시하기',
+    unescape: '특수문자 되돌리기',
+  }
+  return labels[direction] ?? direction
+}
+
+function languageLabel(language: string, messages: ToolMessages): string {
+  if (messages.locale !== 'ko') return language
+  const labels: Record<string, string> = {
+    javascript: 'JavaScript',
+    node: 'Node.js',
+    python: 'Python',
+    go: 'Go',
+    rust: 'Rust',
+    java: 'Java',
+    kotlin: 'Kotlin',
+    swift: 'Swift',
+    csharp: 'C#',
+    php: 'PHP',
+    ruby: 'Ruby',
+    dart: 'Dart',
+    r: 'R',
+    c: 'C',
+    httpie: 'HTTPie',
+    typescript: 'TypeScript',
+  }
+  return labels[language] ?? language
+}
+
+function caseModeLabel(mode: string, messages: ToolMessages): string {
+  if (messages.locale !== 'ko') return mode
+  const labels: Record<string, string> = {
+    camel: 'camelCase',
+    pascal: 'PascalCase',
+    snake: 'snake_case',
+    constant: 'CONSTANT_CASE',
+    kebab: 'kebab-case',
+    slug: 'URL 슬러그',
+    title: '영어 제목식',
+    sentence: '영어 문장식',
+    upper: '모두 대문자',
+    lower: '모두 소문자',
+  }
+  return labels[mode] ?? mode
+}
+
 function defaultOptions(operation: OperationDescriptor): OperationOptions {
   const options: OperationOptions = {}
   if (operation.directions?.length) options.mode = operation.directions[0]
@@ -62,9 +131,22 @@ function resultText(result: OperationResult | null): string {
   return JSON.stringify(result.output, null, 2)
 }
 
+function resultKind(result: OperationResult | null, messages: ToolMessages): string {
+  if (!result) return messages.ready
+  if (messages.locale !== 'ko') return result.kind
+  const labels: Record<OperationResult['kind'], string> = {
+    text: '텍스트 결과',
+    bytes: '바이트 결과',
+    structured: '항목별 결과',
+    preview: '미리보기',
+    image: '이미지 결과',
+  }
+  return labels[result.kind]
+}
+
 export function ToolWorkbench({ operation, execute, messages }: ToolWorkbenchProps) {
   const [hydrated, setHydrated] = useState(false)
-  const [source, setSource] = useState(examples[operation.id] ?? '')
+  const [source, setSource] = useState(() => initialExample(operation.id, messages))
   const [options, setOptions] = useState<OperationOptions>(() => defaultOptions(operation))
   const [result, setResult] = useState<OperationResult | null>(null)
   const [status, setStatus] = useState<'idle' | 'processing' | 'done' | 'error'>('idle')
@@ -138,7 +220,7 @@ export function ToolWorkbench({ operation, execute, messages }: ToolWorkbenchPro
               onChange={(event) => setOption('mode', event.currentTarget.value)}
             >
               {operation.directions.map((direction) => (
-                <option value={direction}>{direction}</option>
+                <option value={direction}>{directionLabel(direction, messages)}</option>
               ))}
             </select>
           </label>
@@ -246,7 +328,7 @@ export function ToolWorkbench({ operation, execute, messages }: ToolWorkbenchPro
                 'c',
                 'httpie',
               ].map((language) => (
-                <option value={language}>{language}</option>
+                <option value={language}>{languageLabel(language, messages)}</option>
               ))}
             </select>
           </label>
@@ -260,7 +342,7 @@ export function ToolWorkbench({ operation, execute, messages }: ToolWorkbenchPro
             >
               {['typescript', 'python', 'go', 'java', 'kotlin', 'swift', 'csharp', 'dart'].map(
                 (language) => (
-                  <option value={language}>{language}</option>
+                  <option value={language}>{languageLabel(language, messages)}</option>
                 ),
               )}
             </select>
@@ -285,7 +367,7 @@ export function ToolWorkbench({ operation, execute, messages }: ToolWorkbenchPro
                 'upper',
                 'lower',
               ].map((mode) => (
-                <option value={mode}>{mode}</option>
+                <option value={mode}>{caseModeLabel(mode, messages)}</option>
               ))}
             </select>
           </label>
@@ -331,7 +413,7 @@ export function ToolWorkbench({ operation, execute, messages }: ToolWorkbenchPro
           <div class="panel-heading">
             <div>
               <span class="eyebrow">{messages.output}</span>
-              <h2>{result?.kind ?? messages.ready}</h2>
+              <h2>{resultKind(result, messages)}</h2>
             </div>
             <button
               class="button small"

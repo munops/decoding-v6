@@ -6,6 +6,7 @@ import {
   writeCopyFeedback,
   type CopyFeedbackPreferences,
 } from './copy-feedback'
+import { detectionLabel, limitReason, localizedDetection } from './detection-copy'
 import type { DecoderMessages } from './messages'
 import { safeShareCardSvg, safeShareMarkdown, safeShareProjection } from './safe-share'
 
@@ -45,20 +46,27 @@ function redactValue(value: unknown, depth = 0): unknown {
   return `[${typeof value}]`
 }
 
-function EvidenceList({ detection }: { detection: Detection }) {
+function EvidenceList({
+  detection,
+  messages,
+}: {
+  detection: Detection
+  messages: DecoderMessages
+}) {
+  const displayDetection = localizedDetection(detection, messages)
   return (
     <div class="evidence-stack">
       <div class="confidence-line">
-        <span class="confidence-badge">{Math.round(detection.confidence * 100)}%</span>
-        <strong>{detection.label}</strong>
+        <span class="confidence-badge">{Math.round(displayDetection.confidence * 100)}%</span>
+        <strong>{displayDetection.label}</strong>
       </div>
-      <p>{detection.summary}</p>
+      <p>{displayDetection.summary}</p>
       <ul class="evidence-list">
-        {detection.evidence.map((evidence) => (
+        {displayDetection.evidence.map((evidence) => (
           <li key={evidence.code}>{evidence.message}</li>
         ))}
       </ul>
-      {detection.warnings.map((warning) => (
+      {displayDetection.warnings.map((warning) => (
         <div class={`notice ${warning.severity}`} role="status" key={warning.ruleId}>
           <strong>{warning.ruleId}</strong>
           <span>{warning.message}</span>
@@ -73,7 +81,7 @@ function interpolate(template: string, values: Record<string, string | number>):
 }
 
 function chainLabel(node: ChainNode, messages: DecoderMessages): string {
-  if (node.selected) return node.selected.label
+  if (node.selected) return detectionLabel(node.selected.label, messages)
   if (node.status === 'ambiguous') return messages.ambiguousStep
   if (node.status === 'limit') return messages.limitStep
   return messages.unsupportedStep
@@ -114,10 +122,10 @@ function ChainView({ node, messages, activeNodeId, onActivate, onKeyDown }: Chai
       onKeyDown={onKeyDown}
     >
       <ChainStage node={node} messages={messages} />
-      {node.selected ? <EvidenceList detection={node.selected} /> : null}
+      {node.selected ? <EvidenceList detection={node.selected} messages={messages} /> : null}
       {node.limitReason ? (
         <div class="notice warning" role="status">
-          {messages.stopped}: {node.limitReason}
+          {messages.stopped}: {limitReason(node.limitReason, messages)}
         </div>
       ) : null}
       {node.children.length ? (
@@ -482,7 +490,7 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
                       onClick={() => setSelected(candidate)}
                       key={candidate.detector}
                     >
-                      <span>{candidate.label}</span>
+                      <span>{detectionLabel(candidate.label, messages)}</span>
                       <strong>{Math.round(candidate.confidence * 100)}%</strong>
                     </button>
                   ))}
@@ -504,7 +512,9 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
             <div class="panel-heading">
               <div>
                 <span class="eyebrow">{messages.inspector}</span>
-                <h2>{selected?.label ?? messages.noCandidate}</h2>
+                <h2>
+                  {selected ? detectionLabel(selected.label, messages) : messages.noCandidate}
+                </h2>
               </div>
               <div class="inline-actions">
                 <button
@@ -527,7 +537,9 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
             </div>
             {selected ? (
               <>
-                {result.root.status === 'ambiguous' ? <EvidenceList detection={selected} /> : null}
+                {result.root.status === 'ambiguous' ? (
+                  <EvidenceList detection={selected} messages={messages} />
+                ) : null}
                 <pre class="output-view">
                   <code>{outputText(selected.value)}</code>
                 </pre>

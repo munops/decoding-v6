@@ -3,6 +3,7 @@ import { operations } from '@decoding/operations'
 import ToolSearch from '../islands/ToolSearch'
 import Layout from '../layouts/Layout.astro'
 import { catalogMessages, type Locale } from '../i18n/catalog'
+import { localizeOperations } from '../i18n/operations'
 
 interface Props {
   locale: Locale
@@ -10,6 +11,7 @@ interface Props {
 const { locale } = Astro.props
 const messages = catalogMessages[locale]
 const pathPrefix = locale === 'en' ? '' : `/${locale}`
+const tools = localizeOperations(locale, operations)
 ---
 
 <Layout
@@ -24,6 +26,6 @@ const pathPrefix = locale === 'en' ? '' : `/${locale}`
     <p>{messages.lead}</p>
   </section>
   <div class="container">
-    <ToolSearch tools={operations} messages={messages} pathPrefix={pathPrefix} client:load />
+    <ToolSearch tools={tools} messages={messages} pathPrefix={pathPrefix} client:load />
   </div>
 </Layout>

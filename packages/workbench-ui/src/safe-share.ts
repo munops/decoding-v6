@@ -1,5 +1,6 @@
 import type { ChainNode, Detection } from '@decoding/engine'
 import type { DecoderMessages } from './messages'
+import { detectionLabel } from './detection-copy'
 
 type SafeShareMessages = Pick<
   DecoderMessages,
@@ -13,6 +14,7 @@ type SafeShareMessages = Pick<
   | 'shareOmitted'
   | 'shareFooter'
   | 'shareHeadline'
+  | 'locale'
 >
 
 export type SafeShareProjection = {
@@ -30,8 +32,8 @@ function nodeLabel(
   selectedAtNode: Detection | null,
   messages: SafeShareMessages,
 ): string {
-  if (selectedAtNode) return publicLabel(selectedAtNode.label)
-  if (node.selected) return publicLabel(node.selected.label)
+  if (selectedAtNode) return publicLabel(detectionLabel(selectedAtNode.label, messages))
+  if (node.selected) return publicLabel(detectionLabel(node.selected.label, messages))
   if (node.status === 'ambiguous') return messages.ambiguousStep
   if (node.status === 'limit') return messages.limitStep
   return messages.unsupportedStep
@@ -62,7 +64,7 @@ export function safeShareProjection(
   const chain: string[] = []
   const warningRuleIds: string[] = []
   appendNode(root, selected, messages, chain, warningRuleIds)
-  return { format: publicLabel(selected.label), chain, warningRuleIds }
+  return { format: publicLabel(detectionLabel(selected.label, messages)), chain, warningRuleIds }
 }
 
 export function safeShareMarkdown(
@@ -129,7 +131,7 @@ export function safeShareCardSvg(
     },
   ]
   const bodyLines = sections.flatMap((section) => [
-    { text: section.label.toUpperCase(), kind: 'label' },
+    { text: messages.locale === 'ko' ? section.label : section.label.toUpperCase(), kind: 'label' },
     ...section.lines.flatMap((line) => wrappedLines(line).map((text) => ({ text, kind: 'body' }))),
   ])
   const height = Math.max(630, 234 + bodyLines.length * 34 + 116)
@@ -138,7 +140,7 @@ export function safeShareCardSvg(
     .map((line) => {
       const output =
         line.kind === 'label'
-          ? `<text x="88" y="${y}" fill="#f0a44d" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17" font-weight="700" letter-spacing="2">${escapeXml(line.text)}</text>`
+          ? `<text x="88" y="${y}" fill="#f0a44d" font-family="${messages.locale === 'ko' ? 'ui-sans-serif, system-ui, sans-serif' : 'ui-monospace, SFMono-Regular, Menlo, monospace'}" font-size="17" font-weight="700" letter-spacing="${messages.locale === 'ko' ? '0' : '2'}">${escapeXml(line.text)}</text>`
           : `<text x="88" y="${y}" fill="#f5f0e8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="26" font-weight="600">${escapeXml(line.text)}</text>`
       y += line.kind === 'label' ? 34 : 36
       return output

@@ -10,6 +10,14 @@ const categoryGlyph: Record<string, string> = {
   encode: '/%',
 }
 
+function categoryLabel(category: OperationDescriptor['category'], messages: CatalogMessages) {
+  if (category === 'format') return messages.categoryFormat
+  if (category === 'convert') return messages.categoryConvert
+  if (category === 'inspect') return messages.categoryInspect
+  if (category === 'generate') return messages.categoryGenerate
+  return messages.categoryEncode
+}
+
 export default function ToolSearch({
   tools,
   messages,
@@ -76,7 +84,7 @@ export default function ToolSearch({
     )
   }, [query, tools])
   const groups = useMemo(() => {
-    const grouped = new Map<string, OperationDescriptor[]>()
+    const grouped = new Map<OperationDescriptor['category'], OperationDescriptor[]>()
     for (const tool of visible)
       grouped.set(tool.category, [...(grouped.get(tool.category) ?? []), tool])
     return grouped
@@ -116,7 +124,7 @@ export default function ToolSearch({
         <section class="tool-group" aria-labelledby={`category-${category}`} key={category}>
           <div class="section-heading compact">
             <span class="eyebrow">{messages.category}</span>
-            <h2 id={`category-${category}`}>{category}</h2>
+            <h2 id={`category-${category}`}>{categoryLabel(category, messages)}</h2>
           </div>
           <div class="tool-grid">
             {items.map((tool) => (

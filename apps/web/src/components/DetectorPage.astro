@@ -4,6 +4,7 @@ import { decoderMessages } from '@decoding/workbench-ui'
 import WebDecoder from '../islands/WebDecoder'
 import Layout from '../layouts/Layout.astro'
 import { detectorPageMessages, localePath, type Locale } from '../i18n/catalog'
+import { localizeDetectorSpec } from '../i18n/detectors'
 
 interface Props {
   locale: Locale
@@ -11,13 +12,14 @@ interface Props {
 }
 const { locale, spec } = Astro.props
 const messages = detectorPageMessages[locale]
-const description = messages.localDescription(spec.label)
+const displaySpec = localizeDetectorSpec(locale, spec)
+const description = messages.localDescription(displaySpec.label)
 const routePath = `/detect/${spec.slug}/`
 ---
 
 <Layout
   locale={locale}
-  title={`${spec.label} — decod.ing`}
+  title={`${displaySpec.label} — decod.ing`}
   description={description}
   alternatePath={routePath}
 >
@@ -25,7 +27,7 @@ const routePath = `/detect/${spec.slug}/`
     <div>
       <a class="back-link" href={localePath(locale, '/methodology/')}>{messages.back}</a>
       <span class="eyebrow">{messages.eyebrow}</span>
-      <h1>{spec.label}</h1>
+      <h1>{displaySpec.label}</h1>
       <p>{description}</p>
     </div>
     <aside class="tool-trust-card">
@@ -41,7 +43,7 @@ const routePath = `/detect/${spec.slug}/`
     <article>
       <span class="eyebrow">{messages.examplesEyebrow}</span><h2>{messages.examplesTitle}</h2><ul>
         {
-          spec.examples.map((example) => (
+          displaySpec.examples.map((example) => (
             <li>
               <code>{example}</code>
             </li>
@@ -54,7 +56,7 @@ const routePath = `/detect/${spec.slug}/`
         {messages.referencesTitle}
       </h2><ul>
         {
-          spec.references.map((reference) => (
+          displaySpec.references.map((reference) => (
             <li>
               <a href={reference.url} rel="external">
                 {reference.title}

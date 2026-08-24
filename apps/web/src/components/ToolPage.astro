@@ -5,6 +5,7 @@ import WebTool from '../islands/WebTool'
 import Layout from '../layouts/Layout.astro'
 import SponsorSlot from './SponsorSlot.astro'
 import { localePath, toolPageMessages, type Locale } from '../i18n/catalog'
+import { localizeOperation } from '../i18n/operations'
 
 interface Props {
   locale: Locale
@@ -12,12 +13,13 @@ interface Props {
 }
 const { locale, operation } = Astro.props
 const messages = toolPageMessages[locale]
-const description = messages.description(operation.name)
+const displayOperation = localizeOperation(locale, operation)
+const description = messages.description(displayOperation.name)
 const routePath = `/${operation.id}/`
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: operation.name,
+  name: displayOperation.name,
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'Web browser',
   inLanguage: locale,
@@ -34,7 +36,7 @@ const boundary =
 
 <Layout
   locale={locale}
-  title={`${operation.name} — decod.ing`}
+  title={`${displayOperation.name} — decod.ing`}
   description={description}
   alternatePath={routePath}
 >
@@ -43,7 +45,7 @@ const boundary =
     <div>
       <a class="back-link" href={localePath(locale, '/tools/')}>{messages.back}</a>
       <span class="eyebrow">{messages.localUtility} · {messages.pack} {operation.pack}</span>
-      <h1>{operation.name}</h1>
+      <h1>{displayOperation.name}</h1>
       <p>{description}</p>
     </div>
     <div class="tool-trust-card">
@@ -53,7 +55,12 @@ const boundary =
     </div>
   </section>
   <div class="container workbench-wrap">
-    <WebTool operation={operation} messages={toolMessages[locale]} client:only="preact" />
+    <WebTool
+      operation={displayOperation}
+      messages={toolMessages[locale]}
+      locale={locale}
+      client:only="preact"
+    />
   </div>
   <SponsorSlot locale={locale} category={operation.category} />
   <section class="container tool-content">

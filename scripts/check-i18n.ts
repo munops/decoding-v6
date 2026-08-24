@@ -14,6 +14,10 @@ import {
   toolPageMessages,
 } from '../apps/web/src/i18n/catalog'
 import { infoMessages } from '../apps/web/src/i18n/info'
+import { localizeOperations, koreanOperationIds } from '../apps/web/src/i18n/operations'
+import { koreanDetectorIds } from '../apps/web/src/i18n/detectors'
+import { operations } from '../packages/operations/src/registry'
+import { detectorSpecs } from '../packages/spec-registry/src/index'
 
 function invariant(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message)
@@ -52,6 +56,27 @@ assertCatalog('tool', toolMessages)
 assertCatalog('catalog', catalogMessages)
 assertCatalog('detectorPage', detectorPageMessages)
 assertCatalog('toolPage', toolPageMessages)
+
+const koreanOperations = localizeOperations('ko', operations)
+invariant(
+  koreanOperationIds.length === operations.length,
+  `Korean operation copy must cover all ${operations.length} tools`,
+)
+invariant(
+  new Set(koreanOperationIds).size === operations.length,
+  'Korean operation copy contains a duplicate tool ID',
+)
+for (const operation of koreanOperations) {
+  invariant(/[가-힣]/.test(operation.name), `${operation.id}: Korean tool name is missing`)
+  invariant(
+    /[가-힣]/.test(operation.description),
+    `${operation.id}: Korean tool description is missing`,
+  )
+}
+invariant(
+  koreanDetectorIds.length === detectorSpecs.length,
+  `Korean detector copy must cover all ${detectorSpecs.length} detectors`,
+)
 
 for (const locale of supportedLocales) {
   for (const page of ['methodology', 'privacy', 'about'] as const) {

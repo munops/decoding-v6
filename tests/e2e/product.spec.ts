@@ -180,6 +180,43 @@ test('runs a dedicated JSON formatter operation', async ({ page }) => {
   await expect(page.getByText('Valid JSON')).toBeVisible()
 })
 
+test('keeps the Korean journey in user-facing language from discovery through result', async ({
+  page,
+}) => {
+  await page.goto('/ko/')
+  await expect(page.getByRole('heading', { name: '값의 정체와 근거를 확인하세요.' })).toBeVisible()
+  await expect(page.locator('.hero h1 br')).toHaveCount(0)
+  await expect(page.getByRole('group', { name: '안전한 예시로 먼저 확인해 보세요' })).toContainText(
+    '16진수와 Base64 후보 비교',
+  )
+
+  await page.getByLabel('텍스트를 붙여넣거나 파일을 놓으세요').fill('dGVzdA==')
+  await expect(page.locator('.evidence-stack').first()).toContainText('Base64에서 쓰는 문자')
+
+  await page.goto('/ko/tools/')
+  await expect(page.getByRole('heading', { name: '필요한 변환과 검사를 한곳에서.' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: '정리', exact: true })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'JSON 정리와 문법 확인' })).toBeVisible()
+  await expect(page.locator('.tool-card').first()).toContainText(
+    'JSON 들여쓰기를 정리하거나 한 줄로 줄이고 문법 오류를 확인합니다.',
+  )
+
+  await page.goto('/ko/json-format/')
+  await expect(page.getByRole('heading', { name: 'JSON 정리와 문법 확인', level: 1 })).toBeVisible()
+  await page.locator('.operation-pane textarea').first().fill('{"answer":42}')
+  await page.getByRole('button', { name: '이 기기에서 실행' }).click()
+  await expect(page.getByText('JSON 문법을 확인했습니다.')).toBeVisible()
+  await expect(page.getByRole('heading', { name: '텍스트 결과' })).toBeVisible()
+
+  await page.goto('/ko/curl-to-code/')
+  await expect(page.locator('option[value="javascript"]')).toHaveText('JavaScript')
+  await expect(page.getByRole('option', { name: 'javascript', exact: true })).toHaveCount(0)
+
+  await page.goto('/ko/string-case/')
+  await expect(page.locator('option[value="camel"]')).toHaveText('camelCase')
+  await expect(page.getByRole('option', { name: 'camel', exact: true })).toHaveCount(0)
+})
+
 test('renders HTML preview inside a locked sandbox', async ({ page }) => {
   await page.goto('/html-preview/')
   await expect(page.locator('.tool-workbench')).toHaveAttribute('data-hydrated', 'true')

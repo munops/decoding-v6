@@ -75,3 +75,82 @@ test('captures representative desktop and mobile visual evidence', async ({ page
     fullPage: true,
   })
 })
+
+test('Korean copy keeps whole words and readable type at 320, 390, and 1440 pixels', async ({
+  page,
+}) => {
+  for (const width of [320, 390, 1440]) {
+    await page.setViewportSize({ width, height: 1000 })
+    for (const route of ['/ko/', '/ko/tools/', '/ko/json-format/', '/ko/methodology/']) {
+      await page.goto(route)
+      const result = await page.evaluate(() => {
+        const elements = [
+          ...document.querySelectorAll<HTMLElement>(
+            'h1, .hero-copy > p, .page-hero > p, .tool-hero > div > p, .prose .lead',
+          ),
+        ]
+        const splitWords: string[] = []
+        for (const element of elements) {
+          const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT)
+          let node: Node | null
+          while ((node = walker.nextNode())) {
+            const text = node.textContent ?? ''
+            for (const match of text.matchAll(/\S+/gu)) {
+              if (!/[가-힣]/u.test(match[0])) continue
+              const range = document.createRange()
+              range.setStart(node, match.index ?? 0)
+              range.setEnd(node, (match.index ?? 0) + match[0].length)
+              if (range.getClientRects().length > 1) splitWords.push(match[0])
+            }
+          }
+        }
+        const h1 = document.querySelector<HTMLElement>('h1')
+        const h1Style = h1 ? getComputedStyle(h1) : null
+        const h1LineTops = new Set<number>()
+        if (h1) {
+          const walker = document.createTreeWalker(h1, NodeFilter.SHOW_TEXT)
+          const range = document.createRange()
+          let node: Node | null
+          while ((node = walker.nextNode())) {
+            for (let index = 0; index < (node.textContent?.length ?? 0); index += 1) {
+              if (/\s/u.test(node.textContent?.[index] ?? '')) continue
+              range.setStart(node, index)
+              range.setEnd(node, index + 1)
+              h1LineTops.add(Math.round(range.getBoundingClientRect().top))
+            }
+          }
+        }
+        return {
+          clientWidth: document.documentElement.clientWidth,
+          scrollWidth: document.documentElement.scrollWidth,
+          outOfBounds: elements
+            .filter((element) => {
+              const bounds = element.getBoundingClientRect()
+              return bounds.left < -1 || bounds.right > document.documentElement.clientWidth + 1
+            })
+            .map((element) => element.textContent?.trim()),
+          splitWords,
+          wordBreak: h1Style?.wordBreak,
+          overflowWrap: h1Style?.overflowWrap,
+          h1LineCount: h1LineTops.size,
+          lineHeightRatio:
+            h1Style && Number.parseFloat(h1Style.fontSize)
+              ? Number.parseFloat(h1Style.lineHeight) / Number.parseFloat(h1Style.fontSize)
+              : 0,
+          letterSpacingRatio:
+            h1Style && Number.parseFloat(h1Style.fontSize)
+              ? Number.parseFloat(h1Style.letterSpacing) / Number.parseFloat(h1Style.fontSize)
+              : -1,
+        }
+      })
+      expect(result.scrollWidth).toBeLessThanOrEqual(result.clientWidth + 1)
+      expect(result.outOfBounds).toEqual([])
+      expect(result.splitWords).toEqual([])
+      expect(result.wordBreak).toBe('keep-all')
+      expect(result.overflowWrap).toBe('break-word')
+      expect(result.lineHeightRatio).toBeGreaterThanOrEqual(1.15)
+      expect(result.letterSpacingRatio).toBeGreaterThanOrEqual(-0.03)
+      if (route === '/ko/' && width <= 390) expect(result.h1LineCount).toBe(2)
+    }
+  }
+})

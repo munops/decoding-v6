@@ -1,4 +1,5 @@
 export type DecoderMessages = {
+  locale: WorkbenchLocale
   ariaLabel: string
   privacy: string
   pasteLabel: string
@@ -53,6 +54,7 @@ export type DecoderMessages = {
 }
 
 export type ToolMessages = {
+  locale: WorkbenchLocale
   ariaSuffix: string
   privacy: string
   direction: string
@@ -89,6 +91,7 @@ export type WorkbenchLocale = (typeof workbenchLocales)[number]
 
 export const decoderMessages = {
   en: {
+    locale: 'en',
     ariaLabel: 'Universal decoder',
     privacy: 'Input stays on this device. No account, upload, or AI.',
     pasteLabel: 'Paste text or drop a file',
@@ -142,6 +145,7 @@ export const decoderMessages = {
     copyFailed: 'Unable to copy the selected result.',
   },
   ko: {
+    locale: 'ko',
     ariaLabel: '범용 디코더',
     privacy: '입력은 이 기기에만 남습니다. 계정, 업로드, AI가 없습니다.',
     pasteLabel: '텍스트를 붙여넣거나 파일을 놓으세요',
@@ -155,46 +159,47 @@ export const decoderMessages = {
     fileLimit: '파일이 로컬 안전 제한인 10 MiB를 초과합니다.',
     localFile: '로컬 파일',
     copied: '선택한 결과를 복사했습니다.',
-    exported: '값을 제거한 구조를 내보냈습니다.',
-    decodeChain: '디코딩 체인',
+    exported: '실제 값을 뺀 구조 파일을 저장했습니다.',
+    decodeChain: '값을 푼 순서',
     possibleFormats: '가능한 형식',
-    localResult: '로컬 결과',
-    inspector: '검사기',
+    localResult: '이 기기에서 확인한 결과',
+    inspector: '자세히 보기',
     noCandidate: '후보 없음',
     copy: '복사',
-    exportRedacted: '값을 가리고 내보내기',
-    trySupported: '지원 형식을 입력하거나 도구 모음에서 도구를 선택하세요.',
+    exportRedacted: '실제 값을 뺀 구조 파일 받기',
+    trySupported: '다른 값을 입력하거나 도구 목록에서 하려는 작업을 선택하세요.',
     wrongFormat: '형식이 다른가요?',
-    chooseCandidate: '다른 후보를 선택하세요. 신고나 입력 데이터는 전송되지 않습니다.',
+    chooseCandidate: '다른 형식 후보를 선택할 수 있습니다. 선택 내용과 입력값은 전송되지 않습니다.',
     bytes: '바이트',
     stopped: '중단됨',
     chainStep: '{step}단계',
     inputSize: '입력: {size}바이트',
-    ambiguousStep: '둘 이상의 형식이 가능해요',
-    unsupportedStep: '선택된 형식이 없어요',
-    limitStep: '로컬 안전 제한에서 중단했어요',
-    shareTitle: '안전하게 공유',
-    copySafeSummary: '안전한 요약 복사',
-    downloadShareCard: '공유 카드 다운로드',
+    ambiguousStep: '가능성이 비슷한 형식이 둘 이상입니다',
+    unsupportedStep: '확인된 형식이 없습니다',
+    limitStep: '기기 내 안전 제한에서 멈췄습니다',
+    shareTitle: '입력값 없이 결과 공유',
+    copySafeSummary: '입력값 없는 요약 복사',
+    downloadShareCard: '입력값 없는 결과 카드 받기',
     shareCopied: '입력과 디코딩 값이 없는 안전한 요약을 복사했어요.',
     shareCardDownloaded: '입력과 디코딩 값이 없는 안전한 공유 카드를 받았어요.',
-    shareHeadline: '로컬 디코딩 요약',
+    shareHeadline: '이 기기에서 확인한 결과',
     shareFormat: '형식',
-    shareChain: '디코딩 체인',
+    shareChain: '값을 푼 순서',
     shareWarnings: '경고',
-    shareNoWarnings: '결정적 경고 없음',
-    shareOmitted: '입력과 디코딩 값은 의도적으로 제외했습니다.',
-    shareFooter: 'Decoded locally at decod.ing',
-    copyFeedback: '복사 피드백',
+    shareNoWarnings: '규칙에 따른 경고 없음',
+    shareOmitted: '원본 입력과 풀린 값은 이 요약에 넣지 않았습니다.',
+    shareFooter: 'decod.ing에서 기기 내 처리',
+    copyFeedback: '복사 완료 알림',
     copyFeedbackDescription: '복사에 성공했을 때만 이 기기에서 조용한 소리를 냅니다.',
     copyFeedbackEnabled: '복사 후 소리 재생',
     copyFeedbackVolume: '소리 크기',
-    copyFeedbackPreview: '소리 미리 듣기',
+    copyFeedbackPreview: '알림 소리 들어보기',
     copyFeedbackPreviewed: '이 기기에서 미리 듣기 소리를 재생했어요.',
     copyFeedbackVisualOnly: '소리를 사용할 수 없어 시각 알림만 표시합니다.',
     copyFailed: '선택한 결과를 복사하지 못했습니다.',
   },
   ja: {
+    locale: 'ja',
     ariaLabel: 'ユニバーサルデコーダー',
     privacy: '入力はこのデバイスにのみ保持されます。アカウント、アップロード、AIは使用しません。',
     pasteLabel: 'テキストを貼り付けるか、ファイルをドロップ',
@@ -248,6 +253,7 @@ export const decoderMessages = {
     copyFailed: '選択した結果をコピーできませんでした。',
   },
   'zh-cn': {
+    locale: 'zh-cn',
     ariaLabel: '通用解码器',
     privacy: '输入仅保留在此设备上。无需账户、上传或 AI。',
     pasteLabel: '粘贴文本或拖入文件',
@@ -301,6 +307,7 @@ export const decoderMessages = {
     copyFailed: '无法复制所选结果。',
   },
   es: {
+    locale: 'es',
     ariaLabel: 'Decodificador universal',
     privacy: 'La entrada permanece en este dispositivo. Sin cuenta, subidas ni IA.',
     pasteLabel: 'Pega texto o suelta un archivo',
@@ -354,6 +361,7 @@ export const decoderMessages = {
     copyFailed: 'No se pudo copiar el resultado seleccionado.',
   },
   'pt-br': {
+    locale: 'pt-br',
     ariaLabel: 'Decodificador universal',
     privacy: 'A entrada fica neste dispositivo. Sem conta, upload ou IA.',
     pasteLabel: 'Cole texto ou solte um arquivo',
@@ -407,6 +415,7 @@ export const decoderMessages = {
     copyFailed: 'Não foi possível copiar o resultado selecionado.',
   },
   de: {
+    locale: 'de',
     ariaLabel: 'Universeller Decoder',
     privacy: 'Eingaben bleiben auf diesem Gerät. Kein Konto, Upload oder KI.',
     pasteLabel: 'Text einfügen oder Datei ablegen',
@@ -461,6 +470,7 @@ export const decoderMessages = {
     copyFailed: 'Das ausgewählte Ergebnis konnte nicht kopiert werden.',
   },
   fr: {
+    locale: 'fr',
     ariaLabel: 'Décodeur universel',
     privacy: "L'entrée reste sur cet appareil. Sans compte, transfert ni IA.",
     pasteLabel: 'Collez du texte ou déposez un fichier',
@@ -518,6 +528,7 @@ export const decoderMessages = {
 
 export const toolMessages = {
   en: {
+    locale: 'en',
     ariaSuffix: 'tool',
     privacy: 'This operation runs locally. Input is never uploaded.',
     direction: 'Direction',
@@ -549,37 +560,39 @@ export const toolMessages = {
     imageReadFailed: 'Unable to read image pixels.',
   },
   ko: {
+    locale: 'ko',
     ariaSuffix: '도구',
     privacy: '이 작업은 기기에서 실행되며 입력은 업로드되지 않습니다.',
     direction: '방향',
     fromBase: '입력 진법',
     toBase: '출력 진법',
-    pattern: '패턴',
-    flags: '플래그',
+    pattern: '찾을 규칙',
+    flags: '검색 옵션',
     compareWith: '비교 대상',
     kind: '종류',
-    algorithm: '알고리즘',
+    algorithm: '계산 방식',
     language: '언어',
     caseLabel: '표기법',
     input: '입력',
     file: '파일',
     enterInput: '입력하세요…',
     running: '실행 중…',
-    runLocally: '로컬에서 실행',
+    runLocally: '이 기기에서 실행',
     clear: '지우기',
     output: '출력',
     ready: '준비됨',
     copy: '복사',
-    sandboxTitle: '격리된 로컬 미리보기',
+    sandboxTitle: '외부 연결을 막은 미리보기',
     generatedQrAlt: '생성된 QR 코드',
-    emptyOutput: '도구를 실행하면 로컬 결과가 표시됩니다.',
+    emptyOutput: '도구를 실행하면 이 기기에서 처리한 결과가 표시됩니다.',
     useAsInput: '입력으로 사용',
     runningMessage: '이 기기에서 실행 중…',
     operationFailed: '작업에 실패했습니다.',
-    fileLimit: '파일이 로컬 제한인 10 MiB를 초과합니다.',
+    fileLimit: '파일이 이 기기에서 안전하게 처리할 수 있는 10 MiB를 초과합니다.',
     imageReadFailed: '이미지 픽셀을 읽지 못했습니다.',
   },
   ja: {
+    locale: 'ja',
     ariaSuffix: 'ツール',
     privacy: 'この処理はデバイス内で実行され、入力はアップロードされません。',
     direction: '方向',
@@ -611,6 +624,7 @@ export const toolMessages = {
     imageReadFailed: '画像ピクセルを読み取れませんでした。',
   },
   'zh-cn': {
+    locale: 'zh-cn',
     ariaSuffix: '工具',
     privacy: '此操作在本地运行，输入永不上传。',
     direction: '方向',
@@ -642,6 +656,7 @@ export const toolMessages = {
     imageReadFailed: '无法读取图像像素。',
   },
   es: {
+    locale: 'es',
     ariaSuffix: 'herramienta',
     privacy: 'Esta operación se ejecuta localmente. La entrada nunca se sube.',
     direction: 'Dirección',
@@ -673,6 +688,7 @@ export const toolMessages = {
     imageReadFailed: 'No se pudieron leer los píxeles de la imagen.',
   },
   'pt-br': {
+    locale: 'pt-br',
     ariaSuffix: 'ferramenta',
     privacy: 'Esta operação roda localmente. A entrada nunca é enviada.',
     direction: 'Direção',
@@ -704,6 +720,7 @@ export const toolMessages = {
     imageReadFailed: 'Não foi possível ler os pixels da imagem.',
   },
   de: {
+    locale: 'de',
     ariaSuffix: 'Tool',
     privacy: 'Dieser Vorgang läuft lokal. Eingaben werden nie hochgeladen.',
     direction: 'Richtung',
@@ -735,6 +752,7 @@ export const toolMessages = {
     imageReadFailed: 'Bildpixel konnten nicht gelesen werden.',
   },
   fr: {
+    locale: 'fr',
     ariaSuffix: 'outil',
     privacy: "Cette opération s'exécute localement. L'entrée n'est jamais transférée.",
     direction: 'Sens',
