@@ -152,6 +152,7 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
   const [selected, setSelected] = useState<Detection | null>(null)
   const [status, setStatus] = useState<'idle' | 'processing' | 'done' | 'error'>('idle')
   const [message, setMessage] = useState('')
+  const [diagnostic, setDiagnostic] = useState('')
   const [showCandidates, setShowCandidates] = useState(false)
   const [activeChainNode, setActiveChainNode] = useState<string | null>(null)
   const [copyFeedback, setCopyFeedback] = useState<CopyFeedbackPreferences>(() =>
@@ -159,12 +160,15 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
   )
   const requestId = useRef(0)
   const inputRef = useRef<HTMLTextAreaElement>(null)
+  const lastInput = useRef<DecodeInput | null>(null)
 
   const run = useCallback(
     async (input: DecodeInput) => {
+      lastInput.current = input
       const current = ++requestId.current
       setStatus('processing')
       setMessage(messages.checking)
+      setDiagnostic('')
       try {
         const next = await decodeInput(input)
         if (current !== requestId.current) return
@@ -177,7 +181,8 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
       } catch (error) {
         if (current !== requestId.current) return
         setStatus('error')
-        setMessage(error instanceof Error ? error.message : messages.decodeFailed)
+        setMessage(messages.decodeFailed)
+        setDiagnostic(error instanceof Error ? error.message : String(error))
       }
     },
     [decodeInput, messages],
@@ -191,6 +196,8 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
       setSelected(null)
       setStatus('idle')
       setMessage('')
+      setDiagnostic('')
+      lastInput.current = null
       setShowCandidates(false)
       setActiveChainNode(null)
       return
@@ -439,7 +446,22 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
       ) : null}
       {message && status !== 'processing' ? (
         <div class={`notice ${status === 'error' ? 'danger' : 'info'}`} aria-live="polite">
-          {message}
+          <span>{message}</span>
+          {status === 'error' && lastInput.current ? (
+            <button
+              class="button secondary small"
+              type="button"
+              onClick={() => lastInput.current && void run(lastInput.current)}
+            >
+              {messages.retry}
+            </button>
+          ) : null}
+          {status === 'error' && diagnostic ? (
+            <details>
+              <summary>{messages.diagnosticDetails}</summary>
+              <code>{diagnostic}</code>
+            </details>
+          ) : null}
         </div>
       ) : null}
 

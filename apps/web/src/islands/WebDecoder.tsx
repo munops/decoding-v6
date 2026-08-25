@@ -1,9 +1,7 @@
-import type { DecodeInput, DecodeResult } from '@decoding/engine'
 import { DecoderWorkbench } from '@decoding/workbench-ui'
 import type { DecoderMessages } from '@decoding/workbench-ui'
 import { useEffect, useMemo, useState } from 'preact/hooks'
-
-type Pending = { resolve: (result: DecodeResult) => void; reject: (error: Error) => void }
+import { createDecoderWorkerClient } from '../lib/decoder-worker-client'
 
 export type WebDecoderSample = {
   id: string
@@ -19,33 +17,17 @@ type Props = {
 
 export default function WebDecoder({ messages, sampleLabel, samples = [] }: Props) {
   const [externalInput, setExternalInput] = useState<{ id: number; value: string }>()
-  const client = useMemo(() => {
-    const worker = new Worker(new URL('../workers/decoder.worker.ts', import.meta.url), {
-      type: 'module',
-    })
-    const pending = new Map<number, Pending>()
-    let id = 0
-    worker.onmessage = (
-      event: MessageEvent<{ id: number; result?: DecodeResult; error?: string }>,
-    ) => {
-      const request = pending.get(event.data.id)
-      if (!request) return
-      pending.delete(event.data.id)
-      if (event.data.error) request.reject(new Error(event.data.error))
-      else if (event.data.result) request.resolve(event.data.result)
-    }
-    return {
-      worker,
-      decodeInput(input: DecodeInput) {
-        const requestId = ++id
-        return new Promise<DecodeResult>((resolve, reject) => {
-          pending.set(requestId, { resolve, reject })
-          worker.postMessage({ id: requestId, input })
-        })
-      },
-    }
-  }, [])
-  useEffect(() => () => client.worker.terminate(), [client])
+  const client = useMemo(
+    () =>
+      createDecoderWorkerClient(
+        () =>
+          new Worker(new URL('../workers/decoder.worker.ts', import.meta.url), {
+            type: 'module',
+          }),
+      ),
+    [],
+  )
+  useEffect(() => () => client.terminate(), [client])
   return (
     <div class="decoder-frame">
       {sampleLabel && samples.length ? (

@@ -10,6 +10,8 @@ export type DecoderMessages = {
   checking: string
   unsupported: string
   decodeFailed: string
+  retry: string
+  diagnosticDetails: string
   fileLimit: string
   localFile: string
   copied: string
@@ -102,6 +104,8 @@ export const decoderMessages = {
     checking: 'Checking formats locally…',
     unsupported: "We couldn't identify this yet.",
     decodeFailed: 'Unable to decode this input.',
+    retry: 'Try again',
+    diagnosticDetails: 'Technical details',
     fileLimit: 'File exceeds the 10 MiB local safety limit.',
     localFile: 'Local file',
     copied: 'Selected result copied.',
@@ -156,6 +160,8 @@ export const decoderMessages = {
     checking: '이 기기에서 형식을 확인하는 중…',
     unsupported: '아직 이 형식을 식별하지 못했습니다.',
     decodeFailed: '입력을 디코딩하지 못했습니다.',
+    retry: '다시 시도',
+    diagnosticDetails: '진단 정보',
     fileLimit: '파일이 로컬 안전 제한인 10 MiB를 초과합니다.',
     localFile: '로컬 파일',
     copied: '선택한 결과를 복사했습니다.',
@@ -210,6 +216,8 @@ export const decoderMessages = {
     checking: 'ローカルで形式を確認中…',
     unsupported: 'この形式はまだ識別できません。',
     decodeFailed: '入力をデコードできませんでした。',
+    retry: 'もう一度試す',
+    diagnosticDetails: '技術情報',
     fileLimit: 'ファイルがローカル安全上限の 10 MiB を超えています。',
     localFile: 'ローカルファイル',
     copied: '選択した結果をコピーしました。',
@@ -264,6 +272,8 @@ export const decoderMessages = {
     checking: '正在本地检查格式…',
     unsupported: '暂时无法识别此格式。',
     decodeFailed: '无法解码此输入。',
+    retry: '重试',
+    diagnosticDetails: '技术详情',
     fileLimit: '文件超过 10 MiB 本地安全限制。',
     localFile: '本地文件',
     copied: '已复制所选结果。',
@@ -318,6 +328,8 @@ export const decoderMessages = {
     checking: 'Comprobando formatos localmente…',
     unsupported: 'Aún no podemos identificar este formato.',
     decodeFailed: 'No se pudo decodificar la entrada.',
+    retry: 'Intentar de nuevo',
+    diagnosticDetails: 'Detalles técnicos',
     fileLimit: 'El archivo supera el límite local de 10 MiB.',
     localFile: 'Archivo local',
     copied: 'Resultado seleccionado copiado.',
@@ -372,6 +384,8 @@ export const decoderMessages = {
     checking: 'Verificando formatos localmente…',
     unsupported: 'Ainda não foi possível identificar este formato.',
     decodeFailed: 'Não foi possível decodificar a entrada.',
+    retry: 'Tentar novamente',
+    diagnosticDetails: 'Detalhes técnicos',
     fileLimit: 'O arquivo excede o limite local de 10 MiB.',
     localFile: 'Arquivo local',
     copied: 'Resultado selecionado copiado.',
@@ -426,6 +440,8 @@ export const decoderMessages = {
     checking: 'Formate werden lokal geprüft…',
     unsupported: 'Dieses Format konnte noch nicht erkannt werden.',
     decodeFailed: 'Die Eingabe konnte nicht decodiert werden.',
+    retry: 'Erneut versuchen',
+    diagnosticDetails: 'Technische Details',
     fileLimit: 'Die Datei überschreitet das lokale Limit von 10 MiB.',
     localFile: 'Lokale Datei',
     copied: 'Ausgewähltes Ergebnis kopiert.',
@@ -481,6 +497,8 @@ export const decoderMessages = {
     checking: 'Vérification locale des formats…',
     unsupported: "Ce format n'a pas encore été identifié.",
     decodeFailed: "Impossible de décoder l'entrée.",
+    retry: 'Réessayer',
+    diagnosticDetails: 'Détails techniques',
     fileLimit: 'Le fichier dépasse la limite locale de 10 Mio.',
     localFile: 'Fichier local',
     copied: 'Résultat sélectionné copié.',
