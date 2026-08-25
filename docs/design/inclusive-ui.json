@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 2,
+  "projectId": "decoding-v6",
+  "checkedAt": "2026-08-25",
+  "adoption": {
+    "profile": "baseline",
+    "claim": "krds_derived_not_compliance",
+    "rationale": "decod.ing은 개발자와 운영자가 낯선 값을 로컬에서 판별하는 민간 도구다. 정부 서비스 외형이나 KRDS 준수를 주장하지 않고, KRDS에서 파생한 재배치·키보드·색상 외 신호·200% 글자 확대 품질바를 실제 웹 작업대에 적용한다."
+  },
+  "identityBoundary": {
+    "kind": "private_non_government",
+    "rationale": "decod.ing은 정부기관이나 공공 디지털 서비스가 아니며, 계정·서버 입력 업로드 없이 브라우저에서 값을 해석하는 MUNOPS의 민간 개발 도구다.",
+    "ownerPaths": ["apps/web/src/components/HomePage.astro", "apps/web/src/layouts/Layout.astro"]
+  },
+  "typography": {
+    "strategy": "system_stack",
+    "rationale": "개발자용 긴 payload와 근거 ledger를 즉시 그리기 위해 UI에는 플랫폼 sans를, 입력·출력·단계와 수치에는 플랫폼 mono를 사용한다. 외부 폰트 지연과 제3자 font request를 만들지 않으며 브라우저·PWA·desktop·extension에서 각 플랫폼의 읽기 좋은 기본 metric을 수용한다.",
+    "fallbackPolicy": "sans는 ui-sans-serif에서 system-ui와 플랫폼 UI 글꼴을 거쳐 sans-serif로, mono는 ui-monospace에서 SFMono-Regular·Menlo·Monaco·Consolas를 거쳐 monospace로 내려간다. 설치 글꼴과 glyph metric은 OS마다 달라질 수 있으므로 픽셀 동일성을 약속하지 않고 의미 역할과 reflow를 보존하며 320·390·1440px와 320px/200%에서 overflow를 검사한다. 어느 후보도 없으면 브라우저 generic family가 렌더하며 기능은 계속 동작한다.",
+    "scanRoots": ["apps/web/src", "apps/web/public", "apps/desktop/src", "apps/extension/src"],
+    "fonts": [
+      {
+        "id": "platform-ui-sans",
+        "stack": [
+          "ui-sans-serif",
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "sans-serif"
+        ],
+        "roles": ["body", "display"],
+        "files": [],
+        "license": {
+          "status": "not_redistributed"
+        }
+      },
+      {
+        "id": "platform-ui-mono",
+        "stack": ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
+        "roles": ["numeric"],
+        "files": [],
+        "license": {
+          "status": "not_redistributed"
+        }
+      }
+    ],
+    "roles": {
+      "body": {
+        "fontId": "platform-ui-sans",
+        "weights": [400, 500, 650, 680, 700, 720, 750, 760, 780, 800],
+        "usage": "탐색, 설명, privacy 안내, 작업대 label과 결과 해설"
+      },
+      "display": {
+        "fontId": "platform-ui-sans",
+        "weights": [700, 750, 760, 780, 800],
+        "usage": "첫 화면 가치 문장, route 제목, panel heading과 선택 상태"
+      },
+      "numeric": {
+        "fontId": "platform-ui-mono",
+        "weights": [400, 500, 650, 700, 750, 760, 800],
+        "usage": "입력 payload, decoded output, confidence·step·byte 수치와 evidence metadata"
+      }
+    },
+    "distribution": {
+      "remoteStylesheets": [],
+      "screenFontBinaries": 0,
+      "privacyBoundary": "UI 글꼴을 내려받거나 제3자 font host에 IP·user-agent·referrer를 전송하지 않는다. CLI 글꼴은 사용자 terminal, 웹·desktop·extension 글꼴은 실행 OS가 소유한다."
+    },
+    "channels": {
+      "web": {
+        "status": "implemented",
+        "cssOwners": ["apps/web/src/styles/global.css"],
+        "parityDecision": "현재 local source와 PWA는 같은 Astro global.css의 sans/mono 역할을 소비한다. 이 manifest·test·raster는 현재 HEAD의 local evidence이며 기존 public Worker revision을 새 font release로 승격하지 않는다."
+      },
+      "appsInToss": {
+        "status": "not_applicable",
+        "rationale": "제품 channel plan에서 target/workflow mismatch로 미선택이며 appName·SDK·artifact·QR·console·review evidence가 없다."
+      },
+      "ios": {
+        "status": "not_applicable",
+        "rationale": "독립 iOS 채널은 미선택이며 native-only 가치, signed artifact, device 또는 store evidence가 없다."
+      },
+      "android": {
+        "status": "not_applicable",
+        "rationale": "독립 Android 채널은 미선택이며 native-only 가치, signed artifact, device 또는 store evidence가 없다."
+      },
+      "desktop": {
+        "status": "built",
+        "cssOwners": ["apps/web/src/styles/global.css", "apps/desktop/src/desktop.css"],
+        "parityDecision": "Tauri engineering build는 웹 global.css의 sans/mono 역할과 desktop.css의 상태줄 mono override를 공유한다. signing·notarization·device smoke·public distribution은 별도 wait_external gate라 released가 아니다."
+      },
+      "browserExtension": {
+        "status": "built",
+        "cssOwners": ["apps/extension/src/style.css"],
+        "parityDecision": "MV3 auxiliary build도 system sans와 payload용 system mono만 사용해 binary·license notice가 없다. 현재 사용자 소유 dirty CSS를 읽기만 했으며 이 작업에서 byte를 바꾸거나 store release를 주장하지 않는다."
+      },
+      "cli": {
+        "status": "not_applicable",
+        "rationale": "stdin CLI는 화면 글꼴을 배포하지 않고 사용자의 terminal renderer와 font preference를 그대로 사용한다."
+      }
+    }
+  },
+  "inclusiveInteraction": {
+    "textResizePercent": 200,
+    "contrastTarget": "WCAG-AA",
+    "colorNotSoleSignal": true,
+    "minimumTargetCssPx": 44,
+    "requiredFieldText": true,
+    "errorSummaryAndFocus": true,
+    "currentLocationNotColorOnly": true,
+    "reducedMotion": true,
+    "displayModes": ["light", "dark", "high_contrast"]
+  },
+  "evidence": {
+    "checkedAt": "2026-08-25",
+    "sourceRefs": [
+      "apps/web/src/components/HomePage.astro",
+      "apps/web/src/islands/WebDecoder.tsx",
+      "apps/web/src/layouts/Layout.astro",
+      "apps/web/src/styles/global.css",
+      "docs/platforms/channel-plan.md"
+    ],
+    "browserTestRefs": ["tests/e2e/inclusive-ui.spec.ts"],
+    "renderRefs": [
+      "docs/design/evidence/inclusive-ui-20260825/home-320.png",
+      "docs/design/evidence/inclusive-ui-20260825/home-390.png",
+      "docs/design/evidence/inclusive-ui-20260825/home-1440.png",
+      "docs/design/evidence/inclusive-ui-20260825/home-320-text-200.png"
+    ],
+    "testedWidthsPx": [320, 390, 1440],
+    "viewportRuns": [
+      {
+        "widthCssPx": 320,
+        "browserTestRef": "tests/e2e/inclusive-ui.spec.ts",
+        "renderRef": "docs/design/evidence/inclusive-ui-20260825/home-320.png"
+      },
+      {
+        "widthCssPx": 390,
+        "browserTestRef": "tests/e2e/inclusive-ui.spec.ts",
+        "renderRef": "docs/design/evidence/inclusive-ui-20260825/home-390.png"
+      },
+      {
+        "widthCssPx": 1440,
+        "browserTestRef": "tests/e2e/inclusive-ui.spec.ts",
+        "renderRef": "docs/design/evidence/inclusive-ui-20260825/home-1440.png"
+      }
+    ],
+    "textResizeRun": {
+      "percent": 200,
+      "viewportWidthCssPx": 320,
+      "browserTestRef": "tests/e2e/inclusive-ui.spec.ts",
+      "renderRef": "docs/design/evidence/inclusive-ui-20260825/home-320-text-200.png"
+    }
+  }
+}

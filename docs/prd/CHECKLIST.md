@@ -352,3 +352,12 @@ GitHub Issues raw JSON 직독(등급 A)으로 얻은 결과를 제품 작업으�
   VSCode Extension *"Currently one has to copy tex[t]"*(👍20). 만족한 사용자가 원하는 다음 단계이지만
   설치형으로 가면 DevToys와 같은 자리로 이동한다. **웹 사용자가 같은 값을 반복 붙여넣는 행동이
   관측되면** 재검토한다.
+
+## 2026-08-25 inclusive UI·font contract
+
+- [x] **DC-IUI-01** `done_local` — 오너가 지정한 `ready` 항목을 `in_progress`로 전환한 뒤, 실제 `/` 웹
+  route의 system sans/mono stack, 비재배포·privacy·fallback 경계와 320·390·1440·320/200% reflow를
+  schema v2 manifest, 전용 browser fixture, 같은 HEAD의 새 raster/receipt로 결속했다. strict 0/0,
+  Playwright capture 4 pass와 분리 재검증 4 pass, lint·typecheck·486-page web build가 통과했다. runtime
+  source·tracked runtime artifact는 바뀌지 않아 web deploy가 필요 없고 Apps in Toss는 미선택이다.
+  (`ready → in_progress → done_local`; [receipt](../design/evidence/inclusive-ui-20260825/receipt.json))

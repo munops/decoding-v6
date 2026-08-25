@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "stableId": "DC-IUI-01",
+  "status": "done_local",
+  "capturedAt": "2026-08-25T02:50:35Z",
+  "route": "/",
+  "sourceIdentity": {
+    "branch": "main",
+    "baseHead": "e799606231fa3a3f8e222c6ca1ec152f65b20cfd",
+    "captureHead": "e799606231fa3a3f8e222c6ca1ec152f65b20cfd",
+    "finalHead": "e799606231fa3a3f8e222c6ca1ec152f65b20cfd",
+    "preDirtyFingerprint": "27bb08877a7e10c76d0a92e9089de75b27dd43fd061395fb7bdf88f8c7639f58",
+    "preDirtyEntryCount": 3,
+    "postDirtyFingerprint": "0af2ab173ba518ef734ea893441c560bc02091a258de4469f30580c88e95df6a",
+    "postDirtyEntryCount": 11,
+    "runtimeSourceChanged": false,
+    "runtimeSourceFilesModified": []
+  },
+  "protectedDirtyBaseline": [
+    {
+      "path": "apps/extension/src/style.css",
+      "preSha256": "e7c376c2ee674ad3cbe8e6eaebfc3b33f24acd29585947cca2e358c14a3c1d29",
+      "postSha256": "e7c376c2ee674ad3cbe8e6eaebfc3b33f24acd29585947cca2e358c14a3c1d29",
+      "bytesPreserved": true
+    },
+    {
+      "path": "docs/monetization/ad-surface-registry.json",
+      "preSha256": "7b10c6a6fa5c55d51c3391e95eb7bff0eec3444387ae3fb83d8b68aac02af156",
+      "postSha256": "7b10c6a6fa5c55d51c3391e95eb7bff0eec3444387ae3fb83d8b68aac02af156",
+      "bytesPreserved": true
+    },
+    {
+      "path": "docs/operations/product-operations-manifest.json",
+      "preSha256": "b5a95ebb6799b3ea009e80d21d1d15ee736722a18abd5ead2c7374157c391955",
+      "postSha256": "b5a95ebb6799b3ea009e80d21d1d15ee736722a18abd5ead2c7374157c391955",
+      "bytesPreserved": true
+    }
+  ],
+  "fontDelivery": {
+    "strategy": "system_stack",
+    "screenFontBinaries": 0,
+    "remoteFontStylesheets": 0,
+    "licenseStatus": "not_redistributed",
+    "privacy": "No UI font request or third-party font-host transmission is introduced; OS and terminal renderers own installed system fonts.",
+    "fallback": "Generic sans-serif and monospace preserve function when named platform families are unavailable; metric variation is accepted and covered by bound reflow runs."
+  },
+  "screens": [
+    {
+      "path": "docs/design/evidence/inclusive-ui-20260825/home-320.png",
+      "viewportCssPx": {
+        "width": 320,
+        "height": 1000
+      },
+      "rasterPx": {
+        "width": 320,
+        "height": 1450
+      },
+      "bytes": 96520,
+      "sha256": "fed482ba891ffd4e5a9b4034acfe2ad31be2a92d93f5eddd367647e5691deb14"
+    },
+    {
+      "path": "docs/design/evidence/inclusive-ui-20260825/home-390.png",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "rasterPx": {
+        "width": 390,
+        "height": 1409
+      },
+      "bytes": 103630,
+      "sha256": "87a257e6d54018dc197d0486adcbaa02f8f7621ded454c5bc975abf33423da8e"
+    },
+    {
+      "path": "docs/design/evidence/inclusive-ui-20260825/home-1440.png",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "rasterPx": {
+        "width": 1440,
+        "height": 1246
+      },
+      "bytes": 146077,
+      "sha256": "6013f5a8419b94d84474e84ddf7cab8c0dd7c92f933da4c0850556c8fa7d3d4e"
+    },
+    {
+      "path": "docs/design/evidence/inclusive-ui-20260825/home-320-text-200.png",
+      "viewportCssPx": {
+        "width": 320,
+        "height": 1000
+      },
+      "textResizePercent": 200,
+      "rasterPx": {
+        "width": 320,
+        "height": 1470
+      },
+      "bytes": 96710,
+      "sha256": "d340d49ad8b674e13208d0972ee68a92ffe6fd1da9b1612aed0f3eb6f4a53c2b"
+    }
+  ],
+  "commands": {
+    "capture": "DECODING_INCLUSIVE_UI_EVIDENCE_DIR=/Users/minhan/Desktop/workspace/decoding-v6/docs/design/evidence/inclusive-ui-20260825 PLAYWRIGHT_PORT=4337 node ../scripts/run-agent-browser.mjs --timeout-ms 120000 -- pnpm exec playwright test tests/e2e/inclusive-ui.spec.ts --project=chromium",
+    "captureResult": "4 passed; AGENT_BROWSER_RUN_RESULT runId=910d902e-d99c-42c0-94b2-3cfb5f6e1b06 exitCode=0 remainingPids=[]",
+    "strict": "node ../scripts/check-inclusive-ui.mjs --project . --strict",
+    "strictResult": "projects=1 adopted=1 errors=0 warnings=0",
+    "browserVerification": "PLAYWRIGHT_PORT=4338 node ../scripts/run-agent-browser.mjs --timeout-ms 120000 -- pnpm exec playwright test tests/e2e/inclusive-ui.spec.ts --project=chromium",
+    "browserVerificationResult": "4 passed; AGENT_BROWSER_RUN_RESULT runId=831296bf-b1d8-49dc-ac90-691294475d46 exitCode=0 remainingPids=[]",
+    "lint": "pnpm lint",
+    "lintResult": "passed",
+    "typecheck": "pnpm typecheck",
+    "typecheckResult": "passed; apps/web Astro diagnostics 0 errors, 0 warnings, 0 hints",
+    "webBuild": "pnpm --filter @decoding/web build",
+    "webBuildResult": "passed; 486 pages built"
+  },
+  "releaseDecision": {
+    "trackedRuntimeArtifactChanged": false,
+    "localIgnoredWebDistRegeneratedForValidation": true,
+    "webDeployRequired": false,
+    "webRationale": "Only checklist, design contract, browser test, and local evidence files changed; no tracked web runtime source, config, or runtime asset changed.",
+    "appsInTossDeployRequired": false,
+    "appsInTossRationale": "Apps in Toss is not selected and no appName, SDK adapter, .ait artifact, console upload, QR, review, or release state exists for this work.",
+    "providerMutationPerformed": false,
+    "commitOrPushPerformed": false
+  }
+}
