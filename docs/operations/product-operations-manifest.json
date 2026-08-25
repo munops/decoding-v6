@@ -19,7 +19,8 @@
     "masterChecklist": "docs/prd/CHECKLIST.md",
     "decisions": "docs/10-decisions/ADR-003-zero-account-ad-supported-greenfield.md",
     "traceability": "docs/prd/CHECKLIST.md",
-    "releaseEvidence": "docs/research/2026-08-09-free-first-monetization.md"
+    "releaseEvidence": "docs/research/2026-08-09-free-first-monetization.md",
+    "productionEvidence": "docs/operations/production-evidence.json"
   },
   "connections": {
     "registry": "../../../docs/munops/ops/provider-registry.yaml",
@@ -94,13 +95,27 @@
     "lastSuccessfulReadbackAt": null
   },
   "trust": {
-    "status": "in_progress",
     "dataInventory": "docs/trust/data-inventory.md",
     "privacyUrl": "https://decod.ing/privacy",
     "termsUrl": "https://decod.ing/terms",
     "supportUrl": "https://decod.ing/support",
     "accountDeletion": "See docs/prd/README.md and docs/operations/support.md when present.",
-    "policyVersion": "draft-2026-08-08"
+    "policyVersion": "blocked-2026-08-08.1",
+    "contractVersion": 1,
+    "publicationStatus": "blocked",
+    "lastReviewedAt": "2026-08-25",
+    "effectiveAt": null,
+    "publishedAt": null,
+    "contactEmail": "support@munops.com",
+    "contactRole": "public_product_support",
+    "contactRef": "../../../hq/bootstrap/manifest.yaml#resources.support_email_route",
+    "deliveryMode": "inbound_forwarding",
+    "deliveryStatus": "data_pending",
+    "outboundStatus": "data_pending",
+    "customContactEvidenceRef": null,
+    "archiveUrl": null,
+    "renderEvidenceRef": null,
+    "policySourceRevision": null
   },
   "monetization": {
     "status": "data_pending",

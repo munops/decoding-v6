@@ -3,7 +3,7 @@
   "project": "decoding-v6",
   "track": "ad_monetization",
   "productType": "non_game",
-  "checkedAt": "2026-08-10",
+  "checkedAt": "2026-08-24",
   "research": {
     "policyCheckedAt": "2026-08-10",
     "sources": [
@@ -26,7 +26,7 @@
   },
   "strategy": {
     "status": "selected",
-    "rationale": "A single clearly labeled direct sponsor can follow a completed local tool result without transmitting payloads, changing tool or result ranking, or occupying the first viewport. Direct self-sold sponsorship is isolated from network advertising and paid acquisition.",
+    "rationale": "The public tool route produces a complete local-only result before the dormant sponsor boundary, but the proposed placement remains prohibited until same-revision browser evidence proves that publisher-content boundary and the traffic, quality, privacy, sponsor-contract and release-wave gates all close. Direct self-sold sponsorship remains only a selected future web direction, isolated from network advertising and paid acquisition.",
     "firstValueEvent": "local_decode_completed_not_transmitted",
     "productionActivated": false,
     "activationGate": "owner-approved release wave after a direct sponsor contract, release flag and campaign read-back, privacy review, route QA, impression reconciliation and rollback drill"
@@ -48,8 +48,8 @@
     ],
     "sourceDigest": "sha256:807c8484a0d31b2e1bccaba4931497c058e255e19786069783a7f50caebf808a",
     "requiredBeforeRelease": true,
-    "rejudgedAt": "2026-08-13",
-    "rejudgeNote": "owner 파일이 바뀌었으나 diff에 route 추가·화면 추가·첫 가치 event 변경 신호가 0줄이라 지면 판정이 그대로 유효하다. 이 회차 변경은 canonical 도메인 전환과 보안 헤더가 중심이며 광고 지면의 위치·빈도·금지 순간을 건드리지 않는다. 해시를 맞추려고 올린 것이 아니라 재판정 결과가 '변화 없음'이어서 올렸다."
+    "rejudgedAt": "2026-08-24",
+    "rejudgeNote": "The actual /:tool owner still completes the decoded product result locally before the dormant below-fold sponsor component, and no payload, account, payment, ranking or non-web surface is eligible. The registry no longer treats source inspection alone as publisher-content browser proof: the placement is prohibited until a same-revision clean-profile journey and all activation gates are recorded."
   },
   "globalNoAdMoments": [
     "first_visit",
@@ -96,15 +96,11 @@
       "id": "web_tool_below_fold",
       "routePattern": "/:tool",
       "moment": "post_value_result",
-      "classification": "conditional",
-      "impressionCommit": "provider_confirmed_callback_only",
-      "noFillBehavior": "collapse_zero_gap",
-      "formatByChannel": {
-        "web": "responsive_display"
-      },
-      "trigger": "successful_local_operation_then_below_fold_viewability",
+      "classification": "prohibited",
+      "formatByChannel": {},
+      "trigger": "never_until_same_revision_publisher_content_browser_evidence_and_release_gates",
       "frequencyCap": {
-        "maxPerSession": 1,
+        "maxPerSession": 0,
         "minOrganicActionsBetweenFullScreenAds": null,
         "cooldownSeconds": 0
       },
@@ -121,9 +117,38 @@
         "desktop",
         "extension"
       ],
-      "rationale": "The hidden slot has zero layout footprint until a successful local operation, reads real session and local timestamp state, labels the sponsor, sends no payload targeting, does not affect tool or output ranking, and persists the cap only after the direct provider impression callback acknowledges viewability.",
+      "rationale": "A usable local product result exists independently before this dormant boundary, and the component is source-gated to zero layout footprint before first value with no payload targeting or ranking effect. The surface is nevertheless prohibited because no same-revision browser journey currently proves the actual /:tool completed-result boundary; traffic and quality thresholds, privacy review, a direct sponsor contract, test-ad QA, reconciliation, rollback and owner-approved release-wave evidence also remain open.",
       "codeOwner": "apps/web/src/components/SponsorSlot.astro",
-      "testOwner": "packages/workbench-ui/test/monetization.test.ts"
+      "testOwner": "packages/workbench-ui/test/monetization.test.ts",
+      "publisherContent": {
+        "publisherContentOwner": "apps/web/src/islands/WebTool.tsx",
+        "screenPurpose": "A public local-only decoding tool screen that returns a complete usable result without transmitting the input.",
+        "independentValueCompletion": {
+          "completedBeforePlacement": true,
+          "event": "decoding:local-operation-completed",
+          "description": "WebTool renders the successful worker result and only then dispatches the first-value event consumed by the dormant below-fold sponsor boundary."
+        },
+        "contentValueKind": "product_result",
+        "contentFocalPoint": "The decoded, encoded, hashed or inspected result produced from the visitor's local input.",
+        "generatedContent": {
+          "present": false,
+          "reviewStatus": "not_applicable"
+        },
+        "browserEvidence": {
+          "status": "data_pending",
+          "requiredEvidenceRef": "docs/operations/browser-runtime-evidence.json",
+          "remainingGate": "Record a clean-profile same-source web journey for /:tool that completes a local operation, shows the result before the below-fold boundary, and proves zero ad request before explicit release approval."
+        }
+      },
+      "remainingGates": [
+        "same_revision_publisher_content_browser_journey",
+        "phase_4_traffic_and_quality_thresholds",
+        "privacy_review",
+        "direct_sponsor_contract_and_campaign_readback",
+        "test_ad_route_qa_and_impression_reconciliation",
+        "rollback_drill",
+        "owner_approved_release_wave"
+      ]
     },
     {
       "id": "first_value_and_sensitive_surfaces_prohibited",
