@@ -361,3 +361,11 @@ GitHub Issues raw JSON 직독(등급 A)으로 얻은 결과를 제품 작업으�
   Playwright capture 4 pass와 분리 재검증 4 pass, lint·typecheck·486-page web build가 통과했다. runtime
   source·tracked runtime artifact는 바뀌지 않아 web deploy가 필요 없고 Apps in Toss는 미선택이다.
   (`ready → in_progress → done_local`; [receipt](../design/evidence/inclusive-ui-20260825/receipt.json))
+
+## 2026-08-26 interaction integrity
+
+- [x] **AIINT-DECODING-01** `deployed` — decoder worker의 `error`, `messageerror`, timeout이
+  영구 processing으로 남지 않고 한국어 복구 상태와 접힌 진단으로 닫힌다. 실패 worker를 폐기한 뒤
+  같은 입력을 새 worker로 재시도하며, 세 failure fixture와 clean build, production 강제 실패→재시도,
+  Cloudflare 100% read-back을 같은 runtime source에 결속했다.
+  ([receipt](../evidence/aiint-decoding-01-2026-08-26.md))

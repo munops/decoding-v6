@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "productId": "decoding-v6",
-  "checkedAt": "2026-08-24T19:09:47+09:00",
+  "checkedAt": "2026-08-26T00:48:07+09:00",
   "status": "done",
   "evidenceLevel": "release_verified",
-  "sourceRevision": "06564f552efbb63f46d4c1926dc6b360b2c057e2",
+  "sourceRevision": "602cc73e75bf1626b5ccadfb700b91319c87d1e3",
   "scope": {
     "productionEnvironment": "Cloudflare Worker decoding-v6 on decod.ing",
     "publicProduct": true,
@@ -39,16 +39,16 @@
   "accessibility": {"status": "done", "target": "WCAG-2.2-AA", "planRef": "docs/prd/05-uiux.md", "automatedEvidenceRef": "tests/e2e/responsive.spec.ts", "manualEvidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md", "representativeFlows": ["Korean landing and catalog", "Korean local JSON operation"], "knownViolations": []},
   "performance": {"status": "done", "budgetRef": "docs/prd/06-architecture.md", "labEvidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md", "fieldEvidenceRef": null, "webVitalsTarget": {"percentile": 75, "lcpMs": 2500, "inpMs": 200, "cls": 0.1}, "representativeRoutes": ["/ko/", "/ko/tools/", "/ko/json-format/", "/ko/methodology/"], "regressions": []},
   "dataLifecycle": {"status": "not_applicable", "inventoryRef": "docs/trust/data-inventory.md", "migrationPlanRef": null, "migrationRehearsalRef": null, "backupReadbackRef": null, "restoreDrillRef": null, "retentionDeletionEvidenceRef": null, "importExportRoundTripRef": null},
-  "resilience": {"status": "done", "failureModeRef": "docs/prd/06-architecture.md", "retryIdempotencyEvidenceRef": "tests/e2e/pwa.spec.ts", "failureInjectionEvidenceRef": "tests/e2e/pwa.spec.ts", "paymentFailureEvidenceRef": null, "aiFallbackEvidenceRef": null},
+  "resilience": {"status": "done", "failureModeRef": "docs/prd/06-architecture.md", "retryIdempotencyEvidenceRef": "docs/evidence/aiint-decoding-01-2026-08-26.md", "failureInjectionEvidenceRef": "apps/web/src/lib/decoder-worker-client.test.ts", "paymentFailureEvidenceRef": null, "aiFallbackEvidenceRef": null},
   "operations": {"status": "done", "sloRef": "docs/implementation/DEPLOYMENT.md", "observabilityRef": "wrangler.toml", "alertReadbackRef": "docs/evidence/web-product-language-release-2026-08-24.md", "runbookRef": "docs/implementation/DEPLOYMENT.md", "incidentOwner": "owner_lane", "costCapReadbackRef": "docs/evidence/web-product-language-release-2026-08-24.md", "killSwitchEvidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md"},
   "delivery": {
     "status": "done", "releasePlanRef": "docs/evidence/web-product-language-release-2026-08-24.md", "ciRunRef": "docs/evidence/web-product-language-release-2026-08-24.md",
-    "artifact": {"name": "apps/web/dist Cloudflare assets", "sha256": "1c8565308bf3637ffb471891051bf684cbabab31d0385fce3423876f46763053", "sourceRevision": "06564f552efbb63f46d4c1926dc6b360b2c057e2", "provenanceKind": "provider_version_manifest", "provenanceRef": "docs/evidence/web-product-language-release-2026-08-24.md"},
-    "previewSmokeRef": "docs/evidence/web-product-language-release-2026-08-24.md", "providerReadbackRef": "docs/evidence/web-product-language-release-2026-08-24.md", "realEntrypointSmokeRef": "docs/evidence/web-product-language-release-2026-08-24.md", "releaseEvidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md",
-    "rollback": {"target": "Cloudflare deployment d30e7aea-ebd4-4031-82f2-b5be1a47ff6c / version 7fa42c37-88f0-4f07-b039-a1b4341faca3", "planRef": "docs/implementation/DEPLOYMENT.md", "drillRef": "docs/evidence/web-product-language-release-2026-08-24.md"}
+    "artifact": {"name": "apps/web/dist Cloudflare assets", "sha256": "b18bb11a7e12f5d16c2acc4c2dbc616d4bce5a4746e6ae06f5eddfb12b1a94fd", "sourceRevision": "602cc73e75bf1626b5ccadfb700b91319c87d1e3", "provenanceKind": "provider_version_manifest", "provenanceRef": "docs/evidence/aiint-decoding-01-2026-08-26.md"},
+    "previewSmokeRef": "docs/evidence/aiint-decoding-01-2026-08-26.md", "providerReadbackRef": "docs/evidence/aiint-decoding-01-2026-08-26.md", "realEntrypointSmokeRef": "docs/evidence/aiint-decoding-01-2026-08-26.md", "releaseEvidenceRef": "docs/evidence/aiint-decoding-01-2026-08-26.md",
+    "rollback": {"target": "Cloudflare deployment 4f7a89e6-f827-4431-8fa2-483b8ad6aacf / version 0d7b792a-fece-4889-99b9-c24875ba64c7", "planRef": "docs/implementation/DEPLOYMENT.md", "drillRef": "docs/evidence/aiint-decoding-01-2026-08-26.md"}
   },
   "channels": {
-    "web": {"decision": "selected", "status": "done", "stage": "released", "artifactSha256": "1c8565308bf3637ffb471891051bf684cbabab31d0385fce3423876f46763053", "providerReadbackRef": "docs/evidence/web-product-language-release-2026-08-24.md", "realConsumerSmokeRef": "docs/evidence/web-product-language-release-2026-08-24.md", "rollbackRef": "docs/evidence/web-product-language-release-2026-08-24.md"},
+    "web": {"decision": "selected", "status": "done", "stage": "released", "artifactSha256": "b18bb11a7e12f5d16c2acc4c2dbc616d4bce5a4746e6ae06f5eddfb12b1a94fd", "providerReadbackRef": "docs/evidence/aiint-decoding-01-2026-08-26.md", "realConsumerSmokeRef": "docs/evidence/aiint-decoding-01-2026-08-26.md", "rollbackRef": "docs/evidence/aiint-decoding-01-2026-08-26.md"},
     "appsInToss": {"decision": "not_applicable", "status": "not_applicable", "stage": "assessed", "artifactSha256": null, "providerReadbackRef": null, "realConsumerSmokeRef": null, "rollbackRef": null},
     "ios": {"decision": "not_applicable", "status": "not_applicable", "stage": "assessed", "artifactSha256": null, "providerReadbackRef": null, "realConsumerSmokeRef": null, "rollbackRef": null},
     "android": {"decision": "not_applicable", "status": "not_applicable", "stage": "assessed", "artifactSha256": null, "providerReadbackRef": null, "realConsumerSmokeRef": null, "rollbackRef": null},
