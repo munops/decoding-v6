@@ -1,8 +1,8 @@
 :root {
   color-scheme: light dark;
   font-family: ui-sans-serif, system-ui, sans-serif;
-  background: #f7f7fb;
-  color: #17182d;
+  background: #f3f1ea;
+  color: #101827;
 }
 body {
   margin: 0;
@@ -12,7 +12,7 @@ main {
   margin: 48px auto;
 }
 .status {
-  color: #5949d8;
+  color: #b83b1c;
   font:
     700 12px ui-monospace,
     monospace;
@@ -24,24 +24,24 @@ h1 {
   margin: 12px 0;
 }
 p {
-  color: #62657f;
+  color: #5c6573;
 }
 pre {
   min-height: 240px;
   max-height: 60vh;
   overflow: auto;
   padding: 20px;
-  border: 1px solid #dcddeb;
+  border: 1px solid #d5d8d4;
   border-radius: 14px;
-  background: white;
+  background: #fffdf8;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
 button {
   padding: 10px 15px;
-  border: 1px solid #5949d8;
+  border: 1px solid #b83b1c;
   border-radius: 9px;
-  background: #5949d8;
+  background: #b83b1c;
   color: white;
   font: inherit;
   font-weight: 700;
@@ -52,14 +52,14 @@ button {
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    background: #0c0d18;
-    color: #f1f0ff;
+    background: #0a111d;
+    color: #f4f1e8;
   }
   pre {
-    border-color: #2d3044;
-    background: #131522;
+    border-color: #2a394e;
+    background: #101a2a;
   }
   p {
-    color: #a8a9c1;
+    color: #aab4c3;
   }
 }
