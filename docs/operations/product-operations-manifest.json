@@ -36,7 +36,8 @@
     "credentialRefs": [],
     "legalAccountRef": null,
     "channelAccountRefs": {},
-    "runtimeResourceRefs": []
+    "runtimeResourceRefs": [],
+    "externalIntegrationRefs": []
   },
   "experience": {
     "status": "done",
