@@ -46,10 +46,10 @@
       "apps/web/src/islands/WebTool.tsx",
       "packages/workbench-ui/src/monetization.ts"
     ],
-    "sourceDigest": "sha256:807c8484a0d31b2e1bccaba4931497c058e255e19786069783a7f50caebf808a",
+    "sourceDigest": "sha256:1c3331666fe28d156f6831032ff43d38e1bbfbd9eb02e3acfab2196e39bad339",
     "requiredBeforeRelease": true,
-    "rejudgedAt": "2026-08-24",
-    "rejudgeNote": "The actual /:tool owner still completes the decoded product result locally before the dormant below-fold sponsor component, and no payload, account, payment, ranking or non-web surface is eligible. The registry no longer treats source inspection alone as publisher-content browser proof: the placement is prohibited until a same-revision clean-profile journey and all activation gates are recorded."
+    "rejudgedAt": "2026-08-27",
+    "rejudgeNote": "2026-08-27 재검토: ToolPage → WebTool → SponsorSlot 순서를 다시 읽었다. 성공한 로컬 worker 결과 뒤에만 first-value event가 나고, 공개 경로는 PUBLIC_SPONSOR_RELEASE_APPROVED가 정확히 true이며 직접 sponsor provider가 있을 때만 DOM을 보일 수 있다. 현재 registry의 productionActivated=false·surface prohibited와 same-revision browser/계약/release-wave gate는 그대로다; payload·계정·결제·순위 대상 전송이나 provider 활성화는 추가하지 않았다."
   },
   "globalNoAdMoments": [
     "first_visit",
