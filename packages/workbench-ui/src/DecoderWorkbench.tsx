@@ -1,5 +1,6 @@
 import type { ChainNode, DecodeInput, DecodeResult, Detection } from '@decoding/engine'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
+import { PortfolioThemeControl } from './PortfolioThemeControl'
 import {
   playCopyFeedback,
   readCopyFeedback,
@@ -530,7 +531,7 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
               </ol>
             )}
           </div>
-          <aside class="inspector-panel">
+          <aside class="inspector-panel"><PortfolioThemeControl />
             <div class="panel-heading">
               <div>
                 <span class="eyebrow">{messages.inspector}</span>
