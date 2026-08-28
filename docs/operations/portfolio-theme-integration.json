@@ -1,1 +1,66 @@
-{"schemaVersion":1,"project":"decoding-v6","assetId":"decoding-v6-local-signal","releaseState":"internal_only","integrationStatus":"implemented_internal_candidate","listeningStatus":"owner_waived_not_heard","heard":false,"humanApproved":false,"publicRelease":false,"sourceCandidate":{"path":"docs/munops/audio/candidates/decoding-v6/decoding-v6-local-signal.mp3","sha256":"1d6ea6f577827ec19c2d4b06aae6145d5190fc92073468a657c3cc208244cd83","activeSource":"provider_original"},"channels":[{"id":"web","consumerEntrypoint":"packages/workbench-ui/src/DecoderWorkbench.tsx","assetPath":"apps/web/public/audio/portfolio-theme.mp3","controlOwner":"packages/workbench-ui/src/PortfolioThemeControl.tsx","triggerOwner":"packages/workbench-ui/src/DecoderWorkbench.tsx","trigger":"explicit listen control after result","defaultOff":true,"explicitPlay":true,"mute":true,"reducedStimulation":"pause_and_disable","visualEquivalent":true,"status":"implemented"}],"checks":[{"command":"pnpm build","result":"pass"}]}
+{
+  "schemaVersion": 1,
+  "project": "decoding-v6",
+  "assetId": "decoding-v6-local-signal",
+  "releaseState": "internal_only",
+  "integrationStatus": "released_not_human_approved",
+  "listeningStatus": "owner_waived_not_heard",
+  "heard": false,
+  "humanApproved": false,
+  "publicRelease": true,
+  "sourceCandidate": {
+    "path": "docs/munops/audio/candidates/decoding-v6/decoding-v6-local-signal.mp3",
+    "sha256": "1d6ea6f577827ec19c2d4b06aae6145d5190fc92073468a657c3cc208244cd83",
+    "activeSource": "provider_original"
+  },
+  "channels": [
+    {
+      "id": "web",
+      "consumerEntrypoint": "packages/workbench-ui/src/DecoderWorkbench.tsx",
+      "assetPath": "apps/web/public/audio/portfolio-theme.mp3",
+      "controlOwner": "packages/workbench-ui/src/PortfolioThemeControl.tsx",
+      "triggerOwner": "packages/workbench-ui/src/DecoderWorkbench.tsx",
+      "trigger": "explicit listen control after result",
+      "defaultOff": true,
+      "explicitPlay": true,
+      "mute": true,
+      "reducedStimulation": "pause_and_disable",
+      "visualEquivalent": true,
+      "status": "implemented",
+      "releaseStatus": "released_not_human_approved"
+    }
+  ],
+  "checks": [
+    {
+      "command": "pnpm build",
+      "result": "pass"
+    },
+    {
+      "command": "provider deployment read-back plus live trigger route and exact MP3 SHA-256 smoke",
+      "result": "pass"
+    }
+  ],
+  "productRelease": {
+    "status": "released_not_human_approved",
+    "approvalClass": "P-REPORT",
+    "approvalRef": "conversation:owner-deploy-all-portfolio-audio-2026-08-28",
+    "accountRef": "cloudflare:69abd904cab5ffd103e569e7e050a884",
+    "providerResource": "cloudflare:workers/decoding-v6",
+    "destination": "https://decod.ing",
+    "cost": {
+      "currency": "USD",
+      "subtotal": 0,
+      "tax": 0,
+      "total": 0,
+      "recurrence": "none"
+    },
+    "publicImpact": "adds a default-off explicit music control and one MP3 static asset; no product outcome is gated by audio",
+    "transmittedData": "runtime source and one generated MP3; no credential, personal data, or product user data",
+    "rollback": "restore Worker version fd54657c-5451-4c56-b58a-da900c62a545",
+    "releasedAt": "2026-08-28T08:35:16.183Z",
+    "revision": "ab6c6be5216528ee15987c79f1e0f92c70f77caa",
+    "providerVersion": "09707af7-cd58-4d33-8423-4d8209108a28",
+    "url": "https://decod.ing",
+    "smoke": "pass"
+  }
+}
