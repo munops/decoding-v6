@@ -343,7 +343,7 @@ pre {
 }
 .locale-suggestion {
   width: min(720px, calc(100% - 32px));
-  margin: 20px auto -42px;
+  margin: 20px auto 0;
   padding: 10px 12px 10px 16px;
   display: flex;
   align-items: center;
@@ -358,7 +358,9 @@ pre {
   display: none;
 }
 .locale-suggestion > span {
+  min-width: 0;
   margin-right: auto;
+  overflow-wrap: anywhere;
 }
 .privacy-dot {
   flex: 0 0 auto;
@@ -1725,6 +1727,15 @@ html:lang(ko) body .translation-status {
   .language-menu summary {
     min-width: 58px;
     font-size: 11px;
+  }
+  .locale-suggestion {
+    width: calc(100% - 24px);
+    padding: 12px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .locale-suggestion > span {
+    grid-column: 1 / -1;
   }
   .hero h1 span::after {
     display: none;

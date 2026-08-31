@@ -6,8 +6,9 @@ export const localizedLocales = supportedLocales.filter((locale) => locale !== '
   'en'
 >[]
 
-// Only native-reviewed locales belong in search indexes. Other locales remain fully usable technical betas.
-export const indexedLocales: Locale[] = ['en']
+// Korean has completed the shipped common-UI, tool-route, privacy/method and responsive language journey.
+// Other locales remain fully usable technical betas until their own native review closes.
+export const indexedLocales: Locale[] = ['en', 'ko']
 
 export const localeNames: Record<Locale, string> = {
   en: 'English',

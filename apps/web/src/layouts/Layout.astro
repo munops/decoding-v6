@@ -136,7 +136,11 @@ const localizedPrivacy = localePath(locale, '/privacy/')
           </details>
         ) : null
       }
-      {locale !== 'en' ? <span class="translation-status">{messages.translationBeta}</span> : null}
+      {
+        !indexedLocales.includes(locale) ? (
+          <span class="translation-status">{messages.translationBeta}</span>
+        ) : null
+      }
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label={messages.theme}>
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <g class="theme-sun">

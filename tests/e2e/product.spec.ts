@@ -184,6 +184,12 @@ test('keeps the Korean journey in user-facing language from discovery through re
   page,
 }) => {
   await page.goto('/ko/')
+  await expect(page.locator('meta[name="robots"]')).toHaveCount(0)
+  await expect(page.locator('link[rel="alternate"][hreflang="ko"]')).toHaveAttribute(
+    'href',
+    'https://decod.ing/ko/',
+  )
+  await expect(page.getByText('한국어 번역 검토 중')).toHaveCount(0)
   await expect(page.getByRole('heading', { name: '값의 정체와 근거를 확인하세요.' })).toBeVisible()
   await expect(page.locator('.hero h1 br')).toHaveCount(0)
   await expect(page.getByRole('group', { name: '안전한 예시로 먼저 확인해 보세요' })).toContainText(
@@ -215,6 +221,41 @@ test('keeps the Korean journey in user-facing language from discovery through re
   await page.goto('/ko/string-case/')
   await expect(page.locator('option[value="camel"]')).toHaveText('camelCase')
   await expect(page.getByRole('option', { name: 'camel', exact: true })).toHaveCount(0)
+})
+
+test.describe('Korean locale suggestion', () => {
+  test.use({ locale: 'ko-KR' })
+
+  for (const width of [320, 390]) {
+    test(`keeps the Korean suggestion separate from the main content at ${width}px`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width, height: 800 })
+      await page.goto('/')
+      if (width === 320) {
+        await page.evaluate(() => {
+          document.documentElement.style.fontSize = '200%'
+        })
+      }
+
+      const suggestion = page.locator('#locale-suggestion')
+      await expect(suggestion).toBeVisible()
+      await expect(suggestion).toContainText('한국어로 볼 수 있어요.')
+      await expect(suggestion.getByRole('link', { name: '한국어로 보기' })).toHaveAttribute(
+        'href',
+        '/ko/',
+      )
+
+      const suggestionBox = await suggestion.boundingBox()
+      const mainBox = await page.locator('main').boundingBox()
+      expect(suggestionBox).not.toBeNull()
+      expect(mainBox).not.toBeNull()
+      expect(suggestionBox!.y + suggestionBox!.height).toBeLessThanOrEqual(mainBox!.y)
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+        width,
+      )
+    })
+  }
 })
 
 test('renders HTML preview inside a locked sandbox', async ({ page }) => {

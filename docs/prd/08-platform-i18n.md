@@ -73,11 +73,12 @@
 | 상태 | 로케일 | 운영 경계 |
 |---|---|---|
 | 기본 | `en` | 색인·`hreflang`·sitemap 포함 |
-| 핵심 기술 베타 | `ko`, `ja` | 전체 공통 UI와 핵심 문서 초안, native review 전 `noindex` |
+| 핵심 색인 로케일 | `ko` | 전체 공통 UI·47 tool·privacy·methodology와 한국어 production journey 검증, 색인·`hreflang`·sitemap 포함 |
+| 핵심 기술 베타 | `ja` | 전체 공통 UI와 핵심 문서 초안, native review 전 `noindex` |
 | 확장 기술 베타 | `zh-cn`, `es`, `pt-br`, `de`, `fr` | 전체 공통 UI·도구 라우트와 핵심 안전 문서 초안, native review 전 `noindex` |
 | 후보 | `hi`, `id`, `ru`, `ar` | 현재 8개 로케일의 용어 검수·실사용 결과 후 순차 확장 |
 
-기술 베타는 사용자가 직접 열고 실행할 수 있지만 `Translation beta`를 명시하고 자동 redirect하지 않는다. Native reviewer가 용어·예시·privacy 정확성을 승인하기 전에는 검색 색인·sitemap·`hreflang` 집합에 승격하지 않는다.
+기술 베타는 사용자가 직접 열고 실행할 수 있지만 `Translation beta`를 명시하고 자동 redirect하지 않는다. Native reviewer가 용어·예시·privacy 정확성을 승인하기 전에는 검색 색인·sitemap·`hreflang` 집합에 승격하지 않는다. 한국어는 2026-08-24 production language journey와 2026-09-01 오너의 한국 사용자 우선 피드백을 함께 반영해 첫 승격 로케일로 고정했다. 국가만으로 언어를 추정해 자동 전환하지 않고, 한국어 브라우저에는 본문보다 앞서 한국어 선택 제안을 표시한다.
 
 첫 로케일은 다음 점수로 선택한다.
 
