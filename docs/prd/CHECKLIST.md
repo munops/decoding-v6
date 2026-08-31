@@ -138,7 +138,7 @@
 - [x] 2026-07-15 — [GitHub engine 공개](https://github.com/whoo3474/decoding-v6), MIT·SECURITY·CONTRIBUTING·Private Vulnerability Reporting 구성
 - [ ] r/webdev → r/devops → r/netsec 순차, 동일 글 복제 금지
 - [ ] Search Console 색인·query·page completion 주간 검토
-- [x] 2026-09-01 DC-GR-02 local candidate — 한국 브라우저의 언어 제안을 한국어로 표시하고 배너의 음수 하단 margin을 제거했다. `/ko/`와 59개 한국어 하위 경로를 self-canonical·`hreflang=ko`·sitemap 색인 대상으로 승격했으며 320px/200%·390px에서 배너와 본문 비겹침·가로 overflow 0, Korean journey, 486-page build를 통과했다. production 배포와 Search Console 제출·색인 read-back은 별도 release gate다.
+- [x] 2026-09-01 DC-GR-02 released — 한국 브라우저의 언어 제안을 한국어로 표시하고 배너의 음수 하단 margin을 제거했다. `/ko/`와 59개 한국어 하위 경로를 self-canonical·`hreflang=ko`·sitemap 색인 대상으로 승격했으며 production 320px/200%·390px에서 배너와 본문 비겹침·가로 overflow 0, HSTS, exact revision read-back을 통과했다. Search Console은 DNS 권한 승인 전 `wait_external`이다.
 
 ### 로컬 공유 루프
 
@@ -196,7 +196,7 @@
 
 - [ ] 로케일 점수표: 8주 유입·검색 노출·요청·native reviewer
 - [x] 2026-07-15 — `en/ko/ja/zh-cn/es/pt-br/de/fr` 전체 공통 UI·47 tool·8 detector·privacy/methodology 기술 베타 라우트
-- [x] 2026-09-01 DC-GR-02 local candidate — 기존 한국어 공통 UI·47 tool·privacy·methodology와 production Korean journey 증거에 오너의 한국 사용자 우선 피드백을 반영해 `ko`의 `noindex`와 sitemap 제외를 제거했다. 이는 local build 상태이며 실제 검색 색인은 배포와 Search Console read-back 전 `data_pending`이다.
+- [x] 2026-09-01 DC-GR-02 released — 기존 한국어 공통 UI·47 tool·privacy·methodology와 production Korean journey 증거에 오너의 한국 사용자 우선 피드백을 반영해 `ko`의 `noindex`와 sitemap 제외를 제거했다. 배포와 sitemap production read-back은 완료했고 실제 Google 색인은 Search Console DNS 소유권 확인 전 `wait_external`이다.
 - [x] 2026-09-01 — self-canonical·English x-default를 유지하고, 색인 로케일은 `en`·`ko`, 미검수 기술 베타 6개 로케일은 sitemap 제외·`noindex`를 유지하는 typed route build 검증
 - [ ] locale별 screenshot·screen-reader/native terminology review
 - [x] 2026-07-15 — 브라우저 언어 로케일 제안·session dismiss, 자동 redirect 없음

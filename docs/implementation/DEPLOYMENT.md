@@ -1,6 +1,14 @@
 # Cloudflare deployment evidence
 
-Updated: 2026-08-24 19:09 (Asia/Seoul)
+Updated: 2026-09-01 04:20 (Asia/Seoul)
+
+## 2026-09-01 Korean discovery and AdSense ownership release
+
+- Runtime source `3c3efe68a662925ec0c65a4fdf7ba195e9783f75` is active on Cloudflare version `f8f2b4a8-bb52-4e9e-8613-ffd86e8e5094` at 100% traffic.
+- Korean locale suggestion layout, Korean indexability, sitemap membership, HSTS, and AdSense `ads.txt` ownership record are live. The static artifact digest is `09b4726884b768839f0d7d8a00be0d5824c8b39f880c8349fb20934a31049d57`.
+- Production read-back passed canonical Korean routes, 60 Korean sitemap URLs, retained `noindex` on Japanese beta routes, exact `/healthz` revision, and 320px/200% plus 390px no-overlap/no-overflow browser checks.
+- Immediate rollback target is version `56d01667-30fa-4a78-837d-2b0b9ea9365d`. This wave changed no database, KV, auth, payment, or event schema.
+- AdSense site ownership is verified, but final policy review has not been submitted and no ad-serving script is active. Search Console domain verification remains at the DNS authorization boundary. See [DC-GR-02 evidence](../evidence/dc-gr-02-korean-discovery-release-2026-09-01.md).
 
 ## 2026-08-24 Korean product-language web release
 
