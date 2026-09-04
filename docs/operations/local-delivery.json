@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "sourceRevision": "1978148ef0e68c93fd7aad1512350a708f7c134f",
-  "declarationScope": "This declaration is bound only to the approved zero-cost owner-lane Web wave docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml. It authorizes one input-first existing decoding-v6 Worker delivery from runtime source 1978148ef0e68c93fd7aad1512350a708f7c134f after exact claim assertion and fresh provider read-back; it does not authorize DNS, routes, secrets, bindings, data, plans, advertising, desktop or another channel.",
+  "sourceRevision": "9e6e8d07d68e3ed4fd442451758f90bfed3a96db",
+  "declarationScope": "This declaration is bound only to the approved zero-cost owner-lane Web wave docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml. It authorizes one input-first existing decoding-v6 Worker delivery from runtime source 9e6e8d07d68e3ed4fd442451758f90bfed3a96db after exact claim assertion and fresh provider read-back; it does not authorize DNS, routes, secrets, bindings, data, plans, advertising, desktop or another channel.",
   "infrastructure": {
     "inventoryRef": "docs/operations/product-operations-manifest.json",
     "runtimeResources": [
@@ -47,7 +47,7 @@
   "commands": {
     "preflight": "test -z \"$(git status --porcelain=v1 --untracked-files=all)\" && git diff --check && pnpm install --frozen-lockfile && pnpm verify && pnpm test:e2e && pnpm test:privacy && pnpm test:a11y",
     "deploy": "test -n \"$DECODING_RELEASE_WAVE\" && test -n \"$DECODING_DELIVERY_TARGET\" && pnpm delivery:web:deploy -- --execute",
-    "verify": "test -n \"$DECODING_RELEASE_WAVE\" && test -n \"$DECODING_DELIVERY_TARGET\" && DECODING_EXPECTED_BUILD_SHA=1978148ef0e68c93fd7aad1512350a708f7c134f pnpm delivery:web:verify"
+    "verify": "test -n \"$DECODING_RELEASE_WAVE\" && test -n \"$DECODING_DELIVERY_TARGET\" && DECODING_EXPECTED_BUILD_SHA=9e6e8d07d68e3ed4fd442451758f90bfed3a96db pnpm delivery:web:verify"
   },
   "receipts": {
     "directory": "docs/evidence/releases/local-owner-wave"
