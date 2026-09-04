@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "pnpm --filter @decoding/web dev",
     "build": "pnpm -r --if-present build",
-    "typecheck": "pnpm -r --if-present typecheck",
+    "typecheck": "pnpm -r --parallel --if-present typecheck",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -41,6 +41,7 @@
     "desktop:build": "pnpm --filter @decoding/desktop tauri build",
     "desktop:verify": "pnpm --filter @decoding/desktop typecheck && pnpm --filter @decoding/desktop build",
     "validate:staged": "node ../scripts/run-validation.mjs --project decoding-v6 --worktree . --mode staged",
+    "validate:project-changed": "node scripts/validate-project-changed.mjs",
     "validate:changed": "node ../scripts/run-validation.mjs --project decoding-v6 --worktree . --mode changed",
     "validate:repo": "node ../scripts/run-validation.mjs --project decoding-v6 --worktree . --mode repo",
     "validate:candidate": "node ../scripts/run-validation.mjs --project decoding-v6 --worktree . --mode candidate",

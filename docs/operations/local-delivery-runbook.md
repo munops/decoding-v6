@@ -27,7 +27,9 @@ resource이지 payload API가 아니다. GitHub issue/security advisory와 `supp
 
 1. Git root, branch/HEAD, untracked files, project instruction, active `repo:decoding-v6`/provider claim과 fencing
    token을 확인한다. source는 clean commit이어야 한다.
-2. `local-delivery.json.sourceRevision`을 candidate commit으로 re-anchor한다. 실행 직전 provider account,
+2. `local-delivery.json.sourceRevision`을 runtime candidate commit으로 re-anchor한다. exact approved wave와 이
+   declaration만 담은 clean delivery-metadata follow-up commit은 허용하지만, runner는 wave의
+   `source_revision`이 ancestor인지와 그 이후 runtime path 변경이 0건인지 확인한다. 실행 직전 provider account,
    existing Worker/version/traffic/binding, destination, cost/recurrence, transmitted data, rollback version을
    fresh read-back한다. historical evidence는 현재 state를 대신하지 않는다.
 3. Node 22 이상과 pnpm 10.15를 사용해 local gate를 실행한다. Worker dry-run은 upload가 아니다.
@@ -72,7 +74,7 @@ After deploy, use the **same fresh wave**. `delivery:web:verify` requires the cu
 smoke `decod.ing`/`www`/Workers fallback for production; staging verifies only its staging origin.
 
 ```bash
-export DECODING_EXPECTED_BUILD_SHA="$(git rev-parse HEAD)"
+export DECODING_EXPECTED_BUILD_SHA='<release-wave source_revision>'
 pnpm delivery:web:verify
 ```
 

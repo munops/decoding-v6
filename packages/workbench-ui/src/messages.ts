@@ -53,6 +53,21 @@ export type DecoderMessages = {
   copyFeedbackPreviewed: string
   copyFeedbackVisualOnly: string
   copyFailed: string
+  portfolioTheme: PortfolioThemeMessages
+}
+
+export type PortfolioThemeMessages = {
+  ariaLabel: string
+  title: string
+  privacy: string
+  play: string
+  pause: string
+  unmute: string
+  mute: string
+  reduced: string
+  muted: string
+  playing: string
+  off: string
 }
 
 export type ToolMessages = {
@@ -147,6 +162,19 @@ export const decoderMessages = {
     copyFeedbackPreviewed: 'A local preview played.',
     copyFeedbackVisualOnly: 'Sound is unavailable, so this stays visual only.',
     copyFailed: 'Unable to copy the selected result.',
+    portfolioTheme: {
+      ariaLabel: 'Result audio',
+      title: 'Local result audio',
+      privacy: 'Input and results stay on this device while audio plays.',
+      play: 'Play audio',
+      pause: 'Pause audio',
+      unmute: 'Unmute',
+      mute: 'Mute',
+      reduced: 'Audio stopped because reduced motion is enabled.',
+      muted: 'Audio is muted.',
+      playing: 'Audio is playing.',
+      off: 'Audio is off.',
+    },
   },
   ko: {
     locale: 'ko',
@@ -203,6 +231,19 @@ export const decoderMessages = {
     copyFeedbackPreviewed: '이 기기에서 미리 듣기 소리를 재생했어요.',
     copyFeedbackVisualOnly: '소리를 사용할 수 없어 시각 알림만 표시합니다.',
     copyFailed: '선택한 결과를 복사하지 못했습니다.',
+    portfolioTheme: {
+      ariaLabel: '결과 음악',
+      title: '로컬 결과 음악',
+      privacy: '입력과 결과는 음악 재생 중에도 기기 밖으로 전송되지 않습니다.',
+      play: '음악 재생',
+      pause: '음악 일시정지',
+      unmute: '음소거 해제',
+      mute: '음소거',
+      reduced: '동작 줄이기 설정으로 음악을 멈췄습니다.',
+      muted: '음소거 상태입니다.',
+      playing: '음악 재생 중입니다.',
+      off: '음악이 꺼져 있습니다.',
+    },
   },
   ja: {
     locale: 'ja',
@@ -259,6 +300,19 @@ export const decoderMessages = {
     copyFeedbackPreviewed: 'このデバイスで試聴音を再生しました。',
     copyFeedbackVisualOnly: '音を利用できないため、視覚的な通知のみ表示します。',
     copyFailed: '選択した結果をコピーできませんでした。',
+    portfolioTheme: {
+      ariaLabel: '結果サウンド',
+      title: 'ローカル結果サウンド',
+      privacy: '音声の再生中も、入力と結果がこのデバイスの外へ送信されることはありません。',
+      play: '音声を再生',
+      pause: '音声を一時停止',
+      unmute: 'ミュートを解除',
+      mute: 'ミュート',
+      reduced: '視差効果を減らす設定により音声を停止しました。',
+      muted: 'ミュート中です。',
+      playing: '音声を再生中です。',
+      off: '音声はオフです。',
+    },
   },
   'zh-cn': {
     locale: 'zh-cn',
@@ -315,6 +369,19 @@ export const decoderMessages = {
     copyFeedbackPreviewed: '已在此设备播放试听声音。',
     copyFeedbackVisualOnly: '声音不可用，因此仅显示视觉提示。',
     copyFailed: '无法复制所选结果。',
+    portfolioTheme: {
+      ariaLabel: '结果音频',
+      title: '本地结果音频',
+      privacy: '播放音频时，输入和结果也不会离开此设备。',
+      play: '播放音频',
+      pause: '暂停音频',
+      unmute: '取消静音',
+      mute: '静音',
+      reduced: '已根据减少动态效果设置停止音频。',
+      muted: '音频已静音。',
+      playing: '音频正在播放。',
+      off: '音频已关闭。',
+    },
   },
   es: {
     locale: 'es',
@@ -371,6 +438,19 @@ export const decoderMessages = {
     copyFeedbackPreviewed: 'Se reprodujo una vista previa local.',
     copyFeedbackVisualOnly: 'El sonido no está disponible; solo se muestra la confirmación visual.',
     copyFailed: 'No se pudo copiar el resultado seleccionado.',
+    portfolioTheme: {
+      ariaLabel: 'Audio del resultado',
+      title: 'Audio local del resultado',
+      privacy: 'La entrada y el resultado permanecen en este dispositivo durante la reproducción.',
+      play: 'Reproducir audio',
+      pause: 'Pausar audio',
+      unmute: 'Activar sonido',
+      mute: 'Silenciar',
+      reduced: 'El audio se detuvo por la preferencia de movimiento reducido.',
+      muted: 'El audio está silenciado.',
+      playing: 'El audio se está reproduciendo.',
+      off: 'El audio está apagado.',
+    },
   },
   'pt-br': {
     locale: 'pt-br',
@@ -427,6 +507,19 @@ export const decoderMessages = {
     copyFeedbackPreviewed: 'Uma prévia local foi reproduzida.',
     copyFeedbackVisualOnly: 'O som não está disponível; apenas a confirmação visual é mostrada.',
     copyFailed: 'Não foi possível copiar o resultado selecionado.',
+    portfolioTheme: {
+      ariaLabel: 'Áudio do resultado',
+      title: 'Áudio local do resultado',
+      privacy: 'A entrada e o resultado permanecem neste dispositivo durante a reprodução.',
+      play: 'Reproduzir áudio',
+      pause: 'Pausar áudio',
+      unmute: 'Ativar som',
+      mute: 'Silenciar',
+      reduced: 'O áudio foi interrompido pela preferência de movimento reduzido.',
+      muted: 'O áudio está silenciado.',
+      playing: 'O áudio está sendo reproduzido.',
+      off: 'O áudio está desligado.',
+    },
   },
   de: {
     locale: 'de',
@@ -484,6 +577,19 @@ export const decoderMessages = {
     copyFeedbackPreviewed: 'Eine lokale Vorschau wurde abgespielt.',
     copyFeedbackVisualOnly: 'Ton ist nicht verfügbar; nur die visuelle Bestätigung wird gezeigt.',
     copyFailed: 'Das ausgewählte Ergebnis konnte nicht kopiert werden.',
+    portfolioTheme: {
+      ariaLabel: 'Ergebnis-Audio',
+      title: 'Lokales Ergebnis-Audio',
+      privacy: 'Eingabe und Ergebnis bleiben auch während der Wiedergabe auf diesem Gerät.',
+      play: 'Audio abspielen',
+      pause: 'Audio pausieren',
+      unmute: 'Ton einschalten',
+      mute: 'Stummschalten',
+      reduced: 'Audio wurde wegen der Einstellung für reduzierte Bewegung gestoppt.',
+      muted: 'Audio ist stummgeschaltet.',
+      playing: 'Audio wird abgespielt.',
+      off: 'Audio ist ausgeschaltet.',
+    },
   },
   fr: {
     locale: 'fr',
@@ -541,6 +647,19 @@ export const decoderMessages = {
     copyFeedbackVisualOnly:
       'Le son est indisponible ; seule la confirmation visuelle est affichée.',
     copyFailed: 'Impossible de copier le résultat sélectionné.',
+    portfolioTheme: {
+      ariaLabel: 'Audio du résultat',
+      title: 'Audio local du résultat',
+      privacy: 'L’entrée et le résultat restent sur cet appareil pendant la lecture.',
+      play: 'Lire l’audio',
+      pause: 'Mettre l’audio en pause',
+      unmute: 'Activer le son',
+      mute: 'Couper le son',
+      reduced: 'L’audio a été arrêté selon la préférence de réduction des animations.',
+      muted: 'Le son est coupé.',
+      playing: 'L’audio est en cours de lecture.',
+      off: 'L’audio est désactivé.',
+    },
   },
 } as const satisfies Record<WorkbenchLocale, DecoderMessages>
 

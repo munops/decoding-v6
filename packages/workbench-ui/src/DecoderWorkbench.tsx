@@ -531,7 +531,8 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
               </ol>
             )}
           </div>
-          <aside class="inspector-panel"><PortfolioThemeControl />
+          <aside class="inspector-panel">
+            <PortfolioThemeControl messages={messages.portfolioTheme} />
             <div class="panel-heading">
               <div>
                 <span class="eyebrow">{messages.inspector}</span>

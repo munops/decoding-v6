@@ -41,6 +41,17 @@ function cleanRevision() {
   return git(['rev-parse', 'HEAD'])
 }
 
+function isAncestor(ancestor, descendant) {
+  try {
+    execFileSync('git', ['-C', repoRoot, 'merge-base', '--is-ancestor', ancestor, descendant], {
+      stdio: 'ignore',
+    })
+    return true
+  } catch {
+    return false
+  }
+}
+
 function deliveryTarget() {
   const target = process.env.DECODING_DELIVERY_TARGET?.trim()
   if (!target || !Object.hasOwn(targets, target)) {
@@ -49,7 +60,7 @@ function deliveryTarget() {
   return { name: target, ...targets[target] }
 }
 
-function approvedWavePath(sourceRevision) {
+function approvedWavePath(cleanHead) {
   const requested = process.env.DECODING_RELEASE_WAVE?.trim()
   if (!requested)
     fail('set DECODING_RELEASE_WAVE to an existing approved release-wave document path')
@@ -61,10 +72,24 @@ function approvedWavePath(sourceRevision) {
     fail('DECODING_RELEASE_WAVE must identify an exact owner-lane release-wave document')
   }
   const wave = readFileSync(path, 'utf8')
-  if (!/^status:\s*approved\s*$/mu.test(wave) || !wave.includes(sourceRevision)) {
-    fail('release wave must be approved and bind the exact clean source SHA')
+  if (!/^status:\s*approved\s*$/mu.test(wave)) {
+    fail('release wave must be approved')
   }
-  return requested
+  const sourceRevision = wave.match(/^source_revision:\s*["']?([0-9a-f]{40})["']?\s*$/mu)?.[1]
+  if (!sourceRevision || !isAncestor(sourceRevision, cleanHead)) {
+    fail('release wave must bind an exact runtime source SHA that is an ancestor of clean HEAD')
+  }
+  const changedAfterRuntime = git(['diff', '--name-only', `${sourceRevision}..${cleanHead}`])
+    .split('\n')
+    .filter(Boolean)
+  const allowedDeliveryMetadata = new Set([requested, 'docs/operations/local-delivery.json'])
+  const runtimeDrift = changedAfterRuntime.filter((file) => !allowedDeliveryMetadata.has(file))
+  if (runtimeDrift.length > 0) {
+    fail(
+      `clean HEAD differs from the approved runtime source outside delivery metadata: ${runtimeDrift.join(', ')}`,
+    )
+  }
+  return { path: requested, sourceRevision }
 }
 
 function wrangler(args) {
@@ -78,12 +103,12 @@ async function fetchHealth(origin) {
 }
 
 async function verifyWeb() {
-  const sourceRevision = cleanRevision()
+  const cleanHead = cleanRevision()
+  const { sourceRevision } = approvedWavePath(cleanHead)
   const expected = process.env.DECODING_EXPECTED_BUILD_SHA?.trim()
   if (expected && expected !== sourceRevision) {
-    fail('DECODING_EXPECTED_BUILD_SHA must match the current clean source SHA')
+    fail('DECODING_EXPECTED_BUILD_SHA must match the approved runtime source SHA')
   }
-  approvedWavePath(sourceRevision)
   const target = deliveryTarget()
   const health = await fetchHealth(target.origin)
   if (
@@ -121,8 +146,8 @@ if (command === '--help' || command === 'help' || !command) {
 
 if (command === 'deploy-web') {
   if (!execute) fail('provider deployment requires an explicit --execute flag')
-  const sourceRevision = cleanRevision()
-  approvedWavePath(sourceRevision)
+  const cleanHead = cleanRevision()
+  const { sourceRevision } = approvedWavePath(cleanHead)
   const target = deliveryTarget()
   run('pnpm', ['verify'])
   run('pnpm', ['test:e2e'])
@@ -142,8 +167,8 @@ if (command === 'deploy-web') {
   await verifyWeb()
 } else if (command === 'rollback-web') {
   if (!execute) fail('provider rollback requires an explicit --execute flag')
-  const sourceRevision = cleanRevision()
-  approvedWavePath(sourceRevision)
+  const cleanHead = cleanRevision()
+  approvedWavePath(cleanHead)
   const target = deliveryTarget()
   const version = process.env.DECODING_ROLLBACK_VERSION?.trim()
   if (!version)

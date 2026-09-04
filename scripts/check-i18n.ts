@@ -27,6 +27,21 @@ function keys(value: object): string[] {
   return Object.keys(value).sort()
 }
 
+function assertCopy(path: string, value: unknown): void {
+  if (typeof value === 'function') return
+  if (typeof value === 'string') {
+    invariant(value.trim().length > 0, `${path} is empty`)
+    return
+  }
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    const entries = Object.entries(value)
+    invariant(entries.length > 0, `${path} is empty`)
+    for (const [key, nestedValue] of entries) assertCopy(`${path}.${key}`, nestedValue)
+    return
+  }
+  throw new Error(`${path} must contain copy or a nested copy group`)
+}
+
 function assertCatalog(name: string, catalog: Record<string, object>): void {
   const baseline = keys(catalog.en)
   for (const locale of supportedLocales) {
@@ -36,10 +51,7 @@ function assertCatalog(name: string, catalog: Record<string, object>): void {
       `${name}: ${locale} keys do not match English`,
     )
     for (const [key, value] of Object.entries(catalog[locale])) {
-      invariant(
-        typeof value === 'function' || (typeof value === 'string' && value.trim().length > 0),
-        `${name}.${locale}.${key} is empty`,
-      )
+      assertCopy(`${name}.${locale}.${key}`, value)
     }
   }
 }
@@ -109,6 +121,10 @@ const literalChecks = [
   [
     'packages/workbench-ui/src/ToolWorkbench.tsx',
     ['This operation runs locally', 'Run locally', 'Operation failed'],
+  ],
+  [
+    'packages/workbench-ui/src/PortfolioThemeControl.tsx',
+    ['결과 음악', '로컬 결과 음악', '음악 재생'],
   ],
 ] as const
 for (const [file, forbidden] of literalChecks) {
