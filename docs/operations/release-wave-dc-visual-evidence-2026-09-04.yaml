@@ -1,9 +1,9 @@
 schema_version: 6
 wave_id: decoding-visual-evidence-web-release-2026-09-04
 status: approved
-source_revision: 6c1055648937f7fcf4f488ef00d6b38d2fc7494e
-prepared_at: 2026-09-04T19:07:48+09:00
-expires_at: 2026-09-04T21:07:48+09:00
+source_revision: 20eeb704311c8ff5487615b1496cd3de7413e2ef
+prepared_at: 2026-09-04T19:52:43+09:00
+expires_at: 2026-09-04T21:52:43+09:00
 legal_entity_ref: hq/bootstrap/identity.yaml
 execution_lane: owner_lane
 approval_authority: human_owner
@@ -21,7 +21,7 @@ work_claim:
     repo:decoding-v6: 37
     provider:github:munops/decoding-v6: 1
     provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6: 3
-  asserted_at: 2026-09-04T19:07:48+09:00
+  asserted_at: 2026-09-04T19:52:43+09:00
   released_at: null
   release_evidence_ref: null
 intervention_mode: normal
@@ -46,7 +46,7 @@ actions:
     product: decoding-v6
     channel: source
     provider: github
-    exact_mutation: fast-forward munops/decoding-v6 main from release packet 8ab665dc9c330e430de16145cfdfcddf5d307b60 through corrected runtime source 6c1055648937f7fcf4f488ef00d6b38d2fc7494e and this exact delivery-metadata commit; never force-push
+    exact_mutation: fast-forward munops/decoding-v6 main from delivery metadata 8115abb9582d158305ac26d373149849b56f4a20 through runtime source 20eeb704311c8ff5487615b1496cd3de7413e2ef and this exact delivery-metadata commit; never force-push
     account_ref: docs/munops/ops/provider-registry.yaml#accounts.github_primary
     resource_ref: github:munops/decoding-v6:refs/heads/main
     claim_resource_refs:
@@ -57,8 +57,8 @@ actions:
       applicability: source_only
       candidate:
         source_repository: munops/decoding-v6
-        source_before_sha: 8ab665dc9c330e430de16145cfdfcddf5d307b60
-        candidate_sha: 6c1055648937f7fcf4f488ef00d6b38d2fc7494e
+        source_before_sha: 8115abb9582d158305ac26d373149849b56f4a20
+        candidate_sha: 20eeb704311c8ff5487615b1496cd3de7413e2ef
         artifact_sha256: null
         release_entrypoint: null
       identity_transition:
@@ -113,13 +113,13 @@ actions:
       reconciled_at: null
     public_impact: no direct product runtime change; the source of record advances before the existing Worker is updated
     transmitted_data:
-      - Git commit objects through corrected runtime source 6c1055648937f7fcf4f488ef00d6b38d2fc7494e and the exact delivery-metadata commit
+      - Git commit objects through corrected runtime source 20eeb704311c8ff5487615b1496cd3de7413e2ef and the exact delivery-metadata commit
       - no credential value, decoded input, local result, browser storage, personal data or payment data
     legal_terms_changed: false
     preflight_evidence:
-      - remote main read back as release packet 8ab665dc9c330e430de16145cfdfcddf5d307b60 and fast-forward ancestry is required
+      - remote main read back as delivery metadata 8115abb9582d158305ac26d373149849b56f4a20 and fast-forward ancestry is required
       - initial runtime candidate passed validate:changed and validate:candidate; the three-file correction passed focused changed validation
-    rollback_or_abort: abort unless origin main remains exactly 8ab665dc9c330e430de16145cfdfcddf5d307b60 and ancestry is fast-forward; after push use a forward corrective commit and never rewrite main
+    rollback_or_abort: abort unless origin main remains exactly 8115abb9582d158305ac26d373149849b56f4a20 and ancestry is fast-forward; after push use a forward corrective commit and never rewrite main
     status: approved
     provider_readback: null
     channel_smoke: null
@@ -131,7 +131,7 @@ actions:
     product: decoding-v6
     channel: web
     provider: cloudflare_workers
-    exact_mutation: deploy corrected runtime source 6c1055648937f7fcf4f488ef00d6b38d2fc7494e and artifact 686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe once to the existing decoding-v6 Worker; preserve EVENTS dataset, static-assets binding, routes, domains, DNS, secrets, plans and data
+    exact_mutation: deploy corrected runtime source 20eeb704311c8ff5487615b1496cd3de7413e2ef and artifact 686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe once to the existing decoding-v6 Worker; preserve EVENTS dataset, static-assets binding, routes, domains, DNS, secrets, plans and data
     account_ref: docs/munops/ops/provider-registry.yaml#accounts.cloudflare_primary
     resource_ref: cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6
     claim_resource_refs:
@@ -155,7 +155,7 @@ actions:
       candidate:
         source_repository: munops/decoding-v6
         source_before_sha: 2b520f20533f0d71f0474b21b9c69a1767a8c544
-        candidate_sha: 6c1055648937f7fcf4f488ef00d6b38d2fc7494e
+        candidate_sha: 20eeb704311c8ff5487615b1496cd3de7413e2ef
         artifact_sha256: 686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe
         release_entrypoint: DECODING_RELEASE_WAVE=docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml DECODING_DELIVERY_TARGET=production pnpm delivery:web:deploy -- --execute
       identity_transition:
@@ -174,12 +174,12 @@ actions:
         target_environment: production
         build_environment: production
         assertion_profile: production
-        source_sha: 6c1055648937f7fcf4f488ef00d6b38d2fc7494e
+        source_sha: 20eeb704311c8ff5487615b1496cd3de7413e2ef
         artifact_sha256: 686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe
         fresh_server_required: true
         reuse_existing_server: false
-        server_identity_receipt_sha256: 1ac0b1820661cde6251e4a48555a831899323b3f14a7b970473e48f38820e86e
-        server_identity_receipt_payload: '{"source_sha":"6c1055648937f7fcf4f488ef00d6b38d2fc7494e","artifact_sha256":"686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe","target_environment":"production","build_environment":"production","assertion_profile":"production","fresh_server_required":true,"reuse_existing_server":false}'
+        server_identity_receipt_sha256: f4822a9c0664c2c6d865afc5896c151615833666e61f495ee2c5f900763a8575
+        server_identity_receipt_payload: '{"source_sha":"20eeb704311c8ff5487615b1496cd3de7413e2ef","artifact_sha256":"686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe","target_environment":"production","build_environment":"production","assertion_profile":"production","fresh_server_required":true,"reuse_existing_server":false}'
       provider_before:
         applicability: deployment
         deployment_id: 13f77113-c17c-4ba2-8185-0401c9f1b291
