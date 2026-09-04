@@ -97,12 +97,7 @@
       ]
     }
   },
-  "ranking": [
-    "B",
-    "C",
-    "A",
-    "D"
-  ],
+  "ranking": ["B", "C", "A", "D"],
   "worstRank": {
     "A": 4,
     "B": 3,

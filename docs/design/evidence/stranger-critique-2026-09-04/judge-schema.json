@@ -1,21 +1,12 @@
 {
   "type": "object",
   "additionalProperties": false,
-  "required": [
-    "screens",
-    "ranking",
-    "rankingRationale"
-  ],
+  "required": ["screens", "ranking", "rankingRationale"],
   "properties": {
     "screens": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
+      "required": ["A", "B", "C", "D"],
       "properties": {
         "A": {
           "type": "object",
@@ -32,10 +23,7 @@
               "type": "string"
             },
             "captureIssue": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             },
             "scores": {
               "type": "object",
@@ -82,10 +70,7 @@
               }
             },
             "aiDefaultLook": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             },
             "blockingFindings": {
               "type": "array",
@@ -110,10 +95,7 @@
               "type": "string"
             },
             "captureIssue": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             },
             "scores": {
               "type": "object",
@@ -160,10 +142,7 @@
               }
             },
             "aiDefaultLook": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             },
             "blockingFindings": {
               "type": "array",
@@ -188,10 +167,7 @@
               "type": "string"
             },
             "captureIssue": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             },
             "scores": {
               "type": "object",
@@ -238,10 +214,7 @@
               }
             },
             "aiDefaultLook": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             },
             "blockingFindings": {
               "type": "array",
@@ -266,10 +239,7 @@
               "type": "string"
             },
             "captureIssue": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             },
             "scores": {
               "type": "object",
@@ -316,10 +286,7 @@
               }
             },
             "aiDefaultLook": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             },
             "blockingFindings": {
               "type": "array",
@@ -335,12 +302,7 @@
       "type": "array",
       "items": {
         "type": "string",
-        "enum": [
-          "A",
-          "B",
-          "C",
-          "D"
-        ]
+        "enum": ["A", "B", "C", "D"]
       },
       "minItems": 4,
       "maxItems": 4

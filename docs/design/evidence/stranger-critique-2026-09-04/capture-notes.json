@@ -4,13 +4,9 @@
   "device": "iPhone 13",
   "ourUrl": "https://decod.ing",
   "captureNotes": {
-    "ours": [
-      "copied from docs/design/evidence/dc-visual-evidence-01/home-first-390.png"
-    ],
+    "ours": ["copied from docs/design/evidence/dc-visual-evidence-01/home-first-390.png"],
     "bench-gchq.github.io-CyberChef": [],
-    "bench-jwt.io": [
-      "removed overlays: div (100%)"
-    ],
+    "bench-jwt.io": ["removed overlays: div (100%)"],
     "bench-base64.guru-converter": []
   }
 }

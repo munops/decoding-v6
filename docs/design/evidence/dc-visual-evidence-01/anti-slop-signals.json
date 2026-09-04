@@ -11,10 +11,7 @@
     }
   },
   "scanConfig": {
-    "sourceRoots": [
-      "apps/web/src",
-      "packages/workbench-ui/src"
-    ],
+    "sourceRoots": ["apps/web/src", "packages/workbench-ui/src"],
     "includeTests": false,
     "excludes": []
   },

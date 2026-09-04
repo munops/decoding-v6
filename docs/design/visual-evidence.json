@@ -402,10 +402,7 @@
     ],
     "primaryAction": "Paste text or drop a file",
     "primaryActionCount": 1,
-    "secondaryActions": [
-      "Try a safe synthetic case",
-      "Open file"
-    ],
+    "secondaryActions": ["Try a safe synthetic case", "Open file"],
     "oneSentenceVerdict": "A local-only decoder that identifies unknown developer data and shows the evidence behind each nested step.",
     "automatedTestRef": "tests/e2e/visual-evidence.spec.ts"
   },
@@ -430,10 +427,7 @@
   "structureReview": {
     "fingerprintMatchesBrief": true,
     "nearestPortfolioSurface": "goodscheck /start first_visit_clean — 사용자 입력과 local-only 경계를 첫 화면에 두는 점은 가깝지만 결과 구조와 저장 모델이 다르다.",
-    "overlapAxes": [
-      "큰 결과 중심 제목",
-      "입력 가까이에 둔 local-only proof"
-    ],
+    "overlapAxes": ["큰 결과 중심 제목", "입력 가까이에 둔 local-only proof"],
     "repeatDecision": "distinct",
     "repeatRationale": "The overlap lowers explanation cost, while the dark free-input surface, scored candidates, nested orange-edge chain, and inspector form a product-specific Reveal Ledger that the compared routes do not have.",
     "writerIdentity": "codex:decoding-visual-writer-20260904",
@@ -515,9 +509,7 @@
         "checkedAt": "2026-09-04T20:08:38+09:00",
         "viewport": "390x844 (iPhone 13)",
         "screenshotRef": "docs/design/evidence/stranger-critique-2026-09-04/benchmark-jwt.io-390x844.png",
-        "captureNotes": [
-          "removed overlays: div (100%)"
-        ],
+        "captureNotes": ["removed overlays: div (100%)"],
         "blindLabel": "D",
         "captureIssue": null,
         "judgeRank": 4,
@@ -813,18 +805,9 @@
     "toneConsistent": true,
     "languageLayersSeparated": true,
     "sourceToUserTermsReviewed": true,
-    "generatedSurfacesReviewed": [
-      "error",
-      "share",
-      "export",
-      "legal-summary"
-    ],
+    "generatedSurfacesReviewed": ["error", "share", "export", "legal-summary"],
     "layoutReadability": {
-      "widthsPx": [
-        320,
-        390,
-        1440
-      ],
+      "widthsPx": [320, 390, 1440],
       "characterStacking": false,
       "midWordBreaks": false,
       "criticalVerticalText": false,
