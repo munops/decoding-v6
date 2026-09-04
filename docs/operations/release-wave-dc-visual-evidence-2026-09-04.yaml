@@ -1,9 +1,9 @@
 schema_version: 6
-wave_id: decoding-visual-evidence-web-release-2026-09-04
+wave_id: decoding-visual-evidence-web-release-r2-2026-09-04
 status: approved
-source_revision: 20eeb704311c8ff5487615b1496cd3de7413e2ef
-prepared_at: 2026-09-04T19:52:43+09:00
-expires_at: 2026-09-04T21:52:43+09:00
+source_revision: 1978148ef0e68c93fd7aad1512350a708f7c134f
+prepared_at: 2026-09-04T20:36:00+09:00
+expires_at: 2026-09-04T22:36:00+09:00
 legal_entity_ref: hq/bootstrap/identity.yaml
 execution_lane: owner_lane
 approval_authority: human_owner
@@ -21,7 +21,7 @@ work_claim:
     repo:decoding-v6: 37
     provider:github:munops/decoding-v6: 1
     provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6: 3
-  asserted_at: 2026-09-04T19:52:43+09:00
+  asserted_at: 2026-09-04T20:36:00+09:00
   released_at: null
   release_evidence_ref: null
 intervention_mode: normal
@@ -30,15 +30,15 @@ approval:
   mode: standing_delegation
   standing_delegation_ref: docs/munops/ops/owner-standing-delegation.json#zeroCostProviderExecution
   standing_delegation_id: MUNOPS-OWNER-STANDING-EXECUTION-20260826
-  resolved_at: 2026-09-04T19:07:48+09:00
-  requested_at: 2026-09-04T19:07:48+09:00
-  approved_at: 2026-09-04T19:07:48+09:00
+  resolved_at: 2026-09-04T20:36:00+09:00
+  requested_at: 2026-09-04T20:36:00+09:00
+  approved_at: 2026-09-04T20:36:00+09:00
   approved_action_ids:
-    - DC-VISUAL-EVIDENCE-SOURCE-20260904
-    - DC-VISUAL-EVIDENCE-WEB-20260904
+    - DC-VISUAL-EVIDENCE-SOURCE-R2-20260904
+    - DC-VISUAL-EVIDENCE-WEB-R2-20260904
   owner_evidence_ref: conversation:current-thread:user-request-all-proceed-and-deploy
 actions:
-  - action_id: DC-VISUAL-EVIDENCE-SOURCE-20260904
+  - action_id: DC-VISUAL-EVIDENCE-SOURCE-R2-20260904
     approval_readiness: approved
     approval_class: P-REPORT
     standing_delegation_eligible: true
@@ -46,7 +46,7 @@ actions:
     product: decoding-v6
     channel: source
     provider: github
-    exact_mutation: fast-forward munops/decoding-v6 main from delivery metadata 8115abb9582d158305ac26d373149849b56f4a20 through runtime source 20eeb704311c8ff5487615b1496cd3de7413e2ef and this exact delivery-metadata commit; never force-push
+    exact_mutation: fast-forward munops/decoding-v6 main from eba3d8513d46048f8eae3b74ecb06d1238ec245d through runtime source 1978148ef0e68c93fd7aad1512350a708f7c134f and this exact delivery-metadata commit; never force-push
     account_ref: docs/munops/ops/provider-registry.yaml#accounts.github_primary
     resource_ref: github:munops/decoding-v6:refs/heads/main
     claim_resource_refs:
@@ -57,8 +57,8 @@ actions:
       applicability: source_only
       candidate:
         source_repository: munops/decoding-v6
-        source_before_sha: 8115abb9582d158305ac26d373149849b56f4a20
-        candidate_sha: 20eeb704311c8ff5487615b1496cd3de7413e2ef
+        source_before_sha: eba3d8513d46048f8eae3b74ecb06d1238ec245d
+        candidate_sha: 1978148ef0e68c93fd7aad1512350a708f7c134f
         artifact_sha256: null
         release_entrypoint: null
       identity_transition:
@@ -113,17 +113,17 @@ actions:
       reconciled_at: null
     public_impact: no direct product runtime change; the source of record advances before the existing Worker is updated
     transmitted_data:
-      - Git commit objects through corrected runtime source 20eeb704311c8ff5487615b1496cd3de7413e2ef and the exact delivery-metadata commit
+      - Git commit objects through input-first runtime source 1978148ef0e68c93fd7aad1512350a708f7c134f and the exact delivery-metadata commit
       - no credential value, decoded input, local result, browser storage, personal data or payment data
     legal_terms_changed: false
     preflight_evidence:
-      - remote main read back as delivery metadata 8115abb9582d158305ac26d373149849b56f4a20 and fast-forward ancestry is required
-      - initial runtime candidate passed validate:changed and validate:candidate; the three-file correction passed focused changed validation
-    rollback_or_abort: abort unless origin main remains exactly 8115abb9582d158305ac26d373149849b56f4a20 and ancestry is fast-forward; after push use a forward corrective commit and never rewrite main
+      - remote main read back as eba3d8513d46048f8eae3b74ecb06d1238ec245d and fast-forward ancestry is required
+      - input-first runtime candidate passed validate:changed, focused browser regression and validate:candidate
+    rollback_or_abort: abort unless origin main remains exactly eba3d8513d46048f8eae3b74ecb06d1238ec245d and ancestry is fast-forward; after push use a forward corrective commit and never rewrite main
     status: approved
     provider_readback: null
     channel_smoke: null
-  - action_id: DC-VISUAL-EVIDENCE-WEB-20260904
+  - action_id: DC-VISUAL-EVIDENCE-WEB-R2-20260904
     approval_readiness: approved
     approval_class: P-REPORT
     standing_delegation_eligible: true
@@ -131,14 +131,14 @@ actions:
     product: decoding-v6
     channel: web
     provider: cloudflare_workers
-    exact_mutation: deploy corrected runtime source 20eeb704311c8ff5487615b1496cd3de7413e2ef and artifact 686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe once to the existing decoding-v6 Worker; preserve EVENTS dataset, static-assets binding, routes, domains, DNS, secrets, plans and data
+    exact_mutation: deploy input-first runtime source 1978148ef0e68c93fd7aad1512350a708f7c134f and artifact 10f23a823baa355ad5fb3052ce6badcdb60abb794290b06dbc8d09896a7063c0 once to the existing decoding-v6 Worker; preserve EVENTS dataset, static-assets binding, routes, domains, DNS, secrets, plans and data
     account_ref: docs/munops/ops/provider-registry.yaml#accounts.cloudflare_primary
     resource_ref: cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6
     claim_resource_refs:
       - repo:decoding-v6
       - provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6
     depends_on_action_ids:
-      - DC-VISUAL-EVIDENCE-SOURCE-20260904
+      - DC-VISUAL-EVIDENCE-SOURCE-R2-20260904
     destination:
       - https://decod.ing
       - https://www.decod.ing
@@ -146,7 +146,7 @@ actions:
     artifact:
       format: cloudflare_worker_with_static_assets
       local_ref: apps/web/dist
-      sha256: 686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe
+      sha256: 10f23a823baa355ad5fb3052ce6badcdb60abb794290b06dbc8d09896a7063c0
       build_command: pnpm --filter @decoding/web build
       digest_method: sorted per-file SHA-256 ledger folded with SHA-256
       built_from_clean_runtime_commit: true
@@ -154,9 +154,9 @@ actions:
       applicability: release_candidate
       candidate:
         source_repository: munops/decoding-v6
-        source_before_sha: 2b520f20533f0d71f0474b21b9c69a1767a8c544
-        candidate_sha: 20eeb704311c8ff5487615b1496cd3de7413e2ef
-        artifact_sha256: 686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe
+        source_before_sha: 20eeb704311c8ff5487615b1496cd3de7413e2ef
+        candidate_sha: 1978148ef0e68c93fd7aad1512350a708f7c134f
+        artifact_sha256: 10f23a823baa355ad5fb3052ce6badcdb60abb794290b06dbc8d09896a7063c0
         release_entrypoint: DECODING_RELEASE_WAVE=docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml DECODING_DELIVERY_TARGET=production pnpm delivery:web:deploy -- --execute
       identity_transition:
         mode: preserve
@@ -174,23 +174,23 @@ actions:
         target_environment: production
         build_environment: production
         assertion_profile: production
-        source_sha: 20eeb704311c8ff5487615b1496cd3de7413e2ef
-        artifact_sha256: 686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe
+        source_sha: 1978148ef0e68c93fd7aad1512350a708f7c134f
+        artifact_sha256: 10f23a823baa355ad5fb3052ce6badcdb60abb794290b06dbc8d09896a7063c0
         fresh_server_required: true
         reuse_existing_server: false
-        server_identity_receipt_sha256: f4822a9c0664c2c6d865afc5896c151615833666e61f495ee2c5f900763a8575
-        server_identity_receipt_payload: '{"source_sha":"20eeb704311c8ff5487615b1496cd3de7413e2ef","artifact_sha256":"686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe","target_environment":"production","build_environment":"production","assertion_profile":"production","fresh_server_required":true,"reuse_existing_server":false}'
+        server_identity_receipt_sha256: 55542e0432dec94fe037f6ef18472affc852be4582c3aa82be8bf560fea3de9b
+        server_identity_receipt_payload: '{"source_sha":"1978148ef0e68c93fd7aad1512350a708f7c134f","artifact_sha256":"10f23a823baa355ad5fb3052ce6badcdb60abb794290b06dbc8d09896a7063c0","target_environment":"production","build_environment":"production","assertion_profile":"production","fresh_server_required":true,"reuse_existing_server":false}'
       provider_before:
         applicability: deployment
-        deployment_id: 13f77113-c17c-4ba2-8185-0401c9f1b291
-        version_id: 55d7379f-74ba-409c-88e6-72796d34fff7
+        deployment_id: 0c719d00-5a9d-43f8-acf8-298b3fbcd438
+        version_id: 038d978f-512f-401d-82b1-ae10edfe53cf
       single_deployment_path: decoding_local_delivery_existing_worker_once
     provider_before:
-      deployment_id: 13f77113-c17c-4ba2-8185-0401c9f1b291
-      version_id: 55d7379f-74ba-409c-88e6-72796d34fff7
+      deployment_id: 0c719d00-5a9d-43f8-acf8-298b3fbcd438
+      version_id: 038d978f-512f-401d-82b1-ae10edfe53cf
       traffic_percent: 100
-      runtime_source: 2b520f20533f0d71f0474b21b9c69a1767a8c544
-      rollback_target: 55d7379f-74ba-409c-88e6-72796d34fff7
+      runtime_source: 20eeb704311c8ff5487615b1496cd3de7413e2ef
+      rollback_target: 038d978f-512f-401d-82b1-ae10edfe53cf
     price:
       cost_type: free
       cost_status: not_applicable
@@ -225,20 +225,18 @@ actions:
       invoice_or_receipt_ref: null
       ledger_ref: null
       reconciled_at: null
-    public_impact: existing public Web users receive correctly localized result-audio controls and the same local-first decoder workbench; no new discovery, indexing, payment, advertising, data collection or legal scope opens
+    public_impact: existing public Web users receive the same local-first decoder with the real paste surface moved into the first viewport, unclipped mobile examples, one trust sentence and result-only copy-feedback settings; no new discovery, indexing, payment, advertising, data collection or legal scope opens
     transmitted_data:
       - compiled Worker code, public HTML, CSS, JavaScript, source maps, icons, fonts, PWA assets and non-secret release metadata
       - no decoded input, result value, browser storage, Analytics row, credential, personal data or payment data
     legal_terms_changed: false
     preflight_evidence:
-      - validate:changed passed with 40 of 40 focused tests
-      - validate:candidate passed including formatting, lint, typecheck, 40 tests, content, links, network, parity, i18n, build and bundle budget
-      - Playwright product, accessibility, privacy and responsive suite passed 41 tests with 2 intentional configuration skips
-      - privacy passed 3 of 3 and accessibility passed 6 of 6 as separate runbook gates
-      - Wrangler dry-run read 1022 files and preserved EVENTS, ASSETS and BUILD_SHA bindings
-      - first deployment health read back source 2b520f20533f0d71f0474b21b9c69a1767a8c544; original-detail inspection then found and rejected a detached desktop hero slash before final evidence
-      - corrected workbench build passed with 0 Astro diagnostics and artifact 686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe
-    rollback_or_abort: abort before deployment on source, artifact, account, resource, route, binding, destination, claim, cost or transmitted-data drift; after deployment restore version 55d7379f-74ba-409c-88e6-72796d34fff7 at 100 percent if exact health, mandatory routes, security/privacy smoke or localized core-result browser evidence fails
+      - validate:changed passed for the six input-first runtime and browser-test files
+      - focused Vitest passed 40 of 40; Playwright product/responsive passed 20 with 1 intentional visual-capture skip, and the moved result-only copy-feedback control passed its focused regression
+      - validate:candidate passed including formatting, lint, typecheck, 40 tests, engine benchmark, content, links, network, parity, extension, i18n, build and bundle budget
+      - clean 528-file workbench build produced artifact 10f23a823baa355ad5fb3052ce6badcdb60abb794290b06dbc8d09896a7063c0
+      - production baseline read back deployment 0c719d00-5a9d-43f8-acf8-298b3fbcd438, version 038d978f-512f-401d-82b1-ae10edfe53cf at runtime source 20eeb704311c8ff5487615b1496cd3de7413e2ef
+    rollback_or_abort: abort before deployment on source, artifact, account, resource, route, binding, destination, claim, cost or transmitted-data drift; after deployment restore version 038d978f-512f-401d-82b1-ae10edfe53cf at 100 percent if exact health, mandatory routes, security/privacy smoke or localized core-result browser evidence fails
     channel_smoke_plan: read back one new deployment at 100 percent and exact source, run canonical, www and workers.dev health plus synthetic and privacy smoke, then capture clean-profile 320, 390 and 1440 and core, unsupported and Worker-error screens from the same runtime
     status: approved
     provider_readback: null
