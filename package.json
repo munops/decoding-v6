@@ -39,7 +39,12 @@
     "cli": "pnpm --filter @decoding/cli start",
     "desktop:dev": "pnpm --filter @decoding/desktop tauri dev",
     "desktop:build": "pnpm --filter @decoding/desktop tauri build",
-    "desktop:verify": "pnpm --filter @decoding/desktop typecheck && pnpm --filter @decoding/desktop build"
+    "desktop:verify": "pnpm --filter @decoding/desktop typecheck && pnpm --filter @decoding/desktop build",
+    "validate:staged": "node ../scripts/run-validation.mjs --project decoding-v6 --worktree . --mode staged",
+    "validate:changed": "node ../scripts/run-validation.mjs --project decoding-v6 --worktree . --mode changed",
+    "validate:repo": "node ../scripts/run-validation.mjs --project decoding-v6 --worktree . --mode repo",
+    "validate:candidate": "node ../scripts/run-validation.mjs --project decoding-v6 --worktree . --mode candidate",
+    "validate:ops": "node ../scripts/run-validation.mjs --project decoding-v6 --worktree . --mode ops"
   },
   "devDependencies": {
     "@decoding/engine": "workspace:*",
