@@ -30,7 +30,10 @@ page.on('request', (request) => {
 })
 
 try {
-  await page.goto(`${baseURL}/`, { waitUntil: 'networkidle' })
+  // The aggregate-only counters use fetch({ keepalive: true }). Chromium can keep those
+  // completed same-origin requests in Playwright's pending set, so networkidle is not a
+  // reliable readiness signal. Load plus the explicit product assertions below is stricter.
+  await page.goto(`${baseURL}/`, { waitUntil: 'load' })
   const linkedAssets = await page.evaluate(async () => {
     const paths = [...document.querySelectorAll('link[rel="stylesheet"][href], script[src]')].map(
       (element) => element.getAttribute(element.tagName === 'LINK' ? 'href' : 'src'),
@@ -80,12 +83,12 @@ try {
   if (storage.includes(canary)) throw new Error('Synthetic canary was persisted in browser storage')
   if (canaryLeaks.length > 0) throw new Error(`Synthetic canary leaked: ${canaryLeaks.join(', ')}`)
 
-  await page.goto(`${baseURL}/tools/`, { waitUntil: 'networkidle' })
+  await page.goto(`${baseURL}/tools/`, { waitUntil: 'load' })
   await page.getByText('47 of 47 tools').waitFor()
   if ((await page.locator('.tool-card').count()) !== 47)
     throw new Error('Expected exactly 47 tools')
 
-  await page.goto(`${baseURL}/json-format/`, { waitUntil: 'networkidle' })
+  await page.goto(`${baseURL}/json-format/`, { waitUntil: 'load' })
   await page.locator('.operation-pane textarea').first().fill('{"answer":42,"local":true}')
   await page.getByRole('button', { name: 'Run locally' }).click()
   await page
@@ -94,7 +97,7 @@ try {
     .waitFor()
 
   for (const route of ['/privacy/', '/terms/', '/support/']) {
-    const response = await page.goto(`${baseURL}${route}`, { waitUntil: 'networkidle' })
+    const response = await page.goto(`${baseURL}${route}`, { waitUntil: 'load' })
     if (response?.status() !== 200) throw new Error(`Expected 200 for ${route}`)
     if ((await page.locator('main h1').count()) !== 1)
       throw new Error(`Expected one h1 for ${route}`)

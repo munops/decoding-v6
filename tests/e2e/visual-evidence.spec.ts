@@ -56,7 +56,21 @@ async function assertFirstVisit(page: Page, viewport: { width: number; height: n
       .filter((element) => {
         const range = document.createRange()
         range.selectNodeContents(element)
-        return new Set([...range.getClientRects()].map((rect) => Math.round(rect.top))).size > 1
+        const verticalRuns = [...range.getClientRects()]
+          .map((rect) => ({ top: rect.top, bottom: rect.bottom }))
+          .sort((left, right) => left.top - right.top)
+          .reduce<Array<{ top: number; bottom: number }>>((runs, rect) => {
+            const previous = runs.at(-1)
+            // Badges and inline icons have a different top edge but overlap the text line.
+            // Merge overlapping vertical intervals so the gate catches real wrapping only.
+            if (previous && rect.top <= previous.bottom + 1) {
+              previous.bottom = Math.max(previous.bottom, rect.bottom)
+            } else {
+              runs.push({ ...rect })
+            }
+            return runs
+          }, [])
+        return verticalRuns.length > 1
       })
       .map((element) => element.textContent?.trim()),
     storage: {
@@ -69,6 +83,10 @@ async function assertFirstVisit(page: Page, viewport: { width: number; height: n
   expect(geometry.primaryInputs).toBe(1)
   expect(geometry.wrappedClickables).toEqual([])
   expect(geometry.storage).toEqual({ local: 0, session: 0 })
+  await expect(page.locator('.hero h1 span')).toHaveCSS(
+    'display',
+    viewport.width > 640 ? 'inline-block' : 'inline',
+  )
 }
 
 async function capture(page: Page, filename: string, state: string, captures: Capture[]) {
