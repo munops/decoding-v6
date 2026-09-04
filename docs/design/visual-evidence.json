@@ -2,9 +2,9 @@
   "schemaVersion": 4,
   "projectId": "decoding-v6",
   "status": "release_verified",
-  "statusScope": "Public Web runtime evidence only: exact production revision 3233ef31b91c2b4d9a70c76de609d1ed253b86ac, clean-profile first visit, core synthetic decode, unsupported input, and material worker error were rendered and reviewed. The prior r2 stranger critique is preserved as a failure under the owner's every-axis-at-least-4 bar; a fresh screens-only critique of this revision is not claimed here. This does not claim desktop distribution, full visual-quality closure, user value, monitoring, or profitability.",
+  "statusScope": "Public Web runtime evidence only: exact production revision 3233ef31b91c2b4d9a70c76de609d1ed253b86ac, clean-profile first visit, core synthetic decode, unsupported input, and material worker error were rendered and reviewed. A fresh screens-only critique ranked this revision first of four with every axis at least 4; the prior r2 minimum-3 critique remains preserved as superseded evidence. Computed 390px, 320px, and 320px at 200% geometry shows the result-anchored capture moves earlier controls behind the sticky header only at that scroll position and does not trap interaction, so no runtime change or redeploy was made. This does not claim desktop distribution, the separate mobile target-size follow-up, user value, monitoring, or profitability.",
   "sourceRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
-  "checkedAt": "2026-09-04T21:51:42+09:00",
+  "checkedAt": "2026-09-04T22:18:55+09:00",
   "runtimeIdentityRef": "docs/design/evidence/dc-visual-evidence-03/source-runtime-identity.json",
   "currentSourceIdentity": {
     "kind": "deployed_capture",
@@ -459,6 +459,84 @@
       "lowestScoreRationale": "At the 320px floor the sticky header remains dense, but the input surface and all three equal-width examples are visible without clipping; desktop preserves deliberate whitespace around one continuous workbench.",
       "verdict": "pass"
     }
+  },
+  "strangerCritique": {
+    "version": 1,
+    "checkedAt": "2026-09-04T22:18:55+09:00",
+    "sourceRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
+    "evidenceRef": "docs/design/evidence/stranger-critique-2026-09-04-r3/judge-raw.json",
+    "grader": {
+      "holder": "codex:/root/decoding_blind_judge",
+      "contextIsolation": "screens_only",
+      "host": "codex",
+      "sameHostAsWriter": true,
+      "sameSessionAsWriter": false
+    },
+    "method": "Blind single-session review of the latest deployed first-visit screen and the three existing r2 benchmark captures at the same 390x844 viewport. The judge received only shuffled screens and the rubric, and did not receive the product brief, writer self-review, prior blind mapping, or prior judge output.",
+    "viewport": "390x844",
+    "screenshotRef": "docs/design/evidence/dc-visual-evidence-03/home-first-390.png",
+    "blindLabel": "B",
+    "benchmarks": [
+      {
+        "name": "Base64.Guru Text Decoder",
+        "url": "https://base64.guru/converter/decode/text",
+        "checkedAt": "2026-09-04T20:57:58+09:00",
+        "viewport": "390x844 (iPhone 13)",
+        "screenshotRef": "docs/design/evidence/stranger-critique-2026-09-04-r2/benchmark-base64.guru-converter-390x844.png",
+        "captureNotes": [],
+        "blindLabel": "A",
+        "judgeRank": 4
+      },
+      {
+        "name": "JWT.io Debugger",
+        "url": "https://www.jwt.io/",
+        "checkedAt": "2026-09-04T20:57:58+09:00",
+        "viewport": "390x844 (iPhone 13)",
+        "screenshotRef": "docs/design/evidence/stranger-critique-2026-09-04-r2/benchmark-jwt.io-390x844.png",
+        "captureNotes": ["removed overlays: div (100%)"],
+        "blindLabel": "C",
+        "judgeRank": 2
+      },
+      {
+        "name": "CyberChef",
+        "url": "https://gchq.github.io/CyberChef/",
+        "checkedAt": "2026-09-04T20:57:58+09:00",
+        "viewport": "390x844 (iPhone 13)",
+        "screenshotRef": "docs/design/evidence/stranger-critique-2026-09-04-r2/benchmark-gchq.github.io-CyberChef-390x844.png",
+        "captureNotes": [],
+        "blindLabel": "D",
+        "judgeRank": 3
+      }
+    ],
+    "rank": 1,
+    "rankCeiling": 4,
+    "ranking": ["B", "C", "D", "A"],
+    "firstImpression": "정체불명의 데이터를 붙여 넣으면 형식·중첩·근거·경고를 기기 안에서 추적해 주는, 목적이 선명한 개발자 도구로 보인다.",
+    "scores": {
+      "philosophy": 5,
+      "hierarchy": 5,
+      "execution": 4,
+      "specificity": 5,
+      "restraint": 4,
+      "variety": 4
+    },
+    "aiDefaultLook": false,
+    "blockingFindings": [],
+    "nonBlockingObservations": [
+      "The visual language retains some familiar landing-template structure.",
+      "A short category subcopy could make the developer-tool category even more explicit.",
+      "Privacy and support controls read small on mobile and remain tracked by DC-MOBILE-TARGET-01.",
+      "The result-anchored core capture appears to place prior input controls behind the sticky header; computed interaction geometry resolves this as a recoverable scroll state, not a trapped control.",
+      "Local result audio receives substantial vertical priority in the narrow result sequence."
+    ],
+    "geometryDispositionRef": "docs/design/evidence/dc-visual-evidence-03/sticky-header-geometry.json",
+    "verdict": "pass",
+    "lowestScore": 4,
+    "aggregation": "single_judge",
+    "rankingRationale": "Blind rank B > C > D > A.",
+    "benchmarkQualityNote": "The reused JWT.io capture records an automatically removed overlay; all four judged image files are fixed 390x844 screen captures and no benchmark was omitted.",
+    "wantedFeedback": "첫 화면의 위계, 첫 행동, 카테고리 명확성, 모바일 조작과 결과 우선순위",
+    "notWantedFeedback": "브랜드 색 자체의 취향이나 기존 판정 재해석"
   },
   "supersededStrangerCritique": {
     "supersededByRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",

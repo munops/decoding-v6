@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-04T22:18:55+09:00",
+  "sourceRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
+  "runtime": {
+    "url": "https://decod.ing/",
+    "healthUrl": "https://decod.ing/healthz",
+    "healthRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
+    "cloudflareDeploymentId": "69495344-6a72-414d-9783-bf5a26515134",
+    "cloudflareVersionId": "eb355be7-d553-4447-b333-2d938f89fe45",
+    "cloudflarePercentage": 100
+  },
+  "reportedConcern": "In the result-anchored 390px capture, prior input controls appear behind the sticky header.",
+  "method": "Load the deployed clean profile with service workers blocked and reduced motion, run the nested synthetic case, reproduce the capture scroll anchor with result-grid at about y=82px, then scroll each prior input control into view and measure its bounding box against the computed sticky-header box and document.elementFromPoint at the target center. Finally edit the textarea and activate Clear.",
+  "cases": [
+    {
+      "viewport": { "width": 390, "height": 844 },
+      "rootFontSize": "16px",
+      "resultAnchor": {
+        "scrollY": 531,
+        "header": { "top": 8, "bottom": 70, "height": 62 },
+        "input": { "top": -181.97, "bottom": -36.97, "height": 145 },
+        "inputActions": { "top": -17.38, "bottom": 52.61, "height": 69.98 },
+        "resultTop": 81.61,
+        "concernReproduced": true
+      },
+      "recovery": {
+        "scrollY": 0,
+        "targets": ["#decoder-input", ".input-actions .file-action", ".input-actions button"],
+        "allFullyVisible": true,
+        "allClearOfStickyHeader": true,
+        "allCenterHitTargets": true,
+        "textareaEditAndClearActivation": "pass"
+      }
+    },
+    {
+      "viewport": { "width": 320, "height": 844 },
+      "rootFontSize": "16px",
+      "resultAnchor": {
+        "scrollY": 517,
+        "header": { "top": 8, "bottom": 70, "height": 62 },
+        "input": { "top": -181.44, "bottom": -36.44, "height": 145 },
+        "inputActions": { "top": -16.84, "bottom": 53.14, "height": 69.98 },
+        "resultTop": 82.14,
+        "concernReproduced": true
+      },
+      "recovery": {
+        "scrollY": 0,
+        "targets": ["#decoder-input", ".input-actions .file-action", ".input-actions button"],
+        "allFullyVisible": true,
+        "allClearOfStickyHeader": true,
+        "allCenterHitTargets": true,
+        "textareaEditAndClearActivation": "pass"
+      }
+    },
+    {
+      "viewport": { "width": 320, "height": 844 },
+      "rootFontSize": "32px",
+      "textResizePercent": 200,
+      "resultAnchor": {
+        "scrollY": 524,
+        "header": { "top": 8, "bottom": 70, "height": 62 },
+        "input": { "top": -188.44, "bottom": -43.44, "height": 145 },
+        "inputActions": { "top": -17.25, "bottom": 52.73, "height": 69.98 },
+        "resultTop": 81.73,
+        "concernReproduced": true
+      },
+      "recovery": {
+        "scrollY": 0,
+        "targets": ["#decoder-input", ".input-actions .file-action", ".input-actions button"],
+        "allFullyVisible": true,
+        "allClearOfStickyHeader": true,
+        "allCenterHitTargets": true,
+        "textareaEditAndClearActivation": "pass"
+      }
+    }
+  ],
+  "automatedTest": {
+    "path": "tests/e2e/inclusive-ui.spec.ts",
+    "name": "sticky header does not trap prior input controls after a mobile result",
+    "command": "PLAYWRIGHT_BASE_URL=https://decod.ing pnpm exec playwright test tests/e2e/inclusive-ui.spec.ts --project=chromium --grep sticky header",
+    "result": "1 passed"
+  },
+  "verdict": "capture_anchor_only_not_runtime_defect",
+  "rationale": "The result capture intentionally scrolls earlier content above the viewport, so the sticky header covers the departing input-actions at that one scroll position. At every required viewport and text size, browser scrolling returns all prior controls to a stable, unobscured, hit-testable position and both text editing and Clear activation work.",
+  "releaseDecision": {
+    "runtimeChanged": false,
+    "providerMutation": "forbidden_and_not_run",
+    "deploy": "not_run",
+    "reason": "The evidence-only profile found no runtime defect; redeploying the unchanged Worker would create false release churn."
+  }
+}

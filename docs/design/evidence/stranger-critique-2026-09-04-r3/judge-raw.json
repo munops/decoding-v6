@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "receivedAt": "2026-09-04T22:18:55+09:00",
+  "sourceRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
+  "grader": {
+    "holder": "codex:/root/decoding_blind_judge",
+    "contextIsolation": "screens_only",
+    "sameSessionAsWriter": false
+  },
+  "inputIsolation": {
+    "included": [
+      "docs/design/evidence/dc-visual-evidence-03/home-first-390.png",
+      "docs/design/evidence/stranger-critique-2026-09-04-r2/benchmark-base64.guru-converter-390x844.png",
+      "docs/design/evidence/stranger-critique-2026-09-04-r2/benchmark-jwt.io-390x844.png",
+      "docs/design/evidence/stranger-critique-2026-09-04-r2/benchmark-gchq.github.io-CyberChef-390x844.png",
+      "visual-production stranger-critique rubric"
+    ],
+    "excluded": [
+      "product brief",
+      "writer self-review",
+      "docs/design/evidence/stranger-critique-2026-09-04-r2/blind-mapping.json",
+      "docs/design/evidence/stranger-critique-2026-09-04-r2/judge-raw.json"
+    ]
+  },
+  "screens": {
+    "A": {
+      "identity": "Base64.Guru",
+      "path": "docs/design/evidence/stranger-critique-2026-09-04-r2/benchmark-base64.guru-converter-390x844.png",
+      "sha256": "7124c022b7ca16c38580acabedea2d2f345a0f7f0bd0fbdbf618e78179b25bf5"
+    },
+    "B": {
+      "identity": "ours",
+      "path": "docs/design/evidence/dc-visual-evidence-03/home-first-390.png",
+      "sha256": "29f30e31c80215e6d58f2f5cb954f4f1243f11847ed2071c71cc599b316deb35"
+    },
+    "C": {
+      "identity": "jwt.io",
+      "path": "docs/design/evidence/stranger-critique-2026-09-04-r2/benchmark-jwt.io-390x844.png",
+      "sha256": "199fefaa1ceae674ca7ee6fa46a26a7c94de92088b20354732caafe2637a076b"
+    },
+    "D": {
+      "identity": "CyberChef",
+      "path": "docs/design/evidence/stranger-critique-2026-09-04-r2/benchmark-gchq.github.io-CyberChef-390x844.png",
+      "sha256": "93c10e7f6a36c2b5cd130b05bd517a07566f51cd6c3fb1ad98f32aa4ef40a7bb"
+    }
+  },
+  "result": {
+    "ranking": ["B", "C", "D", "A"],
+    "oursRank": 1,
+    "rankCeiling": 4,
+    "scores": {
+      "philosophy": 5,
+      "hierarchy": 5,
+      "execution": 4,
+      "specificity": 5,
+      "restraint": 4,
+      "variety": 4
+    },
+    "firstImpression": "정체불명의 데이터를 붙여 넣으면 형식·중첩·근거·경고를 기기 안에서 추적해 주는, 목적이 선명한 개발자 도구로 보인다.",
+    "aiDefaultLook": false,
+    "blockingFindings": [],
+    "observations": [
+      "template familiarity",
+      "category needs subcopy",
+      "mobile small privacy/support controls",
+      "home-core-synthetic-390.png sticky header 뒤 이전 입력 조작 잘림 가능성",
+      "Local result audio priority"
+    ]
+  },
+  "ownerBarAssessment": {
+    "requiredRank": 2,
+    "requiredMinimumAxisScore": 4,
+    "observedRank": 1,
+    "observedMinimumAxisScore": 4,
+    "verdict": "pass"
+  }
+}

@@ -76,3 +76,82 @@ test('320px route survives an actual 200 percent root text resize', async ({ pag
     fullPage: true,
   })
 })
+
+test('sticky header does not trap prior input controls after a mobile result', async ({ page }) => {
+  const cases = [
+    { width: 390, height: 844, textScale: 1 },
+    { width: 320, height: 844, textScale: 1 },
+    { width: 320, height: 844, textScale: 2 },
+  ]
+
+  for (const item of cases) {
+    await page.setViewportSize({ width: item.width, height: item.height })
+    await page.goto('/')
+    if (item.textScale === 2) {
+      await page.evaluate(() => {
+        document.documentElement.style.fontSize = '200%'
+      })
+    }
+    await expectCoreRouteWithinCanvas(page)
+
+    await page.locator('[data-sample-id="nested"]').click()
+    await expect(
+      page.getByRole('tree', { name: 'Decode chain' }).getByRole('treeitem'),
+    ).toHaveCount(2)
+
+    await page.locator('.result-grid').evaluate((element) => {
+      window.scrollTo({ top: element.getBoundingClientRect().top + window.scrollY - 82 })
+    })
+    await page.waitForFunction(
+      () => (document.querySelector('.result-grid')?.getBoundingClientRect().top ?? Infinity) <= 83,
+    )
+
+    const anchored = await page.evaluate(() => {
+      const header = document.querySelector('.site-header')?.getBoundingClientRect()
+      const actions = document.querySelector('.input-actions')?.getBoundingClientRect()
+      const result = document.querySelector('.result-grid')?.getBoundingClientRect()
+      return {
+        headerBottom: header?.bottom ?? -1,
+        actionsBottom: actions?.bottom ?? -1,
+        resultTop: result?.top ?? -1,
+      }
+    })
+    expect(anchored.actionsBottom).toBeLessThanOrEqual(anchored.headerBottom)
+    expect(anchored.resultTop).toBeGreaterThanOrEqual(anchored.headerBottom)
+
+    for (const selector of [
+      '#decoder-input',
+      '.input-actions .file-action',
+      '.input-actions button',
+    ]) {
+      const target = page.locator(selector)
+      await target.scrollIntoViewIfNeeded()
+      const geometry = await target.evaluate((element) => {
+        const targetRect = element.getBoundingClientRect()
+        const headerRect = document.querySelector('.site-header')?.getBoundingClientRect()
+        const centerX = targetRect.left + targetRect.width / 2
+        const centerY = targetRect.top + targetRect.height / 2
+        const hit = document.elementFromPoint(centerX, centerY)
+        return {
+          targetTop: targetRect.top,
+          targetBottom: targetRect.bottom,
+          headerBottom: headerRect?.bottom ?? 0,
+          viewportHeight: window.innerHeight,
+          centerHitTarget: Boolean(hit && (hit === element || element.contains(hit))),
+        }
+      })
+      expect(geometry.targetTop).toBeGreaterThanOrEqual(geometry.headerBottom)
+      expect(geometry.targetBottom).toBeLessThanOrEqual(geometry.viewportHeight)
+      expect(geometry.centerHitTarget).toBe(true)
+    }
+
+    const input = page.getByLabel('Paste text or drop a file')
+    await input.fill('?')
+    await expect(input).toHaveValue('?')
+    const clear = page.getByRole('button', { name: 'Clear' })
+    await clear.scrollIntoViewIfNeeded()
+    await clear.click()
+    await expect(input).toHaveValue('')
+    await expect(clear).toBeDisabled()
+  }
+})
