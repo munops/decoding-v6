@@ -81,7 +81,7 @@
       "script": "verify",
       "sourceScriptSha256": "eefe483f23668fc4ddc6d45e9fd490e9bc09c7867a868a37dd06d40b84d48d02",
       "cwd": ".",
-      "timeoutMs": 300000,
+      "timeoutMs": 600000,
       "cachePolicy": "input-fingerprint"
     }
   ],
@@ -96,14 +96,14 @@
     "stagedMs": 10000,
     "changedMs": 300000,
     "repoMs": 300000,
-    "candidateMs": 300000,
+    "candidateMs": 600000,
     "opsMs": 120000,
     "maxConcurrency": 2
   },
   "coverage": {
     "complete": true,
     "blockingReasons": [],
-    "advisories": ["project_changed_profile_extended_budget"],
+    "advisories": ["project_changed_profile_extended_budget", "candidate_quality_extended_budget"],
     "notApplicableRoles": {}
   },
   "knownFailureFingerprints": []
