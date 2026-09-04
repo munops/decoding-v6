@@ -10,7 +10,12 @@ if (!baseURL) {
 }
 
 const browser = await chromium.launch({ headless: true })
-const page = await browser.newPage()
+const page = await browser.newPage({
+  viewport: { width: 390, height: 844 },
+  locale: 'en-US',
+  colorScheme: 'light',
+  reducedMotion: 'reduce',
+})
 const canary = 'DECODING_DEPLOY_CANARY_6b4761e7_secret'
 const canaryLeaks = []
 const externalOrigins = new Set()
@@ -62,13 +67,35 @@ try {
   if ((await launchpad.getByRole('button').count()) !== 3) {
     throw new Error('Expected exactly three synthetic triage cases')
   }
+  await page.getByText('Input stays on this device. No account, upload, or AI.').waitFor()
+  if ((await page.getByText('0 input bytes uploaded').count()) !== 0) {
+    throw new Error('Expected the obsolete duplicate upload claim to be absent')
+  }
+  if ((await page.locator('.copy-feedback-settings').count()) !== 0) {
+    throw new Error('Expected copy feedback settings only after a result exists')
+  }
+  const firstVisitGeometry = await page.evaluate(() => {
+    const inputSurface = document.querySelector('.paste-surface')?.getBoundingClientRect()
+    const samples = [...document.querySelectorAll('[data-sample-id]')].map((element) =>
+      element.getBoundingClientRect(),
+    )
+    return {
+      surfaceBottom: inputSurface?.bottom ?? Number.POSITIVE_INFINITY,
+      sampleOverflow: samples.some(
+        (bounds) => bounds.left < 0 || bounds.right > document.documentElement.clientWidth,
+      ),
+    }
+  })
+  if (firstVisitGeometry.surfaceBottom > 844 || firstVisitGeometry.sampleOverflow) {
+    throw new Error(`First-visit geometry failed: ${JSON.stringify(firstVisitGeometry)}`)
+  }
   await launchpad.getByRole('button', { name: 'Nested Base64 → JSON' }).click()
   await page.getByRole('tree', { name: 'Decode chain' }).getByRole('treeitem').nth(1).waitFor()
 
   await page.getByLabel('Paste text or drop a file').fill(btoa(JSON.stringify({ secret: canary })))
   await page.getByText('Base64', { exact: false }).first().waitFor()
   await page.getByText('JSON', { exact: false }).first().waitFor()
-  await page.getByText('0 input bytes uploaded').waitFor()
+  await page.locator('.copy-feedback-settings').waitFor()
 
   const storage = await page.evaluate(async () => {
     const databases = 'databases' in indexedDB ? await indexedDB.databases() : []
