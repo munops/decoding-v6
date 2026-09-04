@@ -1,0 +1,56 @@
+{
+  "runId": "2026-09-04-2d33d6",
+  "labels": {
+    "A": "bench-gchq.github.io-CyberChef",
+    "B": "bench-base64.guru-converter",
+    "C": "ours",
+    "D": "bench-jwt.io"
+  },
+  "judgeHost": "claude+grok",
+  "judges": [
+    {
+      "host": "claude",
+      "holder": "claude:stranger-critique-2026-09-04-2d33d6-1",
+      "sameHostAsWriter": false,
+      "rank": 2,
+      "scores": {
+        "philosophy": 3,
+        "hierarchy": 2,
+        "execution": 3,
+        "specificity": 3,
+        "restraint": 2,
+        "variety": 2
+      },
+      "firstImpression": "정체불명 문자열을 로컬에서 판별해준다는 개발자 도구 같은데, 정작 붙여넣을 칸은 화면 맨 아래에 잘려 있다.",
+      "ms": 166830
+    },
+    {
+      "host": "grok",
+      "holder": "grok:stranger-critique-2026-09-04-2d33d6-2",
+      "sameHostAsWriter": false,
+      "rank": 3,
+      "scores": {
+        "philosophy": 3,
+        "hierarchy": 3,
+        "execution": 3,
+        "specificity": 3,
+        "restraint": 3,
+        "variety": 3
+      },
+      "firstImpression": "이미지를 열어 화면을 먼저 본다.",
+      "ms": 270294
+    }
+  ],
+  "tried": [
+    {
+      "host": "claude",
+      "ok": true,
+      "ms": 166830
+    },
+    {
+      "host": "grok",
+      "ok": true,
+      "ms": 270294
+    }
+  ]
+}

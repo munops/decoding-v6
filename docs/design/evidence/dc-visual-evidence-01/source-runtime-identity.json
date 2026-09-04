@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-04T20:03:57+09:00",
+  "production": {
+    "healthUrls": [
+      "https://decod.ing/healthz",
+      "https://www.decod.ing/healthz",
+      "https://decoding-v6.wjstks3474.workers.dev/healthz"
+    ],
+    "service": "decoding-v6",
+    "ok": true,
+    "runtimeRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+    "deploymentId": "0c719d00-5a9d-43f8-acf8-298b3fbcd438",
+    "versionId": "038d978f-512f-401d-82b1-ae10edfe53cf",
+    "trafficPercent": 100
+  },
+  "localGit": {
+    "branch": "main",
+    "headBeforeEvidenceCommit": "eba3d8513d46048f8eae3b74ecb06d1238ec245d"
+  },
+  "runtimeSourceComparison": {
+    "command": "git diff --name-only 20eeb704311c8ff5487615b1496cd3de7413e2ef..eba3d8513d46048f8eae3b74ecb06d1238ec245d",
+    "changedFiles": [
+      "docs/operations/local-delivery.json",
+      "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml"
+    ],
+    "verdict": "runtime_source_exact_with_later_delivery_metadata"
+  },
+  "captureIdentity": {
+    "kind": "deployed_capture",
+    "baseHead": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+    "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "receiptRef": "docs/design/evidence/dc-visual-evidence-01/capture-receipt.json"
+  },
+  "deployDecision": {
+    "verdict": "performed",
+    "reason": "The production CSS and result-audio localization changed after the prior runtime, so the exact clean runtime commit was deployed before evidence capture.",
+    "providerMutationPerformed": true,
+    "rollbackVersionId": "55d7379f-74ba-409c-88e6-72796d34fff7"
+  }
+}

@@ -1,0 +1,28 @@
+You are an independent design judge. You know nothing about who made these screens. Do NOT search the filesystem or web; use ONLY the images below (open each with your file/image reading tool; if images are attached to this message they are in the same order). Judge as a stranger who has never heard of any of these products.
+
+Images (all mobile first-viewport captures, iPhone 13, 390x844):
+- Screen A: /Users/minhan/Desktop/workspace/decoding-v6/docs/design/evidence/stranger-critique-2026-09-04/blind/screen-A.png
+- Screen B: /Users/minhan/Desktop/workspace/decoding-v6/docs/design/evidence/stranger-critique-2026-09-04/blind/screen-B.png
+- Screen C: /Users/minhan/Desktop/workspace/decoding-v6/docs/design/evidence/stranger-critique-2026-09-04/blind/screen-C.png
+- Screen D: /Users/minhan/Desktop/workspace/decoding-v6/docs/design/evidence/stranger-critique-2026-09-04/blind/screen-D.png
+
+
+Rubric (score each screen 1-5 per axis; 3 = acceptable professional baseline, 5 = best-in-class, 1 = clearly deficient). Axes: philosophy, hierarchy, execution, specificity, restraint, variety.
+- philosophy: a coherent point of view derived from the subject's own world (materials, objects, vernacular) rather than template defaults.
+- hierarchy: within 3 seconds you know what this is, the one thing to do now, and the one result you'll get. Exactly one primary action.
+- execution: craft — type, spacing, alignment, image sharpness, no overlaps/defects/placeholders/'loading' states, no broken layout, no mid-word Korean line breaks.
+- specificity: shows this product's real objects, data, or states (a real document, map, photo, character) instead of generic cards, stock feel, abstract copy.
+- restraint: nothing superfluous — no clutter, no duplicated disclaimers or status badges, no decoration without purpose, at most one trust/disclaimer sentence in the first viewport.
+- variety: visual richness appropriate to the subject — a real asset (photo, illustration, live data) is present; not a blank text page; not a cookie-cutter look.
+
+Known AI-default looks to be suspicious of (defaults, not choices): (1) warm cream background + high-contrast serif + terracotta/brown accent; (2) near-black background + one neon green/vermilion accent; (3) newspaper-style hairline rules + zero radius + uppercase micro-labels. An uppercase letter-spaced 'eyebrow' label → big headline → one paragraph → button → privacy line skeleton is also a template tell. A tiny geometric face made of circles inside a beige box is a placeholder, not an illustration.
+
+Tasks:
+1. For each screen write firstImpression: the ONE sentence (Korean) a stranger says within 3 seconds. If a screen is a cookie wall, blank, error page, permission prompt, open-in-app or welcome modal, say so in captureIssue and still score what is visible.
+2. Score every screen on the six axes.
+3. Rank all 4 screens (1 = best) on overall first-visit quality for a stranger. No ties.
+4. For each screen list 2-5 blockingFindings: concrete, repairable instructions with screen location + specific fix, ordered foundation → structure → function → cosmetic.
+5. Note in aiDefaultLook which of the three AI-default looks or the eyebrow skeleton a screen matches (null if none).
+
+Output ONLY valid JSON with Korean strings, exactly this shape:
+{"screens":{"A":{"firstImpression":"","captureIssue":null,"scores":{"philosophy":0,"hierarchy":0,"execution":0,"specificity":0,"restraint":0,"variety":0},"aiDefaultLook":null,"blockingFindings":[]},"B":{"firstImpression":"","captureIssue":null,"scores":{"philosophy":0,"hierarchy":0,"execution":0,"specificity":0,"restraint":0,"variety":0},"aiDefaultLook":null,"blockingFindings":[]},"C":{"firstImpression":"","captureIssue":null,"scores":{"philosophy":0,"hierarchy":0,"execution":0,"specificity":0,"restraint":0,"variety":0},"aiDefaultLook":null,"blockingFindings":[]},"D":{"firstImpression":"","captureIssue":null,"scores":{"philosophy":0,"hierarchy":0,"execution":0,"specificity":0,"restraint":0,"variety":0},"aiDefaultLook":null,"blockingFindings":[]}},"ranking":["X","X","X","X"],"rankingRationale":""}

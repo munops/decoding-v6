@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-04T20:03:57+09:00",
+  "inspectionMode": "original",
+  "reviewer": "codex:subagent:decoding-visual-evidence-20260904",
+  "assets": [
+    {
+      "sourceRef": "apps/web/public/icon.svg",
+      "inspectionRef": "apps/web/public/icon-512.png",
+      "inspectionSha256": "ea38d5814d01c6acda00eea3980ebb91ca7bb4c8aad63e95974a92c5d09ceb0f",
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "verdict": "pass",
+      "observations": [
+        "The cream lowercase d keeps an open, centered counter and remains distinct from the blue-black field.",
+        "The orange round-cap slash crosses cleanly without a cusp, halo, stray pixel, or accidental tangent.",
+        "The silhouette uses no generated texture, embedded raster, filter, or external dependency."
+      ]
+    },
+    {
+      "sourceRef": "apps/web/public/og.svg",
+      "inspectionRef": "apps/web/public/og.png",
+      "inspectionSha256": "c5fd6d67130213a66d29bc9e3639c046276be289c708f5027f7301f7974cb732",
+      "dimensions": {
+        "width": 1200,
+        "height": 630
+      },
+      "verdict": "pass",
+      "observations": [
+        "The 1200x630 export has one dominant two-line promise, a separate compact input-format-layer chain, and an aligned lower evidence rule.",
+        "All exact text is legible at original detail with no malformed glyphs, clipping, raster seam, or export artifact.",
+        "The deterministic raster keeps the hand-authored SVG grid, symbol geometry, blue-black, cream, orange, and mint hierarchy without inventing a new source asset."
+      ]
+    }
+  ],
+  "screens": [
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-01/home-first-320.png",
+      "verdict": "pass",
+      "observation": "The category, two-line outcome, mechanism, upload boundary, synthetic rail, and start of the real paste surface remain legible at the 320px floor; the next sample is intentionally peeking inside the horizontal rail, not clipped by the page."
+    },
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-01/home-first-390.png",
+      "verdict": "pass",
+      "observation": "The 390px reference view keeps the full promise and input entry sequence readable without generic illustration or decorative filler."
+    },
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-01/home-first-1440.png",
+      "verdict": "pass",
+      "observation": "The orange slash is now anchored immediately after the highlighted sentence instead of floating at the far edge, and the workbench remains the dominant object."
+    },
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-01/home-core-synthetic-390.png",
+      "verdict": "pass",
+      "observation": "The Base64 to JSON chain, confidence, evidence, selected result, local-audio boundary, and reduced-motion fallback are readable in one mobile result state."
+    },
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-01/home-unsupported-390.png",
+      "verdict": "pass",
+      "observation": "Unsupported input is not promoted to a guessed format; the no-format row, disabled audio control, and next-step context remain explicit."
+    },
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-01/home-worker-error-390.png",
+      "verdict": "pass",
+      "observation": "The material worker failure uses a restrained danger surface with Try again and Technical details, while preserving the input and global support links."
+    }
+  ],
+  "verdict": "pass"
+}

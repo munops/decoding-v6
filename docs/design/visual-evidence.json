@@ -1,0 +1,874 @@
+{
+  "schemaVersion": 4,
+  "projectId": "decoding-v6",
+  "status": "release_verified",
+  "statusScope": "Public Web only: the exact production Worker runtime, clean-profile first visit, core synthetic decode, unsupported input, and material worker error were rendered and reviewed. This does not claim desktop distribution, user value, monitoring, or profitability.",
+  "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+  "checkedAt": "2026-09-04T20:03:57+09:00",
+  "runtimeIdentityRef": "docs/design/evidence/dc-visual-evidence-01/source-runtime-identity.json",
+  "currentSourceIdentity": {
+    "kind": "deployed_capture",
+    "baseHead": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+    "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reviewedAt": "2026-09-04T20:03:57+09:00",
+    "renderCaptureIdentity": {
+      "baseHead": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+      "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "sourceFiles": [
+    {
+      "path": "apps/web/src/components/HomePage.astro",
+      "sha256": "f501c005ea5ccf8d02c6da9cc40c429f52a2bef41427d976df1edb8f5f57c147"
+    },
+    {
+      "path": "apps/web/src/layouts/Layout.astro",
+      "sha256": "4dbcf8ffa7895b6df39b9f27c6e02bf779c5d1174c9b5d938b7b970e7be1d2c5"
+    },
+    {
+      "path": "apps/web/src/styles/global.css",
+      "sha256": "2211be91350080204e7f111683609d7d50e24e416004e49d07efa7d0009e7173"
+    },
+    {
+      "path": "packages/workbench-ui/src/DecoderWorkbench.tsx",
+      "sha256": "1cc88b4c027d5acb842781de8a72862ad9a10d864ce3380ca53d8fbfaa35642d"
+    },
+    {
+      "path": "tests/e2e/visual-evidence.spec.ts",
+      "sha256": "f487eb04d4b872e737b7e513df30c2227fd0186cfe57453b83f6fdd351eba786"
+    }
+  ],
+  "briefRef": "docs/design/visual-brief.json",
+  "compiledPromptRef": "docs/design/compiled-visual-prompts.json",
+  "assets": [
+    {
+      "id": "symbol",
+      "role": "symbol",
+      "path": "apps/web/public/icon.svg",
+      "sha256": "f6cc9fb2c7e1f324d0fa6eb6dda9a54e9223fda175c90a43aedbd41e2ae29d57",
+      "source": "repo_native_vector",
+      "width": 64,
+      "height": 64,
+      "promptSha256": null,
+      "routeDecisionId": "brand-vector-family",
+      "derivative": null,
+      "provenance": {
+        "kind": "first_party_authored",
+        "creatorOrProvider": "MUNOPS first-party repo-native implementation",
+        "checkedAt": "2026-09-04T20:03:57+09:00",
+        "commercialUse": true
+      },
+      "contentReview": {
+        "reviewedAt": "2026-09-04T20:03:57+09:00",
+        "notTextOnly": true,
+        "compositionSpecific": true,
+        "artifactFree": true,
+        "smallSizeLegible": true,
+        "originalDetailInspectionRef": "docs/design/evidence/dc-visual-evidence-01/original-detail-review.json"
+      }
+    },
+    {
+      "id": "favicon",
+      "role": "favicon",
+      "path": "apps/web/public/favicon.svg",
+      "sha256": "f6cc9fb2c7e1f324d0fa6eb6dda9a54e9223fda175c90a43aedbd41e2ae29d57",
+      "source": "repo_native_vector",
+      "width": 64,
+      "height": 64,
+      "promptSha256": null,
+      "routeDecisionId": "brand-vector-family",
+      "derivative": null,
+      "provenance": {
+        "kind": "first_party_authored",
+        "creatorOrProvider": "MUNOPS first-party repo-native implementation",
+        "checkedAt": "2026-09-04T20:03:57+09:00",
+        "commercialUse": true
+      },
+      "contentReview": {
+        "reviewedAt": "2026-09-04T20:03:57+09:00",
+        "notTextOnly": true,
+        "compositionSpecific": true,
+        "artifactFree": true,
+        "smallSizeLegible": true,
+        "originalDetailInspectionRef": "docs/design/evidence/dc-visual-evidence-01/original-detail-review.json"
+      }
+    },
+    {
+      "id": "og",
+      "role": "og",
+      "path": "apps/web/public/og.png",
+      "sha256": "c5fd6d67130213a66d29bc9e3639c046276be289c708f5027f7301f7974cb732",
+      "source": "repo_native_vector_deterministic_raster_export",
+      "width": 1200,
+      "height": 630,
+      "promptSha256": null,
+      "routeDecisionId": "brand-vector-family",
+      "derivative": {
+        "sourceRef": "apps/web/public/og.svg",
+        "sourceMedium": "vector",
+        "method": "deterministic_raster_export",
+        "generatorRef": "docs/prd/13-pwa-presentation-assets.md",
+        "reproducible": true,
+        "sourceSha256": "b580118ef8e090570f22cecb42d0abc40be1cef67a0c4afd043e75d967e33796"
+      },
+      "provenance": {
+        "kind": "first_party_authored",
+        "creatorOrProvider": "MUNOPS first-party SVG and deterministic renderer",
+        "checkedAt": "2026-09-04T20:03:57+09:00",
+        "commercialUse": true
+      },
+      "contentReview": {
+        "reviewedAt": "2026-09-04T20:03:57+09:00",
+        "notTextOnly": true,
+        "compositionSpecific": true,
+        "artifactFree": true,
+        "smallSizeLegible": true,
+        "originalDetailInspectionRef": "docs/design/evidence/dc-visual-evidence-01/original-detail-review.json"
+      }
+    },
+    {
+      "id": "wordmark",
+      "role": "wordmark",
+      "path": "apps/web/src/layouts/Layout.astro",
+      "sha256": "4dbcf8ffa7895b6df39b9f27c6e02bf779c5d1174c9b5d938b7b970e7be1d2c5",
+      "source": "repo_native_code",
+      "width": null,
+      "height": null,
+      "promptSha256": null,
+      "routeDecisionId": "native-wordmark",
+      "derivative": null,
+      "provenance": {
+        "kind": "first_party_authored",
+        "creatorOrProvider": "MUNOPS first-party repo-native implementation",
+        "checkedAt": "2026-09-04T20:03:57+09:00",
+        "commercialUse": true
+      },
+      "contentReview": {
+        "reviewedAt": "2026-09-04T20:03:57+09:00",
+        "notTextOnly": false,
+        "compositionSpecific": true,
+        "artifactFree": true,
+        "smallSizeLegible": true
+      }
+    },
+    {
+      "id": "signature",
+      "role": "signature",
+      "path": "packages/workbench-ui/src/DecoderWorkbench.tsx",
+      "sha256": "1cc88b4c027d5acb842781de8a72862ad9a10d864ce3380ca53d8fbfaa35642d",
+      "source": "repo_native_code",
+      "width": null,
+      "height": null,
+      "promptSha256": null,
+      "routeDecisionId": "signature-native-workbench",
+      "derivative": null,
+      "provenance": {
+        "kind": "first_party_authored",
+        "creatorOrProvider": "MUNOPS first-party repo-native implementation",
+        "checkedAt": "2026-09-04T20:03:57+09:00",
+        "commercialUse": true
+      },
+      "contentReview": {
+        "reviewedAt": "2026-09-04T20:03:57+09:00",
+        "notTextOnly": true,
+        "compositionSpecific": true,
+        "artifactFree": true,
+        "smallSizeLegible": true
+      }
+    }
+  ],
+  "mediaRouteReview": {
+    "version": 1,
+    "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+    "decisions": [
+      {
+        "id": "brand-vector-family",
+        "route": "R2",
+        "ownerRef": "apps/web/public/icon.svg",
+        "renderedEvidenceRefs": [
+          "docs/design/evidence/dc-visual-evidence-01/home-first-390.png",
+          "docs/design/evidence/dc-visual-evidence-01/home-first-1440.png",
+          "docs/design/evidence/dc-visual-evidence-01/original-detail-review.json"
+        ],
+        "fallbackEvidenceRef": "apps/web/src/layouts/Layout.astro",
+        "verdict": "pass",
+        "rationale": "The d counter, round-cap slash, favicon silhouette, and deterministic SVG-to-PNG OG derivative remain exact at original detail and on the deployed route; HTML title and wordmark preserve identity if media is unavailable."
+      },
+      {
+        "id": "native-wordmark",
+        "route": "R0",
+        "ownerRef": "apps/web/src/layouts/Layout.astro",
+        "renderedEvidenceRefs": [
+          "docs/design/evidence/dc-visual-evidence-01/home-first-320.png",
+          "docs/design/evidence/dc-visual-evidence-01/home-first-1440.png"
+        ],
+        "fallbackEvidenceRef": "apps/web/src/layouts/Layout.astro",
+        "verdict": "pass",
+        "rationale": "Selectable HTML text is the clearest and most accessible official wordmark, adapts to zoom and theme, and needs no duplicate image asset."
+      },
+      {
+        "id": "signature-native-workbench",
+        "route": "R0",
+        "ownerRef": "packages/workbench-ui/src/DecoderWorkbench.tsx",
+        "renderedEvidenceRefs": [
+          "docs/design/evidence/dc-visual-evidence-01/home-first-390.png",
+          "docs/design/evidence/dc-visual-evidence-01/home-core-synthetic-390.png",
+          "docs/design/evidence/dc-visual-evidence-01/home-unsupported-390.png",
+          "docs/design/evidence/dc-visual-evidence-01/home-worker-error-390.png"
+        ],
+        "fallbackEvidenceRef": "tests/e2e/visual-evidence.spec.ts",
+        "verdict": "pass",
+        "rationale": "The real textarea, ranked evidence chain, result inspector, reduced-motion behavior, unsupported state, and recovery action carry the product job directly; decorative raster or 3D would not improve the decision."
+      }
+    ],
+    "verdict": "pass"
+  },
+  "screens": [
+    {
+      "route": "/",
+      "state": "first_visit_clean",
+      "materialState": "first_visit_clean",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "path": "docs/design/evidence/dc-visual-evidence-01/home-first-320.png",
+      "sha256": "1e987abb403439e0bad228844106fc35c66ea7f96dba4cd0e11dec0e913b1ede",
+      "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+      "captureSourceIdentity": {
+        "kind": "deployed_capture",
+        "baseHead": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+        "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "visualReview": {
+        "hierarchyClear": true,
+        "noClipping": true,
+        "brandDistinct": true,
+        "assetsFit": true,
+        "copyToneNatural": true,
+        "categoryExplicit": true,
+        "outcomeExplicit": true,
+        "mechanismVisible": true,
+        "primaryActionDominant": true,
+        "aboveFoldComplete": true,
+        "notTemplateClone": true
+      }
+    },
+    {
+      "route": "/",
+      "state": "first_visit_clean",
+      "materialState": "first_visit_clean",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "path": "docs/design/evidence/dc-visual-evidence-01/home-first-390.png",
+      "sha256": "16ae7758329d141547b7046e1b72813013c782722eb1fd52202e0f43c016c97e",
+      "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+      "captureSourceIdentity": {
+        "kind": "deployed_capture",
+        "baseHead": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+        "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "visualReview": {
+        "hierarchyClear": true,
+        "noClipping": true,
+        "brandDistinct": true,
+        "assetsFit": true,
+        "copyToneNatural": true,
+        "categoryExplicit": true,
+        "outcomeExplicit": true,
+        "mechanismVisible": true,
+        "primaryActionDominant": true,
+        "aboveFoldComplete": true,
+        "notTemplateClone": true
+      }
+    },
+    {
+      "route": "/",
+      "state": "first_visit_clean",
+      "materialState": "first_visit_clean",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "path": "docs/design/evidence/dc-visual-evidence-01/home-first-1440.png",
+      "sha256": "ef0af33011e6b4b94cfc11bb75c950f2f12ebbc6e2e82a52b094e490da13e907",
+      "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+      "captureSourceIdentity": {
+        "kind": "deployed_capture",
+        "baseHead": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+        "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "visualReview": {
+        "hierarchyClear": true,
+        "noClipping": true,
+        "brandDistinct": true,
+        "assetsFit": true,
+        "copyToneNatural": true,
+        "categoryExplicit": true,
+        "outcomeExplicit": true,
+        "mechanismVisible": true,
+        "primaryActionDominant": true,
+        "aboveFoldComplete": true,
+        "notTemplateClone": true
+      }
+    },
+    {
+      "route": "/",
+      "state": "core",
+      "materialState": "core",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "path": "docs/design/evidence/dc-visual-evidence-01/home-core-synthetic-390.png",
+      "sha256": "a871252bb7050b5d16f3926f8f8df3c95dfef66e0b9395661d7c33e4d50857c8",
+      "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+      "captureSourceIdentity": {
+        "kind": "deployed_capture",
+        "baseHead": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+        "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "visualReview": {
+        "hierarchyClear": true,
+        "noClipping": true,
+        "brandDistinct": true,
+        "assetsFit": true,
+        "copyToneNatural": true
+      }
+    },
+    {
+      "route": "/",
+      "state": "unsupported",
+      "materialState": "empty",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "path": "docs/design/evidence/dc-visual-evidence-01/home-unsupported-390.png",
+      "sha256": "6b893f0626c22a734ce61f496e680abf2d42eb78456d9e89df2972a02ad16eb4",
+      "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+      "captureSourceIdentity": {
+        "kind": "deployed_capture",
+        "baseHead": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+        "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "visualReview": {
+        "hierarchyClear": true,
+        "noClipping": true,
+        "brandDistinct": true,
+        "assetsFit": true,
+        "copyToneNatural": true
+      }
+    },
+    {
+      "route": "/",
+      "state": "error",
+      "materialState": "error",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "path": "docs/design/evidence/dc-visual-evidence-01/home-worker-error-390.png",
+      "sha256": "dde6f569c8ea68f60d8043377758a8edd306e0de21ec467fd3053bab70cdcc46",
+      "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+      "captureSourceIdentity": {
+        "kind": "deployed_capture",
+        "baseHead": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+        "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "visualReview": {
+        "hierarchyClear": true,
+        "noClipping": true,
+        "brandDistinct": true,
+        "assetsFit": true,
+        "copyToneNatural": true
+      }
+    }
+  ],
+  "firstVisit": {
+    "route": "/",
+    "cleanProfile": true,
+    "aboveFold": true,
+    "timeBudgetSeconds": 5,
+    "visibleCategory": "Local triage for unknown developer data",
+    "visibleProblem": "The visitor has an opaque developer value but does not yet know which format-specific tool to choose.",
+    "visibleOutcome": "Trace the value and keep the evidence for every plausible and nested format.",
+    "visibleMechanism": [
+      "Paste the unknown text or open a local file.",
+      "Compare ranked candidates and follow nested decode-chain stages.",
+      "Inspect evidence and warnings without uploading the input."
+    ],
+    "primaryAction": "Paste text or drop a file",
+    "primaryActionCount": 1,
+    "secondaryActions": [
+      "Try a safe synthetic case",
+      "Open file"
+    ],
+    "oneSentenceVerdict": "A local-only decoder that identifies unknown developer data and shows the evidence behind each nested step.",
+    "automatedTestRef": "tests/e2e/visual-evidence.spec.ts"
+  },
+  "assetReuseReview": {
+    "route": "/",
+    "automatedTestRef": "tests/e2e/visual-evidence.spec.ts",
+    "repeatedPrimaryAssetPaths": [],
+    "allowedRepeats": [
+      "The compact d/slash brand mark may repeat in the global header and footer because it is navigation identity, not duplicated hero art."
+    ]
+  },
+  "portfolioPatternReview": {
+    "comparedProducts": [
+      "goodscheck /start first_visit_clean",
+      "hwakdap question workbench",
+      "languagemate practice entry"
+    ],
+    "repeatedFormula": "Several portfolio utilities place a large result-oriented heading and a local-processing proof close to the first input.",
+    "structuralDifference": "decod.ing starts with a free-form dark paste surface, then expands a scored recursive decode ledger and adjacent inspector; it does not use a fixed questionnaire, upload card gallery, or generic CTA-card grid.",
+    "verdict": "pass"
+  },
+  "structureReview": {
+    "fingerprintMatchesBrief": true,
+    "nearestPortfolioSurface": "goodscheck /start first_visit_clean — 사용자 입력과 local-only 경계를 첫 화면에 두는 점은 가깝지만 결과 구조와 저장 모델이 다르다.",
+    "overlapAxes": [
+      "큰 결과 중심 제목",
+      "입력 가까이에 둔 local-only proof"
+    ],
+    "repeatDecision": "distinct",
+    "repeatRationale": "The overlap lowers explanation cost, while the dark free-input surface, scored candidates, nested orange-edge chain, and inspector form a product-specific Reveal Ledger that the compared routes do not have.",
+    "writerIdentity": "codex:decoding-visual-writer-20260904",
+    "verifierIdentity": "codex:decoding-original-detail-reanchored-20260904",
+    "verificationMode": "separate_reanchored_pass",
+    "critique": {
+      "philosophy": 5,
+      "hierarchy": 4,
+      "execution": 4,
+      "specificity": 5,
+      "restraint": 5,
+      "variety": 4,
+      "lowestScoreRationale": "At narrow widths the synthetic rail deliberately peeks the next case and the sticky header remains dense, but neither obstructs the primary input, core result, or recovery state.",
+      "verdict": "pass"
+    }
+  },
+  "strangerCritique": {
+    "version": 1,
+    "checkedAt": "2026-09-04T20:08:38+09:00",
+    "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+    "grader": {
+      "holder": "claude:stranger-critique-2026-09-04-2d33d6-1",
+      "contextIsolation": "screens_only",
+      "host": "claude+grok",
+      "sameHostAsWriter": false,
+      "command": "grok --cwd /Users/minhan/Desktop/workspace/decoding-v6 --output-format json --permission-mode default --disallowed-tools search_replace,write --json-schema -p"
+    },
+    "method": "blind: our first-visit screen and external same-moment benchmarks captured at the same device viewport, shuffled into A~D labels; the judge received screens and rubric only (no product docs, brief, or prior verdicts). Runner: scripts/run-stranger-critique.mjs; protocol: craft-exemplars.md §7",
+    "viewport": "390x844",
+    "screenshotRef": "docs/design/evidence/stranger-critique-2026-09-04/ours-390x844.png",
+    "blindLabel": "C",
+    "benchmarks": [
+      {
+        "name": "CyberChef",
+        "url": "https://gchq.github.io/CyberChef/",
+        "source": "brief.sameMomentScreens",
+        "checkedAt": "2026-09-04T20:08:38+09:00",
+        "viewport": "390x844 (iPhone 13)",
+        "screenshotRef": "docs/design/evidence/stranger-critique-2026-09-04/benchmark-gchq.github.io-CyberChef-390x844.png",
+        "captureNotes": [],
+        "blindLabel": "A",
+        "captureIssue": "쿠키월/에러는 아니지만 Input·Output 패널이 모두 빈 상태고 데스크톱 3열 레이아웃이 모바일 뷰포트에 그대로 렌더돼 화면 절반 이상이 빈 흰 영역이다.",
+        "judgeRank": 4,
+        "firstImpression": "설명 한 줄 없이 데스크톱 화면을 그대로 욱여넣은 느낌이라, 목록만 잔뜩 보이고 뭘 하는 도구인지 감이 안 온다.",
+        "scores": {
+          "philosophy": 3,
+          "hierarchy": 1,
+          "execution": 2,
+          "specificity": 3,
+          "restraint": 2,
+          "variety": 2
+        }
+      },
+      {
+        "name": "Base64 Guru Text Decoder",
+        "url": "https://base64.guru/converter/decode/text",
+        "source": "brief.sameMomentScreens",
+        "checkedAt": "2026-09-04T20:08:38+09:00",
+        "viewport": "390x844 (iPhone 13)",
+        "screenshotRef": "docs/design/evidence/stranger-critique-2026-09-04/benchmark-base64.guru-converter-390x844.png",
+        "captureNotes": [],
+        "blindLabel": "B",
+        "captureIssue": null,
+        "judgeRank": 3,
+        "firstImpression": "Base64를 글자로 바꿔주는 옛날 무료 사이트 같은데, 글씨가 너무 커서 붙여넣기 전에 설명부터 읽어야 한다.",
+        "scores": {
+          "philosophy": 3,
+          "hierarchy": 3,
+          "execution": 2,
+          "specificity": 3,
+          "restraint": 3,
+          "variety": 3
+        }
+      },
+      {
+        "name": "JWT.io Debugger",
+        "url": "https://www.jwt.io/",
+        "source": "brief.sameMomentScreens",
+        "checkedAt": "2026-09-04T20:08:38+09:00",
+        "viewport": "390x844 (iPhone 13)",
+        "screenshotRef": "docs/design/evidence/stranger-critique-2026-09-04/benchmark-jwt.io-390x844.png",
+        "captureNotes": [
+          "removed overlays: div (100%)"
+        ],
+        "blindLabel": "D",
+        "captureIssue": null,
+        "judgeRank": 4,
+        "firstImpression": "JWT를 디코드·검증하는 도구라는 건 바로 알겠는데, 맨 위가 광고 배너와 큰 빈 공간이라 정작 입력칸이 늦게 보인다.",
+        "scores": {
+          "philosophy": 3,
+          "hierarchy": 3,
+          "execution": 3,
+          "specificity": 3,
+          "restraint": 3,
+          "variety": 3
+        }
+      }
+    ],
+    "rank": 3,
+    "rankCeiling": 4,
+    "firstImpression": "정체불명 문자열을 로컬에서 판별해준다는 개발자 도구 같은데, 정작 붙여넣을 칸은 화면 맨 아래에 잘려 있다.",
+    "firstImpressions": [
+      "정체불명 문자열을 로컬에서 판별해준다는 개발자 도구 같은데, 정작 붙여넣을 칸은 화면 맨 아래에 잘려 있다.",
+      "이미지를 열어 화면을 먼저 본다."
+    ],
+    "scores": {
+      "philosophy": 3,
+      "hierarchy": 2,
+      "execution": 3,
+      "specificity": 3,
+      "restraint": 2,
+      "variety": 2
+    },
+    "aiDefaultLook": "대문자 자간 아이브로우 → 큰 헤드라인 → 한 문단 → 신뢰 문구로 이어지는 템플릿 스켈레톤에 정확히 들어맞고, 크림 배경 + 고대비 검정 + 버밀리언 강조라는 AI 기본 팔레트(1·2번 혼합)도 함께 쓴다.",
+    "blockingFindings": [
+      "기반: 'LOCAL TRIAGE FOR UNKNOWN DEVELOPER DATA' 아이브로우 → 헤드라인 → 문단 → 프라이버시 한 줄 구조가 템플릿 그 자체다 — 히어로에 제품 고유 소재(실제 디코딩 체인 레이어, 바이트 수, 후보 포맷 순위 같은 실물 화면)를 넣어 골격을 바꾼다.",
+      "구조: 유일한 주 액션인 붙여넣기 패널이 첫 화면 하단에서 잘린다 — 예제 카드와 피드백 버튼보다 입력 패널을 위로 올려 헤드라인 바로 아래에 배치한다.",
+      "구조: 신뢰 문구가 중복이다 — '0 input bytes uploaded' 배지와 'Input stays on this device. No account, upload, or AI.' 중 하나만 남기고(입력 전에는 0바이트 배지 제거) 첫 화면 disclaimer를 한 문장으로 줄인다.",
+      "기능: 'TRY A SAFE SYNTHETIC CASE'의 02번 카드가 우측에서 잘려 스크롤 가능 여부를 알 수 없다 — 2열 그리드로 두 카드를 모두 보이게 하거나 페이드+화살표로 가로 스크롤을 명시한다.",
+      "미관: 입력 패널의 굵은 주황·빨강 테두리가 에러 상태처럼 읽힌다 — 기본은 중립 보더로 두고 포커스에서만 강조 링을 쓰며, 'Copy feedback' 버튼은 첫 화면에서 내린다."
+    ],
+    "verdict": "fail",
+    "lowestScore": 2,
+    "judges": [
+      {
+        "host": "claude",
+        "holder": "claude:stranger-critique-2026-09-04-2d33d6-1",
+        "sameHostAsWriter": false,
+        "rank": 2,
+        "scores": {
+          "philosophy": 3,
+          "hierarchy": 2,
+          "execution": 3,
+          "specificity": 3,
+          "restraint": 2,
+          "variety": 2
+        },
+        "firstImpression": "정체불명 문자열을 로컬에서 판별해준다는 개발자 도구 같은데, 정작 붙여넣을 칸은 화면 맨 아래에 잘려 있다.",
+        "ms": 166830
+      },
+      {
+        "host": "grok",
+        "holder": "grok:stranger-critique-2026-09-04-2d33d6-2",
+        "sameHostAsWriter": false,
+        "rank": 3,
+        "scores": {
+          "philosophy": 3,
+          "hierarchy": 3,
+          "execution": 3,
+          "specificity": 3,
+          "restraint": 3,
+          "variety": 3
+        },
+        "firstImpression": "이미지를 열어 화면을 먼저 본다.",
+        "ms": 270294
+      }
+    ],
+    "aggregation": "worst_rank_min_scores_union_findings",
+    "rankingRationale": "[judge 1] D는 3초 안에 '무엇을 하는 도구인지'가 확실하고 실제 JWT 토큰이 색상 구분된 상태로 채워져 있어 낯선 사람에게 제품의 실물이 바로 보인다. 상단 프로모 배너 결합과 빈 공백, 레이블 정렬이 흠이지만 구조 자체는 살아 있다. C는 반응형과 타이포 완성도는 가장 현대적이나, 아이브로우 스켈레톤+크림·버밀리언이라는 템플릿 인상이 강하고 신뢰 문구가 중복되며 유일한 주 액션인 입력창이 첫 화면 아래에서 잘려 우선순위가 무너졌다. B는 제목과 버튼이 하나뿐이라 할 일은 명확하지만 태그라인 가로 잘림, 텍스처 띠 절단, 과대한 타입 스케일 같은 크래프트 결함이 커서 신뢰가 깎인다. A는 데스크톱 3열을 모바일에 그대로 렌더해 제품명·설명·주 액션이 모두 사라졌고 입력·출력이 빈 채로 화면 절반을 차지해 첫 방문 품질이 가장 낮다.\n[judge 2] 이미지를 읽은 뒤 판정한다.",
+    "benchmarkQualityNote": "One or more benchmarks still showed a modal or interstitial after automatic dismissal; a rank won against a blocked benchmark is not a win. Re-run with cleaner benchmark URLs before relying on the rank.",
+    "wantedFeedback": "첫 화면의 위계, 첫 행동의 명확성, 실물 asset 존재, 면책·상태 어휘 과잉",
+    "notWantedFeedback": "브랜드 색 자체의 취향, 벤치마크 브랜드 복제 제안"
+  },
+  "tasteReview": {
+    "version": 1,
+    "designReadMatches": true,
+    "verifierIdentity": "codex:decoding-original-detail-reanchored-20260904",
+    "dials": {
+      "compositionVariance": {
+        "verdict": "pass",
+        "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/home-first-1440.png",
+        "rationale": "The compressed editorial hero gives way to one large continuous workbench instead of repeating equal marketing cards."
+      },
+      "motionIntensity": {
+        "verdict": "pass",
+        "evidenceRef": "tests/e2e/visual-evidence.spec.ts",
+        "rationale": "Hover and entry motion are restrained, transition properties are explicit, and reduced motion removes animation while preserving the full result."
+      },
+      "informationDensity": {
+        "verdict": "pass",
+        "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/home-core-synthetic-390.png",
+        "rationale": "Evidence density appears only after input, with chain stage, confidence, reasons, and inspector grouped by the actual decision."
+      }
+    },
+    "tradeoffs": [],
+    "verdict": "pass"
+  },
+  "antiSlopReview": {
+    "checkedAt": "2026-09-04T20:03:57+09:00",
+    "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+    "automatedTestRef": "tests/e2e/visual-evidence.spec.ts",
+    "signalScan": {
+      "reportRef": "docs/design/evidence/dc-visual-evidence-01/anti-slop-signals.json",
+      "reportSha256": "334090e19a217e87c9718ed893852d0fa946b9b3af812ae4bc22f6969eb11ffa",
+      "triage": [
+        {
+          "fingerprint": "6248e81d8e4afa0abc8f8483e33d17ea661d97621e0d99c9029e4a46f11791ef",
+          "verdict": "intentional_choice",
+          "rationale": "Detector labels distinguish evidence, safe examples, and official references around an actual format-specific result; they are task landmarks rather than marketing kickers.",
+          "evidenceRef": "apps/web/src/components/DetectorPage.astro"
+        },
+        {
+          "fingerprint": "290f89d045a8800d61fc0fbe4f5b60257fb261b4e1daf60d94c00f12a1f9a620",
+          "verdict": "false_positive",
+          "rationale": "The scanner counts the one interpolated home eyebrow expression three times; the deployed first visit renders one category label above one outcome heading.",
+          "evidenceRef": "apps/web/src/components/HomePage.astro"
+        },
+        {
+          "fingerprint": "3ccfd109dfa4ec971debced865e5164c05a4cd998ab43b480326797ff70ba068",
+          "verdict": "intentional_choice",
+          "rationale": "Tool pages use short labels to separate the specific local operation, how-to steps, and safety boundary; the actual headings and actions remain different.",
+          "evidenceRef": "apps/web/src/components/ToolPage.astro"
+        },
+        {
+          "fingerprint": "32501eee3ae630333f76bcc1a1950f4e95eb5dd511a2b5cf82003c51c2704df5",
+          "verdict": "intentional_choice",
+          "rationale": "The catalog repeats a typed eyebrow field across eight locale records so the same semantic landmark is translated, not to stamp the same English marketing formula across sections.",
+          "evidenceRef": "apps/web/src/i18n/catalog.ts"
+        },
+        {
+          "fingerprint": "b9d63f9bdcc58eeff390db228c06ce142a05ef5c1a3d7ba3648b2cee8d2c6de4",
+          "verdict": "intentional_choice",
+          "rationale": "Information pages use translated section landmarks for methodology, privacy, and about content whose headings and factual bodies differ.",
+          "evidenceRef": "apps/web/src/i18n/info.ts"
+        },
+        {
+          "fingerprint": "070f300dcc39a2282fb5ccf277c19bd1a15e9e448ac52697abe8f7d3cf2fedeb",
+          "verdict": "intentional_choice",
+          "rationale": "Trust copy labels the legal and safety facts adjacent to their content and does not introduce decorative feature-card repetition.",
+          "evidenceRef": "apps/web/src/i18n/trust.ts"
+        },
+        {
+          "fingerprint": "05312f60b583ae62c45b46a480ee8fc288637845676fbf774be0bd850b2c6805",
+          "verdict": "intentional_choice",
+          "rationale": "Workspace labels mark saved local-record sections and controls; the underlying rows are user-owned records rather than fabricated showcase cards.",
+          "evidenceRef": "apps/web/src/islands/WorkspaceManager.tsx"
+        },
+        {
+          "fingerprint": "ed177d43f55a8801680373e9da2b3e805e6f2f94bfad94693a6c3331af24d086",
+          "verdict": "false_positive",
+          "rationale": "The stylesheet signal counts selector occurrences for the one shared semantic eyebrow primitive, including locale overrides; it does not prove repeated rendered marketing content.",
+          "evidenceRef": "apps/web/src/styles/global.css"
+        },
+        {
+          "fingerprint": "ef9d47750f45cf8525acfcc05ba3618777b5c757f218b2806428bd54874bbdad",
+          "verdict": "intentional_choice",
+          "rationale": "Workbench labels identify the decode chain, selected inspector, and synthetic launcher around different live states, making the evidence hierarchy scannable.",
+          "evidenceRef": "packages/workbench-ui/src/DecoderWorkbench.tsx"
+        }
+      ]
+    },
+    "checks": [
+      {
+        "id": "horizontal-overflow",
+        "verdict": "pass",
+        "evidenceRef": "tests/e2e/visual-evidence.spec.ts",
+        "rationale": "Clean contexts at 320, 390, 1440, and 1920 measure document scroll width against client width; the separate 200 percent geometry suite also passes."
+      },
+      {
+        "id": "clickable-wrap",
+        "verdict": "pass",
+        "evidenceRef": "tests/e2e/visual-evidence.spec.ts",
+        "rationale": "Rendered nav, input actions, and footer links merge overlapping icon and badge runs before rejecting any true multi-line clickable label."
+      },
+      {
+        "id": "focus-visible",
+        "verdict": "pass",
+        "evidenceRef": "tests/e2e/visual-evidence.spec.ts",
+        "rationale": "The nested synthetic case receives a visible solid focus outline of at least 3px in the deployed browser."
+      },
+      {
+        "id": "transition-scope",
+        "verdict": "pass",
+        "evidenceRef": "tests/e2e/visual-evidence.spec.ts",
+        "rationale": "The signature sample interaction declares specific changing properties and the browser confirms transition-property does not contain all."
+      },
+      {
+        "id": "reduced-motion",
+        "verdict": "pass",
+        "evidenceRef": "tests/e2e/visual-evidence.spec.ts",
+        "rationale": "A reduced-motion context retains the decode result, stops result audio, and measures zero transition duration and no animation."
+      },
+      {
+        "id": "intrinsic-grid",
+        "verdict": "pass",
+        "evidenceRef": "tests/e2e/responsive.spec.ts",
+        "rationale": "The workbench switches from a wide chain-inspector grid to one sequential narrow column without long content pushing the page canvas."
+      },
+      {
+        "id": "icon-consistency",
+        "verdict": "pass",
+        "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/original-detail-review.json",
+        "rationale": "The header, favicon, install raster, and OG card derive from the same d/slash geometry and semantic palette; no emoji substitutes the brand symbol."
+      },
+      {
+        "id": "fabricated-proof",
+        "verdict": "pass",
+        "evidenceRef": "tests/e2e/visual-evidence.spec.ts",
+        "rationale": "The 0 input bytes uploaded statement is paired with canary egress and storage checks; format confidence is generated by the deterministic engine rather than testimonials or fake logos."
+      },
+      {
+        "id": "fake-chrome",
+        "verdict": "not_applicable",
+        "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/home-first-390.png",
+        "rationale": "The screenshot is the real production route and the product does not draw decorative browser, phone, terminal, or IDE chrome."
+      },
+      {
+        "id": "structural-repetition",
+        "verdict": "pass",
+        "evidenceRef": "docs/design/visual-brief.json",
+        "rationale": "The brief compares the nearest portfolio surface and preserves only explanatory conventions; the recursive Reveal Ledger workbench is structurally distinct."
+      }
+    ]
+  },
+  "componentStateReview": {
+    "automatedTestRef": "tests/e2e/visual-evidence.spec.ts",
+    "components": [
+      {
+        "id": "decoder-workbench",
+        "ownerPath": "packages/workbench-ui/src/DecoderWorkbench.tsx",
+        "states": [
+          {
+            "state": "default",
+            "verdict": "pass",
+            "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/home-first-390.png",
+            "rationale": "The clean surface exposes one dark labeled textarea, file fallback, local boundary, and safe synthetic cases without a format-picker prerequisite."
+          },
+          {
+            "state": "hover",
+            "verdict": "pass",
+            "evidenceRef": "tests/e2e/visual-evidence.spec.ts",
+            "rationale": "A synthetic case changes border color and receives a small transform without moving surrounding layout."
+          },
+          {
+            "state": "focus-visible",
+            "verdict": "pass",
+            "evidenceRef": "tests/e2e/visual-evidence.spec.ts",
+            "rationale": "Keyboard focus on the synthetic case has a solid outline at least 3px wide."
+          },
+          {
+            "state": "active",
+            "verdict": "pass",
+            "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/home-core-synthetic-390.png",
+            "rationale": "Selecting the nested case produces a two-step Base64 to JSON tree with evidence and the selected inspector, all on device."
+          },
+          {
+            "state": "disabled",
+            "verdict": "pass",
+            "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/home-unsupported-390.png",
+            "rationale": "Unavailable result audio remains visibly disabled and Clear is disabled before any input, preventing false action affordance."
+          },
+          {
+            "state": "loading",
+            "verdict": "pass",
+            "evidenceRef": "tests/e2e/visual-evidence.spec.ts",
+            "rationale": "A delayed worker renders Checking formats locally while reduced motion prevents nonessential animation."
+          },
+          {
+            "state": "error",
+            "verdict": "pass",
+            "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/home-worker-error-390.png",
+            "rationale": "A blocked worker produces a material danger message with Try again and Technical details instead of a silent empty result."
+          },
+          {
+            "state": "success",
+            "verdict": "pass",
+            "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/home-core-synthetic-390.png",
+            "rationale": "The successful synthetic decode exposes both chain stages, confidence, evidence, inspector, and local result-audio boundary."
+          }
+        ]
+      }
+    ]
+  },
+  "copyReview": {
+    "locale": "ko-KR",
+    "voiceRef": "docs/design/visual-brief.json",
+    "toneConsistent": true,
+    "languageLayersSeparated": true,
+    "sourceToUserTermsReviewed": true,
+    "generatedSurfacesReviewed": [
+      "error",
+      "share",
+      "export",
+      "legal-summary"
+    ],
+    "layoutReadability": {
+      "widthsPx": [
+        320,
+        390,
+        1440
+      ],
+      "characterStacking": false,
+      "midWordBreaks": false,
+      "criticalVerticalText": false,
+      "evidenceRef": "tests/e2e/responsive.spec.ts"
+    },
+    "awkwardPhrases": [],
+    "surfaces": [
+      {
+        "surface": "landing",
+        "ownerPath": "apps/web/src/i18n/catalog.ts",
+        "sample": "값의 정체와 근거를 확인하세요."
+      },
+      {
+        "surface": "onboarding",
+        "ownerPath": "apps/web/src/i18n/catalog.ts",
+        "sample": "안전한 예시로 먼저 확인해 보세요"
+      },
+      {
+        "surface": "core",
+        "ownerPath": "packages/workbench-ui/src/messages.ts",
+        "sample": "이 기기에서 확인한 결과"
+      },
+      {
+        "surface": "empty",
+        "ownerPath": "packages/workbench-ui/src/messages.ts",
+        "sample": "아직 이 형식을 식별하지 못했습니다."
+      },
+      {
+        "surface": "error",
+        "ownerPath": "packages/workbench-ui/src/messages.ts",
+        "sample": "입력을 디코딩하지 못했습니다. 다시 시도"
+      },
+      {
+        "surface": "support",
+        "ownerPath": "apps/web/src/i18n/info.ts",
+        "sample": "문의할 때 로그인 정보, 비밀 키나 고객 원문을 보내지 마세요."
+      }
+    ]
+  },
+  "comparison": {
+    "categoryConventionCovered": true,
+    "originalityDistinct": true,
+    "renderedAgainstBenchmarks": true,
+    "regressions": []
+  },
+  "remainingGaps": []
+}
