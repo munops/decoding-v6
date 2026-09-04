@@ -379,7 +379,7 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
           autocapitalize="off"
         />
         <div class="input-actions">
-          <label class="button secondary">
+          <label class="button ghost file-action">
             {messages.openFile}
             <input
               class="visually-hidden"

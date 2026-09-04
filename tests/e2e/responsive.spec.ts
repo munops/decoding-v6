@@ -48,6 +48,62 @@ test('desktop first viewport exposes the real paste surface', async ({ page }, t
   expect((bounds?.y ?? 0) + 80).toBeLessThan(viewport?.height ?? 0)
 })
 
+test('mobile first action stays above the fold without a competing filled control', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/')
+  await expect(page.getByLabel('Paste text or drop a file')).toBeVisible()
+  const metrics = await page.evaluate(() => {
+    const channels = (value: string) =>
+      [...value.matchAll(/[\d.]+/g)].slice(0, 3).map((match) => Number(match[0]) / 255)
+    const luminance = (value: string) => {
+      const [red = 0, green = 0, blue = 0] = channels(value).map((channel) =>
+        channel <= 0.03928 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4,
+      )
+      return 0.2126 * red + 0.7152 * green + 0.0722 * blue
+    }
+    const contrast = (foreground: string, background: string) => {
+      const light = Math.max(luminance(foreground), luminance(background))
+      const dark = Math.min(luminance(foreground), luminance(background))
+      return (light + 0.05) / (dark + 0.05)
+    }
+    const pasteSurface = document.querySelector<HTMLElement>('.paste-surface')
+    const fileAction = document.querySelector<HTMLElement>('.input-actions .file-action')
+    const clear = document.querySelector<HTMLButtonElement>('.input-actions button:disabled')
+    const sampleLabel = document.querySelector<HTMLElement>('.triage-launchpad > .eyebrow')
+    const samples = [...document.querySelectorAll<HTMLElement>('.triage-sample')].map((sample) => {
+      const bounds = sample.getBoundingClientRect()
+      return { top: bounds.top, width: bounds.width }
+    })
+    const clearStyle = clear ? getComputedStyle(clear) : null
+    const surfaceStyle = pasteSurface ? getComputedStyle(pasteSurface) : null
+    return {
+      pasteTop: pasteSurface?.getBoundingClientRect().top ?? Number.POSITIVE_INFINITY,
+      heroRepeatsDeviceClaim: document
+        .querySelector('.hero-copy > p')
+        ?.textContent?.toLowerCase()
+        .includes('on this device'),
+      fileBackground: fileAction ? getComputedStyle(fileAction).backgroundColor : '',
+      clearOpacity: clearStyle?.opacity,
+      clearContrast:
+        clearStyle && surfaceStyle ? contrast(clearStyle.color, surfaceStyle.backgroundColor) : 0,
+      sampleLabelTransform: sampleLabel ? getComputedStyle(sampleLabel).textTransform : '',
+      samples,
+    }
+  })
+  expect(metrics.pasteTop).toBeLessThanOrEqual(300)
+  expect(metrics.heroRepeatsDeviceClaim).toBe(false)
+  expect(metrics.fileBackground).toBe('rgba(0, 0, 0, 0)')
+  expect(metrics.clearOpacity).toBe('1')
+  expect(metrics.clearContrast).toBeGreaterThanOrEqual(4.5)
+  expect(metrics.sampleLabelTransform).toBe('none')
+  expect(new Set(metrics.samples.map((sample) => Math.round(sample.top))).size).toBe(1)
+  expect(Math.max(...metrics.samples.map((sample) => sample.width))).toBeLessThanOrEqual(
+    Math.min(...metrics.samples.map((sample) => sample.width)) + 1,
+  )
+})
+
 test('a 200 percent desktop-equivalent viewport keeps core routes within the canvas', async ({
   page,
 }) => {

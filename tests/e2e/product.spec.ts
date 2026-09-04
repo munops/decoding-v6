@@ -25,7 +25,7 @@ test('auto-detects a nested Base64 JSON payload locally', async ({ page }) => {
 
 test('lets a visitor experience three evidence-first synthetic triage cases', async ({ page }) => {
   await page.goto('/')
-  const launchpad = page.getByRole('group', { name: 'Try a safe synthetic case' })
+  const launchpad = page.getByRole('group', { name: 'See the evidence with a known input' })
   await expect(launchpad.getByRole('button')).toHaveCount(3)
   await expect(page.locator('.hero-proof')).toHaveCount(0)
   await expect(page.locator('meta[name="description"]')).toHaveAttribute(
@@ -194,7 +194,7 @@ test('keeps the Korean journey in user-facing language from discovery through re
   await expect(page.getByText('한국어 번역 검토 중')).toHaveCount(0)
   await expect(page.getByRole('heading', { name: '값의 정체와 근거를 확인하세요.' })).toBeVisible()
   await expect(page.locator('.hero h1 br')).toHaveCount(0)
-  await expect(page.getByRole('group', { name: '안전한 예시로 먼저 확인해 보세요' })).toContainText(
+  await expect(page.getByRole('group', { name: '알려진 입력으로 판정 근거 보기' })).toContainText(
     '16진수와 Base64 후보 비교',
   )
 
