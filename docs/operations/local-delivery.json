@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "bf9537ad3fdd57835114e71a130bbbdaf58cdadb",
+  "declarationScope": "This migration records the source/config and historical 2026-09-01 provider receipt used to introduce local delivery. It authorizes no deployment from this checkout: each future exact owner-lane wave must replace the source SHA, artifact hash, provider read-back and receipt after a clean local gate.",
+  "infrastructure": {
+    "inventoryRef": "docs/operations/product-operations-manifest.json",
+    "runtimeResources": [
+      {
+        "provider": "Cloudflare",
+        "service": "Workers with Static Assets",
+        "resourceRef": "account:69abd904cab5ffd103e569e7e050a884; worker:decoding-v6; assets:apps/web/dist; routes:decod.ing/*,www.decod.ing/*; historical version:f8f2b4a8-bb52-4e9e-8613-ffd86e8e5094 (2026-09-01 receipt)",
+        "environment": "owner_lane_public_web_production",
+        "destination": "https://decod.ing, https://www.decod.ing and technical fallback https://decoding-v6.wjstks3474.workers.dev",
+        "mutationBoundary": "Only an exact current owner-lane Web wave may deploy the existing Worker. Domain/DNS/routes, new Worker/binding/secret/resource/cost, indexing, sponsor activation, desktop release and public channel changes are excluded."
+      },
+      {
+        "provider": "Cloudflare",
+        "service": "Workers staging static asset surface",
+        "resourceRef": "worker:decoding-v6-staging; config env:staging; routes:[]; historical staging destination only",
+        "environment": "owner_lane_web_staging",
+        "destination": "https://decoding-v6-staging.wjstks3474.workers.dev",
+        "mutationBoundary": "A staging upload is still a provider mutation and requires its own exact wave, source SHA, read-back and receipt. It cannot change production routes, traffic, domain or public release state."
+      },
+      {
+        "provider": "Cloudflare",
+        "service": "Analytics Engine aggregate counter",
+        "resourceRef": "binding:EVENTS; dataset:decoding_v6_events; allowlist:app_open,landing_view; routes:/e and /e/events only",
+        "environment": "owner_lane_web_observability",
+        "destination": "same-origin aggregate event boundary",
+        "mutationBoundary": "A Web code delivery preserves the existing binding and two-name allowlist. Event schema, retention, sampling, queries, analytics resource or cost changes require a separate observability wave."
+      },
+      {
+        "provider": "Cloudflare",
+        "service": "future Tauri updater static endpoint",
+        "resourceRef": "configured endpoint:https://decod.ing/releases/{{target}}/{{arch}}/{{current_version}}.json; no signed manifest or distributed desktop artifact is currently verified",
+        "environment": "desktop_channel_not_distributed",
+        "destination": "future explicit updater check after signed/notarized desktop channel approval",
+        "mutationBoundary": "Web Worker delivery never publishes desktop artifacts, updater manifests or signatures. Developer ID signing, notarization, artifact hosting, device smoke and distribution are a distinct desktop wave."
+      }
+    ],
+    "externalApis": []
+  },
+  "release": {
+    "waveRef": "docs/operations/release-wave-local-required.md",
+    "approvalBoundary": "This declaration grants no provider mutation. Existing Worker version traffic movement or rollback requires an exact current owner-lane wave, active repository/provider claim, fresh provider read-back and real-origin smoke. DNS/domain/routes, Analytics schema, sponsor/advertising, account/payment/AI, package or store publication, desktop signing/notarization and external support delivery remain separate actions."
+  },
+  "commands": {
+    "preflight": "test -z \"$(git status --porcelain=v1 --untracked-files=all)\" && git diff --check && pnpm install --frozen-lockfile && pnpm verify && pnpm test:e2e && pnpm test:privacy && pnpm test:a11y && pnpm exec wrangler deploy --dry-run --config wrangler.toml --strict --keep-vars --var \"BUILD_SHA:$(git rev-parse HEAD)\"",
+    "deploy": "test -n \"$DECODING_RELEASE_WAVE\" && test -n \"$DECODING_DELIVERY_TARGET\" && pnpm delivery:web:deploy -- --execute",
+    "verify": "test -n \"$DECODING_RELEASE_WAVE\" && test -n \"$DECODING_DELIVERY_TARGET\" && DECODING_EXPECTED_BUILD_SHA=$(git rev-parse HEAD) pnpm delivery:web:verify"
+  },
+  "receipts": {
+    "directory": "docs/evidence/releases/local-owner-wave"
+  },
+  "rollback": {
+    "command": "test -n \"$DECODING_RELEASE_WAVE\" && test -n \"$DECODING_DELIVERY_TARGET\" && test -n \"$DECODING_ROLLBACK_VERSION\" && pnpm delivery:web:rollback -- --execute",
+    "runbookRef": "docs/operations/local-delivery-runbook.md"
+  }
+}

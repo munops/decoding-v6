@@ -49,7 +49,7 @@ The user explicitly requested implementation of the complete 47-tool, desktop, a
 ## Verified
 
 - `pnpm verify`: format, lint, strict types, unit/fixture/CLI tests, benchmark, content/link/network/parity/extension checks, all builds, bundle budget
-- GitHub Actions hosted CI: [`verify` and `test:e2e` passed](https://github.com/whoo3474/decoding-v6/actions/runs/30754058374)
+- historical GitHub Actions `verify`/`test:e2e` run은 과거 evidence일 뿐 current local delivery authority가 아니다
 - Playwright: desktop/mobile UI, local worker operations, PWA offline reload, same-origin request audit, privacy canary, IndexedDB raw-secret absence, and axe
 - public fixture quality: at least 95% precision and 90% recall for each detector family
 - 1 MiB engine benchmark: first candidate p75 1.9 ms, complete p75 15.2 ms
@@ -58,7 +58,7 @@ The user explicitly requested implementation of the complete 47-tool, desktop, a
 - Tauri: Rust `cargo check`, native release bundle, updater signing, checksums, code-sign verification, capability allowlist, and two-minute no-socket runtime observation
 - Cloudflare: staging, production, custom-domain cutover, external Chromium smoke/privacy gate, and rollback/restore drill
 - Cloudflare immutable i18n preview: `f9ad317e-1204-42b9-82ad-d9afd1ff8c74` at `https://codex-i18n-decoding-v6.wjstks3474.workers.dev`
-- PR preview workflow and repository variables are configured; the dedicated minimal Cloudflare API token remains an owner-authenticated dashboard action
+- GitHub preview workflow, repository variables and CI provider credential path는 제거했다. local build preview는 provider mutation 없이 수행하며, staging/production upload는 exact owner-lane local release wave에서만 가능하다.
 - sponsor adapter defaults to none and validates same-origin raster assets, HTTPS targets, dates, categories, and forbidden payload/session query keys
 
 ## Desktop artifacts
@@ -82,7 +82,7 @@ The universal engineering DMG contains both `x86_64` and `arm64`; `codesign --ve
 - Show HN, subreddit, and extension-store launch activities
 - Apple Developer ID signing/notarization and macOS universal release require owner credentials; Windows/Linux packages require a connected release workflow
 - full manual WCAG 2.2 AA audit and real-user assistive-technology verification
-- PR preview workflow needs a dedicated `CLOUDFLARE_API_TOKEN`; the local expiring OAuth session was deliberately not copied into GitHub Secrets
+- local build preview는 provider credential을 요구하지 않는다. future staging/production upload는 GitHub secret이 아니라 exact release wave의 local authenticated provider action, read-back 및 receipt가 필요하다.
 - all 7 non-English locales are labeled translation beta and excluded from indexing until native technical/privacy review
 
 These gates remain unchecked in [CHECKLIST.md](../prd/CHECKLIST.md). No ad slot or ad request exists until Phase 4 evidence is real.

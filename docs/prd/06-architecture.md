@@ -192,7 +192,7 @@ not_found_handling = "404-page"
 - build가 TypeScript/ESLint 오류를 무시하는 설정 금지
 - source map은 공개 가능 여부를 검토하고 raw fixture 포함 금지
 
-## 9. CI 게이트
+## 9. local verification gate
 
 1. format·typecheck·lint
 2. unit + node/browser worker environment tests
@@ -204,13 +204,14 @@ not_found_handling = "404-page"
 8. static content/spec link validation
 9. dependency license·known vulnerability scan
 
-모든 PR은 변경된 detector·페이지·bundle·network allowlist 영향을 요약한다.
+모든 local candidate receipt은 변경된 detector·페이지·bundle·network allowlist 영향을 요약한다. GitHub
+Actions, pull-request preview, push/tag trigger는 이 gate 또는 provider delivery authority가 아니다.
 
 ## 10. 완료 조건
 
 - 빈 저장소에서 `pnpm install && pnpm verify && pnpm build` 성공
 - web/worker/CLI가 같은 engine fixture 결과를 생성하고, desktop 활성 후 동일 fixture gate에 포함
 - 정적 단계에 Worker main·DB·session·auth·payment dependency 0개
-- 성능 예산과 privacy gate가 CI에서 실패를 차단
+- 성능 예산과 privacy gate가 local verification에서 실패를 차단
 - PWA cache는 same-origin static shell만 다루고 query URL·payload-like route를 write하지 않는다. 새 worker는 `skipWaiting`·`clients.claim`으로 page reload 없이 활성화하고, navigation은 network-first, fingerprinted `/_astro/` asset은 cache-first로 분리한다. offline non-navigation miss를 HTML로 대체하지 않는다.
 - staging URL에서 hard refresh·offline·404·CSP 검증 통과

@@ -8,7 +8,7 @@
 
 ## Phase 0 — 새 저장소 부트스트랩 (주 1)
 
-완료 정의: 빈 저장소에서 정적 홈 배포 + engine skeleton + privacy/performance gate가 CI에서 동작.
+완료 정의: 빈 저장소에서 정적 홈 배포 + engine skeleton + privacy/performance local gate가 동작.
 
 ### 결정·저장소
 
@@ -34,7 +34,7 @@
 - [x] 2026-07-15 — fixture schema와 cross-negative runner 구현
 - [x] 2026-07-15 — Node unit + browser worker E2E matrix 구현
 - [x] 2026-07-15 — Playwright synthetic canary egress/storage 검사 통과
-- [x] 2026-07-15 — bundle budget·1MiB benchmark·axe smoke CI 통과 ([status](../implementation/STATUS.md))
+- [x] 2026-07-15 — bundle budget·1MiB benchmark·axe smoke local gate 통과 ([status](../implementation/STATUS.md))
 - [x] 2026-07-15 — detector ↔ tool page ↔ spec registry parity script 통과
 
 **Gate P0**

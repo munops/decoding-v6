@@ -32,7 +32,7 @@ decod.ing v6는 정체불명의 문자열·파일을 자동 판별하고 재귀 
 5. **detector quality**: public positive/edge/negative와 blind fixture, cross-negative, precision/recall gate 없이 detector를 merge하지 않는다.
 6. **ambiguity honesty**: 낮은 신뢰도나 유사 후보를 임의의 정답으로 자동 확정하지 않는다.
 7. **English first, i18n-ready**: 제품 문자열은 message catalog에 두고, 로케일은 실제 수요와 native review gate 후 추가한다. 내부 문서는 한국어다.
-8. **performance budget**: 초기 JS, Web Worker latency, memory, Core Web Vitals 예산 회귀를 CI가 차단한다.
+8. **performance budget**: 초기 JS, Web Worker latency, memory, Core Web Vitals 예산 회귀를 local verification gate가 차단한다.
 9. **ads last**: Phase 4 gate 전 광고 DOM·script·request가 없어야 한다. 이후에도 웹 below-the-fold 한 자리만 허용하며 PWA standalone·workspace·CLI·desktop·extension에는 광고가 없다.
 10. **desktop least privilege**: 수요 gate 전 `apps/desktop` 구현을 시작하지 않는다. 시작 후 clipboard는 explicit shortcut/action에서만 읽고 broad filesystem·shell·HTTP capability를 금지한다.
 11. **wide catalog, bounded loading**: DevUtils 공개 47개 도구를 Pack 1~4 backlog로 유지하되 각 tool을 독립 operation manifest·fixture·inspector·local lazy chunk로 구현한다. 도구 수를 이유로 startup bundle이나 권한을 넓히지 않는다.
@@ -89,6 +89,13 @@ pnpm content:validate
 pnpm deploy:staging
 pnpm deploy
 ```
+
+GitHub Actions는 이 저장소의 CI/CD, preview, artifact 또는 provider credential 경로가 아니다. 새 workflow,
+scheduled workflow, GitHub artifact upload를 만들지 않는다. `docs/operations/local-delivery.json`과
+`docs/operations/local-delivery-runbook.md`가 Cloudflare Worker/Analytics와 channel boundary의 non-secret
+inventory 및 local preflight/deploy/read-back/rollback 정본이다. `pnpm deploy*`는 exact owner-lane wave,
+clean source, explicit target과 `--execute`가 없으면 fail-closed다. Web deploy는 desktop/CLI/extension
+publish, DNS, Analytics schema, sponsor, store review나 public native release를 수행하지 않는다.
 
 데스크톱 작업이 수요 gate 후 시작될 때 `pnpm desktop:verify`를 추가한다. 실제 script와 config는 항상 파일에서 확인하며 Task Master나 구세대 harness를 새 프로젝트 계약으로 사용하지 않는다.
 

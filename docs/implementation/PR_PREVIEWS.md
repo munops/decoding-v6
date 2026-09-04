@@ -1,20 +1,17 @@
-# Cloudflare PR previews
+# Local preview boundary
 
-Every same-repository pull request builds the static web app and uploads an immutable Worker version with alias `pr-<number>`. The workflow updates one pull-request comment instead of creating duplicate comments.
+상태: `active` · 2026-09-03 · GitHub Actions preview 없음.
 
-## Repository configuration
+Pull request, push, tag는 Cloudflare immutable version, preview alias, GitHub comment, GitHub secret 또는 artifact를
+자동으로 만들지 않는다. historical GitHub preview run은 과거 evidence일 뿐 current delivery authority가 아니다.
 
-- Actions variable `CLOUDFLARE_ACCOUNT_ID`
-- Actions variable `CLOUDFLARE_WORKERS_SUBDOMAIN`
-- Actions secret `CLOUDFLARE_API_TOKEN`
-
-The token must be a dedicated, revocable Cloudflare API token with only the account and Workers Scripts permissions needed by Wrangler. A local interactive OAuth token must not be copied into GitHub because it expires and grants a broader user session.
-
-Fork pull requests do not receive credentials and therefore do not run the preview job. Production routes are never changed by this workflow; production deployment remains an explicit separate action.
-
-Local verification:
+로컬 변경 확인은 provider mutation 없이 static build와 local preview로 끝낸다.
 
 ```sh
 pnpm --filter @decoding/web build
-pnpm exec wrangler versions upload --env="" --preview-alias local-check
+pnpm --filter @decoding/web preview
 ```
+
+공유 가능한 staging URL이 정말 필요할 때에도 `wrangler versions upload`, preview alias, production/staging upload는
+자동화하지 않는다. `docs/operations/local-delivery-runbook.md`의 exact owner-lane release wave, clean SHA,
+provider read-back, receipt 절차를 따르는 별도 local delivery action이다.

@@ -100,23 +100,25 @@ pnpm test:a11y        # axe + keyboard flows
 pnpm test:perf        # bundle + benchmark
 pnpm content:validate # tool/spec/i18n/links
 pnpm desktop:verify   # Phase 3 활성 후 Tauri capability·fixture·package
-pnpm deploy:staging
-pnpm deploy
+DECODING_DELIVERY_TARGET=staging pnpm deploy:staging -- --execute
+DECODING_DELIVERY_TARGET=production pnpm deploy -- --execute
 ```
 
-`verify`가 로컬과 CI에서 같은 스크립트를 호출한다. `desktop:verify`는 데스크톱 작업이 시작되기 전에는 no-op이 아니라 존재하지 않으며, 시작 ADR과 함께 root 계약에 추가한다. 수동으로만 존재하는 핵심 검증은 허용하지 않는다.
+`verify`는 local clean-source gate다. GitHub Actions는 사용하지 않으며, deploy command는 exact release wave,
+clean source, explicit target, `--execute` 없이는 fail-closed다. `desktop:verify`는 데스크톱 작업이 시작되기
+전에는 no-op이 아니라 존재하지 않으며, 시작 ADR과 함께 root 계약에 추가한다. 수동으로만 존재하는 핵심 검증은 허용하지 않는다.
 
-## 6. CI와 브랜치 규율
+## 6. local delivery와 브랜치 규율
 
 - `main`은 항상 배포 가능
-- PR마다 preview URL
-- required checks: type/lint, fixtures, privacy, E2E smoke, a11y, bundle
-- detector PR은 coverage delta와 top confusion pair를 comment
-- operation PR은 47-tool ledger·registry parity·chunk·security profile delta를 comment
-- dependency PR은 network·bundle·license delta 포함
-- production 배포는 태그와 changelog가 있는 수동 승인 단계
+- pull request, push, tag는 preview·provider upload·artifact publish를 자동 실행하지 않는다
+- required local gate: type/lint, fixtures, privacy, E2E smoke, a11y, bundle
+- detector change는 local receipt에 coverage delta와 top confusion pair를 남긴다
+- operation change는 local receipt에 47-tool ledger·registry parity·chunk·security profile delta를 남긴다
+- dependency change는 local receipt에 network·bundle·license delta를 남긴다
+- production 배포는 exact release wave와 provider read-back이 있는 명시적 local 단계다
 - rollback은 이전 정적 asset version 재배포로 5분 이내 가능
-- desktop 활성 후 OS별 package job은 web CI와 분리하고, macOS → Windows → Linux 순차 release gate를 강제
+- desktop 활성 후 OS별 package는 web delivery와 분리하고, macOS → Windows → Linux 순차 release gate를 강제
 - desktop release는 signing/notarization·updater signature·checksum·capability diff가 필수
 
 ## 7. 코드 리뷰 체크

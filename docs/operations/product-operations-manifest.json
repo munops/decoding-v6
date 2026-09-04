@@ -20,7 +20,8 @@
     "decisions": "docs/10-decisions/ADR-003-zero-account-ad-supported-greenfield.md",
     "traceability": "docs/prd/CHECKLIST.md",
     "releaseEvidence": "docs/research/2026-08-09-free-first-monetization.md",
-    "productionEvidence": "docs/operations/production-evidence.json"
+    "productionEvidence": "docs/operations/production-evidence.json",
+    "localDelivery": "docs/operations/local-delivery.json"
   },
   "connections": {
     "registry": "../../../docs/munops/ops/provider-registry.yaml",
