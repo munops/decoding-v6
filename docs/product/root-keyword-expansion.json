@@ -85,7 +85,11 @@
       "name": "무엇인지 판별하고 중첩을 끝까지 푼다",
       "relation": "core",
       "userExpectation": "형식을 고르지 않고 붙여넣기만 해도 후보가 순위와 함께 나오고, 값이 여러 겹이면 겹마다 이어서 풀린다.",
-      "sourceRefs": ["SRC-UNKNOWN-STRING-DISTRIBUTION", "SRC-CYBERCHEF-MAGIC-DEFECTS", "SRC-DECODING-LIVE"],
+      "sourceRefs": [
+        "SRC-UNKNOWN-STRING-DISTRIBUTION",
+        "SRC-CYBERCHEF-MAGIC-DEFECTS",
+        "SRC-DECODING-LIVE"
+      ],
       "decision": "selected",
       "reason": "\"Paste anything. See what it is.\"가 약속하는 첫 가치이고 제품의 코어 루프다.",
       "jobs": [
@@ -677,7 +681,13 @@
       "changedBy": "claude:a0dc89de-fab5",
       "what": "root-keyword-expansion 계약을 신설하고 의미 영토 7개(선택 5 · later 1 · 의도적 제외 1), 후보 capability 21개(선택 12 · later 7 · 의도적 제외 2), 콘텐츠 family 3개(실물 36건)를 열었다. 새로 연 축은 셋이다 — (1) TERR-ALPHABET: 판별 폭을 기능이 아니라 공급으로 보고 RFC 4648과 카테고리 식별 가이드에 대고 세어 uncovered로 기록, (2) TERR-EVIDENCE의 렌즈 C 항목: 엔진이 채우는 specUrl·metadata를 읽는 렌더 경로 0건, (3) TERR-CLIPBOARD: 이 카테고리의 유료 가치가 붙어 있는 진입 순간을 territory로 승격하고 게이트를 선행 조건으로 명시.",
       "why": "웹 검색 분포에서 이 키워드의 1번 질문이 \"어떻게 디코딩하나\"가 아니라 \"이게 무슨 알파벳인가\"로 확인됐고(규칙표 또는 자동 판별), 그 답의 표준 집합에 우리 detector가 5종 미달이었다. 동시에 전수 grep에서 근거 재료가 이미 생성되는데 화면이 읽지 않는 것이 확인됐다 — 즉 부족한 것은 재료가 아니라 배선이다. 두 사실 모두 기존 계약의 축에는 자리가 없었다.",
-      "evidenceRefs": ["SRC-RFC4648", "SRC-CTF-IDENTIFY-GUIDE", "SRC-UNKNOWN-STRING-DISTRIBUTION", "SRC-DEVUTILS-CLIPBOARD", "SRC-DECODING-LIVE"],
+      "evidenceRefs": [
+        "SRC-RFC4648",
+        "SRC-CTF-IDENTIFY-GUIDE",
+        "SRC-UNKNOWN-STRING-DISTRIBUTION",
+        "SRC-DEVUTILS-CLIPBOARD",
+        "SRC-DECODING-LIVE"
+      ],
       "supersedes": "revision 1 — category-coverage의 5개 capabilityGroup만으로 의미 반경을 대신하던 상태"
     }
   ],

@@ -11,7 +11,13 @@
     "capabilityAssessmentRef": "docs/product/category-coverage.json",
     "selectedChannels": ["web"],
     "releaseCandidateChannels": ["web"],
-    "capabilities": {"storesUserData": false, "mutableSchema": false, "authentication": false, "payments": false, "aiRuntime": false}
+    "capabilities": {
+      "storesUserData": false,
+      "mutableSchema": false,
+      "authentication": false,
+      "payments": false,
+      "aiRuntime": false
+    }
   },
   "traceability": {
     "status": "done",
@@ -23,41 +29,210 @@
     "status": "done",
     "requiredLayers": ["static", "unit", "integration", "e2e", "build", "security"],
     "mandatoryCommands": [
-      {"layer": "static", "command": "pnpm check:i18n && pnpm lint && pnpm typecheck", "result": "pass", "exitCode": 0, "checkedAt": "2026-08-24T18:57:28+09:00", "evidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md"},
-      {"layer": "unit", "command": "pnpm test", "result": "pass", "exitCode": 0, "checkedAt": "2026-08-24T18:57:36+09:00", "evidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md"},
-      {"layer": "integration", "command": "managed production Korean local JSON operation at 320/390/1440", "result": "pass", "exitCode": 0, "checkedAt": "2026-08-24T19:08:22+09:00", "evidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md"},
-      {"layer": "e2e", "command": "managed production Korean typography and bounds smoke at 320/390/1440", "result": "pass", "exitCode": 0, "checkedAt": "2026-08-24T19:08:22+09:00", "evidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md"},
-      {"layer": "build", "command": "pnpm build", "result": "pass", "exitCode": 0, "checkedAt": "2026-08-24T18:58:27+09:00", "evidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md"},
-      {"layer": "security", "command": "provider version bindings and production response security-header read-back", "result": "pass", "exitCode": 0, "checkedAt": "2026-08-24T19:09:47+09:00", "evidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md"}
+      {
+        "layer": "static",
+        "command": "pnpm check:i18n && pnpm lint && pnpm typecheck",
+        "result": "pass",
+        "exitCode": 0,
+        "checkedAt": "2026-08-24T18:57:28+09:00",
+        "evidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md"
+      },
+      {
+        "layer": "unit",
+        "command": "pnpm test",
+        "result": "pass",
+        "exitCode": 0,
+        "checkedAt": "2026-08-24T18:57:36+09:00",
+        "evidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md"
+      },
+      {
+        "layer": "integration",
+        "command": "managed production Korean local JSON operation at 320/390/1440",
+        "result": "pass",
+        "exitCode": 0,
+        "checkedAt": "2026-08-24T19:08:22+09:00",
+        "evidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md"
+      },
+      {
+        "layer": "e2e",
+        "command": "managed production Korean typography and bounds smoke at 320/390/1440",
+        "result": "pass",
+        "exitCode": 0,
+        "checkedAt": "2026-08-24T19:08:22+09:00",
+        "evidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md"
+      },
+      {
+        "layer": "build",
+        "command": "pnpm build",
+        "result": "pass",
+        "exitCode": 0,
+        "checkedAt": "2026-08-24T18:58:27+09:00",
+        "evidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md"
+      },
+      {
+        "layer": "security",
+        "command": "provider version bindings and production response security-header read-back",
+        "result": "pass",
+        "exitCode": 0,
+        "checkedAt": "2026-08-24T19:09:47+09:00",
+        "evidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md"
+      }
     ],
     "aiEvaluationEvidenceRef": null,
     "mandatoryFailures": []
   },
   "security": {
-    "status": "done", "standard": "OWASP-ASVS-5.0.0-risk-based", "planRef": "docs/prd/09-security-privacy.md", "threatModelRef": "docs/security/THREAT_MODEL.md", "secretScanEvidenceRef": "docs/audit/2026-08-08-product-readiness.md", "dependencyAuditEvidenceRef": "docs/engineering/dependencies.md", "securityHeadersEvidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md", "authAbuseEvidenceRef": null, "paymentAbuseEvidenceRef": null, "aiAbuseEvidenceRef": null, "privacyDataFlowRef": "docs/trust/data-inventory.md", "unresolvedHighCritical": []
+    "status": "done",
+    "standard": "OWASP-ASVS-5.0.0-risk-based",
+    "planRef": "docs/prd/09-security-privacy.md",
+    "threatModelRef": "docs/security/THREAT_MODEL.md",
+    "secretScanEvidenceRef": "docs/audit/2026-08-08-product-readiness.md",
+    "dependencyAuditEvidenceRef": "docs/engineering/dependencies.md",
+    "securityHeadersEvidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md",
+    "authAbuseEvidenceRef": null,
+    "paymentAbuseEvidenceRef": null,
+    "aiAbuseEvidenceRef": null,
+    "privacyDataFlowRef": "docs/trust/data-inventory.md",
+    "unresolvedHighCritical": []
   },
-  "accessibility": {"status": "done", "target": "WCAG-2.2-AA", "planRef": "docs/prd/05-uiux.md", "automatedEvidenceRef": "tests/e2e/responsive.spec.ts", "manualEvidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md", "representativeFlows": ["Korean landing and catalog", "Korean local JSON operation"], "knownViolations": []},
-  "performance": {"status": "done", "budgetRef": "docs/prd/06-architecture.md", "labEvidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md", "fieldEvidenceRef": null, "webVitalsTarget": {"percentile": 75, "lcpMs": 2500, "inpMs": 200, "cls": 0.1}, "representativeRoutes": ["/ko/", "/ko/tools/", "/ko/json-format/", "/ko/methodology/"], "regressions": []},
-  "dataLifecycle": {"status": "not_applicable", "inventoryRef": "docs/trust/data-inventory.md", "migrationPlanRef": null, "migrationRehearsalRef": null, "backupReadbackRef": null, "restoreDrillRef": null, "retentionDeletionEvidenceRef": null, "importExportRoundTripRef": null},
-  "resilience": {"status": "done", "failureModeRef": "docs/prd/06-architecture.md", "retryIdempotencyEvidenceRef": "docs/evidence/aiint-decoding-01-2026-08-26.md", "failureInjectionEvidenceRef": "apps/web/src/lib/decoder-worker-client.test.ts", "paymentFailureEvidenceRef": null, "aiFallbackEvidenceRef": null},
-  "operations": {"status": "done", "sloRef": "docs/implementation/DEPLOYMENT.md", "observabilityRef": "wrangler.toml", "alertReadbackRef": "docs/evidence/web-product-language-release-2026-08-24.md", "runbookRef": "docs/implementation/DEPLOYMENT.md", "incidentOwner": "owner_lane", "costCapReadbackRef": "docs/evidence/web-product-language-release-2026-08-24.md", "killSwitchEvidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md"},
+  "accessibility": {
+    "status": "done",
+    "target": "WCAG-2.2-AA",
+    "planRef": "docs/prd/05-uiux.md",
+    "automatedEvidenceRef": "tests/e2e/responsive.spec.ts",
+    "manualEvidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md",
+    "representativeFlows": ["Korean landing and catalog", "Korean local JSON operation"],
+    "knownViolations": []
+  },
+  "performance": {
+    "status": "done",
+    "budgetRef": "docs/prd/06-architecture.md",
+    "labEvidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md",
+    "fieldEvidenceRef": null,
+    "webVitalsTarget": { "percentile": 75, "lcpMs": 2500, "inpMs": 200, "cls": 0.1 },
+    "representativeRoutes": ["/ko/", "/ko/tools/", "/ko/json-format/", "/ko/methodology/"],
+    "regressions": []
+  },
+  "dataLifecycle": {
+    "status": "not_applicable",
+    "inventoryRef": "docs/trust/data-inventory.md",
+    "migrationPlanRef": null,
+    "migrationRehearsalRef": null,
+    "backupReadbackRef": null,
+    "restoreDrillRef": null,
+    "retentionDeletionEvidenceRef": null,
+    "importExportRoundTripRef": null
+  },
+  "resilience": {
+    "status": "done",
+    "failureModeRef": "docs/prd/06-architecture.md",
+    "retryIdempotencyEvidenceRef": "docs/evidence/aiint-decoding-01-2026-08-26.md",
+    "failureInjectionEvidenceRef": "apps/web/src/lib/decoder-worker-client.test.ts",
+    "paymentFailureEvidenceRef": null,
+    "aiFallbackEvidenceRef": null
+  },
+  "operations": {
+    "status": "done",
+    "sloRef": "docs/implementation/DEPLOYMENT.md",
+    "observabilityRef": "wrangler.toml",
+    "alertReadbackRef": "docs/evidence/web-product-language-release-2026-08-24.md",
+    "runbookRef": "docs/implementation/DEPLOYMENT.md",
+    "incidentOwner": "owner_lane",
+    "costCapReadbackRef": "docs/evidence/web-product-language-release-2026-08-24.md",
+    "killSwitchEvidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md"
+  },
   "delivery": {
-    "status": "done", "releasePlanRef": "docs/evidence/web-product-language-release-2026-08-24.md", "ciRunRef": "docs/evidence/web-product-language-release-2026-08-24.md",
-    "artifact": {"name": "apps/web/dist Cloudflare assets", "sha256": "09b4726884b768839f0d7d8a00be0d5824c8b39f880c8349fb20934a31049d57", "sourceRevision": "3c3efe68a662925ec0c65a4fdf7ba195e9783f75", "provenanceKind": "provider_version_manifest", "provenanceRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md"},
-    "previewSmokeRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md", "providerReadbackRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md", "realEntrypointSmokeRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md", "releaseEvidenceRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md",
-    "rollback": {"target": "Cloudflare version 56d01667-30fa-4a78-837d-2b0b9ea9365d", "planRef": "docs/implementation/DEPLOYMENT.md", "drillRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md"}
+    "status": "done",
+    "releasePlanRef": "docs/evidence/web-product-language-release-2026-08-24.md",
+    "ciRunRef": "docs/evidence/web-product-language-release-2026-08-24.md",
+    "artifact": {
+      "name": "apps/web/dist Cloudflare assets",
+      "sha256": "09b4726884b768839f0d7d8a00be0d5824c8b39f880c8349fb20934a31049d57",
+      "sourceRevision": "3c3efe68a662925ec0c65a4fdf7ba195e9783f75",
+      "provenanceKind": "provider_version_manifest",
+      "provenanceRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md"
+    },
+    "previewSmokeRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md",
+    "providerReadbackRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md",
+    "realEntrypointSmokeRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md",
+    "releaseEvidenceRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md",
+    "rollback": {
+      "target": "Cloudflare version 56d01667-30fa-4a78-837d-2b0b9ea9365d",
+      "planRef": "docs/implementation/DEPLOYMENT.md",
+      "drillRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md"
+    }
   },
   "channels": {
-    "web": {"decision": "selected", "status": "done", "stage": "released", "artifactSha256": "09b4726884b768839f0d7d8a00be0d5824c8b39f880c8349fb20934a31049d57", "providerReadbackRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md", "realConsumerSmokeRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md", "rollbackRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md"},
-    "appsInToss": {"decision": "not_applicable", "status": "not_applicable", "stage": "assessed", "artifactSha256": null, "providerReadbackRef": null, "realConsumerSmokeRef": null, "rollbackRef": null},
-    "ios": {"decision": "not_applicable", "status": "not_applicable", "stage": "assessed", "artifactSha256": null, "providerReadbackRef": null, "realConsumerSmokeRef": null, "rollbackRef": null},
-    "android": {"decision": "not_applicable", "status": "not_applicable", "stage": "assessed", "artifactSha256": null, "providerReadbackRef": null, "realConsumerSmokeRef": null, "rollbackRef": null},
-    "desktop": {"decision": "later", "status": "in_progress", "stage": "built", "artifactSha256": null, "providerReadbackRef": "docs/platforms/channel-plan.md", "realConsumerSmokeRef": null, "rollbackRef": null}
+    "web": {
+      "decision": "selected",
+      "status": "done",
+      "stage": "released",
+      "artifactSha256": "09b4726884b768839f0d7d8a00be0d5824c8b39f880c8349fb20934a31049d57",
+      "providerReadbackRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md",
+      "realConsumerSmokeRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md",
+      "rollbackRef": "docs/evidence/dc-gr-02-korean-discovery-release-2026-09-01.md"
+    },
+    "appsInToss": {
+      "decision": "not_applicable",
+      "status": "not_applicable",
+      "stage": "assessed",
+      "artifactSha256": null,
+      "providerReadbackRef": null,
+      "realConsumerSmokeRef": null,
+      "rollbackRef": null
+    },
+    "ios": {
+      "decision": "not_applicable",
+      "status": "not_applicable",
+      "stage": "assessed",
+      "artifactSha256": null,
+      "providerReadbackRef": null,
+      "realConsumerSmokeRef": null,
+      "rollbackRef": null
+    },
+    "android": {
+      "decision": "not_applicable",
+      "status": "not_applicable",
+      "stage": "assessed",
+      "artifactSha256": null,
+      "providerReadbackRef": null,
+      "realConsumerSmokeRef": null,
+      "rollbackRef": null
+    },
+    "desktop": {
+      "decision": "later",
+      "status": "in_progress",
+      "stage": "built",
+      "artifactSha256": null,
+      "providerReadbackRef": "docs/platforms/channel-plan.md",
+      "realConsumerSmokeRef": null,
+      "rollbackRef": null
+    }
   },
   "externalGates": [
-    {"id": "DC-FIELD-01", "status": "data_pending", "gate": "first non-operator activation and eligible retention cohort", "owner": "owner_lane"},
-    {"id": "DC-GR-02-SEARCH-CONSOLE", "status": "wait_external", "gate": "domain property ownership requires an owner-approved DNS authorization or credential path before sitemap submission and index read-back", "owner": "owner_lane"},
-    {"id": "DC-ADS-01", "status": "wait_external", "gate": "AdSense site ownership is verified; final policy review submission and any later ad serving remain owner-approved external actions", "owner": "owner_lane"},
-    {"id": "DC-DESKTOP-01", "status": "wait_external", "gate": "desktop signing, notarization, device smoke, and public distribution remain separate", "owner": "owner_lane"}
+    {
+      "id": "DC-FIELD-01",
+      "status": "data_pending",
+      "gate": "first non-operator activation and eligible retention cohort",
+      "owner": "owner_lane"
+    },
+    {
+      "id": "DC-GR-02-SEARCH-CONSOLE",
+      "status": "wait_external",
+      "gate": "domain property ownership requires an owner-approved DNS authorization or credential path before sitemap submission and index read-back",
+      "owner": "owner_lane"
+    },
+    {
+      "id": "DC-ADS-01",
+      "status": "wait_external",
+      "gate": "AdSense site ownership is verified; final policy review submission and any later ad serving remain owner-approved external actions",
+      "owner": "owner_lane"
+    },
+    {
+      "id": "DC-DESKTOP-01",
+      "status": "wait_external",
+      "gate": "desktop signing, notarization, device smoke, and public distribution remain separate",
+      "owner": "owner_lane"
+    }
   ]
 }

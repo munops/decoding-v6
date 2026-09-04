@@ -35,7 +35,7 @@
 - `https://decod.ing/`, `https://www.decod.ing/`, `https://decoding-v6.wjstks3474.workers.dev/`는 200이다. `/healthz`는 canonical과 Workers fallback 모두 exact runtime source를 반환했다.
 - Canonical root의 linked `/_astro/_detector_.De5rUvi-.css`는 200, `content-type: text/css`, `cache-control: public, max-age=31536000, immutable`이다.
 - Managed browser run `b2193a67-3900-4321-8b20-a3d2ff411b6e`에서 320/390/1440 각각 `/ko/`, `/ko/tools/`, `/ko/json-format/`, `/ko/methodology/`를 실측했다. 12개 조합 모두 HTTP 200, `lang=ko`, 한국어 목적형 h1, document overflow 0, clipped/out-of-bounds text 0, 어절 중간 절단 0, 한 글자 외톨이 마지막 줄 0이었다.
-- 같은 12개 조합의 h1 computed style은 `word-break: keep-all`, `overflow-wrap: break-word`, `text-wrap: balance`, line-height ratio `1.16`이었다. 모바일 letter-spacing은 약 `-0.95px`~`-1.15px`, 1440은 `-1.7px`~`-1.8px`로 실측됐다.
+- 같은 12개 조합의 h1 computed style은 `word-break: keep-all`, `overflow-wrap: break-word`, `text-wrap: balance`, line-height ratio `1.16`이었다. 모바일 letter-spacing은 약 `-0.95px`~~`-1.15px`, 1440은 `-1.7px`~~`-1.8px`로 실측됐다.
 - 같은 run에서 각 폭마다 `/ko/json-format/`에 `{"answer":42,"local":true}`를 입력해 실제 로컬 결과 `"answer": 42`를 확인했다. page/console error와 외부 request origin은 0이었다.
 
 이 증거는 public web release만 증명한다. Apps in Toss, desktop/extension release, field retention, user value, revenue, Analytics Engine row 수를 증명하지 않는다. 중앙 `docs/munops/ops/action-log.md`는 다른 active writer claim 때문에 이번 commit에서 갱신하지 않았으며 reconciliation pending이다.

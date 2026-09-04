@@ -12,9 +12,7 @@
       "evidenceState": "not_applicable",
       "signedInCatalogStatus": "not_applicable",
       "checkedAt": "2026-08-12",
-      "sources": [
-        "https://toss.im/apps-in-toss"
-      ],
+      "sources": ["https://toss.im/apps-in-toss"],
       "searchQueries": [
         "앱인토스 미니앱이 개발자용 로컬 디코더 도구를 담을 수 있는 카테고리인지 확인",
         "apps-in-toss 비게임 체크리스트에서 개발자 도구 카테고리 존재 여부"
@@ -37,9 +35,7 @@
         "estimatedNetRevenueKrw": 0,
         "variableCostKrw": 0,
         "contributionMarginKrw": 0,
-        "sourceUrls": [
-          "https://devutils.com/pricing/"
-        ],
+        "sourceUrls": ["https://devutils.com/pricing/"],
         "checkedAt": "2026-08-12"
       }
     },
@@ -187,13 +183,8 @@
         "observedCount": 1,
         "sourceUrl": "https://www.base64.sh/blog/best-base64-tools-2025/",
         "checkedAt": "2026-08-12",
-        "verbatimExcerpts": [
-          "CyberChef is best for advanced users needing multiple operations"
-        ],
-        "findingIds": [
-          "fnd-advanced-only",
-          "fnd-simple-task-overkill"
-        ]
+        "verbatimExcerpts": ["CyberChef is best for advanced users needing multiple operations"],
+        "findingIds": ["fnd-advanced-only", "fnd-simple-task-overkill"]
       },
       {
         "id": "rc-jwtio-verification",
@@ -202,12 +193,8 @@
         "observedCount": 1,
         "sourceUrl": "https://community.auth0.com/t/new-jwt-io-fails-to-verify-signature-for-hs512/189278",
         "checkedAt": "2026-08-12",
-        "verbatimExcerpts": [
-          "New jwt.io fails to verify signature for HS512"
-        ],
-        "findingIds": [
-          "fnd-decode-vs-verify-confusion"
-        ]
+        "verbatimExcerpts": ["New jwt.io fails to verify signature for HS512"],
+        "findingIds": ["fnd-decode-vs-verify-confusion"]
       },
       {
         "id": "rc-cyberchef-magic-low",
@@ -222,11 +209,7 @@
           "The Magic function is unable to identify ROT13 ciphertext.",
           "By default, cyberchef does auto-detect of the encoding. But once you set a specific encoding in the out pane, you"
         ],
-        "findingIds": [
-          "fnd-autodetect-hangs",
-          "fnd-autodetect-misses",
-          "fnd-no-return-to-auto"
-        ]
+        "findingIds": ["fnd-autodetect-hangs", "fnd-autodetect-misses", "fnd-no-return-to-auto"]
       },
       {
         "id": "rc-cyberchef-high",
@@ -240,10 +223,7 @@
           "Feature request: VSCode Extension — Currently one has to copy tex[t] (👍20)",
           "Feature request: Command-line interface for CyberChef — It would be very helpful to have a command line interface for performing CyberChef operations on local files without the need for a GUI web app. (👍15)"
         ],
-        "findingIds": [
-          "fnd-format-coverage-demand",
-          "fnd-workflow-integration"
-        ]
+        "findingIds": ["fnd-format-coverage-demand", "fnd-workflow-integration"]
       },
       {
         "id": "rc-ittools-low",
@@ -256,10 +236,7 @@
           "Local (offline) executable — I've been using the tool as a Tauri executab[le]",
           "[BUG] local deploy language can not fully switch — When I switch the language to Chinese, only a part of context converted."
         ],
-        "findingIds": [
-          "fnd-offline-demand",
-          "fnd-partial-i18n"
-        ]
+        "findingIds": ["fnd-offline-demand", "fnd-partial-i18n"]
       }
     ],
     "communitySignals": [
@@ -329,219 +306,143 @@
           "fnd-free-core-required",
           "fnd-willing-to-pay-for-convenience"
         ],
-        "specIds": [
-          "ADR-003"
-        ]
+        "specIds": ["ADR-003"]
       },
       {
         "id": "cov-crossplatform-web",
         "userNeed": "특정 OS를 요구하지 않는다",
         "response": "cover",
         "reason": "'Mac only'가 HN 최상위 불만이다. 웹(Astro 정적 export + PWA)을 1차 채널로 두고 desktop은 수요 게이트 뒤 선택 채널로 격리한다.",
-        "sourceRefs": [
-          "fnd-platform-lockout",
-          "fnd-zero-install-crossplatform"
-        ],
-        "specIds": [
-          "PRD-06"
-        ]
+        "sourceRefs": ["fnd-platform-lockout", "fnd-zero-install-crossplatform"],
+        "specIds": ["PRD-06"]
       },
       {
         "id": "cov-no-recipe-tax",
         "userNeed": "무엇인지 모르는 문자열을 그냥 붙여넣어도 답이 나와야 한다",
         "response": "cover",
         "reason": "CyberChef는 고급 사용자용으로 분류되고 사용자가 operation을 먼저 골라야 한다. 8개 detector가 자동 판별하고 재귀 체인을 만들어 도구 선택 세금을 없앤다.",
-        "sourceRefs": [
-          "fnd-advanced-only",
-          "fnd-simple-task-overkill",
-          "fnd-no-recipe-assembly"
-        ],
-        "specIds": [
-          "PRD-01"
-        ]
+        "sourceRefs": ["fnd-advanced-only", "fnd-simple-task-overkill", "fnd-no-recipe-assembly"],
+        "specIds": ["PRD-01"]
       },
       {
         "id": "cov-payload-never-leaves",
         "userNeed": "붙여넣은 값이 서버로 새지 않는다는 것이 증명돼야 한다",
         "response": "cover",
         "reason": "'출처가 의심스러운 사이트에 붙여넣기'가 이 카테고리의 기준선이다. UI 소스의 network primitive를 기계 검사로 1개 파일(집계 카운터)로 제한하고, canary suite가 모든 요청을 검사한다.",
-        "sourceRefs": [
-          "fnd-offline-trust",
-          "fnd-no-paste-to-unknown-site"
-        ],
-        "specIds": [
-          "PRD-09"
-        ]
+        "sourceRefs": ["fnd-offline-trust", "fnd-no-paste-to-unknown-site"],
+        "specIds": ["PRD-09"]
       },
       {
         "id": "cov-no-input-in-url",
         "userNeed": "공유 링크에 입력이 들어가지 않아야 한다",
         "response": "cover",
         "reason": "CyberChef recipe deep link는 입력을 URL에 담을 수 있다. 우리는 raw·decoded·digest·크기·파일명을 제외한 안전 요약만 공유하고 privacy 테스트가 강제한다.",
-        "sourceRefs": [
-          "fnd-advanced-only"
-        ],
-        "specIds": [
-          "PRD-09"
-        ]
+        "sourceRefs": ["fnd-advanced-only"],
+        "specIds": ["PRD-09"]
       },
       {
         "id": "cov-bounded-execution",
         "userNeed": "큰 입력에서 화면이 멈추지 않아야 한다",
         "response": "cover",
         "reason": "CyberChef는 Auto Bake 성능 부담을 공식 문서에서 인정하고 끄는 법을 안내한다. 우리는 2초 CPU·10MiB 입력·32MiB 출력·100:1 압축비 상한을 두고 전용 워커에서 실행한다.",
-        "sourceRefs": [
-          "fnd-simple-task-overkill"
-        ],
-        "specIds": [
-          "PRD-01"
-        ]
+        "sourceRefs": ["fnd-simple-task-overkill"],
+        "specIds": ["PRD-01"]
       },
       {
         "id": "cov-decode-not-verify",
         "userNeed": "디코딩을 검증 성공처럼 보이게 하지 않는다",
         "response": "cover",
         "reason": "jwt.io 검증 실패 보고가 그 혼동의 실제 비용을 보여준다. 신뢰 키 없이는 서명을 검증하지 않는다고 화면에서 명시한다.",
-        "sourceRefs": [
-          "fnd-decode-vs-verify-confusion"
-        ],
-        "specIds": [
-          "PRD-01"
-        ]
+        "sourceRefs": ["fnd-decode-vs-verify-confusion"],
+        "specIds": ["PRD-01"]
       },
       {
         "id": "cov-tool-fit",
         "userNeed": "47개 도구가 첫 화면에 쏟아지지 않고 내 작업에 맞는 것을 찾을 수 있어야 한다",
         "response": "cover",
         "reason": "'몇 개만 내 워크플로에 맞는다'는 HN 반응이 카탈로그 과잉의 비용이다. 카테고리 검색·최근 사용·즐겨찾기와 도구별 lazy chunk로 시작 번들을 21.6 KiB로 묶는다.",
-        "sourceRefs": [
-          "fnd-tool-fit-variance",
-          "fnd-one-place-value"
-        ],
-        "specIds": [
-          "PRD-05"
-        ]
+        "sourceRefs": ["fnd-tool-fit-variance", "fnd-one-place-value"],
+        "specIds": ["PRD-05"]
       },
       {
         "id": "cov-repl-alternative",
         "userNeed": "REPL 한 줄로 되는 일을 굳이 웹에서 할 이유",
         "response": "cover",
         "reason": "'REPL에서 한 줄이면 된다'는 반응이 실재한다. 답은 '무엇인지 모를 때'다 — 포맷을 알면 REPL이 빠르고, 모를 때만 우리가 필요하다. CLI(stdin/--file)를 두어 터미널 사용자에게도 같은 판별을 제공한다.",
-        "sourceRefs": [
-          "fnd-tool-redundancy"
-        ],
-        "specIds": [
-          "PRD-03"
-        ]
+        "sourceRefs": ["fnd-tool-redundancy"],
+        "specIds": ["PRD-03"]
       },
       {
         "id": "cov-recipe-builder",
         "userNeed": "수백 개 operation을 자유 조립하는 recipe builder",
         "response": "intentional_exclude",
         "reason": "CyberChef의 강점이자 정체성이다. 정면 경쟁하지 않는다. 우리 코어는 자동 triage와 경계가 있는 체인이며, 조립이 필요한 사용자는 CyberChef가 더 낫다고 인정한다.",
-        "sourceRefs": [
-          "fnd-advanced-only"
-        ],
-        "specIds": [
-          "PRD-README-7"
-        ]
+        "sourceRefs": ["fnd-advanced-only"],
+        "specIds": ["PRD-README-7"]
       },
       {
         "id": "cov-native-hotkey",
         "userNeed": "전역 단축키·클립보드 자동 감지",
         "response": "intentional_exclude",
         "reason": "DevUtils의 강점이지만 네이티브 권한이 필요하고 그 순간 macOS 전용 배제 문제를 그대로 물려받는다. desktop 채널은 수요 게이트 뒤로 미루고, 그때도 clipboard는 명시적 동작에서 1회만 읽는다.",
-        "sourceRefs": [
-          "fnd-offline-trust",
-          "fnd-platform-lockout"
-        ],
-        "specIds": [
-          "PRD-10"
-        ]
+        "sourceRefs": ["fnd-offline-trust", "fnd-platform-lockout"],
+        "specIds": ["PRD-10"]
       },
       {
         "id": "cov-autodetect-reliability",
         "userNeed": "자동 판별이 멈추거나 터지지 않아야 한다.",
         "response": "cover",
         "reason": "자동 판별과 재귀 디코딩 체인이 제품의 코어이므로 입력별 시간 상한과 재귀 깊이 상한을 계약으로 둔다. 판별 실패는 예외가 아니라 '판별 못 함' 결과로 표시한다.",
-        "sourceRefs": [
-          "fnd-autodetect-hangs"
-        ],
-        "specIds": [
-          "DC-AUTODETECT-01"
-        ]
+        "sourceRefs": ["fnd-autodetect-hangs"],
+        "specIds": ["DC-AUTODETECT-01"]
       },
       {
         "id": "cov-autodetect-coverage",
         "userNeed": "결정론적 인코딩은 반드시 잡아야 한다.",
         "response": "cover",
         "reason": "ROT13처럼 결정론적인 변환을 놓치면 '무엇인지 알려준다'는 약속이 깨진다. 후보 랭킹에 결정론 변환군을 회귀 fixture로 고정한다.",
-        "sourceRefs": [
-          "fnd-autodetect-misses"
-        ],
-        "specIds": [
-          "DC-AUTODETECT-01"
-        ]
+        "sourceRefs": ["fnd-autodetect-misses"],
+        "specIds": ["DC-AUTODETECT-01"]
       },
       {
         "id": "cov-return-to-auto",
         "userNeed": "수동으로 포맷을 고른 뒤에도 자동 판별로 돌아갈 수 있어야 한다.",
         "response": "cover",
         "reason": "제품이 '포맷 피커로 시작하지 않는다'를 표방하므로, 수동 선택은 되돌릴 수 있는 상태여야 한다.",
-        "sourceRefs": [
-          "fnd-no-return-to-auto"
-        ],
-        "specIds": [
-          "DC-AUTODETECT-01"
-        ]
+        "sourceRefs": ["fnd-no-return-to-auto"],
+        "specIds": ["DC-AUTODETECT-01"]
       },
       {
         "id": "cov-format-coverage",
         "userNeed": "실무에서 만나는 압축·직렬화 포맷이 있어야 한다.",
         "response": "cover",
         "reason": "47개 도구를 유지하되 확장은 사용자 요청 반응 수 순으로 판단한다. 숫자를 채우는 도구는 추가하지 않는다.",
-        "sourceRefs": [
-          "fnd-format-coverage-demand"
-        ],
-        "specIds": [
-          "docs/prd/CHECKLIST.md"
-        ]
+        "sourceRefs": ["fnd-format-coverage-demand"],
+        "specIds": ["docs/prd/CHECKLIST.md"]
       },
       {
         "id": "cov-offline-proof",
         "userNeed": "정말로 업로드가 안 되는지 확인하고 싶다.",
         "response": "cover",
         "reason": "'0 input bytes uploaded'를 문구가 아니라 관측 가능한 증거로 제공한다. 로컬 처리 보장이 이 제품의 유일한 구조적 차별점이다.",
-        "sourceRefs": [
-          "fnd-offline-demand"
-        ],
-        "specIds": [
-          "DC-LOCALPROOF-01"
-        ]
+        "sourceRefs": ["fnd-offline-demand"],
+        "specIds": ["DC-LOCALPROOF-01"]
       },
       {
         "id": "cov-workflow-integration",
         "userNeed": "복사-붙여넣기 없이 작업 흐름 안에서 쓰고 싶다.",
         "response": "intentional_exclude",
         "reason": "CLI·에디터 확장은 현재 범위 밖이다. 웹에서 '붙여넣고 즉시 판별'이라는 즉시성이 제품 정체성이고, 설치형으로 가면 DevToys와 같은 자리로 이동한다. 재검토 조건은 웹 사용자가 같은 값을 반복 붙여넣는 행동이 관측될 때다.",
-        "sourceRefs": [
-          "fnd-workflow-integration"
-        ],
-        "specIds": [
-          "docs/10-decisions"
-        ]
+        "sourceRefs": ["fnd-workflow-integration"],
+        "specIds": ["docs/10-decisions"]
       },
       {
         "id": "cov-partial-i18n",
         "userNeed": "언어를 바꾸면 전부 바뀌어야 한다.",
         "response": "cover",
         "reason": "8개 언어를 지원하므로 부분 번역은 곧 신뢰 손상이다. 언어별 문자열 커버리지를 검사로 고정한다.",
-        "sourceRefs": [
-          "fnd-partial-i18n"
-        ],
-        "specIds": [
-          "DC-I18N-01"
-        ]
+        "sourceRefs": ["fnd-partial-i18n"],
+        "specIds": ["DC-I18N-01"]
       }
     ],
     "uncoveredCount": 0
@@ -566,14 +467,8 @@
         "reassurance": "첫 화면이 로컬 처리와 무계정을 명시하고, 개인정보 페이지가 정확히 무엇이 전송되는지 한 문단으로 말한다.",
         "reward": "붙여넣자마자 후보와 신뢰도가 뜬다 — 도구를 고르지 않았는데 답이 나온다.",
         "returnTrigger": "다음에 또 모르는 문자열을 만났을 때.",
-        "forbiddenPatterns": [
-          "가입 유도",
-          "결과를 가리는 페이월",
-          "입력이 담긴 공유 URL"
-        ],
-        "specIds": [
-          "PRD-01"
-        ]
+        "forbiddenPatterns": ["가입 유도", "결과를 가리는 페이월", "입력이 담긴 공유 URL"],
+        "specIds": ["PRD-01"]
       },
       {
         "id": "psy-onboarding",
@@ -586,14 +481,8 @@
         "reassurance": "각 후보에 신뢰도와 판별 근거(rule ID·스펙 링크)가 붙는다.",
         "reward": "왜 그렇게 판별했는지 읽고 납득한다.",
         "returnTrigger": "같은 종류의 문자열을 또 만났을 때.",
-        "forbiddenPatterns": [
-          "단일 정답 강제",
-          "근거 숨김",
-          "AI가 생성한 설명"
-        ],
-        "specIds": [
-          "PRD-01"
-        ]
+        "forbiddenPatterns": ["단일 정답 강제", "근거 숨김", "AI가 생성한 설명"],
+        "specIds": ["PRD-01"]
       },
       {
         "id": "psy-core",
@@ -606,14 +495,8 @@
         "reassurance": "깊이 8·노드 64·2초 CPU 상한이 있어 화면이 멈추지 않는다. 한계에 걸리면 부분 결과를 명시적으로 보여준다.",
         "reward": "마지막에 사람이 읽을 수 있는 형태가 나온다.",
         "returnTrigger": "업무 중 반복되는 디버깅 순간.",
-        "forbiddenPatterns": [
-          "무한 실행",
-          "freeze",
-          "raw parser exception 노출"
-        ],
-        "specIds": [
-          "PRD-01"
-        ]
+        "forbiddenPatterns": ["무한 실행", "freeze", "raw parser exception 노출"],
+        "specIds": ["PRD-01"]
       },
       {
         "id": "psy-recovery",
@@ -626,14 +509,8 @@
         "reassurance": "한계 초과·미지원 포맷·모호를 각각 다른 결정적 상태로 구분해 말한다.",
         "reward": "무엇이 문제인지 알고 다음 행동을 고를 수 있다.",
         "returnTrigger": "같은 포맷이 지원되기를 기대하고 다시 방문.",
-        "forbiddenPatterns": [
-          "빈 화면",
-          "raw stack trace",
-          "성공처럼 보이는 실패"
-        ],
-        "specIds": [
-          "PRD-01"
-        ]
+        "forbiddenPatterns": ["빈 화면", "raw stack trace", "성공처럼 보이는 실패"],
+        "specIds": ["PRD-01"]
       },
       {
         "id": "psy-return",
@@ -646,14 +523,8 @@
         "reassurance": "저장 항목을 개인정보 페이지에 그대로 나열한다.",
         "reward": "최근 쓰던 도구가 그대로 있다.",
         "returnTrigger": "다음 디버깅 세션, 새 detector 추가 배지(1회만 표시).",
-        "forbiddenPatterns": [
-          "푸시 알림 유도",
-          "재방문 강요 배지 반복",
-          "계정으로만 되는 동기화"
-        ],
-        "specIds": [
-          "PRD-03"
-        ]
+        "forbiddenPatterns": ["푸시 알림 유도", "재방문 강요 배지 반복", "계정으로만 되는 동기화"],
+        "specIds": ["PRD-03"]
       }
     ]
   },
@@ -662,45 +533,26 @@
       {
         "id": "par-local-processing",
         "userExpectation": "입력이 브라우저를 떠나지 않는다 — 이 카테고리의 신뢰 기준선이며 없으면 개발자가 쓰지 않는다.",
-        "sourceFindingIds": [
-          "fnd-offline-trust",
-          "fnd-no-paste-to-unknown-site"
-        ],
-        "featureIds": [
-          "F-LOCAL"
-        ]
+        "sourceFindingIds": ["fnd-offline-trust", "fnd-no-paste-to-unknown-site"],
+        "featureIds": ["F-LOCAL"]
       },
       {
         "id": "par-format-breadth",
         "userExpectation": "자주 쓰는 포맷이 한곳에 다 있다 — DevUtils 고점의 'having them all in one place'가 이 기대다.",
-        "sourceFindingIds": [
-          "fnd-one-place-value",
-          "fnd-tool-fit-variance"
-        ],
-        "featureIds": [
-          "F-CATALOG"
-        ]
+        "sourceFindingIds": ["fnd-one-place-value", "fnd-tool-fit-variance"],
+        "featureIds": ["F-CATALOG"]
       },
       {
         "id": "par-free-no-account",
         "userExpectation": "무료이고 계정을 요구하지 않는다 — 무료 대안이 즉시 비교되는 카테고리라 최소 조건이다.",
-        "sourceFindingIds": [
-          "fnd-free-competition",
-          "fnd-free-core-required"
-        ],
-        "featureIds": [
-          "F-FREE"
-        ]
+        "sourceFindingIds": ["fnd-free-competition", "fnd-free-core-required"],
+        "featureIds": ["F-FREE"]
       },
       {
         "id": "par-contextual-inspection",
         "userExpectation": "인코딩된 원문과 해석 결과를 같은 화면에서 보고 부분 복사할 수 있다 — jwt.io가 만든 기대다.",
-        "sourceFindingIds": [
-          "fnd-decode-vs-verify-confusion"
-        ],
-        "featureIds": [
-          "F-INSPECTOR"
-        ]
+        "sourceFindingIds": ["fnd-decode-vs-verify-confusion"],
+        "featureIds": ["F-INSPECTOR"]
       }
     ],
     "beyondCompetitor": [
@@ -708,33 +560,25 @@
         "id": "bey-no-tool-selection",
         "structuralConstraint": "CyberChef는 recipe 조립이 제품 정체성이라 '고르지 않아도 되는 경험'을 기본값으로 만들면 자기 제품을 부정하게 된다. jwt.io는 단일 포맷 범위를 바꾸지 않는 한 format-agnostic 판별을 할 수 없다.",
         "userBenefit": "무엇인지 몰라도 붙여넣기만 하면 순위가 매겨진 후보와 근거가 나온다. 도구를 고르는 단계 자체가 없다.",
-        "featureIds": [
-          "F-DETECT"
-        ]
+        "featureIds": ["F-DETECT"]
       },
       {
         "id": "bey-ambiguity-honesty",
         "structuralConstraint": "단일 정답을 보여주는 도구는 신뢰도를 노출하는 순간 '틀릴 수 있다'를 인정하게 되어 제품 인상이 약해진다. 그래서 대부분 하나만 확정해 보여준다.",
         "userBenefit": "신뢰도가 낮거나 후보가 비슷하면 자동 확정하지 않고 경쟁 후보를 나란히 보여준다. 틀린 해석을 믿고 진행하는 사고를 막는다.",
-        "featureIds": [
-          "F-AMBIGUITY"
-        ]
+        "featureIds": ["F-AMBIGUITY"]
       },
       {
         "id": "bey-share-without-payload",
         "structuralConstraint": "CyberChef의 recipe deep link는 입력을 URL에 담을 수 있어야 재현이 되는 구조다. 그 편의를 버리면 그들의 공유 워크플로가 깨진다.",
         "userBenefit": "공유 요약에 raw·decoded·digest·크기·파일명이 들어가지 않는다. 동료에게 '무엇이었는지'는 전달하되 값 자체는 절대 나가지 않는다.",
-        "featureIds": [
-          "F-SAFE-SHARE"
-        ]
+        "featureIds": ["F-SAFE-SHARE"]
       },
       {
         "id": "bey-mechanical-privacy-gate",
         "structuralConstraint": "광고·분석 수익 모델을 가진 도구는 UI 소스에서 네트워크 호출을 기계적으로 금지할 수 없다. 금지하는 순간 수익 경로가 사라진다.",
         "userBenefit": "빌드가 UI 소스의 fetch·sendBeacon·XHR을 검사해 감사된 집계 카운터 1개 외에는 실패시킨다. '로컬 처리'가 마케팅 문구가 아니라 릴리스를 막는 게이트다.",
-        "featureIds": [
-          "F-NETWORK-GATE"
-        ]
+        "featureIds": ["F-NETWORK-GATE"]
       }
     ],
     "selectionReasons": [
@@ -839,11 +683,7 @@
       "docs/design/visual-evidence.json"
     ],
     "chainOrderRef": "../docs/engineering/product-quality-bar.md §3",
-    "productChangeIds": [
-      "DC-AUTODETECT-01",
-      "DC-LOCALPROOF-01",
-      "DC-I18N-01"
-    ],
+    "productChangeIds": ["DC-AUTODETECT-01", "DC-LOCALPROOF-01", "DC-I18N-01"],
     "productChangeLedger": "docs/prd/CHECKLIST.md (이 저장소의 실행 순서 SSOT; prd-work-state.json은 provenance만 소유)"
   }
 }

@@ -46,11 +46,7 @@
       "repeatCadence": "개발 중 수시",
       "route": "/ 판별 워크벤치 입력란에 붙여넣기",
       "recovery": "판별이 모호하면 후보와 이유를 함께 보여주고 사용자가 고른다.",
-      "featureIds": [
-        "F-DETECT",
-        "F-CHAIN",
-        "F-WARN"
-      ]
+      "featureIds": ["F-DETECT", "F-CHAIN", "F-WARN"]
     },
     {
       "id": "JOB-UNWRAP",
@@ -59,10 +55,7 @@
       "repeatCadence": "개발 중 수시",
       "route": "/ 판별 워크벤치의 디코딩 체인 패널",
       "recovery": "체인 중간에서 실패하면 그 단계까지의 결과와 실패 이유를 남긴다.",
-      "featureIds": [
-        "F-CHAIN",
-        "F-WARN"
-      ]
+      "featureIds": ["F-CHAIN", "F-WARN"]
     },
     {
       "id": "JOB-INSPECT-JWT",
@@ -71,10 +64,7 @@
       "repeatCadence": "주 단위",
       "route": "/ 판별 워크벤치 — jwt detector가 헤더·클레임·만료를 펼친다",
       "recovery": "서명 검증은 하지 않는다는 것을 명시해 오해를 막는다.",
-      "featureIds": [
-        "F-DETECT",
-        "F-WARN"
-      ]
+      "featureIds": ["F-DETECT", "F-WARN"]
     },
     {
       "id": "JOB-FORMAT",
@@ -83,10 +73,7 @@
       "repeatCadence": "개발 중 수시",
       "route": "/{tool} 변환 도구 (예: /json-format)",
       "recovery": "파싱 실패 위치를 표시한다.",
-      "featureIds": [
-        "F-OPERATIONS",
-        "F-TOOLSEARCH"
-      ]
+      "featureIds": ["F-OPERATIONS", "F-TOOLSEARCH"]
     },
     {
       "id": "JOB-CONVERT",
@@ -95,10 +82,7 @@
       "repeatCadence": "주 단위",
       "route": "/{tool} 변환 도구 (예: /yaml-to-json)",
       "recovery": "변환 불가 입력은 이유와 함께 거절한다.",
-      "featureIds": [
-        "F-OPERATIONS",
-        "F-WORKER"
-      ]
+      "featureIds": ["F-OPERATIONS", "F-WORKER"]
     },
     {
       "id": "JOB-RESUME",
@@ -107,21 +91,14 @@
       "repeatCadence": "주 단위",
       "route": "/ 판별 워크벤치 — 보관해 둔 workspace 레코드 열기",
       "recovery": "TTL이 지나면 자동 삭제되고 그 사실을 고지한다.",
-      "featureIds": [
-        "F-WORKSPACE",
-        "F-RECENT"
-      ]
+      "featureIds": ["F-WORKSPACE", "F-RECENT"]
     }
   ],
   "capabilityGroups": [
     {
       "id": "CG-DETECT",
       "name": "판별과 재귀 디코딩",
-      "featureIds": [
-        "F-DETECT",
-        "F-CHAIN",
-        "F-WARN"
-      ],
+      "featureIds": ["F-DETECT", "F-CHAIN", "F-WARN"],
       "depthLevels": [
         "첫 사용: 붙여넣기 하나로 종류와 근거가 나온다",
         "반복: 중첩 인코딩을 재귀로 끝까지 풀어 체인 각 단계를 보여준다",
@@ -131,11 +108,7 @@
     {
       "id": "CG-OPERATIONS",
       "name": "형식 변환·포매팅 47종",
-      "featureIds": [
-        "F-OPERATIONS",
-        "F-WORKER",
-        "F-TOOLSEARCH"
-      ],
+      "featureIds": ["F-OPERATIONS", "F-WORKER", "F-TOOLSEARCH"],
       "depthLevels": [
         "첫 사용: 도구를 골라 붙여넣으면 변환 결과가 나온다",
         "반복: 47종 레지스트리에서 검색으로 찾고 워커가 메인 스레드를 막지 않는다",
@@ -145,10 +118,7 @@
     {
       "id": "CG-CONTINUITY",
       "name": "이어보기",
-      "featureIds": [
-        "F-WORKSPACE",
-        "F-RECENT"
-      ],
+      "featureIds": ["F-WORKSPACE", "F-RECENT"],
       "depthLevels": [
         "첫 사용: 쓴 도구가 최근 목록에 남는다",
         "반복: 작업 중 값을 TTL(session·24h·7d·keep)로 workspace에 보관해 이어서 본다",
@@ -158,11 +128,7 @@
     {
       "id": "CG-TRUST",
       "name": "안전 공유와 신뢰",
-      "featureIds": [
-        "F-SAFESHARE",
-        "F-COPY",
-        "F-TRUSTPAGE"
-      ],
+      "featureIds": ["F-SAFESHARE", "F-COPY", "F-TRUSTPAGE"],
       "depthLevels": [
         "첫 사용: 입력이 기기를 떠나지 않는다는 것을 /about에서 확인한다",
         "반복: safe-share가 payload를 빼고 구조·rule만으로 공유 텍스트를 만든다",
@@ -172,12 +138,7 @@
     {
       "id": "CG-REACH",
       "name": "다중 표면과 언어",
-      "featureIds": [
-        "F-CLI",
-        "F-DESKTOP",
-        "F-EXTENSION",
-        "F-I18N"
-      ],
+      "featureIds": ["F-CLI", "F-DESKTOP", "F-EXTENSION", "F-I18N"],
       "depthLevels": [
         "첫 사용: 설치 없이 웹에서 바로 쓴다",
         "반복: 같은 엔진을 CLI·데스크톱·브라우저 확장에서 그대로 쓴다",

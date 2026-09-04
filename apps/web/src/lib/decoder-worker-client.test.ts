@@ -1,8 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import {
-  createDecoderWorkerClient,
-  type DecoderWorkerLike,
-} from './decoder-worker-client'
+import { createDecoderWorkerClient, type DecoderWorkerLike } from './decoder-worker-client'
 
 class FakeWorker implements DecoderWorkerLike {
   onmessage: DecoderWorkerLike['onmessage'] = null

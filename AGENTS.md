@@ -113,6 +113,7 @@ publish, DNS, Analytics schema, sponsor, store review나 public native release�
 - DevUtils 감사: `docs/research/2026-07-15-devutils-feature-audit.md`
 
 <!-- munops-validation:start -->
+
 ## Validation entrypoint
 
 - Task-owned files: `pnpm run validate:changed -- --file <path>`.
@@ -120,4 +121,5 @@ publish, DNS, Analytics schema, sponsor, store review나 public native release�
 - Full repository/candidate validation is reserved for explicit full scope or planner escalation.
 - Deterministic results reuse the same input fingerprint; provider/live/channel smoke remains fresh.
 - Contract: `../docs/engineering/validation-runner-contract.md`; project manifest: `docs/operations/validation-manifest.json`.
+
 <!-- munops-validation:end -->

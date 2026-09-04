@@ -67,9 +67,7 @@
     "web": {
       "decision": "selected",
       "provider": "Direct self-sold contextual sponsor",
-      "allowedFormats": [
-        "responsive_display"
-      ],
+      "allowedFormats": ["responsive_display"],
       "productionActivated": false
     },
     "appsInToss": {
@@ -163,9 +161,7 @@
         "cooldownSeconds": null
       },
       "firstValueRequired": true,
-      "excludedStates": [
-        "all_first_value_input_result_ranking_and_non_web_surfaces"
-      ],
+      "excludedStates": ["all_first_value_input_result_ranking_and_non_web_surfaces"],
       "rationale": "Input, the first local result, result ordering, and every non-web channel remain sponsor-free.",
       "codeOwner": null,
       "testOwner": "packages/workbench-ui/test/monetization.test.ts"
@@ -184,10 +180,7 @@
       "ad_revenue_fee",
       "ad_revenue_net"
     ],
-    "forbiddenMarketingMetrics": [
-      "campaign_spend",
-      "campaign_cac"
-    ]
+    "forbiddenMarketingMetrics": ["campaign_spend", "campaign_cac"]
   },
   "reconciliation": {
     "window": "previous_calendar_day_Asia_Seoul",

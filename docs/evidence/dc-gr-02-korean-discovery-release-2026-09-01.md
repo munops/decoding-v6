@@ -35,4 +35,3 @@ Verified: 2026-09-01 04:20 (Asia/Seoul)
 - Changed-file Prettier check, lint, full typecheck, 40 unit tests, benchmark, content/link/network/parity/extension/i18n/sponsor checks, 486-page build, and bundle budget passed.
 - Workspace live-surface, strict trust-surface, and live trust-surface checks each completed with zero errors and zero warnings after deployment.
 - The repository-wide `pnpm verify` formatter stage still reports nine unrelated pre-existing files; the changed-file formatting gate passed and all remaining verify stages passed.
-
