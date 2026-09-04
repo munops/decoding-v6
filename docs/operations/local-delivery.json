@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceRevision": "bf9537ad3fdd57835114e71a130bbbdaf58cdadb",
+  "sourceRevision": "4e1b42553cf2a09f016e494576f4b0d0262ce5d4",
   "declarationScope": "This migration records the source/config and historical 2026-09-01 provider receipt used to introduce local delivery. It authorizes no deployment from this checkout: each future exact owner-lane wave must replace the source SHA, artifact hash, provider read-back and receipt after a clean local gate.",
   "infrastructure": {
     "inventoryRef": "docs/operations/product-operations-manifest.json",
