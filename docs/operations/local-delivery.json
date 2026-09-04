@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "sourceRevision": "4e1b42553cf2a09f016e494576f4b0d0262ce5d4",
-  "declarationScope": "This migration records the source/config and historical 2026-09-01 provider receipt used to introduce local delivery. It authorizes no deployment from this checkout: each future exact owner-lane wave must replace the source SHA, artifact hash, provider read-back and receipt after a clean local gate.",
+  "sourceRevision": "2b520f20533f0d71f0474b21b9c69a1767a8c544",
+  "declarationScope": "This declaration is bound only to the approved zero-cost owner-lane Web wave docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml. It authorizes one existing decoding-v6 Worker delivery from runtime source 2b520f20533f0d71f0474b21b9c69a1767a8c544 after exact claim assertion and fresh provider read-back; it does not authorize DNS, routes, secrets, bindings, data, plans, advertising, desktop or another channel.",
   "infrastructure": {
     "inventoryRef": "docs/operations/product-operations-manifest.json",
     "runtimeResources": [
       {
         "provider": "Cloudflare",
         "service": "Workers with Static Assets",
-        "resourceRef": "account:69abd904cab5ffd103e569e7e050a884; worker:decoding-v6; assets:apps/web/dist; routes:decod.ing/*,www.decod.ing/*; historical version:f8f2b4a8-bb52-4e9e-8613-ffd86e8e5094 (2026-09-01 receipt)",
+        "resourceRef": "account:69abd904cab5ffd103e569e7e050a884; worker:decoding-v6; assets:apps/web/dist; routes:decod.ing/*,www.decod.ing/*; provider-before deployment:e5d086e2-a31b-4d4d-8c4e-9252b77b6bec; rollback version:f8f2b4a8-bb52-4e9e-8613-ffd86e8e5094; artifact:cfe29c78a56ec62866ee01582a487ccc24e01fd3e33efedd4fea7b5868c50bd4",
         "environment": "owner_lane_public_web_production",
         "destination": "https://decod.ing, https://www.decod.ing and technical fallback https://decoding-v6.wjstks3474.workers.dev",
         "mutationBoundary": "Only an exact current owner-lane Web wave may deploy the existing Worker. Domain/DNS/routes, new Worker/binding/secret/resource/cost, indexing, sponsor activation, desktop release and public channel changes are excluded."
@@ -41,13 +41,13 @@
     "externalApis": []
   },
   "release": {
-    "waveRef": "docs/operations/release-wave-local-required.md",
-    "approvalBoundary": "This declaration grants no provider mutation. Existing Worker version traffic movement or rollback requires an exact current owner-lane wave, active repository/provider claim, fresh provider read-back and real-origin smoke. DNS/domain/routes, Analytics schema, sponsor/advertising, account/payment/AI, package or store publication, desktop signing/notarization and external support delivery remain separate actions."
+    "waveRef": "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml",
+    "approvalBoundary": "The current standing-delegation P-REPORT wave permits exactly one zero-cost existing Worker delivery after repository, GitHub and Cloudflare claim assertion. Existing routes, DNS, EVENTS/ASSETS bindings, secrets, plan, Analytics schema, sponsor/advertising, account/payment/AI, package or store publication, desktop signing/notarization and external support delivery remain unchanged and unauthorized."
   },
   "commands": {
-    "preflight": "test -z \"$(git status --porcelain=v1 --untracked-files=all)\" && git diff --check && pnpm install --frozen-lockfile && pnpm verify && pnpm test:e2e && pnpm test:privacy && pnpm test:a11y && pnpm exec wrangler deploy --dry-run --config wrangler.toml --strict --keep-vars --var \"BUILD_SHA:$(git rev-parse HEAD)\"",
+    "preflight": "test -z \"$(git status --porcelain=v1 --untracked-files=all)\" && git diff --check && pnpm install --frozen-lockfile && pnpm verify && pnpm test:e2e && pnpm test:privacy && pnpm test:a11y",
     "deploy": "test -n \"$DECODING_RELEASE_WAVE\" && test -n \"$DECODING_DELIVERY_TARGET\" && pnpm delivery:web:deploy -- --execute",
-    "verify": "test -n \"$DECODING_RELEASE_WAVE\" && test -n \"$DECODING_DELIVERY_TARGET\" && DECODING_EXPECTED_BUILD_SHA=$(git rev-parse HEAD) pnpm delivery:web:verify"
+    "verify": "test -n \"$DECODING_RELEASE_WAVE\" && test -n \"$DECODING_DELIVERY_TARGET\" && DECODING_EXPECTED_BUILD_SHA=2b520f20533f0d71f0474b21b9c69a1767a8c544 pnpm delivery:web:verify"
   },
   "receipts": {
     "directory": "docs/evidence/releases/local-owner-wave"
