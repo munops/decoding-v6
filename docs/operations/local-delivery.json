@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "sourceRevision": "2b520f20533f0d71f0474b21b9c69a1767a8c544",
-  "declarationScope": "This declaration is bound only to the approved zero-cost owner-lane Web wave docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml. It authorizes one existing decoding-v6 Worker delivery from runtime source 2b520f20533f0d71f0474b21b9c69a1767a8c544 after exact claim assertion and fresh provider read-back; it does not authorize DNS, routes, secrets, bindings, data, plans, advertising, desktop or another channel.",
+  "sourceRevision": "6c1055648937f7fcf4f488ef00d6b38d2fc7494e",
+  "declarationScope": "This declaration is bound only to the approved zero-cost owner-lane Web wave docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml. It authorizes one corrected existing decoding-v6 Worker delivery from runtime source 6c1055648937f7fcf4f488ef00d6b38d2fc7494e after exact claim assertion and fresh provider read-back; it does not authorize DNS, routes, secrets, bindings, data, plans, advertising, desktop or another channel.",
   "infrastructure": {
     "inventoryRef": "docs/operations/product-operations-manifest.json",
     "runtimeResources": [
       {
         "provider": "Cloudflare",
         "service": "Workers with Static Assets",
-        "resourceRef": "account:69abd904cab5ffd103e569e7e050a884; worker:decoding-v6; assets:apps/web/dist; routes:decod.ing/*,www.decod.ing/*; provider-before deployment:e5d086e2-a31b-4d4d-8c4e-9252b77b6bec; rollback version:f8f2b4a8-bb52-4e9e-8613-ffd86e8e5094; artifact:cfe29c78a56ec62866ee01582a487ccc24e01fd3e33efedd4fea7b5868c50bd4",
+        "resourceRef": "account:69abd904cab5ffd103e569e7e050a884; worker:decoding-v6; assets:apps/web/dist; routes:decod.ing/*,www.decod.ing/*; provider-before deployment:13f77113-c17c-4ba2-8185-0401c9f1b291; rollback version:55d7379f-74ba-409c-88e6-72796d34fff7; artifact:686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe",
         "environment": "owner_lane_public_web_production",
         "destination": "https://decod.ing, https://www.decod.ing and technical fallback https://decoding-v6.wjstks3474.workers.dev",
         "mutationBoundary": "Only an exact current owner-lane Web wave may deploy the existing Worker. Domain/DNS/routes, new Worker/binding/secret/resource/cost, indexing, sponsor activation, desktop release and public channel changes are excluded."
@@ -47,7 +47,7 @@
   "commands": {
     "preflight": "test -z \"$(git status --porcelain=v1 --untracked-files=all)\" && git diff --check && pnpm install --frozen-lockfile && pnpm verify && pnpm test:e2e && pnpm test:privacy && pnpm test:a11y",
     "deploy": "test -n \"$DECODING_RELEASE_WAVE\" && test -n \"$DECODING_DELIVERY_TARGET\" && pnpm delivery:web:deploy -- --execute",
-    "verify": "test -n \"$DECODING_RELEASE_WAVE\" && test -n \"$DECODING_DELIVERY_TARGET\" && DECODING_EXPECTED_BUILD_SHA=2b520f20533f0d71f0474b21b9c69a1767a8c544 pnpm delivery:web:verify"
+    "verify": "test -n \"$DECODING_RELEASE_WAVE\" && test -n \"$DECODING_DELIVERY_TARGET\" && DECODING_EXPECTED_BUILD_SHA=6c1055648937f7fcf4f488ef00d6b38d2fc7494e pnpm delivery:web:verify"
   },
   "receipts": {
     "directory": "docs/evidence/releases/local-owner-wave"

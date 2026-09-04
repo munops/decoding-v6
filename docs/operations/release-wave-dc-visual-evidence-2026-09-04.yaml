@@ -1,7 +1,7 @@
 schema_version: 6
 wave_id: decoding-visual-evidence-web-release-2026-09-04
 status: approved
-source_revision: 2b520f20533f0d71f0474b21b9c69a1767a8c544
+source_revision: 6c1055648937f7fcf4f488ef00d6b38d2fc7494e
 prepared_at: 2026-09-04T19:07:48+09:00
 expires_at: 2026-09-04T21:07:48+09:00
 legal_entity_ref: hq/bootstrap/identity.yaml
@@ -46,7 +46,7 @@ actions:
     product: decoding-v6
     channel: source
     provider: github
-    exact_mutation: fast-forward munops/decoding-v6 main from 5d18cc85baf116b11a37d31d27d0ca7f8a222a02 through runtime source 2b520f20533f0d71f0474b21b9c69a1767a8c544 and this exact delivery-metadata commit; never force-push
+    exact_mutation: fast-forward munops/decoding-v6 main from release packet 8ab665dc9c330e430de16145cfdfcddf5d307b60 through corrected runtime source 6c1055648937f7fcf4f488ef00d6b38d2fc7494e and this exact delivery-metadata commit; never force-push
     account_ref: docs/munops/ops/provider-registry.yaml#accounts.github_primary
     resource_ref: github:munops/decoding-v6:refs/heads/main
     claim_resource_refs:
@@ -57,8 +57,8 @@ actions:
       applicability: source_only
       candidate:
         source_repository: munops/decoding-v6
-        source_before_sha: 5d18cc85baf116b11a37d31d27d0ca7f8a222a02
-        candidate_sha: 2b520f20533f0d71f0474b21b9c69a1767a8c544
+        source_before_sha: 8ab665dc9c330e430de16145cfdfcddf5d307b60
+        candidate_sha: 6c1055648937f7fcf4f488ef00d6b38d2fc7494e
         artifact_sha256: null
         release_entrypoint: null
       identity_transition:
@@ -113,13 +113,13 @@ actions:
       reconciled_at: null
     public_impact: no direct product runtime change; the source of record advances before the existing Worker is updated
     transmitted_data:
-      - Git commit objects through runtime source 2b520f20533f0d71f0474b21b9c69a1767a8c544 and the exact delivery-metadata commit
+      - Git commit objects through corrected runtime source 6c1055648937f7fcf4f488ef00d6b38d2fc7494e and the exact delivery-metadata commit
       - no credential value, decoded input, local result, browser storage, personal data or payment data
     legal_terms_changed: false
     preflight_evidence:
-      - remote main read back as 5d18cc85baf116b11a37d31d27d0ca7f8a222a02 and fast-forward ancestry is required
-      - runtime candidate validate:changed and validate:candidate passed from a clean checkout
-    rollback_or_abort: abort unless origin main remains exactly 5d18cc85baf116b11a37d31d27d0ca7f8a222a02 and ancestry is fast-forward; after push use a forward corrective commit and never rewrite main
+      - remote main read back as release packet 8ab665dc9c330e430de16145cfdfcddf5d307b60 and fast-forward ancestry is required
+      - initial runtime candidate passed validate:changed and validate:candidate; the three-file correction passed focused changed validation
+    rollback_or_abort: abort unless origin main remains exactly 8ab665dc9c330e430de16145cfdfcddf5d307b60 and ancestry is fast-forward; after push use a forward corrective commit and never rewrite main
     status: approved
     provider_readback: null
     channel_smoke: null
@@ -131,7 +131,7 @@ actions:
     product: decoding-v6
     channel: web
     provider: cloudflare_workers
-    exact_mutation: deploy runtime source 2b520f20533f0d71f0474b21b9c69a1767a8c544 and artifact cfe29c78a56ec62866ee01582a487ccc24e01fd3e33efedd4fea7b5868c50bd4 once to the existing decoding-v6 Worker; preserve EVENTS dataset, static-assets binding, routes, domains, DNS, secrets, plans and data
+    exact_mutation: deploy corrected runtime source 6c1055648937f7fcf4f488ef00d6b38d2fc7494e and artifact 686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe once to the existing decoding-v6 Worker; preserve EVENTS dataset, static-assets binding, routes, domains, DNS, secrets, plans and data
     account_ref: docs/munops/ops/provider-registry.yaml#accounts.cloudflare_primary
     resource_ref: cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6
     claim_resource_refs:
@@ -146,7 +146,7 @@ actions:
     artifact:
       format: cloudflare_worker_with_static_assets
       local_ref: apps/web/dist
-      sha256: cfe29c78a56ec62866ee01582a487ccc24e01fd3e33efedd4fea7b5868c50bd4
+      sha256: 686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe
       build_command: pnpm --filter @decoding/web build
       digest_method: sorted per-file SHA-256 ledger folded with SHA-256
       built_from_clean_runtime_commit: true
@@ -154,9 +154,9 @@ actions:
       applicability: release_candidate
       candidate:
         source_repository: munops/decoding-v6
-        source_before_sha: 3c3efe68a662925ec0c65a4fdf7ba195e9783f75
-        candidate_sha: 2b520f20533f0d71f0474b21b9c69a1767a8c544
-        artifact_sha256: cfe29c78a56ec62866ee01582a487ccc24e01fd3e33efedd4fea7b5868c50bd4
+        source_before_sha: 2b520f20533f0d71f0474b21b9c69a1767a8c544
+        candidate_sha: 6c1055648937f7fcf4f488ef00d6b38d2fc7494e
+        artifact_sha256: 686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe
         release_entrypoint: DECODING_RELEASE_WAVE=docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml DECODING_DELIVERY_TARGET=production pnpm delivery:web:deploy -- --execute
       identity_transition:
         mode: preserve
@@ -174,23 +174,23 @@ actions:
         target_environment: production
         build_environment: production
         assertion_profile: production
-        source_sha: 2b520f20533f0d71f0474b21b9c69a1767a8c544
-        artifact_sha256: cfe29c78a56ec62866ee01582a487ccc24e01fd3e33efedd4fea7b5868c50bd4
+        source_sha: 6c1055648937f7fcf4f488ef00d6b38d2fc7494e
+        artifact_sha256: 686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe
         fresh_server_required: true
         reuse_existing_server: false
-        server_identity_receipt_sha256: 7fd11c23dad29b159bd02bf9a85f3c6b8d6937b4997b513d62de987bcf4a2735
-        server_identity_receipt_payload: '{"source_sha":"2b520f20533f0d71f0474b21b9c69a1767a8c544","artifact_sha256":"cfe29c78a56ec62866ee01582a487ccc24e01fd3e33efedd4fea7b5868c50bd4","target_environment":"production","build_environment":"production","assertion_profile":"production","fresh_server_required":true,"reuse_existing_server":false}'
+        server_identity_receipt_sha256: 1ac0b1820661cde6251e4a48555a831899323b3f14a7b970473e48f38820e86e
+        server_identity_receipt_payload: '{"source_sha":"6c1055648937f7fcf4f488ef00d6b38d2fc7494e","artifact_sha256":"686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe","target_environment":"production","build_environment":"production","assertion_profile":"production","fresh_server_required":true,"reuse_existing_server":false}'
       provider_before:
         applicability: deployment
-        deployment_id: e5d086e2-a31b-4d4d-8c4e-9252b77b6bec
-        version_id: f8f2b4a8-bb52-4e9e-8613-ffd86e8e5094
+        deployment_id: 13f77113-c17c-4ba2-8185-0401c9f1b291
+        version_id: 55d7379f-74ba-409c-88e6-72796d34fff7
       single_deployment_path: decoding_local_delivery_existing_worker_once
     provider_before:
-      deployment_id: e5d086e2-a31b-4d4d-8c4e-9252b77b6bec
-      version_id: f8f2b4a8-bb52-4e9e-8613-ffd86e8e5094
+      deployment_id: 13f77113-c17c-4ba2-8185-0401c9f1b291
+      version_id: 55d7379f-74ba-409c-88e6-72796d34fff7
       traffic_percent: 100
-      runtime_source: 3c3efe68a662925ec0c65a4fdf7ba195e9783f75
-      rollback_target: f8f2b4a8-bb52-4e9e-8613-ffd86e8e5094
+      runtime_source: 2b520f20533f0d71f0474b21b9c69a1767a8c544
+      rollback_target: 55d7379f-74ba-409c-88e6-72796d34fff7
     price:
       cost_type: free
       cost_status: not_applicable
@@ -236,8 +236,9 @@ actions:
       - Playwright product, accessibility, privacy and responsive suite passed 41 tests with 2 intentional configuration skips
       - privacy passed 3 of 3 and accessibility passed 6 of 6 as separate runbook gates
       - Wrangler dry-run read 1022 files and preserved EVENTS, ASSETS and BUILD_SHA bindings
-      - production health read back prior source 3c3efe68a662925ec0c65a4fdf7ba195e9783f75
-    rollback_or_abort: abort before deployment on source, artifact, account, resource, route, binding, destination, claim, cost or transmitted-data drift; after deployment restore version f8f2b4a8-bb52-4e9e-8613-ffd86e8e5094 at 100 percent if exact health, mandatory routes, security/privacy smoke or localized core-result browser evidence fails
+      - first deployment health read back source 2b520f20533f0d71f0474b21b9c69a1767a8c544; original-detail inspection then found and rejected a detached desktop hero slash before final evidence
+      - corrected workbench build passed with 0 Astro diagnostics and artifact 686231fc142895dc137fb9ed8283d35012c27aab8a5a605fc4723855e0dd96fe
+    rollback_or_abort: abort before deployment on source, artifact, account, resource, route, binding, destination, claim, cost or transmitted-data drift; after deployment restore version 55d7379f-74ba-409c-88e6-72796d34fff7 at 100 percent if exact health, mandatory routes, security/privacy smoke or localized core-result browser evidence fails
     channel_smoke_plan: read back one new deployment at 100 percent and exact source, run canonical, www and workers.dev health plus synthetic and privacy smoke, then capture clean-profile 320, 390 and 1440 and core, unsupported and Worker-error screens from the same runtime
     status: approved
     provider_readback: null
