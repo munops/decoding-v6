@@ -246,8 +246,17 @@ test.describe('Korean locale suggestion', () => {
         '/ko/',
       )
 
-      const suggestionBox = await suggestion.boundingBox()
-      const mainBox = await page.locator('main').boundingBox()
+      // The decoder autofocus can trigger a smooth scroll while this assertion runs.
+      // Read both rectangles in one browser task so their viewport coordinates come
+      // from the same animation frame instead of two different scroll positions.
+      const { suggestionBox, mainBox } = await page.evaluate(() => {
+        const suggestionElement = document.querySelector('#locale-suggestion')
+        const mainElement = document.querySelector('main')
+        return {
+          suggestionBox: suggestionElement?.getBoundingClientRect().toJSON() ?? null,
+          mainBox: mainElement?.getBoundingClientRect().toJSON() ?? null,
+        }
+      })
       expect(suggestionBox).not.toBeNull()
       expect(mainBox).not.toBeNull()
       expect(suggestionBox!.y + suggestionBox!.height).toBeLessThanOrEqual(mainBox!.y)
