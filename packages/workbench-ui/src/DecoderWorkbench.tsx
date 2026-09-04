@@ -358,46 +358,6 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
           <span class="privacy-dot" aria-hidden="true" />
           {messages.privacy}
         </div>
-        <details class="copy-feedback-settings">
-          <summary>{messages.copyFeedback}</summary>
-          <div class="copy-feedback-controls">
-            <p>{messages.copyFeedbackDescription}</p>
-            <label class="copy-feedback-toggle">
-              <input
-                type="checkbox"
-                checked={copyFeedback.enabled}
-                onChange={(event) =>
-                  updateCopyFeedback({ ...copyFeedback, enabled: event.currentTarget.checked })
-                }
-              />
-              {messages.copyFeedbackEnabled}
-            </label>
-            <label class="copy-feedback-volume" for="copy-feedback-volume">
-              <span>{messages.copyFeedbackVolume}</span>
-              <input
-                id="copy-feedback-volume"
-                type="range"
-                min="0"
-                max="1"
-                step="0.05"
-                value={copyFeedback.volume}
-                disabled={!copyFeedback.enabled}
-                onInput={(event) =>
-                  updateCopyFeedback({ ...copyFeedback, volume: Number(event.currentTarget.value) })
-                }
-              />
-              <output>{Math.round(copyFeedback.volume * 100)}%</output>
-            </label>
-            <button
-              class="button ghost small"
-              type="button"
-              onClick={() => void previewCopyFeedback()}
-              disabled={!copyFeedback.enabled}
-            >
-              {messages.copyFeedbackPreview}
-            </button>
-          </div>
-        </details>
       </div>
       <div
         class="paste-surface"
@@ -417,7 +377,6 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
           spellcheck={false}
           autocomplete="off"
           autocapitalize="off"
-          autofocus
         />
         <div class="input-actions">
           <label class="button secondary">
@@ -613,6 +572,49 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
               </button>
             ) : null}
           </aside>
+          <details class="copy-feedback-settings result-preference">
+            <summary>{messages.copyFeedback}</summary>
+            <div class="copy-feedback-controls">
+              <p>{messages.copyFeedbackDescription}</p>
+              <label class="copy-feedback-toggle">
+                <input
+                  type="checkbox"
+                  checked={copyFeedback.enabled}
+                  onChange={(event) =>
+                    updateCopyFeedback({ ...copyFeedback, enabled: event.currentTarget.checked })
+                  }
+                />
+                {messages.copyFeedbackEnabled}
+              </label>
+              <label class="copy-feedback-volume" for="copy-feedback-volume">
+                <span>{messages.copyFeedbackVolume}</span>
+                <input
+                  id="copy-feedback-volume"
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value={copyFeedback.volume}
+                  disabled={!copyFeedback.enabled}
+                  onInput={(event) =>
+                    updateCopyFeedback({
+                      ...copyFeedback,
+                      volume: Number(event.currentTarget.value),
+                    })
+                  }
+                />
+                <output>{Math.round(copyFeedback.volume * 100)}%</output>
+              </label>
+              <button
+                class="button ghost small"
+                type="button"
+                onClick={() => void previewCopyFeedback()}
+                disabled={!copyFeedback.enabled}
+              >
+                {messages.copyFeedbackPreview}
+              </button>
+            </div>
+          </details>
         </div>
       ) : null}
     </section>

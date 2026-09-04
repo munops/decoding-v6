@@ -471,24 +471,6 @@ pre {
   font-size: clamp(17px, 1.7vw, 20px);
   line-height: 1.55;
 }
-.hero-proof {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.hero-proof span {
-  padding: 8px 12px;
-  border: 1px solid color-mix(in srgb, var(--mint) 35%, var(--line));
-  border-radius: 9px;
-  background: var(--mint-soft);
-  color: var(--muted);
-  font-size: 13px;
-}
-.hero-proof strong {
-  color: var(--mint);
-  font-family: var(--mono);
-  font-size: 16px;
-}
 .workbench-wrap {
   margin-bottom: 96px;
   animation: workbench-in var(--motion-base) var(--ease-out) both;
@@ -504,8 +486,8 @@ pre {
   margin: 0;
   padding: 14px 16px 15px;
   border: 0;
-  border-bottom: 1px solid var(--line);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   background: color-mix(in srgb, var(--surface-2) 55%, var(--surface));
 }
 .triage-launchpad > .eyebrow {
@@ -609,9 +591,6 @@ pre {
   border-radius: var(--radius-lg);
   box-shadow: none;
 }
-.decoder-frame .triage-launchpad + .decoder-shell {
-  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-}
 .workbench-bar {
   min-height: 42px;
   padding: 0 2px 10px;
@@ -636,9 +615,12 @@ pre {
 .paste-surface::before {
   position: absolute;
   inset: 0 auto 0 0;
-  width: 4px;
-  background: var(--accent-2);
+  width: 3px;
+  background: #5f718a;
   content: '';
+}
+.paste-surface:focus-within::before {
+  background: var(--accent-2);
 }
 .paste-surface > label {
   display: block;
@@ -693,6 +675,12 @@ textarea {
 }
 .paste-surface .button.ghost {
   color: var(--workbench-muted);
+}
+.result-preference {
+  grid-column: 1 / -1;
+  width: max-content;
+  max-width: 100%;
+  margin: 12px 0 0 auto;
 }
 .button {
   display: inline-flex;
@@ -1606,19 +1594,18 @@ html:lang(ko) body .translation-status {
   }
   .hero {
     min-height: auto;
-    padding: 38px 0 18px;
+    padding: 24px 0 14px;
   }
   .hero h1 {
-    font-size: clamp(43px, 13vw, 54px);
+    font-size: clamp(36px, 10.8vw, 44px);
   }
   html:lang(ko) body .hero h1 {
-    font-size: clamp(38px, 11vw, 50px);
+    font-size: clamp(35px, 10.4vw, 43px);
   }
   .hero-copy > p {
-    font-size: 17px;
-  }
-  .hero-proof {
-    display: flex;
+    margin: 10px 0 0;
+    font-size: 15px;
+    line-height: 1.48;
   }
   .workbench-wrap {
     margin-bottom: 72px;
@@ -1627,15 +1614,16 @@ html:lang(ko) body .translation-status {
     padding: 12px;
   }
   .triage-sample-grid {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 3px;
-    scroll-snap-type: x proximity;
   }
   .triage-sample {
-    min-width: 205px;
-    scroll-snap-align: start;
+    min-width: 0;
+    min-height: 60px;
+  }
+  .triage-sample:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
   .decoder-shell,
   .tool-workbench {
@@ -1646,7 +1634,7 @@ html:lang(ko) body .translation-status {
     padding: 14px 12px 12px 15px;
   }
   .paste-surface textarea {
-    min-height: 170px;
+    min-height: 145px;
   }
   .result-chain,
   .inspector-panel,
@@ -1750,6 +1738,15 @@ html:lang(ko) body .translation-status {
   .workbench-bar .privacy-line {
     max-width: 210px;
     font-size: 11px;
+  }
+}
+
+@media (max-width: 350px) {
+  .triage-sample-grid {
+    grid-template-columns: 1fr;
+  }
+  .triage-sample:last-child:nth-child(odd) {
+    grid-column: auto;
   }
 }
 

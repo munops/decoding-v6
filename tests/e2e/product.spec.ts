@@ -18,14 +18,16 @@ test('auto-detects a nested Base64 JSON payload locally', async ({ page }) => {
   await expect(stages.nth(1)).toBeFocused()
   await page.keyboard.press('ArrowLeft')
   await expect(stages.first()).toBeFocused()
-  await expect(page.getByText('0 input bytes uploaded')).toBeVisible()
+  await expect(
+    page.getByText('Input stays on this device. No account, upload, or AI.'),
+  ).toBeVisible()
 })
 
 test('lets a visitor experience three evidence-first synthetic triage cases', async ({ page }) => {
   await page.goto('/')
   const launchpad = page.getByRole('group', { name: 'Try a safe synthetic case' })
   await expect(launchpad.getByRole('button')).toHaveCount(3)
-  await expect(page.locator('.hero-proof')).not.toContainText('47')
+  await expect(page.locator('.hero-proof')).toHaveCount(0)
   await expect(page.locator('meta[name="description"]')).toHaveAttribute(
     'content',
     /rank plausible formats/i,
@@ -246,9 +248,7 @@ test.describe('Korean locale suggestion', () => {
         '/ko/',
       )
 
-      // The decoder autofocus can trigger a smooth scroll while this assertion runs.
-      // Read both rectangles in one browser task so their viewport coordinates come
-      // from the same animation frame instead of two different scroll positions.
+      // Read both rectangles in one browser task so the boundary is sampled together.
       const { suggestionBox, mainBox } = await page.evaluate(() => {
         const suggestionElement = document.querySelector('#locale-suggestion')
         const mainElement = document.querySelector('main')

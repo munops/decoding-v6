@@ -31,9 +31,12 @@ async function openCleanPage(
 async function assertFirstVisit(page: Page, viewport: { width: number; height: number }) {
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await expect(page.locator('html')).toHaveAttribute('lang', 'en')
-  await expect(page.getByText('Local triage for unknown developer data')).toBeVisible()
   await expect(page.getByRole('heading', { name: /Trace the value/i })).toBeVisible()
-  await expect(page.getByText('0 input bytes uploaded')).toBeVisible()
+  await expect(
+    page.getByText('Input stays on this device. No account, upload, or AI.'),
+  ).toBeVisible()
+  await expect(page.getByText('0 input bytes uploaded')).toHaveCount(0)
+  await expect(page.locator('.copy-feedback-settings')).toHaveCount(0)
   await expect(page.locator('[data-sample-id]')).toHaveCount(3)
 
   const input = page.getByLabel('Paste text or drop a file')
@@ -41,6 +44,17 @@ async function assertFirstVisit(page: Page, viewport: { width: number; height: n
   const inputBounds = await input.boundingBox()
   expect(inputBounds).not.toBeNull()
   expect(inputBounds?.y).toBeLessThan(viewport.height)
+  expect((inputBounds?.y ?? 0) + (inputBounds?.height ?? 0)).toBeLessThanOrEqual(viewport.height)
+
+  const sampleBounds = await page.locator('[data-sample-id]').evaluateAll((elements) =>
+    elements.map((element) => {
+      const bounds = element.getBoundingClientRect()
+      return { left: bounds.left, right: bounds.right }
+    }),
+  )
+  expect(sampleBounds.every((bounds) => bounds.left >= 0 && bounds.right <= viewport.width)).toBe(
+    true,
+  )
 
   const geometry = await page.evaluate(() => ({
     clientWidth: document.documentElement.clientWidth,
