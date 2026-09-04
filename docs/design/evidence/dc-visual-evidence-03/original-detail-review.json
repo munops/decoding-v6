@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-04T21:51:42+09:00",
+  "inspectionMode": "original",
+  "reviewer": "codex:subagent:decoding-visual-evidence-20260904",
+  "assets": [
+    {
+      "sourceRef": "apps/web/public/icon.svg",
+      "inspectionRef": "apps/web/public/icon-512.png",
+      "inspectionSha256": "ea38d5814d01c6acda00eea3980ebb91ca7bb4c8aad63e95974a92c5d09ceb0f",
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "verdict": "pass",
+      "observations": [
+        "The cream lowercase d keeps an open, centered counter and remains distinct from the blue-black field.",
+        "The orange round-cap slash crosses cleanly without a cusp, halo, stray pixel, or accidental tangent.",
+        "The silhouette uses no generated texture, embedded raster, filter, or external dependency."
+      ]
+    },
+    {
+      "sourceRef": "apps/web/public/og.svg",
+      "inspectionRef": "apps/web/public/og.png",
+      "inspectionSha256": "c5fd6d67130213a66d29bc9e3639c046276be289c708f5027f7301f7974cb732",
+      "dimensions": {
+        "width": 1200,
+        "height": 630
+      },
+      "verdict": "pass",
+      "observations": [
+        "The 1200x630 export has one dominant two-line promise, a separate input-format-layer chain, and an aligned evidence rule.",
+        "All exact text is legible at original detail with no malformed glyphs, clipping, raster seam, or export artifact.",
+        "The PNG is a deterministic delivery derivative of the first-party SVG and introduces no new image source or generation route."
+      ]
+    }
+  ],
+  "screens": [
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-03/home-first-320.png",
+      "verdict": "pass",
+      "observation": "At the 320px floor the real paste surface and all three equal-width synthetic cases remain in the first viewport; controls and words are unclipped, with the file fallback visibly secondary."
+    },
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-03/home-first-390.png",
+      "verdict": "pass",
+      "observation": "At 390px the compact outcome statement leads directly to the dominant paste surface; all three examples share one row and the single local-only proof is not duplicated."
+    },
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-03/home-first-1440.png",
+      "verdict": "pass",
+      "observation": "The wide production route centers one continuous input-first workbench, preserves a restrained two-line outcome, and uses no detached decorative raster or 3D object."
+    },
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-03/home-core-synthetic-390.png",
+      "verdict": "pass",
+      "observation": "The production Base64 to JSON result exposes both chain steps, confidence, evidence, local-result audio boundary, and reduced-motion state without clipping the active decision surface."
+    },
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-03/home-unsupported-390.png",
+      "verdict": "pass",
+      "observation": "The unsupported state clearly says the format was not identified, records No format selected, and avoids presenting an unsupported guess as a successful decode."
+    },
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-03/home-worker-error-390.png",
+      "verdict": "pass",
+      "observation": "The injected production worker failure is materially distinct from unsupported input and retains both Try again and Technical details beside the original input."
+    }
+  ],
+  "verdict": "pass"
+}

@@ -5,6 +5,7 @@ import { basename, resolve } from 'node:path'
 
 const evidenceDir = process.env.DECODING_VISUAL_EVIDENCE_DIR
 const expectedRevision = process.env.DECODING_EXPECTED_REVISION
+const deployedBaseURL = process.env.PLAYWRIGHT_BASE_URL?.replace(/\/$/, '')
 const cleanFingerprint = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
 
 type Capture = {
@@ -30,6 +31,9 @@ async function openCleanPage(
 
 async function assertFirstVisit(page: Page, viewport: { width: number; height: number }) {
   await page.goto('/', { waitUntil: 'domcontentloaded' })
+  if (deployedBaseURL) {
+    expect(new URL(page.url()).origin).toBe(new URL(deployedBaseURL).origin)
+  }
   await expect(page.locator('html')).toHaveAttribute('lang', 'en')
   await expect(page.getByRole('heading', { name: /Trace the value/i })).toBeVisible()
   await expect(
@@ -118,6 +122,8 @@ test('captures deployed clean-profile, core, unsupported, and material error sta
 }) => {
   test.skip(!evidenceDir, 'Run only through the explicit visual-evidence capture command')
   mkdirSync(evidenceDir!, { recursive: true })
+
+  expect(deployedBaseURL).toBe('https://decod.ing')
 
   const health = await request.get('https://decod.ing/healthz')
   expect(health.ok()).toBe(true)
@@ -238,6 +244,7 @@ test('captures deployed clean-profile, core, unsupported, and material error sta
     schemaVersion: 1,
     checkedAt: new Date().toISOString(),
     target: 'https://decod.ing/',
+    navigationOrigin: deployedBaseURL,
     captureSourceIdentity: {
       kind: 'deployed_capture',
       baseHead: healthBody.revision,

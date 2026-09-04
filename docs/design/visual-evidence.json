@@ -2,40 +2,56 @@
   "schemaVersion": 4,
   "projectId": "decoding-v6",
   "status": "release_verified",
-  "statusScope": "Public Web only: the exact production Worker runtime, clean-profile first visit, core synthetic decode, unsupported input, and material worker error were rendered and reviewed. This does not claim desktop distribution, user value, monitoring, or profitability.",
-  "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
-  "checkedAt": "2026-09-04T20:03:57+09:00",
-  "runtimeIdentityRef": "docs/design/evidence/dc-visual-evidence-01/source-runtime-identity.json",
+  "statusScope": "Public Web runtime evidence only: exact production revision 3233ef31b91c2b4d9a70c76de609d1ed253b86ac, clean-profile first visit, core synthetic decode, unsupported input, and material worker error were rendered and reviewed. The prior r2 stranger critique is preserved as a failure under the owner's every-axis-at-least-4 bar; a fresh screens-only critique of this revision is not claimed here. This does not claim desktop distribution, full visual-quality closure, user value, monitoring, or profitability.",
+  "sourceRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
+  "checkedAt": "2026-09-04T21:51:42+09:00",
+  "runtimeIdentityRef": "docs/design/evidence/dc-visual-evidence-03/source-runtime-identity.json",
   "currentSourceIdentity": {
     "kind": "deployed_capture",
-    "baseHead": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+    "baseHead": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
     "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "reviewedAt": "2026-09-04T20:03:57+09:00",
+    "reviewedAt": "2026-09-04T21:51:42+09:00",
     "renderCaptureIdentity": {
-      "baseHead": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+      "baseHead": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
       "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }
   },
   "sourceFiles": [
     {
       "path": "apps/web/src/components/HomePage.astro",
-      "sha256": "f501c005ea5ccf8d02c6da9cc40c429f52a2bef41427d976df1edb8f5f57c147"
+      "sha256": "6dcc7cc92d1abd7adba4ba780e84051083182434bc262b337f44111606a9156a"
     },
     {
       "path": "apps/web/src/layouts/Layout.astro",
       "sha256": "4dbcf8ffa7895b6df39b9f27c6e02bf779c5d1174c9b5d938b7b970e7be1d2c5"
     },
     {
+      "path": "apps/web/src/islands/WebDecoder.tsx",
+      "sha256": "baa6e3500ab5a889b558b35b76849cbf342a319aea6a01c897760313fb291983"
+    },
+    {
+      "path": "apps/web/src/i18n/catalog.ts",
+      "sha256": "bb48a58660126a0a79c243c69b2f1ef1e18a6eee78dfa72b028d601834f2cdb2"
+    },
+    {
       "path": "apps/web/src/styles/global.css",
-      "sha256": "2211be91350080204e7f111683609d7d50e24e416004e49d07efa7d0009e7173"
+      "sha256": "3b3fc302d3f0120c8224159d7f9d98f149136c4c107440e79f084c63774439d8"
     },
     {
       "path": "packages/workbench-ui/src/DecoderWorkbench.tsx",
-      "sha256": "1cc88b4c027d5acb842781de8a72862ad9a10d864ce3380ca53d8fbfaa35642d"
+      "sha256": "9b5bbd82ba27336cad0b295715d5daf5939262fbf4caf3de972a1dd5dc08f079"
     },
     {
       "path": "tests/e2e/visual-evidence.spec.ts",
-      "sha256": "f487eb04d4b872e737b7e513df30c2227fd0186cfe57453b83f6fdd351eba786"
+      "sha256": "fa2327dd3e3043cc05a21a7d696b397e82aa866a96f194fa0c96db79dfac027a"
+    },
+    {
+      "path": "tests/e2e/product.spec.ts",
+      "sha256": "638fc879360072ff5a516a1423e57a819f601cfe1fa1798a9197a9a9f86b9768"
+    },
+    {
+      "path": "tests/e2e/responsive.spec.ts",
+      "sha256": "dce5948642cb579f73c13f00a734b25ed35b8ea9e5543c0b52add1668af6caab"
     }
   ],
   "briefRef": "docs/design/visual-brief.json",
@@ -55,16 +71,16 @@
       "provenance": {
         "kind": "first_party_authored",
         "creatorOrProvider": "MUNOPS first-party repo-native implementation",
-        "checkedAt": "2026-09-04T20:03:57+09:00",
+        "checkedAt": "2026-09-04T21:51:42+09:00",
         "commercialUse": true
       },
       "contentReview": {
-        "reviewedAt": "2026-09-04T20:03:57+09:00",
+        "reviewedAt": "2026-09-04T21:51:42+09:00",
         "notTextOnly": true,
         "compositionSpecific": true,
         "artifactFree": true,
         "smallSizeLegible": true,
-        "originalDetailInspectionRef": "docs/design/evidence/dc-visual-evidence-01/original-detail-review.json"
+        "originalDetailInspectionRef": "docs/design/evidence/dc-visual-evidence-03/original-detail-review.json"
       }
     },
     {
@@ -81,16 +97,16 @@
       "provenance": {
         "kind": "first_party_authored",
         "creatorOrProvider": "MUNOPS first-party repo-native implementation",
-        "checkedAt": "2026-09-04T20:03:57+09:00",
+        "checkedAt": "2026-09-04T21:51:42+09:00",
         "commercialUse": true
       },
       "contentReview": {
-        "reviewedAt": "2026-09-04T20:03:57+09:00",
+        "reviewedAt": "2026-09-04T21:51:42+09:00",
         "notTextOnly": true,
         "compositionSpecific": true,
         "artifactFree": true,
         "smallSizeLegible": true,
-        "originalDetailInspectionRef": "docs/design/evidence/dc-visual-evidence-01/original-detail-review.json"
+        "originalDetailInspectionRef": "docs/design/evidence/dc-visual-evidence-03/original-detail-review.json"
       }
     },
     {
@@ -114,16 +130,16 @@
       "provenance": {
         "kind": "first_party_authored",
         "creatorOrProvider": "MUNOPS first-party SVG and deterministic renderer",
-        "checkedAt": "2026-09-04T20:03:57+09:00",
+        "checkedAt": "2026-09-04T21:51:42+09:00",
         "commercialUse": true
       },
       "contentReview": {
-        "reviewedAt": "2026-09-04T20:03:57+09:00",
+        "reviewedAt": "2026-09-04T21:51:42+09:00",
         "notTextOnly": true,
         "compositionSpecific": true,
         "artifactFree": true,
         "smallSizeLegible": true,
-        "originalDetailInspectionRef": "docs/design/evidence/dc-visual-evidence-01/original-detail-review.json"
+        "originalDetailInspectionRef": "docs/design/evidence/dc-visual-evidence-03/original-detail-review.json"
       }
     },
     {
@@ -140,11 +156,11 @@
       "provenance": {
         "kind": "first_party_authored",
         "creatorOrProvider": "MUNOPS first-party repo-native implementation",
-        "checkedAt": "2026-09-04T20:03:57+09:00",
+        "checkedAt": "2026-09-04T21:51:42+09:00",
         "commercialUse": true
       },
       "contentReview": {
-        "reviewedAt": "2026-09-04T20:03:57+09:00",
+        "reviewedAt": "2026-09-04T21:51:42+09:00",
         "notTextOnly": false,
         "compositionSpecific": true,
         "artifactFree": true,
@@ -155,7 +171,7 @@
       "id": "signature",
       "role": "signature",
       "path": "packages/workbench-ui/src/DecoderWorkbench.tsx",
-      "sha256": "1cc88b4c027d5acb842781de8a72862ad9a10d864ce3380ca53d8fbfaa35642d",
+      "sha256": "9b5bbd82ba27336cad0b295715d5daf5939262fbf4caf3de972a1dd5dc08f079",
       "source": "repo_native_code",
       "width": null,
       "height": null,
@@ -165,11 +181,11 @@
       "provenance": {
         "kind": "first_party_authored",
         "creatorOrProvider": "MUNOPS first-party repo-native implementation",
-        "checkedAt": "2026-09-04T20:03:57+09:00",
+        "checkedAt": "2026-09-04T21:51:42+09:00",
         "commercialUse": true
       },
       "contentReview": {
-        "reviewedAt": "2026-09-04T20:03:57+09:00",
+        "reviewedAt": "2026-09-04T21:51:42+09:00",
         "notTextOnly": true,
         "compositionSpecific": true,
         "artifactFree": true,
@@ -179,16 +195,16 @@
   ],
   "mediaRouteReview": {
     "version": 1,
-    "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+    "sourceRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
     "decisions": [
       {
         "id": "brand-vector-family",
         "route": "R2",
         "ownerRef": "apps/web/public/icon.svg",
         "renderedEvidenceRefs": [
-          "docs/design/evidence/dc-visual-evidence-01/home-first-390.png",
-          "docs/design/evidence/dc-visual-evidence-01/home-first-1440.png",
-          "docs/design/evidence/dc-visual-evidence-01/original-detail-review.json"
+          "docs/design/evidence/dc-visual-evidence-03/home-first-390.png",
+          "docs/design/evidence/dc-visual-evidence-03/home-first-1440.png",
+          "docs/design/evidence/dc-visual-evidence-03/original-detail-review.json"
         ],
         "fallbackEvidenceRef": "apps/web/src/layouts/Layout.astro",
         "verdict": "pass",
@@ -199,8 +215,8 @@
         "route": "R0",
         "ownerRef": "apps/web/src/layouts/Layout.astro",
         "renderedEvidenceRefs": [
-          "docs/design/evidence/dc-visual-evidence-01/home-first-320.png",
-          "docs/design/evidence/dc-visual-evidence-01/home-first-1440.png"
+          "docs/design/evidence/dc-visual-evidence-03/home-first-320.png",
+          "docs/design/evidence/dc-visual-evidence-03/home-first-1440.png"
         ],
         "fallbackEvidenceRef": "apps/web/src/layouts/Layout.astro",
         "verdict": "pass",
@@ -211,14 +227,14 @@
         "route": "R0",
         "ownerRef": "packages/workbench-ui/src/DecoderWorkbench.tsx",
         "renderedEvidenceRefs": [
-          "docs/design/evidence/dc-visual-evidence-01/home-first-390.png",
-          "docs/design/evidence/dc-visual-evidence-01/home-core-synthetic-390.png",
-          "docs/design/evidence/dc-visual-evidence-01/home-unsupported-390.png",
-          "docs/design/evidence/dc-visual-evidence-01/home-worker-error-390.png"
+          "docs/design/evidence/dc-visual-evidence-03/home-first-390.png",
+          "docs/design/evidence/dc-visual-evidence-03/home-core-synthetic-390.png",
+          "docs/design/evidence/dc-visual-evidence-03/home-unsupported-390.png",
+          "docs/design/evidence/dc-visual-evidence-03/home-worker-error-390.png"
         ],
         "fallbackEvidenceRef": "tests/e2e/visual-evidence.spec.ts",
         "verdict": "pass",
-        "rationale": "The real textarea, ranked evidence chain, result inspector, reduced-motion behavior, unsupported state, and recovery action carry the product job directly; decorative raster or 3D would not improve the decision."
+        "rationale": "The real textarea is now the first dominant object; ranked evidence, the result inspector, reduced-motion behavior, unsupported state, and recovery action carry the product job directly. Decorative raster or 3D would not improve the decision."
       }
     ],
     "verdict": "pass"
@@ -232,12 +248,12 @@
         "width": 320,
         "height": 844
       },
-      "path": "docs/design/evidence/dc-visual-evidence-01/home-first-320.png",
-      "sha256": "1e987abb403439e0bad228844106fc35c66ea7f96dba4cd0e11dec0e913b1ede",
-      "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+      "path": "docs/design/evidence/dc-visual-evidence-03/home-first-320.png",
+      "sha256": "d8c1f7f8797fe30bcb5012629fa7a847a4fb0314f8e0364974f4a1942d29a917",
+      "sourceRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
       "captureSourceIdentity": {
         "kind": "deployed_capture",
-        "baseHead": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+        "baseHead": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
         "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "visualReview": {
@@ -262,12 +278,12 @@
         "width": 390,
         "height": 844
       },
-      "path": "docs/design/evidence/dc-visual-evidence-01/home-first-390.png",
-      "sha256": "16ae7758329d141547b7046e1b72813013c782722eb1fd52202e0f43c016c97e",
-      "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+      "path": "docs/design/evidence/dc-visual-evidence-03/home-first-390.png",
+      "sha256": "29f30e31c80215e6d58f2f5cb954f4f1243f11847ed2071c71cc599b316deb35",
+      "sourceRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
       "captureSourceIdentity": {
         "kind": "deployed_capture",
-        "baseHead": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+        "baseHead": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
         "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "visualReview": {
@@ -292,12 +308,12 @@
         "width": 1440,
         "height": 1000
       },
-      "path": "docs/design/evidence/dc-visual-evidence-01/home-first-1440.png",
-      "sha256": "ef0af33011e6b4b94cfc11bb75c950f2f12ebbc6e2e82a52b094e490da13e907",
-      "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+      "path": "docs/design/evidence/dc-visual-evidence-03/home-first-1440.png",
+      "sha256": "604157af47b9c3af4fb4e033f2fa3e4d73687230c00d201bf98fe941850f34f2",
+      "sourceRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
       "captureSourceIdentity": {
         "kind": "deployed_capture",
-        "baseHead": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+        "baseHead": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
         "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "visualReview": {
@@ -322,12 +338,12 @@
         "width": 390,
         "height": 844
       },
-      "path": "docs/design/evidence/dc-visual-evidence-01/home-core-synthetic-390.png",
-      "sha256": "a871252bb7050b5d16f3926f8f8df3c95dfef66e0b9395661d7c33e4d50857c8",
-      "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+      "path": "docs/design/evidence/dc-visual-evidence-03/home-core-synthetic-390.png",
+      "sha256": "cb2a41f0c83af10b4a3298d712010ef14eeaa5e13c79605edb4b08e1a775bd77",
+      "sourceRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
       "captureSourceIdentity": {
         "kind": "deployed_capture",
-        "baseHead": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+        "baseHead": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
         "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "visualReview": {
@@ -346,12 +362,12 @@
         "width": 390,
         "height": 844
       },
-      "path": "docs/design/evidence/dc-visual-evidence-01/home-unsupported-390.png",
-      "sha256": "6b893f0626c22a734ce61f496e680abf2d42eb78456d9e89df2972a02ad16eb4",
-      "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+      "path": "docs/design/evidence/dc-visual-evidence-03/home-unsupported-390.png",
+      "sha256": "c0b278878b1aa2d8406fc5c662c3f4f4b45dbf19785a863b4a253a982490c2c7",
+      "sourceRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
       "captureSourceIdentity": {
         "kind": "deployed_capture",
-        "baseHead": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+        "baseHead": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
         "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "visualReview": {
@@ -370,12 +386,12 @@
         "width": 390,
         "height": 844
       },
-      "path": "docs/design/evidence/dc-visual-evidence-01/home-worker-error-390.png",
-      "sha256": "dde6f569c8ea68f60d8043377758a8edd306e0de21ec467fd3053bab70cdcc46",
-      "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+      "path": "docs/design/evidence/dc-visual-evidence-03/home-worker-error-390.png",
+      "sha256": "dfae388b5259e0d2c920c64121c26fd949ca87e633cd07404afcca1a73b1a651",
+      "sourceRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
       "captureSourceIdentity": {
         "kind": "deployed_capture",
-        "baseHead": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+        "baseHead": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
         "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "visualReview": {
@@ -392,7 +408,7 @@
     "cleanProfile": true,
     "aboveFold": true,
     "timeBudgetSeconds": 5,
-    "visibleCategory": "Local triage for unknown developer data",
+    "visibleCategory": "Unknown developer data format and nested-layer decoder",
     "visibleProblem": "The visitor has an opaque developer value but does not yet know which format-specific tool to choose.",
     "visibleOutcome": "Trace the value and keep the evidence for every plausible and nested format.",
     "visibleMechanism": [
@@ -402,7 +418,7 @@
     ],
     "primaryAction": "Paste text or drop a file",
     "primaryActionCount": 1,
-    "secondaryActions": ["Try a safe synthetic case", "Open file"],
+    "secondaryActions": ["See the evidence with a known input", "Open file"],
     "oneSentenceVerdict": "A local-only decoder that identifies unknown developer data and shows the evidence behind each nested step.",
     "automatedTestRef": "tests/e2e/visual-evidence.spec.ts"
   },
@@ -440,16 +456,26 @@
       "specificity": 5,
       "restraint": 5,
       "variety": 4,
-      "lowestScoreRationale": "At narrow widths the synthetic rail deliberately peeks the next case and the sticky header remains dense, but neither obstructs the primary input, core result, or recovery state.",
+      "lowestScoreRationale": "At the 320px floor the sticky header remains dense, but the input surface and all three equal-width examples are visible without clipping; desktop preserves deliberate whitespace around one continuous workbench.",
       "verdict": "pass"
     }
   },
-  "strangerCritique": {
+  "supersededStrangerCritique": {
+    "supersededByRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
+    "evidenceRef": "docs/design/evidence/stranger-critique-2026-09-04-r2/judge-raw.json",
+    "ownerQualityBarAssessment": {
+      "requiredRank": 2,
+      "requiredMinimumAxisScore": 4,
+      "observedRank": 1,
+      "observedMinimumAxisScore": 3,
+      "verdict": "fail",
+      "reason": "The original r2 result is preserved without promotion: it ranked first, but every aggregated axis scored 3 and therefore missed the owner-required minimum of 4. Its five findings were implemented in the deployed r3 runtime; a fresh screens-only critique remains a separate follow-up gate."
+    },
     "version": 1,
-    "checkedAt": "2026-09-04T20:08:38+09:00",
-    "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+    "checkedAt": "2026-09-04T20:57:58+09:00",
+    "sourceRevision": "9e6e8d07d68e3ed4fd442451758f90bfed3a96db",
     "grader": {
-      "holder": "claude:stranger-critique-2026-09-04-2d33d6-1",
+      "holder": "claude:stranger-critique-2026-09-04-r2-b096c5-1",
       "contextIsolation": "screens_only",
       "host": "claude+grok",
       "sameHostAsWriter": false,
@@ -457,27 +483,48 @@
     },
     "method": "blind: our first-visit screen and external same-moment benchmarks captured at the same device viewport, shuffled into A~D labels; the judge received screens and rubric only (no product docs, brief, or prior verdicts). Runner: scripts/run-stranger-critique.mjs; protocol: craft-exemplars.md §7",
     "viewport": "390x844",
-    "screenshotRef": "docs/design/evidence/stranger-critique-2026-09-04/ours-390x844.png",
-    "blindLabel": "C",
+    "screenshotRef": "docs/design/evidence/stranger-critique-2026-09-04-r2/ours-390x844.png",
+    "blindLabel": "A",
     "benchmarks": [
+      {
+        "name": "JWT.io Debugger",
+        "url": "https://www.jwt.io/",
+        "source": "brief.sameMomentScreens",
+        "checkedAt": "2026-09-04T20:57:58+09:00",
+        "viewport": "390x844 (iPhone 13)",
+        "screenshotRef": "docs/design/evidence/stranger-critique-2026-09-04-r2/benchmark-jwt.io-390x844.png",
+        "captureNotes": ["removed overlays: div (100%)"],
+        "blindLabel": "B",
+        "captureIssue": null,
+        "judgeRank": 3,
+        "firstImpression": "JWT 디버거인 건 알겠는데 정작 붙여넣을 칸은 한참 아래에 있고 위에는 광고부터 뜬다.",
+        "scores": {
+          "philosophy": 3,
+          "hierarchy": 2,
+          "execution": 2,
+          "specificity": 3,
+          "restraint": 2,
+          "variety": 2
+        }
+      },
       {
         "name": "CyberChef",
         "url": "https://gchq.github.io/CyberChef/",
         "source": "brief.sameMomentScreens",
-        "checkedAt": "2026-09-04T20:08:38+09:00",
+        "checkedAt": "2026-09-04T20:57:58+09:00",
         "viewport": "390x844 (iPhone 13)",
-        "screenshotRef": "docs/design/evidence/stranger-critique-2026-09-04/benchmark-gchq.github.io-CyberChef-390x844.png",
+        "screenshotRef": "docs/design/evidence/stranger-critique-2026-09-04-r2/benchmark-gchq.github.io-CyberChef-390x844.png",
         "captureNotes": [],
-        "blindLabel": "A",
-        "captureIssue": "쿠키월/에러는 아니지만 Input·Output 패널이 모두 빈 상태고 데스크톱 3열 레이아웃이 모바일 뷰포트에 그대로 렌더돼 화면 절반 이상이 빈 흰 영역이다.",
+        "blindLabel": "C",
+        "captureIssue": "모바일 뷰포트에 데스크톱 4분할 레이아웃이 그대로 렌더링됐고 Operations/Recipe/Input/Output 모두 데이터가 없는 빈 상태다(오류 페이지나 모달은 아님).",
         "judgeRank": 4,
-        "firstImpression": "설명 한 줄 없이 데스크톱 화면을 그대로 욱여넣은 느낌이라, 목록만 잔뜩 보이고 뭘 하는 도구인지 감이 안 온다.",
+        "firstImpression": "설명 한 줄 없이 빈 패널만 가득한 데스크톱 툴이 폰 화면에 억지로 들어와 있다.",
         "scores": {
           "philosophy": 3,
           "hierarchy": 1,
           "execution": 2,
           "specificity": 3,
-          "restraint": 2,
+          "restraint": 3,
           "variety": 2
         }
       },
@@ -485,14 +532,14 @@
         "name": "Base64 Guru Text Decoder",
         "url": "https://base64.guru/converter/decode/text",
         "source": "brief.sameMomentScreens",
-        "checkedAt": "2026-09-04T20:08:38+09:00",
+        "checkedAt": "2026-09-04T20:57:58+09:00",
         "viewport": "390x844 (iPhone 13)",
-        "screenshotRef": "docs/design/evidence/stranger-critique-2026-09-04/benchmark-base64.guru-converter-390x844.png",
+        "screenshotRef": "docs/design/evidence/stranger-critique-2026-09-04-r2/benchmark-base64.guru-converter-390x844.png",
         "captureNotes": [],
-        "blindLabel": "B",
+        "blindLabel": "D",
         "captureIssue": null,
-        "judgeRank": 3,
-        "firstImpression": "Base64를 글자로 바꿔주는 옛날 무료 사이트 같은데, 글씨가 너무 커서 붙여넣기 전에 설명부터 읽어야 한다.",
+        "judgeRank": 4,
+        "firstImpression": "2000년대 홈페이지 같긴 한데 Base64를 텍스트로 바꾸는 곳이라는 건 확실하다.",
         "scores": {
           "philosophy": 3,
           "hierarchy": 3,
@@ -501,76 +548,55 @@
           "restraint": 3,
           "variety": 3
         }
-      },
-      {
-        "name": "JWT.io Debugger",
-        "url": "https://www.jwt.io/",
-        "source": "brief.sameMomentScreens",
-        "checkedAt": "2026-09-04T20:08:38+09:00",
-        "viewport": "390x844 (iPhone 13)",
-        "screenshotRef": "docs/design/evidence/stranger-critique-2026-09-04/benchmark-jwt.io-390x844.png",
-        "captureNotes": ["removed overlays: div (100%)"],
-        "blindLabel": "D",
-        "captureIssue": null,
-        "judgeRank": 4,
-        "firstImpression": "JWT를 디코드·검증하는 도구라는 건 바로 알겠는데, 맨 위가 광고 배너와 큰 빈 공간이라 정작 입력칸이 늦게 보인다.",
-        "scores": {
-          "philosophy": 3,
-          "hierarchy": 3,
-          "execution": 3,
-          "specificity": 3,
-          "restraint": 3,
-          "variety": 3
-        }
       }
     ],
-    "rank": 3,
+    "rank": 1,
     "rankCeiling": 4,
-    "firstImpression": "정체불명 문자열을 로컬에서 판별해준다는 개발자 도구 같은데, 정작 붙여넣을 칸은 화면 맨 아래에 잘려 있다.",
+    "firstImpression": "붙여넣기만 하면 뭔지 알아서 판별해 주는 개발자 도구구나, 입력창이 바로 보인다.",
     "firstImpressions": [
-      "정체불명 문자열을 로컬에서 판별해준다는 개발자 도구 같은데, 정작 붙여넣을 칸은 화면 맨 아래에 잘려 있다.",
-      "이미지를 열어 화면을 먼저 본다."
+      "붙여넣기만 하면 뭔지 알아서 판별해 주는 개발자 도구구나, 입력창이 바로 보인다.",
+      "이미지를 열어 판정합니다."
     ],
     "scores": {
       "philosophy": 3,
-      "hierarchy": 2,
+      "hierarchy": 3,
       "execution": 3,
       "specificity": 3,
-      "restraint": 2,
-      "variety": 2
+      "restraint": 3,
+      "variety": 3
     },
-    "aiDefaultLook": "대문자 자간 아이브로우 → 큰 헤드라인 → 한 문단 → 신뢰 문구로 이어지는 템플릿 스켈레톤에 정확히 들어맞고, 크림 배경 + 고대비 검정 + 버밀리언 강조라는 AI 기본 팔레트(1·2번 혼합)도 함께 쓴다.",
+    "aiDefaultLook": "①번(웜 크림 배경 + 테라코타/버밀리언 accent)에 부분 일치 — 세리프가 아닌 헤비 그로테스크라 완전 일치는 아니지만, 'TRY A SAFE SYNTHETIC CASE' 대문자 레터스페이스 마이크로 라벨은 템플릿 신호에 해당한다.",
     "blockingFindings": [
-      "기반: 'LOCAL TRIAGE FOR UNKNOWN DEVELOPER DATA' 아이브로우 → 헤드라인 → 문단 → 프라이버시 한 줄 구조가 템플릿 그 자체다 — 히어로에 제품 고유 소재(실제 디코딩 체인 레이어, 바이트 수, 후보 포맷 순위 같은 실물 화면)를 넣어 골격을 바꾼다.",
-      "구조: 유일한 주 액션인 붙여넣기 패널이 첫 화면 하단에서 잘린다 — 예제 카드와 피드백 버튼보다 입력 패널을 위로 올려 헤드라인 바로 아래에 배치한다.",
-      "구조: 신뢰 문구가 중복이다 — '0 input bytes uploaded' 배지와 'Input stays on this device. No account, upload, or AI.' 중 하나만 남기고(입력 전에는 0바이트 배지 제거) 첫 화면 disclaimer를 한 문장으로 줄인다.",
-      "기능: 'TRY A SAFE SYNTHETIC CASE'의 02번 카드가 우측에서 잘려 스크롤 가능 여부를 알 수 없다 — 2열 그리드로 두 카드를 모두 보이게 하거나 페이드+화살표로 가로 스크롤을 명시한다.",
-      "미관: 입력 패널의 굵은 주황·빨강 테두리가 에러 상태처럼 읽힌다 — 기본은 중립 보더로 두고 포커스에서만 강조 링을 쓰며, 'Copy feedback' 버튼은 첫 화면에서 내린다."
+      "[전면 팔레트] 크림 배경 + 버밀리언 accent + 대문자 레터스페이스 라벨 조합이 AI 기본값으로 읽힌다. accent를 제품 소재에서 뽑아라 — 토큰 세그먼트(헤더/페이로드/서명) 색 구분이나 경고 등급 색을 accent 원천으로 삼고, 배경은 입력 패널 대비를 살리는 중성 톤으로 낮춘다.",
+      "[상단 히어로] 2줄 헤드라인 + 3줄 본문이 첫 화면 상단 40%를 점유해 입력 패널이 화면 중앙 아래로 밀렸다. 헤드라인을 1줄로 줄이고 본문을 1문장으로 잘라 입력 패널 상단이 스크롤 없이 y=300px 안에 들어오게 한다.",
+      "[입력 패널 하단] 유일한 filled 버튼이 'Open file'이라 주행동이 붙여넣기인지 파일 열기인지 모호하다. 'Paste from clipboard'를 filled primary로 올리고 Open file은 ghost로 강등해 primary를 정확히 하나로 만든다.",
+      "[서브헤드 + 프라이버시 배지] 'on this device'가 서브헤드 끝문장과 초록 점 배지에서 두 번 반복된다. 서브헤드에서 해당 구절을 삭제하고 첫 화면 신뢰 문장은 배지 한 줄만 남긴다.",
+      "[예시 칩 영역] 칩 3개가 2+1로 떨어져 마지막 'Expired JWT warning'만 폭이 두 배인 비대칭 그리드가 됐고 'Clear'는 회색 대비가 낮다. 칩을 가로 스크롤 1줄 또는 3열 균등 그리드로 정렬하고 Clear 비활성 상태 대비를 4.5:1 이상으로 올린다."
     ],
-    "verdict": "fail",
-    "lowestScore": 2,
+    "verdict": "pass",
+    "lowestScore": 3,
     "judges": [
       {
         "host": "claude",
-        "holder": "claude:stranger-critique-2026-09-04-2d33d6-1",
+        "holder": "claude:stranger-critique-2026-09-04-r2-b096c5-1",
         "sameHostAsWriter": false,
-        "rank": 2,
+        "rank": 1,
         "scores": {
-          "philosophy": 3,
-          "hierarchy": 2,
-          "execution": 3,
+          "philosophy": 4,
+          "hierarchy": 4,
+          "execution": 4,
           "specificity": 3,
-          "restraint": 2,
-          "variety": 2
+          "restraint": 3,
+          "variety": 3
         },
-        "firstImpression": "정체불명 문자열을 로컬에서 판별해준다는 개발자 도구 같은데, 정작 붙여넣을 칸은 화면 맨 아래에 잘려 있다.",
-        "ms": 166830
+        "firstImpression": "붙여넣기만 하면 뭔지 알아서 판별해 주는 개발자 도구구나, 입력창이 바로 보인다.",
+        "ms": 250190
       },
       {
         "host": "grok",
-        "holder": "grok:stranger-critique-2026-09-04-2d33d6-2",
+        "holder": "grok:stranger-critique-2026-09-04-r2-b096c5-2",
         "sameHostAsWriter": false,
-        "rank": 3,
+        "rank": 1,
         "scores": {
           "philosophy": 3,
           "hierarchy": 3,
@@ -579,12 +605,12 @@
           "restraint": 3,
           "variety": 3
         },
-        "firstImpression": "이미지를 열어 화면을 먼저 본다.",
-        "ms": 270294
+        "firstImpression": "이미지를 열어 판정합니다.",
+        "ms": 269694
       }
     ],
     "aggregation": "worst_rank_min_scores_union_findings",
-    "rankingRationale": "[judge 1] D는 3초 안에 '무엇을 하는 도구인지'가 확실하고 실제 JWT 토큰이 색상 구분된 상태로 채워져 있어 낯선 사람에게 제품의 실물이 바로 보인다. 상단 프로모 배너 결합과 빈 공백, 레이블 정렬이 흠이지만 구조 자체는 살아 있다. C는 반응형과 타이포 완성도는 가장 현대적이나, 아이브로우 스켈레톤+크림·버밀리언이라는 템플릿 인상이 강하고 신뢰 문구가 중복되며 유일한 주 액션인 입력창이 첫 화면 아래에서 잘려 우선순위가 무너졌다. B는 제목과 버튼이 하나뿐이라 할 일은 명확하지만 태그라인 가로 잘림, 텍스처 띠 절단, 과대한 타입 스케일 같은 크래프트 결함이 커서 신뢰가 깎인다. A는 데스크톱 3열을 모바일에 그대로 렌더해 제품명·설명·주 액션이 모두 사라졌고 입력·출력이 빈 채로 화면 절반을 차지해 첫 방문 품질이 가장 낮다.\n[judge 2] 이미지를 읽은 뒤 판정한다.",
+    "rankingRationale": "[judge 1] A는 3초 안에 '정체 → 붙여넣을 곳 → 어떤 결과가 나오는지(예시 3건)'가 모두 첫 화면에 있고, 타이포·정렬·간격 크래프트가 유일하게 프로 기준을 넘는다(팔레트가 AI 기본값에 가깝고 결과 화면 실물이 없다는 게 감점 요인). D는 미감이 20년 낡고 태그라인·텍스처가 가로로 잘리는 결함이 있지만, '무엇을 붙여넣고 어떤 버튼 하나를 누르면 무엇이 나오는지'가 첫 화면에 전부 있고 primary가 정확히 하나여서 낯선 사람의 첫 방문 성공률은 B보다 높다. B는 라운드·타이포는 현대적이나 첫 요소가 프로모 배너이고, 히어로가 뷰포트 3분의 2를 먹어 실제 입력창이 폴드 아래에서 잘렸으며, 'Generate example' 라벨 줄바꿈·baseline 어긋남 같은 정렬 결함이 겹친다. C는 모바일에서 정체 문장도, 실제 데이터도, 시작 안내도 없이 빈 데스크톱 패널만 보여 무엇을 하는 곳인지조차 전달하지 못해 최하위다.\n[judge 2] placeholder",
     "benchmarkQualityNote": "One or more benchmarks still showed a modal or interstitial after automatic dismissal; a rank won against a blocked benchmark is not a win. Re-run with cleaner benchmark URLs before relying on the rank.",
     "wantedFeedback": "첫 화면의 위계, 첫 행동의 명확성, 실물 asset 존재, 면책·상태 어휘 과잉",
     "notWantedFeedback": "브랜드 색 자체의 취향, 벤치마크 브랜드 복제 제안"
@@ -596,8 +622,8 @@
     "dials": {
       "compositionVariance": {
         "verdict": "pass",
-        "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/home-first-1440.png",
-        "rationale": "The compressed editorial hero gives way to one large continuous workbench instead of repeating equal marketing cards."
+        "evidenceRef": "docs/design/evidence/dc-visual-evidence-03/home-first-1440.png",
+        "rationale": "The compressed outcome statement gives way immediately to one large continuous input-first workbench instead of repeating equal marketing cards or adding detached art."
       },
       "motionIntensity": {
         "verdict": "pass",
@@ -606,7 +632,7 @@
       },
       "informationDensity": {
         "verdict": "pass",
-        "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/home-core-synthetic-390.png",
+        "evidenceRef": "docs/design/evidence/dc-visual-evidence-03/home-core-synthetic-390.png",
         "rationale": "Evidence density appears only after input, with chain stage, confidence, reasons, and inspector grouped by the actual decision."
       }
     },
@@ -614,24 +640,18 @@
     "verdict": "pass"
   },
   "antiSlopReview": {
-    "checkedAt": "2026-09-04T20:03:57+09:00",
-    "sourceRevision": "20eeb704311c8ff5487615b1496cd3de7413e2ef",
+    "checkedAt": "2026-09-04T21:51:42+09:00",
+    "sourceRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
     "automatedTestRef": "tests/e2e/visual-evidence.spec.ts",
     "signalScan": {
-      "reportRef": "docs/design/evidence/dc-visual-evidence-01/anti-slop-signals.json",
-      "reportSha256": "334090e19a217e87c9718ed893852d0fa946b9b3af812ae4bc22f6969eb11ffa",
+      "reportRef": "docs/design/evidence/dc-visual-evidence-03/anti-slop-signals.json",
+      "reportSha256": "6cd8d08da9ae5025496e0e5ecbec5f410c54be3bba5932348c4eec8ea1e55bfe",
       "triage": [
         {
           "fingerprint": "6248e81d8e4afa0abc8f8483e33d17ea661d97621e0d99c9029e4a46f11791ef",
           "verdict": "intentional_choice",
           "rationale": "Detector labels distinguish evidence, safe examples, and official references around an actual format-specific result; they are task landmarks rather than marketing kickers.",
           "evidenceRef": "apps/web/src/components/DetectorPage.astro"
-        },
-        {
-          "fingerprint": "290f89d045a8800d61fc0fbe4f5b60257fb261b4e1daf60d94c00f12a1f9a620",
-          "verdict": "false_positive",
-          "rationale": "The scanner counts the one interpolated home eyebrow expression three times; the deployed first visit renders one category label above one outcome heading.",
-          "evidenceRef": "apps/web/src/components/HomePage.astro"
         },
         {
           "fingerprint": "3ccfd109dfa4ec971debced865e5164c05a4cd998ab43b480326797ff70ba068",
@@ -717,19 +737,19 @@
       {
         "id": "icon-consistency",
         "verdict": "pass",
-        "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/original-detail-review.json",
+        "evidenceRef": "docs/design/evidence/dc-visual-evidence-03/original-detail-review.json",
         "rationale": "The header, favicon, install raster, and OG card derive from the same d/slash geometry and semantic palette; no emoji substitutes the brand symbol."
       },
       {
         "id": "fabricated-proof",
         "verdict": "pass",
         "evidenceRef": "tests/e2e/visual-evidence.spec.ts",
-        "rationale": "The 0 input bytes uploaded statement is paired with canary egress and storage checks; format confidence is generated by the deterministic engine rather than testimonials or fake logos."
+        "rationale": "The single input-stays-on-device sentence is backed by canary egress and storage checks; the removed pre-input byte counter is not presented as proof, and format confidence comes from the deterministic engine rather than testimonials or fake logos."
       },
       {
         "id": "fake-chrome",
         "verdict": "not_applicable",
-        "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/home-first-390.png",
+        "evidenceRef": "docs/design/evidence/dc-visual-evidence-03/home-first-390.png",
         "rationale": "The screenshot is the real production route and the product does not draw decorative browser, phone, terminal, or IDE chrome."
       },
       {
@@ -750,7 +770,7 @@
           {
             "state": "default",
             "verdict": "pass",
-            "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/home-first-390.png",
+            "evidenceRef": "docs/design/evidence/dc-visual-evidence-03/home-first-390.png",
             "rationale": "The clean surface exposes one dark labeled textarea, file fallback, local boundary, and safe synthetic cases without a format-picker prerequisite."
           },
           {
@@ -768,13 +788,13 @@
           {
             "state": "active",
             "verdict": "pass",
-            "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/home-core-synthetic-390.png",
+            "evidenceRef": "docs/design/evidence/dc-visual-evidence-03/home-core-synthetic-390.png",
             "rationale": "Selecting the nested case produces a two-step Base64 to JSON tree with evidence and the selected inspector, all on device."
           },
           {
             "state": "disabled",
             "verdict": "pass",
-            "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/home-unsupported-390.png",
+            "evidenceRef": "docs/design/evidence/dc-visual-evidence-03/home-unsupported-390.png",
             "rationale": "Unavailable result audio remains visibly disabled and Clear is disabled before any input, preventing false action affordance."
           },
           {
@@ -786,13 +806,13 @@
           {
             "state": "error",
             "verdict": "pass",
-            "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/home-worker-error-390.png",
+            "evidenceRef": "docs/design/evidence/dc-visual-evidence-03/home-worker-error-390.png",
             "rationale": "A blocked worker produces a material danger message with Try again and Technical details instead of a silent empty result."
           },
           {
             "state": "success",
             "verdict": "pass",
-            "evidenceRef": "docs/design/evidence/dc-visual-evidence-01/home-core-synthetic-390.png",
+            "evidenceRef": "docs/design/evidence/dc-visual-evidence-03/home-core-synthetic-390.png",
             "rationale": "The successful synthetic decode exposes both chain stages, confidence, evidence, inspector, and local result-audio boundary."
           }
         ]

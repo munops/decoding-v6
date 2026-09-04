@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-09-04T20:57:58+09:00",
+  "playwright": "hwakdap/node_modules/playwright/index.mjs",
+  "device": "iPhone 13",
+  "ourUrl": "https://decod.ing",
+  "captureNotes": {
+    "ours": ["copied from docs/design/evidence/dc-visual-evidence-02/home-first-390.png"],
+    "bench-gchq.github.io-CyberChef": [],
+    "bench-jwt.io": ["removed overlays: div (100%)"],
+    "bench-base64.guru-converter": []
+  }
+}

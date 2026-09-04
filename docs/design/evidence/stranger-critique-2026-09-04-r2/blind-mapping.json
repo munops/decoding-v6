@@ -1,0 +1,56 @@
+{
+  "runId": "2026-09-04-r2-b096c5",
+  "labels": {
+    "A": "ours",
+    "B": "bench-jwt.io",
+    "C": "bench-gchq.github.io-CyberChef",
+    "D": "bench-base64.guru-converter"
+  },
+  "judgeHost": "claude+grok",
+  "judges": [
+    {
+      "host": "claude",
+      "holder": "claude:stranger-critique-2026-09-04-r2-b096c5-1",
+      "sameHostAsWriter": false,
+      "rank": 1,
+      "scores": {
+        "philosophy": 4,
+        "hierarchy": 4,
+        "execution": 4,
+        "specificity": 3,
+        "restraint": 3,
+        "variety": 3
+      },
+      "firstImpression": "붙여넣기만 하면 뭔지 알아서 판별해 주는 개발자 도구구나, 입력창이 바로 보인다.",
+      "ms": 250190
+    },
+    {
+      "host": "grok",
+      "holder": "grok:stranger-critique-2026-09-04-r2-b096c5-2",
+      "sameHostAsWriter": false,
+      "rank": 1,
+      "scores": {
+        "philosophy": 3,
+        "hierarchy": 3,
+        "execution": 3,
+        "specificity": 3,
+        "restraint": 3,
+        "variety": 3
+      },
+      "firstImpression": "이미지를 열어 판정합니다.",
+      "ms": 269694
+    }
+  ],
+  "tried": [
+    {
+      "host": "claude",
+      "ok": true,
+      "ms": 250190
+    },
+    {
+      "host": "grok",
+      "ok": true,
+      "ms": 269694
+    }
+  ]
+}

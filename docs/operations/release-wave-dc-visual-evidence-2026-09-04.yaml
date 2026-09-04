@@ -1,6 +1,6 @@
 schema_version: 6
 wave_id: decoding-visual-evidence-web-release-r3-2026-09-04
-status: approved
+status: done
 source_revision: 3233ef31b91c2b4d9a70c76de609d1ed253b86ac
 prepared_at: 2026-09-04T21:18:00+09:00
 expires_at: 2026-09-04T23:18:00+09:00
@@ -23,7 +23,7 @@ work_claim:
     provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6: 3
   asserted_at: 2026-09-04T21:18:00+09:00
   released_at: null
-  release_evidence_ref: null
+  release_evidence_ref: docs/design/evidence/dc-visual-evidence-03/source-runtime-identity.json
 intervention_mode: normal
 owner_delegation_ref: docs/munops/ops/owner-standing-delegation.json#zeroCostProviderExecution
 approval:
@@ -39,7 +39,7 @@ approval:
   owner_evidence_ref: conversation:current-thread:user-request-all-proceed-and-deploy
 actions:
   - action_id: DC-VISUAL-EVIDENCE-SOURCE-R3-20260904
-    approval_readiness: approved
+    approval_readiness: done
     approval_class: P-REPORT
     standing_delegation_eligible: true
     execution_lane: owner_lane
@@ -120,11 +120,11 @@ actions:
       - remote main read back as 42f0eddc2996208bcee642e4741d84a0725c3754 and fast-forward ancestry is required
       - visual-quality runtime candidate passed lint, typecheck, a clean 486-page build, product/responsive browser regression and the focused mobile hierarchy gate
     rollback_or_abort: abort unless origin main remains exactly 42f0eddc2996208bcee642e4741d84a0725c3754 and ancestry is fast-forward; after push use a forward corrective commit and never rewrite main
-    status: approved
-    provider_readback: null
-    channel_smoke: null
+    status: done
+    provider_readback: GitHub origin/main read back fast-forward commit 62628936ab975c81c1283b5215a4a5d78066e5ce containing runtime source 3233ef31b91c2b4d9a70c76de609d1ed253b86ac and approved release metadata; no force push occurred
+    channel_smoke: origin/main contains runtime source 3233ef31b91c2b4d9a70c76de609d1ed253b86ac as an ancestor and the final evidence commit is a later non-runtime fast-forward
   - action_id: DC-VISUAL-EVIDENCE-WEB-R3-20260904
-    approval_readiness: approved
+    approval_readiness: done
     approval_class: P-REPORT
     standing_delegation_eligible: true
     execution_lane: owner_lane
@@ -139,6 +139,8 @@ actions:
       - provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6
     depends_on_action_ids:
       - DC-VISUAL-EVIDENCE-SOURCE-R3-20260904
+    dependency_receipts:
+      DC-VISUAL-EVIDENCE-SOURCE-R3-20260904: GitHub origin/main read back 62628936ab975c81c1283b5215a4a5d78066e5ce before the Cloudflare release command
     destination:
       - https://decod.ing
       - https://www.decod.ing
@@ -237,9 +239,17 @@ actions:
       - production baseline read back deployment 8f11bbe4-7edf-4771-b1b9-81cf2a013616, version 14a86d08-b642-4203-9479-bfd8624b472b at runtime source 9e6e8d07d68e3ed4fd442451758f90bfed3a96db
     rollback_or_abort: abort before deployment on source, artifact, account, resource, route, binding, destination, claim, cost or transmitted-data drift; after deployment restore version 14a86d08-b642-4203-9479-bfd8624b472b at 100 percent if exact health, mandatory routes, security/privacy smoke or localized core-result browser evidence fails
     channel_smoke_plan: read back one new deployment at 100 percent and exact source, run canonical, www and workers.dev health plus synthetic and privacy smoke, then capture clean-profile 320, 390 and 1440 and core, unsupported and Worker-error screens from the same runtime
-    status: approved
-    provider_readback: null
-    channel_smoke: null
+    status: done
+    provider_readback: Cloudflare deployments list confirmed deployment 69495344-6a72-414d-9783-bf5a26515134 and version eb355be7-d553-4447-b333-2d938f89fe45 at 100 percent for exact runtime source 3233ef31b91c2b4d9a70c76de609d1ed253b86ac
+    provider_readback_details:
+      worker_name: decoding-v6
+      deployment_id: 69495344-6a72-414d-9783-bf5a26515134
+      version_id: eb355be7-d553-4447-b333-2d938f89fe45
+      created_at: 2026-09-04T12:30:13.846002Z
+      deployment_percentage: 100
+      source_revision: 3233ef31b91c2b4d9a70c76de609d1ed253b86ac
+      artifact_sha256: 792453c5173f2bc1627b755aedb067085ab6bc2c4071975746e1752848b31eec
+    channel_smoke: canonical, www and workers.dev /healthz returned exact runtime source; the production browser verifier passed synthetic triage, 47-tool catalog, local operation, canary egress/storage, linked assets and trust routes; the production-only capture runner passed clean-profile 320/390/1440 plus core, unsupported and worker-error states
 reapproval_triggers:
   - account_ref_changed
   - resource_or_destination_changed

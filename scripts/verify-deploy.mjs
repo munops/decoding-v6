@@ -62,7 +62,7 @@ try {
   )
   if (brokenAssets.length > 0)
     throw new Error(`Broken linked assets: ${JSON.stringify(brokenAssets)}`)
-  const launchpad = page.getByRole('group', { name: 'Try a safe synthetic case' })
+  const launchpad = page.getByRole('group', { name: 'See the evidence with a known input' })
   await launchpad.waitFor()
   if ((await launchpad.getByRole('button').count()) !== 3) {
     throw new Error('Expected exactly three synthetic triage cases')

@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-04T20:53:00+09:00",
+  "inspectionMode": "original",
+  "reviewer": "codex:subagent:decoding-visual-evidence-20260904",
+  "assets": [
+    {
+      "sourceRef": "apps/web/public/icon.svg",
+      "inspectionRef": "apps/web/public/icon-512.png",
+      "inspectionSha256": "ea38d5814d01c6acda00eea3980ebb91ca7bb4c8aad63e95974a92c5d09ceb0f",
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "verdict": "pass",
+      "observations": [
+        "The cream lowercase d keeps an open, centered counter and remains distinct from the blue-black field.",
+        "The orange round-cap slash crosses cleanly without a cusp, halo, stray pixel, or accidental tangent.",
+        "The silhouette uses no generated texture, embedded raster, filter, or external dependency."
+      ]
+    },
+    {
+      "sourceRef": "apps/web/public/og.svg",
+      "inspectionRef": "apps/web/public/og.png",
+      "inspectionSha256": "c5fd6d67130213a66d29bc9e3639c046276be289c708f5027f7301f7974cb732",
+      "dimensions": {
+        "width": 1200,
+        "height": 630
+      },
+      "verdict": "pass",
+      "observations": [
+        "The 1200x630 export has one dominant two-line promise, a separate compact input-format-layer chain, and an aligned lower evidence rule.",
+        "All exact text is legible at original detail with no malformed glyphs, clipping, raster seam, or export artifact.",
+        "The PNG is a deterministic delivery derivative of the hand-authored SVG; it preserves the symbol geometry, grid, blue-black, cream, orange, and mint hierarchy without introducing a new source image."
+      ]
+    }
+  ],
+  "screens": [
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-02/home-first-320.png",
+      "verdict": "pass",
+      "observation": "At the 320px floor the complete paste surface through the 10 MiB boundary is visible in the first viewport; the examples form one column and no label or word is clipped or split mid-word."
+    },
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-02/home-first-390.png",
+      "verdict": "pass",
+      "observation": "At 390px the real paste surface is the dominant first action and all three synthetic cases are visible; the first two form a balanced two-column row and the third spans the width without horizontal overflow."
+    },
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-02/home-first-1440.png",
+      "verdict": "pass",
+      "observation": "The wide route is organized around one continuous input-first workbench rather than a detached illustration or card grid; the restrained hero and footer frame the functional object without a floating decorative slash."
+    },
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-02/home-core-synthetic-390.png",
+      "verdict": "pass",
+      "observation": "The deployed Base64 to JSON chain, confidence, evidence, selected inspector, local result-audio boundary, and reduced-motion message remain readable in the real mobile result state."
+    },
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-02/home-unsupported-390.png",
+      "verdict": "pass",
+      "observation": "The restrained question-mark state says that the format was not identified, does not promote a guess, and preserves a clear next-input path."
+    },
+    {
+      "inspectionRef": "docs/design/evidence/dc-visual-evidence-02/home-worker-error-390.png",
+      "verdict": "pass",
+      "observation": "The material worker failure uses a bounded danger surface with Try again and Technical details while preserving the input and navigation; it is visually distinct from unsupported data."
+    }
+  ],
+  "verdict": "pass"
+}

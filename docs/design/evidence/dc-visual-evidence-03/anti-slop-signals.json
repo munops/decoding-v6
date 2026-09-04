@@ -1,0 +1,300 @@
+{
+  "schemaVersion": 1,
+  "scanner": {
+    "id": "munops-visual-anti-slop",
+    "version": 1,
+    "rulesDigest": "95487a07df31c3f7427ce3d6a2690287df9deea646bbe1a53f7ab32e11f6f987",
+    "upstream": {
+      "repository": "https://github.com/yetone/kill-ai-slop",
+      "commit": "96d1ca568a1db7e1ef9a381644c744440f816ee4",
+      "license": "Apache-2.0"
+    }
+  },
+  "scanConfig": {
+    "sourceRoots": ["apps/web/src", "packages/workbench-ui/src"],
+    "includeTests": false,
+    "excludes": []
+  },
+  "sourceDigest": "5fde8687f0fe81f7728ba9130a1b974cf5523a9bd48b8cb7f627ff0a0099577d",
+  "filesScanned": 58,
+  "summary": {
+    "rawSignals": 8,
+    "occurrences": 60,
+    "byRule": {
+      "VP-SLOP-06": {
+        "signals": 8,
+        "occurrences": 60
+      }
+    }
+  },
+  "signals": [
+    {
+      "fingerprint": "6248e81d8e4afa0abc8f8483e33d17ea661d97621e0d99c9029e4a46f11791ef",
+      "ruleId": "VP-SLOP-06",
+      "group": "type",
+      "name": "kicker or eyebrow repetition",
+      "confidence": "review",
+      "file": "apps/web/src/components/DetectorPage.astro",
+      "occurrences": 4,
+      "locations": [
+        {
+          "line": 29,
+          "excerpt": "<span class=\"eyebrow\">{messages.eyebrow}</span>"
+        },
+        {
+          "line": 29,
+          "excerpt": "<span class=\"eyebrow\">{messages.eyebrow}</span>"
+        },
+        {
+          "line": 44,
+          "excerpt": "<span class=\"eyebrow\">{messages.examplesEyebrow}</span><h2>{messages.examplesTitle}</h2><ul>"
+        },
+        {
+          "line": 55,
+          "excerpt": "<span class=\"eyebrow\">{messages.referencesEyebrow}</span><h2>"
+        }
+      ]
+    },
+    {
+      "fingerprint": "3ccfd109dfa4ec971debced865e5164c05a4cd998ab43b480326797ff70ba068",
+      "ruleId": "VP-SLOP-06",
+      "group": "type",
+      "name": "kicker or eyebrow repetition",
+      "confidence": "review",
+      "file": "apps/web/src/components/ToolPage.astro",
+      "occurrences": 3,
+      "locations": [
+        {
+          "line": 47,
+          "excerpt": "<span class=\"eyebrow\">{messages.localUtility} · {messages.pack} {operation.pack}</span>"
+        },
+        {
+          "line": 68,
+          "excerpt": "<span class=\"eyebrow\">{messages.howEyebrow}</span><h2>{messages.howTitle}</h2>"
+        },
+        {
+          "line": 72,
+          "excerpt": "<span class=\"eyebrow\">{messages.boundaryEyebrow}</span><h2>{messages.boundaryTitle}</h2><p>"
+        }
+      ]
+    },
+    {
+      "fingerprint": "32501eee3ae630333f76bcc1a1950f4e95eb5dd511a2b5cf82003c51c2704df5",
+      "ruleId": "VP-SLOP-06",
+      "group": "type",
+      "name": "kicker or eyebrow repetition",
+      "confidence": "review",
+      "file": "apps/web/src/i18n/catalog.ts",
+      "occurrences": 27,
+      "locations": [
+        {
+          "line": 195,
+          "excerpt": "eyebrow: string"
+        },
+        {
+          "line": 210,
+          "excerpt": "eyebrow: 'Local triage for unknown developer data',"
+        },
+        {
+          "line": 223,
+          "excerpt": "eyebrow: '알 수 없는 값, 기기에서 바로 확인',"
+        },
+        {
+          "line": 237,
+          "excerpt": "eyebrow: 'アカウント不要のユニバーサルデコーダー',"
+        },
+        {
+          "line": 249,
+          "excerpt": "eyebrow: '无需账户的通用解码器',"
+        },
+        {
+          "line": 262,
+          "excerpt": "eyebrow: 'Decodificador universal sin cuenta',"
+        },
+        {
+          "line": 276,
+          "excerpt": "eyebrow: 'Decodificador universal sem conta',"
+        },
+        {
+          "line": 290,
+          "excerpt": "eyebrow: 'Universeller Decoder ohne Konto',"
+        },
+        {
+          "line": 304,
+          "excerpt": "eyebrow: 'Décodeur universel sans compte',"
+        },
+        {
+          "line": 318,
+          "excerpt": "eyebrow: string"
+        },
+        {
+          "line": 331,
+          "excerpt": "eyebrow: 'Local detector',"
+        },
+        {
+          "line": 344,
+          "excerpt": "eyebrow: '이 기기에서 형식 확인',"
+        }
+      ]
+    },
+    {
+      "fingerprint": "b9d63f9bdcc58eeff390db228c06ce142a05ef5c1a3d7ba3648b2cee8d2c6de4",
+      "ruleId": "VP-SLOP-06",
+      "group": "type",
+      "name": "kicker or eyebrow repetition",
+      "confidence": "review",
+      "file": "apps/web/src/i18n/info.ts",
+      "occurrences": 12,
+      "locations": [
+        {
+          "line": 6,
+          "excerpt": "eyebrow: string"
+        },
+        {
+          "line": 21,
+          "excerpt": "eyebrow: 'Auditable method',"
+        },
+        {
+          "line": 46,
+          "excerpt": "eyebrow: 'Privacy contract',"
+        },
+        {
+          "line": 76,
+          "excerpt": "eyebrow: 'About',"
+        },
+        {
+          "line": 95,
+          "excerpt": "eyebrow: '판단 근거를 공개합니다',"
+        },
+        {
+          "line": 120,
+          "excerpt": "eyebrow: '입력 데이터 보호 약속',"
+        },
+        {
+          "line": 150,
+          "excerpt": "eyebrow: '소개',"
+        },
+        {
+          "line": 169,
+          "excerpt": "eyebrow: '監査可能な方法',"
+        },
+        {
+          "line": 194,
+          "excerpt": "eyebrow: 'プライバシー契約',"
+        },
+        {
+          "line": 220,
+          "excerpt": "eyebrow: 'このサイトについて',"
+        },
+        {
+          "line": 424,
+          "excerpt": "const [title, description, eyebrow, heading, lead] = values[key]"
+        },
+        {
+          "line": 428,
+          "excerpt": "eyebrow,"
+        }
+      ]
+    },
+    {
+      "fingerprint": "070f300dcc39a2282fb5ccf277c19bd1a15e9e448ac52697abe8f7d3cf2fedeb",
+      "ruleId": "VP-SLOP-06",
+      "group": "type",
+      "name": "kicker or eyebrow repetition",
+      "confidence": "review",
+      "file": "apps/web/src/i18n/trust.ts",
+      "occurrences": 3,
+      "locations": [
+        {
+          "line": 6,
+          "excerpt": "eyebrow: string"
+        },
+        {
+          "line": 21,
+          "excerpt": "eyebrow: 'Terms of service',"
+        },
+        {
+          "line": 56,
+          "excerpt": "eyebrow: 'Support',"
+        }
+      ]
+    },
+    {
+      "fingerprint": "05312f60b583ae62c45b46a480ee8fc288637845676fbf774be0bd850b2c6805",
+      "ruleId": "VP-SLOP-06",
+      "group": "type",
+      "name": "kicker or eyebrow repetition",
+      "confidence": "review",
+      "file": "apps/web/src/islands/WorkspaceManager.tsx",
+      "occurrences": 3,
+      "locations": [
+        {
+          "line": 106,
+          "excerpt": "<span class=\"eyebrow\">Explicit opt-in</span>"
+        },
+        {
+          "line": 176,
+          "excerpt": "<span class=\"eyebrow\">Before storage</span>"
+        },
+        {
+          "line": 196,
+          "excerpt": "<span class=\"eyebrow\">Stored locally</span>"
+        }
+      ]
+    },
+    {
+      "fingerprint": "ed177d43f55a8801680373e9da2b3e805e6f2f94bfad94693a6c3331af24d086",
+      "ruleId": "VP-SLOP-06",
+      "group": "type",
+      "name": "kicker or eyebrow repetition",
+      "confidence": "review",
+      "file": "apps/web/src/styles/global.css",
+      "occurrences": 5,
+      "locations": [
+        {
+          "line": 431,
+          "excerpt": ".eyebrow {"
+        },
+        {
+          "line": 484,
+          "excerpt": ".triage-launchpad > .eyebrow {"
+        },
+        {
+          "line": 786,
+          "excerpt": ".panel-heading .eyebrow {"
+        },
+        {
+          "line": 807,
+          "excerpt": ".safe-share .eyebrow {"
+        },
+        {
+          "line": 1498,
+          "excerpt": "html:lang(ko) body .eyebrow,"
+        }
+      ]
+    },
+    {
+      "fingerprint": "ef9d47750f45cf8525acfcc05ba3618777b5c757f218b2806428bd54874bbdad",
+      "ruleId": "VP-SLOP-06",
+      "group": "type",
+      "name": "kicker or eyebrow repetition",
+      "confidence": "review",
+      "file": "packages/workbench-ui/src/DecoderWorkbench.tsx",
+      "occurrences": 3,
+      "locations": [
+        {
+          "line": 433,
+          "excerpt": "<span class=\"eyebrow\">{messages.decodeChain}</span>"
+        },
+        {
+          "line": 497,
+          "excerpt": "<span class=\"eyebrow\">{messages.inspector}</span>"
+        },
+        {
+          "line": 536,
+          "excerpt": "<span class=\"eyebrow\">{messages.shareTitle}</span>"
+        }
+      ]
+    }
+  ]
+}

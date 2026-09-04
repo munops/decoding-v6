@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-04T21:51:42+09:00",
+  "production": {
+    "healthUrls": [
+      "https://decod.ing/healthz",
+      "https://www.decod.ing/healthz",
+      "https://decoding-v6.wjstks3474.workers.dev/healthz"
+    ],
+    "service": "decoding-v6",
+    "ok": true,
+    "runtimeRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
+    "deploymentId": "69495344-6a72-414d-9783-bf5a26515134",
+    "versionId": "eb355be7-d553-4447-b333-2d938f89fe45",
+    "trafficPercent": 100
+  },
+  "localGit": {
+    "branch": "main",
+    "headBeforeEvidenceCommit": "62628936ab975c81c1283b5215a4a5d78066e5ce"
+  },
+  "runtimeSourceComparison": {
+    "command": "git diff --name-only 3233ef31b91c2b4d9a70c76de609d1ed253b86ac..62628936ab975c81c1283b5215a4a5d78066e5ce",
+    "changedFiles": [
+      "docs/operations/local-delivery.json",
+      "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml"
+    ],
+    "verdict": "runtime_source_exact_with_later_release_metadata"
+  },
+  "captureIdentity": {
+    "kind": "deployed_capture",
+    "baseHead": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
+    "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "target": "https://decod.ing/",
+    "receiptRef": "docs/design/evidence/dc-visual-evidence-03/capture-receipt.json"
+  },
+  "providerReadback": {
+    "cloudflareDeploymentListCheckedAt": "2026-09-04T21:31:00+09:00",
+    "canonicalHealthExact": true,
+    "wwwHealthExact": true,
+    "workersDevHealthExact": true,
+    "productionBrowserSmoke": "pass",
+    "securityHeadersCheckedAt": "2026-09-04T21:54:28+09:00",
+    "securityHeaders": {
+      "strictTransportSecurity": "max-age=31536000; includeSubDomains",
+      "contentSecurityPolicy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; worker-src 'self' blob:; frame-src 'self' data: blob:; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+      "permissionsPolicy": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=()",
+      "referrerPolicy": "strict-origin",
+      "xContentTypeOptions": "nosniff",
+      "xFrameOptions": "DENY"
+    }
+  },
+  "deployDecision": {
+    "verdict": "performed",
+    "reason": "Five visual hierarchy and copy corrections changed the public workbench, so exact clean runtime source 3233ef31b91c2b4d9a70c76de609d1ed253b86ac was deployed before production capture.",
+    "providerMutationPerformed": true,
+    "rollbackDeploymentId": "8f11bbe4-7edf-4771-b1b9-81cf2a013616",
+    "rollbackVersionId": "14a86d08-b642-4203-9479-bfd8624b472b"
+  },
+  "postDeployNonRuntimeChanges": {
+    "paths": [
+      "docs/design/visual-evidence.json",
+      "docs/design/evidence/dc-visual-evidence-03",
+      "docs/operations/production-evidence.json",
+      "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml",
+      "docs/prd-work-state.json",
+      "docs/prd/CHECKLIST.md",
+      "playwright.config.ts",
+      "scripts/verify-deploy.mjs",
+      "tests/e2e/visual-evidence.spec.ts"
+    ],
+    "providerMutationRequired": false,
+    "reason": "These paths record or verify the already-deployed runtime and make the evidence runner target production. They are excluded from the Worker runtime and static-asset artifact, so the later evidence commit must not be represented as a deployed revision."
+  }
+}

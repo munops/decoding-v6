@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-04T20:53:00+09:00",
+  "production": {
+    "healthUrls": [
+      "https://decod.ing/healthz",
+      "https://www.decod.ing/healthz",
+      "https://decoding-v6.wjstks3474.workers.dev/healthz"
+    ],
+    "service": "decoding-v6",
+    "ok": true,
+    "runtimeRevision": "9e6e8d07d68e3ed4fd442451758f90bfed3a96db",
+    "deploymentId": "8f11bbe4-7edf-4771-b1b9-81cf2a013616",
+    "versionId": "14a86d08-b642-4203-9479-bfd8624b472b",
+    "trafficPercent": 100
+  },
+  "localGit": {
+    "branch": "main",
+    "headBeforeEvidenceCommit": "42f0eddc2996208bcee642e4741d84a0725c3754"
+  },
+  "runtimeSourceComparison": {
+    "command": "git diff --name-only 9e6e8d07d68e3ed4fd442451758f90bfed3a96db..42f0eddc2996208bcee642e4741d84a0725c3754",
+    "changedFiles": [
+      "docs/operations/local-delivery.json",
+      "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml",
+      "scripts/verify-deploy.mjs"
+    ],
+    "verdict": "runtime_source_exact_with_later_release_metadata_and_verifier"
+  },
+  "captureIdentity": {
+    "kind": "deployed_capture",
+    "baseHead": "9e6e8d07d68e3ed4fd442451758f90bfed3a96db",
+    "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "receiptRef": "docs/design/evidence/dc-visual-evidence-02/capture-receipt.json"
+  },
+  "deployDecision": {
+    "verdict": "performed",
+    "reason": "The input-first workbench, mobile sample layout, trust sentence, and result-only feedback behavior changed the public runtime, so the exact clean runtime commit was deployed before capture.",
+    "providerMutationPerformed": true,
+    "rollbackVersionId": "038d978f-512f-401d-82b1-ae10edfe53cf"
+  },
+  "postDeployNonRuntimeChanges": {
+    "paths": [
+      "docs/operations/local-delivery.json",
+      "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml",
+      "scripts/verify-deploy.mjs"
+    ],
+    "providerMutationRequired": false,
+    "reason": "The two documents record the already-executed wave and the local verifier now asserts the shipped input-first contract. None of these paths is included in the Worker runtime or static-asset artifact."
+  }
+}
