@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "ADSENSE-FRESH-READBACK-20260915-DECODING-V6",
+  "observedAt": "2026-09-14T20:50:10.000Z",
+  "channel": "web",
+  "project": "decoding-v6",
+  "site": "decod.ing",
+  "sourceRevision": "ed14b371ee2150b411bfa0bb7224703fb5267e35",
+  "provider": {
+    "name": "Google AdSense",
+    "publisherId": "pub-3541041706281849",
+    "accountScope": "existing authenticated publisher account; no credential stored",
+    "productSelection": "readback_only; product policy remains direct_self_sold_contextual_sponsor",
+    "siteList": {
+      "approvalStatus": "준비 중",
+      "adsTxtStatus": "찾을 수 없음",
+      "lastUpdate": "2026년 9월 14일 오후 3:12 KST"
+    },
+    "detailReadback": {
+      "status": "사이트의 광고 게재 가능 여부 검토 중",
+      "ownershipStep": "check_circle_filled",
+      "reviewStep": "requested",
+      "cmpStep": "not_configured",
+      "actionTaken": "none; existing AdSense registration was already in review"
+    }
+  },
+  "publicReadback": {
+    "baseUrl": "https://decod.ing",
+    "routes": {
+      "/": {
+        "status": 200,
+        "contentType": "text/html",
+        "bytes": 17034,
+        "sha256": "c82d1c3cc0f82500f52748740b297ba03f88101f4bf885c8e280f9fec0042867",
+        "canonical": "https://decod.ing/"
+      },
+      "/ads.txt": {
+        "status": 200,
+        "contentType": "text/plain",
+        "bytes": 59,
+        "sha256": "9a244aa8de9791ff635a866f86e3cfe5ad4ec94f82d48830eef084020eed5dd5",
+        "publisherLine": "google.com, pub-3541041706281849, DIRECT, f08c47fec0942fa0"
+      },
+      "/robots.txt": {
+        "status": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "bytes": 1927,
+        "sha256": "530c2972bdfbba3eda7f1a58092637caad5afce1ab2306a429518d27631b0878"
+      },
+      "/sitemap.xml": {
+        "status": 404,
+        "contentType": "text/html",
+        "bytes": 5694,
+        "sha256": "d0996043b3d771309f74eb96fdd43f7a6e9fee7cfa5164e2e4c35b36956a436a",
+        "note": "public sitemap gate is not closed"
+      }
+    }
+  },
+  "safety": {
+    "productionActivated": false,
+    "providerScriptLoaded": false,
+    "adRequests": 0,
+    "adDomNodes": 0,
+    "adServing": false,
+    "note": "AdSense is not the selected serving strategy. Direct sponsor contract/campaign, browser evidence, release approval and reconciliation remain open; no provider or ad activation occurred."
+  },
+  "conclusion": "Existing AdSense registration is in preparing/review-requested state with ownership step checked in the detail UI, while provider ads.txt crawler status remains not found. The product remains direct sponsor only and no new registration or review submission was made."
+}

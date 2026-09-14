@@ -3,7 +3,7 @@
   "project": "decoding-v6",
   "track": "ad_monetization",
   "productType": "non_game",
-  "checkedAt": "2026-08-24",
+  "checkedAt": "2026-09-15",
   "research": {
     "policyCheckedAt": "2026-08-10",
     "sources": [
@@ -192,5 +192,31 @@
     "unclassifiedSurfaceRequests": 0,
     "providerActivationRequiresSeparateWave": true,
     "evidenceStatus": "implementation_verified"
+  },
+  "providerRegistration": {
+    "provider": "Google AdSense",
+    "publisherId": "pub-3541041706281849",
+    "clientId": "ca-pub-3541041706281849",
+    "site": "decod.ing",
+    "resourceRef": "google_adsense:site:decod.ing",
+    "status": "review_requested_pending_readback_only",
+    "productSelection": "not_selected_direct_self_sold_contextual_sponsor",
+    "siteListStatus": "preparing",
+    "ownershipStatus": "confirmed",
+    "reviewStatus": "requested",
+    "adsTxtStatus": "not_found",
+    "providerReadbackAt": "2026-09-14T20:50:10.000Z",
+    "evidenceRef": "docs/evidence/adsense-fresh-readback-20260915.json",
+    "productionServing": false,
+    "nextGate": "Do not use AdSense for serving. Close the product direct-sponsor contract/campaign, same-revision browser evidence, privacy review, reconciliation, rollback and owner-approved release wave; keep all ad requests and DOM at 0."
+  },
+  "adsTxtProvenance": {
+    "status": "public_live_provider_crawler_pending",
+    "assetPath": "apps/web/public/ads.txt",
+    "publicUrl": "https://decod.ing/ads.txt",
+    "localHandling": "public_readback_only",
+    "providerReadbackAt": "2026-09-14T20:50:10.000Z",
+    "evidenceRef": "docs/evidence/adsense-fresh-readback-20260915.json",
+    "externalClosure": "AdSense crawler confirmation is pending and is not a product serving gate because direct sponsor is the selected provider strategy."
   }
 }
