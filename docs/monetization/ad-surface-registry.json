@@ -3,7 +3,7 @@
   "project": "decoding-v6",
   "track": "ad_monetization",
   "productType": "non_game",
-  "checkedAt": "2026-09-15",
+  "checkedAt": "2026-09-16",
   "research": {
     "policyCheckedAt": "2026-08-10",
     "sources": [
@@ -204,9 +204,9 @@
     "siteListStatus": "preparing",
     "ownershipStatus": "confirmed",
     "reviewStatus": "requested",
-    "adsTxtStatus": "not_found",
-    "providerReadbackAt": "2026-09-14T20:50:10.000Z",
-    "evidenceRef": "docs/evidence/adsense-fresh-readback-20260915.json",
+    "adsTxtStatus": "provider_not_found_public_line_live",
+    "providerReadbackAt": "2026-09-15T16:42:45.673Z",
+    "evidenceRef": "docs/evidence/adsense-full-readback-20260916.json",
     "productionServing": false,
     "nextGate": "Do not use AdSense for serving. Close the product direct-sponsor contract/campaign, same-revision browser evidence, privacy review, reconciliation, rollback and owner-approved release wave; keep all ad requests and DOM at 0."
   },
@@ -215,8 +215,8 @@
     "assetPath": "apps/web/public/ads.txt",
     "publicUrl": "https://decod.ing/ads.txt",
     "localHandling": "public_readback_only",
-    "providerReadbackAt": "2026-09-14T20:50:10.000Z",
-    "evidenceRef": "docs/evidence/adsense-fresh-readback-20260915.json",
+    "providerReadbackAt": "2026-09-15T16:42:45.673Z",
+    "evidenceRef": "docs/evidence/adsense-full-readback-20260916.json",
     "externalClosure": "AdSense crawler confirmation is pending and is not a product serving gate because direct sponsor is the selected provider strategy."
   }
 }
