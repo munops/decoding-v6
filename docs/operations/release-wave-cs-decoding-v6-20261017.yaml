@@ -1,0 +1,316 @@
+schema_version: 6
+wave_id: CS-DECODING-V6-20261017
+status: approved
+source_revision: c90bca6228be78da2d46f7138e641b7a449d8093
+prepared_at: 2026-10-18T18:56:31.835Z
+expires_at: 2026-10-19T00:56:31.836Z
+legal_entity_ref: hq/bootstrap/identity.yaml
+execution_lane: owner_lane
+approval_authority: human_owner
+work_queue_ref: docs/product/product-card.md
+work_claim:
+  registry_ref: .orchestration/work-claims.sqlite
+  required_for_mutation: true
+  claim_id: claim_72990047-8937-4720-a067-132f2921c184
+  holder: codex:cs-decoding-v6
+  resources:
+    - repo:decoding-v6
+    - provider:github:munops/decoding-v6
+    - provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6
+  fencing_tokens:
+    repo:decoding-v6: 42
+    provider:github:munops/decoding-v6: 3
+    provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6: 4
+  asserted_at: 2026-10-18T18:56:31.925Z
+  released_at: null
+  release_evidence_ref: docs/evidence/completion-2026-10/deploy-20261017-c90bca6.json
+intervention_mode: normal
+owner_delegation_ref: docs/munops/ops/owner-standing-delegation.json#zeroCostProviderExecution
+approval:
+  mode: action_time
+  resolved_at: 2026-10-18T18:56:31.835Z
+  requested_at: null
+  approved_at: null
+  approved_date: 2026-10-17
+  approval_clock_status: date supplied; exact time not supplied
+  approved_action_ids:
+    - CS-DECODING-V6-SOURCE-20261017
+    - CS-DECODING-V6-WEB-20261017
+  owner_evidence_ref: conversation:COMPLETE-SERVICES-20261017:owner-all-projects-implement-deploy-approved
+actions:
+  - action_id: CS-DECODING-V6-SOURCE-20261017
+    approval_readiness: ready
+    approval_class: P-REPORT
+    standing_delegation_eligible: true
+    execution_lane: owner_lane
+    product: decoding-v6
+    channel: source
+    provider: github
+    exact_mutation: Fast-forward existing origin/main from
+      ed14b371ee2150b411bfa0bb7224703fb5267e35 through runtime
+      c90bca6228be78da2d46f7138e641b7a449d8093 and owned release
+      metadata/evidence; no force or new branch.
+    account_ref: docs/munops/ops/provider-registry.yaml#accounts.github_primary
+    resource_ref: github:munops/decoding-v6:refs/heads/main
+    claim_resource_refs:
+      - repo:decoding-v6
+      - provider:github:munops/decoding-v6
+    destination: github:munops/decoding-v6:refs/heads/main
+    candidate_attestation:
+      applicability: source_only
+      candidate:
+        source_repository: munops/decoding-v6
+        source_before_sha: ed14b371ee2150b411bfa0bb7224703fb5267e35
+        candidate_sha: c90bca6228be78da2d46f7138e641b7a449d8093
+        artifact_sha256: null
+        release_entrypoint: null
+      identity_transition:
+        mode: not_applicable
+        reason: source synchronization does not itself change a rendered or provider
+          identity surface
+        surfaces: []
+        provider_before_fingerprint: null
+        candidate_artifact_fingerprint: null
+        migration_action_id: null
+      browser_gate:
+        mode: not_applicable
+        reason: browser evidence belongs to the dependent Cloudflare production action
+      provider_before:
+        applicability: not_applicable
+        reason: Git fast-forward is fenced by the exact remote SHA instead of a
+          deployment tuple
+        deployment_id: null
+        version_id: null
+      single_deployment_path: source_only
+    price:
+      cost_type: free
+      cost_status: not_applicable
+      currency: KRW
+      subtotal: 0
+      tax_amount: 0
+      total_payable: 0
+      first_charge: 0
+      recurrence: none
+      renewal_or_cap: 0
+      checked_at: 2026-10-18T18:56:31.835Z
+      checkout_evidence_refs: []
+    tax:
+      seller_legal_entity: null
+      billing_country: null
+      business_tax_profile_ref: hq/bootstrap/identity.yaml
+      business_tax_id_status: not_required
+      treatment: not_applicable
+      rate_percent: 0
+      evidence_type: none
+      invoice_expected: false
+      input_vat_recoverability: not_applicable
+      classification_evidence: []
+      prior_invoice_remediation: not_applicable
+      not_applicable_reason: existing private repository fast-forward has no checkout,
+        purchase, invoice, plan change or recurring commitment
+    post_purchase:
+      provider_billing_readback: null
+      actual_currency: null
+      actual_subtotal: null
+      actual_tax_amount: null
+      actual_total_paid: null
+      invoice_or_receipt_ref: null
+      ledger_ref: null
+      reconciled_at: null
+    public_impact: Existing private repository main advances; source alone does not
+      prove runtime release.
+    transmitted_data:
+      - Existing baseline local-only docs commits f584ed5 and 4ac8070 retained
+        without modification; complete-service runtime commits and exact
+        delivery/evidence metadata.
+      - No credentials, decoded values, private account data or browser profiles.
+    legal_terms_changed: false
+    preflight_evidence:
+      - Frozen c90bca6 clean Web1073pages; type/lint/focused units passed;
+        same-input prior full non-Web builds reused.
+      - Delayed-Worker private-key browser regression1 passed, wrapper7ca7b2f7
+        cleanup[]; current390/1440 and390recovery actual captures viewed,
+        wrappera9e45275 cleanup[].
+      - Original5b36pass10fail1skip and4738repair14pass1fail retained; observed
+        UI defects fixed and settled Axe6routes passed. Guard-required verify
+        and fullE2E run fresh immediately before deployment.
+    rollback_or_abort: Abort if remote main is not
+      ed14b371ee2150b411bfa0bb7224703fb5267e35 or not an ancestor; correct
+      forward without rewriting history.
+    status: ready
+    provider_readback: null
+    channel_smoke: null
+  - action_id: CS-DECODING-V6-WEB-20261017
+    approval_readiness: ready
+    approval_class: P-REPORT
+    standing_delegation_eligible: true
+    execution_lane: owner_lane
+    product: decoding-v6
+    channel: web
+    provider: cloudflare_workers
+    exact_mutation: Deploy frozen source c90bca6228be78da2d46f7138e641b7a449d8093
+      and artifact
+      7078d84760e75f79fbbac867a31c2a04a12ba1910b58a7bd568f1cb6ab102f42 to
+      existing decoding-v6 Worker once; existing ASSETS/EVENTS bindings, same
+      origin routes, secrets, DNS, accounts and cost preserved. Only seven
+      aggregate event-name allowlist and the exact /share/ no-body redirect are
+      added in code.
+    account_ref: docs/munops/ops/provider-registry.yaml#accounts.cloudflare_primary
+    resource_ref: cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6
+    claim_resource_refs:
+      - repo:decoding-v6
+      - provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6
+    depends_on_action_ids:
+      - CS-DECODING-V6-SOURCE-20261017
+    destination:
+      - https://decod.ing
+      - https://www.decod.ing
+      - https://decoding-v6.wjstks3474.workers.dev
+    artifact:
+      format: cloudflare_worker_with_static_assets
+      local_ref: apps/web/dist
+      sha256: 7078d84760e75f79fbbac867a31c2a04a12ba1910b58a7bd568f1cb6ab102f42
+      build_command: pnpm -r --workspace-concurrency=2 --if-present build
+      digest_method: sorted per-file SHA-256 ledger folded with SHA-256
+      built_from_clean_runtime_commit: true
+    candidate_attestation:
+      applicability: release_candidate
+      candidate:
+        source_repository: munops/decoding-v6
+        source_before_sha: 3233ef31b91c2b4d9a70c76de609d1ed253b86ac
+        candidate_sha: c90bca6228be78da2d46f7138e641b7a449d8093
+        artifact_sha256: 7078d84760e75f79fbbac867a31c2a04a12ba1910b58a7bd568f1cb6ab102f42
+        release_entrypoint:
+          DECODING_RELEASE_WAVE=docs/operations/release-wave-cs-decoding-v6-20261017.yaml
+          DECODING_DELIVERY_TARGET=production pnpm delivery:web:deploy --
+          --execute
+      identity_transition:
+        mode: preserve
+        surfaces:
+          - canonical origin
+          - manifest application name
+          - manifest short name
+        provider_before_fingerprint: dcb9b339cb30b0178e1ea36d68465b03b84c0f27301d5808481637969ed8169e
+        candidate_artifact_fingerprint: dcb9b339cb30b0178e1ea36d68465b03b84c0f27301d5808481637969ed8169e
+        migration_action_id: null
+      browser_gate:
+        mode: release
+        source_sha: c90bca6228be78da2d46f7138e641b7a449d8093
+        artifact_sha256: 7078d84760e75f79fbbac867a31c2a04a12ba1910b58a7bd568f1cb6ab102f42
+        target_environment: production
+        build_environment: production
+        assertion_profile: production
+        fresh_server_required: true
+        reuse_existing_server: false
+        server_identity_receipt_sha256: 90902633eda345d217048fefbf8fb0c74678d1e09397c076c2ac66470e1ea16b
+        server_identity_receipt_payload: '{"source_sha":"c90bca6228be78da2d46f7138e641b7a449d8093","artifact_sha256":"7078d84760e75f79fbbac867a31c2a04a12ba1910b58a7bd568f1cb6ab102f42","target_environment":"production","build_environment":"production","assertion_profile":"production","fresh_server_required":true,"reuse_existing_server":false}'
+        observed_status: local source meta exact; fresh isolated preview
+          actual390/1440/recovery passed
+      provider_before:
+        applicability: deployment
+        deployment_id: 69495344-6a72-414d-9783-bf5a26515134
+        version_id: eb355be7-d553-4447-b333-2d938f89fe45
+      single_deployment_path: decoding_local_delivery_existing_worker_once
+    provider_before:
+      deployment_id: 69495344-6a72-414d-9783-bf5a26515134
+      version_id: eb355be7-d553-4447-b333-2d938f89fe45
+      traffic_percent: 100
+      runtime_source: 3233ef31b91c2b4d9a70c76de609d1ed253b86ac
+      rollback_target: eb355be7-d553-4447-b333-2d938f89fe45
+    price:
+      cost_type: free
+      cost_status: not_applicable
+      currency: KRW
+      subtotal: 0
+      tax_amount: 0
+      total_payable: 0
+      first_charge: 0
+      recurrence: none
+      renewal_or_cap: 0
+      checked_at: 2026-10-18T18:56:31.835Z
+      checkout_evidence_refs: []
+    tax:
+      seller_legal_entity: null
+      billing_country: null
+      business_tax_profile_ref: hq/bootstrap/identity.yaml
+      business_tax_id_status: not_required
+      treatment: not_applicable
+      rate_percent: 0
+      evidence_type: none
+      invoice_expected: false
+      input_vat_recoverability: not_applicable
+      classification_evidence: []
+      prior_invoice_remediation: not_applicable
+      not_applicable_reason: Existing Worker code/static replacement; approved
+        incremental ceiling0 with no purchase or plan change; actual billing not
+        read and remains null.
+    post_purchase:
+      provider_billing_readback: null
+      actual_currency: null
+      actual_subtotal: null
+      actual_tax_amount: null
+      actual_total_paid: null
+      invoice_or_receipt_ref: null
+      ledger_ref: null
+      reconciled_at: null
+    public_impact: Existing public decoder gains complete plan workflows, local
+      parsers, redacted storage/backup, value-free sharing, trust routes,
+      opt-out anonymous counts and disabled-safe sponsor information. No
+      campaign, payment, new resource, PII collection, external contact or
+      channel is enabled.
+    transmitted_data:
+      - Worker code and static assets; fixed event names only on existing
+        same-origin /e/events.
+      - No input/output/key/file content, identifiers, private email,
+        credentials, payment or browser storage.
+    legal_terms_changed: true
+    preflight_evidence:
+      - Frozen c90bca6 clean Web1073pages; type/lint/focused units passed;
+        same-input prior full non-Web builds reused.
+      - Delayed-Worker private-key browser regression1 passed, wrapper7ca7b2f7
+        cleanup[]; current390/1440 and390recovery actual captures viewed,
+        wrappera9e45275 cleanup[].
+      - Original5b36pass10fail1skip and4738repair14pass1fail retained; observed
+        UI defects fixed and settled Axe6routes passed. Guard-required verify
+        and fullE2E run fresh immediately before deployment.
+    rollback_or_abort: Before mutation abort unless exact
+      resource/source/artifact/fences and provider-before remain current.
+      Within10min HTTP200/new source or version/390 render/first-value failure
+      invokes guarded rollback to eb355be7-d553-4447-b333-2d938f89fe45 and
+      read-back. Measurement timeout alone remains unknown.
+    status: ready
+    provider_readback: null
+    channel_smoke: null
+    channel_smoke_plan: Within10min canonical HTTP200/exact source/new version,390
+      visual/first value; same-origin share303/no-body and names-only count
+      receive; external-device/natural-use remain unobserved.
+reapproval_triggers:
+  - account_ref_changed
+  - resource_or_destination_changed
+  - seller_or_billing_country_changed
+  - business_tax_profile_changed
+  - subtotal_tax_or_total_payable_changed
+  - price_recurrence_or_cap_changed
+  - expected_invoice_or_tax_treatment_changed
+  - public_impact_changed
+  - transmitted_data_changed
+  - legal_terms_changed
+human_only_steps:
+  - mfa
+  - captcha
+  - legal_consent
+lane_rules:
+  mixed_lane_actions_allowed: false
+  exact_provider_claim_required_before_mutation: true
+  claim_does_not_replace_resolved_release_authority: true
+  hq_targeting_owner_lane_requires_owner_delegation: true
+  owner_targeting_hq_lane_requires_intervention_mode: owner_takeover
+  owner_takeover_requires_explicit_current_user_instruction: true
+  owner_takeover_requires_hq_park_fence_and_reconciliation: true
+tax_rules:
+  contract_ref: docs/munops/ops/tax-purchase-evidence.md
+  business_registration_is_not_automatic_discount: true
+  checkout_tax_and_input_vat_are_separate: true
+  raw_tax_id_or_payment_data_in_git_forbidden: true
+  paid_action_requires_current_checkout_evidence_before_approval: true
+  paid_done_requires_invoice_and_ledger_reconciliation: true
