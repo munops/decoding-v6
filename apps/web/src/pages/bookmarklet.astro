@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro'
+const code =
+  "javascript:(()=>{const text=String(getSelection());const target=open('https://decod.ing/','_blank');if(!target){alert('Allow pop-ups, or copy the selection and use Paste at decod.ing.');return;}const receive=event=>{if(event.source===target&&event.origin==='https://decod.ing'&&event.data==='decoding:ready'){target.postMessage({type:'decoding:selection',text},'https://decod.ing');removeEventListener('message',receive);}};addEventListener('message',receive);setTimeout(()=>removeEventListener('message',receive),30000);})()"
+---
+
+<Layout
+  title="Decode selected text — decod.ing bookmarklet"
+  description="Send selected text to a local decoder without putting the value in a URL."
+>
+  <article class="prose container">
+    <h1>Decode selected text.</h1><p>
+      Drag this link to your desktop browser’s bookmarks bar. Select text on a page, then click the
+      bookmark. The value is sent only between the two local windows, never in the address.
+    </p><a class="button" href={code}>Decode selection</a><p>
+      Some sites block bookmarklets with Content Security Policy. If it does not open, copy the text
+      and <a href="/">use Paste</a>. Pop-up blocking also requires the same fallback. This tool
+      never executes selected text.
+    </p>
+  </article>
+</Layout>

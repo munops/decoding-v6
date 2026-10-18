@@ -121,3 +121,6 @@ export const detectorSpecs: DetectorSpec[] = [
 ]
 
 export const detectorSpecById = new Map(detectorSpecs.map((entry) => [entry.detector, entry]))
+
+export { ruleSpecs } from './rules'
+export type { RuleSpec } from './rules'

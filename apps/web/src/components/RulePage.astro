@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro'
+import type { RuleSpec } from '@decoding/spec-registry'
+import { localePath, type Locale } from '../i18n/catalog'
+const { rule, locale = 'en' } = Astro.props as { rule: RuleSpec; locale?: Locale }
+const ko = locale === 'ko'
+---
+
+<Layout
+  locale={locale}
+  title={`${rule.id} — ${rule.title} — decod.ing`}
+  description={rule.why}
+  alternatePath={`/rules/${rule.id.toLowerCase()}/`}
+>
+  <article class="prose container">
+    <a class="back-link" href={localePath(locale, '/')}
+      >{ko ? '값 다시 확인하기' : 'Back to the decoder'}</a
+    ><span class="eyebrow">{rule.id}</span><h1>{rule.title}</h1><h2>
+      {ko ? '무엇을 뜻하나요?' : 'What it means'}
+    </h2><p>{rule.why}</p><h2>{ko ? '어떻게 고치나요?' : 'What to do next'}</h2><p>{rule.fix}</p><p
+      class="notice"
+    >
+      {
+        ko
+          ? '이 경고는 형식 규칙에 따른 안내이며 보안 감사를 대신하지 않아요.'
+          : 'This rule-based warning is guidance, not a security audit.'
+      }
+    </p><a href={rule.reference} rel="external">{ko ? '공식 문서' : 'Official specification'}</a>
+  </article>
+</Layout>

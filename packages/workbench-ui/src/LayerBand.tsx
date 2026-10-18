@@ -24,7 +24,9 @@ export function EvidenceList({
       </ul>
       {displayDetection.warnings.map((warning) => (
         <div class={`notice ${warning.severity}`} role="status" key={warning.ruleId}>
-          <strong>{warning.ruleId}</strong>
+          <strong>
+            <a href={`/rules/${warning.ruleId.toLowerCase()}/`}>{warning.ruleId}</a>
+          </strong>
           <span>{warning.message}</span>
         </div>
       ))}

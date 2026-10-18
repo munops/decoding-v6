@@ -16,7 +16,12 @@ import {
 import { detectionLabel } from './detection-copy'
 import type { DecoderMessages } from './messages'
 import { ChainStage, LayerBand } from './LayerBand'
-import { safeShareCardSvg, safeShareMarkdown, safeShareProjection } from './safe-share'
+import {
+  safeShareCardSvg,
+  safeShareCardPng,
+  safeShareMarkdown,
+  safeShareProjection,
+} from './safe-share'
 
 export type DecoderWorkbenchProps = {
   decodeInput: (input: DecodeInput, overrides?: Record<string, string>) => Promise<DecodeResult>
@@ -221,6 +226,33 @@ export function DecoderWorkbench({
     setMessage(messages.shareCardDownloaded)
   }
 
+  const sharePng = async () => {
+    if (!result || !selected) return
+    const projection = safeShareProjection(result.root, selected, messages)
+    if (!projection) return
+    try {
+      const slug = ['gzip', 'zlib', 'deflate', 'compression'].includes(selected.detector)
+        ? 'gzip-base64'
+        : selected.detector
+      const blob = await safeShareCardPng(projection, messages, slug),
+        file = new File([blob], 'decoding-safe-verdict.png', { type: 'image/png' })
+      if (navigator.canShare?.({ files: [file] }))
+        await navigator.share({ files: [file], title: 'decod.ing' })
+      else {
+        const href = URL.createObjectURL(blob),
+          link = document.createElement('a')
+        link.href = href
+        link.download = file.name
+        link.click()
+        setTimeout(() => URL.revokeObjectURL(href), 0)
+      }
+      onEvent?.('share_action')
+      setMessage(messages.shareCardDownloaded)
+    } catch (error) {
+      if (!(error instanceof DOMException && error.name === 'AbortError'))
+        setMessage(messages.copyFailed)
+    }
+  }
   const updateCopyFeedback = (next: CopyFeedbackPreferences) => {
     const saved = writeCopyFeedback(next)
     setCopyFeedback(saved)
@@ -426,7 +458,10 @@ export function DecoderWorkbench({
             )
             .map((warning) => (
               <div class="notice danger result-alert" role="status" key={warning.ruleId}>
-                <strong>{warning.ruleId}</strong> {warning.message}
+                <strong>
+                  <a href={`/rules/${warning.ruleId.toLowerCase()}/`}>{warning.ruleId}</a>
+                </strong>{' '}
+                {warning.message}
               </div>
             ))}
           <div class="result-chain">
@@ -521,7 +556,7 @@ export function DecoderWorkbench({
           {...(onSave ? { onSave } : {})}
           onInput={handleSource}
           onCopy={() => void copySelected()}
-          onShare={downloadSafeShareCard}
+          onShare={() => void sharePng()}
         />
       ) : null}
       <details class="copy-feedback-settings result-preference">

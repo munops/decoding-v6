@@ -86,7 +86,7 @@ test('an online navigation replaces a stale cached document before rendering', a
   await page.evaluate(async () => {
     await navigator.serviceWorker.register('/sw.js')
     await navigator.serviceWorker.ready
-    const cache = await caches.open('decoding-v6-shell-v3')
+    const cache = await caches.open('decoding-v6-shell-v4')
     await cache.put(
       '/',
       new Response('<h1>stale shell must not render</h1>', {

@@ -37,7 +37,16 @@ const routePath = `/detect/${spec.slug}/`
     </aside>
   </section>
   <div class="container workbench-wrap">
-    <WebDecoder messages={decoderMessages[locale]} client:load />
+    <WebDecoder
+      messages={decoderMessages[locale]}
+      sampleLabel={messages.examplesTitle}
+      samples={displaySpec.examples.map((value, index) => ({
+        id: `example-${index}`,
+        label: `${messages.examplesTitle} ${index + 1}`,
+        value,
+      }))}
+      client:load
+    />
   </div>
   <section class="tool-content container">
     <article>

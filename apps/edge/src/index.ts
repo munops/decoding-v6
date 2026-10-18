@@ -40,6 +40,8 @@ const noStore = { 'cache-control': 'no-store' }
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url)
+    if (url.pathname === '/share/' && request.method === 'POST')
+      return new Response(null, { status: 303, headers: { location: '/', ...noStore } })
 
     // `/e`가 예약된 경계이고 `/e/events`가 그 안의 이벤트 경로다.
     // 경로에 `events`를 두는 이유는 포트폴리오 판정자(check-production-readiness)가

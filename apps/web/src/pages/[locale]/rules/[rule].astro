@@ -1,0 +1,16 @@
+---
+import { ruleSpecs } from '@decoding/spec-registry'
+import RulePage from '../../../components/RulePage.astro'
+import { localizedLocales } from '../../../i18n/catalog'
+export function getStaticPaths() {
+  return localizedLocales.flatMap((locale) =>
+    ruleSpecs.map((rule) => ({
+      params: { locale, rule: rule.id.toLowerCase() },
+      props: { rule, locale },
+    })),
+  )
+}
+const { rule, locale } = Astro.props
+---
+
+<RulePage rule={rule} locale={locale} />

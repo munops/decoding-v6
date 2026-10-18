@@ -2,7 +2,8 @@
 /* global ServiceWorkerGlobalScope */
 
 const sw = /** @type {ServiceWorkerGlobalScope} */ (self)
-const CACHE = 'decoding-v6-shell-v3'
+const CACHE = 'decoding-v6-shell-v4'
+const shares = new Map()
 const CORE = [
   '/',
   '/tools/',
@@ -79,7 +80,41 @@ sw.addEventListener('activate', (event) => {
   )
 })
 
+sw.addEventListener('message', (event) => {
+  if (event.data?.type !== 'decoding:take-share') return
+  const id = event.source?.id
+  const text = id ? shares.get(id) : null
+  if (id) shares.delete(id)
+  event.ports[0]?.postMessage(typeof text === 'string' ? text : null)
+})
+
 sw.addEventListener('fetch', (event) => {
+  const url = new URL(event.request.url)
+  if (
+    url.origin === sw.location.origin &&
+    url.pathname === '/share/' &&
+    event.request.method === 'POST'
+  ) {
+    event.respondWith(
+      (async () => {
+        try {
+          const form = await event.request.formData()
+          const text = [form.get('text'), form.get('url')]
+            .filter((value) => typeof value === 'string')
+            .join('\n')
+          if (event.resultingClientId && text && text.length <= 10 * 1024 * 1024) {
+            if (shares.size >= 16) shares.delete(shares.keys().next().value)
+            shares.set(event.resultingClientId, text)
+            setTimeout(() => shares.delete(event.resultingClientId), 60000)
+          }
+        } catch {
+          /* The home screen offers explicit paste recovery. */
+        }
+        return Response.redirect(new URL('/#share', sw.location.origin), 303)
+      })(),
+    )
+    return
+  }
   if (!cacheable(event.request)) return
   event.respondWith(
     isNavigation(event.request) || !isImmutableAsset(event.request)

@@ -1,0 +1,10 @@
+---
+import { ruleSpecs } from '@decoding/spec-registry'
+import RulePage from '../../components/RulePage.astro'
+export function getStaticPaths() {
+  return ruleSpecs.map((rule) => ({ params: { rule: rule.id.toLowerCase() }, props: { rule } }))
+}
+const { rule } = Astro.props
+---
+
+<RulePage rule={rule} locale="en" />

@@ -1,0 +1,12 @@
+---
+import DetectorPage from '../../components/DetectorPage.astro'
+import { detectorSpecs } from '@decoding/spec-registry'
+const spec = {
+  ...detectorSpecs.find((spec) => spec.detector === 'compression')!,
+  slug: 'gzip-base64',
+  label: 'Decode gzip inside Base64',
+  description: 'Paste Base64-wrapped gzip and follow the local decompression chain.',
+}
+---
+
+<DetectorPage locale="en" spec={spec} />

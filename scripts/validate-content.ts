@@ -1,3 +1,4 @@
+import { decode } from '@decoding/engine'
 import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { operations } from '@decoding/operations'
@@ -58,3 +59,12 @@ for (const forbidden of ['shell:', 'fs:', 'http:', 'sql:']) {
 console.log(
   `Content validation passed: 47 tools, Pack ${packs.join('+')}, ${detectorSpecs.length} detector pages, least-privilege desktop and extension.`,
 )
+
+for (const spec of detectorSpecs)
+  for (const example of spec.examples) {
+    const root = (await decode(example)).root
+    const contains = (node: typeof root): boolean =>
+      node.candidates.some((candidate) => candidate.detector === spec.detector) ||
+      node.children.some(contains)
+    if (!contains(root)) throw new Error(`${spec.detector}: landing example is not recognized`)
+  }

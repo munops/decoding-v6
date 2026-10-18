@@ -51,6 +51,22 @@ const localizedPrivacy = localePath(locale, '/privacy/')
     <meta name="color-scheme" content="light dark" />
     <meta name="application-version" content="6.0.0" />
     <meta name="description" content={description} />
+    {
+      import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION ? (
+        <meta
+          name="google-site-verification"
+          content={import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION}
+        />
+      ) : null
+    }
+    {
+      import.meta.env.PUBLIC_NAVER_SITE_VERIFICATION ? (
+        <meta
+          name="naver-site-verification"
+          content={import.meta.env.PUBLIC_NAVER_SITE_VERIFICATION}
+        />
+      ) : null
+    }
     {preventIndexing ? <meta name="robots" content="noindex,follow" /> : null}
     <link rel="canonical" href={canonicalUrl} />
     {
