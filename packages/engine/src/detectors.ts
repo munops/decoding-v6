@@ -1,3 +1,5 @@
+import { identifyMagic } from './formats/magic-bytes'
+import { binaryDetectors } from './formats/binary'
 import { textDetectors } from './formats/text'
 import { extraTimeId } from './formats/time-ids'
 import { gunzipSync, inflateSync, unzlibSync } from 'fflate'
@@ -158,6 +160,8 @@ const base64Detector: Detector = {
     const explicitUrl = /[-_]/.test(text)
     const padded = /=+$/.test(text)
     const compressed =
+      !!identifyMagic(bytes) ||
+      (bytes[0] === 0x28 && bytes[1] === 0xb5 && bytes[2] === 0x2f && bytes[3] === 0xfd) ||
       (bytes[0] === 0x1f && bytes[1] === 0x8b) ||
       (bytes[0] === 0x78 && [0x01, 0x5e, 0x9c, 0xda].includes(bytes[1] ?? -1))
     const confidence = compressed
@@ -195,6 +199,8 @@ const hexDetector: Detector = {
     const ratio = printableRatio(bytes)
     const hasPrefix = /^0x/i.test(inputText(input).trim())
     const compressed =
+      !!identifyMagic(bytes) ||
+      (bytes[0] === 0x28 && bytes[1] === 0xb5 && bytes[2] === 0x2f && bytes[3] === 0xfd) ||
       (bytes[0] === 0x1f && bytes[1] === 0x8b) ||
       (bytes[0] === 0x78 && [0x01, 0x5e, 0x9c, 0xda].includes(bytes[1] ?? -1))
     const confidence = compressed
@@ -453,6 +459,7 @@ const compressionDetector: Detector = {
 
 export const defaultDetectors: Detector[] = [
   ...textDetectors,
+  ...binaryDetectors,
   jwtDetector,
   jsonDetector,
   compressionDetector,

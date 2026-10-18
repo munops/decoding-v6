@@ -25,7 +25,16 @@ export type Detection = {
   metadata?: Record<string, unknown>
 }
 
+export type DecodeCodecs = {
+  zstd?: (bytes: Uint8Array, limits: DecodeLimits) => Promise<Uint8Array>
+  brotli?: (bytes: Uint8Array, limits: DecodeLimits) => Promise<Uint8Array>
+  msgpack?: (bytes: Uint8Array) => Promise<unknown>
+  cbor?: (bytes: Uint8Array) => Promise<unknown>
+  toml?: (text: string) => Promise<unknown>
+}
 export type DetectorContext = {
+  codecs?: DecodeCodecs
+
   signal?: AbortSignal
   now: Date
   limits: DecodeLimits

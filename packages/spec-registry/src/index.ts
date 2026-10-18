@@ -1,3 +1,4 @@
+import { binarySpecs } from './binary-formats'
 import { completeTextSpecs } from './complete-formats'
 export type DetectorSpec = {
   detector: string
@@ -10,6 +11,7 @@ export type DetectorSpec = {
 
 export const detectorSpecs: DetectorSpec[] = [
   ...completeTextSpecs,
+  ...binarySpecs,
   {
     detector: 'jwt',
     slug: 'jwt',

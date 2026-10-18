@@ -16,8 +16,13 @@
     "@decoding/operations": "workspace:*",
     "@decoding/spec-registry": "workspace:*",
     "@decoding/workbench-ui": "workspace:*",
+    "@msgpack/msgpack": "3.1.3",
     "astro": "^5.12.8",
-    "preact": "^10.27.0"
+    "brotli-dec-wasm": "2.3.2",
+    "cbor-x": "1.6.6",
+    "fzstd": "0.1.1",
+    "preact": "^10.27.0",
+    "smol-toml": "1.9.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",

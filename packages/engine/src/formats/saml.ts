@@ -1,0 +1,69 @@
+import { inflateSync } from 'fflate'
+import type { Detector } from '../types'
+import { decodeBase64, inputText } from '../utils'
+import { found, warning } from './common'
+export const saml: Detector = {
+  id: 'saml',
+  detect(input, context) {
+    let text = inputText(input).trim()
+    if (!/<(?:[\w-]+:)?(?:Response|Assertion)\b/.test(text)) {
+      const bytes = decodeBase64(text)
+      if (!bytes) return null
+      text = inputText(bytes)
+      if (!text.trim().startsWith('<')) {
+        try {
+          const expanded = inflateSync(bytes)
+          if (
+            expanded.length > context.limits.maxExpandedBytes ||
+            expanded.length > bytes.length * context.limits.maxCompressionRatio
+          )
+            return found('saml', 'SAML response', { error: 'Expansion limit' }, 0.999, {
+              warnings: [
+                warning(
+                  'COMPRESSION-LIMIT',
+                  'SAML decompression exceeded the output limit.',
+                  'danger',
+                ),
+              ],
+            })
+          text = inputText(expanded)
+        } catch {
+          return null
+        }
+      }
+    }
+    if (
+      !/<(?:[\w-]+:)?(?:Response|Assertion)\b/.test(text) ||
+      !/(?:urn:oasis:names:tc:SAML|saml)/i.test(text)
+    )
+      return null
+    const issuer = /<(?:[\w-]+:)?Issuer\b[^>]*>([^<]*)<\//.exec(text)?.[1],
+      audience = /<(?:[\w-]+:)?Audience\b[^>]*>([^<]*)<\//.exec(text)?.[1],
+      notAfter = /\bNotOnOrAfter=["']([^"']+)["']/.exec(text)?.[1],
+      signed = /<(?:[\w-]+:)?Signature\b/.test(text)
+    return found(
+      'saml',
+      'SAML response / assertion',
+      {
+        issuer,
+        audience,
+        notOnOrAfter: notAfter,
+        signaturePresent: signed,
+        signatureVerified: false,
+      },
+      0.999,
+      {
+        warnings: [
+          ...(notAfter && new Date(notAfter) < context.now
+            ? [warning('SAML-EXPIRED', 'SAML assertion has expired.', 'danger')]
+            : []),
+          warning(
+            'SAML-SIGNATURE-UNVERIFIED',
+            'Signature presence is not signature verification.',
+            'info',
+          ),
+        ],
+      },
+    )
+  },
+}

@@ -1,3 +1,4 @@
+import { BinaryPreview } from './BinaryPreview'
 import { EmbeddedValues } from './EmbeddedValues'
 import type { Detection, DecodeResult } from '@decoding/engine'
 import type { DecoderMessages } from './messages'
@@ -59,6 +60,7 @@ export function ResultInspector({
           {result.root.status === 'ambiguous' ? (
             <EvidenceList detection={selected} messages={messages} />
           ) : null}
+          <BinaryPreview detection={selected} />
           <EmbeddedValues detection={selected} messages={messages} onInspect={onInspectValue} />
           <pre class="output-view">
             <code>{outputText(selected.value)}</code>

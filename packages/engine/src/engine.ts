@@ -1,7 +1,9 @@
+import { manualDecode } from './formats/manual'
 import { defaultDetectors } from './detectors'
 import type {
   ChainNode,
   DecodeInput,
+  DecodeCodecs,
   DecodeLimits,
   DecodeResult,
   Detection,
@@ -19,6 +21,9 @@ export const DEFAULT_LIMITS: DecodeLimits = {
 }
 
 export type DecodeOptions = {
+  codecs?: DecodeCodecs
+  overrides?: Record<string, string>
+
   detectors?: Detector[]
   limits?: Partial<DecodeLimits>
   signal?: AbortSignal
@@ -42,7 +47,10 @@ function selectedCandidate(
 ): Detection | undefined {
   const first = candidates[0]
   if (!first || first.confidence < confidence) return undefined
-  const second = candidates[1]
+  const subsumed: Record<string, string[]> = { saml: ['base64', 'xml'], 'data-uri': ['url'] }
+  const second = candidates.find(
+    (candidate, index) => index > 0 && !subsumed[first.detector]?.includes(candidate.detector),
+  )
   if (second && first.confidence - second.confidence < margin) return undefined
   return first
 }
@@ -82,17 +90,25 @@ export async function decode(
     if (seen.has(digest)) return { ...base, status: 'limit', limitReason: 'cycle' }
     seen.add(digest)
 
-    const context = { now, limits, ...(options.signal ? { signal: options.signal } : {}) }
+    const context = {
+      now,
+      limits,
+      ...(options.codecs ? { codecs: options.codecs } : {}),
+      ...(options.signal ? { signal: options.signal } : {}),
+    }
     const detections = await Promise.all(
       detectors.map((detector) => detector.detect(value, context)),
     )
     const candidates = sortCandidates(detections.filter((item): item is Detection => item !== null))
-    if (!candidates.length) return { ...base, candidates, status: 'unsupported' }
-    let selected = selectedCandidate(
-      candidates,
-      options.autoConfidence ?? 0.85,
-      options.autoMargin ?? 0.15,
-    )
+    const forcedFormat = options.overrides?.[base.id]
+    const forced = forcedFormat
+      ? ((await manualDecode(value, forcedFormat, context)) ??
+        candidates.find((candidate) => candidate.detector === forcedFormat))
+      : undefined
+    if (!candidates.length && !forced) return { ...base, candidates, status: 'unsupported' }
+    let selected =
+      forced ??
+      selectedCandidate(candidates, options.autoConfidence ?? 0.85, options.autoMargin ?? 0.15)
     if (!selected) return { ...base, candidates, status: 'ambiguous' }
     if (options.enrich) selected = await options.enrich(selected, value)
     const node: ChainNode = { ...base, candidates, selected, status: 'confident' }
@@ -126,7 +142,12 @@ export async function detect(
   const limits = { ...DEFAULT_LIMITS, ...options.limits }
   const now = options.now ?? new Date()
   const detectors = options.detectors ?? defaultDetectors
-  const context = { now, limits, ...(options.signal ? { signal: options.signal } : {}) }
+  const context = {
+    now,
+    limits,
+    ...(options.codecs ? { codecs: options.codecs } : {}),
+    ...(options.signal ? { signal: options.signal } : {}),
+  }
   const results = await Promise.all(detectors.map((detector) => detector.detect(input, context)))
   return sortCandidates(results.filter((item): item is Detection => item !== null))
 }

@@ -1,3 +1,4 @@
+import { completionMessages } from './completion-messages'
 import type { ChainNode, Detection } from '@decoding/engine'
 import type { DecoderMessages } from './messages'
 import { detectionLabel, limitReason, localizedDetection } from './detection-copy'
@@ -60,6 +61,7 @@ type ChainViewProps = {
   messages: DecoderMessages
   activeNodeId: string | null
   onActivate: (nodeId: string) => void
+  onOverride?: (nodeId: string, format: string) => void
   rootSize?: number
   onKeyDown: (event: KeyboardEvent) => void
 }
@@ -71,6 +73,7 @@ export function LayerBand({
   onActivate,
   onKeyDown,
   rootSize = node.inputSize,
+  onOverride,
 }: ChainViewProps) {
   return (
     <li
@@ -86,7 +89,14 @@ export function LayerBand({
       aria-expanded={node.children.length ? true : undefined}
       tabIndex={activeNodeId === node.id ? 0 : -1}
       data-chain-node-id={node.id}
-      onFocus={() => onActivate(node.id)}
+      onFocus={(event) => {
+        event.stopPropagation()
+        onActivate(node.id)
+      }}
+      onClick={(event) => {
+        event.stopPropagation()
+        onActivate(node.id)
+      }}
       onKeyDown={onKeyDown}
     >
       {node.sourcePath ? <p class="layer-source-path">{node.sourcePath}</p> : null}
@@ -97,12 +107,49 @@ export function LayerBand({
           {messages.stopped}: {limitReason(node.limitReason, messages)}
         </div>
       ) : null}
+      {onOverride ? (
+        <label class="manual-format">
+          {completionMessages[messages.locale].manual}
+          <select
+            value="automatic"
+            onChange={(event) => onOverride(node.id, event.currentTarget.value)}
+          >
+            <option value="automatic">{completionMessages[messages.locale].automatic}</option>
+            {[
+              ...new Set([
+                ...node.candidates.map((candidate) => candidate.detector),
+                'base64',
+                'hex',
+                'url',
+                'gzip',
+                'zlib',
+                'deflate',
+                'zstd',
+                'brotli',
+                'base32',
+                'base58',
+                'html-entities',
+              ]),
+            ].map((id) => (
+              <option value={id}>{id}</option>
+            ))}
+          </select>
+          <button
+            type="button"
+            class="button ghost"
+            onClick={() => onOverride(node.id, 'automatic')}
+          >
+            {completionMessages[messages.locale].undo}
+          </button>
+        </label>
+      ) : null}
       {node.children.length ? (
         <ol class="chain-list" role="group">
           {node.children.map((child) => (
             <LayerBand
               node={child}
               rootSize={rootSize}
+              {...(onOverride ? { onOverride } : {})}
               messages={messages}
               activeNodeId={activeNodeId}
               onActivate={onActivate}

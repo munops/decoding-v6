@@ -16,7 +16,7 @@ import { ChainStage, LayerBand } from './LayerBand'
 import { safeShareCardSvg, safeShareMarkdown, safeShareProjection } from './safe-share'
 
 export type DecoderWorkbenchProps = {
-  decodeInput: (input: DecodeInput) => Promise<DecodeResult>
+  decodeInput: (input: DecodeInput, overrides?: Record<string, string>) => Promise<DecodeResult>
   externalInput?: { id: number; value: string } | undefined
   onEvent?: (name: 'decode_completed' | 'decode_unsupported' | 'share_action') => void
   messages: DecoderMessages
@@ -62,6 +62,7 @@ export function DecoderWorkbench({
   const [copyFeedback, setCopyFeedback] = useState<CopyFeedbackPreferences>(() =>
     readCopyFeedback(),
   )
+  const overrides = useRef<Record<string, string>>({})
   const requestId = useRef(0)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const lastInput = useRef<DecodeInput | null>(null)
@@ -74,7 +75,7 @@ export function DecoderWorkbench({
       setMessage(messages.checking)
       setDiagnostic('')
       try {
-        const next = await decodeInput(input)
+        const next = await decodeInput(input, overrides.current)
         if (current !== requestId.current) return
         setResult(next)
         setSelected(next.root.selected ?? next.root.candidates[0] ?? null)
@@ -95,6 +96,7 @@ export function DecoderWorkbench({
   )
 
   const handleSource = (value: string) => {
+    overrides.current = {}
     setSource(value)
     if (!value) {
       requestId.current += 1
@@ -124,6 +126,22 @@ export function DecoderWorkbench({
     await run(new Uint8Array(await file.arrayBuffer()))
   }
 
+  const activateLayer = (nodeId: string) => {
+    setActiveChainNode(nodeId)
+    const visit = (node: DecodeResult['root']): void => {
+      if (node.id === nodeId) setSelected(node.selected ?? node.candidates[0] ?? null)
+      else node.children.forEach(visit)
+    }
+    if (result) visit(result.root)
+  }
+  const overrideLayer = (nodeId: string, format: string) => {
+    const depth = Number(nodeId.split('-')[0])
+    for (const key of Object.keys(overrides.current))
+      if (Number(key.split('-')[0]) > depth) delete overrides.current[key]
+    if (format === 'automatic') delete overrides.current[nodeId]
+    else overrides.current[nodeId] = format
+    if (lastInput.current) void run(lastInput.current)
+  }
   const copySelected = async () => {
     if (!selected) return
     try {
@@ -203,6 +221,7 @@ export function DecoderWorkbench({
   }
 
   const handleChainKeyDown = (event: KeyboardEvent) => {
+    event.stopPropagation()
     const current = event.currentTarget as HTMLElement
     const tree = current.closest<HTMLElement>('[role="tree"]')
     if (!tree) return
@@ -348,7 +367,10 @@ export function DecoderWorkbench({
                       }
                       role="option"
                       aria-selected={selected?.detector === candidate.detector}
-                      onClick={() => setSelected(candidate)}
+                      onClick={() => {
+                        setSelected(candidate)
+                        overrideLayer(result.root.id, candidate.detector)
+                      }}
                       key={candidate.detector}
                     >
                       <span>{detectionLabel(candidate.label, messages)}</span>
@@ -361,9 +383,10 @@ export function DecoderWorkbench({
               <ol class="chain-list" role="tree" aria-label={messages.decodeChain}>
                 <LayerBand
                   node={result.root}
+                  onOverride={overrideLayer}
                   messages={messages}
                   activeNodeId={activeChainNode}
-                  onActivate={setActiveChainNode}
+                  onActivate={activateLayer}
                   onKeyDown={handleChainKeyDown}
                 />
               </ol>

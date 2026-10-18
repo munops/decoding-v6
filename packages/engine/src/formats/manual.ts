@@ -1,0 +1,54 @@
+import { gunzipSync, inflateSync, unzlibSync } from 'fflate'
+import type { DecodeInput, Detection, DetectorContext } from '../types'
+import { decodeBase64, inputBytes, inputText } from '../utils'
+import { found, readable, warning } from './common'
+import { decode32, decode58 } from './base-n'
+export async function manualDecode(
+  input: DecodeInput,
+  format: string,
+  context: DetectorContext,
+): Promise<Detection | null> {
+  const bytes = inputBytes(input),
+    text = inputText(input).trim()
+  let output: DecodeInput | undefined
+  try {
+    if (format === 'base64') {
+      const decoded = decodeBase64(text)
+      if (!decoded) throw new Error('Invalid Base64')
+      output = readable(decoded)
+    } else if (format === 'base32') output = readable(decode32(text))
+    else if (format === 'base58') output = readable(decode58(text))
+    else if (format === 'url') output = decodeURIComponent(text.replace(/\+/g, ' '))
+    else if (format === 'gzip') output = readable(gunzipSync(bytes))
+    else if (format === 'zlib') output = readable(unzlibSync(bytes))
+    else if (format === 'deflate') output = readable(inflateSync(bytes))
+    else if (format === 'brotli') {
+      if (!context.codecs?.brotli) throw new Error('Parser unavailable')
+      output = readable(await context.codecs.brotli(bytes, context.limits))
+    } else return null
+    if (
+      inputBytes(output).length > context.limits.maxExpandedBytes ||
+      (['gzip', 'zlib', 'deflate', 'brotli'].includes(format) &&
+        inputBytes(output).length > bytes.length * context.limits.maxCompressionRatio)
+    )
+      throw new Error('Expansion limit')
+    return found(format, `${format} (chosen by you)`, output, 1, { decoded: output })
+  } catch {
+    return found(
+      format,
+      `${format} (chosen by you)`,
+      {
+        error: `Cannot decode this layer as ${format}. Check the format, or open its local parser online once and retry.`,
+      },
+      1,
+      {
+        warnings: [
+          warning(
+            'MANUAL-DECODE-FAILED',
+            `This layer cannot be decoded as ${format}. Undo to restore automatic detection.`,
+          ),
+        ],
+      },
+    )
+  }
+}

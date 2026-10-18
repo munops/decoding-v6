@@ -5,3 +5,5 @@
 
 - 2026-10-19: coordinator msg_7e4a4f8b1828의 최종 frozen build 1회 지시에 따라 묶음1+2 중간 배포를 최종 guarded release로 합침. 따라서 판별 확대 전 라이브 기준선 비교는 미관측이며 구현·수신·자연사용으로 승격하지 않음.
 - 2026-10-19: 디자인은 계획6의 층 띠·오프셋 거터·흰 바탕을 그대로 채택. 새 전략·심사 문서나 validator는 만들지 않고 결과 캡처에서 검증한다. IBM Plex Mono Latin WOFF2는 Google Fonts 공식 원본, OFL 동봉·자체호스팅·swap·시스템 한글 대체를 사용한다.
+
+- 2026-10-19: 묶음5 웹 전용 지연 codec 고정: fzstd0.1.1 MIT, @msgpack/msgpack3.1.3 ISC, cbor-x1.6.6 MIT, smol-toml1.9.1 BSD-3-Clause, brotli-dec-wasm2.3.2 MIT/Apache-2.0. 공식 저장소 API·npm 메타데이터 확인; 엔진은 주입만 받고 codec 미탑재 표면은 인식/후보와 해석 불가를 구분한다.

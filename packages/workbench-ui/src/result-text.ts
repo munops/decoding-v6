@@ -4,7 +4,9 @@ export function outputText(value: unknown): string {
     return [...value].map((byte) => byte.toString(16).padStart(2, '0')).join(' ')
   if (typeof value === 'string') return redactSecrets(value)
   try {
-    return redactSecrets(JSON.stringify(value, null, 2))
+    return redactSecrets(
+      JSON.stringify(value, (_key, item) => (typeof item === 'bigint' ? `${item}n` : item), 2),
+    )
   } catch {
     return String(value)
   }

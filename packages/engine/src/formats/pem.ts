@@ -43,6 +43,7 @@ export const pem: Detector = {
     const text = inputText(input).trim(),
       match = /^-----BEGIN ([A-Z0-9 ]+)-----\s*([\s\S]+?)\s*-----END \1-----$/.exec(text)
     if (!match) return null
+    if (match[1]?.startsWith('PGP ')) return null
     const kind = match[1]!,
       privateKey = /PRIVATE KEY/.test(kind)
     if (privateKey)

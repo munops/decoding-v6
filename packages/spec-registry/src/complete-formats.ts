@@ -1,3 +1,4 @@
+import { binarySpecs } from './binary-formats'
 import type { DetectorSpec } from './index'
 const rfc = (id: number) => `https://www.rfc-editor.org/rfc/rfc${id}`
 export const completeTextSpecs: DetectorSpec[] = [
@@ -250,7 +251,7 @@ export const completeTextSpecs: DetectorSpec[] = [
   }
 })
 export const completeKoreanLabels = new Map(
-  completeTextSpecs.map((spec) => [
+  [...completeTextSpecs, ...binarySpecs].map((spec) => [
     spec.detector,
     (spec as DetectorSpec & { koreanLabel: string }).koreanLabel,
   ]),

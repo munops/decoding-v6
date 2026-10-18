@@ -4,6 +4,7 @@ export { decodeBase64, encodeBase64, inputBytes, inputText } from './utils'
 export type {
   ChainNode,
   DecodeInput,
+  DecodeCodecs,
   DecodeLimits,
   DecodeResult,
   Detection,
@@ -13,3 +14,6 @@ export type {
 } from './types'
 
 export { redactSecrets } from './formats/secret-patterns'
+
+export type { DecodeOptions } from './engine'
+export { identifyMagic } from './formats/magic-bytes'

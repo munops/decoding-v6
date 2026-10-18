@@ -6,7 +6,11 @@ export type DecoderWorkerLike = {
   onmessage: ((event: MessageEvent<DecoderWorkerMessage>) => void) | null
   onerror: ((event: ErrorEvent) => void) | null
   onmessageerror: ((event: MessageEvent<unknown>) => void) | null
-  postMessage: (message: { id: number; input: DecodeInput }) => void
+  postMessage: (message: {
+    id: number
+    input: DecodeInput
+    overrides?: Record<string, string>
+  }) => void
   terminate: () => void
 }
 
@@ -17,7 +21,7 @@ type Pending = {
 }
 
 export type DecoderWorkerClient = {
-  decodeInput: (input: DecodeInput) => Promise<DecodeResult>
+  decodeInput: (input: DecodeInput, overrides?: Record<string, string>) => Promise<DecodeResult>
   terminate: () => void
 }
 
@@ -76,7 +80,7 @@ export function createDecoderWorkerClient(
   }
 
   return {
-    decodeInput(input) {
+    decodeInput(input, overrides) {
       const id = ++requestId
       return new Promise<DecodeResult>((resolve, reject) => {
         const timeout = setTimeout(() => {
@@ -85,7 +89,7 @@ export function createDecoderWorkerClient(
         }, timeoutMs)
         pending.set(id, { resolve, reject, timeout })
         try {
-          getWorker().postMessage({ id, input })
+          getWorker().postMessage({ id, input, ...(overrides ? { overrides } : {}) })
         } catch (error) {
           failWorker(error instanceof Error ? error : new Error('Decoder worker failed.'))
         }

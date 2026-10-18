@@ -1,3 +1,4 @@
+import { webCodecs } from './codecs'
 /// <reference lib="webworker" />
 import { decode, type DecodeInput, type Detection } from '@decoding/engine'
 
@@ -64,14 +65,17 @@ async function enrich(detection: Detection, input: DecodeInput): Promise<Detecti
     }
   }
 }
-self.addEventListener('message', (event: MessageEvent<{ id: number; input: DecodeInput }>) => {
-  const { id, input } = event.data
-  void decode(input, { enrich })
-    .then((result) => self.postMessage({ id, result }))
-    .catch(() =>
-      self.postMessage({
-        id,
-        error: 'Local decoding could not finish. Your input is kept; retry or clear it.',
-      }),
-    )
-})
+self.addEventListener(
+  'message',
+  (event: MessageEvent<{ id: number; input: DecodeInput; overrides?: Record<string, string> }>) => {
+    const { id, input, overrides } = event.data
+    void decode(input, { enrich, codecs: webCodecs, ...(overrides ? { overrides } : {}) })
+      .then((result) => self.postMessage({ id, result }))
+      .catch(() =>
+        self.postMessage({
+          id,
+          error: 'Local decoding could not finish. Your input is kept; retry or clear it.',
+        }),
+      )
+  },
+)
