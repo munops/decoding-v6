@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "kind": "immutable-predeploy-receipt",
+  "preparedAt": "2026-10-18T18:56:52.787Z",
+  "sourceSha": "c90bca6228be78da2d46f7138e641b7a449d8093",
+  "metadataHead": "42ece94c22a034d9d5e9676987457665941e9a92",
+  "cleanCheckout": "/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6",
+  "cleanStatus": "",
+  "artifact": {
+    "sourceSha": "c90bca6228be78da2d46f7138e641b7a449d8093",
+    "artifactSha256": "7078d84760e75f79fbbac867a31c2a04a12ba1910b58a7bd568f1cb6ab102f42",
+    "fileCount": 1154,
+    "method": "sorted per-file SHA-256 ledger folded with SHA-256"
+  },
+  "providerBefore": {
+    "observedAt": "2026-10-18T18:56:06.028Z",
+    "accountId": "69abd904cab5ffd103e569e7e050a884",
+    "worker": "decoding-v6",
+    "health": {
+      "status": 200,
+      "ok": true,
+      "service": "decoding-v6",
+      "revision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac"
+    },
+    "deploymentId": "69495344-6a72-414d-9783-bf5a26515134",
+    "versionId": "eb355be7-d553-4447-b333-2d938f89fe45",
+    "trafficPercent": 100,
+    "providerIdentityFingerprint": "dcb9b339cb30b0178e1ea36d68465b03b84c0f27301d5808481637969ed8169e",
+    "candidateIdentityFingerprint": "dcb9b339cb30b0178e1ea36d68465b03b84c0f27301d5808481637969ed8169e",
+    "remoteMain": "ed14b371ee2150b411bfa0bb7224703fb5267e35",
+    "bindings": [
+      {
+        "name": "ASSETS",
+        "type": "assets"
+      },
+      {
+        "name": "BUILD_SHA",
+        "type": "plain_text",
+        "text": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac"
+      },
+      {
+        "name": "EVENTS",
+        "type": "analytics_engine",
+        "dataset": "decoding_v6_events"
+      }
+    ]
+  },
+  "resources": [
+    "repo:decoding-v6",
+    "provider:github:munops/decoding-v6",
+    "provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6"
+  ],
+  "claimId": "claim_72990047-8937-4720-a067-132f2921c184",
+  "fences": {
+    "repo": 42,
+    "github": 3,
+    "cloudflare": 4
+  },
+  "approvalRef": "conversation:COMPLETE-SERVICES-20261017:owner-all-projects-implement-deploy-approved",
+  "waveRef": "docs/operations/release-wave-cs-decoding-v6-20261017.yaml",
+  "publicImpact": "Local complete-plan decoding workflows, redacted save/backup, value-free share, notices and opt-out names-only counts; sponsor information disabled-safe. No new resource/account/domain/cost/PII/payment/ad/native/store/legal declaration/contact.",
+  "rollback": {
+    "versionId": "eb355be7-d553-4447-b333-2d938f89fe45",
+    "command": "DECODING_DELIVERY_TARGET=production DECODING_RELEASE_WAVE=docs/operations/release-wave-cs-decoding-v6-20261017.yaml DECODING_ROLLBACK_VERSION=eb355be7-d553-4447-b333-2d938f89fe45 pnpm delivery:web:rollback -- --execute",
+    "compatibility": "IndexedDB existing database/store/version1 and persistent record fields preserved; prior deployment can read persistent records; new tab records ephemeral; no migration."
+  },
+  "outsideWaveExistingCommits": [
+    "4ac80703c205ed2a2a57c9f56e81de660c6dadaa docs(ads): refresh full AdSense readback",
+    "f584ed538d5c323d370aadcf1cd127c072e8db4d docs(ads): record AdSense readback boundary"
+  ],
+  "preflight": {
+    "browserPrivateKey": {
+      "passed": 1,
+      "runId": "7ca7b2f7-8b7f-4b30-8c1c-5703d9986751",
+      "remainingPids": []
+    },
+    "localCapture": {
+      "source": "c90bca6228be78da2d46f7138e641b7a449d8093",
+      "origin": "http://127.0.0.1:4577",
+      "captures": [
+        "/tmp/cs-decoding-v6-20261019/captures-c90bca6/clean-390-start.png",
+        "/tmp/cs-decoding-v6-20261019/captures-c90bca6/clean-390-value.png",
+        "/tmp/cs-decoding-v6-20261019/captures-c90bca6/clean-1440-start.png",
+        "/tmp/cs-decoding-v6-20261019/captures-c90bca6/clean-1440-value.png",
+        "/tmp/cs-decoding-v6-20261019/captures-c90bca6/clean-390-recovery.png"
+      ],
+      "checks": [
+        {
+          "width": 390,
+          "geometry": {
+            "inputTop": 238.6875,
+            "overflow": false
+          }
+        },
+        {
+          "width": 1440,
+          "geometry": {
+            "inputTop": 259.25,
+            "overflow": false
+          }
+        }
+      ],
+      "status": "passed",
+      "actualViewed": true,
+      "runId": "a9e45275-dbe5-43db-87d2-6627e17a30c9",
+      "remainingPids": []
+    },
+    "captures": [
+      {
+        "path": "/tmp/cs-decoding-v6-20261019/captures-c90bca6/clean-390-start.png",
+        "sha256": "109d8795d8e6e2a81f7c54c3654423b18619d579c0314c59cf8d5e2767047c04"
+      },
+      {
+        "path": "/tmp/cs-decoding-v6-20261019/captures-c90bca6/clean-390-value.png",
+        "sha256": "6b6331196b0f35f198a8d199325979d87bf02bd2e089c808b132936b8b25197a"
+      },
+      {
+        "path": "/tmp/cs-decoding-v6-20261019/captures-c90bca6/clean-1440-start.png",
+        "sha256": "6ec569b0555f1e53d2729f0649d0b32b3e3b58004463a964fea331db8fc12f9a"
+      },
+      {
+        "path": "/tmp/cs-decoding-v6-20261019/captures-c90bca6/clean-1440-value.png",
+        "sha256": "20425e4a7490b4e214ae94d1034b9b637e953422527e8797aff9cc72139ee0e4"
+      },
+      {
+        "path": "/tmp/cs-decoding-v6-20261019/captures-c90bca6/clean-390-recovery.png",
+        "sha256": "b881e1fbc74a988d8682c3e356fbfb4a4c93eee402df26e37972a4b87c1bba70"
+      }
+    ]
+  },
+  "actualIncrementalCost": null,
+  "providerMutationPerformed": false
+}
