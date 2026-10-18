@@ -120,7 +120,7 @@ test('a 200 percent desktop-equivalent viewport keeps core routes within the can
 
 test('captures representative desktop and mobile visual evidence', async ({ page }, testInfo) => {
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: /Trace the value/i })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /What is this string/i })).toBeVisible()
   await page.screenshot({
     path: screenshotPath(testInfo, `home-${testInfo.project.name}.png`),
     fullPage: true,

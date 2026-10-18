@@ -35,7 +35,7 @@ async function assertFirstVisit(page: Page, viewport: { width: number; height: n
     expect(new URL(page.url()).origin).toBe(new URL(deployedBaseURL).origin)
   }
   await expect(page.locator('html')).toHaveAttribute('lang', 'en')
-  await expect(page.getByRole('heading', { name: /Trace the value/i })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /What is this string/i })).toBeVisible()
   await expect(
     page.getByText('Input stays on this device. No account, upload, or AI.'),
   ).toBeVisible()

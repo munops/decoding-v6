@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 
 test('auto-detects a nested Base64 JSON payload locally', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: /Trace the value/i })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /What is this string/i })).toBeVisible()
   const input = page.getByLabel('Paste text or drop a file')
   await input.fill('eyJsb2NhbCI6dHJ1ZSwidG9vbHMiOjQ3fQ==')
   await expect(page.getByText('Base64', { exact: false }).first()).toBeVisible()
@@ -192,7 +192,7 @@ test('keeps the Korean journey in user-facing language from discovery through re
     'https://decod.ing/ko/',
   )
   await expect(page.getByText('한국어 번역 검토 중')).toHaveCount(0)
-  await expect(page.getByRole('heading', { name: '값의 정체와 근거를 확인하세요.' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: '이 문자열, 뭔지 알려 드려요.' })).toBeVisible()
   await expect(page.locator('.hero h1 br')).toHaveCount(0)
   await expect(page.getByRole('group', { name: '알려진 입력으로 판정 근거 보기' })).toContainText(
     '16진수와 Base64 후보 비교',

@@ -1,7 +1,7 @@
 :root {
   color-scheme: light dark;
   font-family: ui-sans-serif, system-ui, sans-serif;
-  background: #f3f1ea;
+  background: #ffffff;
   color: #101827;
 }
 body {
@@ -12,7 +12,7 @@ main {
   margin: 48px auto;
 }
 .status {
-  color: #b83b1c;
+  color: #33465c;
   font:
     700 12px ui-monospace,
     monospace;
@@ -39,9 +39,9 @@ pre {
 }
 button {
   padding: 10px 15px;
-  border: 1px solid #b83b1c;
+  border: 1px solid #33465c;
   border-radius: 9px;
-  background: #b83b1c;
+  background: #33465c;
   color: white;
   font: inherit;
   font-weight: 700;

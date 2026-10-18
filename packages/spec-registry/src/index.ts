@@ -103,7 +103,11 @@ export const detectorSpecs: DetectorSpec[] = [
     label: 'gzip / zlib / deflate',
     description:
       'Expand recognized compressed bytes under strict size and ratio limits, then continue the decode chain.',
-    examples: ['H4sIAAAAAAAEA6tWys9WsiopKk2tBQCQX9SnCwAAAA=='],
+    examples: [
+      'H4sIAAAAAAAC/6tWSsusKCktSlWyUjDQUVBKzs8tKEotLk5NAQqUFJWm1gIAdxZRKSIAAAA=',
+      'H4sIAAAAAAAC/6tWSsusKCktSlWyUjDUUVBKzs8tKEotLk5NAQqUFJWm1gIAt3J5PiIAAAA=',
+      'H4sIAAAAAAAC/6tWSsusKCktSlWyUjDSUVBKzs8tKEotLk5NAQqUFJWm1gIA998BByIAAAA=',
+    ],
     references: [
       { title: 'RFC 1950 — ZLIB', url: 'https://www.rfc-editor.org/rfc/rfc1950' },
       { title: 'RFC 1951 — DEFLATE', url: 'https://www.rfc-editor.org/rfc/rfc1951' },

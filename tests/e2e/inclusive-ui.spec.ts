@@ -10,7 +10,7 @@ function evidencePath(testInfo: TestInfo, filename: string) {
 }
 
 async function expectCoreRouteWithinCanvas(page: Page) {
-  await expect(page.getByRole('heading', { name: /Trace the value/i })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /What is this string/i })).toBeVisible()
   await expect(page.getByLabel('Paste text or drop a file')).toBeVisible()
   const dimensions = await page.evaluate(() => ({
     clientWidth: document.documentElement.clientWidth,
