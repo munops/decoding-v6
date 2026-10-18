@@ -76,6 +76,19 @@ test('local Brotli WASM compiles and decodes through a forced binary layer', asy
 })
 test('private-key ancestors stay hidden in output, bytes and copy', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'])
+  await page.addInitScript(() => {
+    const NativeWorker = window.Worker
+    let hold = false
+    addEventListener('synthetic:hold-decoder', () => {
+      hold = true
+    })
+    class HeldWorker extends NativeWorker {
+      override postMessage(message: unknown) {
+        if (!hold) super.postMessage(message)
+      }
+    }
+    window.Worker = HeldWorker
+  })
   await page.goto('/')
   const key = '-----BEGIN PRIVATE KEY-----\nZml4dHVyZUtleUJ5dGVz\n-----END PRIVATE KEY-----'
   await page.getByLabel('Paste text or drop a file').fill(Buffer.from(key).toString('base64'))
@@ -93,6 +106,14 @@ test('private-key ancestors stay hidden in output, bytes and copy', async ({ pag
   expect(await page.evaluate(() => navigator.clipboard.readText())).not.toContain(
     'Zml4dHVyZUtleUJ5dGVz',
   )
+  await page.locator('.inspector-panel > button').click()
+  await page.evaluate(() => dispatchEvent(new Event('synthetic:hold-decoder')))
+  await page.locator('.candidate-list button').first().click()
+  await expect(page.locator('.processing')).toBeVisible()
+  await expect(page.locator('.inspector-panel .output-view')).not.toContainText(
+    'Zml4dHVyZUtleUJ5dGVz',
+  )
+  await expect(page.locator('.inspector-panel .output-view')).not.toContainText('BEGIN PRIVATE KEY')
 })
 test('proof page decodes offline without count events and data page reads saved state', async ({
   page,

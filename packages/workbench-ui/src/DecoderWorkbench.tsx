@@ -549,7 +549,7 @@ export function DecoderWorkbench({
                       role="option"
                       aria-selected={selected?.detector === candidate.detector}
                       onClick={() => {
-                        setSelected(candidate)
+                        setSelected(privateKeyDetection(result.root) ?? candidate)
                         overrideLayer(result.root.id, candidate.detector)
                       }}
                       key={candidate.detector}
