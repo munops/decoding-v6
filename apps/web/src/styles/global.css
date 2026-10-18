@@ -2031,3 +2031,46 @@ h2,
   max-height: 320px;
   object-fit: contain;
 }
+
+.result-alert {
+  grid-column: 1/-1;
+}
+.claim-times select {
+  min-height: 44px;
+  margin-left: 8px;
+}
+.byte-map meter {
+  width: 100%;
+}
+.hex-inspector pre {
+  font-size: 11px;
+  overflow-x: auto;
+}
+.candidate-comparison {
+  overflow-x: auto;
+}
+.candidate-comparison table {
+  width: 100%;
+  font-size: 12px;
+  border-collapse: collapse;
+}
+.candidate-comparison td,
+.candidate-comparison th {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+.next-step {
+  display: grid;
+  gap: 8px;
+}
+.jwt-verifier textarea {
+  width: 100%;
+  min-height: 100px;
+}
+summary {
+  min-height: 44px;
+  padding-block: 8px;
+  cursor: pointer;
+}

@@ -55,6 +55,35 @@ function jwtWarnings(
       message: 'This token is unsigned. Never accept it as authenticated.',
     })
   }
+  if (typeof payload.exp !== 'number')
+    warnings.push({
+      ruleId: 'JWT-NO-EXP',
+      severity: 'warning',
+      message: 'This token has no numeric expiry claim.',
+    })
+  if (
+    typeof payload.exp === 'number' &&
+    typeof payload.iat === 'number' &&
+    payload.exp - payload.iat > 86400
+  )
+    warnings.push({
+      ruleId: 'JWT-LONG-LIFETIME',
+      severity: 'info',
+      message: 'The declared token lifetime exceeds 24 hours.',
+    })
+  if (header.jku !== undefined || header.x5u !== undefined)
+    warnings.push({
+      ruleId: 'JWT-REMOTE-KEY-HEADER',
+      severity: 'warning',
+      message: 'Remote key URLs are present. Never trust or request them automatically.',
+    })
+  if (/^HS\d+$/.test(String(header.alg)))
+    warnings.push({
+      ruleId: 'JWT-SYMMETRIC-ALG',
+      severity: 'info',
+      message:
+        'A symmetric HMAC algorithm requires a shared secret. Do not use a public key as that secret.',
+    })
   const nowSeconds = Math.floor(now.getTime() / 1000)
   if (typeof payload.exp === 'number' && payload.exp < nowSeconds) {
     warnings.push({
@@ -107,7 +136,7 @@ const jwtDetector: Detector = {
         ],
         {
           warnings: jwtWarnings(payload, header, context.now),
-          metadata: { algorithm: header.alg },
+          metadata: { algorithm: header.alg, token: text },
         },
       )
     } catch {

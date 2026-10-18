@@ -1,3 +1,4 @@
+import { takeHandoff } from '../lib/handoff'
 import type {
   OperationDescriptor,
   OperationInput,
@@ -6,7 +7,7 @@ import type {
 } from '@decoding/operations'
 import { SPONSOR_FIRST_VALUE_EVENT, ToolWorkbench } from '@decoding/workbench-ui'
 import type { ToolMessages } from '@decoding/workbench-ui'
-import { useEffect, useMemo } from 'preact/hooks'
+import { useEffect, useMemo, useState } from 'preact/hooks'
 import type { Locale } from '../i18n/catalog'
 import { localizeOperationError, localizeOperationResult } from '../i18n/operation-results'
 
@@ -21,6 +22,9 @@ export default function WebTool({
   messages: ToolMessages
   locale: Locale
 }) {
+  const [initialInput] = useState(() =>
+    typeof window === 'undefined' ? undefined : takeHandoff(operation.id),
+  )
   const client = useMemo(() => {
     const createWorker = () =>
       new Worker(new URL('../workers/operation.worker.ts', import.meta.url), {
@@ -58,5 +62,12 @@ export default function WebTool({
     }
   }, [locale])
   useEffect(() => () => client.terminate(), [client])
-  return <ToolWorkbench operation={operation} execute={client.execute} messages={messages} />
+  return (
+    <ToolWorkbench
+      initialInput={initialInput}
+      operation={operation}
+      execute={client.execute}
+      messages={messages}
+    />
+  )
 }

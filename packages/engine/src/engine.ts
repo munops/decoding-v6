@@ -74,6 +74,7 @@ export async function decode(
       ...(sourcePath ? { sourcePath } : {}),
       inputKind: typeof value === 'string' ? ('text' as const) : ('bytes' as const),
       inputSize: inputSize(value),
+      ...(typeof value === 'string' ? {} : { bytes: value }),
       candidates: [] as Detection[],
       children: [] as ChainNode[],
     }

@@ -57,6 +57,7 @@ export type DecodeLimits = {
 export type ChainNode = {
   id: string
   depth: number
+  bytes?: Uint8Array
   inputKind: 'text' | 'bytes'
   inputSize: number
   sourcePath?: string

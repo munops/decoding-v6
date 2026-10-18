@@ -1,3 +1,4 @@
+import { sendToTool } from '../lib/handoff'
 import { DecoderWorkbench } from '@decoding/workbench-ui'
 import type { DecoderMessages } from '@decoding/workbench-ui'
 import { useEffect, useMemo, useState } from 'preact/hooks'
@@ -34,6 +35,7 @@ export default function WebDecoder({ messages, sampleLabel, samples = [] }: Prop
       <DecoderWorkbench
         decodeInput={client.decodeInput}
         onEvent={countOpen}
+        onTool={sendToTool}
         externalInput={externalInput}
         messages={messages}
       />

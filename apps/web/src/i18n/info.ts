@@ -452,3 +452,16 @@ for (const [locale, content] of Object.entries(infoMessages)) {
         },
   )
 }
+
+for (const [locale, content] of Object.entries(infoMessages))
+  content.privacy.sections.push(
+    locale === 'ko'
+      ? {
+          heading: '직접 선택한 도구 간 전달',
+          body: '결과를 다른 도구로 보내는 버튼을 누르면 이 탭의 sessionStorage에 값을 잠깐 두고 다음 도구가 한 번 읽은 뒤 즉시 지워요. 주소창이나 서버로 보내지 않아요. 서명 검증 키는 탭 메모리에만 있으며 페이지를 떠나면 지워요.',
+        }
+      : {
+          heading: 'Explicit tool handoff',
+          body: 'Only when you choose to send a result to another tool, this tab places the value briefly in sessionStorage. The next tool reads it once and immediately deletes it. It is never put in a URL or sent to a server. Signature-verification keys remain in tab memory and are cleared on page exit.',
+        },
+  )

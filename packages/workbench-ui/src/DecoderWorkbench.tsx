@@ -18,6 +18,7 @@ import { safeShareCardSvg, safeShareMarkdown, safeShareProjection } from './safe
 export type DecoderWorkbenchProps = {
   decodeInput: (input: DecodeInput, overrides?: Record<string, string>) => Promise<DecodeResult>
   externalInput?: { id: number; value: string } | undefined
+  onTool?: (tool: string, text: string) => void
   onEvent?: (name: 'decode_completed' | 'decode_unsupported' | 'share_action') => void
   messages: DecoderMessages
 }
@@ -46,6 +47,7 @@ export function DecoderWorkbench({
   externalInput,
   messages,
   onEvent,
+  onTool,
 }: DecoderWorkbenchProps) {
   const [source, setSource] = useState(() =>
     typeof document === 'undefined'
@@ -325,6 +327,18 @@ export function DecoderWorkbench({
 
       {result ? (
         <div class="result-grid">
+          {result.root.candidates
+            .flatMap((candidate) => candidate.warnings)
+            .filter((warning) => warning.severity === 'danger')
+            .filter(
+              (warning, i, list) =>
+                list.findIndex((other) => other.ruleId === warning.ruleId) === i,
+            )
+            .map((warning) => (
+              <div class="notice danger result-alert" role="status" key={warning.ruleId}>
+                <strong>{warning.ruleId}</strong> {warning.message}
+              </div>
+            ))}
           <div class="result-chain">
             <div class="panel-heading">
               <div>
@@ -393,6 +407,8 @@ export function DecoderWorkbench({
             )}
           </div>
           <ResultInspector
+            source={source}
+            {...(onTool ? { onTool } : {})}
             onInspectValue={handleSource}
             selected={selected}
             result={result}
