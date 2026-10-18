@@ -1,0 +1,10 @@
+---
+import TrustPage from '../../components/TrustPage.astro'
+import { localizedLocales } from '../../i18n/catalog'
+export function getStaticPaths() {
+  return localizedLocales.map((locale) => ({ params: { locale }, props: { locale } }))
+}
+const { locale } = Astro.props
+---
+
+<TrustPage locale={locale} page="terms" />

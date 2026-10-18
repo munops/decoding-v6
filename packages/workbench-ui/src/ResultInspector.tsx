@@ -121,6 +121,12 @@ export function ResultInspector({
       ) : (
         <>
           <p>{messages.trySupported}</p>
+          {result.root.bytes ? (
+            <>
+              <ByteMap bytes={result.root.bytes} locale={messages.locale} />
+              <HexDump bytes={result.root.bytes} locale={messages.locale} />
+            </>
+          ) : null}
           <NextStep
             source={source}
             result={result}
@@ -129,6 +135,17 @@ export function ResultInspector({
           />
         </>
       )}
+      {selected ? (
+        <details class="safe-report">
+          <summary>{messages.wrongFormat}</summary>
+          <NextStep
+            source={source}
+            result={result}
+            locale={messages.locale}
+            {...(onTool && !privateKey ? { onTool } : {})}
+          />
+        </details>
+      ) : null}
       {result.root.candidates.length ? (
         <button
           class="button ghost small"

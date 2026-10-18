@@ -39,7 +39,14 @@ const sponsor = decision.visible ? candidate : undefined
         </span>
       </a>
     </aside>
-  ) : null
+  ) : (
+    <aside class="sponsor-empty container" data-sponsor-empty>
+      <p>
+        {locale === 'ko' ? '이 자리는 비어 있어요.' : 'This space is available.'}{' '}
+        <a href="/sponsor/">{locale === 'ko' ? '스폰서 안내' : 'Sponsor information'}</a>
+      </p>
+    </aside>
+  )
 }
 
 <script>
@@ -50,6 +57,10 @@ const sponsor = decision.visible ? candidate : undefined
     SPONSOR_FIRST_VALUE_EVENT,
   } from '@decoding/workbench-ui'
 
+  if (matchMedia('(display-mode: standalone)').matches)
+    document
+      .querySelectorAll('[data-sponsor-empty],[data-sponsor]')
+      .forEach((element) => element.remove())
   const slot = document.querySelector<HTMLElement>('[data-sponsor-surface="web_tool_below_fold"]')
 
   if (slot && 'IntersectionObserver' in window) {

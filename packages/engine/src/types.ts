@@ -18,6 +18,10 @@ export type Detection = {
   label: string
   confidence: number
   evidence: Evidence[]
+  rejection?: {
+    code: 'below-auto-threshold' | 'insufficient-margin' | 'lower-ranked'
+    message: string
+  }
   summary: string
   value: unknown
   decoded?: DecodeInput

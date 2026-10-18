@@ -1,0 +1,51 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { publicOperator } from '../lib/public-operator'
+const subject = 'decod.ing sponsorship inquiry'
+const body =
+  'Hello, I would like to ask about the decod.ing sponsor space.\nProduct/site:\nDesired four-week period:\nAudience fit:\nPlease send the current measured audience and quotation.\nI understand this inquiry does not book or pay for a campaign.'
+---
+
+<Layout
+  title="Sponsor a local developer workbench — decod.ing"
+  description="One static, clearly labeled developer sponsor space, with no tracking or payload targeting."
+>
+  <article class="prose container">
+    <span class="eyebrow">{publicOperator.name} · {publicOperator.koreanName}</span><h1>
+      One place for a relevant developer tool.
+    </h1><p>
+      The sponsor space is below the first screen of a web tool. It never sits beside an input or
+      decoded result. The installed app, workspace, CLI and extension remain ad-free.
+    </p><h2>Price formula</h2><p>
+      Weekly quote = the previous four weeks’ average weekly page views × USD 4 / 1,000, with a
+      minimum of USD 25 per week. Campaigns run for four weeks. We share current measured traffic in
+      the quotation; no audience figure is assumed here.
+    </p><h2>Display rules</h2><p>
+      Static, same-origin image and a link, labeled Sponsored. No tracking, cookies, payload
+      targeting or third-party ad script. All decoder features remain free with no usage limit.
+    </p><h2>How a campaign would run</h2><ol>
+      <li>Inquiry and an audience-fit review.</li><li>
+        A written quotation based on current measurements.
+      </li><li>
+        Only after sales and legal readiness: prepayment by bank transfer and an invoice.
+      </li><li>Four weeks of clearly labeled display.</li>
+    </ol><p class="notice">
+      No campaign or payment is active. This page only opens an inquiry draft and does not reserve a
+      space or charge you.
+    </p><h2>Cancellation and refund</h2><p>
+      Cancel with one email before the next cycle. Unserved time is refunded proportionally.
+      Cancellation is no harder than making an inquiry.
+    </p><a
+      class="button"
+      data-sponsor-interest
+      href={`mailto:support@munops.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`}
+      >Ask for the current audience and quote</a
+    ><p>support@munops.com · <a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a></p>
+  </article>
+</Layout>
+<script>
+  import { countOpen } from '../lib/telemetry'
+  document
+    .querySelector('[data-sponsor-interest]')
+    ?.addEventListener('click', () => countOpen('sponsor_interest'))
+</script>

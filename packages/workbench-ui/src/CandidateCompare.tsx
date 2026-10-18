@@ -31,6 +31,8 @@ export function CandidateCompare({
               <td>
                 {candidate.evidence.map((e) => e.message).join('; ')}
                 <br />
+                {candidate.rejection ? <code>{candidate.rejection.code}</code> : null}
+                <br />
                 {i > 0 && candidates[0]!.confidence - candidate.confidence >= 0.15
                   ? messages.locale === 'ko'
                     ? '1위보다 근거 점수가 15점 이상 낮아요.'

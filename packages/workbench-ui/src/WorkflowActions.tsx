@@ -2,7 +2,7 @@ import { identifyMagic, redactSecrets, type DecodeResult, type Detection } from 
 import { useEffect, useState } from 'preact/hooks'
 import type { DecoderMessages } from './messages'
 import { completionMessages } from './completion-messages'
-import { outputText } from './result-text'
+import { outputText, privateKeyDetection } from './result-text'
 import { linearChain, reproduceCommands } from './reproduce-commands'
 import { canReencode, reencode, maskSensitiveFields } from './re-encode'
 type Ttl = 'session' | '24h' | '7d' | 'keep'
@@ -115,7 +115,8 @@ export function WorkflowActions({
     link.click()
     setTimeout(() => URL.revokeObjectURL(href), 0)
   }
-  const gate = canReencode(result.root),
+  const privateKey = privateKeyDetection(result.root)
+  const gate = privateKey ? { allowed: false, reason: copy.private } : canReencode(result.root),
     last = linearChain(result.root).at(-1)?.selected
   return (
     <>
@@ -205,7 +206,7 @@ export function WorkflowActions({
                   </div>
                 ))}
               </details>
-              {onTool ? (
+              {onTool && !privateKey ? (
                 <div class="input-actions">
                   {['json-format', 'json-to-code', 'json-to-csv'].map((id) => (
                     <button

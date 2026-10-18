@@ -1,4 +1,8 @@
 ---
+import { publicOperator } from '../lib/public-operator'
+import { buildRevision } from '../lib/build-info'
+import { detectorSpecs } from '@decoding/spec-registry'
+import UpdateBanner from '../components/UpdateBanner'
 import '../styles/global.css'
 import {
   layoutMessages,
@@ -50,6 +54,7 @@ const localizedPrivacy = localePath(locale, '/privacy/')
     <meta name="theme-color" content="#ffffff" />
     <meta name="color-scheme" content="light dark" />
     <meta name="application-version" content="6.0.0" />
+    <meta name="application-build" content={buildRevision} />
     <meta name="description" content={description} />
     {
       import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION ? (
@@ -171,6 +176,7 @@ const localizedPrivacy = localePath(locale, '/privacy/')
       <div class="header-trust"><span class="privacy-dot"></span> {messages.localOnly}</div>
     </header>
     {locale === 'en' && translationPath ? <LocaleSuggestion path={translationPath} /> : null}
+    <UpdateBanner locale={locale} client:load />
     <main id="main"><slot /></main>
     <footer class="site-footer">
       <div>
@@ -181,16 +187,26 @@ const localizedPrivacy = localePath(locale, '/privacy/')
         <p>{messages.footer}</p>
       </div>
       <div class="footer-links">
+        <a href="/data/">{locale === 'ko' ? '이 기기 데이터' : 'Device data'}</a>
+        <a href="/proof/">{locale === 'ko' ? '전송 직접 확인' : 'Check local processing'}</a>
+        <a href="/bookmarklet/">Bookmarklet</a><a href="/sponsor/"
+          >{locale === 'ko' ? '스폰서 안내' : 'Sponsor'}</a
+        >
         <a href={localizedTools}>47 {messages.tools}</a><a href={localizedPrivacy}
           >{messages.privacy}</a
-        ><a href="/terms/">{messages.terms}</a><a href="/support/">{messages.support}</a><a
-          href={localizedMethod}>{messages.method}</a
-        ><a href="/download/">{messages.desktop}</a><a href="/changelog/">{messages.changelog}</a><a
-          href={localePath(locale, '/about/')}>{messages.about}</a
+        ><a href={locale === 'ko' ? '/ko/terms/' : '/terms/'}>{messages.terms}</a><a
+          href={locale === 'ko' ? '/ko/support/' : '/support/'}>{messages.support}</a
+        ><a href={localizedMethod}>{messages.method}</a><a href="/download/">{messages.desktop}</a
+        ><a href="/changelog/">{messages.changelog}</a><a href={localePath(locale, '/about/')}
+          >{messages.about}</a
         >
       </div>
       <CountControl locale={locale} />
-      <p class="footer-note">{messages.footerNote}</p>
+      <p class="footer-note">
+        {messages.footerNote} · {publicOperator.name} ({publicOperator.koreanName}) · Build {
+          buildRevision.slice(0, 7)
+        } · {detectorSpecs.length} formats
+      </p>
     </footer>
     <script>
       import { countOpen, countReturn } from '../lib/telemetry'

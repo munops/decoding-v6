@@ -27,6 +27,10 @@ const notices: Record<Locale, string> = {
 <p data-count-notice data-notice={notices[locale]} role="status"></p>
 <script>
   import { countingDisabled, setCountingDisabled } from '../lib/telemetry'
+  addEventListener('decoding:settings-cleared', () => {
+    for (const checkbox of document.querySelectorAll<HTMLInputElement>('[data-count-toggle]'))
+      checkbox.checked = !countingDisabled()
+  })
   for (const checkbox of document.querySelectorAll<HTMLInputElement>('[data-count-toggle]')) {
     checkbox.checked = !countingDisabled()
     checkbox.addEventListener('change', () => {

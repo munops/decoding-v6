@@ -93,7 +93,33 @@ function approvedWavePath(cleanHead) {
 }
 
 function wrangler(args) {
-  run('pnpm', ['exec', 'wrangler', ...args])
+  try {
+    const output = execFileSync('pnpm', ['exec', 'wrangler', ...args], {
+      cwd: repoRoot,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: { ...process.env, WRANGLER_WRITE_LOGS: 'false', WRANGLER_SEND_METRICS: 'false' },
+    })
+    if (args.includes('--json')) {
+      const rows = JSON.parse(output)
+      console.log(
+        JSON.stringify({
+          deployments: Array.isArray(rows)
+            ? rows.map((row) => ({
+                id: row.id,
+                created_on: row.created_on,
+                versions: row.versions?.map((version) => ({
+                  version_id: version.version_id,
+                  percentage: version.percentage,
+                })),
+              }))
+            : [],
+        }),
+      )
+    } else console.log(JSON.stringify({ providerAction: args[0], completed: true }))
+  } catch {
+    fail('provider command failed; raw provider output withheld')
+  }
 }
 
 async function fetchHealth(origin) {
@@ -149,6 +175,7 @@ if (command === 'deploy-web') {
   const cleanHead = cleanRevision()
   const { sourceRevision } = approvedWavePath(cleanHead)
   const target = deliveryTarget()
+  process.env.DECODING_RUNTIME_SOURCE_SHA = sourceRevision
   run('pnpm', ['verify'])
   run('pnpm', ['test:e2e'])
   wrangler([

@@ -1,6 +1,6 @@
 import type { Detector } from '../types'
 import { inputText } from '../utils'
-import { found, readable, warning } from './common'
+import { found, readable, warning, digest, hex } from './common'
 export function decode32(text: string): Uint8Array {
   const value = text.toUpperCase(),
     raw = value.replace(/=+$/, '')
@@ -67,7 +67,7 @@ export function decode58(text: string): Uint8Array {
 }
 export const base58: Detector = {
   id: 'base58',
-  detect(input) {
+  async detect(input) {
     const text = inputText(input).trim()
     if (
       text.length < 12 ||
@@ -78,6 +78,21 @@ export const base58: Detector = {
       return null
     const bytes = decode58(text),
       output = readable(bytes)
+    const checked = bytes.length === 25 && [0, 5, 111, 196].includes(bytes[0]!)
+    if (checked) {
+      const payload = bytes.slice(0, -4),
+        checksum = (await digest(await digest(payload))).slice(0, 4)
+      return found(
+        'base58',
+        'Base58Check candidate',
+        {
+          version: bytes[0],
+          payload: hex(payload.slice(1)),
+          checksum: hex(checksum) === hex(bytes.slice(-4)) ? 'valid' : 'mismatch',
+        },
+        0.7,
+      )
+    }
     return found('base58', 'Base58 (Bitcoin alphabet)', output, 0.7, { decoded: output })
   },
 }

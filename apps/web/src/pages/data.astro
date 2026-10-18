@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro'
+import DataManager from '../islands/DataManager'
+import CountControl from '../components/CountControl.astro'
+---
+
+<Layout
+  title="Data on this device — decod.ing"
+  description="Inspect and delete local settings, redacted workspace records and offline caches."
+>
+  <article class="prose container">
+    <h1>Data on this device.</h1><p>
+      No account or server copy exists. Save a private backup in the <a href="/workspace/"
+        >workspace</a
+      > before clearing this browser.
+    </p><h2>Anonymous counts</h2><CountControl locale="en" /><p>
+      Only a fixed event name is sent. Turning this off also removes the local first-visit date.
+    </p><DataManager client:load />
+  </article>
+</Layout>

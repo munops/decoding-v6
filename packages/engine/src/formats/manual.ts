@@ -16,6 +16,10 @@ export async function manualDecode(
       const decoded = decodeBase64(text)
       if (!decoded) throw new Error('Invalid Base64')
       output = readable(decoded)
+    } else if (format === 'hex') {
+      const raw = text.replace(/^0x/i, '').replace(/[\s:-]/g, '')
+      if (!raw || raw.length % 2 || !/^[0-9a-f]+$/i.test(raw)) throw new Error('Invalid hex')
+      output = readable(Uint8Array.from(raw.match(/.{2}/g) ?? [], (pair) => parseInt(pair, 16)))
     } else if (format === 'base32') output = readable(decode32(text))
     else if (format === 'base58') output = readable(decode58(text))
     else if (format === 'url') output = decodeURIComponent(text.replace(/\+/g, ' '))
@@ -51,4 +55,21 @@ export async function manualDecode(
       },
     )
   }
+}
+
+export function manualFailure(format: string): Detection {
+  return found(
+    format,
+    `${format} (chosen by you)`,
+    { error: `Cannot decode this layer as ${format}.` },
+    1,
+    {
+      warnings: [
+        warning(
+          'MANUAL-DECODE-FAILED',
+          `This layer cannot be decoded as ${format}. Undo to restore automatic detection.`,
+        ),
+      ],
+    },
+  )
 }

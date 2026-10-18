@@ -1,6 +1,6 @@
 import type { Detector } from '../types'
 import { inputText } from '../utils'
-import { found, sensitiveKey, warning } from './common'
+import { encodedFields, found, sensitiveKey, warning } from './common'
 export const httpHeaders: Detector = {
   id: 'http-headers',
   detect(input) {
@@ -32,10 +32,16 @@ export const httpHeaders: Detector = {
             ),
           ]
         : []
-    const bearer = lines.find((x) => /^authorization:\s*bearer /i.test(x))
     return found('http-headers', 'HTTP headers', { startLine, headers: entries }, 0.999, {
       warnings,
-      ...(bearer ? { decoded: bearer } : {}),
+      metadata: {
+        embedded: encodedFields(
+          lines.map((line) => ({
+            name: line.slice(0, line.indexOf(':')),
+            raw: line.slice(line.indexOf(':') + 1).trim(),
+          })),
+        ),
+      },
     })
   },
 }

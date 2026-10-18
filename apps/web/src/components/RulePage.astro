@@ -1,8 +1,10 @@
 ---
+import { localizedRule } from '../i18n/rules'
 import Layout from '../layouts/Layout.astro'
 import type { RuleSpec } from '@decoding/spec-registry'
 import { localePath, type Locale } from '../i18n/catalog'
-const { rule, locale = 'en' } = Astro.props as { rule: RuleSpec; locale?: Locale }
+const { rule: originalRule, locale = 'en' } = Astro.props as { rule: RuleSpec; locale?: Locale }
+const rule = localizedRule(originalRule, locale)
 const ko = locale === 'ko'
 ---
 

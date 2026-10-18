@@ -1,4 +1,4 @@
-import { manualDecode } from './formats/manual'
+import { manualDecode, manualFailure } from './formats/manual'
 import { defaultDetectors } from './detectors'
 import type {
   ChainNode,
@@ -104,12 +104,31 @@ export async function decode(
     const forcedFormat = options.overrides?.[base.id]
     const forced = forcedFormat
       ? ((await manualDecode(value, forcedFormat, context)) ??
-        candidates.find((candidate) => candidate.detector === forcedFormat))
+        candidates.find((candidate) => candidate.detector === forcedFormat) ??
+        manualFailure(forcedFormat))
       : undefined
     if (!candidates.length && !forced) return { ...base, candidates, status: 'unsupported' }
     let selected =
       forced ??
       selectedCandidate(candidates, options.autoConfidence ?? 0.85, options.autoMargin ?? 0.15)
+    for (const [index, candidate] of candidates.entries()) {
+      if (candidate === selected) continue
+      const code =
+        candidate.confidence < (options.autoConfidence ?? 0.85)
+          ? 'below-auto-threshold'
+          : selected && index > 0
+            ? 'lower-ranked'
+            : 'insufficient-margin'
+      candidate.rejection = {
+        code,
+        message:
+          code === 'below-auto-threshold'
+            ? 'Evidence is below the automatic confidence threshold.'
+            : code === 'lower-ranked'
+              ? 'A stronger candidate was selected.'
+              : 'Candidates are too close to choose automatically.',
+      }
+    }
     if (!selected) return { ...base, candidates, status: 'ambiguous' }
     if (options.enrich) selected = await options.enrich(selected, value)
     const node: ChainNode = { ...base, candidates, selected, status: 'confident' }

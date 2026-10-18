@@ -22,6 +22,18 @@ export const k8sSecret: Detector = {
           }
         })
     const stringData = /^stringData:\s*\n((?:[ \t]+[^\n]*\n?)*)/m.exec(text)?.[1]
+    const plaintext = (stringData ?? '')
+      .trim()
+      .split(/\n/)
+      .filter(Boolean)
+      .map((line) => {
+        const match = /^\s*([^:]+):\s*(.*)$/.exec(line)
+        return {
+          name: `stringData.${match?.[1] ?? '(invalid)'}`,
+          value: '[redacted]',
+          decoded: (match?.[2] ?? '').replace(/^(['"])([\s\S]*)\1$/, '$2'),
+        }
+      })
     return found(
       'k8s-secret',
       'Kubernetes Secret',
@@ -32,7 +44,7 @@ export const k8sSecret: Detector = {
       0.999,
       {
         metadata: {
-          secretFields: entries.filter(
+          secretFields: [...entries, ...plaintext].filter(
             (entry): entry is { name: string; value: string; decoded: string } =>
               typeof entry.name === 'string' &&
               'decoded' in entry &&

@@ -37,6 +37,10 @@ export const saml: Detector = {
       !/(?:urn:oasis:names:tc:SAML|saml)/i.test(text)
     )
       return null
+    if (!/<\/(?:[\w-]+:)?(?:Response|Assertion)\s*>/.test(text))
+      return found('saml', 'SAML response', { xml: text, error: 'Malformed XML' }, 0.999, {
+        warnings: [warning('XML-MALFORMED', 'The SAML XML is incomplete; raw XML is retained.')],
+      })
     const issuer = /<(?:[\w-]+:)?Issuer\b[^>]*>([^<]*)<\//.exec(text)?.[1],
       audience = /<(?:[\w-]+:)?Audience\b[^>]*>([^<]*)<\//.exec(text)?.[1],
       notAfter = /\bNotOnOrAfter=["']([^"']+)["']/.exec(text)?.[1],

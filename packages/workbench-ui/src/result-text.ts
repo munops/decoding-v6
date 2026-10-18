@@ -11,3 +11,13 @@ export function outputText(value: unknown): string {
     return String(value)
   }
 }
+
+/** A detected private key stays hidden even when an ancestor decoded its raw bytes. */
+export function privateKeyDetection(
+  root: import('@decoding/engine').ChainNode,
+): import('@decoding/engine').Detection | undefined {
+  const own = [root.selected, ...root.candidates].find((candidate) =>
+    candidate?.warnings.some((warning) => warning.ruleId === 'PRIVATE-KEY-EXPOSED'),
+  )
+  return own ?? root.children.map(privateKeyDetection).find(Boolean)
+}

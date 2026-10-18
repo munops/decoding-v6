@@ -53,3 +53,17 @@ export function maskFields(value: unknown, depth = 0): unknown {
     )
   return value
 }
+
+/** Scan bounded value fields without retaining them in display summaries. */
+export function encodedFields(entries: Array<{ name: string; raw: string }>) {
+  return entries
+    .slice(0, 64)
+    .filter(
+      ({ name, raw }) =>
+        (!sensitiveKey.test(name) || /^(?:Bearer\s+)?[\w-]+\.[\w-]+\.[\w-]*$/.test(raw)) &&
+        (/^(?:Bearer\s+)?[\w-]+\.[\w-]+\.[\w-]*$/.test(raw) ||
+          /%[\da-f]{2}/i.test(raw) ||
+          (raw.length >= 12 && /^[A-Za-z0-9+/_-]+={0,2}$/.test(raw))),
+    )
+    .map(({ name, raw }) => ({ path: name, encoded: raw }))
+}

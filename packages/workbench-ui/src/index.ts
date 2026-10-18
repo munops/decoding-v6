@@ -43,3 +43,5 @@ export type {
   SponsorImpressionRequest,
   SponsorSurface,
 } from './monetization'
+
+export { ErrorBoundary } from './ErrorBoundary'

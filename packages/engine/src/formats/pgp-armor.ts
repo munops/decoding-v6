@@ -95,7 +95,19 @@ export const pgpArmor: Detector = {
         createdAt: new Date(
           new DataView(packet.body.buffer, packet.body.byteOffset + 1, 4).getUint32(0) * 1000,
         ).toISOString(),
-        algorithm: packet.body[5],
+        algorithm:
+          (
+            {
+              1: 'RSA',
+              2: 'RSA encrypt-only',
+              3: 'RSA sign-only',
+              17: 'DSA',
+              18: 'ECDH',
+              19: 'ECDSA',
+              22: 'EdDSA',
+              27: 'Ed25519',
+            } as Record<number, string>
+          )[packet.body[5]!] ?? `Unknown algorithm ${packet.body[5]}`,
         fingerprint: hex(await digest(frame, 'SHA-1')).toUpperCase(),
       }
     }
@@ -108,7 +120,7 @@ export const pgpArmor: Detector = {
         checksum: checksum === null ? 'absent' : checksum ? 'valid' : 'mismatch',
         key,
         ...(/MESSAGE/.test(kind)
-          ? { note: 'Encrypted content cannot be read without the key.' }
+          ? { note: 'If this message is encrypted, its body cannot be read without the key.' }
           : {}),
       },
       0.999,

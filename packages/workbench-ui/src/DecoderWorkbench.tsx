@@ -1,7 +1,7 @@
 import { completionMessages } from './completion-messages'
 import { WorkflowActions } from './WorkflowActions'
 import { BatchCompare } from './BatchCompare'
-import { outputText } from './result-text'
+import { outputText, privateKeyDetection } from './result-text'
 import { DecoderInput } from './DecoderInput'
 import { ResultInspector } from './ResultInspector'
 import type { DecodeInput, DecodeResult, Detection } from '@decoding/engine'
@@ -26,6 +26,8 @@ import {
 export type DecoderWorkbenchProps = {
   decodeInput: (input: DecodeInput, overrides?: Record<string, string>) => Promise<DecodeResult>
   externalInput?: { id: number; value: string } | undefined
+  restoreInput?: { input: DecodeInput; source: string } | undefined
+  onInputState?: (input: DecodeInput, source: string) => void
   onSave?: (selected: Detection, ttl: 'session' | '24h' | '7d' | 'keep') => Promise<void>
   onTool?: (tool: string, text: string) => void
   onEvent?: (name: 'decode_completed' | 'decode_unsupported' | 'share_action') => void
@@ -58,14 +60,18 @@ export function DecoderWorkbench({
   onEvent,
   onTool,
   onSave,
+  restoreInput,
+  onInputState,
 }: DecoderWorkbenchProps) {
   const [sessionHistory, setSessionHistory] = useState<Array<{ input: string; label: string }>>([])
   const [shortcuts, setShortcuts] = useState(false)
   const copy = completionMessages[messages.locale]
   const [source, setSource] = useState(() =>
-    typeof document === 'undefined'
-      ? ''
-      : (document.querySelector<HTMLTextAreaElement>('#decoder-input')?.value ?? ''),
+    restoreInput
+      ? restoreInput.source
+      : typeof document === 'undefined'
+        ? ''
+        : (document.querySelector<HTMLTextAreaElement>('#decoder-input')?.value ?? ''),
   )
   const [result, setResult] = useState<DecodeResult | null>(null)
   const [selected, setSelected] = useState<Detection | null>(null)
@@ -93,7 +99,9 @@ export function DecoderWorkbench({
         const next = await decodeInput(input, overrides.current)
         if (current !== requestId.current) return
         setResult(next)
-        setSelected(next.root.selected ?? next.root.candidates[0] ?? null)
+        setSelected(
+          privateKeyDetection(next.root) ?? next.root.selected ?? next.root.candidates[0] ?? null,
+        )
         setShowCandidates(next.root.status === 'ambiguous')
         setActiveChainNode(next.root.id)
         setStatus('done')
@@ -112,18 +120,32 @@ export function DecoderWorkbench({
           )
         if (next.root.status === 'confident') onEvent?.('decode_completed')
         else if (next.root.status === 'unsupported') onEvent?.('decode_unsupported')
-        setMessage(next.root.status === 'unsupported' ? messages.unsupported : '')
+        setMessage(
+          next.root.status === 'unsupported'
+            ? typeof input === 'string' && /\s/.test(input)
+              ? messages.locale === 'ko'
+                ? '평문으로 보여요. 알아볼 수 있는 인코딩 값은 찾지 못했어요.'
+                : 'This looks like plain text. No supported encoded values were found.'
+              : messages.unsupported
+            : '',
+        )
       } catch (error) {
         if (current !== requestId.current) return
         setStatus('error')
         setMessage(messages.decodeFailed)
-        setDiagnostic(error instanceof Error ? error.message : String(error))
+        setDiagnostic(
+          error instanceof Error &&
+            ['Error', 'TypeError', 'RangeError', 'SyntaxError', 'DOMException'].includes(error.name)
+            ? error.name
+            : 'Error',
+        )
       }
     },
     [decodeInput, messages],
   )
 
   const handleSource = (value: string) => {
+    onInputState?.(value, value)
     overrides.current = {}
     setSource(value)
     if (!value) {
@@ -165,13 +187,21 @@ export function DecoderWorkbench({
     setSource(
       `[${messages.localFile}: ${file.name}, ${file.size.toLocaleString()} ${messages.bytes}]`,
     )
-    await run(new Uint8Array(await file.arrayBuffer()))
+    const bytes = new Uint8Array(await file.arrayBuffer())
+    onInputState?.(bytes, `[${messages.localFile}: ${file.name}, ${file.size} ${messages.bytes}]`)
+    await run(bytes)
   }
 
   const activateLayer = (nodeId: string) => {
     setActiveChainNode(nodeId)
     const visit = (node: DecodeResult['root']): void => {
-      if (node.id === nodeId) setSelected(node.selected ?? node.candidates[0] ?? null)
+      if (node.id === nodeId)
+        setSelected(
+          (result ? privateKeyDetection(result.root) : undefined) ??
+            node.selected ??
+            node.candidates[0] ??
+            null,
+        )
       else node.children.forEach(visit)
     }
     if (result) visit(result.root)
@@ -231,7 +261,7 @@ export function DecoderWorkbench({
     const projection = safeShareProjection(result.root, selected, messages)
     if (!projection) return
     try {
-      const slug = ['gzip', 'zlib', 'deflate', 'compression'].includes(selected.detector)
+      const slug = ['gzip', 'zlib', 'deflate', 'brotli', 'compression'].includes(selected.detector)
         ? 'gzip-base64'
         : selected.detector
       const blob = await safeShareCardPng(projection, messages, slug),
@@ -331,7 +361,8 @@ export function DecoderWorkbench({
   }
 
   useEffect(() => {
-    if (source) void run(source)
+    if (restoreInput) void run(restoreInput.input)
+    else if (source) void run(source)
   }, [])
 
   useEffect(() => {
@@ -449,7 +480,14 @@ export function DecoderWorkbench({
 
       {result ? (
         <div class="result-grid">
-          {result.root.candidates
+          {(function flatten(node: DecodeResult['root']): DecodeResult['root'][] {
+            return [node, ...node.children.flatMap(flatten)]
+          })(result.root)
+            .flatMap((node) =>
+              [node.selected, ...node.candidates].filter(
+                (candidate): candidate is Detection => !!candidate,
+              ),
+            )
             .flatMap((candidate) => candidate.warnings)
             .filter((warning) => warning.severity === 'danger')
             .filter(

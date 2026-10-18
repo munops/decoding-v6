@@ -1,6 +1,6 @@
 import type { Detector } from '../types'
 import { decodeBase64, inputText } from '../utils'
-import { found } from './common'
+import { found, warning } from './common'
 export const mime: Detector = {
   id: 'mime',
   detect(input) {
@@ -8,11 +8,13 @@ export const mime: Detector = {
     const encoded = /=\?([^?]+)\?([BQ])\?([^?]*)\?=/gi
     if (encoded.test(text)) {
       encoded.lastIndex = 0
-      const charsets: string[] = []
+      const charsets: string[] = [],
+        failed: Array<{ charset: string; bytes: number[] }> = []
       const decoded = text.replace(encoded, (all, charset: string, kind: string, body: string) => {
         charsets.push(charset)
+        let bytes: Uint8Array | null = null
         try {
-          const bytes =
+          bytes =
             kind.toUpperCase() === 'B'
               ? decodeBase64(body)
               : Uint8Array.from(
@@ -25,12 +27,24 @@ export const mime: Detector = {
                 )
           return bytes ? new TextDecoder(charset).decode(bytes) : all
         } catch {
+          failed.push({ charset, bytes: Array.from(bytes ?? []) })
           return all
         }
       })
       return found('mime', 'MIME encoded words', decoded, 0.995, {
         decoded,
         metadata: { charsets },
+        ...(failed.length
+          ? {
+              value: { text: decoded, unsupportedCharsets: failed },
+              warnings: [
+                warning(
+                  'MIME-CHARSET-UNSUPPORTED',
+                  'Unsupported charset: original words and decoded raw byte values are retained. Choose a charset in the string inspector.',
+                ),
+              ],
+            }
+          : {}),
       })
     }
     if (!/=[\da-f]{2}/i.test(text) || !/(?:=[89a-f][\da-f]){2}|=\r?\n/i.test(text)) return null

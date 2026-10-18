@@ -83,7 +83,7 @@ test('workspace stores only redacted structure and clear deletes it', async ({ p
   expect(persisted).not.toContain(secret)
   expect(persisted).toContain('[redacted]')
   await page.getByRole('button', { name: 'Clear workspace' }).click()
-  await expect(page.getByText('0 redacted records')).toBeVisible()
+  await expect(page.getByText('Save a result to collect it here')).toBeVisible()
 })
 
 test('anonymous-count opt-out suppresses open, decode and share events', async ({ page }) => {

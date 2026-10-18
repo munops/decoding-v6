@@ -115,3 +115,38 @@ describe('new format outcomes and cross-negative regressions', () => {
     ).toBe('PGP-CHECKSUM')
   })
 })
+
+describe('completion recovery and nested field regressions', () => {
+  it('retains failed forced interpretations instead of silently choosing another format', async () => {
+    const result = await decode('hello world', { overrides: { '0-1': 'xml' } })
+    expect(result.root.selected?.warnings[0]?.ruleId).toBe('MANUAL-DECODE-FAILED')
+    expect(result.root.selected?.detector).toBe('xml')
+  })
+  it('walks multiple header, query and env values with field paths', async () => {
+    const token = `${enc('{"alg":"none"}')}.${enc('{"sub":"synthetic"}')}.`
+    for (const input of [
+      `?first=${token}&second=${token}x`,
+      `HTTP/1.1 200 OK\nX-First: ${token}\nX-Second: ${token}x`,
+      `FIRST=${token}\nSECOND=${token}x`,
+    ]) {
+      const result = await decode(input)
+      expect(result.root.children).toHaveLength(2)
+      expect(result.root.children.every((node) => typeof node.sourcePath === 'string')).toBe(true)
+    }
+  })
+  it('retains unsupported MIME bytes and hides Kubernetes plaintext until reveal', async () => {
+    const mime = await candidate('mime', '=?unknown-synthetic-charset?B?aGVsbG8=?=')
+    expect(mime?.warnings[0]?.ruleId).toBe('MIME-CHARSET-UNSUPPORTED')
+    expect(mime?.value).toMatchObject({
+      unsupportedCharsets: [{ bytes: [104, 101, 108, 108, 111] }],
+    })
+    const k8s = await candidate(
+      'k8s-secret',
+      'apiVersion: v1\nkind: Secret\nstringData:\n  password: synthetic',
+    )
+    expect(JSON.stringify(k8s?.value)).not.toContain('synthetic')
+    expect(k8s?.metadata?.secretFields).toMatchObject([
+      { name: 'stringData.password', decoded: 'synthetic' },
+    ])
+  })
+})

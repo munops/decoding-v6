@@ -26,7 +26,10 @@ const samples = triageSamples.map((sample) => ({
   <section class="hero container">
     <div class="hero-copy">
       <h1>{heading} <span>{accentHeading}</span></h1>
-      <p>{messages.intro}</p>
+      <p>
+        {messages.intro}
+        <a href="/proof/">{locale === 'ko' ? '전송 직접 확인' : 'Check local processing'}</a>
+      </p>
     </div>
   </section>
   <div class="container workbench-wrap">

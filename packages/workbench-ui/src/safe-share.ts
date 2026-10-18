@@ -193,7 +193,7 @@ export async function safeShareCardPng(
   ctx.fillText(messages.shareOmitted, 64, canvas.height - 70, 1070)
   ctx.font = '22px monospace'
   ctx.fillText(
-    `decod.ing/detect/${/^[a-z0-9-]+$/.test(slug) ? slug : 'jwt'}/`,
+    /^[a-z0-9-]+$/.test(slug) ? `decod.ing/detect/${slug}/` : 'decod.ing/',
     64,
     canvas.height - 30,
     1070,

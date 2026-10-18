@@ -1,6 +1,6 @@
 import type { Detector } from '../types'
 import { inputText } from '../utils'
-import { found, sensitiveKey, warning } from './common'
+import { encodedFields, found, sensitiveKey, warning } from './common'
 export const kv: Detector = {
   id: 'kv',
   detect(input) {
@@ -28,13 +28,15 @@ export const kv: Detector = {
               warning(`COOKIE-NO-${flag.toUpperCase()}`, `Set-Cookie is missing ${flag}.`),
             )
         : []
-    const inner = cookie ? entries[0]?.[1] : entries.find(([, v]) => v.split('.').length === 3)?.[1]
     return found(
       'kv',
       cookie ? 'Cookie header' : 'Query string',
       { entries: values },
       cookie ? 0.999 : 0.97,
-      { warnings, ...(inner ? { decoded: inner } : {}) },
+      {
+        warnings,
+        metadata: { embedded: encodedFields(entries.map(([name, raw]) => ({ name, raw }))) },
+      },
     )
   },
 }
@@ -47,12 +49,16 @@ export const env: Detector = {
       .filter((x) => x.trim() && !/^\s*#/.test(x))
     if (!lines.length || !lines.every((x) => /^\s*(?:export\s+)?[A-Za-z_][\w]*\s*=/.test(x)))
       return null
+    const rawEntries: Array<{ name: string; raw: string }> = []
     const entries = lines.map((x) => {
       const match = /^\s*(?:export\s+)?([\w]+)\s*=\s*([\s\S]*)$/.exec(x)!
       const key = match[1]!,
         raw = match[2]!.replace(/^(['"])([\s\S]*)\1$/, '$2')
+      rawEntries.push({ name: key, raw })
       return { name: key, value: sensitiveKey.test(key) ? '[redacted]' : raw }
     })
-    return found('env', '.env / key=value', { entries }, lines.length === 1 ? 0.72 : 0.995)
+    return found('env', '.env / key=value', { entries }, lines.length === 1 ? 0.72 : 0.995, {
+      metadata: { embedded: encodedFields(rawEntries) },
+    })
   },
 }

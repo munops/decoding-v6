@@ -71,7 +71,7 @@ try {
   if ((await page.getByText('0 input bytes uploaded').count()) !== 0) {
     throw new Error('Expected the obsolete duplicate upload claim to be absent')
   }
-  if ((await page.locator('.copy-feedback-settings').count()) !== 0) {
+  if ((await page.locator('.copy-feedback-settings[open]').count()) !== 0) {
     throw new Error('Expected copy feedback settings only after a result exists')
   }
   const firstVisitGeometry = await page.evaluate(() => {

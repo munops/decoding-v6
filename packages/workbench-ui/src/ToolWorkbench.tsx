@@ -8,6 +8,7 @@ import { useEffect, useMemo, useState } from 'preact/hooks'
 import type { ToolMessages } from './messages'
 
 export type ToolWorkbenchProps = {
+  onSourceChange?: (source: string) => void
   initialInput?: string | undefined
   operation: OperationDescriptor
   execute: (
@@ -145,9 +146,15 @@ function resultKind(result: OperationResult | null, messages: ToolMessages): str
   return labels[result.kind]
 }
 
-export function ToolWorkbench({ operation, execute, messages, initialInput }: ToolWorkbenchProps) {
+export function ToolWorkbench({
+  operation,
+  execute,
+  messages,
+  initialInput,
+  onSourceChange,
+}: ToolWorkbenchProps) {
   const [hydrated, setHydrated] = useState(false)
-  const [source, setSource] = useState(() =>
+  const [source, assignSource] = useState(() =>
     initialInput !== undefined
       ? initialInput
       : typeof document === 'undefined'
@@ -155,6 +162,10 @@ export function ToolWorkbench({ operation, execute, messages, initialInput }: To
         : (document.querySelector<HTMLTextAreaElement>('textarea')?.value ??
           initialExample(operation.id, messages)),
   )
+  const setSource = (text: string) => {
+    assignSource(text)
+    onSourceChange?.(text)
+  }
   const [options, setOptions] = useState<OperationOptions>(() => defaultOptions(operation))
   const [result, setResult] = useState<OperationResult | null>(null)
   const [status, setStatus] = useState<'idle' | 'processing' | 'done' | 'error'>('idle')

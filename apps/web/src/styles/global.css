@@ -2168,3 +2168,46 @@ summary {
   width: 100%;
   min-height: 44px;
 }
+
+.data-manager li {
+  overflow-wrap: anywhere;
+  margin-block: 8px;
+}
+.data-manager button {
+  margin: 4px;
+}
+.proof-monitor {
+  margin: 12px;
+  padding: 12px;
+  border-left: 3px solid var(--line-strong);
+  font-size: 13px;
+}
+.proof-monitor code {
+  overflow-wrap: anywhere;
+}
+.install-hint {
+  margin: 16px;
+  padding: 12px 0;
+  border-block: 1px solid var(--line);
+}
+.update-banner {
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--layer-3);
+  flex-wrap: wrap;
+}
+.sponsor-empty {
+  margin-block: 32px;
+  padding: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
+}
+@media (display-mode: standalone) {
+  .sponsor-empty,
+  [data-sponsor] {
+    display: none !important;
+  }
+}

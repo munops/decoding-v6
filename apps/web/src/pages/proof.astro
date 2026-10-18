@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro'
+import WebDecoder from '../islands/WebDecoder'
+import { decoderMessages } from '@decoding/workbench-ui'
+---
+
+<Layout
+  title="Check local decoding without the network — decod.ing"
+  description="Inspect page-visible network requests and try the decoder in airplane mode."
+>
+  <section class="page-hero container">
+    <h1>Try it with the network off.</h1><p>
+      The decoder opens its local code first. Then disconnect and paste a synthetic example. Only
+      page-visible resource requests are listed; no payload is sent.
+    </p>
+  </section>
+  <div class="container workbench-wrap">
+    <WebDecoder messages={decoderMessages.en} proofMode client:load />
+  </div>
+</Layout>
