@@ -1,3 +1,4 @@
+import { completeTextSpecs } from './complete-formats'
 export type DetectorSpec = {
   detector: string
   slug: string
@@ -8,6 +9,7 @@ export type DetectorSpec = {
 }
 
 export const detectorSpecs: DetectorSpec[] = [
+  ...completeTextSpecs,
   {
     detector: 'jwt',
     slug: 'jwt',

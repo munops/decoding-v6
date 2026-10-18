@@ -24,6 +24,7 @@ export type DecodeOptions = {
   signal?: AbortSignal
   now?: Date
   autoConfidence?: number
+  enrich?: (detection: Detection, input: DecodeInput) => Promise<Detection>
   autoMargin?: number
 }
 
@@ -57,11 +58,12 @@ export async function decode(
   const seen = new Set<string>()
   let nodes = 0
 
-  async function visit(value: DecodeInput, depth: number): Promise<ChainNode> {
+  async function visit(value: DecodeInput, depth: number, sourcePath?: string): Promise<ChainNode> {
     nodes += 1
     const base = {
       id: `${depth}-${nodes}`,
       depth,
+      ...(sourcePath ? { sourcePath } : {}),
       inputKind: typeof value === 'string' ? ('text' as const) : ('bytes' as const),
       inputSize: inputSize(value),
       candidates: [] as Detection[],
@@ -86,16 +88,30 @@ export async function decode(
     )
     const candidates = sortCandidates(detections.filter((item): item is Detection => item !== null))
     if (!candidates.length) return { ...base, candidates, status: 'unsupported' }
-    const selected = selectedCandidate(
+    let selected = selectedCandidate(
       candidates,
       options.autoConfidence ?? 0.85,
       options.autoMargin ?? 0.15,
     )
     if (!selected) return { ...base, candidates, status: 'ambiguous' }
+    if (options.enrich) selected = await options.enrich(selected, value)
     const node: ChainNode = { ...base, candidates, selected, status: 'confident' }
     if (selected.decoded !== undefined && stableDigest(selected.decoded) !== digest) {
       node.children.push(await visit(selected.decoded, depth + 1))
     }
+    const embedded = candidates.find((candidate) => Array.isArray(candidate.metadata?.embedded))
+      ?.metadata?.embedded as Array<{ path?: string; encoded: string; offset?: number }> | undefined
+    if (embedded)
+      for (const field of embedded) {
+        if (nodes >= limits.maxNodes) {
+          node.limitReason = 'nodes'
+          break
+        }
+        if (typeof field.encoded === 'string')
+          node.children.push(
+            await visit(field.encoded, depth + 1, field.path ?? `offset ${field.offset}`),
+          )
+      }
     return node
   }
 

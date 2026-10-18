@@ -50,6 +50,7 @@ export type ChainNode = {
   depth: number
   inputKind: 'text' | 'bytes'
   inputSize: number
+  sourcePath?: string
   candidates: Detection[]
   selected?: Detection
   children: ChainNode[]

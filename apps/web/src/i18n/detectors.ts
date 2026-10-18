@@ -1,3 +1,4 @@
+import { completeKoreanLabels } from '../../../../packages/spec-registry/src/complete-formats'
 import type { DetectorSpec } from '@decoding/spec-registry'
 import type { Locale } from './catalog'
 
@@ -62,7 +63,14 @@ const koreanDetectorCopy = {
 export function localizeDetectorSpec(locale: Locale, spec: DetectorSpec): DetectorSpec {
   if (locale !== 'ko') return spec
   const copy = koreanDetectorCopy[spec.detector as keyof typeof koreanDetectorCopy]
-  return copy ? { ...spec, ...copy } : spec
+  if (copy) return { ...spec, ...copy, examples: spec.examples }
+  const label = completeKoreanLabels.get(spec.detector)
+  return label
+    ? { ...spec, label, description: `${label}을 기기에서 확인하고 근거와 해석 한계를 함께 봐요.` }
+    : spec
 }
 
-export const koreanDetectorIds = Object.freeze(Object.keys(koreanDetectorCopy))
+export const koreanDetectorIds = Object.freeze([
+  ...Object.keys(koreanDetectorCopy),
+  ...completeKoreanLabels.keys(),
+])

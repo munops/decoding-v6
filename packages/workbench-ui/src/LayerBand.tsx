@@ -89,6 +89,7 @@ export function LayerBand({
       onFocus={() => onActivate(node.id)}
       onKeyDown={onKeyDown}
     >
+      {node.sourcePath ? <p class="layer-source-path">{node.sourcePath}</p> : null}
       <ChainStage node={node} messages={messages} />
       {node.selected ? <EvidenceList detection={node.selected} messages={messages} /> : null}
       {node.limitReason ? (

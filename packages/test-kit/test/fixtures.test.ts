@@ -6,8 +6,8 @@ import { measureDetector } from '../src/index'
 
 describe('public detector fixture gate', () => {
   it('has the required public counts and official references', () => {
-    expect(fixturesByDetector.size).toBe(8)
-    expect(detectorSpecs).toHaveLength(8)
+    expect(fixturesByDetector.size).toBe(detectorSpecs.length)
+    expect(detectorSpecs.length).toBeGreaterThanOrEqual(8)
     for (const [detector, fixtures] of fixturesByDetector) {
       expect(
         fixtures.filter((fixture) => fixture.class === 'positive'),

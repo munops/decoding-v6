@@ -1,3 +1,4 @@
+import { completionMessages } from '../packages/workbench-ui/src/completion-messages'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import {
@@ -64,6 +65,7 @@ invariant(
 assertCatalog('layout', layoutMessages)
 assertCatalog('home', homeMessages)
 assertCatalog('decoder', decoderMessages)
+assertCatalog('completion', completionMessages)
 assertCatalog('tool', toolMessages)
 assertCatalog('catalog', catalogMessages)
 assertCatalog('detectorPage', detectorPageMessages)

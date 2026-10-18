@@ -1,5 +1,5 @@
 import { decodeBase64, encodeBase64, inputBytes, inputText } from '@decoding/engine'
-import { X509Certificate } from '@peculiar/x509'
+import { SubjectAlternativeNameExtension, X509Certificate } from '@peculiar/x509'
 import { optionString, structuredResult, text, textResult } from './shared'
 import type { OperationRunner } from './types'
 
@@ -132,6 +132,8 @@ export const runEncode: OperationRunner = async (id, input, options) => {
           subject: certificate.subject,
           issuer: certificate.issuer,
           serialNumber: certificate.serialNumber,
+          subjectAlternativeNames:
+            certificate.getExtension(SubjectAlternativeNameExtension)?.names.toJSON() ?? [],
           notBefore: certificate.notBefore.toISOString(),
           notAfter: certificate.notAfter.toISOString(),
           signatureAlgorithm: certificate.signatureAlgorithm.name,

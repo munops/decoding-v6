@@ -370,6 +370,7 @@ export function DecoderWorkbench({
             )}
           </div>
           <ResultInspector
+            onInspectValue={handleSource}
             selected={selected}
             result={result}
             messages={messages}

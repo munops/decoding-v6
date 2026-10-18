@@ -11,3 +11,5 @@ export type {
   Evidence,
   LintWarning,
 } from './types'
+
+export { redactSecrets } from './formats/secret-patterns'

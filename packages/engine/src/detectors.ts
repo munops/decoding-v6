@@ -1,3 +1,5 @@
+import { textDetectors } from './formats/text'
+import { extraTimeId } from './formats/time-ids'
 import { gunzipSync, inflateSync, unzlibSync } from 'fflate'
 import type { DecodeInput, Detection, Detector, LintWarning } from './types'
 import {
@@ -246,7 +248,7 @@ const urlDetector: Detector = {
       return result(
         'url',
         parsedUrl ? 'URL' : hasQuery ? 'Query string' : 'URL-encoded text',
-        parsedUrl ? 0.98 : hasQuery ? 0.92 : 0.9,
+        parsedUrl ? 0.98 : hasQuery ? 0.72 : 0.9,
         parsedUrl
           ? `${parsedUrl.protocol}//${parsedUrl.host}`
           : hasQuery
@@ -341,6 +343,13 @@ const uuidDetector: Detector = {
     if (uuid) {
       const version = Number(uuid[3]?.[0])
       const metadata: Record<string, unknown> = { version, variant: 'RFC 4122' }
+      if (version === 1) {
+        const ticks =
+          ((BigInt(`0x${uuid[3]}`) & 0xfffn) << 48n) |
+          (BigInt(`0x${uuid[2]}`) << 32n) |
+          BigInt(`0x${uuid[1]}`)
+        metadata.timestamp = new Date(Number((ticks - 122192928000000000n) / 10000n)).toISOString()
+      }
       if (version === 7) {
         const milliseconds = Number.parseInt(`${uuid[1]}${uuid[2]}`, 16)
         metadata.timestamp = new Date(milliseconds).toISOString()
@@ -368,7 +377,7 @@ const uuidDetector: Detector = {
         { metadata },
       )
     }
-    return null
+    return extraTimeId(text)
   },
 }
 
@@ -443,6 +452,7 @@ const compressionDetector: Detector = {
 }
 
 export const defaultDetectors: Detector[] = [
+  ...textDetectors,
   jwtDetector,
   jsonDetector,
   compressionDetector,

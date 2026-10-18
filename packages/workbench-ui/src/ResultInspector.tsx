@@ -1,9 +1,11 @@
+import { EmbeddedValues } from './EmbeddedValues'
 import type { Detection, DecodeResult } from '@decoding/engine'
 import type { DecoderMessages } from './messages'
 import { EvidenceList } from './LayerBand'
 import { detectionLabel } from './detection-copy'
 import { outputText } from './result-text'
 type Props = {
+  onInspectValue: (text: string) => void
   selected: Detection | null
   result: DecodeResult
   messages: DecoderMessages
@@ -15,6 +17,7 @@ type Props = {
   setMessage: (text: string) => void
 }
 export function ResultInspector({
+  onInspectValue,
   selected,
   result,
   messages,
@@ -56,6 +59,7 @@ export function ResultInspector({
           {result.root.status === 'ambiguous' ? (
             <EvidenceList detection={selected} messages={messages} />
           ) : null}
+          <EmbeddedValues detection={selected} messages={messages} onInspect={onInspectValue} />
           <pre class="output-view">
             <code>{outputText(selected.value)}</code>
           </pre>

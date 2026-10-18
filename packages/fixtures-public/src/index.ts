@@ -1,3 +1,4 @@
+import { completeTextFixtures } from './text-fixtures'
 import { gzipSync } from 'fflate'
 
 export type PublicFixture = {
@@ -88,6 +89,7 @@ const compressed = Array.from({ length: 20 }, (_, index) =>
 )
 
 export const publicFixtures: PublicFixture[] = [
+  ...completeTextFixtures,
   ...fixtures(
     'jwt',
     jwt,

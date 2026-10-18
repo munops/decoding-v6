@@ -32,7 +32,7 @@ for (const page of requiredPages) {
 }
 
 if (
-  detectorSpecs.length !== 8 ||
+  detectorSpecs.length < 8 ||
   detectorSpecs.some((spec) => spec.examples.length < 3 || !spec.references.length)
 ) {
   throw new Error('Every detector needs a page, three safe examples, and an official reference.')
@@ -56,5 +56,5 @@ for (const forbidden of ['shell:', 'fs:', 'http:', 'sql:']) {
 }
 
 console.log(
-  `Content validation passed: 47 tools, Pack ${packs.join('+')}, 8 detector pages, least-privilege desktop and extension.`,
+  `Content validation passed: 47 tools, Pack ${packs.join('+')}, ${detectorSpecs.length} detector pages, least-privilege desktop and extension.`,
 )
