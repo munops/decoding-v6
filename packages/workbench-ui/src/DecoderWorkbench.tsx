@@ -14,6 +14,7 @@ import { safeShareCardSvg, safeShareMarkdown, safeShareProjection } from './safe
 export type DecoderWorkbenchProps = {
   decodeInput: (input: DecodeInput) => Promise<DecodeResult>
   externalInput?: { id: number; value: string } | undefined
+  onEvent?: (name: 'decode_completed' | 'decode_unsupported' | 'share_action') => void
   messages: DecoderMessages
 }
 
@@ -147,7 +148,12 @@ function ChainView({ node, messages, activeNodeId, onActivate, onKeyDown }: Chai
   )
 }
 
-export function DecoderWorkbench({ decodeInput, externalInput, messages }: DecoderWorkbenchProps) {
+export function DecoderWorkbench({
+  decodeInput,
+  externalInput,
+  messages,
+  onEvent,
+}: DecoderWorkbenchProps) {
   const [source, setSource] = useState(() =>
     typeof document === 'undefined'
       ? ''
@@ -182,6 +188,8 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
         setShowCandidates(next.root.status === 'ambiguous')
         setActiveChainNode(next.root.id)
         setStatus('done')
+        if (next.root.status === 'confident') onEvent?.('decode_completed')
+        else if (next.root.status === 'unsupported') onEvent?.('decode_unsupported')
         setMessage(next.root.status === 'unsupported' ? messages.unsupported : '')
       } catch (error) {
         if (current !== requestId.current) return
@@ -240,6 +248,7 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
     if (!projection) return
     try {
       await navigator.clipboard.writeText(safeShareMarkdown(projection, messages))
+      onEvent?.('share_action')
       setMessage(messages.shareCopied)
       void playCopyFeedback(copyFeedback)
     } catch {
@@ -260,6 +269,7 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
     link.click()
     link.remove()
     setTimeout(() => URL.revokeObjectURL(url), 0)
+    onEvent?.('share_action')
     setMessage(messages.shareCardDownloaded)
   }
 

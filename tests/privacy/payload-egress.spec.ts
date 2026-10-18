@@ -85,3 +85,17 @@ test('workspace stores only redacted structure and clear deletes it', async ({ p
   await page.getByRole('button', { name: 'Clear workspace' }).click()
   await expect(page.getByText('0 redacted records')).toBeVisible()
 })
+
+test('anonymous-count opt-out suppresses open, decode and share events', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('decoding-count-optout', 'true'))
+  const counts: string[] = []
+  page.on('request', (request) => {
+    if (new URL(request.url()).pathname === '/e/events') counts.push(request.method())
+  })
+  await page.goto('/')
+  await expect(page.locator('[data-count-toggle]')).not.toBeChecked()
+  await page.getByLabel('Paste text or drop a file').fill('eyJsb2NhbCI6dHJ1ZX0=')
+  await expect(page.locator('.output-view')).toBeVisible()
+  await expect(page.locator('[data-safe-share]')).toBeVisible()
+  expect(counts).toEqual([])
+})

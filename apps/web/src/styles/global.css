@@ -1805,3 +1805,10 @@ html:lang(ko) body .translation-status {
   margin-left: 8px;
   padding-left: 0;
 }
+
+.count-control {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 44px;
+}

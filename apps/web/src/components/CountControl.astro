@@ -1,0 +1,40 @@
+---
+import type { Locale } from '../i18n/catalog'
+const { locale = 'en' } = Astro.props as { locale?: Locale }
+const labels: Record<Locale, string> = {
+  en: 'Anonymous counts',
+  ko: '익명 집계',
+  ja: '匿名集計',
+  'zh-cn': '匿名统计',
+  es: 'Recuentos anónimos',
+  'pt-br': 'Contagens anônimas',
+  de: 'Anonyme Zählung',
+  fr: 'Comptages anonymes',
+}
+const notices: Record<Locale, string> = {
+  en: 'This browser cannot remember this setting. Counts are off in this tab only.',
+  ko: '이 브라우저는 설정을 기억하지 못해요. 이 탭에서만 꺼져요.',
+  ja: '設定を保存できません。このタブでのみ無効です。',
+  'zh-cn': '无法保存设置，仅在此标签页停用。',
+  es: 'No se puede guardar. Desactivado solo en esta pestaña.',
+  'pt-br': 'Não é possível salvar. Desativado apenas nesta aba.',
+  de: 'Nicht speicherbar. Nur in diesem Tab deaktiviert.',
+  fr: 'Réglage non enregistré. Désactivé dans cet onglet seulement.',
+}
+---
+
+<label class="count-control"><input type="checkbox" data-count-toggle /> {labels[locale]}</label>
+<p data-count-notice data-notice={notices[locale]} role="status"></p>
+<script>
+  import { countingDisabled, setCountingDisabled } from '../lib/telemetry'
+  for (const checkbox of document.querySelectorAll<HTMLInputElement>('[data-count-toggle]')) {
+    checkbox.checked = !countingDisabled()
+    checkbox.addEventListener('change', () => {
+      const saved = setCountingDisabled(!checkbox.checked)
+      for (const other of document.querySelectorAll<HTMLInputElement>('[data-count-toggle]'))
+        other.checked = checkbox.checked
+      const notice = document.querySelector<HTMLElement>('[data-count-notice]')
+      if (notice) notice.textContent = saved ? '' : (notice.dataset.notice ?? '')
+    })
+  }
+</script>

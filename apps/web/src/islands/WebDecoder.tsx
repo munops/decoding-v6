@@ -1,6 +1,7 @@
 import { DecoderWorkbench } from '@decoding/workbench-ui'
 import type { DecoderMessages } from '@decoding/workbench-ui'
 import { useEffect, useMemo, useState } from 'preact/hooks'
+import { countOpen } from '../lib/telemetry'
 import { createDecoderWorkerClient } from '../lib/decoder-worker-client'
 
 export type WebDecoderSample = {
@@ -32,6 +33,7 @@ export default function WebDecoder({ messages, sampleLabel, samples = [] }: Prop
     <div class="decoder-frame">
       <DecoderWorkbench
         decodeInput={client.decodeInput}
+        onEvent={countOpen}
         externalInput={externalInput}
         messages={messages}
       />

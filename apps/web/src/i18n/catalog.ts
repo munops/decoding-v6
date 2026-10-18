@@ -674,7 +674,7 @@ export const toolPageMessages: Record<Locale, ToolPageMessages> = {
     localUtility: 'Local utility',
     pack: 'Utility Pack',
     runsHere: 'Runs on this device',
-    trustBody: 'No account, upload, telemetry, or server processing.',
+    trustBody: 'No account or upload. Anonymous event-name counts can be turned off in the footer.',
     howEyebrow: 'How it works',
     howTitle: 'Purpose-built and deterministic.',
     operationBody: (profile) =>
@@ -694,7 +694,7 @@ export const toolPageMessages: Record<Locale, ToolPageMessages> = {
     localUtility: '기기에서 바로 실행',
     pack: '도구 묶음',
     runsHere: '입력은 이 기기에만 남습니다',
-    trustBody: '계정, 서버 전송, 이용 추적 없이 이 페이지 안에서 처리합니다.',
+    trustBody: '계정·업로드 없이 기기에서 처리해요. 이름만 있는 익명 집계는 푸터에서 끌 수 있어요.',
     howEyebrow: '결과를 만드는 방식',
     howTitle: '같은 입력에는 언제나 같은 결과를 냅니다.',
     operationBody: () =>
@@ -714,7 +714,7 @@ export const toolPageMessages: Record<Locale, ToolPageMessages> = {
     localUtility: 'ローカルツール',
     pack: 'ツールパック',
     runsHere: 'このデバイスで実行',
-    trustBody: 'アカウント、アップロード、テレメトリ、サーバー処理はありません。',
+    trustBody: 'アカウントやアップロードなし。匿名のイベント集計はフッターで無効にできます。',
     howEyebrow: '動作方法',
     howTitle: '専用設計の決定論的な処理。',
     operationBody: (profile) =>
@@ -733,7 +733,7 @@ export const toolPageMessages: Record<Locale, ToolPageMessages> = {
     localUtility: '本地工具',
     pack: '工具包',
     runsHere: '在此设备上运行',
-    trustBody: '无需账户，无上传、遥测或服务器处理。',
+    trustBody: '无需账户或上传。可在页脚关闭匿名事件名称统计。',
     howEyebrow: '工作原理',
     howTitle: '专用且确定的处理。',
     operationBody: (profile) =>
@@ -750,7 +750,7 @@ export const toolPageMessages: Record<Locale, ToolPageMessages> = {
     localUtility: 'Utilidad local',
     pack: 'Paquete',
     runsHere: 'Se ejecuta en este dispositivo',
-    trustBody: 'Sin cuenta, subidas, telemetría ni proceso en servidor.',
+    trustBody: 'Sin cuenta ni subidas. Puede desactivar los recuentos anónimos en el pie.',
     howEyebrow: 'Cómo funciona',
     howTitle: 'Especializado y determinista.',
     operationBody: (profile) =>
@@ -769,7 +769,7 @@ export const toolPageMessages: Record<Locale, ToolPageMessages> = {
     localUtility: 'Utilitário local',
     pack: 'Pacote',
     runsHere: 'Roda neste dispositivo',
-    trustBody: 'Sem conta, upload, telemetria ou processamento no servidor.',
+    trustBody: 'Sem conta nem upload. Desative as contagens anônimas no rodapé.',
     howEyebrow: 'Como funciona',
     howTitle: 'Especializado e determinístico.',
     operationBody: (profile) =>
@@ -788,7 +788,8 @@ export const toolPageMessages: Record<Locale, ToolPageMessages> = {
     localUtility: 'Lokales Tool',
     pack: 'Tool-Paket',
     runsHere: 'Läuft auf diesem Gerät',
-    trustBody: 'Kein Konto, Upload, Telemetrie oder Serververarbeitung.',
+    trustBody:
+      'Ohne Konto oder Upload. Anonyme Ereigniszählungen sind in der Fußzeile abschaltbar.',
     howEyebrow: 'Funktionsweise',
     howTitle: 'Spezialisiert und deterministisch.',
     operationBody: (profile) =>
@@ -808,7 +809,7 @@ export const toolPageMessages: Record<Locale, ToolPageMessages> = {
     localUtility: 'Outil local',
     pack: 'Pack',
     runsHere: "S'exécute sur cet appareil",
-    trustBody: 'Sans compte, transfert, télémétrie ni traitement serveur.',
+    trustBody: 'Sans compte ni transfert. Désactivez les comptages anonymes dans le pied de page.',
     howEyebrow: 'Fonctionnement',
     howTitle: 'Spécialisé et déterministe.',
     operationBody: (profile) =>

@@ -15,7 +15,15 @@
  * 리텐션 측정용 회전 cohort token(`docs/prd/03-retention.md` §8)은 **구현하지 않았다.**
  * 그것은 동의 게이트가 필요하고, 지금 필요한 것은 첫 방문 분모뿐이다.
  */
-const ALLOWED_EVENTS = new Set(['app_open', 'landing_view'])
+const ALLOWED_EVENTS = new Set([
+  'app_open',
+  'landing_view',
+  'decode_completed',
+  'decode_unsupported',
+  'return_7d',
+  'share_action',
+  'sponsor_interest',
+])
 
 interface AnalyticsEngineDataset {
   writeDataPoint(point: { indexes: string[]; blobs: string[]; doubles: number[] }): void

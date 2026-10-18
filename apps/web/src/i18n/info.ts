@@ -49,7 +49,7 @@ export const infoMessages: Record<Locale, Record<InfoKey, InfoContent>> = {
       sections: [
         {
           heading: 'What the application stores',
-          body: 'By default: theme, locale, analytics consent, and recently used tool slugs only. Raw input and results live in page or worker memory until cleared or closed.',
+          body: 'By default: theme, locale, favorites, recent tools, optional redacted workspace records, anonymous-count opt-out and a first-visit date (maximum 13 months, never renewed). Raw input and results live in page or worker memory until cleared or closed.',
         },
         {
           heading: 'Network boundary',
@@ -123,7 +123,7 @@ export const infoMessages: Record<Locale, Record<InfoKey, InfoContent>> = {
       sections: [
         {
           heading: '저장하는 정보',
-          body: '기본적으로 화면 테마, 언어, 이용 분석 동의 여부와 최근 사용한 도구 이름만 저장합니다. 원본 입력과 결과는 현재 페이지의 작업 메모리에만 있다가 지우거나 닫으면 사라집니다.',
+          body: '기본적으로 화면 테마·언어·즐겨찾기·최근 도구·직접 저장한 가린 구조·익명 집계 끄기 설정·첫 방문 날짜(최대 13개월, 방문해도 연장 안 함)를 기기에 저장해요. 원본 입력과 결과는 현재 페이지의 작업 메모리에만 있다가 지우거나 닫으면 사라집니다.',
         },
         {
           heading: '네트워크 경계',
@@ -436,4 +436,19 @@ function simpleInfo(locale: 'zh-cn' | 'es' | 'pt-br' | 'de' | 'fr'): Record<Info
     privacy: build('privacy', sectionLabels[1] as [string, string]),
     about: build('about', sectionLabels[2] as [string, string]),
   }
+}
+
+// The same event-name-only boundary applies to every technical-beta locale.
+for (const [locale, content] of Object.entries(infoMessages)) {
+  content.privacy.sections.push(
+    locale === 'ko'
+      ? {
+          heading: '익명 집계와 끄기',
+          body: '방문·홈 진입·첫 판별·미지원·7일 재방문·공유·스폰서 관심의 이름 한 필드만 같은 출처 /e/events로 보내요(app_open, landing_view, decode_completed, decode_unsupported, return_7d, share_action, sponsor_interest). 입력·결과·식별자·IP·파일명은 앱 집계에 저장하지 않아요. 푸터 익명 집계를 끄면 요청과 첫 방문 날짜 저장을 멈춰요. 날짜는 13개월 뒤 다시 방문할 때 삭제 후 새 기간을 시작하며 자동 연장하지 않아요. Cloudflare(미국)가 정적 파일·요청을 처리하므로 접속 과정의 IP 등은 제공자의 처리 대상이에요. 광고는 현재 없고, 활성화 전에 이 문서와 동의 방식을 먼저 고쳐요.',
+        }
+      : {
+          heading: 'Anonymous counts and your choice',
+          body: 'Only one fixed event name is sent to same-origin /e/events: app_open, landing_view, decode_completed, decode_unsupported, return_7d, share_action, sponsor_interest. The application does not store content, identifiers, IP addresses or file names in these counts. Disable Anonymous counts in the footer to stop requests and first-visit date storage. The date expires after 13 months without renewal; expiry is removed on next access. Cloudflare (US) processes asset requests and connection data including IP addresses. No ads are active; the privacy notice and consent handling must change before activation.',
+        },
+  )
 }
