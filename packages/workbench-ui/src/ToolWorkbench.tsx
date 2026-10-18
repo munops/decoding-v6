@@ -146,7 +146,12 @@ function resultKind(result: OperationResult | null, messages: ToolMessages): str
 
 export function ToolWorkbench({ operation, execute, messages }: ToolWorkbenchProps) {
   const [hydrated, setHydrated] = useState(false)
-  const [source, setSource] = useState(() => initialExample(operation.id, messages))
+  const [source, setSource] = useState(() =>
+    typeof document === 'undefined'
+      ? initialExample(operation.id, messages)
+      : (document.querySelector<HTMLTextAreaElement>('textarea')?.value ??
+        initialExample(operation.id, messages)),
+  )
   const [options, setOptions] = useState<OperationOptions>(() => defaultOptions(operation))
   const [result, setResult] = useState<OperationResult | null>(null)
   const [status, setStatus] = useState<'idle' | 'processing' | 'done' | 'error'>('idle')

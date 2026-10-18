@@ -31,7 +31,11 @@ function result(
   }
 }
 
-function jwtWarnings(payload: Record<string, unknown>, now: Date): LintWarning[] {
+function jwtWarnings(
+  payload: Record<string, unknown>,
+  header: Record<string, unknown>,
+  now: Date,
+): LintWarning[] {
   const warnings: LintWarning[] = [
     {
       ruleId: 'JWT-SIGNATURE-UNVERIFIED',
@@ -40,6 +44,13 @@ function jwtWarnings(payload: Record<string, unknown>, now: Date): LintWarning[]
       specUrl: 'https://www.rfc-editor.org/rfc/rfc7519',
     },
   ]
+  if (String(header.alg).toLowerCase() === 'none') {
+    warnings.unshift({
+      ruleId: 'JWT-ALG-NONE',
+      severity: 'danger',
+      message: 'This token is unsigned. Never accept it as authenticated.',
+    })
+  }
   const nowSeconds = Math.floor(now.getTime() / 1000)
   if (typeof payload.exp === 'number' && payload.exp < nowSeconds) {
     warnings.push({
@@ -63,7 +74,7 @@ const jwtDetector: Detector = {
   detect(input, context) {
     const text = inputText(input).trim()
     const parts = text.split('.')
-    if (parts.length !== 3 || parts.some((part) => !part)) return null
+    if (parts.length !== 3 || !parts[0] || !parts[1]) return null
     const headerBytes = decodeBase64(parts[0] ?? '')
     const payloadBytes = decodeBase64(parts[1] ?? '')
     if (!headerBytes || !payloadBytes) return null
@@ -90,7 +101,10 @@ const jwtDetector: Detector = {
             ? [{ code: 'alg', message: `Algorithm header: ${String(header.alg)}`, weight: 0.05 }]
             : []),
         ],
-        { warnings: jwtWarnings(payload, context.now), metadata: { algorithm: header.alg } },
+        {
+          warnings: jwtWarnings(payload, header, context.now),
+          metadata: { algorithm: header.alg },
+        },
       )
     } catch {
       return null
@@ -128,7 +142,12 @@ const jsonDetector: Detector = {
 const base64Detector: Detector = {
   id: 'base64',
   detect(input) {
-    const text = inputText(input).trim().replace(/\s+/g, '')
+    const raw = inputText(input).trim()
+    if (/[ \t]/.test(raw)) return null
+    const lines = raw.split(/\r?\n/)
+    if (lines.length > 1 && lines.slice(0, -1).some((line) => ![64, 76].includes(line.length)))
+      return null
+    const text = lines.join('')
     if (text.length < 4 || text.length % 4 === 1 || !/^[A-Za-z0-9+/_-]+={0,2}$/.test(text))
       return null
     const bytes = decodeBase64(text)
@@ -136,10 +155,15 @@ const base64Detector: Detector = {
     const ratio = printableRatio(bytes)
     const explicitUrl = /[-_]/.test(text)
     const padded = /=+$/.test(text)
-    const confidence = Math.min(
-      0.96,
-      0.62 + (ratio > 0.85 ? 0.2 : 0.05) + (padded ? 0.1 : 0) + (explicitUrl ? 0.04 : 0),
-    )
+    const compressed =
+      (bytes[0] === 0x1f && bytes[1] === 0x8b) ||
+      (bytes[0] === 0x78 && [0x01, 0x5e, 0x9c, 0xda].includes(bytes[1] ?? -1))
+    const confidence = compressed
+      ? 0.99
+      : Math.min(
+          0.96,
+          0.62 + (ratio > 0.85 ? 0.2 : 0.05) + (padded ? 0.1 : 0) + (explicitUrl ? 0.04 : 0),
+        )
     const decoded = isProbablyUtf8(bytes) ? inputText(bytes) : bytes
     return result(
       'base64',
@@ -168,7 +192,12 @@ const hexDetector: Detector = {
     const bytes = Uint8Array.from(text.match(/.{2}/g) ?? [], (pair) => Number.parseInt(pair, 16))
     const ratio = printableRatio(bytes)
     const hasPrefix = /^0x/i.test(inputText(input).trim())
-    const confidence = Math.min(0.94, 0.68 + (hasPrefix ? 0.16 : 0) + (ratio > 0.75 ? 0.08 : 0))
+    const compressed =
+      (bytes[0] === 0x1f && bytes[1] === 0x8b) ||
+      (bytes[0] === 0x78 && [0x01, 0x5e, 0x9c, 0xda].includes(bytes[1] ?? -1))
+    const confidence = compressed
+      ? 0.99
+      : Math.min(0.94, 0.68 + (hasPrefix ? 0.16 : 0) + (ratio > 0.75 ? 0.08 : 0))
     const decoded = isProbablyUtf8(bytes) ? inputText(bytes) : bytes
     return result(
       'hex',

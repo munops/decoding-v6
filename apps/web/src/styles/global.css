@@ -587,7 +587,7 @@ pre {
   box-shadow: none;
 }
 .workbench-bar {
-  min-height: 42px;
+  min-height: 44px;
   padding: 0 2px 10px;
   display: flex;
   align-items: center;
@@ -685,7 +685,7 @@ textarea {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  min-height: 40px;
+  min-height: 44px;
   padding: 9px 15px;
   border: 1px solid var(--line);
   border-radius: 9px;
@@ -726,7 +726,7 @@ textarea {
   color: var(--muted);
 }
 .button.small {
-  min-height: 34px;
+  min-height: 44px;
   padding: 6px 10px;
 }
 .processing {
@@ -1207,7 +1207,7 @@ textarea {
 }
 .tool-options input,
 .tool-options select {
-  min-height: 38px;
+  min-height: 44px;
   padding: 7px 10px;
   border: 1px solid var(--line);
   border-radius: 7px;
@@ -1375,7 +1375,7 @@ textarea {
   font-weight: 750;
 }
 .workspace-editor > label > input {
-  min-height: 40px;
+  min-height: 44px;
   padding: 8px 11px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -1778,4 +1778,30 @@ html:lang(ko) body .translation-status {
   .tool-card {
     border-left-width: 4px;
   }
+}
+
+/* Narrow screens keep every local value within its column. */
+.tool-content,
+.tool-content article,
+.workbench-wrap,
+.result-grid > * {
+  min-width: 0;
+}
+.tool-content code {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.theme-toggle,
+.language-menu summary,
+.site-header nav a {
+  min-height: 44px;
+}
+.chain-list .chain-list {
+  margin-left: 8px;
+  padding-left: 0;
 }

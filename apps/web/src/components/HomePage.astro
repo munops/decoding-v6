@@ -34,7 +34,7 @@ const samples = triageSamples.map((sample) => ({
       messages={decoderMessages[locale]}
       sampleLabel={messages.examplesLabel}
       samples={samples}
-      client:only="preact"
+      client:load
     />
   </div>
 </Layout>

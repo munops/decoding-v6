@@ -319,3 +319,12 @@ test.describe('Japanese locale', () => {
     )
   })
 })
+
+test('hash generator can compile its local WASM under the production CSP', async ({ page }) => {
+  await page.goto('/hash-generator/')
+  await page.locator('textarea').first().fill('hello')
+  await page.getByRole('button', { name: 'Run locally', exact: true }).click()
+  await expect(page.locator('.output-view')).toContainText(
+    '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824',
+  )
+})

@@ -115,7 +115,6 @@ const localizedPrivacy = localePath(locale, '/privacy/')
         <a href={localizedMethod}>{messages.method}</a>
         <a href={localizedPrivacy}>{messages.privacy}</a>
         {locale === 'en' ? <a href="/workspace/">{messages.workspace}</a> : null}
-        {locale === 'en' ? <a href="/download/">{messages.desktop}</a> : null}
       </nav>
       {
         translationPath ? (
@@ -169,8 +168,8 @@ const localizedPrivacy = localePath(locale, '/privacy/')
           >{messages.privacy}</a
         ><a href="/terms/">{messages.terms}</a><a href="/support/">{messages.support}</a><a
           href={localizedMethod}>{messages.method}</a
-        ><a href="/changelog/">{messages.changelog}</a><a href={localePath(locale, '/about/')}
-          >{messages.about}</a
+        ><a href="/download/">{messages.desktop}</a><a href="/changelog/">{messages.changelog}</a><a
+          href={localePath(locale, '/about/')}>{messages.about}</a
         >
       </div>
       <p class="footer-note">{messages.footerNote}</p>

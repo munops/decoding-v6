@@ -1,4 +1,5 @@
-import { gzipSync } from 'fflate'
+import { detectorSpecs } from '@decoding/spec-registry'
+import { gzipSync, zlibSync } from 'fflate'
 import { describe, expect, it } from 'vitest'
 import { decode, detect, encodeBase64 } from '../src'
 
@@ -45,5 +46,44 @@ describe('detectors', () => {
     const result = await decode('too large', { limits: { maxInputBytes: 2 } })
     expect(result.root.status).toBe('limit')
     expect(result.root.limitReason).toBe('input-size')
+  })
+})
+
+describe('completion regressions', () => {
+  it('recognizes unsigned JWT and puts the danger first', async () => {
+    const token = `${encodeBase64(new TextEncoder().encode('{"alg":"none"}'), true)}.${encodeBase64(new TextEncoder().encode('{"sub":"fixture"}'), true)}.`
+    const root = (await decode(token)).root
+    expect(root.selected?.detector).toBe('jwt')
+    expect(root.selected?.warnings[0]).toMatchObject({ ruleId: 'JWT-ALG-NONE', severity: 'danger' })
+  })
+  it('rejects prose but preserves 64-column MIME base64', async () => {
+    expect(
+      (await detect('hello world this is not encoded')).some((x) => x.detector === 'base64'),
+    ).toBe(false)
+    const text = encodeBase64(new TextEncoder().encode('synthetic fixture '.repeat(10)))
+    const wrapped = text.match(/.{1,64}/g)?.join('\n') ?? ''
+    expect((await detect(wrapped)).some((x) => x.detector === 'base64')).toBe(true)
+  })
+  it('unwraps Base64 gzip and hex zlib through JSON', async () => {
+    const raw = new TextEncoder().encode('{"ok":true}')
+    for (const wrapped of [
+      encodeBase64(gzipSync(raw)),
+      Array.from(zlibSync(raw), (b) => b.toString(16).padStart(2, '0')).join(''),
+    ]) {
+      const root = (await decode(wrapped)).root
+      expect(root.children[0]?.selected?.detector).toBe('compression')
+      expect(root.children[0]?.children[0]?.selected?.detector).toBe('json')
+    }
+  })
+  it('keeps every public landing example executable', async () => {
+    for (const spec of detectorSpecs)
+      for (const example of spec.examples) {
+        const root = (await decode(example)).root
+        const ids = (node: typeof root): string[] => [
+          ...node.candidates.map((x) => x.detector),
+          ...node.children.flatMap(ids),
+        ]
+        expect(ids(root), `${spec.detector}: ${example}`).toContain(spec.detector)
+      }
   })
 })

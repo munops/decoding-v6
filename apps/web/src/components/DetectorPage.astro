@@ -37,7 +37,7 @@ const routePath = `/detect/${spec.slug}/`
     </aside>
   </section>
   <div class="container workbench-wrap">
-    <WebDecoder messages={decoderMessages[locale]} client:only="preact" />
+    <WebDecoder messages={decoderMessages[locale]} client:load />
   </div>
   <section class="tool-content container">
     <article>

@@ -148,7 +148,11 @@ function ChainView({ node, messages, activeNodeId, onActivate, onKeyDown }: Chai
 }
 
 export function DecoderWorkbench({ decodeInput, externalInput, messages }: DecoderWorkbenchProps) {
-  const [source, setSource] = useState('')
+  const [source, setSource] = useState(() =>
+    typeof document === 'undefined'
+      ? ''
+      : (document.querySelector<HTMLTextAreaElement>('#decoder-input')?.value ?? ''),
+  )
   const [result, setResult] = useState<DecodeResult | null>(null)
   const [selected, setSelected] = useState<Detection | null>(null)
   const [status, setStatus] = useState<'idle' | 'processing' | 'done' | 'error'>('idle')
@@ -336,6 +340,10 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
   }
 
   useEffect(() => {
+    if (source) void run(source)
+  }, [])
+
+  useEffect(() => {
     if (externalInput?.value) handleSource(externalInput.value)
   }, [externalInput?.id])
 
@@ -491,7 +499,6 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
             )}
           </div>
           <aside class="inspector-panel">
-            <PortfolioThemeControl messages={messages.portfolioTheme} />
             <div class="panel-heading">
               <div>
                 <span class="eyebrow">{messages.inspector}</span>
@@ -572,51 +579,52 @@ export function DecoderWorkbench({ decodeInput, externalInput, messages }: Decod
               </button>
             ) : null}
           </aside>
-          <details class="copy-feedback-settings result-preference">
-            <summary>{messages.copyFeedback}</summary>
-            <div class="copy-feedback-controls">
-              <p>{messages.copyFeedbackDescription}</p>
-              <label class="copy-feedback-toggle">
-                <input
-                  type="checkbox"
-                  checked={copyFeedback.enabled}
-                  onChange={(event) =>
-                    updateCopyFeedback({ ...copyFeedback, enabled: event.currentTarget.checked })
-                  }
-                />
-                {messages.copyFeedbackEnabled}
-              </label>
-              <label class="copy-feedback-volume" for="copy-feedback-volume">
-                <span>{messages.copyFeedbackVolume}</span>
-                <input
-                  id="copy-feedback-volume"
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.05"
-                  value={copyFeedback.volume}
-                  disabled={!copyFeedback.enabled}
-                  onInput={(event) =>
-                    updateCopyFeedback({
-                      ...copyFeedback,
-                      volume: Number(event.currentTarget.value),
-                    })
-                  }
-                />
-                <output>{Math.round(copyFeedback.volume * 100)}%</output>
-              </label>
-              <button
-                class="button ghost small"
-                type="button"
-                onClick={() => void previewCopyFeedback()}
-                disabled={!copyFeedback.enabled}
-              >
-                {messages.copyFeedbackPreview}
-              </button>
-            </div>
-          </details>
         </div>
       ) : null}
+      <details class="copy-feedback-settings result-preference">
+        <summary>{messages.copyFeedback}</summary>
+        <div class="copy-feedback-controls">
+          <PortfolioThemeControl messages={messages.portfolioTheme} />
+          <p>{messages.copyFeedbackDescription}</p>
+          <label class="copy-feedback-toggle">
+            <input
+              type="checkbox"
+              checked={copyFeedback.enabled}
+              onChange={(event) =>
+                updateCopyFeedback({ ...copyFeedback, enabled: event.currentTarget.checked })
+              }
+            />
+            {messages.copyFeedbackEnabled}
+          </label>
+          <label class="copy-feedback-volume" for="copy-feedback-volume">
+            <span>{messages.copyFeedbackVolume}</span>
+            <input
+              id="copy-feedback-volume"
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              value={copyFeedback.volume}
+              disabled={!copyFeedback.enabled}
+              onInput={(event) =>
+                updateCopyFeedback({
+                  ...copyFeedback,
+                  volume: Number(event.currentTarget.value),
+                })
+              }
+            />
+            <output>{Math.round(copyFeedback.volume * 100)}%</output>
+          </label>
+          <button
+            class="button ghost small"
+            type="button"
+            onClick={() => void previewCopyFeedback()}
+            disabled={!copyFeedback.enabled}
+          >
+            {messages.copyFeedbackPreview}
+          </button>
+        </div>
+      </details>
     </section>
   )
 }

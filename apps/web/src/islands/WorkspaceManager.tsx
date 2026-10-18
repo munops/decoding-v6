@@ -195,7 +195,9 @@ export default function WorkspaceManager() {
         <div>
           <span class="eyebrow">Stored locally</span>
           <h2>
-            {records.length} redacted record{records.length === 1 ? '' : 's'}
+            {records.length
+              ? `${records.length} redacted records`
+              : 'Save a result to collect it here'}
           </h2>
           <p>
             {bytes(usage.usage)} used of an estimated {bytes(usage.quota)} browser quota.

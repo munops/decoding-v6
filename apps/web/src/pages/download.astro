@@ -3,31 +3,24 @@ import Layout from '../layouts/Layout.astro'
 ---
 
 <Layout
-  title="Desktop app — decod.ing"
-  description="Download the offline decod.ing desktop workbench for macOS, Windows, and Linux."
+  title="Use decod.ing offline"
+  description="Install the free web app or run the local CLI from source."
 >
   <section class="page-hero container narrow">
-    <span class="eyebrow">Offline desktop workbench</span><h1>
-      One shortcut away from all 47 tools.
-    </h1><p>
-      The desktop shell adds an explicit global shortcut, one-time clipboard detection, local files,
-      multiple windows, and signed manual updates.
+    <span class="eyebrow">On this device</span><h1>Keep the workbench close.</h1>
+    <p>
+      Use your browser’s Install app action. On iPhone or iPad, choose Share → Add to Home Screen.
+      Open the tools you need once online to cache their local parsers.
     </p>
-  </section>
-  <section class="container download-grid">
-    <article>
-      <span class="platform">macOS</span><h2>Universal app</h2><p>
-        Apple Silicon and Intel. Notarized distribution is published after signing credentials and
-        beta gates are available.
-      </p><button class="button secondary" disabled>Signed build pending</button>
-    </article><article>
-      <span class="platform">Windows</span><h2>x64 / arm64</h2><p>
-        MSI/NSIS follows macOS stabilization and Windows code-signing verification.
-      </p><button class="button secondary" disabled>Quality gate pending</button>
-    </article><article>
-      <span class="platform">Linux</span><h2>AppImage / deb</h2><p>
-        Linux follows the macOS and Windows privacy and crash gates.
-      </p><button class="button secondary" disabled>Quality gate pending</button>
-    </article>
+    <a class="button" href="/tools/">Open the 47 local tools</a>
+    <h2>Command line from source</h2>
+    <p>
+      The CLI is available in the source repository; it is not published to npm. With Node 22 and
+      pnpm 10, install dependencies and pipe synthetic text into the CLI:
+    </p>
+    <pre><code>pnpm install
+printf '%s' 'eyJvayI6dHJ1ZX0=' | pnpm cli</code></pre>
+    <h2>Desktop builds</h2>
+    <p>Signed desktop downloads are not available yet. Use the web app or source CLI today.</p>
   </section>
 </Layout>

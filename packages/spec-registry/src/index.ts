@@ -16,8 +16,8 @@ export const detectorSpecs: DetectorSpec[] = [
       'Inspect compact token segments and deterministic time or algorithm warnings without verifying a signature.',
     examples: [
       'eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiJleGFtcGxlIn0.',
-      'Three dot-separated Base64URL segments',
-      'Expired exp and future nbf claims',
+      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmaXh0dXJlIn0.c2ln',
+      'eyJhbGciOiJub25lIn0.eyJleHAiOjEsIm5iZiI6MjAwMDAwMDAwMH0.',
     ],
     references: [
       { title: 'RFC 7519 — JSON Web Token', url: 'https://www.rfc-editor.org/rfc/rfc7519' },
@@ -103,7 +103,7 @@ export const detectorSpecs: DetectorSpec[] = [
     label: 'gzip / zlib / deflate',
     description:
       'Expand recognized compressed bytes under strict size and ratio limits, then continue the decode chain.',
-    examples: ['Drop a .gz file', 'gzip magic bytes 1f 8b', 'zlib streams with a valid header'],
+    examples: ['H4sIAAAAAAAEA6tWys9WsiopKk2tBQCQX9SnCwAAAA=='],
     references: [
       { title: 'RFC 1950 — ZLIB', url: 'https://www.rfc-editor.org/rfc/rfc1950' },
       { title: 'RFC 1951 — DEFLATE', url: 'https://www.rfc-editor.org/rfc/rfc1951' },

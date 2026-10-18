@@ -22,12 +22,14 @@ export default function WebTool({
   locale: Locale
 }) {
   const client = useMemo(() => {
-    const worker = new Worker(new URL('../workers/operation.worker.ts', import.meta.url), {
-      type: 'module',
-    })
+    const createWorker = () =>
+      new Worker(new URL('../workers/operation.worker.ts', import.meta.url), {
+        type: 'module',
+      })
     const pending = new Map<number, Pending>()
     let id = 0
-    worker.onmessage = (
+    let worker: Worker | undefined
+    const receive = (
       event: MessageEvent<{ id: number; result?: OperationResult; error?: string }>,
     ) => {
       const request = pending.get(event.data.id)
@@ -41,16 +43,20 @@ export default function WebTool({
       }
     }
     return {
-      worker,
+      terminate: () => worker?.terminate(),
       execute(operationId: string, input: OperationInput, options?: OperationOptions) {
         const requestId = ++id
         return new Promise<OperationResult>((resolve, reject) => {
           pending.set(requestId, { resolve, reject })
+          if (!worker) {
+            worker = createWorker()
+            worker.onmessage = receive
+          }
           worker.postMessage({ id: requestId, operation: operationId, input, options })
         })
       },
     }
   }, [locale])
-  useEffect(() => () => client.worker.terminate(), [client])
+  useEffect(() => () => client.terminate(), [client])
   return <ToolWorkbench operation={operation} execute={client.execute} messages={messages} />
 }
