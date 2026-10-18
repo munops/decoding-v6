@@ -1,4 +1,7 @@
 import { createHash, generateKeyPairSync } from 'node:crypto'
+import { gzipSync, deflateSync } from 'fflate'
+import { boundedInflate, ExpansionLimit } from '../src/bounded-inflate'
+import { DEFAULT_LIMITS } from '../src/engine'
 import { describe, expect, it } from 'vitest'
 import { decode, detect, encodeBase64, inputText } from '../src'
 import { decode32, decode58, decode85 } from '../src/formats/base-n'
@@ -149,4 +152,15 @@ describe('completion recovery and nested field regressions', () => {
       { name: 'stringData.password', decoded: 'synthetic' },
     ])
   })
+})
+
+it('stops compressed expansion while streaming in automatic and manual paths', async () => {
+  const plain = new TextEncoder().encode('a'.repeat(1_000_000)),
+    compressed = gzipSync(plain)
+  expect(() => boundedInflate(compressed, 'gzip', DEFAULT_LIMITS)).toThrow(ExpansionLimit)
+  expect((await decode(compressed)).root.selected?.warnings[0]?.ruleId).toBe('COMPRESSION-LIMIT')
+  const raw = deflateSync(plain)
+  expect(
+    (await decode(raw, { overrides: { '0-1': 'deflate' } })).root.selected?.warnings[0]?.ruleId,
+  ).toBe('MANUAL-DECODE-FAILED')
 })

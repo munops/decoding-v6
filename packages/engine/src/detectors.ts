@@ -2,7 +2,7 @@ import { identifyMagic } from './formats/magic-bytes'
 import { binaryDetectors } from './formats/binary'
 import { textDetectors } from './formats/text'
 import { extraTimeId } from './formats/time-ids'
-import { gunzipSync, inflateSync, unzlibSync } from 'fflate'
+import { boundedInflate, ExpansionLimit } from './bounded-inflate'
 import type { DecodeInput, Detection, Detector, LintWarning } from './types'
 import {
   clampConfidence,
@@ -442,15 +442,20 @@ const compressionDetector: Detector = {
         label: 'gzip',
         confidence: 0.999,
         test: bytes[0] === 0x1f && bytes[1] === 0x8b,
-        decode: () => gunzipSync(bytes),
+        decode: () => boundedInflate(bytes, 'gzip', context.limits),
       },
       {
         label: 'zlib',
         confidence: 0.98,
         test: bytes[0] === 0x78 && [0x01, 0x5e, 0x9c, 0xda].includes(bytes[1] ?? -1),
-        decode: () => unzlibSync(bytes),
+        decode: () => boundedInflate(bytes, 'zlib', context.limits),
       },
-      { label: 'deflate', confidence: 0.72, test: false, decode: () => inflateSync(bytes) },
+      {
+        label: 'deflate',
+        confidence: 0.72,
+        test: false,
+        decode: () => boundedInflate(bytes, 'deflate', context.limits),
+      },
     ]
     for (const format of formats) {
       if (!format.test) continue
@@ -489,7 +494,25 @@ const compressionDetector: Detector = {
           [{ code: 'magic', message: `${format.label} signature and valid stream`, weight: 0.98 }],
           { decoded: output, metadata: { ratio } },
         )
-      } catch {
+      } catch (error) {
+        if (error instanceof ExpansionLimit)
+          return result(
+            'compression',
+            format.label,
+            format.confidence,
+            'Expansion stopped at the safety limit.',
+            { compressedBytes: bytes.length, expandedBytes: null },
+            [{ code: 'magic', message: `${format.label} signature`, weight: 0.98 }],
+            {
+              warnings: [
+                {
+                  ruleId: 'COMPRESSION-LIMIT',
+                  severity: 'danger',
+                  message: 'Expanded output exceeds the safe limit.',
+                },
+              ],
+            },
+          )
         return null
       }
     }

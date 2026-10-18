@@ -1,4 +1,4 @@
-import { gunzipSync, inflateSync, unzlibSync } from 'fflate'
+import { boundedInflate } from '../bounded-inflate'
 import type { DecodeInput, Detection, DetectorContext } from '../types'
 import { decodeBase64, inputBytes, inputText } from '../utils'
 import { found, readable, warning } from './common'
@@ -23,9 +23,10 @@ export async function manualDecode(
     } else if (format === 'base32') output = readable(decode32(text))
     else if (format === 'base58') output = readable(decode58(text))
     else if (format === 'url') output = decodeURIComponent(text.replace(/\+/g, ' '))
-    else if (format === 'gzip') output = readable(gunzipSync(bytes))
-    else if (format === 'zlib') output = readable(unzlibSync(bytes))
-    else if (format === 'deflate') output = readable(inflateSync(bytes))
+    else if (format === 'gzip') output = readable(boundedInflate(bytes, 'gzip', context.limits))
+    else if (format === 'zlib') output = readable(boundedInflate(bytes, 'zlib', context.limits))
+    else if (format === 'deflate')
+      output = readable(boundedInflate(bytes, 'deflate', context.limits))
     else if (format === 'brotli') {
       if (!context.codecs?.brotli) throw new Error('Parser unavailable')
       output = readable(await context.codecs.brotli(bytes, context.limits))

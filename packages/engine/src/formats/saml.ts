@@ -1,4 +1,4 @@
-import { inflateSync } from 'fflate'
+import { boundedInflate, ExpansionLimit } from '../bounded-inflate'
 import type { Detector } from '../types'
 import { decodeBase64, inputText } from '../utils'
 import { found, warning } from './common'
@@ -12,7 +12,7 @@ export const saml: Detector = {
       text = inputText(bytes)
       if (!text.trim().startsWith('<')) {
         try {
-          const expanded = inflateSync(bytes)
+          const expanded = boundedInflate(bytes, 'deflate', context.limits)
           if (
             expanded.length > context.limits.maxExpandedBytes ||
             expanded.length > bytes.length * context.limits.maxCompressionRatio
@@ -27,7 +27,17 @@ export const saml: Detector = {
               ],
             })
           text = inputText(expanded)
-        } catch {
+        } catch (error) {
+          if (error instanceof ExpansionLimit)
+            return found('saml', 'SAML candidate', { error: 'Expansion stopped' }, 0.7, {
+              warnings: [
+                warning(
+                  'COMPRESSION-LIMIT',
+                  'Compressed candidate exceeded the expansion limit.',
+                  'danger',
+                ),
+              ],
+            })
           return null
         }
       }
