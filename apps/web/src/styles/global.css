@@ -15,10 +15,10 @@
   --mint-soft: #ddf1e2;
   --danger: #c4302b;
   --warning: #925100;
-  --workbench-ink: #0c1423;
-  --workbench-surface: #111d30;
-  --workbench-text: #eef1f5;
-  --workbench-muted: #aeb8c8;
+  --workbench-ink: var(--surface-2);
+  --workbench-surface: var(--surface-2);
+  --workbench-text: var(--ink);
+  --workbench-muted: var(--muted);
   --shadow-sm: 0 1px 2px rgba(16, 24, 39, 0.06), 0 8px 24px rgba(16, 24, 39, 0.06);
   --shadow: 0 28px 72px rgba(16, 24, 39, 0.13);
   --radius-sm: 10px;
@@ -668,7 +668,7 @@ textarea {
   color: var(--workbench-muted);
 }
 .paste-surface .button.ghost:disabled {
-  color: #9eacc0;
+  color: var(--muted);
   opacity: 1;
 }
 .result-preference {
@@ -2209,5 +2209,20 @@ summary {
   .sponsor-empty,
   [data-sponsor] {
     display: none !important;
+  }
+}
+
+html {
+  scroll-padding-block: 90px;
+}
+.decoder-frame {
+  padding-bottom: 88px;
+}
+@media (min-width: 800px) {
+  .result-action-bar {
+    position: sticky;
+    left: auto;
+    right: auto;
+    bottom: 8px;
   }
 }

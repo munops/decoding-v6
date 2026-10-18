@@ -122,7 +122,8 @@ test('sticky header does not trap prior input controls after a mobile result', a
     for (const selector of [
       '#decoder-input',
       '.input-actions .file-action',
-      '.input-actions button',
+      '.input-actions button:first-child',
+      '.input-actions button:last-of-type',
     ]) {
       const target = page.locator(selector)
       await target.scrollIntoViewIfNeeded()

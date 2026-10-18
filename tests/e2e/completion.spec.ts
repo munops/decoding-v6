@@ -1,6 +1,7 @@
 import { createHmac } from 'node:crypto'
 import { brotliCompressSync } from 'node:zlib'
 import { expect, test } from '@playwright/test'
+test.use({ viewport: { width: 390, height: 844 } })
 const encoded = (value: string) => Buffer.from(value).toString('base64url')
 test('unsigned JWT danger links to an explanation and HS512 verifies locally', async ({ page }) => {
   const key = 'synthetic-local-verification-key',
@@ -26,8 +27,8 @@ test('unsigned JWT danger links to an explanation and HS512 verifies locally', a
   await page
     .getByLabel('Paste text or drop a file')
     .fill(`${encoded('{"alg":"none"}')}.${payload}.`)
-  await expect(page.locator('.result-alert')).toContainText('JWT-ALG-NONE')
-  await page.locator('.result-alert a').click()
+  await expect(page.locator('.result-alert').filter({ hasText: 'JWT-ALG-NONE' })).toBeVisible()
+  await page.locator('.result-alert a').filter({ hasText: 'JWT-ALG-NONE' }).click()
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Unsigned token')
 })
 test('result save, reopen, edit, backup, delete and restore preserve redaction', async ({
@@ -46,6 +47,7 @@ test('result save, reopen, edit, backup, delete and restore preserve redaction',
   await page.getByLabel('Name', { exact: true }).fill('Synthetic incident')
   await page.getByLabel('Note', { exact: true }).fill('Synthetic note')
   await page.getByRole('button', { name: 'Save name and note' }).click()
+  await expect(page.locator('.workspace-record')).toContainText('Synthetic incident')
   await page.reload()
   await expect(page.locator('.workspace-record')).toContainText('Synthetic incident')
   await expect(page.locator('.workspace-record')).not.toContainText('synthetic-DO-NOT-STORE')

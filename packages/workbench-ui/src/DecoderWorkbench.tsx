@@ -1,3 +1,4 @@
+import type { ComponentChildren } from 'preact'
 import { completionMessages } from './completion-messages'
 import { WorkflowActions } from './WorkflowActions'
 import { BatchCompare } from './BatchCompare'
@@ -24,6 +25,7 @@ import {
 } from './safe-share'
 
 export type DecoderWorkbenchProps = {
+  inputAddon?: ComponentChildren
   decodeInput: (input: DecodeInput, overrides?: Record<string, string>) => Promise<DecodeResult>
   externalInput?: { id: number; value: string } | undefined
   restoreInput?: { input: DecodeInput; source: string } | undefined
@@ -54,6 +56,7 @@ function redactValue(value: unknown, depth = 0): unknown {
 }
 
 export function DecoderWorkbench({
+  inputAddon,
   decodeInput,
   externalInput,
   messages,
@@ -416,6 +419,7 @@ export function DecoderWorkbench({
         handleFile={handleFile}
       />
 
+      {inputAddon}
       {shortcuts ? (
         <div class="notice info">
           <button class="button ghost" type="button" onClick={() => setShortcuts(false)}>
@@ -576,7 +580,6 @@ export function DecoderWorkbench({
             selected={selected}
             result={result}
             messages={messages}
-            copySelected={copySelected}
             exportRedacted={exportRedacted}
             copySafeSummary={copySafeSummary}
             downloadSafeShareCard={downloadSafeShareCard}

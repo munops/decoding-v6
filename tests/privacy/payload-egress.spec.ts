@@ -19,6 +19,7 @@ test('synthetic canary never enters requests or browser storage after explicit c
   await page.goto('/')
   await page.getByLabel('Paste text or drop a file').fill(btoa(JSON.stringify({ secret: canary })))
   await expect(page.getByText('JSON', { exact: false }).first()).toBeVisible()
+  await page.getByLabel('Paste text or drop a file').blur()
   await page.getByRole('button', { name: 'Copy', exact: true }).click()
   await expect(page.getByText('Selected result copied.')).toBeVisible()
   const safeShare = page.locator('[data-safe-share]')

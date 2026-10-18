@@ -18,7 +18,6 @@ type Props = {
   selected: Detection | null
   result: DecodeResult
   messages: DecoderMessages
-  copySelected: () => Promise<void>
   exportRedacted: () => void
   copySafeSummary: () => Promise<void>
   downloadSafeShareCard: () => void
@@ -32,7 +31,6 @@ export function ResultInspector({
   selected,
   result,
   messages,
-  copySelected,
   exportRedacted,
   copySafeSummary,
   downloadSafeShareCard,
@@ -54,14 +52,6 @@ export function ResultInspector({
           <h2>{selected ? detectionLabel(selected.label, messages) : messages.noCandidate}</h2>
         </div>
         <div class="inline-actions">
-          <button
-            class="button small inspector-copy"
-            type="button"
-            onClick={() => void copySelected()}
-            disabled={!selected}
-          >
-            {messages.copy}
-          </button>
           <button
             class="button small secondary"
             type="button"

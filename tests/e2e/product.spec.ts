@@ -115,6 +115,7 @@ test('plays a local copy cue only after an explicit successful copy and persists
   })
   await page.goto('/')
   await page.getByLabel('Paste text or drop a file').fill('dGVzdA==')
+  await page.getByLabel('Paste text or drop a file').blur()
   await page.getByRole('button', { name: 'Copy', exact: true }).click()
   await expect(page.getByText('Selected result copied.')).toBeVisible()
   await expect
@@ -164,7 +165,10 @@ test('command palette focus, favorites, and recent tools store slugs only', asyn
     keys: Object.keys(localStorage),
   }))
   expect(stored.favorites).toBe('["json-format"]')
-  expect(stored.keys).toEqual(['decoding-favorite-tools'])
+  expect(stored.keys.sort()).toEqual(['decoding-favorite-tools', 'decoding-first-visit'])
+  expect(await page.evaluate(() => localStorage.getItem('decoding-first-visit'))).toMatch(
+    /^\d{4}-\d\d-\d\d$/,
+  )
   await page.getByRole('link', { name: /JSON Format \/ Validate/ }).click()
   await page.goto('/tools/')
   await expect(page.getByRole('heading', { name: 'Recent tools' })).toBeVisible()
