@@ -1,0 +1,724 @@
+{
+  "schemaVersion": 1,
+  "kind": "builder implementation and existing Web release evidence; independent product verdict pending",
+  "recordedAt": "2026-10-18T19:08:04.114996+00:00",
+  "product": "decoding-v6",
+  "executionLane": "owner_lane",
+  "taskId": "task_27f76ba6ae45",
+  "dispatchId": "ctx_22bc3ea96967",
+  "sourceSha": "c90bca6228be78da2d46f7138e641b7a449d8093",
+  "metadataHead": "42ece94c22a034d9d5e9676987457665941e9a92",
+  "predeployEvidenceHead": "b9e1b588dcf34a5767cecc2d4ff2674658655b8e",
+  "baselineHead": "4ac80703c205ed2a2a57c9f56e81de660c6dadaa",
+  "artifact": {
+    "sourceSha": "c90bca6228be78da2d46f7138e641b7a449d8093",
+    "artifactSha256": "7078d84760e75f79fbbac867a31c2a04a12ba1910b58a7bd568f1cb6ab102f42",
+    "fileCount": 1154,
+    "method": "sorted per-file SHA-256 ledger folded with SHA-256"
+  },
+  "revisionUrl": "https://decod.ing/healthz",
+  "revisionJsonPath": "$.revision",
+  "sourceJsonFieldPath": "revision",
+  "publicUrl": "https://decod.ing",
+  "provider": {
+    "observedAt": "2026-10-18T19:03:55.412Z",
+    "accountId": "69abd904cab5ffd103e569e7e050a884",
+    "worker": "decoding-v6",
+    "deploymentId": "d7705b35-b8a8-4b31-8f32-1b0871d1dd1c",
+    "versionId": "7f82652f-d75d-415d-b614-cf4cba7aaa58",
+    "createdAt": "2026-10-18T19:03:45.148506Z",
+    "trafficPercent": 100,
+    "bindings": [
+      {
+        "name": "ASSETS",
+        "type": "assets"
+      },
+      {
+        "name": "BUILD_SHA",
+        "type": "plain_text",
+        "text": "c90bca6228be78da2d46f7138e641b7a449d8093"
+      },
+      {
+        "name": "EVENTS",
+        "type": "analytics_engine",
+        "dataset": "decoding_v6_events"
+      }
+    ]
+  },
+  "providerBefore": {
+    "observedAt": "2026-10-18T18:56:06.028Z",
+    "accountId": "69abd904cab5ffd103e569e7e050a884",
+    "worker": "decoding-v6",
+    "health": {
+      "status": 200,
+      "ok": true,
+      "service": "decoding-v6",
+      "revision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac"
+    },
+    "deploymentId": "69495344-6a72-414d-9783-bf5a26515134",
+    "versionId": "eb355be7-d553-4447-b333-2d938f89fe45",
+    "trafficPercent": 100,
+    "providerIdentityFingerprint": "dcb9b339cb30b0178e1ea36d68465b03b84c0f27301d5808481637969ed8169e",
+    "candidateIdentityFingerprint": "dcb9b339cb30b0178e1ea36d68465b03b84c0f27301d5808481637969ed8169e",
+    "remoteMain": "ed14b371ee2150b411bfa0bb7224703fb5267e35",
+    "bindings": [
+      {
+        "name": "ASSETS",
+        "type": "assets"
+      },
+      {
+        "name": "BUILD_SHA",
+        "type": "plain_text",
+        "text": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac"
+      },
+      {
+        "name": "EVENTS",
+        "type": "analytics_engine",
+        "dataset": "decoding_v6_events"
+      }
+    ]
+  },
+  "approvalRef": "conversation:COMPLETE-SERVICES-20261017:owner-all-projects-implement-deploy-approved",
+  "waveRef": "docs/operations/release-wave-cs-decoding-v6-20261017.yaml",
+  "immutablePredeployReceipt": "docs/evidence/completion-2026-10/deploy-20261017-c90bca6.json",
+  "implemented": [
+    "Kept47existing tools and8existing detectors; expanded42spec/fixture/page registrations; local lazy text/binary codecs with honest unavailable surfaces.",
+    "Recursive layer bands/offsets, confidence/evidence/candidate overrides, undo/forced decode, safe embedded values, bounded streaming decompression and private-key global masking.",
+    "Local JWT signature/time/risk tools, byte/hex/PNG views, text/binary commands, value-free PNG/report sharing and same-session tool handoff.",
+    "Batch200/compare/re-encode/snippets, memory history10/shortcuts, real redacted save/reopen/edit/delete and compatible backup merge/restore.",
+    "English/Korean discovery, rules/related links/sitemap/OG, local PWA/cache/update/share/bookmarklet/install entry and recovery.",
+    "390mobile/1440wide layout, keyboard/mobile actions, local font, dark palette, current error recovery, names-only opt-out counts, public notices/data controls/support, disabled-safe sponsor information."
+  ],
+  "counts": {
+    "planN": 61,
+    "planM": 131,
+    "registeredDetectors": 42,
+    "existingToolRoutes": 47,
+    "independentlyWorkingFeatureCount": null,
+    "builderCountsAreProductVerdict": false
+  },
+  "checks": [
+    {
+      "command": "pnpm verify (existing mandatory deploy guard)",
+      "status": "passed",
+      "unitFiles": 17,
+      "unitTests": 84,
+      "benchmark1MiBFirstP75ms": 59.7,
+      "benchmarkCompleteP75ms": 70.3,
+      "initialGzipKiB": 51.8,
+      "lazyHeavyChunks": 14,
+      "builtPages": 1073,
+      "scope": "format/lint/type/unit/benchmark/content/links/network/parity/extension/i18n/sponsor/build/budget"
+    },
+    {
+      "command": "pnpm test:e2e (existing mandatory deploy guard; workers1)",
+      "status": "passed",
+      "passed": 52,
+      "skipped": 2,
+      "failed": 0,
+      "skips": [
+        "deployed-only visual capture test requiring explicit live target; separate current live callback captured390",
+        "desktop-first-viewport test intentionally skipped in mobile project"
+      ]
+    },
+    {
+      "command": "pnpm exec playwright test tests/e2e/completion.spec.ts --project=chromium --workers=1 --grep 'private-key ancestors'",
+      "status": "passed",
+      "passed": 1,
+      "runId": "7ca7b2f7-8b7f-4b30-8c1c-5703d9986751"
+    },
+    {
+      "command": "capture-local.mjs c90bca6 --recovery-fix",
+      "status": "passed",
+      "capturesActualViewed": 5,
+      "runId": "a9e45275-dbe5-43db-87d2-6627e17a30c9"
+    },
+    {
+      "command": "pnpm delivery:web:deploy -- --execute",
+      "status": "passed",
+      "runId": "521104d4-f8a6-43bd-a427-3d016fbe9102",
+      "cleanExecutionHead": "42ece94c22a034d9d5e9676987457665941e9a92",
+      "rawProviderOutput": "withheld; allowlisted result only"
+    },
+    {
+      "command": "callback-live.mjs c90bca6 7f82652f-d75d-415d-b614-cf4cba7aaa58",
+      "status": "passed",
+      "runId": "661e9c57-96ad-479b-a02b-fcf3daed5518",
+      "coreFinishedAt": "2026-10-18T19:04:01.908Z",
+      "secondsAfterProviderDeployment": 16.759494,
+      "actualViewed": 2
+    },
+    {
+      "command": "pnpm delivery:web:verify",
+      "status": "passed",
+      "runId": "39142fd8-7601-417d-a67a-f028fee9f67b",
+      "triageCases": 3,
+      "tools": 47,
+      "canaryEgress": "none",
+      "canaryStorage": "none",
+      "externalRequestOrigins": [],
+      "linkedAssets": "passed",
+      "trustRoutes": ["privacy", "terms", "support"]
+    },
+    {
+      "command": "native isolated GPG fingerprint vs local decoder",
+      "status": "passed",
+      "receipt": "receipts/gpg-comparison-valid.json"
+    }
+  ],
+  "callback": {
+    "sourceSha": "c90bca6228be78da2d46f7138e641b7a449d8093",
+    "providerVersionId": "7f82652f-d75d-415d-b614-cf4cba7aaa58",
+    "origin": "https://decod.ing",
+    "startedAt": "2026-10-18T19:03:59.124Z",
+    "firstValue": true,
+    "captures": [
+      "/tmp/cs-decoding-v6-20261019/captures/live-390-start.png",
+      "/tmp/cs-decoding-v6-20261019/captures/live-390-value.png"
+    ],
+    "measurement": {
+      "kind": "synthetic_receiver_acceptance_only",
+      "durableStorage": null,
+      "naturalUse": null,
+      "responses": [
+        {
+          "name": "app_open",
+          "status": 200
+        },
+        {
+          "name": "landing_view",
+          "status": 200
+        },
+        {
+          "name": "decode_completed",
+          "status": 200
+        },
+        {
+          "name": "decode_unsupported",
+          "status": 200
+        },
+        {
+          "name": "return_7d",
+          "status": 200
+        },
+        {
+          "name": "share_action",
+          "status": 200
+        },
+        {
+          "name": "sponsor_interest",
+          "status": 200
+        }
+      ],
+      "requiredGateStatus": "receiver_accepted_only"
+    },
+    "health": {
+      "status": 200,
+      "ok": true,
+      "service": "decoding-v6",
+      "revision": "c90bca6228be78da2d46f7138e641b7a449d8093"
+    },
+    "horizontalOverflow": false,
+    "status": "passed",
+    "scope": "HTTP/source/390/first-value callback only; measurement separately classified",
+    "coreFinishedAt": "2026-10-18T19:04:01.908Z",
+    "shareFallback": {
+      "status": 303,
+      "location": "/",
+      "passed": true
+    },
+    "finishedAt": "2026-10-18T19:04:02.262Z",
+    "captureHashes": [
+      {
+        "path": "/tmp/cs-decoding-v6-20261019/captures/live-390-start.png",
+        "sha256": "373046acccebcbda1f0d23021bd2112a595cc9fa08ed9a9e5bb71cd1a13beb3b"
+      },
+      {
+        "path": "/tmp/cs-decoding-v6-20261019/captures/live-390-value.png",
+        "sha256": "5fc65031e87d24a894422308b57a506fccc0f225194a64f3cd60db58a2d525b0"
+      }
+    ]
+  },
+  "captures": [
+    {
+      "path": "docs/evidence/completion-2026-10/captures/clean-1440-start.png",
+      "sourceSha": "c90bca6228be78da2d46f7138e641b7a449d8093",
+      "sha256": "6ec569b0555f1e53d2729f0649d0b32b3e3b58004463a964fea331db8fc12f9a",
+      "actualViewed": true,
+      "scope": "current local390/1440/start/value/recovery"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/captures/clean-1440-value.png",
+      "sourceSha": "c90bca6228be78da2d46f7138e641b7a449d8093",
+      "sha256": "20425e4a7490b4e214ae94d1034b9b637e953422527e8797aff9cc72139ee0e4",
+      "actualViewed": true,
+      "scope": "current local390/1440/start/value/recovery"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/captures/clean-390-recovery.png",
+      "sourceSha": "c90bca6228be78da2d46f7138e641b7a449d8093",
+      "sha256": "b881e1fbc74a988d8682c3e356fbfb4a4c93eee402df26e37972a4b87c1bba70",
+      "actualViewed": true,
+      "scope": "current local390/1440/start/value/recovery"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/captures/clean-390-start.png",
+      "sourceSha": "c90bca6228be78da2d46f7138e641b7a449d8093",
+      "sha256": "109d8795d8e6e2a81f7c54c3654423b18619d579c0314c59cf8d5e2767047c04",
+      "actualViewed": true,
+      "scope": "current local390/1440/start/value/recovery"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/captures/clean-390-value.png",
+      "sourceSha": "c90bca6228be78da2d46f7138e641b7a449d8093",
+      "sha256": "6b6331196b0f35f198a8d199325979d87bf02bd2e089c808b132936b8b25197a",
+      "actualViewed": true,
+      "scope": "current local390/1440/start/value/recovery"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/captures/live-390-start.png",
+      "sourceSha": "c90bca6228be78da2d46f7138e641b7a449d8093",
+      "sha256": "373046acccebcbda1f0d23021bd2112a595cc9fa08ed9a9e5bb71cd1a13beb3b",
+      "actualViewed": true,
+      "scope": "current live390"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/captures/live-390-value.png",
+      "sourceSha": "c90bca6228be78da2d46f7138e641b7a449d8093",
+      "sha256": "5fc65031e87d24a894422308b57a506fccc0f225194a64f3cd60db58a2d525b0",
+      "actualViewed": true,
+      "scope": "current live390"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/captures/safe-verdict.png",
+      "sourceSha": "37173444f2208d0a8b552d7efd12f0aab9ebffa8",
+      "sha256": "280946a2033fb95fc2b5ad7c02be5ccc1d20a5ee04a57dd17fca194908618ceb",
+      "actualViewed": true,
+      "scope": "unchanged input/component prior-source proof reused; not a fresh c90 execution"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/captures/clean-390-danger.png",
+      "sourceSha": "37173444f2208d0a8b552d7efd12f0aab9ebffa8",
+      "sha256": "d20951e5cb770ecd3c3e611a48e5a8feddcb260b83b2085f5e947be4c0604d6d",
+      "actualViewed": true,
+      "scope": "unchanged input/component prior-source proof reused; not a fresh c90 execution"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/captures/clean-390-unsupported.png",
+      "sourceSha": "37173444f2208d0a8b552d7efd12f0aab9ebffa8",
+      "sha256": "edb194876df48cc6f3e9281311341d858c1085c46abecbcb819ec8470662afcd",
+      "actualViewed": true,
+      "scope": "unchanged input/component prior-source proof reused; not a fresh c90 execution"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/captures/original-failed-390-recovery.png",
+      "sourceSha": "37173444f2208d0a8b552d7efd12f0aab9ebffa8",
+      "sha256": "4fda7b69043b3954c52b1451a8f1d4db54ecad205c4ccf011f461af6a27b2773",
+      "actualViewed": true,
+      "scope": "preserved original390overflow failure"
+    }
+  ],
+  "failuresPreserved": [
+    {
+      "source": "5b56e34",
+      "passed": 36,
+      "failed": 10,
+      "skipped": 1,
+      "wrapperExit": 1,
+      "runId": "096cc4d9-a9a9-4bb8-bc40-e6a89cbfff9d",
+      "classification": "Observed contrast/fixed-bar occlusion plus harness selector/storage timing; original scratch test-results retained."
+    },
+    {
+      "source": "4738bc0",
+      "passed": 14,
+      "failed": 1,
+      "wrapperExit": 1,
+      "runId": "a9757b4d-a43c-47fd-89dd-989b7689fb3b",
+      "classification": "Remaining Axe comparison sampled finite entrance-opacity transition; collector waits actual settled animation; no threshold change."
+    },
+    {
+      "source": "37173444f2208d0a8b552d7efd12f0aab9ebffa8",
+      "classification": "Actual390recovery overflow556px, now fixed and current390capture passed; original PNG retained."
+    },
+    {
+      "source": "c90bca6228be78da2d46f7138e641b7a449d8093",
+      "wrapperExit": 143,
+      "runId": "01e8e4e3-4932-4543-901e-f7730984eb74",
+      "e2eReportedBeforeInterruption": {
+        "passed": 52,
+        "skipped": 2
+      },
+      "overallStatus": "interrupted",
+      "classification": "Operator interrupted before provider mutation over a false digest mismatch: reconstructed Python Path component sort differed from original Node full-path string sort; exact original command reproduced7078. Native prior unchanged, no runtime correction. Existing mandatory guard retry succeeded; both logs/receipts retained."
+    }
+  ],
+  "processClosure": {
+    "ownedPages": 0,
+    "remainingOwnedPids": [],
+    "allListedWrapperCleanupsEmpty": true,
+    "slot2Returned": true,
+    "furtherBrowserOrProviderWritePlanned": false
+  },
+  "rollback": {
+    "status": "prepared_not_executed",
+    "versionId": "eb355be7-d553-4447-b333-2d938f89fe45",
+    "deploymentId": "69495344-6a72-414d-9783-bf5a26515134",
+    "cleanExecutionHead": "42ece94c22a034d9d5e9676987457665941e9a92",
+    "retainedCheckout": "/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6",
+    "dependenciesRestore": "pnpm install --frozen-lockfile",
+    "guardCommand": "DECODING_DELIVERY_TARGET=production DECODING_RELEASE_WAVE=docs/operations/release-wave-cs-decoding-v6-20261017.yaml DECODING_ROLLBACK_VERSION=eb355be7-d553-4447-b333-2d938f89fe45 pnpm delivery:web:rollback -- --execute",
+    "storageCompatibility": "Existing IndexedDB name/store/version1 and persistent fields preserved; prior version can read actual persistent format; ephemeral tab state remains session-only; no migration."
+  },
+  "claimAtEvidencePrepared": {
+    "claimId": "claim_72990047-8937-4720-a067-132f2921c184",
+    "status": "active until final evidence commit/FF push",
+    "fences": {
+      "repo": 42,
+      "github": 3,
+      "cloudflareWorker": 4
+    }
+  },
+  "cleanup": {
+    "finishedAt": "2026-10-18T19:06:25.040316+00:00",
+    "status": "completed",
+    "claimId": "claim_7ad68479-4c59-4ed9-9b38-ca8a43b481f0",
+    "directoriesRemoved": 77,
+    "entriesObserved": 249381,
+    "observedLogicalBytes": 3035068276,
+    "deduplicatedAllocatedBytesBefore": 3596820480,
+    "deduplication": "device+inode; symlinks not followed",
+    "actualPhysicalFreedBytes": null,
+    "physicalReason": "hardlink/shared-store/APFS sharing prevents attributing freed blocks",
+    "quarantineOpenFiles": 0,
+    "deletedPaths": [
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/apps/extension/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/apps/web/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/apps/desktop/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/apps/cli/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/test-kit/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/operations/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/fixtures-public/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/spec-registry/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/workbench-ui/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/engine/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/apps/extension/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/apps/web/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/apps/desktop/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/apps/cli/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/test-kit/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/operations/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/fixtures-public/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/spec-registry/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/workbench-ui/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/engine/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/apps/extension/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/apps/web/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/apps/desktop/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/apps/cli/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/test-kit/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/operations/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/fixtures-public/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/spec-registry/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/workbench-ui/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/engine/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/apps/extension/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/apps/web/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/apps/desktop/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/apps/cli/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/test-kit/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/operations/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/fixtures-public/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/spec-registry/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/workbench-ui/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/engine/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/apps/extension/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/apps/web/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/apps/desktop/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/apps/cli/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/test-kit/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/operations/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/fixtures-public/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/spec-registry/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/workbench-ui/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/engine/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/apps/extension/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/apps/web/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/apps/desktop/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/apps/cli/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/test-kit/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/operations/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/fixtures-public/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/spec-registry/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/workbench-ui/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/engine/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/apps/extension/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/apps/web/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/apps/desktop/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/apps/cli/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/test-kit/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/operations/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/fixtures-public/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/spec-registry/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/workbench-ui/node_modules",
+      "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/engine/node_modules"
+    ],
+    "preserved": [
+      "canonical node_modules",
+      "shared pnpm store",
+      "source and Git",
+      "all dist and artifacts",
+      "failed receipts/captures/profiles",
+      "rollback references"
+    ],
+    "restore": "pnpm install --frozen-lockfile at retained clean worktrees"
+  },
+  "cleanupClaimReleasedAt": "2026-10-18T19:07:01.159Z",
+  "ffPushPredeploy": {
+    "observedAt": "2026-10-18T18:57:06.088Z",
+    "before": "ed14b371ee2150b411bfa0bb7224703fb5267e35",
+    "after": "b9e1b588dcf34a5767cecc2d4ff2674658655b8e",
+    "fastForward": true,
+    "force": false
+  },
+  "finalEvidencePush": "Final exact commit and read-back are recorded in /tmp/cs-decoding-v6-builder-result.json after this immutable evidence file is committed.",
+  "planDeviations": [
+    "Coordinator combined planned intermediate baseline deployment into one frozen final release; pre-expansion live comparison remains unobserved.",
+    "C9 original-text memory history is owned once by the common workbench rather than an unused duplicate Web module; session10 semantics and M retained.",
+    "Broken immediate-expiry session records use redacted tab sessionStorage; durable database version1/fields remain rollback compatible.",
+    "Actual UI/retention/decompression/private-candidate safety defects were repaired narrowly with original failures retained; no planN/M reduction.",
+    "Full-page sticky header/action placement is a capture pose artifact; no unobserved optional redesign was added."
+  ],
+  "channels": {
+    "web": "deployed and builder live smoke passed; independent verifier pending",
+    "appsInToss": "not_applicable; appName absent; no upload/review/cancel/publish",
+    "iOS": "no distribution or physical-device proof",
+    "Android": "Web/PWA implementation; physical share/install unobserved",
+    "desktop": "local build passed; signing/notarization/store/distribution unexecuted",
+    "extensionAndCLI": "existing boundaries and local builds preserved; no external package/store publication"
+  },
+  "externalDecisions": [
+    {
+      "item": "Ads/payment/sponsor activation, campaigns or first external contact",
+      "state": "disabled_safe; outside exact approval"
+    },
+    {
+      "item": "New account/resource/cost/domain/custom-domain/expandedPII/legal attestation/destructive migration",
+      "state": "not performed; excluded"
+    },
+    {
+      "item": "Real-device native sharing, PWA installation, messenger preview and external mail client",
+      "state": "unobserved; separate device/external evidence"
+    },
+    {
+      "item": "Independent clean-profile feature count/productPass",
+      "state": "coordinator separate verifier dispatch"
+    },
+    {
+      "item": "7day natural return, durable aggregate storage, user value and revenue/profit",
+      "state": "unobserved; synthetic HTTP acceptance is not natural/economic proof"
+    }
+  ],
+  "actualIncrementalCost": null,
+  "states": {
+    "documented": true,
+    "implemented": true,
+    "test_passed": true,
+    "built": true,
+    "deployed": true,
+    "independentlyVerified": false,
+    "monitored": "synthetic smoke only",
+    "user_value": null,
+    "profitable": null,
+    "productPass": null
+  },
+  "runtimeCommits": [
+    "c90bca6228be78da2d46f7138e641b7a449d8093 fix(privacy): keep private-key candidates masked while a worker is pending",
+    "7aa30116f7d13fe0444938b29a5bf2a3fe72e824 fix(ui): stack error recovery controls within the mobile canvas",
+    "37173444f2208d0a8b552d7efd12f0aab9ebffa8 test(a11y): observe settled entrance animations before contrast analysis",
+    "4738bc04a6686dccbd0265915a63d74f6c74d479 fix(privacy): clamp month-end anonymous date expiry to thirteen months",
+    "7cc8baaca8eed0fe4ee612664846c7a88617085c fix(ui): close observed contrast action overlay and recovery harness failures",
+    "5b56e34a235cb606d4c314909d191c43cfd1b7fb fix(engine): bound compressed allocations before expansion completes",
+    "93bfcefbd2fd502922b7c790b65ce90ab497820a feat(complete): finish trust data recovery and disabled-safe sponsorship",
+    "06b9c12a6d37c0c5902746766bbc2091730bc32d feat(complete): connect discovery safe sharing and local PWA entry",
+    "3e719075e2a8eeb6af1f89bfdc5ce7e256b6ebaf feat(complete): complete local save restore and decoding workflows",
+    "05003e36d9a223af4560abe9942f1a151c8356fe feat(complete): explain candidates and verify signatures locally",
+    "de0f0ebd62c213717779bce56f8731fb8079cec6 feat(complete): add lazy binary codecs and reversible layer overrides",
+    "8e7aaf59868ecdd84969892008bd10d52ba65d86 feat(complete): decode text formats with evidence and safe embedded values",
+    "6c44e19859fccc999c76c49652a50062b4938a90 feat(complete): introduce local layer bands and offset workbench",
+    "9ec7db76cbe5c0781cbe162a90063f805a06634e feat(complete): wire anonymous value counts and immediate opt-out",
+    "1bda2cc9178efcb2b27c59e6d1e45bf418a5f46c feat(complete): repair detection promises and mobile input surfaces"
+  ],
+  "filesModifiedThroughPredeploy": [
+    "apps/edge/src/index.ts",
+    "apps/edge/test/index.test.ts",
+    "apps/extension/src/style.css",
+    "apps/web/package.json",
+    "apps/web/public/_headers",
+    "apps/web/public/fonts/IBMPlexMono-latin.woff2",
+    "apps/web/public/fonts/OFL.txt",
+    "apps/web/public/manifest.webmanifest",
+    "apps/web/public/og.png",
+    "apps/web/public/og.svg",
+    "apps/web/public/sw.js",
+    "apps/web/src/components/BrandMark.astro",
+    "apps/web/src/components/CountControl.astro",
+    "apps/web/src/components/DetectorPage.astro",
+    "apps/web/src/components/HomePage.astro",
+    "apps/web/src/components/InfoPage.astro",
+    "apps/web/src/components/InstallHint.tsx",
+    "apps/web/src/components/ProofMonitor.tsx",
+    "apps/web/src/components/RulePage.astro",
+    "apps/web/src/components/SponsorSlot.astro",
+    "apps/web/src/components/ToolPage.astro",
+    "apps/web/src/components/TrustPage.astro",
+    "apps/web/src/components/UpdateBanner.tsx",
+    "apps/web/src/i18n/catalog.ts",
+    "apps/web/src/i18n/detectors.ts",
+    "apps/web/src/i18n/info.ts",
+    "apps/web/src/i18n/rules.ts",
+    "apps/web/src/i18n/trust.ts",
+    "apps/web/src/islands/DataManager.tsx",
+    "apps/web/src/islands/WebDecoder.tsx",
+    "apps/web/src/islands/WebTool.tsx",
+    "apps/web/src/islands/WorkspaceManager.tsx",
+    "apps/web/src/layouts/Layout.astro",
+    "apps/web/src/lib/backup.test.ts",
+    "apps/web/src/lib/backup.ts",
+    "apps/web/src/lib/build-info.ts",
+    "apps/web/src/lib/decoder-worker-client.ts",
+    "apps/web/src/lib/handoff.ts",
+    "apps/web/src/lib/public-operator.ts",
+    "apps/web/src/lib/telemetry.test.ts",
+    "apps/web/src/lib/telemetry.ts",
+    "apps/web/src/lib/workspace.ts",
+    "apps/web/src/pages/[locale]/rules/[rule].astro",
+    "apps/web/src/pages/[locale]/support.astro",
+    "apps/web/src/pages/[locale]/terms.astro",
+    "apps/web/src/pages/bookmarklet.astro",
+    "apps/web/src/pages/data.astro",
+    "apps/web/src/pages/detect/gzip-base64.astro",
+    "apps/web/src/pages/download.astro",
+    "apps/web/src/pages/proof.astro",
+    "apps/web/src/pages/rules/[rule].astro",
+    "apps/web/src/pages/sponsor.astro",
+    "apps/web/src/styles/global.css",
+    "apps/web/src/workers/codecs.test.ts",
+    "apps/web/src/workers/codecs.ts",
+    "apps/web/src/workers/decoder.worker.ts",
+    "docs/evidence/completion-2026-10/deploy-20261017-c90bca6.json",
+    "docs/operations/local-delivery.json",
+    "docs/operations/release-wave-cs-decoding-v6-20261017.yaml",
+    "docs/product/decisions.md",
+    "docs/product/product-card.md",
+    "packages/engine/src/bounded-inflate.ts",
+    "packages/engine/src/detectors.ts",
+    "packages/engine/src/engine.ts",
+    "packages/engine/src/formats/auth-header.ts",
+    "packages/engine/src/formats/base-n.ts",
+    "packages/engine/src/formats/binary-grammar.ts",
+    "packages/engine/src/formats/binary.ts",
+    "packages/engine/src/formats/cbor.ts",
+    "packages/engine/src/formats/common.ts",
+    "packages/engine/src/formats/cron.ts",
+    "packages/engine/src/formats/data-uri.ts",
+    "packages/engine/src/formats/datetime.ts",
+    "packages/engine/src/formats/dns-txt.ts",
+    "packages/engine/src/formats/escapes.ts",
+    "packages/engine/src/formats/hash-id.ts",
+    "packages/engine/src/formats/http-headers.ts",
+    "packages/engine/src/formats/json-deep.ts",
+    "packages/engine/src/formats/jwe.ts",
+    "packages/engine/src/formats/k8s-secret.ts",
+    "packages/engine/src/formats/kv.ts",
+    "packages/engine/src/formats/magic-bytes.ts",
+    "packages/engine/src/formats/manual.ts",
+    "packages/engine/src/formats/mime.ts",
+    "packages/engine/src/formats/msgpack.ts",
+    "packages/engine/src/formats/network.ts",
+    "packages/engine/src/formats/pem.ts",
+    "packages/engine/src/formats/pgp-armor.ts",
+    "packages/engine/src/formats/protobuf.ts",
+    "packages/engine/src/formats/punycode.ts",
+    "packages/engine/src/formats/saml.ts",
+    "packages/engine/src/formats/secret-patterns.ts",
+    "packages/engine/src/formats/ssh-key.ts",
+    "packages/engine/src/formats/text-scan.ts",
+    "packages/engine/src/formats/text.ts",
+    "packages/engine/src/formats/time-ids.ts",
+    "packages/engine/src/formats/toml.ts",
+    "packages/engine/src/formats/xml.ts",
+    "packages/engine/src/formats/yaml.ts",
+    "packages/engine/src/formats/zstd.ts",
+    "packages/engine/src/index.ts",
+    "packages/engine/src/types.ts",
+    "packages/engine/test/engine.test.ts",
+    "packages/engine/test/formats.test.ts",
+    "packages/fixtures-public/src/binary-fixtures.ts",
+    "packages/fixtures-public/src/index.ts",
+    "packages/fixtures-public/src/text-fixtures.ts",
+    "packages/operations/src/encode.ts",
+    "packages/spec-registry/src/binary-formats.ts",
+    "packages/spec-registry/src/complete-formats.ts",
+    "packages/spec-registry/src/index.ts",
+    "packages/spec-registry/src/rules.ts",
+    "packages/test-kit/test/fixtures.test.ts",
+    "packages/workbench-ui/src/BatchCompare.tsx",
+    "packages/workbench-ui/src/BinaryPreview.tsx",
+    "packages/workbench-ui/src/ByteMap.tsx",
+    "packages/workbench-ui/src/CandidateCompare.tsx",
+    "packages/workbench-ui/src/DecoderInput.tsx",
+    "packages/workbench-ui/src/DecoderWorkbench.tsx",
+    "packages/workbench-ui/src/EmbeddedValues.tsx",
+    "packages/workbench-ui/src/ErrorBoundary.tsx",
+    "packages/workbench-ui/src/HexDump.tsx",
+    "packages/workbench-ui/src/JwtTimes.tsx",
+    "packages/workbench-ui/src/JwtVerify.tsx",
+    "packages/workbench-ui/src/LayerBand.tsx",
+    "packages/workbench-ui/src/NextStep.tsx",
+    "packages/workbench-ui/src/ResultInspector.tsx",
+    "packages/workbench-ui/src/ToolWorkbench.tsx",
+    "packages/workbench-ui/src/WorkflowActions.tsx",
+    "packages/workbench-ui/src/completion-messages.ts",
+    "packages/workbench-ui/src/index.ts",
+    "packages/workbench-ui/src/jwt-verify.ts",
+    "packages/workbench-ui/src/re-encode.ts",
+    "packages/workbench-ui/src/reproduce-commands.ts",
+    "packages/workbench-ui/src/result-text.ts",
+    "packages/workbench-ui/src/safe-report.ts",
+    "packages/workbench-ui/src/safe-share.ts",
+    "packages/workbench-ui/test/completion-safety.test.ts",
+    "packages/workbench-ui/test/workflow.test.ts",
+    "playwright.config.ts",
+    "pnpm-lock.yaml",
+    "scripts/check-i18n.ts",
+    "scripts/local-delivery.mjs",
+    "scripts/validate-content.ts",
+    "scripts/verify-deploy.mjs",
+    "tests/accessibility/a11y.spec.ts",
+    "tests/e2e/completion.spec.ts",
+    "tests/e2e/inclusive-ui.spec.ts",
+    "tests/e2e/product.spec.ts",
+    "tests/e2e/pwa.spec.ts",
+    "tests/e2e/responsive.spec.ts",
+    "tests/e2e/visual-evidence.spec.ts",
+    "tests/privacy/payload-egress.spec.ts",
+    "vitest.config.ts",
+    "wrangler.toml"
+  ],
+  "artifactCollectorRecovery": {
+    "classification": "collector reconstruction error, no artifact/content/source defect",
+    "incorrectReceipts": [
+      "guard-rebuild-artifact.json: Python Path component sort differed from original full-path string sort",
+      "guard-rebuild-artifact-exact.json: intermediate manual literal-backslash-n recipe claim was incorrect; preserved failed output"
+    ],
+    "authoritativeReceipt": "receipts/final-guard-artifact.json",
+    "result": "Exact original command recovered from this worker session and final rebuilt bytes both match7078d847; no provider action occurred during interrupted guard."
+  }
+}

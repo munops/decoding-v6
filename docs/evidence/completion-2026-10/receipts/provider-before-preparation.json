@@ -1,0 +1,33 @@
+{
+  "observedAt": "2026-10-18T18:56:06.028Z",
+  "accountId": "69abd904cab5ffd103e569e7e050a884",
+  "worker": "decoding-v6",
+  "health": {
+    "status": 200,
+    "ok": true,
+    "service": "decoding-v6",
+    "revision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac"
+  },
+  "deploymentId": "69495344-6a72-414d-9783-bf5a26515134",
+  "versionId": "eb355be7-d553-4447-b333-2d938f89fe45",
+  "trafficPercent": 100,
+  "providerIdentityFingerprint": "dcb9b339cb30b0178e1ea36d68465b03b84c0f27301d5808481637969ed8169e",
+  "candidateIdentityFingerprint": "dcb9b339cb30b0178e1ea36d68465b03b84c0f27301d5808481637969ed8169e",
+  "remoteMain": "ed14b371ee2150b411bfa0bb7224703fb5267e35",
+  "bindings": [
+    {
+      "name": "ASSETS",
+      "type": "assets"
+    },
+    {
+      "name": "BUILD_SHA",
+      "type": "plain_text",
+      "text": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac"
+    },
+    {
+      "name": "EVENTS",
+      "type": "analytics_engine",
+      "dataset": "decoding_v6_events"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "observedAt": "2026-10-18T16:36:31.686Z",
+  "source": "5b56e34a235cb606d4c314909d191c43cfd1b7fb",
+  "syntheticPublicOnly": true,
+  "nativeFingerprint": "280A60BEE1D5766106B3DB77AAFA90E380EF6D5B",
+  "decoderFingerprint": "280A60BEE1D5766106B3DB77AAFA90E380EF6D5B",
+  "match": true,
+  "tool": "gpg --show-keys --with-colons; isolated homedir; self-signed synthetic public packet; private key memory only, never written"
+}

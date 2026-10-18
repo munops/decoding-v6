@@ -1,6 +1,6 @@
 schema_version: 6
 wave_id: CS-DECODING-V6-20261017
-status: approved
+status: done
 source_revision: c90bca6228be78da2d46f7138e641b7a449d8093
 prepared_at: 2026-10-18T18:56:31.835Z
 expires_at: 2026-10-19T00:56:31.836Z
@@ -23,7 +23,7 @@ work_claim:
     provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6: 4
   asserted_at: 2026-10-18T18:56:31.925Z
   released_at: null
-  release_evidence_ref: docs/evidence/completion-2026-10/deploy-20261017-c90bca6.json
+  release_evidence_ref: docs/evidence/completion-2026-10/completion-evidence.json
 intervention_mode: normal
 owner_delegation_ref: docs/munops/ops/owner-standing-delegation.json#zeroCostProviderExecution
 approval:
@@ -39,7 +39,7 @@ approval:
   owner_evidence_ref: conversation:COMPLETE-SERVICES-20261017:owner-all-projects-implement-deploy-approved
 actions:
   - action_id: CS-DECODING-V6-SOURCE-20261017
-    approval_readiness: ready
+    approval_readiness: done
     approval_class: P-REPORT
     standing_delegation_eligible: true
     execution_lane: owner_lane
@@ -137,11 +137,14 @@ actions:
     rollback_or_abort: Abort if remote main is not
       ed14b371ee2150b411bfa0bb7224703fb5267e35 or not an ancestor; correct
       forward without rewriting history.
-    status: ready
-    provider_readback: null
-    channel_smoke: null
+    status: done
+    provider_readback: Existing origin/main FF read-back
+      b9e1b588dcf34a5767cecc2d4ff2674658655b8e; runtimec90bca6 ancestor; final
+      evidence FF recorded separately.
+    channel_smoke: Remote ancestry/read-back passed; source synchronization alone is
+      not runtime verification.
   - action_id: CS-DECODING-V6-WEB-20261017
-    approval_readiness: ready
+    approval_readiness: done
     approval_class: P-REPORT
     standing_delegation_eligible: true
     execution_lane: owner_lane
@@ -278,12 +281,29 @@ actions:
       Within10min HTTP200/new source or version/390 render/first-value failure
       invokes guarded rollback to eb355be7-d553-4447-b333-2d938f89fe45 and
       read-back. Measurement timeout alone remains unknown.
-    status: ready
-    provider_readback: null
-    channel_smoke: null
+    status: done
+    provider_readback: Native deployment d7705b35-b8a8-4b31-8f32-1b0871d1dd1c,
+      version 7f82652f-d75d-415d-b614-cf4cba7aaa58 at100%;
+      BUILD_SHA=c90bca6228be78da2d46f7138e641b7a449d8093; ASSETS/EVENTS
+      preserved.
+    channel_smoke: HTTP200 /healthz JSONrevision exact; +17s390firstvalue and
+      actual-view captures passed; guarded
+      liveverify3triage/47tools/localoperation/assets/trust/canary
+      egress+storage none;7event HTTP200 receiver-only/share303. Independent
+      verdict/device/naturaluse/revenue remain unobserved.
     channel_smoke_plan: Within10min canonical HTTP200/exact source/new version,390
       visual/first value; same-origin share303/no-body and names-only count
       receive; external-device/natural-use remain unobserved.
+    dependency_receipts:
+      CS-DECODING-V6-SOURCE-20261017: Existing origin/main read-back b9e1b588 before guarded deployment.
+    provider_readback_details:
+      worker_name: decoding-v6
+      deployment_id: d7705b35-b8a8-4b31-8f32-1b0871d1dd1c
+      version_id: 7f82652f-d75d-415d-b614-cf4cba7aaa58
+      created_at: 2026-10-18T19:03:45.148506Z
+      deployment_percentage: 100
+      source_revision: c90bca6228be78da2d46f7138e641b7a449d8093
+      artifact_sha256: 7078d84760e75f79fbbac867a31c2a04a12ba1910b58a7bd568f1cb6ab102f42
 reapproval_triggers:
   - account_ref_changed
   - resource_or_destination_changed
@@ -314,3 +334,4 @@ tax_rules:
   raw_tax_id_or_payment_data_in_git_forbidden: true
   paid_action_requires_current_checkout_evidence_before_approval: true
   paid_done_requires_invoice_and_ledger_reconciliation: true
+completed_at: 2026-10-18T19:08:27.660Z

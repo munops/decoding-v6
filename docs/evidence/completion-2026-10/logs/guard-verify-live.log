@@ -1,0 +1,23 @@
+{"started": true, "admission": {"observedAt": "2026-10-18T19:04:11.261971+00:00", "load1": 22.09912109375, "freePercentage": 41, "managedBrowserCount": 0, "managedBrowserPids": [], "countMethod": "anchored node supervisor PID output; never count multiline argv"}, "attempt": 1}
+
+> decoding-v6@6.0.0 delivery:web:verify /private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6
+> node scripts/local-delivery.mjs verify-web
+
+{
+  "baseURL": "https://decod.ing",
+  "syntheticTriageCases": 3,
+  "autoDetection": "passed",
+  "toolCount": 47,
+  "localOperation": "passed",
+  "canaryEgress": "none",
+  "canaryStorage": "none",
+  "externalRequestOrigins": [],
+  "linkedAssets": "passed",
+  "trustRoutes": [
+    "privacy",
+    "terms",
+    "support"
+  ]
+}
+{"deployments":[{"id":"2934af2c-9d13-4d3f-b16f-2b92dfb1d4b2","created_on":"2026-08-25T15:43:11.991447Z","versions":[{"version_id":"fd54657c-5451-4c56-b58a-da900c62a545","percentage":100}]},{"id":"bdd49d89-9414-4e13-a0ce-4ace94c49ad9","created_on":"2026-08-28T07:51:03.20333Z","versions":[{"version_id":"09707af7-cd58-4d33-8423-4d8209108a28","percentage":100}]},{"id":"64fb0b15-b0bf-47f8-afec-25b1590be2dd","created_on":"2026-08-31T19:04:17.998406Z","versions":[{"version_id":"10c644cc-3ca8-4ecf-a145-a77851b98dd2","percentage":100}]},{"id":"12e79cb8-3ec3-4a03-adf3-096066d9f05e","created_on":"2026-08-31T19:05:17.750763Z","versions":[{"version_id":"56d01667-30fa-4a78-837d-2b0b9ea9365d","percentage":100}]},{"id":"e5d086e2-a31b-4d4d-8c4e-9252b77b6bec","created_on":"2026-08-31T19:19:32.265065Z","versions":[{"version_id":"f8f2b4a8-bb52-4e9e-8613-ffd86e8e5094","percentage":100}]},{"id":"13f77113-c17c-4ba2-8185-0401c9f1b291","created_on":"2026-09-04T10:29:26.671684Z","versions":[{"version_id":"55d7379f-74ba-409c-88e6-72796d34fff7","percentage":100}]},{"id":"0c719d00-5a9d-43f8-acf8-298b3fbcd438","created_on":"2026-09-04T10:58:52.333772Z","versions":[{"version_id":"038d978f-512f-401d-82b1-ae10edfe53cf","percentage":100}]},{"id":"8f11bbe4-7edf-4771-b1b9-81cf2a013616","created_on":"2026-09-04T11:46:17.701814Z","versions":[{"version_id":"14a86d08-b642-4203-9479-bfd8624b472b","percentage":100}]},{"id":"69495344-6a72-414d-9783-bf5a26515134","created_on":"2026-09-04T12:30:13.846002Z","versions":[{"version_id":"eb355be7-d553-4447-b333-2d938f89fe45","percentage":100}]},{"id":"d7705b35-b8a8-4b31-8f32-1b0871d1dd1c","created_on":"2026-10-18T19:03:45.148506Z","versions":[{"version_id":"7f82652f-d75d-415d-b614-cf4cba7aaa58","percentage":100}]}]}
+AGENT_BROWSER_RUN_RESULT {"runId":"39142fd8-7601-417d-a67a-f028fee9f67b","reason":"command_exit","exitCode":0,"cleanup":{"pgid":66321,"termSent":false,"killSent":false,"remainingPids":[]}}

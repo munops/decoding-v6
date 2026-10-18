@@ -1,0 +1,8 @@
+{
+  "observedAt": "2026-10-18T16:35:41.622Z",
+  "source": "5b56e34a235cb606d4c314909d191c43cfd1b7fb",
+  "syntheticPublicOnly": true,
+  "decoderFingerprint": "88D26C8F3E4B07A9FA585D314785E58DE9424F7D",
+  "match": false,
+  "tool": "gpg --show-keys --with-colons; isolated homedir; no key retrieval"
+}

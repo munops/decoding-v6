@@ -1,0 +1,12 @@
+{
+  "observedAt": "2026-10-18T18:59:58.767Z",
+  "deploymentId": "69495344-6a72-414d-9783-bf5a26515134",
+  "versions": [
+    {
+      "versionId": "eb355be7-d553-4447-b333-2d938f89fe45",
+      "percentage": 100
+    }
+  ],
+  "guardExited143": true,
+  "reason": "operator stopped before unresolved artifact method"
+}

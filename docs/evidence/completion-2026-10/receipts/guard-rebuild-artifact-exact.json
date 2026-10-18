@@ -1,0 +1,10 @@
+{
+  "observedAt": "2026-10-18T19:00:40.104Z",
+  "actual": "d4114851342d34bd808bc973dd0465f301a083bbf75fd6cb05f776cac31de784",
+  "expected": "7078d84760e75f79fbbac867a31c2a04a12ba1910b58a7bd568f1cb6ab102f42",
+  "matched": false,
+  "method": "Recovered original per-file SHA256 ledger: hash + two spaces + relativepath + literal backslash-n; sorted absolute file paths; fold SHA256",
+  "fileCount": 1154,
+  "source": "c90bca6228be78da2d46f7138e641b7a449d8093",
+  "guardExit143": "operator interrupted; pnpmverify passed, fullE2E52passed2skipped, nativeprior unchanged"
+}

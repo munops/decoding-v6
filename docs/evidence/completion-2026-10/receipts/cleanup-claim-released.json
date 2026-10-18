@@ -1,0 +1,719 @@
+{
+  "claimId": "claim_7ad68479-4c59-4ed9-9b38-ca8a43b481f0",
+  "holder": "codex:cs-decoding-v6",
+  "lane": "owner_lane",
+  "project": "workspace",
+  "mode": "write",
+  "coordinationKind": "supervised",
+  "runId": "run_99f313d53f8c",
+  "taskId": "task_27f76ba6ae45",
+  "dispatchId": "ctx_22bc3ea96967",
+  "terminalHandle": "term_b1186482-431a-4017-81ab-735bf9b7918c",
+  "worktree": null,
+  "branch": null,
+  "baseHead": null,
+  "dirtyFingerprint": null,
+  "status": "released",
+  "acquiredAt": "2026-10-18T19:05:37.766Z",
+  "heartbeatAt": "2026-10-18T19:05:37.766Z",
+  "expiresAt": "2026-10-18T19:35:37.766Z",
+  "releasedAt": "2026-10-18T19:07:01.159Z",
+  "evidence": "/tmp/cs-decoding-v6-20261019/cleanup-result.json: 77 exact owned unused dependency directories quarantined/rechecked/removed; raw logical3.035GB; physical freed unknown; all source/dist/Git/receipts/captures/shared store preserved",
+  "filesModified": [
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/apps/cli/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/apps/desktop/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/apps/extension/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/apps/web/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/engine/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/fixtures-public/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/operations/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/spec-registry/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/test-kit/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/workbench-ui/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/apps/cli/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/apps/desktop/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/apps/extension/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/apps/web/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/engine/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/fixtures-public/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/operations/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/spec-registry/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/test-kit/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/workbench-ui/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/apps/cli/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/apps/desktop/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/apps/extension/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/apps/web/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/engine/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/fixtures-public/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/operations/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/spec-registry/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/test-kit/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/workbench-ui/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/apps/cli/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/apps/desktop/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/apps/extension/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/apps/web/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/engine/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/fixtures-public/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/operations/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/spec-registry/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/test-kit/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/workbench-ui/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/apps/cli/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/apps/desktop/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/apps/extension/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/apps/web/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/engine/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/fixtures-public/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/operations/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/spec-registry/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/test-kit/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/workbench-ui/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/apps/cli/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/apps/desktop/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/apps/extension/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/apps/web/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/engine/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/fixtures-public/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/operations/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/spec-registry/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/test-kit/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/workbench-ui/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/apps/cli/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/apps/desktop/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/apps/extension/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/apps/web/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/engine/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/fixtures-public/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/operations/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/spec-registry/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/test-kit/node_modules",
+    "/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/workbench-ui/node_modules"
+  ],
+  "resources": [
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/apps/cli/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/apps/cli/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/apps/desktop/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/apps/desktop/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/apps/extension/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/apps/extension/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/apps/web/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/apps/web/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/engine/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/engine/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/fixtures-public/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/fixtures-public/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/operations/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/operations/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/spec-registry/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/spec-registry/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/test-kit/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/test-kit/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/workbench-ui/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-3717344/packages/workbench-ui/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/apps/cli/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/apps/cli/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/apps/desktop/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/apps/desktop/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/apps/extension/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/apps/extension/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/apps/web/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/apps/web/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/engine/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/engine/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/fixtures-public/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/fixtures-public/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/operations/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/operations/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/spec-registry/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/spec-registry/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/test-kit/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/test-kit/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/workbench-ui/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-4738bc0/packages/workbench-ui/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/apps/cli/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/apps/cli/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/apps/desktop/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/apps/desktop/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/apps/extension/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/apps/extension/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/apps/web/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/apps/web/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/engine/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/engine/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/fixtures-public/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/fixtures-public/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/operations/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/operations/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/spec-registry/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/spec-registry/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/test-kit/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/test-kit/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/workbench-ui/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-5b56e34/packages/workbench-ui/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/apps/cli/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/apps/cli/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/apps/desktop/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/apps/desktop/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/apps/extension/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/apps/extension/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/apps/web/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/apps/web/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/engine/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/engine/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/fixtures-public/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/fixtures-public/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/operations/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/operations/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/spec-registry/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/spec-registry/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/test-kit/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/test-kit/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/workbench-ui/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7aa3011/packages/workbench-ui/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/apps/cli/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/apps/cli/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/apps/desktop/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/apps/desktop/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/apps/extension/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/apps/extension/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/apps/web/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/apps/web/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/engine/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/engine/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/fixtures-public/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/fixtures-public/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/operations/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/operations/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/spec-registry/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/spec-registry/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/test-kit/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/test-kit/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/workbench-ui/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-7cc8baa/packages/workbench-ui/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/apps/cli/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/apps/cli/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/apps/desktop/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/apps/desktop/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/apps/extension/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/apps/extension/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/apps/web/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/apps/web/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/engine/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/engine/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/fixtures-public/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/fixtures-public/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/operations/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/operations/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/spec-registry/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/spec-registry/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/test-kit/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/test-kit/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/workbench-ui/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-93bfcef/packages/workbench-ui/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/apps/cli/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/apps/cli/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/apps/desktop/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/apps/desktop/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/apps/extension/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/apps/extension/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/apps/web/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/apps/web/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/engine/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/engine/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/fixtures-public/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/fixtures-public/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/operations/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/operations/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/spec-registry/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/spec-registry/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/test-kit/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/test-kit/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/workbench-ui/node_modules",
+      "fencingToken": 1
+    },
+    {
+      "resourceKey": "workspace:/private/tmp/cs-decoding-v6-20261019/decoding-v6-c90bca6/packages/workbench-ui/node_modules.cs-unused-20261019",
+      "fencingToken": 1
+    }
+  ]
+}

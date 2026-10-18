@@ -1,0 +1,28 @@
+{
+  "source": "c90bca6228be78da2d46f7138e641b7a449d8093",
+  "origin": "http://127.0.0.1:4577",
+  "captures": [
+    "/tmp/cs-decoding-v6-20261019/captures-c90bca6/clean-390-start.png",
+    "/tmp/cs-decoding-v6-20261019/captures-c90bca6/clean-390-value.png",
+    "/tmp/cs-decoding-v6-20261019/captures-c90bca6/clean-1440-start.png",
+    "/tmp/cs-decoding-v6-20261019/captures-c90bca6/clean-1440-value.png",
+    "/tmp/cs-decoding-v6-20261019/captures-c90bca6/clean-390-recovery.png"
+  ],
+  "checks": [
+    {
+      "width": 390,
+      "geometry": {
+        "inputTop": 238.6875,
+        "overflow": false
+      }
+    },
+    {
+      "width": 1440,
+      "geometry": {
+        "inputTop": 259.25,
+        "overflow": false
+      }
+    }
+  ],
+  "status": "passed"
+}

@@ -1,0 +1,73 @@
+{
+  "sourceSha": "c90bca6228be78da2d46f7138e641b7a449d8093",
+  "providerVersionId": "7f82652f-d75d-415d-b614-cf4cba7aaa58",
+  "origin": "https://decod.ing",
+  "startedAt": "2026-10-18T19:03:59.124Z",
+  "firstValue": true,
+  "captures": [
+    "/tmp/cs-decoding-v6-20261019/captures/live-390-start.png",
+    "/tmp/cs-decoding-v6-20261019/captures/live-390-value.png"
+  ],
+  "measurement": {
+    "kind": "synthetic_receiver_acceptance_only",
+    "durableStorage": null,
+    "naturalUse": null,
+    "responses": [
+      {
+        "name": "app_open",
+        "status": 200
+      },
+      {
+        "name": "landing_view",
+        "status": 200
+      },
+      {
+        "name": "decode_completed",
+        "status": 200
+      },
+      {
+        "name": "decode_unsupported",
+        "status": 200
+      },
+      {
+        "name": "return_7d",
+        "status": 200
+      },
+      {
+        "name": "share_action",
+        "status": 200
+      },
+      {
+        "name": "sponsor_interest",
+        "status": 200
+      }
+    ],
+    "requiredGateStatus": "receiver_accepted_only"
+  },
+  "health": {
+    "status": 200,
+    "ok": true,
+    "service": "decoding-v6",
+    "revision": "c90bca6228be78da2d46f7138e641b7a449d8093"
+  },
+  "horizontalOverflow": false,
+  "status": "passed",
+  "scope": "HTTP/source/390/first-value callback only; measurement separately classified",
+  "coreFinishedAt": "2026-10-18T19:04:01.908Z",
+  "shareFallback": {
+    "status": 303,
+    "location": "/",
+    "passed": true
+  },
+  "finishedAt": "2026-10-18T19:04:02.262Z",
+  "captureHashes": [
+    {
+      "path": "/tmp/cs-decoding-v6-20261019/captures/live-390-start.png",
+      "sha256": "373046acccebcbda1f0d23021bd2112a595cc9fa08ed9a9e5bb71cd1a13beb3b"
+    },
+    {
+      "path": "/tmp/cs-decoding-v6-20261019/captures/live-390-value.png",
+      "sha256": "5fc65031e87d24a894422308b57a506fccc0f225194a64f3cd60db58a2d525b0"
+    }
+  ]
+}

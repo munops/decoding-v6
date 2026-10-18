@@ -1,0 +1,12 @@
+{
+  "source": "c90bca6",
+  "admission": {
+    "observedAt": "2026-10-18T18:55:06.760384+00:00",
+    "load1": 6.9150390625,
+    "freePercentage": 48,
+    "managedBrowserCount": 0,
+    "managedBrowserPids": [],
+    "countMethod": "anchored node supervisor PID output; never count multiline argv"
+  },
+  "startedAt": "2026-10-18T18:55:06.760435+00:00"
+}
