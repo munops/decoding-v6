@@ -40,6 +40,9 @@ describe('anonymous counts', () => {
     expect(JSON.parse(request.mock.calls[0]?.[1].body)).toEqual({ name: 'return_7d' })
     telemetry.countReturn(new Date('2026-03-01T00:00:00Z'))
     expect(localStorage.getItem('decoding-first-visit')).toBe('2026-03-01')
+    localStorage.setItem('decoding-first-visit', '2025-01-31')
+    telemetry.countReturn(new Date('2026-02-28T00:00:00Z'))
+    expect(localStorage.getItem('decoding-first-visit')).toBe('2026-02-28')
   })
   it('keeps opt-out effective in memory when browser storage is blocked', async () => {
     const request = vi.fn().mockResolvedValue({})

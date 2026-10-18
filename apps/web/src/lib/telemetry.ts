@@ -61,7 +61,14 @@ export function countReturn(now = new Date()): void {
     const stored = localStorage.getItem('decoding-first-visit')
     const first = stored ? new Date(stored) : null
     const expiry = first ? new Date(first) : null
-    expiry?.setUTCMonth(expiry.getUTCMonth() + 13)
+    if (expiry && first) {
+      expiry.setUTCDate(1)
+      expiry.setUTCMonth(expiry.getUTCMonth() + 13)
+      const lastDay = new Date(
+        Date.UTC(expiry.getUTCFullYear(), expiry.getUTCMonth() + 1, 0),
+      ).getUTCDate()
+      expiry.setUTCDate(Math.min(first.getUTCDate(), lastDay))
+    }
     if (!first || !Number.isFinite(first.getTime()) || !expiry || now >= expiry) {
       localStorage.setItem('decoding-first-visit', now.toISOString().slice(0, 10))
       return
