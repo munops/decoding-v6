@@ -1,3 +1,4 @@
+import { saveWorkspaceRecord } from '../lib/workspace'
 import { sendToTool } from '../lib/handoff'
 import { DecoderWorkbench } from '@decoding/workbench-ui'
 import type { DecoderMessages } from '@decoding/workbench-ui'
@@ -36,6 +37,16 @@ export default function WebDecoder({ messages, sampleLabel, samples = [] }: Prop
         decodeInput={client.decodeInput}
         onEvent={countOpen}
         onTool={sendToTool}
+        onSave={async (selected, ttl) => {
+          await saveWorkspaceRecord({
+            name: `${selected.label} · ${new Date().toLocaleString()}`,
+            note: '',
+            format: selected.detector,
+            structure: selected.value,
+            ruleIds: selected.warnings.map((warning) => warning.ruleId),
+            ttl,
+          })
+        }}
         externalInput={externalInput}
         messages={messages}
       />

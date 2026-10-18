@@ -55,7 +55,7 @@ export function ResultInspector({
         </div>
         <div class="inline-actions">
           <button
-            class="button small"
+            class="button small inspector-copy"
             type="button"
             onClick={() => void copySelected()}
             disabled={!selected}

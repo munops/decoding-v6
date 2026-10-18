@@ -465,3 +465,16 @@ for (const [locale, content] of Object.entries(infoMessages))
           body: 'Only when you choose to send a result to another tool, this tab places the value briefly in sessionStorage. The next tool reads it once and immediately deletes it. It is never put in a URL or sent to a server. Signature-verification keys remain in tab memory and are cleared on page exit.',
         },
   )
+
+for (const [locale, content] of Object.entries(infoMessages))
+  content.privacy.sections.push(
+    locale === 'ko'
+      ? {
+          heading: '이 탭 기록과 백업',
+          body: '기본 세션 이력의 원문은 탭 메모리에만 있어요. 이 탭 보관을 직접 고른 가린 구조는 sessionStorage에 저장하고 탭을 닫으면 사라져요. 기기 백업은 가린 구조·이름·메모·설정을 담으므로 공유하지 마세요. 시간대 설정은 이 기기에만 저장해요.',
+        }
+      : {
+          heading: 'Tab records and backups',
+          body: 'Original-input history stays only in tab memory. Redacted records explicitly saved for This tab use sessionStorage and disappear when the tab closes. Device backup files contain redacted structures, local names, notes and settings; keep them private. Time-zone choices stay on this device.',
+        },
+  )

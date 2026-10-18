@@ -1,3 +1,6 @@
+import { completionMessages } from './completion-messages'
+import { WorkflowActions } from './WorkflowActions'
+import { BatchCompare } from './BatchCompare'
 import { outputText } from './result-text'
 import { DecoderInput } from './DecoderInput'
 import { ResultInspector } from './ResultInspector'
@@ -18,6 +21,7 @@ import { safeShareCardSvg, safeShareMarkdown, safeShareProjection } from './safe
 export type DecoderWorkbenchProps = {
   decodeInput: (input: DecodeInput, overrides?: Record<string, string>) => Promise<DecodeResult>
   externalInput?: { id: number; value: string } | undefined
+  onSave?: (selected: Detection, ttl: 'session' | '24h' | '7d' | 'keep') => Promise<void>
   onTool?: (tool: string, text: string) => void
   onEvent?: (name: 'decode_completed' | 'decode_unsupported' | 'share_action') => void
   messages: DecoderMessages
@@ -48,7 +52,11 @@ export function DecoderWorkbench({
   messages,
   onEvent,
   onTool,
+  onSave,
 }: DecoderWorkbenchProps) {
+  const [sessionHistory, setSessionHistory] = useState<Array<{ input: string; label: string }>>([])
+  const [shortcuts, setShortcuts] = useState(false)
+  const copy = completionMessages[messages.locale]
   const [source, setSource] = useState(() =>
     typeof document === 'undefined'
       ? ''
@@ -84,6 +92,19 @@ export function DecoderWorkbench({
         setShowCandidates(next.root.status === 'ambiguous')
         setActiveChainNode(next.root.id)
         setStatus('done')
+        if (typeof input === 'string')
+          setSessionHistory((previous) =>
+            [
+              {
+                input,
+                label:
+                  next.root.selected?.label ??
+                  next.root.candidates[0]?.label ??
+                  messages.unsupportedStep,
+              },
+              ...previous.filter((entry) => entry.input !== input),
+            ].slice(0, 10),
+          )
         if (next.root.status === 'confident') onEvent?.('decode_completed')
         else if (next.root.status === 'unsupported') onEvent?.('decode_unsupported')
         setMessage(next.root.status === 'unsupported' ? messages.unsupported : '')
@@ -115,6 +136,20 @@ export function DecoderWorkbench({
     void run(value)
   }
 
+  const paste = async () => {
+    try {
+      const text = await navigator.clipboard.readText()
+      handleSource(text)
+      setMessage(
+        messages.locale === 'ko'
+          ? '누를 때만 클립보드를 읽고 기기에서 처리해요.'
+          : 'Clipboard read only after your tap; processing stays on this device.',
+      )
+    } catch {
+      setMessage(copy.pasteHelp)
+      inputRef.current?.focus()
+    }
+  }
   const handleFile = async (file?: File) => {
     if (!file) return
     if (file.size > 10 * 1024 * 1024) {
@@ -273,6 +308,24 @@ export function DecoderWorkbench({
 
   useEffect(() => {
     const focusInput = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+        event.preventDefault()
+        if (lastInput.current) void run(lastInput.current)
+        return
+      }
+      if ((event.metaKey || event.ctrlKey) && event.shiftKey && event.key.toLowerCase() === 'c') {
+        event.preventDefault()
+        void copySelected()
+        return
+      }
+      const typing = (event.target as HTMLElement | null)?.matches(
+        'input, textarea, select, [contenteditable="true"]',
+      )
+      if (event.key === '?' && !typing) {
+        event.preventDefault()
+        setShortcuts((previous) => !previous)
+        return
+      }
       if (event.key !== '/' || event.metaKey || event.ctrlKey || event.altKey) return
       const target = event.target as HTMLElement | null
       if (target?.matches('input, textarea, select, [contenteditable="true"]')) return
@@ -281,7 +334,7 @@ export function DecoderWorkbench({
     }
     addEventListener('keydown', focusInput)
     return () => removeEventListener('keydown', focusInput)
-  }, [])
+  }, [selected, source, copyFeedback])
 
   return (
     <section class="decoder-shell" aria-label={messages.ariaLabel}>
@@ -292,6 +345,7 @@ export function DecoderWorkbench({
         </div>
       </div>
       <DecoderInput
+        onPaste={() => void paste()}
         source={source}
         messages={messages}
         inputRef={inputRef}
@@ -299,6 +353,42 @@ export function DecoderWorkbench({
         handleFile={handleFile}
       />
 
+      {shortcuts ? (
+        <div class="notice info">
+          <button class="button ghost" type="button" onClick={() => setShortcuts(false)}>
+            {copy.close}
+          </button>
+          <p>
+            / · {messages.pasteLabel}
+            <br />
+            Ctrl/⌘ + Enter · {copy.retry}
+            <br />
+            Ctrl/⌘ + Shift + C · {messages.copy}
+            <br />? · {messages.locale === 'ko' ? '단축키' : 'Shortcuts'}
+          </p>
+        </div>
+      ) : null}
+      {sessionHistory.length > 1 ? (
+        <details class="session-history">
+          <summary>{copy.history}</summary>
+          {sessionHistory.map((entry, i) => (
+            <button
+              class="button ghost"
+              type="button"
+              key={i}
+              onClick={() => handleSource(entry.input)}
+            >
+              {i + 1} · {entry.label}
+            </button>
+          ))}
+        </details>
+      ) : null}
+      <BatchCompare
+        source={source}
+        decodeInput={decodeInput}
+        messages={messages}
+        onInput={handleSource}
+      />
       {status === 'processing' ? (
         <div class="processing" aria-live="polite">
           {message}
@@ -421,6 +511,18 @@ export function DecoderWorkbench({
             setMessage={setMessage}
           />
         </div>
+      ) : null}
+      {result ? (
+        <WorkflowActions
+          result={result}
+          selected={selected}
+          messages={messages}
+          {...(onTool ? { onTool } : {})}
+          {...(onSave ? { onSave } : {})}
+          onInput={handleSource}
+          onCopy={() => void copySelected()}
+          onShare={downloadSafeShareCard}
+        />
       ) : null}
       <details class="copy-feedback-settings result-preference">
         <summary>{messages.copyFeedback}</summary>

@@ -1,13 +1,23 @@
+import { completionMessages } from './completion-messages'
 import type { RefObject } from 'preact'
 import type { DecoderMessages } from './messages'
 type Props = {
+  onPaste: () => void
+
   source: string
   messages: DecoderMessages
   inputRef: RefObject<HTMLTextAreaElement>
   handleSource: (text: string) => void
   handleFile: (file?: File) => Promise<void>
 }
-export function DecoderInput({ source, messages, inputRef, handleSource, handleFile }: Props) {
+export function DecoderInput({
+  onPaste,
+  source,
+  messages,
+  inputRef,
+  handleSource,
+  handleFile,
+}: Props) {
   return (
     <div
       class="paste-surface"
@@ -29,6 +39,9 @@ export function DecoderInput({ source, messages, inputRef, handleSource, handleF
         autocapitalize="off"
       />
       <div class="input-actions">
+        <button class="button" type="button" onClick={onPaste}>
+          {completionMessages[messages.locale].paste}
+        </button>
         <label class="button ghost file-action">
           {messages.openFile}
           <input

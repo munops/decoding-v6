@@ -1,3 +1,4 @@
+import { exportBackup, restoreBackup } from '../lib/backup'
 import { useEffect, useMemo, useState } from 'preact/hooks'
 import {
   clearWorkspace,
@@ -6,6 +7,7 @@ import {
   redactStructure,
   saveWorkspaceRecord,
   workspaceUsage,
+  updateWorkspaceRecord,
   type WorkspaceRecord,
   type WorkspaceTtl,
 } from '../lib/workspace'
@@ -20,6 +22,8 @@ function bytes(value: number): string {
 }
 
 export default function WorkspaceManager() {
+  const [query, setQuery] = useState('')
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [records, setRecords] = useState<WorkspaceRecord[]>([])
   const [name, setName] = useState('')
   const [note, setNote] = useState('')
@@ -28,7 +32,10 @@ export default function WorkspaceManager() {
   const [rules, setRules] = useState('')
   const [ttl, setTtl] = useState<WorkspaceTtl>('24h')
   const [message, setMessage] = useState('')
-  const [usage, setUsage] = useState({ usage: 0, quota: 0 })
+  const [usage, setUsage] = useState<{ usage: number | null; quota: number | null }>({
+    usage: null,
+    quota: null,
+  })
 
   const preview = useMemo(() => {
     try {
@@ -44,7 +51,11 @@ export default function WorkspaceManager() {
   }
 
   useEffect(() => {
-    void refresh()
+    void refresh().catch(() =>
+      setMessage(
+        'This browser blocked local storage. You can still use the decoder without saving.',
+      ),
+    )
   }, [])
 
   const save = async () => {
@@ -59,18 +70,26 @@ export default function WorkspaceManager() {
       setMessage('Structure must be valid JSON. The original text is not stored.')
       return
     }
-    await saveWorkspaceRecord({
-      name,
-      note,
-      format,
-      structure,
-      ruleIds: rules.split(',').map((rule) => rule.trim()),
-      ttl,
-    })
-    setName('')
-    setNote('')
-    setMessage('Redacted structure saved in this browser only.')
-    await refresh()
+    try {
+      if (editingId) {
+        await updateWorkspaceRecord(editingId, { name, note })
+        setEditingId(null)
+      } else
+        await saveWorkspaceRecord({
+          name,
+          note,
+          format,
+          structure,
+          ruleIds: rules.split(',').map((rule) => rule.trim()),
+          ttl,
+        })
+      setName('')
+      setNote('')
+      setMessage('Redacted structure saved in this browser only.')
+      await refresh()
+    } catch {
+      setMessage('This browser blocked saving. Your draft is kept; try a redacted export instead.')
+    }
   }
 
   const exportRecords = () => {
@@ -166,7 +185,7 @@ export default function WorkspaceManager() {
           </label>
           <div class="input-actions">
             <button class="button primary" type="submit">
-              Save redacted structure
+              {editingId ? 'Save name and note' : 'Save redacted structure'}
             </button>
           </div>
         </form>
@@ -191,6 +210,67 @@ export default function WorkspaceManager() {
           {message}
         </div>
       ) : null}
+      <div class="backup-actions">
+        <p>
+          This backup contains saved redacted structures, names, notes and settings. Keep the file
+          private.
+        </p>
+        <button
+          class="button secondary"
+          type="button"
+          onClick={() =>
+            void exportBackup().then(
+              (backup) => {
+                const href = URL.createObjectURL(
+                    new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' }),
+                  ),
+                  link = document.createElement('a')
+                link.href = href
+                link.download = 'decoding-local-backup.json'
+                link.click()
+                setTimeout(() => URL.revokeObjectURL(href), 0)
+              },
+              () => setMessage('Backup unavailable: this browser blocked local storage.'),
+            )
+          }
+        >
+          Back up this device
+        </button>
+        <label class="button secondary">
+          Restore backup
+          <input
+            class="visually-hidden"
+            type="file"
+            accept="application/json,.json"
+            onChange={(event) => {
+              const file = event.currentTarget.files?.[0]
+              if (file)
+                void file
+                  .text()
+                  .then(restoreBackup)
+                  .then(
+                    async (count) => {
+                      setMessage(`Restored ${count} new records. Existing IDs were kept.`)
+                      await refresh()
+                    },
+                    () =>
+                      setMessage(
+                        'This backup could not be restored. Invalid files change nothing; check browser storage access.',
+                      ),
+                  )
+            }}
+          />
+        </label>
+      </div>
+      <label>
+        Find saved records
+        <input
+          type="search"
+          value={query}
+          onInput={(event) => setQuery(event.currentTarget.value)}
+          placeholder="Name, format or warning rule"
+        />
+      </label>
       <div class="workspace-list-heading">
         <div>
           <span class="eyebrow">Stored locally</span>
@@ -200,7 +280,9 @@ export default function WorkspaceManager() {
               : 'Save a result to collect it here'}
           </h2>
           <p>
-            {bytes(usage.usage)} used of an estimated {bytes(usage.quota)} browser quota.
+            {usage.usage !== null && usage.quota !== null
+              ? `${bytes(usage.usage)} used of an estimated ${bytes(usage.quota)} browser quota.`
+              : 'Browser storage usage is unavailable.'}
           </p>
         </div>
         <div class="input-actions">
@@ -223,31 +305,70 @@ export default function WorkspaceManager() {
         </div>
       </div>
       <div class="workspace-records">
-        {records.map((record) => (
-          <article class="workspace-record" key={record.id}>
-            <div>
-              <span class="pack-badge">{record.format}</span>
-              <h3>{record.name}</h3>
-              <p>{record.note || 'No note.'}</p>
-              <small>
-                Created {new Date(record.createdAt).toLocaleString()} ·{' '}
-                {record.expiresAt
-                  ? `expires ${new Date(record.expiresAt).toLocaleString()}`
-                  : 'kept locally'}
-              </small>
-            </div>
-            <pre>
-              <code>{JSON.stringify(record.structure, null, 2)}</code>
-            </pre>
-            <button
-              class="button ghost small"
-              type="button"
-              onClick={() => void deleteWorkspaceRecord(record.id).then(refresh)}
-            >
-              Delete
+        {records
+          .filter(
+            (record) =>
+              !query ||
+              [record.name, record.note, record.format, ...record.ruleIds]
+                .join(' ')
+                .toLowerCase()
+                .includes(query.toLowerCase()),
+          )
+          .map((record) => (
+            <article class="workspace-record" key={record.id}>
+              <div>
+                <span class="pack-badge">{record.format}</span>
+                <h3>{record.name}</h3>
+                <p>{record.note || 'No note.'}</p>
+                <small>
+                  Created {new Date(record.createdAt).toLocaleString()} ·{' '}
+                  {record.expiresAt
+                    ? `expires ${new Date(record.expiresAt).toLocaleString()}`
+                    : 'kept locally'}
+                </small>
+              </div>
+              <pre>
+                <code>{JSON.stringify(record.structure, null, 2)}</code>
+              </pre>
+              <button
+                class="button secondary"
+                type="button"
+                onClick={() => {
+                  setEditingId(record.id)
+                  setName(record.name)
+                  setNote(record.note)
+                  setFormat(record.format)
+                  setSource(JSON.stringify(record.structure, null, 2))
+                  setRules(record.ruleIds.join(', '))
+                  document.querySelector<HTMLInputElement>('.workspace-editor input')?.focus()
+                }}
+              >
+                Open / edit
+              </button>
+              <button
+                class="button ghost small"
+                type="button"
+                onClick={() => void deleteWorkspaceRecord(record.id).then(refresh)}
+              >
+                Delete
+              </button>
+            </article>
+          ))}
+        {records.length &&
+        query &&
+        !records.some((record) =>
+          [record.name, record.note, record.format, ...record.ruleIds]
+            .join(' ')
+            .toLowerCase()
+            .includes(query.toLowerCase()),
+        ) ? (
+          <div class="empty-catalog">
+            No records match.
+            <button class="button ghost" type="button" onClick={() => setQuery('')}>
+              Clear filter
             </button>
-          </article>
-        ))}
+          </div>
+        ) : null}
         {!records.length ? (
           <div class="empty-catalog">
             Nothing saved. Raw decoder input is never added automatically.

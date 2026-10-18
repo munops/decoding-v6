@@ -193,12 +193,23 @@ const base64Detector: Detector = {
       (bytes[0] === 0x28 && bytes[1] === 0xb5 && bytes[2] === 0x2f && bytes[3] === 0xfd) ||
       (bytes[0] === 0x1f && bytes[1] === 0x8b) ||
       (bytes[0] === 0x78 && [0x01, 0x5e, 0x9c, 0xda].includes(bytes[1] ?? -1))
-    const confidence = compressed
-      ? 0.99
-      : Math.min(
-          0.96,
-          0.62 + (ratio > 0.85 ? 0.2 : 0.05) + (padded ? 0.1 : 0) + (explicitUrl ? 0.04 : 0),
-        )
+    let structured = false
+    try {
+      const decoded = inputText(bytes).trim()
+      if (/^[{["]/.test(decoded)) {
+        const parsed: unknown = JSON.parse(decoded)
+        structured = typeof parsed === 'string' || (parsed !== null && typeof parsed === 'object')
+      }
+    } catch {
+      /* Invalid JSON does not strengthen the candidate. */
+    }
+    const confidence =
+      compressed || structured
+        ? 0.99
+        : Math.min(
+            0.96,
+            0.62 + (ratio > 0.85 ? 0.2 : 0.05) + (padded ? 0.1 : 0) + (explicitUrl ? 0.04 : 0),
+          )
     const decoded = isProbablyUtf8(bytes) ? inputText(bytes) : bytes
     return result(
       'base64',

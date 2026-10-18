@@ -2074,3 +2074,97 @@ summary {
   padding-block: 8px;
   cursor: pointer;
 }
+
+.batch-compare {
+  margin: 12px;
+}
+.batch-compare textarea {
+  width: 100%;
+  min-height: 100px;
+}
+.batch-compare table {
+  width: 100%;
+  font-size: 12px;
+}
+.unified-diff {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.unified-diff code {
+  display: block;
+}
+.diff-added {
+  background: var(--layer-2);
+}
+.diff-removed {
+  background: var(--layer-4);
+}
+.workflow-sheet {
+  position: fixed;
+  z-index: 110;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 85dvh;
+  overflow: auto;
+  background: var(--surface);
+  border: 2px solid var(--line-strong);
+  padding: 16px max(16px, calc((100vw - 800px) / 2));
+  display: grid;
+  gap: 12px;
+  box-shadow: 0 -20px 80px #0003;
+}
+.workflow-sheet textarea {
+  width: 100%;
+  min-height: 160px;
+}
+.workflow-sheet pre {
+  overflow-x: auto;
+}
+.result-action-bar {
+  position: sticky;
+  bottom: 8px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  padding: 8px;
+  z-index: 50;
+}
+.result-action-bar.keyboard-open {
+  display: none;
+}
+.session-history {
+  margin: 12px;
+}
+.decoder-shell {
+  padding-bottom: 72px;
+}
+@media (min-width: 800px) {
+  .workflow-sheet {
+    left: calc((100vw - 760px) / 2);
+    right: calc((100vw - 760px) / 2);
+    padding: 24px;
+  }
+  .result-action-bar {
+    justify-content: flex-end;
+  }
+}
+
+.result-action-bar {
+  position: fixed;
+  bottom: 0;
+  left: max(12px, calc((100vw - 1216px) / 2));
+  right: max(12px, calc((100vw - 1216px) / 2));
+}
+.decoder-shell:has(.result-action-bar:not(.keyboard-open)) .inspector-copy {
+  display: none;
+}
+.backup-actions {
+  margin-block: 24px;
+}
+.workspace-manager input[type='search'] {
+  width: 100%;
+  min-height: 44px;
+}

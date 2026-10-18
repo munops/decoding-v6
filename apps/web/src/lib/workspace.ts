@@ -14,6 +14,18 @@ export type WorkspaceRecord = {
 const DATABASE = 'decoding-local-workspace'
 const STORE = 'redacted-records'
 const VERSION = 1
+const SESSION_KEY = 'decoding-tab-records'
+function tabRecords(): WorkspaceRecord[] {
+  const raw = sessionStorage.getItem(SESSION_KEY)
+  return raw ? (JSON.parse(raw) as WorkspaceRecord[]) : []
+}
+function finish(transaction: IDBTransaction): Promise<void> {
+  return new Promise((resolve, reject) => {
+    transaction.oncomplete = () => resolve()
+    transaction.onabort = transaction.onerror = () =>
+      reject(new Error('Local workspace transaction failed.'))
+  })
+}
 const sensitiveKey =
   /(?:secret|token|password|passwd|authorization|cookie|private|signature|api[-_]?key|session)/i
 
@@ -60,8 +72,8 @@ export function redactStructure(value: unknown, depth = 0): unknown {
 }
 
 function expiry(ttl: WorkspaceTtl): string | null {
-  if (ttl === 'keep') return null
-  const milliseconds = ttl === 'session' ? 0 : ttl === '24h' ? 86_400_000 : 604_800_000
+  if (ttl === 'keep' || ttl === 'session') return null
+  const milliseconds = ttl === '24h' ? 86_400_000 : 604_800_000
   return new Date(Date.now() + milliseconds).toISOString()
 }
 
@@ -69,6 +81,7 @@ export async function listWorkspaceRecords(): Promise<WorkspaceRecord[]> {
   const database = await openDatabase()
   const transaction = database.transaction(STORE, 'readwrite')
   const store = transaction.objectStore(STORE)
+  const completed = finish(transaction)
   const records = await requestResult(store.getAll() as IDBRequest<WorkspaceRecord[]>)
   const now = Date.now()
   const active: WorkspaceRecord[] = []
@@ -76,8 +89,11 @@ export async function listWorkspaceRecords(): Promise<WorkspaceRecord[]> {
     if (record.expiresAt && Date.parse(record.expiresAt) <= now) store.delete(record.id)
     else active.push(record)
   }
+  await completed
   database.close()
-  return active.sort((left, right) => right.createdAt.localeCompare(left.createdAt))
+  return [...active, ...tabRecords()].sort((left, right) =>
+    right.createdAt.localeCompare(left.createdAt),
+  )
 }
 
 export async function saveWorkspaceRecord(input: {
@@ -101,28 +117,99 @@ export async function saveWorkspaceRecord(input: {
     createdAt: new Date().toISOString(),
     expiresAt: expiry(input.ttl),
   }
+  if (input.ttl === 'session') {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify([record, ...tabRecords()]))
+    return record
+  }
   const database = await openDatabase()
   const transaction = database.transaction(STORE, 'readwrite')
-  await requestResult(transaction.objectStore(STORE).put(record))
+  const completed = finish(transaction)
+  transaction.objectStore(STORE).put(record)
+  await completed
   database.close()
   return record
 }
 
 export async function deleteWorkspaceRecord(id: string): Promise<void> {
+  const tab = tabRecords()
+  if (tab.some((record) => record.id === id)) {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(tab.filter((record) => record.id !== id)))
+    return
+  }
   const database = await openDatabase()
   const transaction = database.transaction(STORE, 'readwrite')
-  await requestResult(transaction.objectStore(STORE).delete(id))
+  const completed = finish(transaction)
+  transaction.objectStore(STORE).delete(id)
+  await completed
   database.close()
 }
 
 export async function clearWorkspace(): Promise<void> {
+  sessionStorage.removeItem(SESSION_KEY)
   const database = await openDatabase()
   const transaction = database.transaction(STORE, 'readwrite')
-  await requestResult(transaction.objectStore(STORE).clear())
+  const completed = finish(transaction)
+  transaction.objectStore(STORE).clear()
+  await completed
   database.close()
 }
 
-export async function workspaceUsage(): Promise<{ usage: number; quota: number }> {
+export async function workspaceUsage(): Promise<{ usage: number | null; quota: number | null }> {
   const estimate = await navigator.storage?.estimate()
-  return { usage: estimate?.usage ?? 0, quota: estimate?.quota ?? 0 }
+  return { usage: estimate?.usage ?? null, quota: estimate?.quota ?? null }
+}
+
+export async function updateWorkspaceRecord(
+  id: string,
+  changes: { name: string; note: string },
+): Promise<void> {
+  const name = changes.name.trim().slice(0, 100),
+    note = changes.note.trim().slice(0, 2000)
+  if (!name) throw new Error('Name is required')
+  const tab = tabRecords()
+  if (tab.some((record) => record.id === id)) {
+    sessionStorage.setItem(
+      SESSION_KEY,
+      JSON.stringify(tab.map((record) => (record.id === id ? { ...record, name, note } : record))),
+    )
+    return
+  }
+  const database = await openDatabase(),
+    transaction = database.transaction(STORE, 'readwrite'),
+    completed = finish(transaction),
+    store = transaction.objectStore(STORE)
+  const request = store.get(id)
+  request.onsuccess = () => {
+    const record = request.result as WorkspaceRecord | undefined
+    if (!record) {
+      transaction.abort()
+      return
+    }
+    store.put({ ...record, name, note })
+  }
+  await completed
+  database.close()
+}
+
+/** Version 1/store remain unchanged so existing persistent records also open after rollback. */
+export async function importWorkspaceRecords(records: WorkspaceRecord[]): Promise<number> {
+  const database = await openDatabase(),
+    transaction = database.transaction(STORE, 'readwrite'),
+    completed = finish(transaction),
+    store = transaction.objectStore(STORE)
+  let added = 0
+  const request = store.getAllKeys()
+  request.onsuccess = () => {
+    const ids = new Set(request.result.map(String))
+    for (const record of records) {
+      if (ids.has(record.id) || (record.expiresAt && Date.parse(record.expiresAt) <= Date.now()))
+        continue
+      store.put(record)
+      ids.add(record.id)
+      added++
+    }
+  }
+  await completed
+  database.close()
+  return added
 }

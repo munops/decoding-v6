@@ -87,3 +87,10 @@ describe('completion regressions', () => {
       }
   })
 })
+
+it('uses valid decoded JSON grammar as evidence for unpadded Base64', async () => {
+  const input = encodeBase64(new TextEncoder().encode('{"local":true,"count":1}'))
+  const root = (await decode(input)).root
+  expect(root.selected?.detector).toBe('base64')
+  expect(root.children[0]?.selected?.detector).toBe('json')
+})
