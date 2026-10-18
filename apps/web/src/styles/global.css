@@ -2226,3 +2226,21 @@ html {
     bottom: 8px;
   }
 }
+
+.view-error {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  min-width: 0;
+}
+.view-error h2 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.view-error .button {
+  width: 100%;
+  min-width: 0;
+  white-space: normal;
+}

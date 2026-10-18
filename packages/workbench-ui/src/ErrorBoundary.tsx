@@ -30,7 +30,7 @@ export class ErrorBoundary extends Component<Props, State> {
           'unobserved')
     const report = `decod.ing view error\nName: ${this.state.name}\nBuild: ${/^[a-f0-9]{7,40}$/.test(version) ? version : 'unobserved'}\nDetector: unobserved\nNo input, output, stack or error message included.`
     return (
-      <section class="notice danger" role="alert">
+      <section class="notice danger view-error" role="alert">
         <h2>{copy.error}</h2>
         <button
           class="button"
