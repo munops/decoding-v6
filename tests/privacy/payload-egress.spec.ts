@@ -1,3 +1,4 @@
+import { readFile } from 'node:fs/promises'
 import { expect, test } from '@playwright/test'
 
 test('synthetic canary never enters requests or browser storage after explicit copy actions', async ({
@@ -33,7 +34,9 @@ test('synthetic canary never enters requests or browser storage after explicit c
   const downloadPromise = page.waitForEvent('download')
   await safeShare.getByRole('button', { name: 'Download share card' }).click()
   const download = await downloadPromise
-  expect(download.suggestedFilename()).toBe('decoding-safe-share-card.svg')
+  expect(download.suggestedFilename()).toBe('decoding-safe-verdict.png')
+  const card = await readFile((await download.path())!)
+  expect([...card.subarray(0, 8)]).toEqual([137, 80, 78, 71, 13, 10, 26, 10])
   await page.waitForTimeout(500)
 
   const storage = await page.evaluate(async () => {
