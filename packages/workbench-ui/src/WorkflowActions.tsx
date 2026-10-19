@@ -120,6 +120,26 @@ export function WorkflowActions({
     last = linearChain(result.root).at(-1)?.selected
   return (
     <>
+      {selected && onSave ? (
+        <div class="workflow-save">
+          <button
+            class="button secondary"
+            type="button"
+            onClick={() =>
+              void onSave(selected, ttl).then(
+                () => setMessage(copy.saved),
+                () => setMessage(copy.storageFailed),
+              )
+            }
+          >
+            {copy.save}
+          </button>
+          <a class="button ghost" href="/workspace/">
+            {messages.locale === 'ko' ? '저장한 기록 열기' : 'Open saved records'}
+          </a>
+          {!open && message ? <p role="status">{message}</p> : null}
+        </div>
+      ) : null}
       {selected ? (
         <div class={`result-action-bar ${keyboard ? 'keyboard-open' : ''}`}>
           <button class="button" type="button" onClick={onCopy}>

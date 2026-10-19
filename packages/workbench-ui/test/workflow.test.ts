@@ -85,3 +85,27 @@ it('executes copied JavaScript for the actual Base64 gzip JSON chain', async () 
     ),
   ).toEqual(expected)
 })
+
+import { structureSelection } from '../src/result-text'
+import { redactStructure } from '../../../apps/web/src/lib/workspace'
+it('saves the nested decoded structure even with the outer Base64 layer selected', async () => {
+  const raw = '{"name":"Ada","token":"private_canary","count":7,"nested":{"tools":["one"]}}'
+  const result = await decode(encodeBase64(new TextEncoder().encode(raw)))
+  const saved = structureSelection(result.root, result.root.selected!)
+  expect(saved.detector).toBe('base64')
+  const redacted = redactStructure(saved.value)
+  expect(redacted).toMatchObject({
+    layers: [
+      { base64: '[string]' },
+      {
+        json: {
+          name: '[string]',
+          token: '[redacted]',
+          count: '[number]',
+          nested: { tools: ['[string]'] },
+        },
+      },
+    ],
+  })
+  expect(JSON.stringify(redacted)).not.toMatch(/Ada|private_canary/)
+})

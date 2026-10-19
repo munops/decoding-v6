@@ -2,7 +2,12 @@ import type { ComponentChildren } from 'preact'
 import { completionMessages } from './completion-messages'
 import { WorkflowActions } from './WorkflowActions'
 import { BatchCompare } from './BatchCompare'
-import { outputText, privateKeyDetection, hasUnavailableParser } from './result-text'
+import {
+  outputText,
+  privateKeyDetection,
+  hasUnavailableParser,
+  structureSelection,
+} from './result-text'
 import { DecoderInput } from './DecoderInput'
 import { ResultInspector } from './ResultInspector'
 import type { DecodeInput, DecodeResult, Detection } from '@decoding/engine'
@@ -17,12 +22,7 @@ import {
 import { detectionLabel } from './detection-copy'
 import type { DecoderMessages } from './messages'
 import { ChainStage, LayerBand } from './LayerBand'
-import {
-  safeShareCardSvg,
-  safeShareCardPng,
-  safeShareMarkdown,
-  safeShareProjection,
-} from './safe-share'
+import { safeShareCardPng, safeShareMarkdown, safeShareProjection } from './safe-share'
 
 export type DecoderWorkbenchProps = {
   inputAddon?: ComponentChildren
@@ -242,24 +242,7 @@ export function DecoderWorkbench({
     }
   }
 
-  const downloadSafeShareCard = () => {
-    if (!result || !selected) return
-    const projection = safeShareProjection(result.root, selected, messages)
-    if (!projection) return
-    const blob = new Blob([safeShareCardSvg(projection, messages)], { type: 'image/svg+xml' })
-    const url = URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
-    link.download = 'decoding-safe-share-card.svg'
-    document.body.append(link)
-    link.click()
-    link.remove()
-    setTimeout(() => URL.revokeObjectURL(url), 0)
-    onEvent?.('share_action')
-    setMessage(messages.shareCardDownloaded)
-  }
-
-  const sharePng = async () => {
+  const sharePng = async (nativeShare = true) => {
     if (!result || !selected) return
     const projection = safeShareProjection(result.root, selected, messages)
     if (!projection) return
@@ -269,7 +252,7 @@ export function DecoderWorkbench({
         : selected.detector
       const blob = await safeShareCardPng(projection, messages, slug),
         file = new File([blob], 'decoding-safe-verdict.png', { type: 'image/png' })
-      if (navigator.canShare?.({ files: [file] }))
+      if (nativeShare && navigator.canShare?.({ files: [file] }))
         await navigator.share({ files: [file], title: 'decod.ing' })
       else {
         const href = URL.createObjectURL(blob),
@@ -594,7 +577,7 @@ export function DecoderWorkbench({
             messages={messages}
             exportRedacted={exportRedacted}
             copySafeSummary={copySafeSummary}
-            downloadSafeShareCard={downloadSafeShareCard}
+            downloadSafeShareCard={() => void sharePng(false)}
             setShowCandidates={setShowCandidates}
             setMessage={setMessage}
           />
@@ -606,7 +589,12 @@ export function DecoderWorkbench({
           selected={selected}
           messages={messages}
           {...(onTool ? { onTool } : {})}
-          {...(onSave ? { onSave } : {})}
+          {...(onSave
+            ? {
+                onSave: (selection: Detection, ttl: 'session' | '24h' | '7d' | 'keep') =>
+                  onSave(structureSelection(result.root, selection), ttl),
+              }
+            : {})}
           onInput={handleSource}
           onCopy={() => void copySelected()}
           onShare={() => void sharePng()}
