@@ -1,9 +1,9 @@
 schema_version: 6
 wave_id: CS-DECODING-V6-FIX2-20261019
 status: approved
-source_revision: a954a8ca5562968ea6e5833b68ffac3f8bdc7e14
-prepared_at: 2026-10-19T09:19:30.077Z
-expires_at: 2026-10-19T15:19:30.078Z
+source_revision: 90ff21c3b9122bf30d050617942dce93d10f8635
+prepared_at: 2026-10-19T09:26:22.738Z
+expires_at: 2026-10-19T15:26:22.739Z
 legal_entity_ref: hq/bootstrap/identity.yaml
 execution_lane: owner_lane
 approval_authority: human_owner
@@ -21,25 +21,25 @@ work_claim:
     repo:decoding-v6: 45
     provider:github:munops/decoding-v6: 5
     provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6: 6
-  asserted_at: 2026-10-19T09:19:30.077Z
+  asserted_at: 2026-10-19T09:26:22.738Z
   released_at: null
   release_evidence_ref: docs/evidence/completion-2026-10/fix2-release.json
 intervention_mode: normal
 owner_delegation_ref: docs/munops/ops/owner-standing-delegation.json#zeroCostProviderExecution
 approval:
   mode: action_time
-  resolved_at: 2026-10-19T09:18:32.585Z
+  resolved_at: 2026-10-19T09:26:22.738Z
   requested_at: null
   approved_at: null
   approved_date: 2026-10-17
   approval_clock_status: date supplied; exact time not supplied
   approved_action_ids:
     - CS-DECODING-V6-FIX2-SOURCE-20261019
-    - CS-DECODING-V6-FIX2-WEB-20261019
+    - CS-DECODING-V6-FIX2-WEB-20261019-R1
   owner_evidence_ref: conversation:COMPLETE-SERVICES-20261017:owner-all-projects-implement-deploy-approved
   action_exact_fields_digests:
-    CS-DECODING-V6-FIX2-SOURCE-20261019: 134a51e6c2f9573cf4b529778f0773d0295032b6a915227286d278480fdac47e
-    CS-DECODING-V6-FIX2-WEB-20261019: 0c6d63632d8f664be8bd69dfdec4e61039a82ec6644556db2be1952deb599bc8
+    CS-DECODING-V6-FIX2-SOURCE-20261019: 69a022207c430467760321c6aa5ddc7ea0a98d30d3ccfb04c3b3637dfcf53e28
+    CS-DECODING-V6-FIX2-WEB-20261019-R1: 5fde6994a6bee52b18fc8005e4673da959415b0a4a1511ab5b180492459502fd
   resolution_policy_version: 1
 # prettier-ignore
 actions:
@@ -51,7 +51,7 @@ actions:
     product: decoding-v6
     channel: source
     provider: github
-    exact_mutation: Fast-forward existing origin/main from d4adedc74ba53e010d029b6b5197e954b15d5d68 through correction source a954a8ca5562968ea6e5833b68ffac3f8bdc7e14 and exact release metadata/evidence; no force/new branch.
+    exact_mutation: Fast-forward existing origin/main from d4adedc74ba53e010d029b6b5197e954b15d5d68 through correction source 90ff21c3b9122bf30d050617942dce93d10f8635 and exact release metadata/evidence; no force/new branch.
     account_ref: docs/munops/ops/provider-registry.yaml#accounts.github_primary
     resource_ref: github:munops/decoding-v6:refs/heads/main
     claim_resource_refs:
@@ -63,7 +63,7 @@ actions:
       candidate:
         source_repository: munops/decoding-v6
         source_before_sha: d4adedc74ba53e010d029b6b5197e954b15d5d68
-        candidate_sha: a954a8ca5562968ea6e5833b68ffac3f8bdc7e14
+        candidate_sha: 90ff21c3b9122bf30d050617942dce93d10f8635
         artifact_sha256: null
         release_entrypoint: null
       identity_transition:
@@ -121,13 +121,14 @@ actions:
       - Task-owned correction commits and exact delivery metadata/evidence only; no credentials, payloads, profiles or private keys.
     legal_terms_changed: false
     preflight_evidence:
-      - Prior99unit and current focused21 passed; all channel type/build clean at a954a8ca5562968ea6e5833b68ffac3f8bdc7e14; final mandatory verify/E2E remains in the existing entrypoint.
-      - Clean390 save/reopen/edit/delete and realPNG observed; unchanged save/share owners reused at final source; final390offline/retry and1440/gutters observed, selected images actually viewed.
+      - Final runtime owner hashes match a954;100unit/format/lint/type/static/benchmark/all-channel clean build green from prior mandatory guard.
+      - Original guard stopped before any provider command:47E2E pass/5 obsolete Step-text or SVG-name assertions/2skip; failure preserved and provider still0beb/db2 read back. Only affected test expectations corrected.
+      - Final clean390/1440 source and actual VIEW bound to 90ff21c3b9122bf30d050617942dce93d10f8635; final guard-required verify/E2E remain enforced.
     rollback_or_abort: Abort unless remote main remains d4adedc74ba53e010d029b6b5197e954b15d5d68 and ancestor of candidate; forward repair only.
     status: ready
     provider_readback: null
     channel_smoke: null
-    artifact_digest: de031dd3e75cd128e642d4f71a4ffd1030013ec2c3fde04d0848e7cd53f74875
+    artifact_digest: 047b487f604c7cb93158703241a70dda775039c418b620438cd3d8de89c59c8e
     authorization:
       actionType: existing_branch_push
       effects:
@@ -152,7 +153,7 @@ actions:
         evidenceRef: existing verified CLI deploy/push only; no provider consent surface or new agreement
       humanStep:
         kind: none
-  - action_id: CS-DECODING-V6-FIX2-WEB-20261019
+  - action_id: CS-DECODING-V6-FIX2-WEB-20261019-R1
     approval_readiness: ready
     approval_class: P-REPORT
     standing_delegation_eligible: true
@@ -160,7 +161,7 @@ actions:
     product: decoding-v6
     channel: web
     provider: cloudflare_workers
-    exact_mutation: Deploy frozen correction source a954a8ca5562968ea6e5833b68ffac3f8bdc7e14 and artifact de031dd3e75cd128e642d4f71a4ffd1030013ec2c3fde04d0848e7cd53f74875 to existing decoding-v6 Worker; preserve ASSETS/EVENTS bindings, routes, secrets, DNS, account and cost.
+    exact_mutation: Deploy frozen correction source 90ff21c3b9122bf30d050617942dce93d10f8635 and artifact 047b487f604c7cb93158703241a70dda775039c418b620438cd3d8de89c59c8e to existing decoding-v6 Worker; preserve ASSETS/EVENTS bindings, routes, secrets, DNS, account and cost.
     account_ref: docs/munops/ops/provider-registry.yaml#accounts.cloudflare_primary
     resource_ref: cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6
     claim_resource_refs:
@@ -170,7 +171,7 @@ actions:
     artifact:
       format: cloudflare_worker_with_static_assets
       local_ref: apps/web/dist
-      sha256: de031dd3e75cd128e642d4f71a4ffd1030013ec2c3fde04d0848e7cd53f74875
+      sha256: 047b487f604c7cb93158703241a70dda775039c418b620438cd3d8de89c59c8e
       build_command: pnpm -r --workspace-concurrency=1 --if-present build
       digest_method: sorted per-file SHA-256 ledger folded with SHA-256
       built_from_clean_runtime_commit: true
@@ -179,8 +180,8 @@ actions:
       candidate:
         source_repository: munops/decoding-v6
         source_before_sha: 0beb9287569d7ff32aae31dd3c3442e4686c6803
-        candidate_sha: a954a8ca5562968ea6e5833b68ffac3f8bdc7e14
-        artifact_sha256: de031dd3e75cd128e642d4f71a4ffd1030013ec2c3fde04d0848e7cd53f74875
+        candidate_sha: 90ff21c3b9122bf30d050617942dce93d10f8635
+        artifact_sha256: 047b487f604c7cb93158703241a70dda775039c418b620438cd3d8de89c59c8e
         release_entrypoint: DECODING_RELEASE_WAVE=docs/operations/release-wave-cs-decoding-v6-fix2-20261019.yaml DECODING_DELIVERY_TARGET=production pnpm delivery:web:deploy -- --execute
       identity_transition:
         mode: preserve
@@ -193,16 +194,16 @@ actions:
         migration_action_id: null
       browser_gate:
         mode: release
-        source_sha: a954a8ca5562968ea6e5833b68ffac3f8bdc7e14
-        artifact_sha256: de031dd3e75cd128e642d4f71a4ffd1030013ec2c3fde04d0848e7cd53f74875
+        source_sha: 90ff21c3b9122bf30d050617942dce93d10f8635
+        artifact_sha256: 047b487f604c7cb93158703241a70dda775039c418b620438cd3d8de89c59c8e
         target_environment: production
         build_environment: production
         assertion_profile: production
         fresh_server_required: true
         reuse_existing_server: false
-        server_identity_receipt_sha256: 3b05267ede1d8fa6d2f74c2b4c44f1529171f94cad1f7c4a109fa1e6c198bdbc
-        server_identity_receipt_payload: '{"source_sha":"a954a8ca5562968ea6e5833b68ffac3f8bdc7e14","artifact_sha256":"de031dd3e75cd128e642d4f71a4ffd1030013ec2c3fde04d0848e7cd53f74875","target_environment":"production","build_environment":"production","assertion_profile":"production","fresh_server_required":true,"reuse_existing_server":false}'
-        observed_status: passed exact clean390/1440 source, actual selected PNG VIEW; saved nested structure and PNG prior owner-identical checks reused; final offline/retry/positions/gutters observed; all own wrappers exited cleanup[]
+        server_identity_receipt_sha256: d1879a755790b8938799d3fca2f5098a70092bbc901f0df65186134fe769c481
+        server_identity_receipt_payload: '{"source_sha":"90ff21c3b9122bf30d050617942dce93d10f8635","artifact_sha256":"047b487f604c7cb93158703241a70dda775039c418b620438cd3d8de89c59c8e","target_environment":"production","build_environment":"production","assertion_profile":"production","fresh_server_required":true,"reuse_existing_server":false}'
+        observed_status: Final90ff clean390/1440 source identity and first value captured and VIEW; runtime owners unchanged from accepted a954 offline/recovery/positions and prior save/PNG checks; mandatory guard validates final E2E. Original admission reused only for tests/metadata change in same unfinished Task.
       provider_before:
         applicability: deployment
         deployment_id: fb16415a-50e5-4adc-819d-76c448fd548f
@@ -253,14 +254,15 @@ actions:
       - Worker code/static assets only. Existing fixed aggregate event names on same-origin endpoint; no input/result/file/key content or identifiers.
     legal_terms_changed: false
     preflight_evidence:
-      - Prior99unit and current focused21 passed; all channel type/build clean at a954a8ca5562968ea6e5833b68ffac3f8bdc7e14; final mandatory verify/E2E remains in the existing entrypoint.
-      - Clean390 save/reopen/edit/delete and realPNG observed; unchanged save/share owners reused at final source; final390offline/retry and1440/gutters observed, selected images actually viewed.
+      - Final runtime owner hashes match a954;100unit/format/lint/type/static/benchmark/all-channel clean build green from prior mandatory guard.
+      - Original guard stopped before any provider command:47E2E pass/5 obsolete Step-text or SVG-name assertions/2skip; failure preserved and provider still0beb/db2 read back. Only affected test expectations corrected.
+      - Final clean390/1440 source and actual VIEW bound to 90ff21c3b9122bf30d050617942dce93d10f8635; final guard-required verify/E2E remain enforced.
     rollback_or_abort: Abort on source/artifact/resource/fence/provider-before drift. Within10min HTTP200/new source or version/390 render/first-value failure invokes guarded rollback to db2ecfdf-83d4-4963-aa31-4209d667b60a with read-back. Measurement timeout remains unknown.
     status: ready
     provider_readback: null
     channel_smoke: null
     channel_smoke_plan: Within10min canonical HTTP200/exact source/new native version and actual-view390 first value; same-origin names-only count receive; actual key/payload never transmitted.
-    artifact_digest: de031dd3e75cd128e642d4f71a4ffd1030013ec2c3fde04d0848e7cd53f74875
+    artifact_digest: 047b487f604c7cb93158703241a70dda775039c418b620438cd3d8de89c59c8e
     authorization:
       actionType: deploy
       effects:
