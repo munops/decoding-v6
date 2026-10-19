@@ -31,3 +31,5 @@
 - 2026-10-19: verify1 M6 교정은 개인키의 종류·크기만 DER에서 추출하고 JWK 오류 숫자 위치만 공개한다. 넓은 화면 비교는 기존 diff 조각으로 좌우 원문을 복원하며 탭 기록은 접지 않고, 빈 서명 JWT와 실행 가능한 JS gzip 재현을 복구한다.
 
 - 2026-10-19: 기존 live verifier의 SSR 예시 클릭 두 번 타임아웃을 보존했다. hydration 후 동일 예시는 2층이므로 readiness 한 줄을 추가하고 read-only verify만 harness 후속 커밋을 허용한다. runtime/config tree·source0beb·artifact는 같으며 재빌드·재배포 없이 필수 verify를 통과했다.
+
+- 2026-10-19: fix2는 verify2의 다섯 보통 결함만 수정한다. 공통 절 거터·평평한 층, Unicode 코드포인트·Ascii85 후보·cron 필드 수·YAML/TOML 줄열·XML 위치·키 위치, 미수신 파서와 입력 오류 분리 및 새 Worker 재시도, 전체 해체 구조의 가린 저장과 바로 저장, 기본 PNG 다운로드를 기존 owner에서 고친다. IDB v1·실제 입력·계정 없는 로컬 경계와 기존 형식 정체성을 유지하며 전체 기능 수는 unknown/null, 독립 finalverify3 전 완료 판정은 하지 않는다.
