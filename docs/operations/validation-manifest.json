@@ -5,13 +5,13 @@
   "topology": "workspace",
   "packageManager": {
     "name": "pnpm",
-    "version": "10.15.0",
+    "version": "12.14.0",
     "lockfile": "pnpm-lock.yaml",
     "nodeRange": ">=22"
   },
   "source": {
     "scriptsDigest": "c0a4dc683a4e6e253104788b8d6a926feda5a2f0c48f09d4abe9276f44ff6fe2",
-    "packageManagerDigest": "7c75c1f0765520cfbf1a7236c358f2d4af4ba3696f252b93c05f15c71f1f2509"
+    "packageManagerDigest": "aec6ae9a222854d382ed1c1301eabca71237837c182705c5abcd970df56a5517"
   },
   "commands": [
     {

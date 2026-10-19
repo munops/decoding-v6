@@ -1,7 +1,11 @@
 packages:
-  - apps/*
-  - packages/*
-
-onlyBuiltDependencies:
-  - esbuild
-  - sharp
+- apps/*
+- packages/*
+allowBuilds:
+  esbuild: true
+  sharp: true
+virtualStoreType: global
+storeIndexFormat: sqlite
+verifyDepsBeforeRun: error
+pmOnFail: error
+strictDepBuilds: true

@@ -1,4 +1,44 @@
 #!/usr/bin/env node
+
+import { runPreparedCommand as runScopedDeliveryCommand, resolveScopedPnpm as scopedDeliveryProfile, resolvePnpmExecution as scopedDeliveryExecution, scopedPnpmEnvironment as scopedDeliveryEnvironment } from '../../scripts/lib/validation-preparation.mjs';
+import { fileURLToPath as scopedDeliveryFilePath } from 'node:url';
+import { resolve as scopedDeliveryResolve, dirname as scopedDeliveryDirname } from 'node:path';
+import { existsSync as scopedDeliveryExists, mkdirSync as scopedDeliveryMkdir, readdirSync as scopedDeliveryEntries, cpSync as scopedDeliveryCopy, readFileSync as scopedDeliveryRead } from 'node:fs';
+const scopedDeliveryRoot = scopedDeliveryFilePath(new URL('../', import.meta.url));
+export function resolveDeliveryToolchain() {
+  const profile = scopedDeliveryProfile({ projectRoot: scopedDeliveryRoot, project: 'decoding-v6' });
+  if (!profile) throw new Error('LOCAL_DELIVERY_SCOPED_PNPM_REQUIRED');
+  const execution = scopedDeliveryExecution(profile, scopedDeliveryRoot);
+  return { executable: execution.executable, env: scopedDeliveryEnvironment({ ...process.env, PATH: `${scopedDeliveryDirname(execution.executable)}:${scopedDeliveryDirname(process.execPath)}:${process.env.PATH ?? ''}` }, { projectRoot: scopedDeliveryRoot }) };
+}
+function preserveScopedDeliveryOutputs(source, destination) {
+  if (!scopedDeliveryExists(source)) return;
+  scopedDeliveryMkdir(destination, { recursive: true });
+  for (const entry of scopedDeliveryEntries(source, { withFileTypes: true })) {
+    const from = scopedDeliveryResolve(source, entry.name), to = scopedDeliveryResolve(destination, entry.name);
+    if (entry.isDirectory()) preserveScopedDeliveryOutputs(from, to);
+    else if (entry.isFile()) {
+      if (scopedDeliveryExists(to)) {
+        if (!scopedDeliveryRead(from).equals(scopedDeliveryRead(to))) throw new Error('LOCAL_DELIVERY_EXISTING_OUTPUT_PRESERVED');
+      } else scopedDeliveryCopy(from, to, { errorOnExist: true, force: false });
+    }
+  }
+}
+if (process.argv[1] && scopedDeliveryFilePath(import.meta.url) === scopedDeliveryResolve(process.argv[1]) && (process.argv[2] === 'prepare' || process.argv[2] === 'prepare-dependencies' || /^preflight(?:-|$)/.test(process.argv[2] || '') || process.argv[2] === 'build-ait')) {
+  const argv = process.argv.slice(2), value = name => { const index = argv.indexOf(name); return index >= 0 ? argv[index + 1] : undefined; };
+  const result = await runScopedDeliveryCommand({ projectRoot: scopedDeliveryRoot, project: 'decoding-v6',
+    prepareOnly: process.argv.includes('--prepare-only') || process.argv[2] === 'prepare-dependencies' || (process.argv[2] === 'prepare' && !false),
+    caller: { claimId: value('--claim-id') || process.env.MUNOPS_CLAIM_ID, holder: value('--holder') || process.env.MUNOPS_CLAIM_HOLDER }, args: argv,
+    afterRun: async preparation => {
+      const canonical = scopedDeliveryProfile({ projectRoot: scopedDeliveryRoot, project: 'decoding-v6' }).canonicalRoot;
+      for (const path of ['.local-delivery']) preserveScopedDeliveryOutputs(scopedDeliveryResolve(preparation.worktree, path), scopedDeliveryResolve(canonical, path));
+    },
+  });
+  if (!result.continued) {
+    if (process.argv.includes('--prepare-only') || process.argv[2] === 'prepare-dependencies' || (process.argv[2] === 'prepare' && !false)) console.log(JSON.stringify(result.preparation, null, 2));
+    process.exit(result.exitCode);
+  }
+}
 import { execFileSync } from 'node:child_process'
 import { existsSync, readFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
@@ -104,7 +144,7 @@ function wrangler(args) {
       cwd: repoRoot,
       encoding: 'utf8',
       stdio: ['ignore', 'pipe', 'pipe'],
-      env: { ...process.env, WRANGLER_WRITE_LOGS: 'false', WRANGLER_SEND_METRICS: 'false' },
+      env: { ...resolveDeliveryToolchain().env, WRANGLER_WRITE_LOGS: 'false', WRANGLER_SEND_METRICS: 'false' },
     })
     if (args.includes('--json')) {
       const rows = JSON.parse(output)
