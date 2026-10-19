@@ -405,7 +405,19 @@ function jsonType(value: unknown, language: string, name = 'Root'): string {
       ? Object.entries(value as Record<string, unknown>)
       : [['value', value] as [string, unknown]]
   const typeOf = (item: unknown): string => {
-    if (item === null) return language === 'typescript' ? 'null' : 'Any?'
+    if (language === 'typescript') {
+      if (item === null) return 'null'
+      if (Array.isArray(item)) {
+        const types = [...new Set(item.map(typeOf))]
+        return types.length ? `(${types.join(' | ')})[]` : 'unknown[]'
+      }
+      if (typeof item === 'object')
+        return `{ ${Object.entries(item as Record<string, unknown>)
+          .map(([key, value]) => `${JSON.stringify(key)}: ${typeOf(value)}`)
+          .join('; ')} }`
+      return ['string', 'number', 'boolean'].includes(typeof item) ? typeof item : 'unknown'
+    }
+    if (item === null) return 'Any?'
     if (Array.isArray(item))
       return language === 'typescript' ? `${typeOf(item[0])}[]` : `List<${typeOf(item[0])}>`
     if (typeof item === 'string')
@@ -490,6 +502,11 @@ export const runConvert: OperationRunner = async (id, input, options) => {
     }
     case 'html-to-jsx': {
       const output = source
+        .replace(
+          /<(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)\b((?:[^>"']|"[^"]*"|'[^']*')*)>/gi,
+          (_tag, name: string, attributes: string) =>
+            `<${name}${attributes.replace(/\/\s*$/, '').trimEnd()} />`,
+        )
         .replace(/\bclass=/g, 'className=')
         .replace(/\bfor=/g, 'htmlFor=')
         .replace(/\btabindex=/gi, 'tabIndex=')

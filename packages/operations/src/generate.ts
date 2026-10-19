@@ -121,13 +121,18 @@ export const runGenerate: OperationRunner = async (id, input, options) => {
           location: decoded.location,
         })
       }
-      const dataUrl = await QRCode.toDataURL(source, {
+      const svg = await QRCode.toString(source, {
+        type: 'svg',
         errorCorrectionLevel: optionString(options, 'errorCorrection', 'M') as
           'L' | 'M' | 'Q' | 'H',
         margin: 2,
         width: Math.min(2048, Math.max(128, optionNumber(options, 'width', 384))),
       })
-      return { output: dataUrl, kind: 'image', summary: `${source.length} characters` }
+      return {
+        output: `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`,
+        kind: 'image',
+        summary: `${source.length} characters`,
+      }
     }
     case 'hash-generator': {
       const algorithm = optionString(options, 'algorithm', 'sha256').toLowerCase()

@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest'
+import ts from 'typescript'
+import jsQR from 'jsqr'
 import { executeOperation, operationById, operations } from '../src'
 
 const certificate = `-----BEGIN CERTIFICATE-----
@@ -189,4 +191,86 @@ describe('47-tool operation registry', () => {
     )
     expect(String(xml.output)).toContain('&e;')
   })
+})
+
+it('generates usable TypeScript including nested, empty and mixed arrays', async () => {
+  const result = await executeOperation(
+    'json-to-code',
+    '{"name":"fixture","count":1,"ratio":1.5,"ok":true,"nested":{"n":2},"empty":[],"mixed":[1,"x",null]}',
+    { language: 'typescript' },
+  )
+  const output = String(result.output)
+  const file = '/generated.ts'
+  const host = ts.createCompilerHost({ noLib: true })
+  host.getSourceFile = (name, languageVersion) =>
+    name === file ? ts.createSourceFile(file, output, languageVersion) : undefined
+  const program = ts.createProgram([file], { noLib: true }, host)
+  expect(program.getSyntacticDiagnostics()).toEqual([])
+  expect(program.getSemanticDiagnostics()).toEqual([])
+  expect(output).toContain('number')
+  expect(output).not.toMatch(/\b(Int|Double|String|Boolean|Any)\b/)
+})
+it('generates valid JSX for every HTML void element, preserving quoted greater-than', async () => {
+  const result = await executeOperation(
+    'html-to-jsx',
+    '<label class="field" for="x"><input id="x" title="a>b"><br><img src="local.png" /></label>',
+  )
+  const output = String(result.output)
+  const file = ts.createSourceFile(
+    'generated.tsx',
+    `const element = (${output})`,
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.TSX,
+  )
+  expect((file as unknown as { parseDiagnostics: unknown[] }).parseDiagnostics).toEqual([])
+  expect(output).toContain('htmlFor="x"')
+  expect(output).toContain('title="a>b" />')
+})
+it('creates QR SVG without a DOM/canvas that decodes to the original URL', async () => {
+  const value = 'https://example.test/synthetic'
+  const result = await executeOperation('qr-code', value)
+  const svg = decodeURIComponent(String(result.output).split(',').slice(1).join(','))
+  expect(svg).toContain('<svg')
+  // Rasterize the generated SVG path (each horizontal segment is a dark module).
+  const size = Number(/viewBox="0 0 (\d+)/.exec(svg)?.[1])
+  expect(size).toBeGreaterThan(20)
+  const scale = 8,
+    width = size * scale
+  const pixels = new Uint8ClampedArray(width * width * 4).fill(255)
+  const path = /<path stroke="#[^"]+" d="([^"]+)"/.exec(svg)?.[1] ?? ''
+  let x = 0,
+    y = 0
+  for (const match of path.matchAll(/([Mmh])([\d.]+)(?: ([\d.]+))?/g)) {
+    if (match[1] === 'M') {
+      x = Number(match[2])
+      y = Number(match[3])
+    } else if (match[1] === 'm') {
+      x += Number(match[2])
+      y += Number(match[3])
+    } else {
+      const length = Number(match[2])
+      for (let py = Math.round((y - 0.5) * scale); py < (y + 0.5) * scale; py++)
+        for (let px = x * scale; px < (x + length) * scale; px++) {
+          const i = (py * width + px) * 4
+          pixels[i] = pixels[i + 1] = pixels[i + 2] = 0
+        }
+      x += length
+    }
+  }
+  expect(jsQR(pixels, width, width)?.data).toBe(value)
+})
+it('round-trips PNG bytes and rejects empty image encoding', async () => {
+  const png = Uint8Array.from(
+    Buffer.from(
+      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jOGQAAAAASUVORK5CYII=',
+      'base64',
+    ),
+  )
+  const result = await executeOperation('base64-image', png, { mime: 'image/png' })
+  expect(String(result.output)).toBe(`data:image/png;base64,${Buffer.from(png).toString('base64')}`)
+  expect(
+    (await executeOperation('base64-image', String(result.output), { mode: 'decode' })).output,
+  ).toEqual(png)
+  await expect(executeOperation('base64-image', '')).rejects.toThrow(/Choose an image/)
 })

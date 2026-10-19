@@ -98,6 +98,8 @@ export const runEncode: OperationRunner = async (id, input, options) => {
           metadata: { mime: match?.[1] ?? 'application/octet-stream', size: decoded.length },
         }
       }
+      if (!inputBytes(input).length)
+        throw new Error('Choose an image file or enter image bytes first.')
       const mime = optionString(options, 'mime', 'image/png')
       if (!/^image\/[a-z0-9.+-]+$/i.test(mime)) throw new Error('An image MIME type is required.')
       return textResult(`data:${mime};base64,${encodeBase64(inputBytes(input))}`)

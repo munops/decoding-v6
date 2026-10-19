@@ -162,7 +162,9 @@ export function ToolWorkbench({
         : (document.querySelector<HTMLTextAreaElement>('textarea')?.value ??
           initialExample(operation.id, messages)),
   )
+  const [fileInput, setFileInput] = useState<Uint8Array | null>(null)
   const setSource = (text: string) => {
+    setFileInput(null)
     assignSource(text)
     onSourceChange?.(text)
   }
@@ -174,7 +176,7 @@ export function ToolWorkbench({
 
   useEffect(() => setHydrated(true), [])
 
-  const run = async (input: OperationInput = source, override = options) => {
+  const run = async (input: OperationInput = fileInput ?? source, override = options) => {
     setStatus('processing')
     setMessage(messages.runningMessage)
     try {
@@ -209,8 +211,13 @@ export function ToolWorkbench({
       return
     }
     const bytes = new Uint8Array(await file.arrayBuffer())
-    if (operation.id === 'base64-image' || operation.id === 'x509-decoder') await run(bytes)
-    else {
+    if (operation.id === 'base64-image' || operation.id === 'x509-decoder') {
+      setFileInput(bytes)
+      const nextOptions =
+        operation.id === 'base64-image' ? { ...options, mime: file.type || 'image/png' } : options
+      setOptions(nextOptions)
+      await run(bytes, nextOptions)
+    } else {
       const value = new TextDecoder().decode(bytes)
       setSource(value)
       await run(value)

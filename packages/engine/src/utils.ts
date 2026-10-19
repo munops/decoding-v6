@@ -62,5 +62,10 @@ export function clampConfidence(value: number): number {
 }
 
 export function isProbablyUtf8(bytes: Uint8Array): boolean {
-  return printableRatio(bytes) >= 0.72
+  try {
+    new TextDecoder('utf-8', { fatal: true }).decode(bytes)
+    return printableRatio(bytes) >= 0.72
+  } catch {
+    return false
+  }
 }

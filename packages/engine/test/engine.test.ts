@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module'
 import { detectorSpecs } from '@decoding/spec-registry'
 import { gzipSync, zlibSync } from 'fflate'
 import { describe, expect, it } from 'vitest'
@@ -93,4 +94,42 @@ it('uses valid decoded JSON grammar as evidence for unpadded Base64', async () =
   const root = (await decode(input)).root
   expect(root.selected?.detector).toBe('base64')
   expect(root.children[0]?.selected?.detector).toBe('json')
+})
+
+it('preserves invalid UTF-8 bytes through Base64 and hex before zstd decoding', async () => {
+  // A valid raw-block zstd frame whose high printable ratio used to hide invalid UTF-8.
+  const plain = new TextEncoder().encode('{"synthetic":true}'),
+    frame = new Uint8Array([
+      0x28,
+      0xb5,
+      0x2f,
+      0xfd,
+      0x20,
+      plain.length,
+      plain.length * 8 + 1,
+      0,
+      0,
+      ...plain,
+    ])
+  for (const input of [
+    encodeBase64(frame),
+    [...frame].map((b) => b.toString(16).padStart(2, '0')).join(''),
+  ]) {
+    const result = await decode(input, {
+      codecs: {
+        zstd: async (bytes) => {
+          expect(bytes).toEqual(frame)
+          return (
+            createRequire(new URL('../../../apps/web/package.json', import.meta.url))('fzstd') as {
+              decompress: (input: Uint8Array) => Uint8Array
+            }
+          ).decompress(bytes)
+        },
+      },
+    })
+    expect(result.root.selected?.decoded).toEqual(frame)
+    expect(result.root.children[0]?.inputSize).toBe(frame.length)
+    expect(result.root.children[0]?.selected?.detector).toBe('zstd')
+    expect(result.root.children[0]?.children[0]?.selected?.value).toEqual({ synthetic: true })
+  }
 })
