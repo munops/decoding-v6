@@ -120,7 +120,7 @@ export function WorkflowActions({
     last = linearChain(result.root).at(-1)?.selected
   return (
     <>
-      {selected && onSave ? (
+      {selected && onSave && !open ? (
         <div class="workflow-save">
           <button
             class="button secondary"
