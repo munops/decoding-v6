@@ -1,0 +1,37 @@
+{
+  "project": "decoding-v6",
+  "kind": "immutable_predeploy",
+  "preparedAt": "2026-10-19T09:19:30.077Z",
+  "provider": "cloudflare_workers",
+  "resource": "account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6",
+  "sourceSha": "a954a8ca5562968ea6e5833b68ffac3f8bdc7e14",
+  "artifactSha256": "de031dd3e75cd128e642d4f71a4ffd1030013ec2c3fde04d0848e7cd53f74875",
+  "cleanWorktree": "/tmp/cs-decoding-v6-fix2-final",
+  "cleanStatus": "",
+  "rollback": {
+    "versionId": "db2ecfdf-83d4-4963-aa31-4209d667b60a",
+    "sourceSha": "0beb9287569d7ff32aae31dd3c3442e4686c6803"
+  },
+  "publicImpact": "Fix nested structure saving, offline parser recovery, PNG cards, concrete parser boundaries and positions, common gutters and touch targets. No new channel, collection, activation, cost, resource, account, domain, legal consent or external contact.",
+  "claims": {
+    "registry_ref": ".orchestration/work-claims.sqlite",
+    "required_for_mutation": true,
+    "claim_id": "claim_eaf9f88d-9a47-433d-b225-c3ae3b7ba9e8",
+    "holder": "codex:cs-decoding-v6",
+    "resources": [
+      "repo:decoding-v6",
+      "provider:github:munops/decoding-v6",
+      "provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6"
+    ],
+    "fencing_tokens": {
+      "repo:decoding-v6": 45,
+      "provider:github:munops/decoding-v6": 5,
+      "provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6": 6
+    },
+    "asserted_at": "2026-10-19T09:19:30.077Z",
+    "released_at": null,
+    "release_evidence_ref": "docs/evidence/completion-2026-10/fix2-release.json"
+  },
+  "upstreamOutsideWaveCommits": [],
+  "metadataOnlyTerminalMismatch": "workspace folder metadata; exact dispatched product cwd/claim/fences verified; no rebind"
+}

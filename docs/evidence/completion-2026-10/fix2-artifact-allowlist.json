@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "product": "decoding-v6",
+  "runtimeSourceSha": "90ff21c3b9122bf30d050617942dce93d10f8635",
+  "artifacts": [
+    {
+      "path": "docs/evidence/completion-2026-10/deploy-20261019-a954a8c.json",
+      "bytes": 1759,
+      "sha256": "3e73d6878e7f216f67c0823563e3dec6fb9e21b6d92dc82fdab0654cbe78a04a"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/deploy-20261019-90ff21c.json",
+      "bytes": 1928,
+      "sha256": "93aa8151b480e56ec3cc109aa0c4626d8f43a8d7ab8e197569dc829f35e58445"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix2-release.json",
+      "bytes": 9132,
+      "sha256": "604abd0c3d57a2b402eab9fc8fb7f77998d21e216ae3eaf1b2aeeb9545994570"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix2-captures/clean-1440-value.png",
+      "bytes": 186317,
+      "sha256": "86b50c788b8b3e594f2315a07922e8ae6838fc1045685d1f93dd6d637eb58e1a"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix2-captures/clean-390-error-position.png",
+      "bytes": 161397,
+      "sha256": "b02175fdd6c3d12f6875194326e0acb8d818f29919e4e8786cf6acee5239e025"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix2-captures/clean-390-offline.png",
+      "bytes": 162886,
+      "sha256": "34d8bee09f2ab20474acaeafa67fdcea04e89a80486528316c162885ff95f7c8"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix2-captures/clean-390-value.png",
+      "bytes": 162533,
+      "sha256": "b0e4264dc13a23352846e1684a0295c0dd6a4642a1c9f91b6df8b575eff6959d"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix2-captures/live-390-start.png",
+      "bytes": 57745,
+      "sha256": "d7df74df909d214fcc7df958a7b603c724705cf3cb812bc7e7c59ca58d377c6f"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix2-captures/live-390-value-viewport.png",
+      "bytes": 52956,
+      "sha256": "04ae425cb014037a9a3176c221101eeb5de088f4b13d70bda160ad14d7cbc48e"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix2-captures/safe-share-card.png",
+      "bytes": 53321,
+      "sha256": "280946a2033fb95fc2b5ad7c02be5ccc1d20a5ee04a57dd17fca194908618ceb"
+    }
+  ],
+  "excluded": [
+    "raw profiles/HAR/traces/events",
+    "workspace/backup exports",
+    "private-store/device evidence",
+    "raw provider credential output"
+  ],
+  "note": "All captures use synthetic values; predeploy-a954 receipt is a non-deployed attempt and is not current release evidence."
+}

@@ -1,0 +1,249 @@
+{
+  "project": "decoding-v6",
+  "stage": "builder_deployed_ready_for_finalverify3",
+  "sourceSha": "90ff21c3b9122bf30d050617942dce93d10f8635",
+  "metadataHeadAtDeploy": "3b1635cdf2037d132388369ce818ef2c6ca76f86",
+  "artifactSha256": "047b487f604c7cb93158703241a70dda775039c418b620438cd3d8de89c59c8e",
+  "artifactMethod": "SHA256 of sorted per-file SHA256 ledger (component-wise path sort)",
+  "provider": {
+    "accountId": "69abd904cab5ffd103e569e7e050a884",
+    "worker": "decoding-v6",
+    "deploymentId": "e4e74ae2-13ce-489d-b52e-84bc0faf5543",
+    "versionId": "13c4f167-2d55-41b4-ad1c-2a5d747a1a96",
+    "trafficPercent": 100,
+    "nativeVersionReportedByHealth": null
+  },
+  "revisionUrl": "https://decod.ing/healthz",
+  "revisionJsonPath": "$.revision",
+  "health": {
+    "status": 200,
+    "ok": true,
+    "service": "decoding-v6",
+    "revision": "90ff21c3b9122bf30d050617942dce93d10f8635"
+  },
+  "rollback": {
+    "versionId": "db2ecfdf-83d4-4963-aa31-4209d667b60a",
+    "sourceSha": "0beb9287569d7ff32aae31dd3c3442e4686c6803",
+    "compatible": "Existing IDB v1 generic redacted structures and record IDs preserved; no migration"
+  },
+  "validation": {
+    "focusedLatest": "21 passed + lint/web typecheck",
+    "mandatoryVerify": "passed at final90ff: format/lint/type/unit/static/parity/i18n/benchmark/clean build/bundle",
+    "unitPassed": 100,
+    "e2ePassed": 52,
+    "e2eSkipped": 2,
+    "e2eFailed": 0,
+    "e2eSkipReasons": [
+      "deployed visual suite requires explicit deployment profile",
+      "desktop first viewport is not applicable to mobile project"
+    ],
+    "initialJsGzipKiB": 53.3,
+    "guardArtifactMatched": true,
+    "liveDeliveryVerify": "exit0"
+  },
+  "builderSmoke": {
+    "nestedSaveReopenEditDelete": "observed on own input; unchanged save owner reused",
+    "actualPng": "PNG signature and VIEW; final privacy E2E checks actual PNG signature",
+    "offlineRecovery": "uncached TOML warning and retained input; online retry parsed same input; actual concurrent request race fixed",
+    "positions": "TOML line/column, XML mismatch position, Unicode codepoints observed; YAML numeric line/col and PEM/JWK errors tested; cron/Ascii85 boundary tested",
+    "gutterTouch": "390/1440 real screenshots and VIEW; logo/proof targets>=44px"
+  },
+  "callback": {
+    "startedAt": "2026-10-19T09:30:01.530Z",
+    "coreFinishedAt": "2026-10-19T09:30:05.227Z",
+    "finishedAt": "2026-10-19T09:30:07.542Z",
+    "firstValue": true,
+    "health": {
+      "status": 200,
+      "ok": true,
+      "service": "decoding-v6",
+      "revision": "90ff21c3b9122bf30d050617942dce93d10f8635"
+    },
+    "horizontalOverflow": false,
+    "actualViewportViewed": true,
+    "viewportGeometry": {
+      "header": {
+        "top": 8,
+        "bottom": 72,
+        "width": 374,
+        "height": 64
+      },
+      "result": {
+        "top": 110.34375,
+        "bottom": 1369.015625,
+        "width": 308,
+        "height": 1258.671875
+      },
+      "actions": {
+        "top": 782,
+        "bottom": 844,
+        "width": 366,
+        "height": 62
+      },
+      "overflow": false
+    },
+    "measurement": {
+      "kind": "synthetic_receiver_acceptance_only",
+      "browserEmitted": [
+        {
+          "name": "app_open",
+          "method": "POST",
+          "contentType": "application/json",
+          "status": 200
+        },
+        {
+          "name": "landing_view",
+          "method": "POST",
+          "contentType": "application/json",
+          "status": 200
+        },
+        {
+          "name": "decode_completed",
+          "method": "POST",
+          "contentType": "application/json",
+          "status": 200
+        }
+      ],
+      "syntheticEnumPosts": [
+        {
+          "name": "app_open",
+          "status": 200
+        },
+        {
+          "name": "landing_view",
+          "status": 200
+        },
+        {
+          "name": "decode_completed",
+          "status": 200
+        },
+        {
+          "name": "decode_unsupported",
+          "status": 200
+        },
+        {
+          "name": "return_7d",
+          "status": 200
+        },
+        {
+          "name": "share_action",
+          "status": 200
+        },
+        {
+          "name": "sponsor_interest",
+          "status": 200
+        }
+      ],
+      "durableStorage": null,
+      "naturalUse": null
+    },
+    "shareFallback": {
+      "status": 303,
+      "location": "/",
+      "passed": true
+    }
+  },
+  "defectScope": ["V2-01", "V2-02", "V2-03", "V2-04", "V2-05"],
+  "featureCount": {
+    "before": null,
+    "after": null,
+    "reason": "Baseline61 not fully enumerated in independent packet; no arithmetic inference"
+  },
+  "productPass": null,
+  "independentNext": "fresh finalverify3 only; no fix3/verify4",
+  "states": {
+    "implemented": true,
+    "test_passed": true,
+    "built": true,
+    "deployed": true,
+    "released": null,
+    "monitored": null,
+    "user_value": null,
+    "profitable": null
+  },
+  "channels": {
+    "web": "deployed+builder smoke",
+    "appsInToss": "assessed/not_applicable",
+    "ios": "unobserved",
+    "androidPhysicalDevice": "unobserved",
+    "desktopStore": "not_released",
+    "externalApps": "unobserved"
+  },
+  "planDeviations": [],
+  "externalDecisions": [
+    "Existing disabled-safe sponsor and native/store/device/future-day/external-app boundaries preserved; none activated"
+  ],
+  "failureHistory": {
+    "harness": "ambiguous brand selector and reload-before-save corrected; original own receipts preserved in /tmp",
+    "real": "Immediate parser-worker recycling orphaned concurrent latest requests; fixed and regression-tested",
+    "discardedAttempt": "Speculative import deadline removed after actual request evidence identified concurrency race",
+    "guardAttempt1": "100unit passed;47E2E passed/5 old Step-text or SVG-file expectations failed/2skipped; provider command never ran; before-state confirmed unchanged; original traces/logs preserved outside safe allowlist"
+  },
+  "slotReturned": true,
+  "ownWrappers": "final exits checked, cleanup.remainingPids=[]; no own browser remains",
+  "safeCaptures": [
+    {
+      "path": "docs/evidence/completion-2026-10/fix2-captures/clean-390-value.png",
+      "bytes": 162533,
+      "sha256": "b0e4264dc13a23352846e1684a0295c0dd6a4642a1c9f91b6df8b575eff6959d",
+      "synthetic": true,
+      "capturedSourceSha": "90ff21c3b9122bf30d050617942dce93d10f8635",
+      "reuse": "unchanged affected runtime owner hashes; same Task; final mandatory E2E also green"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix2-captures/clean-1440-value.png",
+      "bytes": 186317,
+      "sha256": "86b50c788b8b3e594f2315a07922e8ae6838fc1045685d1f93dd6d637eb58e1a",
+      "synthetic": true,
+      "capturedSourceSha": "90ff21c3b9122bf30d050617942dce93d10f8635",
+      "reuse": "unchanged affected runtime owner hashes; same Task; final mandatory E2E also green"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix2-captures/clean-390-offline.png",
+      "bytes": 162886,
+      "sha256": "34d8bee09f2ab20474acaeafa67fdcea04e89a80486528316c162885ff95f7c8",
+      "synthetic": true,
+      "capturedSourceSha": "a954a8ca5562968ea6e5833b68ffac3f8bdc7e14",
+      "reuse": "unchanged affected runtime owner hashes; same Task; final mandatory E2E also green"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix2-captures/clean-390-error-position.png",
+      "bytes": 161397,
+      "sha256": "b02175fdd6c3d12f6875194326e0acb8d818f29919e4e8786cf6acee5239e025",
+      "synthetic": true,
+      "capturedSourceSha": "a954a8ca5562968ea6e5833b68ffac3f8bdc7e14",
+      "reuse": "unchanged affected runtime owner hashes; same Task; final mandatory E2E also green"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix2-captures/safe-share-card.png",
+      "bytes": 53321,
+      "sha256": "280946a2033fb95fc2b5ad7c02be5ccc1d20a5ee04a57dd17fca194908618ceb",
+      "synthetic": true,
+      "capturedSourceSha": "c06983a2fc9aed4e4576c45b2b87ae93803612ef",
+      "reuse": "unchanged affected runtime owner hashes; same Task; final mandatory E2E also green"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix2-captures/live-390-start.png",
+      "bytes": 57745,
+      "sha256": "d7df74df909d214fcc7df958a7b603c724705cf3cb812bc7e7c59ca58d377c6f",
+      "synthetic": true,
+      "capturedSourceSha": "90ff21c3b9122bf30d050617942dce93d10f8635",
+      "reuse": "unchanged affected runtime owner hashes; same Task; final mandatory E2E also green"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix2-captures/live-390-value-viewport.png",
+      "bytes": 52956,
+      "sha256": "04ae425cb014037a9a3176c221101eeb5de088f4b13d70bda160ad14d7cbc48e",
+      "synthetic": true,
+      "capturedSourceSha": "90ff21c3b9122bf30d050617942dce93d10f8635",
+      "reuse": "unchanged affected runtime owner hashes; same Task; final mandatory E2E also green"
+    }
+  ],
+  "privateEvidenceExcluded": [
+    "raw browser profiles",
+    "HAR/trace/raw event dumps",
+    "backup/workspace exports",
+    "private provider/key/account data"
+  ],
+  "preparedAt": "2026-10-19T09:32:54.879540+00:00"
+}
