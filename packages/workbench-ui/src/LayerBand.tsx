@@ -51,7 +51,10 @@ export function ChainStage({ node, messages }: { node: ChainNode; messages: Deco
   const label = chainLabel(node, messages)
   return (
     <div class="chain-stage" aria-label={`${step}: ${label}. ${inputSize}`}>
-      <span class="chain-step-badge">{step}</span>
+      <span class="chain-offset" aria-hidden="true">
+        <span class="offset-wide">0000</span>
+        <span class="offset-mobile">{String(node.depth + 1).padStart(2, '0')}</span>
+      </span>
       <strong class="chain-detector-label">{label}</strong>
       <span class="chain-size-badge">{inputSize}</span>
     </div>

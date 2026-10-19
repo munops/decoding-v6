@@ -759,8 +759,8 @@ textarea {
   margin-top: 16px;
   overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: 15px;
-  background: var(--line);
+  border-radius: 0;
+  background: var(--surface);
 }
 .result-chain,
 .inspector-panel {
@@ -769,7 +769,7 @@ textarea {
   background: var(--surface);
 }
 .result-chain {
-  background: color-mix(in srgb, var(--surface-2) 35%, var(--surface));
+  background: var(--surface);
 }
 .panel-heading {
   min-height: 48px;
@@ -1855,8 +1855,8 @@ h2,
   font-size: 15px;
 }
 .decoder-frame {
-  border: 1px solid var(--line-strong);
-  border-radius: 8px;
+  border: 0;
+  border-radius: 0;
   box-shadow: none;
 }
 .paste-surface {
@@ -1946,14 +1946,64 @@ h2,
 .container {
   position: relative;
 }
-.page-hero::before,
-.tool-hero::before {
-  content: '0000';
+/* One shared left column for page sections and local layer offsets. */
+#main {
+  counter-reset: section;
+}
+#main > :is(section, article, .workbench-wrap).container {
+  counter-increment: section;
+  padding-inline-start: 64px;
+}
+#main > :is(section, article, .workbench-wrap).container::before {
+  content: counter(section, decimal-leading-zero);
   position: absolute;
-  left: -44px;
+  left: 16px;
   top: 36px;
-  color: #6b7480;
+  width: 32px;
+  color: var(--muted);
   font: 12px var(--mono);
+}
+.chain-offset {
+  width: 32px;
+  color: var(--muted);
+  font: 12px var(--mono);
+}
+.offset-mobile {
+  display: none;
+}
+.brand {
+  min-height: 44px;
+  min-width: 44px;
+}
+:is(.prose, .tool-content, .hero-copy, .input-trust) a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+@media (max-width: 640px) {
+  #main > :is(section, article, .workbench-wrap).container {
+    padding-inline-start: 40px;
+  }
+  #main > :is(section, article, .workbench-wrap).container::before {
+    left: 8px;
+    width: 24px;
+  }
+  .chain-offset {
+    width: 24px;
+  }
+  .offset-wide {
+    display: none;
+  }
+  .offset-mobile {
+    display: inline;
+  }
+  .result-chain,
+  .inspector-panel {
+    padding: 12px 0;
+  }
+  .chain-stage {
+    gap: 8px;
+  }
 }
 .copy-feedback-settings summary {
   min-height: 44px;
