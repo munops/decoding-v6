@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "sourceRevision": "0beb9287569d7ff32aae31dd3c3442e4686c6803",
-  "declarationScope": "Exact current owner-approved correction source 0beb9287569d7ff32aae31dd3c3442e4686c6803 and existing Worker release+rollback only; no new resources/cost/accounts/domains/activation/PII/legal consent/external contact.",
+  "sourceRevision": "a954a8ca5562968ea6e5833b68ffac3f8bdc7e14",
+  "declarationScope": "Exact current owner-approved correction source a954a8ca5562968ea6e5833b68ffac3f8bdc7e14 and existing Worker release+rollback only; no new resources/cost/accounts/domains/activation/PII/legal consent/external contact.",
   "infrastructure": {
     "inventoryRef": "docs/operations/product-operations-manifest.json",
     "runtimeResources": [
       {
         "provider": "Cloudflare",
         "service": "Workers with Static Assets",
-        "resourceRef": "account:69abd904cab5ffd103e569e7e050a884;worker:decoding-v6;assets:apps/web/dist;routes:decod.ing/*,www.decod.ing/*;rollback version:7f82652f-d75d-415d-b614-cf4cba7aaa58;artifact:6ef3f49b49e992eb600e93d8eaca3180a302636dc52b35454fb7a5e7179bfeda",
+        "resourceRef": "account:69abd904cab5ffd103e569e7e050a884;worker:decoding-v6;assets:apps/web/dist;routes:decod.ing/*,www.decod.ing/*;rollback version:db2ecfdf-83d4-4963-aa31-4209d667b60a;artifact:de031dd3e75cd128e642d4f71a4ffd1030013ec2c3fde04d0848e7cd53f74875",
         "environment": "owner_lane_public_web_production",
         "destination": "https://decod.ing, https://www.decod.ing and technical fallback https://decoding-v6.wjstks3474.workers.dev",
         "mutationBoundary": "Only an exact current owner-lane Web wave may deploy the existing Worker. Domain/DNS/routes, new Worker/binding/secret/resource/cost, indexing, sponsor activation, desktop release and public channel changes are excluded."
@@ -47,7 +47,7 @@
   "commands": {
     "preflight": "test -z \"$(git status --porcelain=v1 --untracked-files=all)\" && git diff --check && pnpm install --frozen-lockfile && pnpm verify && pnpm test:e2e && pnpm test:privacy && pnpm test:a11y",
     "deploy": "test -n \"$DECODING_RELEASE_WAVE\" && test -n \"$DECODING_DELIVERY_TARGET\" && pnpm delivery:web:deploy -- --execute",
-    "verify": "DECODING_RELEASE_WAVE=docs/operations/release-wave-cs-decoding-v6-fix1-20261019.yaml DECODING_DELIVERY_TARGET=production DECODING_EXPECTED_BUILD_SHA=0beb9287569d7ff32aae31dd3c3442e4686c6803 pnpm delivery:web:verify"
+    "verify": "DECODING_RELEASE_WAVE=docs/operations/release-wave-cs-decoding-v6-fix1-20261019.yaml DECODING_DELIVERY_TARGET=production DECODING_EXPECTED_BUILD_SHA=a954a8ca5562968ea6e5833b68ffac3f8bdc7e14 pnpm delivery:web:verify"
   },
   "receipts": {
     "directory": "docs/evidence/releases/local-owner-wave"
