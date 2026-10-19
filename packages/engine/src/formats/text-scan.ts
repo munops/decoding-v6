@@ -8,7 +8,7 @@ export const textScan: Detector = {
     if (!/\s/.test(text) || text.length < 8 || /^\s*[{[<]/.test(text)) return null
     const matches = [
       ...text.matchAll(
-        /\b(?:eyJ[\w-]+\.[\w-]+\.[\w-]*|https?:\/\/[^\s<>]+|(?:\d{1,3}\.){3}\d{1,3}|[\da-f]{8}-(?:[\da-f]{4}-){3}[\da-f]{12}|[A-Za-z0-9+/]{16,}={1,2})\b/gi,
+        /\b(?:eyJ[\w-]+\.[\w-]+\.[\w-]*|https?:\/\/[^\s<>]+|(?:\d{1,3}\.){3}\d{1,3}|[\da-f]{8}-(?:[\da-f]{4}-){3}[\da-f]{12}|[A-Za-z0-9+/]{16,}={1,2})(?![\w-])/gi,
       ),
     ]
       .slice(0, 64)

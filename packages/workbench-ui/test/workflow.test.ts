@@ -1,3 +1,4 @@
+import { gzipSync } from 'node:zlib'
 import { execFileSync } from 'node:child_process'
 import { describe, expect, it } from 'vitest'
 import { decode, encodeBase64 } from '@decoding/engine'
@@ -54,4 +55,33 @@ describe('completed local workflows', () => {
     })
     expect(selected?.warnings[0]?.ruleId).toBe('JWT-ALG-NONE')
   })
+})
+
+it('executes copied JavaScript for the actual Base64 gzip JSON chain', async () => {
+  const expected = { synthetic: 'gzip_roundtrip', count: 18 }
+  const value = encodeBase64(gzipSync(JSON.stringify(expected)))
+  const result = await decode(value)
+  const commands = reproduceCommands(result.root)
+  expect(commands.javascript).not.toContain(value)
+  const output = execFileSync(
+    process.execPath,
+    ['--input-type=module', '-e', `const VALUE = process.env.VALUE;\n${commands.javascript}`],
+    { encoding: 'utf8', env: { ...process.env, VALUE: value } },
+  )
+  expect(output).toContain(expected.synthetic)
+  expect(output).toContain('18')
+  // Capture the actual final value rather than merely matching an output comment.
+  const code = commands.javascript.replace(
+    'console.log(data);',
+    'process.stdout.write(JSON.stringify(data));',
+  )
+  expect(
+    JSON.parse(
+      execFileSync(
+        process.execPath,
+        ['--input-type=module', '-e', `const VALUE = process.env.VALUE;\n${code}`],
+        { encoding: 'utf8', env: { ...process.env, VALUE: value } },
+      ),
+    ),
+  ).toEqual(expected)
 })

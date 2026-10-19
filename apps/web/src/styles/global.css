@@ -2244,3 +2244,26 @@ html {
   min-width: 0;
   white-space: normal;
 }
+
+.side-by-side-diff {
+  display: none;
+}
+@media (min-width: 900px) {
+  .side-by-side-diff {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .side-by-side-diff pre {
+    min-width: 0;
+    overflow: auto;
+  }
+  .side-by-side-diff code {
+    display: block;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .batch-compare .unified-diff {
+    display: none;
+  }
+}

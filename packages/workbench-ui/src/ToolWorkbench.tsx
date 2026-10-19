@@ -458,11 +458,13 @@ export function ToolWorkbench({
               title={messages.sandboxTitle}
             />
           ) : result?.kind === 'image' ? (
-            <img
-              class="generated-image"
-              src={String(result.output)}
-              alt={messages.generatedQrAlt}
-            />
+            <a href={String(result.output)} download="qr-code.svg">
+              <img
+                class="generated-image"
+                src={String(result.output)}
+                alt={messages.generatedQrAlt}
+              />
+            </a>
           ) : (
             <pre class="output-view">
               <code>{output || messages.emptyOutput}</code>

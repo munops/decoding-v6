@@ -118,6 +118,24 @@ export function BatchCompare({
       >
         {copy.compare}
       </button>
+      {diff.length ? (
+        <div class="side-by-side-diff">
+          {[false, true].map((right) => (
+            <pre aria-label={`${copy.compare} · ${right ? 2 : 1}`}>
+              {diff
+                .filter((part) => (right ? !part.removed : !part.added))
+                .map((part, i) => (
+                  <code
+                    key={i}
+                    class={part.added ? 'diff-added' : part.removed ? 'diff-removed' : ''}
+                  >
+                    {part.value}
+                  </code>
+                ))}
+            </pre>
+          ))}
+        </div>
+      ) : null}
       <pre class="unified-diff">
         {diff.map((part, i) => (
           <code class={part.added ? 'diff-added' : part.removed ? 'diff-removed' : ''} key={i}>

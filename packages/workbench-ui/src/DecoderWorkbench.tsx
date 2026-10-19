@@ -436,8 +436,8 @@ export function DecoderWorkbench({
         </div>
       ) : null}
       {sessionHistory.length > 1 ? (
-        <details class="session-history">
-          <summary>{copy.history}</summary>
+        <section class="session-history" aria-label={copy.history}>
+          <p>{copy.history}</p>
           {sessionHistory.map((entry, i) => (
             <button
               class="button ghost"
@@ -448,7 +448,7 @@ export function DecoderWorkbench({
               {i + 1} · {entry.label}
             </button>
           ))}
-        </details>
+        </section>
       ) : null}
       <BatchCompare
         source={source}

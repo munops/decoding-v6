@@ -37,6 +37,63 @@ function der(bytes: Uint8Array, depth = 0): Der {
   }
   return { tag: bytes[0]!, body, children }
 }
+function privateMetadata(
+  kind: string,
+  encoded: string,
+): { algorithm: string; keyBits?: number | undefined } {
+  if (/ENCRYPTED/.test(kind)) return { algorithm: 'encrypted private key; not interpreted' }
+  const bytes = decodeBase64(encoded)
+  if (!bytes) return { algorithm: 'unknown private key' }
+  try {
+    const root = der(bytes)
+    if (root.tag !== 0x30) throw new Error('Expected sequence')
+    let key = root,
+      algorithm = /RSA/.test(kind) ? 'RSA' : /EC/.test(kind) ? 'EC' : 'unknown'
+    const algorithmNode = root.children[1]
+    let identifiers = algorithmNode?.tag === 0x30 ? hex(algorithmNode.body) : ''
+    if (algorithmNode?.tag === 0x30) {
+      algorithm = identifiers.includes('06092a864886f70d010101')
+        ? 'RSA'
+        : identifiers.includes('06072a8648ce3d0201')
+          ? 'EC'
+          : identifiers.includes('06032b6570')
+            ? 'Ed25519'
+            : 'unknown'
+      const wrapped = root.children[2]
+      if (wrapped?.tag === 4 && algorithm !== 'Ed25519') key = der(wrapped.body)
+    }
+    if (algorithm === 'RSA') {
+      const modulus = key.children[1]
+      if (modulus?.tag !== 2) throw new Error('Expected modulus')
+      const first = modulus.body.findIndex((byte) => byte !== 0)
+      const keyBits =
+        first < 0
+          ? undefined
+          : (modulus.body.length - first - 1) * 8 + 32 - Math.clz32(modulus.body[first]!)
+      return { algorithm, keyBits }
+    }
+    if (algorithm === 'Ed25519') return { algorithm, keyBits: 256 }
+    if (algorithm === 'EC') {
+      identifiers += key.children
+        .filter((node) => node.tag === 0xa0)
+        .map((node) => hex(node.body))
+        .join('')
+      const keyBits = identifiers.includes('06082a8648ce3d030107')
+        ? 256
+        : identifiers.includes('06052b81040022')
+          ? 384
+          : identifiers.includes('06052b81040023')
+            ? 521
+            : identifiers.includes('06052b8104000a')
+              ? 256
+              : undefined
+      return { algorithm, keyBits }
+    }
+    return { algorithm: 'unknown private key' }
+  } catch {
+    return { algorithm: 'invalid private key; not interpreted' }
+  }
+}
 export const pem: Detector = {
   id: 'pem',
   detect(input) {
@@ -52,13 +109,7 @@ export const pem: Detector = {
         'PEM private key',
         {
           kind,
-          algorithm: /RSA/.test(kind)
-            ? 'RSA'
-            : /EC/.test(kind)
-              ? 'EC'
-              : /ENCRYPTED/.test(kind)
-                ? 'encrypted private key; not interpreted'
-                : 'private key',
+          ...privateMetadata(kind, match[2] ?? ''),
           note: 'Private key contents are hidden. Consider rotating this key.',
         },
         1,

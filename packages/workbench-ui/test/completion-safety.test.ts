@@ -3,7 +3,7 @@ import { encodeBase64, decode } from '@decoding/engine'
 import { byteStats } from '../src/ByteMap'
 import { hexDump } from '../src/HexDump'
 import { safeReport, nearbyTools } from '../src/safe-report'
-import { verifyJwt } from '../src/jwt-verify'
+import { KeyFormatError, verifyJwt } from '../src/jwt-verify'
 const enc = (text: string) => encodeBase64(new TextEncoder().encode(text), true)
 describe('result safety and byte inspection', () => {
   it('reports distribution without inventing entropy for empty or short data', () => {
@@ -77,4 +77,19 @@ describe('result safety and byte inspection', () => {
         ),
       ).toBe(false)
     })
+})
+
+it('returns safe JWK JSON line and column diagnostics without echoing the supplied key', async () => {
+  const token = `${enc('{"alg":"RS256"}')}.${enc('{}')}.c2ln`
+  for (const key of ['{', '{\n  "private_canary": "NEVER_EXPOSE_KEY",\n  broken\n}']) {
+    try {
+      await verifyJwt(token, key)
+      throw new Error('Expected key error')
+    } catch (error) {
+      expect(error).toBeInstanceOf(KeyFormatError)
+      expect((error as KeyFormatError).line).toBeGreaterThan(0)
+      expect((error as KeyFormatError).column).toBeGreaterThan(0)
+      expect((error as Error).message).not.toMatch(/NEVER_EXPOSE_KEY|private_canary|broken/)
+    }
+  }
 })

@@ -1,4 +1,28 @@
 import { decodeBase64, inputText } from '@decoding/engine'
+export class KeyFormatError extends Error {
+  constructor(
+    public readonly line: number,
+    public readonly column: number,
+  ) {
+    super(`Invalid JWK JSON at line ${line}, column ${column}.`)
+  }
+}
+function parseJwk(text: string): JsonWebKey {
+  try {
+    return JSON.parse(text) as JsonWebKey
+  } catch (error) {
+    // Use only numeric positions from parser diagnostics; never expose its message or key text.
+    const message = error instanceof Error ? error.message : ''
+    const explicit = /line (\d+) column (\d+)/.exec(message)
+    const position = /position (\d+)/.exec(message)
+    const offset = position ? Math.min(text.length, Number(position[1])) : text.length
+    const prefix = text.slice(0, offset).split('\n')
+    throw new KeyFormatError(
+      explicit ? Number(explicit[1]) : prefix.length,
+      explicit ? Number(explicit[2]) : (prefix.at(-1)?.length ?? 0) + 1,
+    )
+  }
+}
 export async function verifyJwt(token: string, keyText: string): Promise<boolean> {
   const parts = token.trim().split('.')
   if (parts.length !== 3) throw new Error('Not JWT')
@@ -22,7 +46,7 @@ export async function verifyJwt(token: string, keyText: string): Promise<boolean
   else algorithm = { name: family === 'PS' ? 'RSA-PSS' : 'RSASSA-PKCS1-v1_5', hash }
   let key: CryptoKey
   if (keyText.trim().startsWith('{')) {
-    const jwk = JSON.parse(keyText) as JsonWebKey
+    const jwk = parseJwk(keyText)
     if (jwk.d) throw new Error('Use public keys only')
     key = await crypto.subtle.importKey('jwk', jwk, algorithm, false, ['verify'])
   } else if (family === 'HS')

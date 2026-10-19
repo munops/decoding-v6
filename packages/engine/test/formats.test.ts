@@ -164,3 +164,56 @@ it('stops compressed expansion while streaming in automatic and manual paths', a
     (await decode(raw, { overrides: { '0-1': 'deflate' } })).root.selected?.warnings[0]?.ruleId,
   ).toBe('MANUAL-DECODE-FAILED')
 })
+
+it('shows RSA, EC and Ed25519 private key metadata while withholding all key contents', async () => {
+  const keys = [
+    {
+      key: generateKeyPairSync('rsa', { modulusLength: 2048 }).privateKey,
+      algorithm: 'RSA',
+      keyBits: 2048,
+      type: 'pkcs8',
+    },
+    {
+      key: generateKeyPairSync('rsa', { modulusLength: 1024 }).privateKey,
+      algorithm: 'RSA',
+      keyBits: 1024,
+      type: 'pkcs1',
+    },
+    {
+      key: generateKeyPairSync('ec', { namedCurve: 'secp384r1' }).privateKey,
+      algorithm: 'EC',
+      keyBits: 384,
+      type: 'pkcs8',
+    },
+    {
+      key: generateKeyPairSync('ec', { namedCurve: 'prime256v1' }).privateKey,
+      algorithm: 'EC',
+      keyBits: 256,
+      type: 'sec1',
+    },
+    {
+      key: generateKeyPairSync('ed25519').privateKey,
+      algorithm: 'Ed25519',
+      keyBits: 256,
+      type: 'pkcs8',
+    },
+  ] as const
+  for (const { key, algorithm, keyBits, type } of keys) {
+    const pem = key.export({ format: 'pem', type }).toString()
+    const result = await candidate('pem', pem)
+    expect(result?.value).toMatchObject({ algorithm, keyBits })
+    expect(result?.warnings[0]?.ruleId).toBe('PRIVATE-KEY-EXPOSED')
+    for (const line of pem.split('\n').filter((line) => line && !line.startsWith('---')))
+      expect(JSON.stringify(result)).not.toContain(line)
+    expect(result?.decoded).toBeUndefined()
+  }
+})
+it('extracts an empty-signature JWT and IP from the same log without truncating the token', async () => {
+  const token = `${enc('{"alg":"none"}')}.${enc('{"sub":"test"}')}.`
+  const result = await candidate('text-scan', `request token=${token} peer=192.168.0.1`)
+  const matches = result?.metadata?.embedded as Array<{ encoded: string }>
+  expect(matches.map((item) => item.encoded)).toEqual([token, '192.168.0.1'])
+  const decoded = await Promise.all(matches.map((item) => decode(item.encoded)))
+  expect(decoded.map((item) => item.root.selected?.detector)).toEqual(['jwt', 'ip'])
+  expect(decoded[0]?.root.selected?.warnings[0]?.ruleId).toBe('JWT-ALG-NONE')
+})
