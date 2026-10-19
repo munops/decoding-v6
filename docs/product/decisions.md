@@ -29,3 +29,5 @@
 - 2026-10-19: verify1 H5 교정은 UTF-8 유효성으로 바이너리를 보존하고, canvas 없는 Worker의 QR은 기존 qrcode SVG로 생성하며, TypeScript·JSX 출력과 이미지 File 재실행을 복구한다. 새 의존성·전송·저장은 없다.
 
 - 2026-10-19: verify1 M6 교정은 개인키의 종류·크기만 DER에서 추출하고 JWK 오류 숫자 위치만 공개한다. 넓은 화면 비교는 기존 diff 조각으로 좌우 원문을 복원하며 탭 기록은 접지 않고, 빈 서명 JWT와 실행 가능한 JS gzip 재현을 복구한다.
+
+- 2026-10-19: 기존 live verifier의 SSR 예시 클릭 두 번 타임아웃을 보존했다. hydration 후 동일 예시는 2층이므로 readiness 한 줄을 추가하고 read-only verify만 harness 후속 커밋을 허용한다. runtime/config tree·source0beb·artifact는 같으며 재빌드·재배포 없이 필수 verify를 통과했다.

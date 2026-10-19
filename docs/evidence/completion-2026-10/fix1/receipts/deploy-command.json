@@ -1,0 +1,57 @@
+{
+  "startedAt": "2026-10-19T03:07:02.201Z",
+  "sourceSha": "0beb9287569d7ff32aae31dd3c3442e4686c6803",
+  "metadataHead": "8fe12add04a6e9daa2248406e470eec2f19db82e",
+  "artifactSha256": "6ef3f49b49e992eb600e93d8eaca3180a302636dc52b35454fb7a5e7179bfeda",
+  "providerBefore": {
+    "observedAt": "2026-10-19T02:58:38.637Z",
+    "accountId": "69abd904cab5ffd103e569e7e050a884",
+    "worker": "decoding-v6",
+    "deploymentId": "d7705b35-b8a8-4b31-8f32-1b0871d1dd1c",
+    "versionId": "7f82652f-d75d-415d-b614-cf4cba7aaa58",
+    "trafficPercent": 100,
+    "bindings": [
+      {
+        "name": "ASSETS",
+        "type": "assets"
+      },
+      {
+        "name": "BUILD_SHA",
+        "type": "plain_text",
+        "text": "c90bca6228be78da2d46f7138e641b7a449d8093"
+      },
+      {
+        "name": "EVENTS",
+        "type": "analytics_engine",
+        "dataset": "decoding_v6_events"
+      }
+    ],
+    "health": {
+      "status": 200,
+      "ok": true,
+      "service": "decoding-v6",
+      "revision": "c90bca6228be78da2d46f7138e641b7a449d8093"
+    },
+    "remoteMain": "03f7df0dd029721c05eea2efee4388fa3d2977ee"
+  },
+  "claimId": "claim_4724eba7-3b51-448f-ba06-bb135a625440",
+  "reservation": {
+    "waveId": "CS-DECODING-V6-FIX1-20261019",
+    "actionId": "CS-DECODING-V6-FIX1-WEB-20261019",
+    "resource": "provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6",
+    "sourceRevision": "0beb9287569d7ff32aae31dd3c3442e4686c6803",
+    "artifactDigest": "6ef3f49b49e992eb600e93d8eaca3180a302636dc52b35454fb7a5e7179bfeda",
+    "phase": "deploy",
+    "reservationId": "4576b31e-47f6-4465-806f-02afd5bcc8f1",
+    "holder": "codex:cs-decoding-v6",
+    "claimId": "claim_4724eba7-3b51-448f-ba06-bb135a625440",
+    "state": "reserved",
+    "reservedAt": "2026-10-19T03:07:02.098Z"
+  },
+  "command": "pnpm delivery:web:deploy -- --execute",
+  "status": "command_completed",
+  "exitCode": 0,
+  "signal": null,
+  "finishedAt": "2026-10-19T03:09:18.816Z",
+  "artifactAfter": "6ef3f49b49e992eb600e93d8eaca3180a302636dc52b35454fb7a5e7179bfeda"
+}

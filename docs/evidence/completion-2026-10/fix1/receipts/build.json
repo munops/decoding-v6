@@ -1,0 +1,75 @@
+{
+  "source": "0beb9287569d7ff32aae31dd3c3442e4686c6803",
+  "steps": [
+    {
+      "check": "format",
+      "exitCode": 0,
+      "seconds": 2.87
+    },
+    {
+      "check": "lint",
+      "exitCode": 0,
+      "seconds": 2.26
+    },
+    {
+      "check": "type",
+      "exitCode": 0,
+      "seconds": 13.66
+    },
+    {
+      "check": "unit",
+      "exitCode": 0,
+      "seconds": 6.47
+    },
+    {
+      "check": "benchmark",
+      "exitCode": 0,
+      "seconds": 2.61
+    },
+    {
+      "check": "content",
+      "exitCode": 0,
+      "seconds": 0.53
+    },
+    {
+      "check": "links",
+      "exitCode": 0,
+      "seconds": 0.46
+    },
+    {
+      "check": "network",
+      "exitCode": 0,
+      "seconds": 0.41
+    },
+    {
+      "check": "parity",
+      "exitCode": 0,
+      "seconds": 0.45
+    },
+    {
+      "check": "extension",
+      "exitCode": 0,
+      "seconds": 0.37
+    },
+    {
+      "check": "i18n",
+      "exitCode": 0,
+      "seconds": 0.39
+    },
+    {
+      "check": "sponsors",
+      "exitCode": 0,
+      "seconds": 0.37
+    },
+    {
+      "check": "build",
+      "exitCode": 0,
+      "seconds": 21.31
+    },
+    {
+      "check": "budget",
+      "exitCode": 0,
+      "seconds": 0.21
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "source": "0beb9287569d7ff32aae31dd3c3442e4686c6803",
+  "checks": [
+    "rendered source identity",
+    "D06 safe JWK line column",
+    "rendered source identity",
+    "D08 history visible by default",
+    "D08 one tap history return",
+    "D09 empty signature JWT and IP extracted",
+    "D10 actual UI JavaScript gzip reproduction",
+    "D07 wide side by side changed values",
+    "D07 mobile unified diff retained"
+  ],
+  "captures": ["/tmp/cs-decoding-v6-fix1-smoke/clean-1440-diff.png"],
+  "status": "passed",
+  "finishedAt": "2026-10-19T02:57:28.069Z"
+}

@@ -1,0 +1,31 @@
+{
+  "source": "0beb9287569d7ff32aae31dd3c3442e4686c6803",
+  "origin": "http://127.0.0.1:4577",
+  "captures": [
+    "/tmp/cs-decoding-v6-fix1-captures-0beb928/clean-390-start.png",
+    "/tmp/cs-decoding-v6-fix1-captures-0beb928/clean-390-value.png",
+    "/tmp/cs-decoding-v6-fix1-captures-0beb928/safe-verdict.png",
+    "/tmp/cs-decoding-v6-fix1-captures-0beb928/clean-390-danger.png",
+    "/tmp/cs-decoding-v6-fix1-captures-0beb928/clean-390-unsupported.png",
+    "/tmp/cs-decoding-v6-fix1-captures-0beb928/clean-1440-start.png",
+    "/tmp/cs-decoding-v6-fix1-captures-0beb928/clean-1440-value.png",
+    "/tmp/cs-decoding-v6-fix1-captures-0beb928/clean-390-recovery.png"
+  ],
+  "checks": [
+    {
+      "width": 390,
+      "geometry": {
+        "inputTop": 238.6875,
+        "overflow": false
+      }
+    },
+    {
+      "width": 1440,
+      "geometry": {
+        "inputTop": 259.25,
+        "overflow": false
+      }
+    }
+  ],
+  "status": "passed"
+}

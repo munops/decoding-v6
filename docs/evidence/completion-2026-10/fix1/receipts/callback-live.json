@@ -1,0 +1,96 @@
+{
+  "sourceSha": "0beb9287569d7ff32aae31dd3c3442e4686c6803",
+  "providerVersionId": "db2ecfdf-83d4-4963-aa31-4209d667b60a",
+  "origin": "https://decod.ing",
+  "startedAt": "2026-10-19T03:09:34.332Z",
+  "firstValue": true,
+  "captures": [
+    "/tmp/cs-decoding-v6-fix1-live-captures/live-390-start.png",
+    "/tmp/cs-decoding-v6-fix1-live-captures/live-390-value.png"
+  ],
+  "measurement": {
+    "kind": "synthetic_receiver_acceptance_only",
+    "durableStorage": null,
+    "naturalUse": null,
+    "responses": [
+      {
+        "name": "app_open",
+        "status": 200
+      },
+      {
+        "name": "landing_view",
+        "status": 200
+      },
+      {
+        "name": "decode_completed",
+        "status": 200
+      },
+      {
+        "name": "decode_unsupported",
+        "status": 200
+      },
+      {
+        "name": "return_7d",
+        "status": 200
+      },
+      {
+        "name": "share_action",
+        "status": 200
+      },
+      {
+        "name": "sponsor_interest",
+        "status": 200
+      }
+    ],
+    "browserEmitted": [
+      {
+        "requestId": "23563.21",
+        "method": "POST",
+        "contentType": "application/json",
+        "name": "app_open",
+        "status": 200
+      },
+      {
+        "requestId": "23563.22",
+        "method": "POST",
+        "contentType": "application/json",
+        "name": "landing_view",
+        "status": 200
+      },
+      {
+        "requestId": "23563.37",
+        "method": "POST",
+        "contentType": "application/json",
+        "name": "decode_completed",
+        "status": 200
+      }
+    ],
+    "requiredGateStatus": "receiver_accepted_only"
+  },
+  "health": {
+    "status": 200,
+    "ok": true,
+    "service": "decoding-v6",
+    "revision": "0beb9287569d7ff32aae31dd3c3442e4686c6803"
+  },
+  "horizontalOverflow": false,
+  "status": "passed",
+  "scope": "HTTP/source/390/first-value callback only; measurement separately classified",
+  "coreFinishedAt": "2026-10-19T03:09:37.800Z",
+  "shareFallback": {
+    "status": 303,
+    "location": "/",
+    "passed": true
+  },
+  "finishedAt": "2026-10-19T03:09:39.715Z",
+  "captureHashes": [
+    {
+      "path": "/tmp/cs-decoding-v6-fix1-live-captures/live-390-start.png",
+      "sha256": "373046acccebcbda1f0d23021bd2112a595cc9fa08ed9a9e5bb71cd1a13beb3b"
+    },
+    {
+      "path": "/tmp/cs-decoding-v6-fix1-live-captures/live-390-value.png",
+      "sha256": "519bb3e9732d7d01a5d75ae4c66f01ff94dea102dd506c1a066393bb51882904"
+    }
+  ]
+}

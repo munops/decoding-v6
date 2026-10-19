@@ -1,0 +1,331 @@
+{
+  "schemaVersion": 1,
+  "project": "decoding-v6",
+  "stage": "correction1_builder_release",
+  "recordedAt": "2026-10-19T03:17:36.603091+00:00",
+  "runtimeSourceSha": "0beb9287569d7ff32aae31dd3c3442e4686c6803",
+  "verificationHead": "f0c42a6f462c2ef2f98ca4942b78d6080825db62",
+  "artifact": {
+    "sourceSha": "0beb9287569d7ff32aae31dd3c3442e4686c6803",
+    "artifactSha256": "6ef3f49b49e992eb600e93d8eaca3180a302636dc52b35454fb7a5e7179bfeda",
+    "fileCount": 1154,
+    "method": "sorted per-file SHA-256 ledger folded with SHA-256"
+  },
+  "providerBefore": {
+    "observedAt": "2026-10-19T02:58:38.637Z",
+    "accountId": "69abd904cab5ffd103e569e7e050a884",
+    "worker": "decoding-v6",
+    "deploymentId": "d7705b35-b8a8-4b31-8f32-1b0871d1dd1c",
+    "versionId": "7f82652f-d75d-415d-b614-cf4cba7aaa58",
+    "trafficPercent": 100,
+    "bindings": [
+      {
+        "name": "ASSETS",
+        "type": "assets"
+      },
+      {
+        "name": "BUILD_SHA",
+        "type": "plain_text",
+        "text": "c90bca6228be78da2d46f7138e641b7a449d8093"
+      },
+      {
+        "name": "EVENTS",
+        "type": "analytics_engine",
+        "dataset": "decoding_v6_events"
+      }
+    ],
+    "health": {
+      "status": 200,
+      "ok": true,
+      "service": "decoding-v6",
+      "revision": "c90bca6228be78da2d46f7138e641b7a449d8093"
+    },
+    "remoteMain": "03f7df0dd029721c05eea2efee4388fa3d2977ee"
+  },
+  "providerAfter": {
+    "observedAt": "2026-10-19T03:09:25.292Z",
+    "accountId": "69abd904cab5ffd103e569e7e050a884",
+    "worker": "decoding-v6",
+    "deploymentId": "fb16415a-50e5-4adc-819d-76c448fd548f",
+    "versionId": "db2ecfdf-83d4-4963-aa31-4209d667b60a",
+    "trafficPercent": 100,
+    "bindings": [
+      {
+        "name": "ASSETS",
+        "type": "assets"
+      },
+      {
+        "name": "BUILD_SHA",
+        "type": "plain_text",
+        "text": "0beb9287569d7ff32aae31dd3c3442e4686c6803"
+      },
+      {
+        "name": "EVENTS",
+        "type": "analytics_engine",
+        "dataset": "decoding_v6_events"
+      }
+    ],
+    "health": {
+      "status": 200,
+      "ok": true,
+      "service": "decoding-v6",
+      "revision": "0beb9287569d7ff32aae31dd3c3442e4686c6803"
+    },
+    "remoteMain": "03f7df0dd029721c05eea2efee4388fa3d2977ee"
+  },
+  "tests": {
+    "unit": 93,
+    "focusedRegression": "passed meaningful binary/type/JSX/QR/PNG/private-key/JWK/JS roundtrips",
+    "staticTypeBuild": "14checks passed",
+    "mandatoryE2e": {
+      "passed": 52,
+      "skipped": 2,
+      "failed": 0
+    },
+    "mandatoryLiveVerification": {
+      "sourceSha": "0beb9287569d7ff32aae31dd3c3442e4686c6803",
+      "verificationHead": "f0c42a6f462c2ef2f98ca4942b78d6080825db62",
+      "originalAttempts": [
+        {
+          "exitCode": 1,
+          "wait": "SSR sample click followed by missing second tree item",
+          "wrapperRunId": "0efbda37-77d6-451c-9b05-e46b1d191084"
+        },
+        {
+          "exitCode": 1,
+          "wait": "SSR sample click followed by missing second tree item",
+          "wrapperRunId": "4a68ba4e-9912-4142-b8d8-d11dead99335"
+        }
+      ],
+      "diagnosis": "SSR=true early click lost;hydrated same sample produces exact input and2chain;original unknown clock preserved",
+      "corrected": {
+        "command": "pnpm delivery:web:verify",
+        "exitCode": 0,
+        "wrapperRunId": "9be4646a-2e67-4310-a805-cf80449f2bb7",
+        "remainingOwnedPids": [],
+        "syntheticTriageCases": 3,
+        "toolCount": 47,
+        "localOperation": "passed",
+        "canaryEgress": "none",
+        "canaryStorage": "none",
+        "externalRequestOrigins": [],
+        "linkedAssets": "passed",
+        "trustRoutes": ["privacy", "terms", "support"]
+      },
+      "runtimeRebuilt": false,
+      "providerWritesInContinuation": 0
+    }
+  },
+  "correctionsObserved": [
+    "D01",
+    "D02",
+    "D03",
+    "D04",
+    "D11",
+    "D05",
+    "D06",
+    "D07",
+    "D08",
+    "D09",
+    "D10"
+  ],
+  "callback": {
+    "status": "passed",
+    "withinTenMinutes": true,
+    "actualViewed": true,
+    "firstValue": true,
+    "horizontalOverflow": false,
+    "startedAt": "2026-10-19T03:09:34.332Z",
+    "coreFinishedAt": "2026-10-19T03:09:37.800Z",
+    "browserNamesOnlyEvents": [
+      {
+        "requestId": "23563.21",
+        "method": "POST",
+        "contentType": "application/json",
+        "name": "app_open",
+        "status": 200
+      },
+      {
+        "requestId": "23563.22",
+        "method": "POST",
+        "contentType": "application/json",
+        "name": "landing_view",
+        "status": 200
+      },
+      {
+        "requestId": "23563.37",
+        "method": "POST",
+        "contentType": "application/json",
+        "name": "decode_completed",
+        "status": 200
+      }
+    ],
+    "syntheticNamesOnlyResponses": [
+      {
+        "name": "app_open",
+        "status": 200
+      },
+      {
+        "name": "landing_view",
+        "status": 200
+      },
+      {
+        "name": "decode_completed",
+        "status": 200
+      },
+      {
+        "name": "decode_unsupported",
+        "status": 200
+      },
+      {
+        "name": "return_7d",
+        "status": 200
+      },
+      {
+        "name": "share_action",
+        "status": 200
+      },
+      {
+        "name": "sponsor_interest",
+        "status": 200
+      }
+    ],
+    "durableStorage": null,
+    "naturalUse": null
+  },
+  "rollback": {
+    "versionId": "7f82652f-d75d-415d-b614-cf4cba7aaa58",
+    "performed": false,
+    "compatibility": "No persistent schema/binding/route/account/cost change;previous version remains compatible."
+  },
+  "status": {
+    "documented": true,
+    "implemented": true,
+    "test_passed": true,
+    "built": true,
+    "deployed": true,
+    "released": "existing_web_surface_smoke_verified",
+    "monitored": false,
+    "user_value": null,
+    "profitable": null
+  },
+  "productPass": null,
+  "channels": {
+    "web": "existing Worker deployed/source+version+actual390 callback verified",
+    "apps_in_toss": "not_applicable;not_created",
+    "ios": "not_released",
+    "android": "PWA web only;no native release",
+    "desktop": "not_released"
+  },
+  "fastForwardPush": {
+    "status": "follows evidence commit;actual receipt retained in coordinator builder result",
+    "expectedRemoteBefore": "03f7df0dd029721c05eea2efee4388fa3d2977ee"
+  },
+  "slot": {
+    "name": "slot1",
+    "returned": true,
+    "messageId": "msg_df47b15230ef",
+    "ownedPages": 0,
+    "remainingOwnedPids": []
+  },
+  "claims": {
+    "repo": "claim_4724eba7-3b51-448f-ba06-bb135a625440",
+    "repoFence": 44,
+    "githubFence": 4,
+    "cloudflareFence": 5,
+    "central": "claim_db1efdc3-1b39-40ff-8c65-8bab71360f0b",
+    "centralFences": 1
+  },
+  "remaining": [
+    "Fresh different independent verifier2 judges productPass and original131 full acceptance;no builder feature counting.",
+    "Natural use/device/store/revenue/profitability remain unobserved."
+  ],
+  "safeArtifactAllowlist": [
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/captures/clean-1440-diff.png",
+      "sha256": "803278b6702e6c09dc633b21da68598c3a62a00bf77472ec47a34506274b9488"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/captures/clean-1440-start.png",
+      "sha256": "b7530e8fb6045ff24d2ed4882fd51a42734a911d4fc6c0d3d17284eebfb9105f"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/captures/clean-1440-value.png",
+      "sha256": "c51f7cc142b9e3edad9e089df0610fb408bc946a9f11bd2a7ef242d94bb38253"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/captures/clean-390-recovery.png",
+      "sha256": "2fe0d92fefb339700f7455d6bfca45658b2707827ebd7c8fee138e058653d3e9"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/captures/clean-390-start.png",
+      "sha256": "6e7260144fc8534722e3a9d286fa083c2529b5c5dc1d01953d67b74bcdd5dca3"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/captures/clean-390-value.png",
+      "sha256": "9c4b3c8e1ecb655ab7ca29f0dcdc540229d929a60083b510b347ebb4c347baa5"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/captures/live-390-start.png",
+      "sha256": "373046acccebcbda1f0d23021bd2112a595cc9fa08ed9a9e5bb71cd1a13beb3b"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/captures/live-390-value.png",
+      "sha256": "519bb3e9732d7d01a5d75ae4c66f01ff94dea102dd506c1a066393bb51882904"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/receipts/artifact.json",
+      "sha256": "dd6c51dba85ce7d979ade1a2ccdbbaad98c681bebd1c3e975466f5aa73f46ab2"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/receipts/build.json",
+      "sha256": "ba6e2513520fa355bc691fa501457e8db402c22707e160331c63575919b79ed3"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/receipts/callback-live.json",
+      "sha256": "0e4253de45030d254b4c2ea5f6abd01e88238a01ea7698b03181304786b2551e"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/receipts/deploy-command.json",
+      "sha256": "7bb89d9c94fd2ac4312fac64ad4b6ed1849e8e9d05f742a71e776a1245ee55cd"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/receipts/harness-runtime-identity.json",
+      "sha256": "18e1ccdaae8f7b752a300ce18c2bbaf47856e721614cd972ab93f24e5397b75a"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/receipts/live-sample-diagnosis.json",
+      "sha256": "9691cb01ea08376404dc3c6d9d9dcafb0f49939e601a9ea65fb36c77732a27f1"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/receipts/live-verification.json",
+      "sha256": "156175bf98645af0c3596ae9220a88efdd10a9aa097dd38bb981a47587a3c3aa"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/receipts/local-captures-0beb928.json",
+      "sha256": "94a6132c659912cfc80c8780f536f5d3913602aadf0f9cc09daa144649527e92"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/receipts/provider-after.json",
+      "sha256": "b8e8ebc74be852e43dc470ecc3ee9e3fc4cfbaac31de8b68a053d8da1e85dba5"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/receipts/provider-before-fresh.json",
+      "sha256": "618175c78c41a312ae38f0eed977eb088e749003a16eead6d296f667cd341aca"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/receipts/smoke-h5.json",
+      "sha256": "a162b425a68ca727d0c7f05e23800a082c785c0dfa5d603dd5fd481cdc5dfc6c"
+    },
+    {
+      "path": "docs/evidence/completion-2026-10/fix1/receipts/smoke-rest.json",
+      "sha256": "157cb6f32f5ba499c40c5702cbd565ba68b8d33380448c67aa2b49661048f872"
+    }
+  ],
+  "approvalClock": {
+    "ownerApprovedDate": "2026-10-17",
+    "approvedAt": null,
+    "clockStatus": "exact owner approval time not supplied;not fabricated",
+    "executionPacket": "preserved immutable approved packet;actual outcomes recorded here"
+  }
+}

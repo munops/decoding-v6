@@ -1,0 +1,33 @@
+{
+  "sourceSha": "0beb9287569d7ff32aae31dd3c3442e4686c6803",
+  "verificationHead": "f0c42a6f462c2ef2f98ca4942b78d6080825db62",
+  "originalAttempts": [
+    {
+      "exitCode": 1,
+      "wait": "SSR sample click followed by missing second tree item",
+      "wrapperRunId": "0efbda37-77d6-451c-9b05-e46b1d191084"
+    },
+    {
+      "exitCode": 1,
+      "wait": "SSR sample click followed by missing second tree item",
+      "wrapperRunId": "4a68ba4e-9912-4142-b8d8-d11dead99335"
+    }
+  ],
+  "diagnosis": "SSR=true early click lost;hydrated same sample produces exact input and2chain;original unknown clock preserved",
+  "corrected": {
+    "command": "pnpm delivery:web:verify",
+    "exitCode": 0,
+    "wrapperRunId": "9be4646a-2e67-4310-a805-cf80449f2bb7",
+    "remainingOwnedPids": [],
+    "syntheticTriageCases": 3,
+    "toolCount": 47,
+    "localOperation": "passed",
+    "canaryEgress": "none",
+    "canaryStorage": "none",
+    "externalRequestOrigins": [],
+    "linkedAssets": "passed",
+    "trustRoutes": ["privacy", "terms", "support"]
+  },
+  "runtimeRebuilt": false,
+  "providerWritesInContinuation": 0
+}

@@ -1,0 +1,22 @@
+{
+  "source": "0beb9287569d7ff32aae31dd3c3442e4686c6803",
+  "origin": "https://decod.ing",
+  "checks": [],
+  "immediate": {
+    "before": {
+      "ssr": true,
+      "input": "",
+      "chains": 0
+    },
+    "after": {
+      "ssr": false,
+      "inputFilled": false,
+      "chains": 0
+    }
+  },
+  "afterHydration": {
+    "inputMatches": true,
+    "chains": 2
+  },
+  "status": "passed"
+}
