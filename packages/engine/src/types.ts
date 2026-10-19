@@ -78,3 +78,11 @@ export type DecodeResult = {
   elapsedMs: number
   limits: DecodeLimits
 }
+
+/** Loading failed before any parser examined the input. Safe to serialize by name. */
+export class LocalParserUnavailableError extends Error {
+  constructor() {
+    super('Open this local parser once online, then retry. Earlier layers and raw bytes are kept.')
+    this.name = 'LocalParserUnavailableError'
+  }
+}

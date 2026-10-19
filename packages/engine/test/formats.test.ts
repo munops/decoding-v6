@@ -217,3 +217,57 @@ it('extracts an empty-signature JWT and IP from the same log without truncating 
   expect(decoded.map((item) => item.root.selected?.detector)).toEqual(['jwt', 'ip'])
   expect(decoded[0]?.root.selected?.warnings[0]?.ruleId).toBe('JWT-ALG-NONE')
 })
+
+import { LocalParserUnavailableError } from '../src'
+import { webCodecs } from '../../../apps/web/src/workers/codecs'
+it('keeps unreceived TOML/zstd distinct from syntax and expansion errors, then retries', async () => {
+  const text = '[owner]\nname = "local"'
+  const offline = {
+    toml: async () => {
+      throw new LocalParserUnavailableError()
+    },
+    zstd: async () => {
+      throw new LocalParserUnavailableError()
+    },
+  }
+  const toml = (await decode(text, { codecs: offline })).root
+  expect(toml.selected?.warnings[0]?.ruleId).toBe('LOCAL-PARSER-UNAVAILABLE')
+  const bytes = Uint8Array.from([
+    0x28, 0xb5, 0x2f, 0xfd, 0x20, 0x05, 0x29, 0, 0, 104, 101, 108, 108, 111,
+  ])
+  const zstd = (await decode(bytes, { codecs: offline })).root
+  expect(zstd.selected?.warnings[0]?.ruleId).toBe('LOCAL-PARSER-UNAVAILABLE')
+  expect((await decode(bytes, { codecs: webCodecs })).root.selected?.decoded).toBe('hello')
+  expect((await decode(text, { codecs: webCodecs })).root.selected?.value).toEqual({
+    owner: { name: 'local' },
+  })
+  const invalid = (await decode('[owner]\nname = "unterminated', { codecs: webCodecs })).root
+    .selected
+  expect(invalid?.warnings[0]?.ruleId).toBe('TOML-INVALID')
+  expect(invalid?.value).toMatchObject({ line: 2, column: expect.any(Number) })
+})
+it('reports cron field count and XML mismatch position, keeps raw Ascii85 ambiguous', async () => {
+  expect((await candidate('cron', '* * * *'))?.value).toMatchObject({ fields: 4 })
+  expect((await candidate('xml', '<root>\n<x></root>'))?.value).toMatchObject({
+    line: 2,
+    column: 4,
+    offset: 10,
+  })
+  expect((await candidate('ascii85', '87cURD_*#TDfTZ)+T'))?.confidence).toBeLessThan(0.85)
+  expect(await candidate('ascii85', 'ordinary development notes')).toBeUndefined()
+  expect((await candidate('unicode-escapes', '\\u00e9\\x41'))?.metadata?.codePoints).toEqual([
+    'U+00E9',
+    'U+0041',
+  ])
+})
+
+it('extracts both line and column from the real YAML parser error without its payload', async () => {
+  const { executeOperation } = await import('@decoding/operations')
+  const { parserPosition } = await import('../src')
+  try {
+    await executeOperation('yaml-to-json', 'name: local\nbad: [unterminated')
+    throw new Error('Expected parser error')
+  } catch (error) {
+    expect(parserPosition(error)).toMatchObject({ line: 2, column: expect.any(Number) })
+  }
+})

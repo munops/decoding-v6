@@ -93,3 +93,20 @@ it('returns safe JWK JSON line and column diagnostics without echoing the suppli
     }
   }
 })
+
+it('points to invalid PEM boundaries and Base64 characters without exposing key bytes', async () => {
+  const token = `${enc('{"alg":"RS256"}')}.${enc('{}')}.c2ln`
+  for (const [key, line] of [
+    ['not a public key', 1],
+    ['-----BEGIN PUBLIC KEY-----\nAA!A\n-----END PUBLIC KEY-----', 2],
+  ] as const) {
+    try {
+      await verifyJwt(token, key)
+      throw new Error('Expected error')
+    } catch (error) {
+      expect(error).toBeInstanceOf(KeyFormatError)
+      expect((error as KeyFormatError).line).toBe(line)
+      expect((error as Error).message).not.toMatch(/AA!A|not a public key/)
+    }
+  }
+})

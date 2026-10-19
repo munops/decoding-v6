@@ -1,5 +1,5 @@
 import type { Detector } from '../types'
-import { found, readable, warning } from './common'
+import { found, readable, warning, parserUnavailable, unavailableDetection } from './common'
 export const zstd: Detector = {
   id: 'zstd',
   async detect(input, context) {
@@ -46,7 +46,9 @@ export const zstd: Detector = {
         0.999,
         { decoded: output, metadata: { bytes: decoded } },
       )
-    } catch {
+    } catch (error) {
+      if (parserUnavailable(error))
+        return unavailableDetection('zstd', 'Zstandard compressed stream', input, 0.999)
       return found(
         'zstd',
         'Zstandard compressed stream',

@@ -1,6 +1,6 @@
 import { binaryGrammar } from './binary-grammar'
 import type { Detector } from '../types'
-import { found } from './common'
+import { found, parserUnavailable, unavailableDetection } from './common'
 export const cbor: Detector = {
   id: 'cbor',
   async detect(input, context) {
@@ -31,7 +31,9 @@ export const cbor: Detector = {
         tagged ? 0.999 : 0.68,
         { metadata: { tag: tagged ? 55799 : undefined } },
       )
-    } catch {
+    } catch (error) {
+      if (parserUnavailable(error))
+        return unavailableDetection('cbor', 'CBOR candidate', input, tagged ? 0.999 : 0.68)
       return null
     }
   },

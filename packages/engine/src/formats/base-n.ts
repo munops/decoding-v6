@@ -130,12 +130,23 @@ export const ascii85: Detector = {
   id: 'ascii85',
   detect(input) {
     const text = inputText(input).trim()
-    if (!text.startsWith('<~') || !text.endsWith('~>')) return null
+    const delimited = text.startsWith('<~') && text.endsWith('~>')
+    if (
+      !delimited &&
+      (text.length < 5 || !/^[!-uz\s]+$/.test(text) || !/[^A-Za-z0-9\s]/.test(text))
+    )
+      return null
     try {
       const output = readable(decode85(text))
-      return found('ascii85', 'Ascii85', output, 0.995, { decoded: output })
+      return found(
+        'ascii85',
+        delimited ? 'Ascii85' : 'Ascii85 candidate',
+        output,
+        delimited ? 0.995 : 0.65,
+        { decoded: output },
+      )
     } catch {
-      return found('ascii85', 'Ascii85', { error: 'Invalid Ascii85 block' }, 0.7)
+      return delimited ? found('ascii85', 'Ascii85', { error: 'Invalid Ascii85 block' }, 0.7) : null
     }
   },
 }

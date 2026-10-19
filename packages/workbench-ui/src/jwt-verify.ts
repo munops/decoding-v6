@@ -3,8 +3,9 @@ export class KeyFormatError extends Error {
   constructor(
     public readonly line: number,
     public readonly column: number,
+    format = 'JWK JSON',
   ) {
-    super(`Invalid JWK JSON at line ${line}, column ${column}.`)
+    super(`Invalid ${format} at line ${line}, column ${column}.`)
   }
 }
 function parseJwk(text: string): JsonWebKey {
@@ -61,10 +62,29 @@ export async function verifyJwt(token: string, keyText: string): Promise<boolean
     const pem = /^-----BEGIN PUBLIC KEY-----\s*([\s\S]+?)\s*-----END PUBLIC KEY-----$/.exec(
       keyText.trim(),
     )
-    if (!pem) throw new Error('Expected public SPKI PEM or JWK')
+    if (!pem) {
+      const lines = keyText.trim().split('\n')
+      const line = lines[0]?.trim() !== '-----BEGIN PUBLIC KEY-----' ? 1 : lines.length
+      throw new KeyFormatError(line, 1, 'public SPKI PEM boundary')
+    }
+    const lines = keyText.trim().split('\n')
+    for (let i = 1; i < lines.length - 1; i++) {
+      const bad = /[^A-Za-z0-9+/=\s]/.exec(lines[i] ?? '')
+      if (bad) throw new KeyFormatError(i + 1, bad.index + 1, 'PEM Base64')
+    }
     const bytes = decodeBase64(pem[1] ?? '')
-    if (!bytes) throw new Error('Invalid public key')
-    key = await crypto.subtle.importKey('spki', new Uint8Array(bytes), algorithm, false, ['verify'])
+    if (!bytes) throw new KeyFormatError(2, 1, 'PEM Base64 body')
+    try {
+      key = await crypto.subtle.importKey('spki', new Uint8Array(bytes), algorithm, false, [
+        'verify',
+      ])
+    } catch {
+      throw new KeyFormatError(
+        2,
+        1,
+        'SPKI DER body (body starts here; check key type and algorithm)',
+      )
+    }
   }
   const verifyAlgorithm =
     family === 'PS'

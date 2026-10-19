@@ -65,8 +65,15 @@ export function createDecoderWorkerClient(
       clearTimeout(request.timeout)
       pending.delete(event.data.id)
       if (event.data.error) request.reject(new Error(event.data.error))
-      else if (event.data.result) request.resolve(event.data.result)
-      else request.reject(new Error('Decoder worker returned an invalid response.'))
+      else if (event.data.result) {
+        const unavailable = (node: DecodeResult['root']): boolean =>
+          [node.selected, ...node.candidates].some((item) =>
+            item?.warnings.some((warning) => warning.ruleId === 'LOCAL-PARSER-UNAVAILABLE'),
+          ) || node.children.some(unavailable)
+        // A failed ESM import is cached for the worker lifetime. Retry in a fresh realm.
+        if (unavailable(event.data.result.root)) discardWorker()
+        request.resolve(event.data.result)
+      } else request.reject(new Error('Decoder worker returned an invalid response.'))
     }
     next.onerror = (event) => {
       event.preventDefault?.()

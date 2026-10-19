@@ -42,7 +42,7 @@ export function JwtVerify({ token, locale }: { token: string; locale: WorkbenchL
                 setStatus(
                   error instanceof KeyFormatError
                     ? locale === 'ko'
-                      ? `JWK JSON ${error.line}행 ${error.column}열의 형식을 확인해 주세요.`
+                      ? `키 ${error.line}행 ${error.column}열의 형식을 확인해 주세요.`
                       : error.message
                     : locale === 'ko'
                       ? '키 형식이나 알고리즘을 확인해 주세요. 공개키 PEM 또는 JWK를 사용해요.'

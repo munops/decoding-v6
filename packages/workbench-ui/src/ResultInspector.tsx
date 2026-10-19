@@ -67,6 +67,12 @@ export function ResultInspector({
           {result.root.status === 'ambiguous' ? (
             <EvidenceList detection={selected} messages={messages} />
           ) : null}
+          {Array.isArray(selected.metadata?.codePoints) ? (
+            <p class="code-points">
+              <strong>{messages.locale === 'ko' ? '코드포인트' : 'Code points'}</strong>:{' '}
+              {selected.metadata.codePoints.map(String).join(' · ')}
+            </p>
+          ) : null}
           <JwtTimes detection={selected} locale={messages.locale} />
           <BinaryPreview detection={selected} />
           <EmbeddedValues detection={selected} messages={messages} onInspect={onInspectValue} />

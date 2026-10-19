@@ -21,3 +21,11 @@ export function privateKeyDetection(
   )
   return own ?? root.children.map(privateKeyDetection).find(Boolean)
 }
+
+export function hasUnavailableParser(node: import('@decoding/engine').ChainNode): boolean {
+  return (
+    [node.selected, ...node.candidates].some((item) =>
+      item?.warnings.some((warning) => warning.ruleId === 'LOCAL-PARSER-UNAVAILABLE'),
+    ) || node.children.some(hasUnavailableParser)
+  )
+}

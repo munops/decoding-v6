@@ -56,7 +56,10 @@ export const unicodeEscapes: Detector = {
     return found('unicode-escapes', 'Unicode escapes', decoded, 0.995, {
       decoded,
       metadata: {
-        codePoints: Array.from(decoded, (c) => `U+${c.codePointAt(0)?.toString(16).toUpperCase()}`),
+        codePoints: Array.from(
+          decoded,
+          (c) => `U+${c.codePointAt(0)?.toString(16).toUpperCase().padStart(4, '0')}`,
+        ),
       },
       warnings: unpaired
         ? [warning('UNICODE-SURROGATE', 'Unpaired surrogate in the decoded string.')]

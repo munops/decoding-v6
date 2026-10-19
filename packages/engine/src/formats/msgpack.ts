@@ -1,6 +1,6 @@
 import { binaryGrammar } from './binary-grammar'
 import type { Detector } from '../types'
-import { found } from './common'
+import { found, parserUnavailable, unavailableDetection } from './common'
 export const msgpack: Detector = {
   id: 'msgpack',
   async detect(input, context) {
@@ -27,7 +27,9 @@ export const msgpack: Detector = {
       )
     try {
       return found('msgpack', 'MessagePack candidate', await context.codecs.msgpack(input), 0.7)
-    } catch {
+    } catch (error) {
+      if (parserUnavailable(error))
+        return unavailableDetection('msgpack', 'MessagePack candidate', input, 0.7)
       return null
     }
   },

@@ -1,4 +1,11 @@
-import type { DecodeCodecs, DecodeLimits } from '@decoding/engine'
+import { LocalParserUnavailableError, type DecodeCodecs, type DecodeLimits } from '@decoding/engine'
+async function loadParser<T>(load: () => Promise<T>): Promise<T> {
+  try {
+    return await load()
+  } catch {
+    throw new LocalParserUnavailableError()
+  }
+}
 function collector(limits: DecodeLimits, inputBytes: number) {
   const chunks: Uint8Array[] = []
   let size = 0
@@ -22,13 +29,13 @@ function collector(limits: DecodeLimits, inputBytes: number) {
 }
 export const webCodecs: DecodeCodecs = {
   async zstd(bytes, limits) {
-    const { Decompress } = await import('fzstd')
+    const { Decompress } = await loadParser(() => import('fzstd'))
     const output = collector(limits, bytes.length)
     new Decompress((chunk) => output.push(chunk)).push(bytes, true)
     return output.finish()
   },
   async msgpack(bytes) {
-    const { decode } = await import('@msgpack/msgpack')
+    const { decode } = await loadParser(() => import('@msgpack/msgpack'))
     return decode(bytes, {
       maxStrLength: 10 * 1024 * 1024,
       maxBinLength: 10 * 1024 * 1024,
@@ -39,16 +46,16 @@ export const webCodecs: DecodeCodecs = {
     })
   },
   async cbor(bytes) {
-    const { decode } = await import('cbor-x')
+    const { decode } = await loadParser(() => import('cbor-x'))
     return decode(bytes)
   },
   async toml(text) {
-    const { parse } = await import('smol-toml')
+    const { parse } = await loadParser(() => import('smol-toml'))
     return parse(text, { integersAsBigInt: 'asNeeded', unsafeKeyBehaviour: 'throw' })
   },
   async brotli(bytes, limits) {
-    const module = await import('brotli-dec-wasm')
-    const brotli = await module.default
+    const module = await loadParser(() => import('brotli-dec-wasm'))
+    const brotli = await loadParser(() => module.default)
     const stream = new brotli.DecompressStream()
     const output = collector(limits, bytes.length)
     let offset = 0

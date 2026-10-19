@@ -1,6 +1,6 @@
 import type { Detector } from '../types'
 import { inputText } from '../utils'
-import { found, warning } from './common'
+import { found, warning, parserUnavailable, unavailableDetection, parserPosition } from './common'
 export const toml: Detector = {
   id: 'toml',
   async detect(input, context) {
@@ -16,12 +16,13 @@ export const toml: Detector = {
     try {
       return found('toml', 'TOML', await context.codecs.toml(text), 0.999)
     } catch (error) {
+      if (parserUnavailable(error)) return unavailableDetection('toml', 'TOML', input, 0.999)
       return found(
         'toml',
         'TOML',
         {
           error: 'Invalid TOML',
-          line: error instanceof Error ? /line\s+(\d+)/i.exec(error.message)?.[1] : undefined,
+          ...parserPosition(error),
         },
         0.99,
         { warnings: [warning('TOML-INVALID', 'The TOML parser could not read this document.')] },

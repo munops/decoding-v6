@@ -1,7 +1,7 @@
 import { boundedInflate } from '../bounded-inflate'
 import type { DecodeInput, Detection, DetectorContext } from '../types'
 import { decodeBase64, inputBytes, inputText } from '../utils'
-import { found, readable, warning } from './common'
+import { found, readable, warning, parserUnavailable, unavailableDetection } from './common'
 import { decode32, decode58 } from './base-n'
 export async function manualDecode(
   input: DecodeInput,
@@ -38,7 +38,9 @@ export async function manualDecode(
     )
       throw new Error('Expansion limit')
     return found(format, `${format} (chosen by you)`, output, 1, { decoded: output })
-  } catch {
+  } catch (error) {
+    if (parserUnavailable(error))
+      return unavailableDetection(format, `${format} (chosen by you)`, input, 1)
     return found(
       format,
       `${format} (chosen by you)`,

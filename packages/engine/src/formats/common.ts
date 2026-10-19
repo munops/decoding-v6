@@ -67,3 +67,49 @@ export function encodedFields(entries: Array<{ name: string; raw: string }>) {
     )
     .map(({ name, raw }) => ({ path: name, encoded: raw }))
 }
+
+export function parserUnavailable(error: unknown): boolean {
+  return error instanceof Error && error.name === 'LocalParserUnavailableError'
+}
+export function unavailableDetection(
+  id: string,
+  label: string,
+  input: DecodeInput,
+  confidence: number,
+): Detection {
+  return found(
+    id,
+    label,
+    {
+      error: 'Local parser is not cached. Connect, then choose Try again.',
+      ...(typeof input === 'string' ? {} : { bytes: input.length }),
+    },
+    confidence,
+    {
+      warnings: [
+        warning(
+          'LOCAL-PARSER-UNAVAILABLE',
+          'Open this local parser once online, then retry. Earlier layers and raw bytes are kept.',
+        ),
+      ],
+    },
+  )
+}
+/** Numeric diagnostics only: parser messages can contain the original private input. */
+export function parserPosition(error: unknown): { line?: number; column?: number } {
+  if (!error || typeof error !== 'object') return {}
+  const value = error as {
+    line?: unknown
+    column?: unknown
+    linePos?: Array<{ line: number; col: number }>
+    message?: unknown
+  }
+  const message = typeof value.message === 'string' ? value.message : ''
+  const line = value.linePos?.[0]?.line ?? value.line ?? /line\s+(\d+)/i.exec(message)?.[1]
+  const column =
+    value.linePos?.[0]?.col ?? value.column ?? /col(?:umn)?\s+(\d+)/i.exec(message)?.[1]
+  return {
+    ...(Number(line) > 0 ? { line: Number(line) } : {}),
+    ...(Number(column) > 0 ? { column: Number(column) } : {}),
+  }
+}

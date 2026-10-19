@@ -54,6 +54,19 @@ export const cron: Detector = {
     const text = inputText(input).trim(),
       parts = text.split(/\s+/)
     if (
+      ![5, 6].includes(parts.length) &&
+      parts.length >= 2 &&
+      parts.length <= 8 &&
+      parts.every((part) => /^[\d*,/-]+$/.test(part)) &&
+      text.includes('*')
+    )
+      return found(
+        'cron',
+        'Cron schedule',
+        { error: 'Expected 5 or 6 cron fields.', fields: parts.length },
+        0.99,
+      )
+    if (
       ![5, 6].includes(parts.length) ||
       !parts.every((x) => /^[\dA-Z*,/-]+$/i.test(x)) ||
       !/[\d*]/.test(text)

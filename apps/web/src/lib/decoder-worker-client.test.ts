@@ -1,3 +1,4 @@
+import { decode, LocalParserUnavailableError } from '@decoding/engine'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { createDecoderWorkerClient, type DecoderWorkerLike } from './decoder-worker-client'
 
@@ -56,4 +57,28 @@ describe('decoder worker client failure closure', () => {
     await rejection
     expect(worker.terminate).toHaveBeenCalledOnce()
   })
+})
+
+it('retains the unavailable result and recreates the failed import realm on retry', async () => {
+  const first = new FakeWorker(),
+    second = new FakeWorker()
+  const workers = [first, second]
+  const client = createDecoderWorkerClient(() => workers.shift()!)
+  const input = '[owner]\nname = "local"'
+  const result = await decode(input, {
+    codecs: {
+      toml: async () => {
+        throw new LocalParserUnavailableError()
+      },
+    },
+  })
+  const pending = client.decodeInput(input)
+  first.onmessage?.({ data: { id: 1, result } } as MessageEvent)
+  expect(await pending).toEqual(result)
+  expect(first.terminate).toHaveBeenCalledOnce()
+  const retried = client.decodeInput(input)
+  expect(second.postMessage).toHaveBeenCalledWith({ id: 2, input })
+  second.onmessage?.({ data: { id: 2, result: await decode('{"ok":true}') } } as MessageEvent)
+  await retried
+  client.terminate()
 })

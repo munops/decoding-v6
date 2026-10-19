@@ -17,3 +17,6 @@ export { redactSecrets } from './formats/secret-patterns'
 
 export type { DecodeOptions } from './engine'
 export { identifyMagic } from './formats/magic-bytes'
+
+export { LocalParserUnavailableError } from './types'
+export { parserPosition } from './formats/common'

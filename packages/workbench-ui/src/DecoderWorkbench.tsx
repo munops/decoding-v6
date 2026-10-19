@@ -2,7 +2,7 @@ import type { ComponentChildren } from 'preact'
 import { completionMessages } from './completion-messages'
 import { WorkflowActions } from './WorkflowActions'
 import { BatchCompare } from './BatchCompare'
-import { outputText, privateKeyDetection } from './result-text'
+import { outputText, privateKeyDetection, hasUnavailableParser } from './result-text'
 import { DecoderInput } from './DecoderInput'
 import { ResultInspector } from './ResultInspector'
 import type { DecodeInput, DecodeResult, Detection } from '@decoding/engine'
@@ -482,6 +482,18 @@ export function DecoderWorkbench({
         </div>
       ) : null}
 
+      {result && lastInput.current && hasUnavailableParser(result.root) ? (
+        <div class="notice warning" role="status">
+          <span>{copy.unavailable}</span>
+          <button
+            class="button secondary"
+            type="button"
+            onClick={() => lastInput.current && void run(lastInput.current)}
+          >
+            {messages.retry}
+          </button>
+        </div>
+      ) : null}
       {result ? (
         <div class="result-grid">
           {(function flatten(node: DecodeResult['root']): DecodeResult['root'][] {

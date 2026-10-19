@@ -1,12 +1,24 @@
 import { webCodecs } from './codecs'
 /// <reference lib="webworker" />
-import { decode, type DecodeInput, type Detection } from '@decoding/engine'
+import {
+  decode,
+  LocalParserUnavailableError,
+  parserPosition,
+  type DecodeInput,
+  type Detection,
+} from '@decoding/engine'
 
 async function enrich(detection: Detection, input: DecodeInput): Promise<Detection> {
   const detail = detection.metadata?.detail
   if (typeof detail !== 'string') return detection
   try {
-    const { executeOperation } = await import('@decoding/operations')
+    let operations
+    try {
+      operations = await import('@decoding/operations')
+    } catch {
+      throw new LocalParserUnavailableError()
+    }
+    const { executeOperation } = operations
     const operation = (
       {
         yaml: 'yaml-to-json',
@@ -16,6 +28,7 @@ async function enrich(detection: Detection, input: DecodeInput): Promise<Detecti
       } as Record<string, string>
     )[detail]
     if (!operation) return detection
+    if (detection.warnings.some((item) => item.ruleId === 'XML-MALFORMED')) return detection
     const result = await executeOperation(operation, input)
     const value =
       detail === 'cron'
@@ -44,6 +57,9 @@ async function enrich(detection: Detection, input: DecodeInput): Promise<Detecti
       ],
     }
   } catch (error) {
+    const unavailable =
+      error instanceof LocalParserUnavailableError ||
+      (error instanceof TypeError && /fetch|import|module|network/i.test(error.message))
     return {
       ...detection,
       value: {
@@ -51,15 +67,16 @@ async function enrich(detection: Detection, input: DecodeInput): Promise<Detecti
           detail === 'x509'
             ? 'Certificate DER parsing failed'
             : `This ${detail} layer could not be parsed.`,
-        line: error instanceof Error ? /line\s+(\d+)/i.exec(error.message)?.[1] : undefined,
+        ...parserPosition(error),
       },
       warnings: [
         ...detection.warnings,
         {
-          ruleId: 'LOCAL-PARSER-UNAVAILABLE',
+          ruleId: unavailable ? 'LOCAL-PARSER-UNAVAILABLE' : `${detail.toUpperCase()}-INVALID`,
           severity: 'warning',
-          message:
-            'The local parser failed or is not cached. Open it online once, then retry. Earlier layers are kept.',
+          message: unavailable
+            ? new LocalParserUnavailableError().message
+            : `Invalid ${detail.toUpperCase()} syntax. Check the indicated position; earlier layers are kept.`,
         },
       ],
     }
