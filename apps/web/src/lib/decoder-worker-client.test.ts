@@ -82,3 +82,12 @@ it('retains the unavailable result and recreates the failed import realm on retr
   await retried
   client.terminate()
 })
+
+import { withParserDeadline } from '../workers/codecs'
+it('turns a stalled parser fetch into retryable unavailability without changing syntax errors', async () => {
+  await expect(withParserDeadline(new Promise(() => undefined), 5)).rejects.toBeInstanceOf(
+    LocalParserUnavailableError,
+  )
+  const syntax = new SyntaxError('synthetic parser error')
+  await expect(withParserDeadline(Promise.reject(syntax))).rejects.toBe(syntax)
+})

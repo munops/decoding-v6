@@ -1,4 +1,4 @@
-import { webCodecs } from './codecs'
+import { webCodecs, loadParser, withParserDeadline } from './codecs'
 /// <reference lib="webworker" />
 import {
   decode,
@@ -12,12 +12,7 @@ async function enrich(detection: Detection, input: DecodeInput): Promise<Detecti
   const detail = detection.metadata?.detail
   if (typeof detail !== 'string') return detection
   try {
-    let operations
-    try {
-      operations = await import('@decoding/operations')
-    } catch {
-      throw new LocalParserUnavailableError()
-    }
+    const operations = await loadParser(() => import('@decoding/operations'))
     const { executeOperation } = operations
     const operation = (
       {
@@ -29,7 +24,7 @@ async function enrich(detection: Detection, input: DecodeInput): Promise<Detecti
     )[detail]
     if (!operation) return detection
     if (detection.warnings.some((item) => item.ruleId === 'XML-MALFORMED')) return detection
-    const result = await executeOperation(operation, input)
+    const result = await withParserDeadline(executeOperation(operation, input))
     const value =
       detail === 'cron'
         ? { ...(detection.value as Record<string, unknown>), description: result.output }
