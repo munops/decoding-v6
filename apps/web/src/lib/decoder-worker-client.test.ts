@@ -83,11 +83,24 @@ it('retains the unavailable result and recreates the failed import realm on retr
   client.terminate()
 })
 
-import { withParserDeadline } from '../workers/codecs'
-it('turns a stalled parser fetch into retryable unavailability without changing syntax errors', async () => {
-  await expect(withParserDeadline(new Promise(() => undefined), 5)).rejects.toBeInstanceOf(
-    LocalParserUnavailableError,
-  )
-  const syntax = new SyntaxError('synthetic parser error')
-  await expect(withParserDeadline(Promise.reject(syntax))).rejects.toBe(syntax)
+it('does not orphan newer concurrent input when an older response needs a fresh parser realm', async () => {
+  const worker = new FakeWorker()
+  const client = createDecoderWorkerClient(() => worker, 100)
+  const older = client.decodeInput('[owner]\nname = "older"')
+  const latest = client.decodeInput('[owner]\nname = "latest"')
+  const unavailable = await decode('[owner]\nname = "older"', {
+    codecs: {
+      toml: async () => {
+        throw new LocalParserUnavailableError()
+      },
+    },
+  })
+  worker.onmessage?.({ data: { id: 1, result: unavailable } } as MessageEvent)
+  await older
+  expect(worker.terminate).not.toHaveBeenCalled()
+  const result = await decode('{"latest":true}')
+  worker.onmessage?.({ data: { id: 2, result } } as MessageEvent)
+  await expect(latest).resolves.toEqual(result)
+  expect(worker.terminate).toHaveBeenCalledOnce()
+  client.terminate()
 })

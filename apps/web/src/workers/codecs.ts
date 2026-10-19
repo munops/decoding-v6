@@ -1,21 +1,7 @@
 import { LocalParserUnavailableError, type DecodeCodecs, type DecodeLimits } from '@decoding/engine'
-/** A dropped connection can leave an ESM fetch pending instead of rejecting. */
-export async function withParserDeadline<T>(work: Promise<T>, timeoutMs = 4000): Promise<T> {
-  let timer: ReturnType<typeof setTimeout> | undefined
+async function loadParser<T>(load: () => Promise<T>): Promise<T> {
   try {
-    return await Promise.race([
-      work,
-      new Promise<never>((_resolve, reject) => {
-        timer = setTimeout(() => reject(new LocalParserUnavailableError()), timeoutMs)
-      }),
-    ])
-  } finally {
-    clearTimeout(timer)
-  }
-}
-export async function loadParser<T>(load: () => Promise<T>): Promise<T> {
-  try {
-    return await withParserDeadline(load())
+    return await load()
   } catch {
     throw new LocalParserUnavailableError()
   }

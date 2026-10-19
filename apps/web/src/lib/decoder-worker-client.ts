@@ -31,6 +31,7 @@ export function createDecoderWorkerClient(
 ): DecoderWorkerClient {
   let worker: DecoderWorkerLike | null = null
   let requestId = 0
+  let recycleWhenIdle = false
   const pending = new Map<number, Pending>()
 
   const rejectAll = (error: Error) => {
@@ -44,6 +45,7 @@ export function createDecoderWorkerClient(
   const discardWorker = () => {
     const current = worker
     worker = null
+    recycleWhenIdle = false
     if (!current) return
     current.onmessage = null
     current.onerror = null
@@ -71,9 +73,11 @@ export function createDecoderWorkerClient(
             item?.warnings.some((warning) => warning.ruleId === 'LOCAL-PARSER-UNAVAILABLE'),
           ) || node.children.some(unavailable)
         // A failed ESM import is cached for the worker lifetime. Retry in a fresh realm.
-        if (unavailable(event.data.result.root)) discardWorker()
+        if (unavailable(event.data.result.root)) recycleWhenIdle = true
         request.resolve(event.data.result)
       } else request.reject(new Error('Decoder worker returned an invalid response.'))
+      // Older and newer inputs can overlap; finish every response before clearing the realm.
+      if (recycleWhenIdle && pending.size === 0) discardWorker()
     }
     next.onerror = (event) => {
       event.preventDefault?.()
