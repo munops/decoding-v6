@@ -83,6 +83,12 @@ function approvedWavePath(cleanHead) {
     .split('\n')
     .filter(Boolean)
   const allowedDeliveryMetadata = new Set([requested, 'docs/operations/local-delivery.json'])
+  // Read-only verification may advance its harness while preserving the deployed runtime.
+  // Deploy and rollback retain the original exact-source boundary.
+  if (command === 'verify-web') {
+    allowedDeliveryMetadata.add('scripts/verify-deploy.mjs')
+    allowedDeliveryMetadata.add('scripts/local-delivery.mjs')
+  }
   const runtimeDrift = changedAfterRuntime.filter((file) => !allowedDeliveryMetadata.has(file))
   if (runtimeDrift.length > 0) {
     fail(

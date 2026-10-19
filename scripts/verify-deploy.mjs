@@ -39,6 +39,7 @@ try {
   // completed same-origin requests in Playwright's pending set, so networkidle is not a
   // reliable readiness signal. Load plus the explicit product assertions below is stricter.
   await page.goto(`${baseURL}/`, { waitUntil: 'load' })
+  await page.locator('astro-island:not([ssr]) #decoder-input').waitFor()
   const linkedAssets = await page.evaluate(async () => {
     const paths = [...document.querySelectorAll('link[rel="stylesheet"][href], script[src]')].map(
       (element) => element.getAttribute(element.tagName === 'LINK' ? 'href' : 'src'),
