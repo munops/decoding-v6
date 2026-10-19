@@ -37,6 +37,11 @@ approval:
     - CS-DECODING-V6-FIX1-SOURCE-20261019
     - CS-DECODING-V6-FIX1-WEB-20261019
   owner_evidence_ref: conversation:COMPLETE-SERVICES-20261017:owner-all-projects-implement-deploy-approved
+  resolution_policy_version: 1
+  action_exact_fields_digests:
+    CS-DECODING-V6-FIX1-SOURCE-20261019: b0135f64b9f2336c2abcc71030d034117257f8a4057b041709c4e302eb205e45
+    CS-DECODING-V6-FIX1-WEB-20261019: 3bc45d3a67e758ba58019824be8f5fd5e0b8af9d2ef70dc101e9777c0f7cb05a
+# prettier-ignore
 actions:
   - action_id: CS-DECODING-V6-FIX1-SOURCE-20261019
     approval_readiness: ready
@@ -46,10 +51,7 @@ actions:
     product: decoding-v6
     channel: source
     provider: github
-    exact_mutation: Fast-forward existing origin/main from
-      03f7df0dd029721c05eea2efee4388fa3d2977ee through correction source
-      0beb9287569d7ff32aae31dd3c3442e4686c6803 and exact release
-      metadata/evidence; no force/new branch.
+    exact_mutation: Fast-forward existing origin/main from 03f7df0dd029721c05eea2efee4388fa3d2977ee through correction source 0beb9287569d7ff32aae31dd3c3442e4686c6803 and exact release metadata/evidence; no force/new branch.
     account_ref: docs/munops/ops/provider-registry.yaml#accounts.github_primary
     resource_ref: github:munops/decoding-v6:refs/heads/main
     claim_resource_refs:
@@ -66,8 +68,7 @@ actions:
         release_entrypoint: null
       identity_transition:
         mode: not_applicable
-        reason: source synchronization does not itself change a rendered or provider
-          identity surface
+        reason: source synchronization does not itself change a rendered or provider identity surface
         surfaces: []
         provider_before_fingerprint: null
         candidate_artifact_fingerprint: null
@@ -77,8 +78,7 @@ actions:
         reason: browser evidence belongs to the dependent Cloudflare production action
       provider_before:
         applicability: not_applicable
-        reason: Git fast-forward is fenced by the exact remote SHA instead of a
-          deployment tuple
+        reason: Git fast-forward is fenced by the exact remote SHA instead of a deployment tuple
         deployment_id: null
         version_id: null
       single_deployment_path: source_only
@@ -106,8 +106,7 @@ actions:
       input_vat_recoverability: not_applicable
       classification_evidence: []
       prior_invoice_remediation: not_applicable
-      not_applicable_reason: existing private repository fast-forward has no checkout,
-        purchase, invoice, plan change or recurring commitment
+      not_applicable_reason: existing private repository fast-forward has no checkout, purchase, invoice, plan change or recurring commitment
     post_purchase:
       provider_billing_readback: null
       actual_currency: null
@@ -117,26 +116,43 @@ actions:
       invoice_or_receipt_ref: null
       ledger_ref: null
       reconciled_at: null
-    public_impact: Existing private repository main advances; source alone does not
-      prove runtime release.
+    public_impact: Existing private repository main advances; source alone does not prove runtime release.
     transmitted_data:
-      - Task-owned correction commits and exact delivery metadata/evidence only;
-        no credentials, payloads, profiles or private keys.
+      - Task-owned correction commits and exact delivery metadata/evidence only; no credentials, payloads, profiles or private keys.
     legal_terms_changed: false
     preflight_evidence:
-      - 93unit tests;format/lint/type/static/benchmark/clean build/bundle passed
-        at exact source 0beb9287569d7ff32aae31dd3c3442e4686c6803
-      - Same source clean3901440 first-use/recovery/unsupported/danger and
-        safe-share captured; selected390/1440 actual VIEW complete;11correction
-        UI outcomes observed.
-      - All owned wrappers settled exit with cleanup[]; mandatory existing
-        deploy entrypoint checks remain required.
-    rollback_or_abort: Abort unless remote main remains
-      03f7df0dd029721c05eea2efee4388fa3d2977ee and ancestor of candidate;
-      forward repair only.
+      - 93unit tests;format/lint/type/static/benchmark/clean build/bundle passed at exact source 0beb9287569d7ff32aae31dd3c3442e4686c6803
+      - Same source clean3901440 first-use/recovery/unsupported/danger and safe-share captured; selected390/1440 actual VIEW complete;11correction UI outcomes observed.
+      - All owned wrappers settled exit with cleanup[]; mandatory existing deploy entrypoint checks remain required.
+    rollback_or_abort: Abort unless remote main remains 03f7df0dd029721c05eea2efee4388fa3d2977ee and ancestor of candidate; forward repair only.
     status: ready
     provider_readback: null
     channel_smoke: null
+    artifact_digest: 6ef3f49b49e992eb600e93d8eaca3180a302636dc52b35454fb7a5e7179bfeda
+    authorization:
+      actionType: existing_branch_push
+      effects:
+        secretDisclosure: false
+        authBypass: false
+        newCharge: false
+        recurrenceChange: false
+        ownershipTransfer: false
+        visibilityTransfer: false
+        personalDataExpansion: false
+        destructiveData: false
+        newAccount: false
+        firstExternalContact: false
+        legalAttestation: false
+        hqActivation: false
+      credential:
+        operation: none
+      terms:
+        kind: none
+        boundaryExpansion: false
+        legalConsent: false
+        evidenceRef: existing verified CLI deploy/push only; no provider consent surface or new agreement
+      humanStep:
+        kind: none
   - action_id: CS-DECODING-V6-FIX1-WEB-20261019
     approval_readiness: ready
     approval_class: P-REPORT
@@ -145,20 +161,13 @@ actions:
     product: decoding-v6
     channel: web
     provider: cloudflare_workers
-    exact_mutation: Deploy frozen correction source
-      0beb9287569d7ff32aae31dd3c3442e4686c6803 and artifact
-      6ef3f49b49e992eb600e93d8eaca3180a302636dc52b35454fb7a5e7179bfeda to
-      existing decoding-v6 Worker; preserve ASSETS/EVENTS bindings, routes,
-      secrets, DNS, account and cost.
+    exact_mutation: Deploy frozen correction source 0beb9287569d7ff32aae31dd3c3442e4686c6803 and artifact 6ef3f49b49e992eb600e93d8eaca3180a302636dc52b35454fb7a5e7179bfeda to existing decoding-v6 Worker; preserve ASSETS/EVENTS bindings, routes, secrets, DNS, account and cost.
     account_ref: docs/munops/ops/provider-registry.yaml#accounts.cloudflare_primary
     resource_ref: cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6
     claim_resource_refs:
       - repo:decoding-v6
       - provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6
-    destination:
-      - https://decod.ing
-      - https://www.decod.ing
-      - https://decoding-v6.wjstks3474.workers.dev
+    destination: https://decod.ing, https://www.decod.ing, https://decoding-v6.wjstks3474.workers.dev
     artifact:
       format: cloudflare_worker_with_static_assets
       local_ref: apps/web/dist
@@ -173,10 +182,7 @@ actions:
         source_before_sha: c90bca6228be78da2d46f7138e641b7a449d8093
         candidate_sha: 0beb9287569d7ff32aae31dd3c3442e4686c6803
         artifact_sha256: 6ef3f49b49e992eb600e93d8eaca3180a302636dc52b35454fb7a5e7179bfeda
-        release_entrypoint:
-          DECODING_RELEASE_WAVE=docs/operations/release-wave-cs-decoding-v6-fix1-20261019.yaml
-          DECODING_DELIVERY_TARGET=production pnpm delivery:web:deploy --
-          --execute
+        release_entrypoint: DECODING_RELEASE_WAVE=docs/operations/release-wave-cs-decoding-v6-fix1-20261019.yaml DECODING_DELIVERY_TARGET=production pnpm delivery:web:deploy -- --execute
       identity_transition:
         mode: preserve
         surfaces:
@@ -197,8 +203,7 @@ actions:
         reuse_existing_server: false
         server_identity_receipt_sha256: 071e77d77319886cf24cb43ebd19823fda3dc14e914b244406961bbd3531b9f6
         server_identity_receipt_payload: '{"source_sha":"0beb9287569d7ff32aae31dd3c3442e4686c6803","artifact_sha256":"6ef3f49b49e992eb600e93d8eaca3180a302636dc52b35454fb7a5e7179bfeda","target_environment":"production","build_environment":"production","assertion_profile":"production","fresh_server_required":true,"reuse_existing_server":false}'
-        observed_status: passed clean3901440 rendered exact build identity; actual
-          images viewed; all11 correction smoke outcomes observed
+        observed_status: passed clean3901440 rendered exact build identity; actual images viewed; all11 correction smoke outcomes observed
       provider_before:
         applicability: deployment
         deployment_id: d7705b35-b8a8-4b31-8f32-1b0871d1dd1c
@@ -234,9 +239,7 @@ actions:
       input_vat_recoverability: not_applicable
       classification_evidence: []
       prior_invoice_remediation: not_applicable
-      not_applicable_reason: Existing Worker code/static replacement; approved
-        incremental ceiling0 with no purchase or plan change; actual billing not
-        read and remains null.
+      not_applicable_reason: Existing Worker code/static replacement; approved incremental ceiling0 with no purchase or plan change; actual billing not read and remains null.
     post_purchase:
       provider_billing_readback: null
       actual_currency: null
@@ -246,32 +249,44 @@ actions:
       invoice_or_receipt_ref: null
       ledger_ref: null
       reconciled_at: null
-    public_impact: Restore binary preservation, TypeScript/JSX/QR/PNG tools,
-      private-key metadata, safe JWK diagnostics, wide diff, history, log JWT
-      and JavaScript gzip reproduction. No new channel, collection, activation,
-      cost, resource, account, domain, legal consent or external contact.
+    public_impact: Restore binary preservation, TypeScript/JSX/QR/PNG tools, private-key metadata, safe JWK diagnostics, wide diff, history, log JWT and JavaScript gzip reproduction. No new channel, collection, activation, cost, resource, account, domain, legal consent or external contact.
     transmitted_data:
-      - Worker code/static assets only. Existing fixed aggregate event names on
-        same-origin endpoint; no input/result/file/key content or identifiers.
+      - Worker code/static assets only. Existing fixed aggregate event names on same-origin endpoint; no input/result/file/key content or identifiers.
     legal_terms_changed: false
     preflight_evidence:
-      - 93unit tests;format/lint/type/static/benchmark/clean build/bundle passed
-        at exact source 0beb9287569d7ff32aae31dd3c3442e4686c6803
-      - Same source clean3901440 first-use/recovery/unsupported/danger and
-        safe-share captured; selected390/1440 actual VIEW complete;11correction
-        UI outcomes observed.
-      - All owned wrappers settled exit with cleanup[]; mandatory existing
-        deploy entrypoint checks remain required.
-    rollback_or_abort: Abort on source/artifact/resource/fence/provider-before
-      drift. Within10min HTTP200/new source or version/390 render/first-value
-      failure invokes guarded rollback to 7f82652f-d75d-415d-b614-cf4cba7aaa58
-      with read-back. Measurement timeout remains unknown.
+      - 93unit tests;format/lint/type/static/benchmark/clean build/bundle passed at exact source 0beb9287569d7ff32aae31dd3c3442e4686c6803
+      - Same source clean3901440 first-use/recovery/unsupported/danger and safe-share captured; selected390/1440 actual VIEW complete;11correction UI outcomes observed.
+      - All owned wrappers settled exit with cleanup[]; mandatory existing deploy entrypoint checks remain required.
+    rollback_or_abort: Abort on source/artifact/resource/fence/provider-before drift. Within10min HTTP200/new source or version/390 render/first-value failure invokes guarded rollback to 7f82652f-d75d-415d-b614-cf4cba7aaa58 with read-back. Measurement timeout remains unknown.
     status: ready
     provider_readback: null
     channel_smoke: null
-    channel_smoke_plan: Within10min canonical HTTP200/exact source/new native
-      version and actual-view390 first value; same-origin names-only count
-      receive; actual key/payload never transmitted.
+    channel_smoke_plan: Within10min canonical HTTP200/exact source/new native version and actual-view390 first value; same-origin names-only count receive; actual key/payload never transmitted.
+    artifact_digest: 6ef3f49b49e992eb600e93d8eaca3180a302636dc52b35454fb7a5e7179bfeda
+    authorization:
+      actionType: deploy
+      effects:
+        secretDisclosure: false
+        authBypass: false
+        newCharge: false
+        recurrenceChange: false
+        ownershipTransfer: false
+        visibilityTransfer: false
+        personalDataExpansion: false
+        destructiveData: false
+        newAccount: false
+        firstExternalContact: false
+        legalAttestation: false
+        hqActivation: false
+      credential:
+        operation: none
+      terms:
+        kind: none
+        boundaryExpansion: false
+        legalConsent: false
+        evidenceRef: existing verified CLI deploy/push only; no provider consent surface or new agreement
+      humanStep:
+        kind: none
 reapproval_triggers:
   - account_ref_changed
   - resource_or_destination_changed
