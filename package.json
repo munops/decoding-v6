@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "pnpm --filter @decoding/web dev",
     "build": "node scripts/build-local.mjs",
-    "typecheck": "pnpm -r --parallel --if-present typecheck",
+    "typecheck": "pnpm -r --workspace-concurrency=2 --if-present typecheck",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
