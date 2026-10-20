@@ -10,7 +10,7 @@
     "nodeRange": ">=22"
   },
   "source": {
-    "scriptsDigest": "5a5fded7093f25d13c8b01797552248337d39d652aa64c1eb626e89d534b277f",
+    "scriptsDigest": "e91f455becca4fede6aa6c66dd14d13a82db8495bd5f4e0a92baeea88d7580bb",
     "packageManagerDigest": "aec6ae9a222854d382ed1c1301eabca71237837c182705c5abcd970df56a5517"
   },
   "commands": [
@@ -49,7 +49,7 @@
       "strategy": "package-script",
       "role": "typecheck",
       "script": "typecheck",
-      "sourceScriptSha256": "11c7d5a462c95ebc6cd5e9bdad4cd8eb642980480ccba5f92f2f238b89ab25ca",
+      "sourceScriptSha256": "5f5dc7a12b5ffef8468c2fdb855a7bff395b3245baba4484013bf2fe6b55b024",
       "cwd": ".",
       "timeoutMs": 180000,
       "cachePolicy": "input-fingerprint"
