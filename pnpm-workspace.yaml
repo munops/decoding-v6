@@ -2,8 +2,10 @@ packages:
 - apps/*
 - packages/*
 allowBuilds:
+  cbor-extract@2.2.2: false
   esbuild: true
   sharp: true
+  'workerd@1.20260708.1': true
 virtualStoreType: global
 storeIndexFormat: sqlite
 verifyDepsBeforeRun: error
