@@ -29,7 +29,7 @@ if (process.argv[1] && scopedDeliveryFilePath(import.meta.url) === scopedDeliver
   const result = await runScopedDeliveryCommand({ projectRoot: scopedDeliveryRoot, project: 'decoding-v6',
     prepareOnly: process.argv.includes('--prepare-only') || process.argv[2] === 'prepare-dependencies' || (process.argv[2] === 'prepare' && !false),
     caller: { claimId: value('--claim-id') || process.env.MUNOPS_CLAIM_ID, holder: value('--holder') || process.env.MUNOPS_CLAIM_HOLDER }, args: argv,
-    afterRun: async preparation => {
+    afterRun: process.argv.includes('--build-only') ? undefined : async preparation => {
       const canonical = scopedDeliveryProfile({ projectRoot: scopedDeliveryRoot, project: 'decoding-v6' }).canonicalRoot;
       for (const path of ['.local-delivery']) preserveScopedDeliveryOutputs(scopedDeliveryResolve(preparation.worktree, path), scopedDeliveryResolve(canonical, path));
     },

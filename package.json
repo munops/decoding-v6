@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "pnpm --filter @decoding/web dev",
-    "build": "pnpm -r --if-present build",
+    "build": "node scripts/build-local.mjs",
     "typecheck": "pnpm -r --parallel --if-present typecheck",
     "lint": "eslint .",
     "format": "prettier --write .",

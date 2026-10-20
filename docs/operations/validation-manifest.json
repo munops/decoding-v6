@@ -10,7 +10,7 @@
     "nodeRange": ">=22"
   },
   "source": {
-    "scriptsDigest": "c0a4dc683a4e6e253104788b8d6a926feda5a2f0c48f09d4abe9276f44ff6fe2",
+    "scriptsDigest": "5a5fded7093f25d13c8b01797552248337d39d652aa64c1eb626e89d534b277f",
     "packageManagerDigest": "aec6ae9a222854d382ed1c1301eabca71237837c182705c5abcd970df56a5517"
   },
   "commands": [
@@ -86,10 +86,21 @@
     }
   ],
   "modes": {
-    "staged": ["changed-lint", "changed-test"],
-    "changed": ["project-changed"],
-    "repo": ["repo-lint", "repo-typecheck", "repo-test"],
-    "candidate": ["candidate-quality"],
+    "staged": [
+      "changed-lint",
+      "changed-test"
+    ],
+    "changed": [
+      "project-changed"
+    ],
+    "repo": [
+      "repo-lint",
+      "repo-typecheck",
+      "repo-test"
+    ],
+    "candidate": [
+      "candidate-quality"
+    ],
     "ops": []
   },
   "budgets": {
@@ -103,7 +114,10 @@
   "coverage": {
     "complete": true,
     "blockingReasons": [],
-    "advisories": ["project_changed_profile_extended_budget", "candidate_quality_extended_budget"],
+    "advisories": [
+      "project_changed_profile_extended_budget",
+      "candidate_quality_extended_budget"
+    ],
     "notApplicableRoles": {}
   },
   "knownFailureFingerprints": []
