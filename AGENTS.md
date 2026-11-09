@@ -106,6 +106,7 @@ publish, DNS, Analytics schema, sponsor, store review나 public native release�
 - 엔진: `docs/prd/01-product-core.md`
 - 광고: `docs/prd/04-monetization.md`
 - UI/UX: `docs/prd/05-uiux.md`
+- 디자인 값·이유(색·글꼴·모양·문구): `DESIGN.md` — 값의 원본은 `apps/web/src/styles/global.css`
 - 구조·성능: `docs/prd/06-architecture.md`
 - 하네스: `docs/prd/07-harness-loop.md`
 - 보안: `docs/prd/09-security-privacy.md`
