@@ -131,7 +131,7 @@ components:
 정체를 모르는 문자열·파일을 붙여넣으면 가능한 형식, 겹겹이 싼 디코딩 층, 판단 근거와 경고를 **기기 안에서** 보여 주는 개발자 도구다.
 핵심 인상은 "해커 도구"도 범용 SaaS도 아닌 **값이 근거 있는 단계로 정리되는 판독 장부(Reveal Ledger)**다.
 
-- 첫 화면은 기능 소개가 아니라 작업면이다. 한 줄 약속, 로컬 처리 증거("서버로 전송된 입력 바이트 0"), 실제 입력칸, 실행 가능한 합성 사례 세 개만 둔다(DC-LANDING-05).
+- 첫 화면은 기능 소개가 아니라 작업면이다. 한 줄 약속(h1)과 소개 한 줄 끝의 `Check local processing`(`/proof/`) 링크, 작업면 맨 위 로컬 처리 줄(민트 점 + `Input stays on this device. No account, upload, or AI.`), 실제 입력칸, 실행 가능한 합성 사례 세 개만 둔다(DC-LANDING-05). catalog의 `uploaded`("서버로 전송된 입력 바이트") 문자열은 지금 홈에 렌더되지 않는다.
 - 첫 가치 경로: 도착 → 붙여넣기 또는 안전 사례 선택 → 후보·근거 확인. 가입·가격·업그레이드 버튼이 없다.
 - 시그니처 화면은 홈의 범용 디코더와 그 아래 `Decode chain + Inspector`다. 층마다 다른 옅은 띠 색이 깔리고, 띠 아래 굵은 선이 그 층의 바이트 크기만큼 그어진다.
 
@@ -162,16 +162,17 @@ stylesheet에는 토큰 밖 고정색이 몇 곳 남아 있다(입력면 테두�
 - **제목(h1·h2)과 decode 층 띠**: IBM Plex Mono 400. Latin WOFF2를 Google Fonts 공식 원본에서 받아 `apps/web/public/fonts/`에 자체 호스팅하고 OFL을 함께 둔다. `font-display: swap`, 한글은 시스템 글꼴로 대체한다. 제3자 글꼴 요청은 없다.
 - **본문·버튼·내비**: 시스템 sans(`ui-sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI`). 본문 16px/1.6.
 - **입력·출력·수치·근거 라벨**: mono. 입력칸 14px/1.6, 근거 라벨 12px.
-- 홈 h1은 `clamp(26px, 3.5vw, 44px)`/1.25, 자간 -0.03em(앞부분 44px는 넓은 화면 상한). 소개 문장은 15px. 문서·도구 페이지 h2는 28px.
+- 홈 h1은 `clamp(26px, 3.5vw, 44px)`/1.25, 자간 -0.03em이다(앞부분 44px는 영어 넓은 화면 상한). 600px 이하 영어는 27px 고정이다(640px 블록의 `clamp(36px, 10.8vw, 44px)`는 뒤의 기본 규칙에 덮여 쓰이지 않는다). 소개 문장은 15px(600px 이하 14px). 문서·도구 페이지 h2는 28px.
 - 버튼 13px 720, 내비 14px 680, 브랜드 워드마크 19px 800.
-- 한국어 화면(`html:lang(ko)`)은 `word-break: keep-all`, 제목 자간 -0.025em, 줄높이 1.24, `text-wrap: balance`. eyebrow 같은 영문 대문자 라벨은 한국어에서 sans·대문자 해제로 바꾼다.
+- 한국어 화면(`html:lang(ko)`)은 `word-break: keep-all`, h1~h3 자간 -0.025em·줄높이 1.24, `text-wrap: balance`. 홈·문서·도구 hero의 h1은 줄높이 1.16·자간 -0.025em이고, 640px 이하 한국어 홈 h1은 `clamp(35px, 10.4vw, 43px)`로 영어(27px)보다 크다. eyebrow 같은 영문 대문자 라벨은 한국어에서 sans·대문자 해제로 바꾼다.
 - 알려진 차이: 번역 상태·후원 라벨·단계/크기 배지·confidence·pack 배지가 10~11px다. 200% 확대 검사는 통과하지만 다음 시각 작업에서 12px 이상으로 올린다.
 
 ## Layout
 
-- 본문 컨테이너 최대 1216px(양옆 24px), 머리말 최대 1320px, 읽기 문서 최대 800px.
+- 본문 컨테이너 최대 1216px(양옆 24px, 640px 이하 12px), 머리말·footer 최대 1320px, 읽기 문서 최대 800px.
 - **오프셋 거터**: `#main` 아래 각 절은 왼쪽 64px(640px 이하 40px) 거터를 두고, 거터에 `01`, `02`처럼 절 번호를 mono 12px muted로 단다. 결과 층의 들여쓰기 번호(`chain-offset`)도 같은 열을 쓴다.
-- 머리말은 화면 위에 붙는(sticky) 64px 높이, 넓은 화면은 Tools·Method·Privacy·Workspace·Desktop, 좁은 화면은 핵심만 남기고 언어·테마 버튼을 유지한다.
+- 머리말은 화면 위에 붙는(sticky) 64px 높이다. 순서는 브랜드 심볼+워드마크, 내비(Tools와 도구 수 `47` 배지·Method·Privacy, Workspace는 영어 화면에만), 언어 메뉴(번역본이 있는 페이지만), 색인 전 언어의 번역 베타 배지, 테마 버튼, 민트 점이 붙은 `Local only` 신뢰 배지다. Desktop(`/download/`)은 머리말이 아니라 footer에 있다.
+- 900px 이하에서 신뢰 배지를 숨기고, 760px 이하에서 내비는 Tools 하나만 남는다. 640px 이하 머리말은 높이 auto(최소 62px)·심볼 30px, 420px 이하에서는 워드마크 글자를 숨기고 심볼만 둔다. 언어·테마 버튼은 모든 너비에서 남는다.
 - 결과: 넓은 화면은 chain과 Inspector 2열, 좁은 화면은 입력 → 후보 → chain 한 열. 복사 같은 결과 행동은 하단 복사 바 하나가 소유하고, 800px 미만에서는 화면 아래에 고정, 키보드가 열리면 숨긴다.
 - 합성 사례는 입력칸 다음, 결과 앞에 둔다(2026-10-19 고정 바가 사례를 가리던 문제를 고친 배치).
 - 360~1440px에서 가로 넘침이 없어야 한다.
@@ -179,12 +180,13 @@ stylesheet에는 토큰 밖 고정색이 몇 곳 남아 있다(입력면 테두�
 ## Elevation & Depth
 
 층은 그림자가 아니라 **바탕색 띠와 아래 선**으로 구분한다. decoder 틀은 2026-10-19부터 테두리·모서리·그림자가 없다.
-그림자는 sticky 머리말(`--shadow-sm`)과 겹치는 레이어에만 쓴다. 머리말은 93% 불투명 surface에 blur 18px를 깐다.
+그림자는 원래 sticky 머리말(`--shadow-sm`)과 겹치는 레이어(언어 메뉴 펼침 `--shadow`, 하단 workflow sheet)에만 두는 것이 원칙이다. 머리말은 93% 불투명 surface에 blur 18px를 깐다.
+지금 코드에는 이 원칙 밖 그림자가 남아 있다: 합성 사례 hover·도구 검색 입력칸·도구 카드 hover·workspace 격자(`--shadow-sm`), 도구 페이지 신뢰 카드의 8px 8px 오프셋 accent 그림자, 선택된 후보의 왼쪽 3px inset 선(Known gaps).
 
 ## Shapes
 
 입력·작은 면 10px, 중간 면 16px, 큰 면 24px, 버튼 9px, 내비 항목 8px, 머리말 15px, footer 18px.
-decode 층 띠와 결과 노드는 모서리가 없다(직선 장부). 원형은 아이콘 버튼에만 쓴다.
+decode 층 띠와 결과 노드는 모서리가 없다(직선 장부). 테마 버튼 같은 아이콘 버튼도 9px 모서리이고, 원형(50%)은 로컬 처리 상태 점(`privacy-dot`, 9px 민트 + 4px 옅은 링)뿐이다.
 
 ## Components
 
@@ -192,13 +194,13 @@ decode 층 띠와 결과 노드는 모서리가 없다(직선 장부). 원형은
 |---|---|---|
 | 주 버튼 | layer-1 바탕, ink 글자, ink 2px 테두리, 높이 44px | hover 1px 떠오름, disabled 55% 불투명. 한 화면에 꽉 찬 강조색 버튼을 두지 않는다 |
 | 보조 버튼 | surface 바탕, line-strong 1px 테두리 | ghost도 같은 모양으로 맞췄다 |
-| 위험 버튼 | danger 글자 | 입력 지우기처럼 되돌릴 수 없는 행동은 결과가 있으면 한 번 확인한다 |
+| 위험 버튼 | 공통 버튼 바탕(layer-1)에 danger 글자, danger 45% 혼합 2px 테두리 | 이 기기 데이터 전체 삭제(`/data/`, 브라우저 confirm 한 번)와 workspace 비우기(확인 없음, Known gaps)에만 쓴다. 홈 입력칸의 `Clear`는 위험 버튼이 아니라 ghost 버튼이고 확인 없이 지운다 |
 | 입력면 | surface 바탕, line-strong 테두리 textarea, mono 14px | 자동 클립보드 읽기 금지, 사용자의 paste 이벤트만 처리. 최대 10 MiB |
 | Decode chain | 층별 layer 띠, 아래 2px line-strong 선과 바이트 크기만큼 3px ink 선 | `Step N`·형식·입력 크기를 같은 줄에. tree/treeitem/group과 roving tabindex |
 | 후보 비교 | 표와 confidence 숫자 | 숫자와 형식 이름을 함께. 낮은 신뢰도를 정답처럼 자동 확정하지 않는다 |
 | 하단 복사 바 | surface 바탕, line-strong 테두리 | 실제 복사 성공 뒤에만 짧은 확인음(Motion & Sound) |
 | 업데이트 배너 | layer-3 바탕 | 새 버전 안내만 |
-| footer | surface-2 바탕, 18px 모서리 | 브랜드 심볼, 로컬 처리 한 문장, Tools·Privacy·Terms·Support·Method·Changelog·About |
+| footer | surface-2 바탕, 18px 모서리, padding 36px(640px 이하 26px·한 열) | 브랜드 심볼, 로컬 처리 한 문장, 링크 Device data(`/data/`)·Check local processing(`/proof/`)·Bookmarklet·Sponsor·47 Tools·Privacy·Terms·Support·Method·Desktop(`/download/`)·Changelog·About, 익명 집계 끄기(`CountControl`), 운영자·build revision·형식 수 한 줄 |
 | 광고 자리 | 광고 도입 전 DOM 없음 | 도입 뒤에도 웹 below-the-fold 한 자리, `Sponsored` 라벨, PWA standalone·workspace·desktop·extension에는 없음 |
 
 브랜드 심볼(`BrandMark.astro`)은 layer-1·2·3 색의 길이가 줄어드는 세 띠다. OG 이미지(`og.svg`)도 같은 세 띠를 쓴다.
@@ -224,7 +226,7 @@ decode 층 띠와 결과 노드는 모서리가 없다(직선 장부). 원형은
 
 - 토큰: `--motion-fast 120ms`, `--motion-base 180ms`, easing `cubic-bezier(0.2, 0.8, 0.2, 1)`. 작업면 진입은 8px 이하로 자리 잡고, 버튼 반응은 1px 이하다.
 - `prefers-reduced-motion`에서는 전환·애니메이션·smooth scroll을 끄고 상태와 포커스 변화는 즉시 유지한다.
-- 판별이 100ms 이하면 spinner를 보이지 않고, 넘으면 `Checking formats locally…`.
+- 판별 중에는 spinner 없이 `Checking formats locally…` 문장을 `aria-live=polite`로 바로 보인다. PRD-05 원안의 "100ms 이하면 표시 안 함" 지연 규칙은 지금 코드에 없다.
 - 복사 확인음: 외부 파일 없이 Web Audio sine 두 음(523.25Hz, 55ms 뒤 659.25Hz, 120ms 안에 끝남), 기본 볼륨 0.3. 명시적 복사 성공에만 울리고, 붙여넣기·감지·후보 변경·제한·오류에는 울리지 않는다. 끄기·reduced-motion·재생 실패 때는 시각 메시지만 남는다. 상세는 [PRD-12](docs/prd/12-copy-feedback-audio.md).
 - 포트폴리오 테마 음악(`apps/web/public/audio/portfolio-theme.mp3`)은 사용자가 재생을 눌러야만 나오고 음소거 버튼이 있으며 reduced-motion에서는 재생 버튼이 꺼진다.
 
@@ -239,13 +241,14 @@ decode 층 띠와 결과 노드는 모서리가 없다(직선 장부). 원형은
 |---|---|---|
 | 홈 제목 | What is this string? | 이 문자열, 뭔지 알려 드려요. |
 | 홈 소개 | Paste it. See every layer. Copy or share without the value. | 붙여넣기 → 모든 층 확인 → 값을 빼고 복사·공유해요. 기기 밖으로는 안 보내요. |
-| 로컬 증거 | input bytes uploaded | 서버로 전송된 입력 바이트 |
+| 로컬 처리 줄 | Input stays on this device. No account, upload, or AI. | 입력은 이 기기에만 남습니다. 계정, 업로드, AI가 없습니다. |
+| 머리말 신뢰 배지 | Local only | 기기에서만 처리 |
 | 판별 중 | Checking formats locally… | |
 | 애매한 층 | More than one format is plausible | |
 | 지원 안 함 | We couldn't identify this yet. | |
 | 안전 요약 복사 | Safe summary copied. It contains no input or decoded values. | 입력과 디코딩 값이 없는 안전한 요약을 복사했어요. |
 
-PRD-05 초안의 일부 문구(`We found a few possible formats`, `Your input stays in this browser`, `0 bytes of your input sent`, `Not verified`)는 지금 코드에 없어 이 표에 옮기지 않았다.
+PRD-05 초안의 일부 문구(`We found a few possible formats`, `Your input stays in this browser`, `0 bytes of your input sent`, `Not verified`)는 지금 코드에 없어 이 표에 옮기지 않았다. catalog의 `input bytes uploaded`/`서버로 전송된 입력 바이트`는 정의만 있고 화면에 렌더되지 않는다.
 
 ## Known gaps
 
@@ -254,10 +257,13 @@ PRD-05 초안의 일부 문구(`We found a few possible formats`, `Your input st
 - 10~11px 글자(Typography 참고).
 - 위험 버튼은 공통 버튼 바탕(layer-1 #dce7f9) 위에 danger(#c4302b) 글자라 대비가 4.43:1로 WCAG AA 4.5:1에 조금 못 미친다(공식 lint 경고). 다음 시각 작업에서 바탕이나 글자색을 조정한다.
 - `inclusive-ui.json`은 "외부 글꼴 없음·시스템 mono"로 적혀 있지만 제목은 자체 호스팅 IBM Plex Mono를 쓴다. 제3자 요청이 없다는 경계는 지켜진다.
+- Elevation 원칙 밖 그림자(합성 사례·검색 입력칸·도구 카드 hover·workspace 격자의 `--shadow-sm`, 도구 신뢰 카드의 8px 오프셋 그림자와 고정 테두리 #29374b)가 남아 있다. 다음 시각 작업에서 띠·선 방식으로 맞추거나 이유를 남긴다.
+- workspace의 `Clear workspace` 위험 버튼은 확인 없이 바로 지운다(`/data/` 전체 삭제는 confirm이 있다).
+- 브라우저 확장 결과 페이지(`apps/extension/src/style.css`)는 웹 토큰을 쓰지 않고 자체 고정색을 쓴다: ink #101827, muted #5c6573, 테두리 #d5d8d4, 출력면 #fffdf8, 어두운 모드 글자 #f4f1e8(2026-08-01 따뜻한 종이 방향의 잔재), 주 버튼은 #33465c 꽉 찬 바탕에 흰 글자로 웹의 "primary는 버튼 바탕이 아니다"와 다르다. 웹 토큰과 맞추는 것은 별도 시각 작업이다.
 
 ## Token sources
 
 - `apps/web/src/styles/global.css`
 - `apps/web/public/favicon.svg`
-- `apps/extension/src/style.css`
+- `apps/extension/src/style.css` (토큰 소비 아님: 같은 #33465c를 고정색으로 둔 확장 결과 페이지. Known gaps 참고)
 - `apps/desktop/src/desktop.css`
