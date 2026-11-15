@@ -13,6 +13,9 @@ function ssh(i: number): string {
   return `ssh-ed25519 ${b64(raw)} fixture-${i}`
 }
 const factory: Record<string, (i: number) => string> = {
+  mojibake: (i) => new TextDecoder('windows-1252').decode(bytes(`안녕하세요 세계 ${i}`)),
+  'unicode-normalization': (i) => `한글 파일 ${i}.txt`.normalize('NFD'),
+  'damaged-text': (i) => `사라진 � 글자 ${i}`,
   'auth-header': (i) =>
     `Bearer ${enc('{"alg":"none"}')}.${enc(JSON.stringify({ sub: `fixture-${i}` }))}.`,
   datetime: (i) => `2026-10-${String((i % 28) + 1).padStart(2, '0')}T09:00:00+09:00`,

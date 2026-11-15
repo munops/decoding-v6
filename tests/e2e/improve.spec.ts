@@ -96,3 +96,34 @@ test('More exposes explicit appearance choices and seven examples are real contr
   await page.goto('/')
   await expect(page.locator('html')).toHaveAttribute('data-text-size', 'large')
 })
+
+for (const width of [390, 1440]) {
+  test(`Korean text recovery and mail facts stay local at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width === 390 ? 780 : 900 })
+    await page.goto('/ko/')
+    const input = page.getByLabel('텍스트를 붙여넣거나 파일을 놓으세요')
+    const field = (await input.count()) ? input : page.locator('.decoder-input textarea')
+    for (const [source, output] of [
+      [
+        new TextDecoder('windows-1252').decode(new TextEncoder().encode('안녕하세요 세계')),
+        '안녕하세요 세계',
+      ],
+      ['ÇÑ±Û º¯È¯', '한글 변환'],
+      ['°¡³ª´Ù', '가나다'],
+      ['%C7%D1%B1%DB', '한글'],
+      ['한글 파일.txt'.normalize('NFD'), '한글 파일.txt'],
+      ['=?UTF-8?B?7ZWc6riA?=', '한글'],
+    ]) {
+      await field.fill(source!)
+      await expect(page.locator('.answer-final .output-view')).toHaveText(output!)
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+        true,
+      )
+    }
+    await field.fill(
+      'From: sender@example.test\nTo: local@example.test\nSubject: =?UTF-8?B?7ZWc6riA?=\nReceived: by relay.example.test',
+    )
+    await expect(page.locator('.answer-card h2')).toContainText('메일 머리말')
+    await expect(page.locator('.answer-facts')).toContainText('한글')
+  })
+}

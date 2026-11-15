@@ -219,6 +219,18 @@ const sentences: Record<string, [string, string]> = {
     'This text contains values that can be inspected separately.',
     '글 안에 따로 풀어 볼 수 있는 값이 들어 있어요.',
   ],
+  mojibake: [
+    'Garbled text can be reversed into readable letters.',
+    '되돌릴 수 있는 깨진 글자예요. 원래 글로 되돌렸어요.',
+  ],
+  'unicode-normalization': [
+    'The Korean letters were separated. We joined them again.',
+    '자음과 모음이 따로 떨어진 한글이에요. 다시 붙였어요. 맥에서 만든 파일 이름이 윈도우로 가면 생기는 일이에요.',
+  ],
+  'damaged-text': [
+    'Some characters have already been lost. Ask the sender for the original.',
+    '이미 글자가 사라진 깨짐이에요. 되돌릴 수 없어요. 보낸 쪽에서 다시 받아야 해요.',
+  ],
   'pgp-armor': [
     'This is data wrapped in PGP armor. Reading encrypted content requires a key.',
     'PGP로 싼 자료예요. 암호화된 내용이라면 열쇠가 있어야 읽을 수 있어요.',
@@ -298,7 +310,23 @@ export function answerSentence(root: ChainNode, locale: WorkbenchLocale, source:
       : answerMessages(locale).unknown.replace('{count}', String(summaryFormats.length))
   const ko = locale === 'ko'
   let sentence = sentences[first.detector]?.[ko ? 1 : 0] ?? first.label
-  if (first.detector === 'jwt') {
+  if (
+    first.detector === 'damaged-text' &&
+    first.metadata?.placeholders &&
+    !first.metadata.replacementCount
+  ) {
+    sentence = ko
+      ? '물음표가 사라진 글자 자리일 수 있어요. 이미 글자가 사라졌다면 되돌릴 수 없어요.'
+      : 'These question marks may stand for missing characters. Already lost characters cannot be recovered.'
+  } else if (first.detector === 'url' && first.metadata?.charset === 'euc-kr') {
+    sentence = ko
+      ? '옛 방식(EUC-KR) 한글을 %로 바꿔 적은 거예요.'
+      : 'This is Korean text percent-encoded using EUC-KR.'
+  } else if (first.detector === 'http-headers' && first.metadata?.kind === 'mail') {
+    sentence = ko
+      ? '메일 머리말이에요. 보낸 곳과 제목, 거쳐 온 곳을 살펴봤어요.'
+      : 'These are mail headers. We inspected the sender, subject and delivery hops.'
+  } else if (first.detector === 'jwt') {
     const payload = (first.value as { payload?: { exp?: unknown } })?.payload
     if (typeof payload?.exp === 'number') {
       const elapsed = Date.now() / 1000 - payload.exp
@@ -331,6 +359,18 @@ export function answerSentence(root: ChainNode, locale: WorkbenchLocale, source:
   return `${sentence}${layers.some((layer) => layer.status === 'ambiguous') ? ` ${answerMessages(locale).uncertain}` : ''}`
 }
 const warningTitles: Record<string, [string, string]> = {
+  'TEXT-LOST': [
+    'Missing characters cannot be reconstructed.',
+    '사라진 글자는 되돌릴 수 없어요. 보낸 쪽에 원본을 요청하세요.',
+  ],
+  'MAIL-REPLY-TO': [
+    'Replies go to a different address from the sender.',
+    '답장은 보낸 곳과 다른 주소로 가요.',
+  ],
+  'MAIL-DISPLAY-ADDRESS': [
+    'The displayed address differs from the actual sender address.',
+    '보낸 사람 이름에 적힌 주소와 실제 주소가 달라요.',
+  ],
   'JWT-LONG-LIFETIME': [
     'This token lasts for more than a day.',
     '하루 넘게 쓸 수 있는 토큰이에요.',
@@ -461,6 +501,21 @@ export function answerFacts(
   detection: Detection | undefined,
   locale: WorkbenchLocale,
 ): Array<[string, string]> {
+  if (detection?.detector === 'mojibake')
+    return [
+      [
+        locale === 'ko' ? '깨진 까닭' : 'Encoding path',
+        `${detection.metadata?.charset} → ${detection.metadata?.misreadAs}`,
+      ],
+      ...(Array.isArray(detection.metadata?.alternatives) && detection.metadata.alternatives.length
+        ? [
+            [
+              locale === 'ko' ? '다른 읽기 방식' : 'Other possible encodings',
+              detection.metadata.alternatives.join(', '),
+            ] as [string, string],
+          ]
+        : []),
+    ]
   if (!detection || !detection.value || typeof detection.value !== 'object') return []
   const value = detection.value as Record<string, unknown>,
     copy = answerMessages(locale),
@@ -476,6 +531,16 @@ export function answerFacts(
       const date = new Date(payload[key] * 1000)
       if (Number.isFinite(date.getTime())) rows.push([label, date.toLocaleString(locale)])
     }
+  if (detection.metadata?.kind === 'mail') {
+    rows.push(
+      [locale === 'ko' ? '보낸 곳' : 'Sender', String(detection.metadata.sender)],
+      [
+        locale === 'ko' ? '거쳐 온 서버 수' : 'Delivery hops',
+        String(detection.metadata.receivedCount),
+      ],
+      [locale === 'ko' ? '제목' : 'Subject', String(detection.metadata.subject)],
+    )
+  }
   if (typeof payload.iss === 'string') rows.push([copy.owner, payload.iss])
   if (typeof value.host === 'string') rows.push([copy.destination, value.host])
   if (typeof value.iso === 'string')

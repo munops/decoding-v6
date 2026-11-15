@@ -1,3 +1,4 @@
+import { decodeLegacyPercent } from './formats/garbled'
 import { identifyMagic } from './formats/magic-bytes'
 import { binaryDetectors } from './formats/binary'
 import { textDetectors } from './formats/text'
@@ -286,7 +287,18 @@ const urlDetector: Detector = {
     }
     if (!hasEscapes && !hasQuery && !parsedUrl) return null
     try {
-      const decoded = hasEscapes ? decodeURIComponent(text.replace(/\+/g, ' ')) : text
+      let decoded = text
+      let charset = 'utf-8'
+      if (hasEscapes) {
+        try {
+          decoded = decodeURIComponent(text.replace(/\+/g, ' '))
+        } catch {
+          const legacy = decodeLegacyPercent(text)
+          if (!legacy) return null
+          decoded = legacy
+          charset = 'euc-kr'
+        }
+      }
       const query = parsedUrl
         ? Object.fromEntries(parsedUrl.searchParams)
         : hasQuery
@@ -311,7 +323,11 @@ const urlDetector: Detector = {
             }
           : (query ?? decoded),
         [{ code: 'url-syntax', message: 'Valid URL or percent/query syntax', weight: 0.9 }],
-        parsedUrl ? { metadata: { originalUrl: text } } : hasEscapes ? { decoded } : {},
+        parsedUrl
+          ? { metadata: { originalUrl: text } }
+          : hasEscapes
+            ? { decoded, metadata: { charset } }
+            : {},
       )
     } catch {
       return null

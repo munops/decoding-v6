@@ -191,6 +191,29 @@ rows.push([
   'Review whether HSTS is appropriate on the HTTPS origin. Absence alone is not a security verdict.',
   'https://www.rfc-editor.org/rfc/rfc6797',
 ])
+rows.push(
+  [
+    'TEXT-LOST',
+    'Characters already lost',
+    'Replacement characters indicate that some original characters are missing. Question marks may also be placeholders; punctuation alone cannot prove loss.',
+    'Request the original file or text from the sender. Missing bytes cannot be reconstructed.',
+    'https://encoding.spec.whatwg.org/',
+  ],
+  [
+    'MAIL-REPLY-TO',
+    'Reply address differs',
+    'Reply-To names a different mailbox from From. This can be legitimate, but replies will leave the sender mailbox.',
+    'Confirm the reply address with the sender through a trusted channel before sending sensitive information.',
+    'https://www.rfc-editor.org/rfc/rfc5322',
+  ],
+  [
+    'MAIL-DISPLAY-ADDRESS',
+    'Displayed and actual addresses differ',
+    'An address in the display name differs from the mailbox in angle brackets.',
+    'Read the full sender mailbox. A display name does not authenticate the sender.',
+    'https://www.rfc-editor.org/rfc/rfc5322',
+  ],
+)
 export const ruleSpecs: RuleSpec[] = rows.map(([id, title, why, fix, reference]) => ({
   id,
   title,

@@ -3,6 +3,27 @@ import type { DetectorSpec } from './index'
 const rfc = (id: number) => `https://www.rfc-editor.org/rfc/rfc${id}`
 export const completeTextSpecs: DetectorSpec[] = [
   [
+    'mojibake',
+    'Garbled text',
+    '깨진 글자',
+    ['ì•ˆë…•í•˜ì„¸ìš”', 'Ã©', 'Ã¼'],
+    'https://encoding.spec.whatwg.org/',
+  ],
+  [
+    'unicode-normalization',
+    'Hangul normalization',
+    '자음·모음 붙이기',
+    ['한글.txt', '안녕', '파일'],
+    'https://www.unicode.org/reports/tr15/',
+  ],
+  [
+    'damaged-text',
+    'Lost characters',
+    '사라진 글자',
+    ['���', '한�글', '�파일'],
+    'https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-3/',
+  ],
+  [
     'auth-header',
     'Authorization header',
     '인증 헤더',

@@ -48,7 +48,11 @@ function selectedCandidate(
 ): Detection | undefined {
   const first = candidates[0]
   if (!first || first.confidence < confidence) return undefined
-  const subsumed: Record<string, string[]> = { saml: ['base64', 'xml'], 'data-uri': ['url'] }
+  const subsumed: Record<string, string[]> = {
+    saml: ['base64', 'xml'],
+    'http-headers': ['yaml', 'mime'],
+    'data-uri': ['url'],
+  }
   const second = candidates.find(
     (candidate, index) => index > 0 && !subsumed[first.detector]?.includes(candidate.detector),
   )

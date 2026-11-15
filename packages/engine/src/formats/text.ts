@@ -1,3 +1,4 @@
+import { mojibake, unicodeNormalization, damagedText } from './garbled'
 import { authHeader } from './auth-header'
 import { datetime } from './datetime'
 import { htmlEntities, unicodeEscapes } from './escapes'
@@ -21,6 +22,9 @@ import { jsonDeep } from './json-deep'
 import { textScan } from './text-scan'
 import { pgpArmor } from './pgp-armor'
 export const textDetectors = [
+  mojibake,
+  unicodeNormalization,
+  damagedText,
   authHeader,
   datetime,
   htmlEntities,
