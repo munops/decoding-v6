@@ -169,5 +169,29 @@ export const expandedSpecs: ExpandedSpec[] = [
       },
     ],
   },
+  {
+    detector: 'curl-command',
+    slug: 'curl-command',
+    label: 'cURL HTTP request command',
+    description:
+      'Read literal HTTP(S) request URLs, method, headers and inline data using the same parser as code conversion. Shell expressions and local files are never evaluated or opened. Unmodeled options are reported; generated snippets require review.',
+    korean: {
+      label: 'curl HTTP 요청 명령',
+      description:
+        '코드 변환 도구와 같은 풀이기로 HTTP(S) 주소·요청 방식·머리말·글자로 적은 내용을 읽어요. 셸 변수·명령이나 기기의 파일은 실행하거나 열지 않아요. 해석하지 못한 선택 항목은 따로 알려 드려요.',
+    },
+    examples: [
+      'curl https://example.test',
+      `curl -X POST https://example.test -H "Content-Type: application/json" --data-raw '{"ok":true}'`,
+      'curl --head https://example.test',
+    ],
+    references: [
+      { title: 'curl official manual', url: 'https://curl.se/docs/manpage.html' },
+      {
+        title: 'Bash quoting reference (literal subset)',
+        url: 'https://www.gnu.org/software/bash/manual/html_node/Quoting.html',
+      },
+    ],
+  },
 ]
 export const expandedKoreanCopy = new Map(expandedSpecs.map((spec) => [spec.detector, spec.korean]))

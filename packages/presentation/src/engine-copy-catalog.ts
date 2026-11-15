@@ -1,5 +1,23 @@
 import type { EngineMessageCode } from '@decoding/engine'
 export const englishEngineCopy = {
+  'diagnostic-curl-unclosed': 'Unclosed quote or escape in cURL command.',
+  'diagnostic-curl-url':
+    'A literal HTTP(S) URL is required; command substitution is not supported.',
+  'diagnostic-curl-size': 'The cURL input exceeds the 1 MiB local reader limit.',
+  'diagnostic-curl-argument': 'A cURL option is missing its value.',
+  'diagnostic-curl-method':
+    'Use an HTTP method containing letters, digits, underscores or hyphens.',
+  'diagnostic-curl-header': 'Use a single-line Name: value request header.',
+  'diagnostic-curl-file':
+    'This command references a local file. Paste its contents explicitly; files are never read by the command parser.',
+  'warning-curl-text-only':
+    'This command was read as text. No shell, file or network request was executed.',
+  'warning-curl-unmodeled':
+    '{optionCount} option or argument kinds were not modeled. Review generated code before using it.',
+  'warning-curl-shell-literal':
+    'Shell variables and substitutions remain literal text. They are never evaluated.',
+  'warning-curl-file-body': 'The body refers to a local file. Its contents were not read.',
+
   'warning-hcert-unverified':
     'The HC1 prefix identifies an encoded health-certificate container. Opening its data does not validate its signature, issuer, schema or current acceptability.',
   'warning-wallet-checksum-absent':

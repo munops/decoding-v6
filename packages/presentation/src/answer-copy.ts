@@ -5,6 +5,7 @@ import type { PresentationLocale as WorkbenchLocale } from './locale'
 const en = {
   cookieSentence:
     'These are cookies: values a site asks your browser to remember so it can recognize you.',
+  curlToCode: 'Convert this request to code',
   colorPreview: 'Color preview',
   barcodeUnavailable:
     'This browser cannot read linear barcodes. If no QR was found, the photo is inspected as a file.',
@@ -65,6 +66,7 @@ const en = {
 }
 const ko: typeof en = {
   cookieSentence: '사이트가 나를 알아보려고 브라우저에 둔 값이에요.',
+  curlToCode: '다른 언어 코드로 보기',
   colorPreview: '색 견본',
   barcodeUnavailable:
     '이 브라우저에서는 막대 바코드를 못 읽어요. QR이 없다면 사진 파일 정보를 보여 줘요.',
@@ -180,6 +182,10 @@ const sentences: Record<string, [string, string]> = {
   base45: [
     'This value was wrapped in Base45. We decoded the next layer.',
     'Base45로 싼 값이에요. 한 겹 풀었어요.',
+  ],
+  'curl-command': [
+    'This is a curl HTTP request command. We read its settings without sending the request.',
+    'curl로 서버에 요청하는 명령이에요. 보내지 않고 요청 내용을 읽었어요.',
   ],
   'binary-bytes': [
     'This writes bytes using zeros and ones. We decoded the next layer.',
@@ -617,6 +623,15 @@ export function answerFacts(
     rows: Array<[string, string]> = []
   if (detection.detector === 'kv' && Array.isArray(value.entries))
     return [[copy.fields, String(value.entries.length)]]
+  if (detection.detector === 'curl-command')
+    return [
+      [locale === 'ko' ? '요청 방식' : 'Method', String(value.method)],
+      [locale === 'ko' ? '주소' : 'URL', String(value.url)],
+      [
+        locale === 'ko' ? '머리말 수' : 'Headers',
+        String(Object.keys(value.headers as object).length),
+      ],
+    ]
   if (detection.detector === 'ethereum-address')
     return [
       [locale === 'ko' ? '주소 모양' : 'Address format', 'Ethereum / EVM'],

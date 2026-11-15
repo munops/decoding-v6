@@ -193,3 +193,22 @@ it('keeps invalid UTF-8 bytes intact across byte notations and Base45 manual dec
     expect((await detect(input)).find((item) => item.detector === id)?.decoded).toEqual(bytes)
   }
 })
+it('reads curl without executing shell expressions, files or requests', async () => {
+  const { parseCurlRequest } = await import('../src')
+  const source =
+    'curl https://example.test \\\n -X GET -H "Authorization: Bearer synthetic" -d "a=1" -d "b=2"'
+  const request = parseCurlRequest(source)
+  expect(request).toMatchObject({ url: 'https://example.test', method: 'GET', body: 'a=1&b=2' })
+  const candidate = (await detect(source)).find((item) => item.detector === 'curl-command')!
+  expect(candidate.value).toHaveProperty('headers.Authorization', '[redacted]')
+  expect(
+    parseCurlRequest("curl --data-raw '$LITERAL' https://example.test").shellExpressions,
+  ).toBeUndefined()
+  expect(parseCurlRequest('curl "https://example.test/$EXPANSION"').shellExpressions).toBe(true)
+  expect(
+    parseCurlRequest('curl --data-binary @fixture.bin https://example.test').bodyFromFile,
+  ).toBe(true)
+  expect(
+    parseCurlRequest('curl --data-raw @literal https://example.test').bodyFromFile,
+  ).toBeUndefined()
+})

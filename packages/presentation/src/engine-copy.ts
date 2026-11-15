@@ -17,6 +17,21 @@ const ko: Record<MessageFact['code'], string> = {
     '대문자나 소문자 한 가지로만 적혀 있어요. 대소문자를 섞은 확인값이 없는 옛 표기로 읽었어요. 보통의 16진수 자료일 수도 있어요.',
   'warning-hcert-unverified':
     'HC1은 건강 증명서에 쓰는 겉 표기예요. 내용을 읽어도 서명·발급자·자료 틀이나 지금 사용할 수 있는 증명서인지는 확인한 것이 아니에요.',
+  'diagnostic-curl-unclosed': 'curl 명령의 따옴표나 이어 쓰기가 닫히지 않았어요.',
+  'diagnostic-curl-url':
+    '글자로 적은 HTTP(S) 주소가 필요해요. 셸 명령이나 변수를 실행해서 주소를 만들지 않아요.',
+  'diagnostic-curl-size': 'curl 입력은 1MiB까지 읽을 수 있어요.',
+  'diagnostic-curl-argument': 'curl 선택 항목 뒤에 값이 빠져 있어요.',
+  'diagnostic-curl-method': 'HTTP 요청 방식을 영문·숫자·밑줄·붙임표로 적어 주세요.',
+  'diagnostic-curl-header': '요청 머리말을 이름: 값 형태의 한 줄로 적어 주세요.',
+  'diagnostic-curl-file':
+    '명령이 기기의 파일을 가리켜요. 파일 내용은 직접 붙여넣어 주세요. 명령을 읽는 과정에서 파일을 열지는 않아요.',
+  'warning-curl-text-only': '명령을 글자로만 읽었어요. 셸·파일·서버 요청은 실행하지 않았어요.',
+  'warning-curl-unmodeled':
+    '선택 항목이나 인자 {optionCount}종류를 해석하지 못했어요. 만들어진 코드를 쓰기 전에 요청을 확인해 주세요.',
+  'warning-curl-shell-literal':
+    '셸 변수와 명령 치환은 글자로 남아 있어요. 실행해서 값을 만들지 않아요.',
+  'warning-curl-file-body': '보낼 내용이 기기의 파일을 가리켜요. 파일 내용은 읽지 않았어요.',
   'photo-read': '사진에서 코드를 읽었어요. 연결되는 곳은 열지 않았어요.',
   'summary-url': '{protocol}//{host}',
   'summary-epoch': '{milliseconds}',

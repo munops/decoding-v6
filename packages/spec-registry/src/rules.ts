@@ -295,6 +295,34 @@ rows.push([
   'Use the trusted issuer or verifier for certificate validity. Do not share private contents; this tool only opens data locally.',
   'https://github.com/ehn-dcc-development/hcert-spec/blob/main/hcert_spec.md',
 ])
+rows.push([
+  'CURL-TEXT-ONLY',
+  'Command read as text',
+  'No shell, file or HTTP request was executed.',
+  'Inspect the settings and use code conversion only after review.',
+  'https://curl.se/docs/manpage.html',
+])
+rows.push([
+  'CURL-UNMODELED',
+  'Some command options were not modeled',
+  'The shared reader covers common literal HTTP request options, not every curl feature.',
+  'Review omitted options before using generated code.',
+  'https://curl.se/docs/manpage.html',
+])
+rows.push([
+  'CURL-SHELL-LITERAL',
+  'Shell expressions remain literal',
+  'Variables and substitutions are not evaluated.',
+  'Replace placeholders explicitly using non-sensitive test data.',
+  'https://curl.se/docs/manpage.html',
+])
+rows.push([
+  'CURL-FILE-BODY',
+  'File contents were not opened',
+  'A data argument refers to a local file. The reader never reads it.',
+  'Paste the intended contents explicitly before code conversion.',
+  'https://curl.se/docs/manpage.html',
+])
 export const ruleSpecs: RuleSpec[] = rows.map(([id, title, why, fix, reference]) => ({
   id,
   title,

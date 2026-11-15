@@ -58,6 +58,13 @@ function koreanWarning(warning: string): string {
   if (exact[warning]) return exact[warning]
   const sensitive = /^Sensitive headers detected: (.+)$/.exec(warning)
   if (sensitive) return `민감할 수 있는 요청 머리글을 찾았습니다: ${sensitive[1]}`
+  if (
+    warning === 'Shell variables and substitutions remain literal text. They are never evaluated.'
+  )
+    return '셸 변수와 명령 치환은 글자로 남아 있어요. 실행해서 값을 만들지 않아요.'
+  const unmodeled = /^(\d+) option or argument kinds were not modeled\./.exec(warning)
+  if (unmodeled)
+    return `선택 항목이나 인자 ${unmodeled[1]}종류를 해석하지 못했어요. 만들어진 코드를 쓰기 전에 요청을 확인해 주세요.`
   return warning
 }
 

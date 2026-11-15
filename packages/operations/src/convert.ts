@@ -1,4 +1,12 @@
-import { encodeBase64, inputBytes, inputText } from '@decoding/engine'
+import { formatEngineMessage } from '@decoding/presentation'
+import {
+  parseCurlRequest,
+  CurlParseError,
+  type CurlRequest as HttpRequest,
+  encodeBase64,
+  inputBytes,
+  inputText,
+} from '@decoding/engine'
 import YAML from 'yaml'
 import { optionNumber, optionString, structuredResult, text, textResult } from './shared'
 import type { OperationInput, OperationOptions, OperationResult, OperationRunner } from './types'
@@ -279,122 +287,62 @@ function phpUnserialize(source: string): unknown {
   return value
 }
 
-function shellWords(source: string): string[] {
-  const words: string[] = []
-  let word = ''
-  let quote: '"' | "'" | null = null
-  let escaped = false
-  for (const character of source.trim()) {
-    if (escaped) {
-      word += character
-      escaped = false
-    } else if (character === '\\' && quote !== "'") escaped = true
-    else if (quote) {
-      if (character === quote) quote = null
-      else word += character
-    } else if (character === '"' || character === "'") quote = character
-    else if (/\s/.test(character)) {
-      if (word) words.push(word)
-      word = ''
-    } else word += character
-  }
-  if (quote || escaped) throw new Error('Unclosed quote or escape in cURL command.')
-  if (word) words.push(word)
-  return words
-}
-
-type HttpRequest = { url: string; method: string; headers: Record<string, string>; body?: string }
 function parseCurl(source: string): HttpRequest {
-  const args = shellWords(source.replace(/^\s*curl\s+/, ''))
-  let url = ''
-  let method = 'GET'
-  let body: string | undefined
-  const headers: Record<string, string> = {}
-  for (let index = 0; index < args.length; index += 1) {
-    const arg = args[index] ?? ''
-    const next = args[index + 1]
-    if (['-X', '--request'].includes(arg) && next) {
-      method = next.toUpperCase()
-      index += 1
-    } else if (['-H', '--header'].includes(arg) && next) {
-      const separator = next.indexOf(':')
-      if (separator > 0) headers[next.slice(0, separator).trim()] = next.slice(separator + 1).trim()
-      index += 1
-    } else if (
-      ['-d', '--data', '--data-raw', '--data-binary'].includes(arg) &&
-      next !== undefined
-    ) {
-      body = next
-      if (method === 'GET') method = 'POST'
-      index += 1
-    } else if (!arg.startsWith('-')) url = arg
+  try {
+    return parseCurlRequest(source)
+  } catch (error) {
+    if (error instanceof CurlParseError) throw new Error(formatEngineMessage(error.fact))
+    throw error
   }
-  if (!/^https?:\/\//i.test(url))
-    throw new Error('A literal HTTP(S) URL is required; command substitution is not supported.')
-  return { url, method, headers, ...(body === undefined ? {} : { body }) }
 }
 
 function requestCode(request: HttpRequest, language: string): string {
-  const headers = JSON.stringify(request.headers, null, 2)
-  const body = request.body === undefined ? '' : request.body
-  const u = JSON.stringify(request.url)
-  const method = request.method
+  const q = (value: string): string => {
+    if (language === 'php' || language === 'ruby') return jsonToPhp(value)
+    if (language === 'httpie') return "'" + value.replace(/'/g, "'\\''") + "'"
+    if (language === 'kotlin' || language === 'dart')
+      return (
+        '"' +
+        [...value]
+          .map((char) =>
+            char === '$'
+              ? '\\$'
+              : char === '\f' && language === 'kotlin'
+                ? '\\u000c'
+                : JSON.stringify(char).slice(1, -1),
+          )
+          .join('') +
+        '"'
+      )
+    return JSON.stringify(value)
+  }
+  const headers =
+    '{' +
+    Object.entries(request.headers)
+      .map(([key, value]) => `${q(key)}: ${q(value)}`)
+      .join(', ') +
+    '}'
+  const body = request.body,
+    hasBody = body !== undefined,
+    u = q(request.url),
+    method = q(request.method)
+  const entries = Object.entries(request.headers)
   const templates: Record<string, string> = {
-    javascript: `const response = await fetch(${u}, {\n  method: '${method}',\n  headers: ${headers},${body ? `\n  body: ${JSON.stringify(body)},` : ''}\n})\nconsole.log(await response.text())`,
-    node: `import axios from 'axios'\n\nconst response = await axios({ url: ${u}, method: '${method}', headers: ${headers}${body ? `, data: ${JSON.stringify(body)}` : ''} })\nconsole.log(response.data)`,
-    python: `import requests\n\nresponse = requests.request('${method}', ${u}, headers=${headers.replace(/"/g, "'")}${body ? `, data=${JSON.stringify(body)}` : ''})\nprint(response.text)`,
-    go: `req, _ := http.NewRequest("${method}", ${u}, ${body ? `strings.NewReader(${JSON.stringify(body)})` : 'nil'})\n${Object.entries(
-      request.headers,
-    )
-      .map(([key, value]) => `req.Header.Set(${JSON.stringify(key)}, ${JSON.stringify(value)})`)
-      .join('\n')}\nresp, err := http.DefaultClient.Do(req)`,
-    rust: `let client = reqwest::Client::new();\nlet response = client.request(reqwest::Method::${method}, ${u})${Object.entries(
-      request.headers,
-    )
-      .map(([key, value]) => `\n  .header(${JSON.stringify(key)}, ${JSON.stringify(value)})`)
-      .join('')}${body ? `\n  .body(${JSON.stringify(body)})` : ''}\n  .send().await?;`,
-    java: `HttpRequest request = HttpRequest.newBuilder(URI.create(${u}))\n  .method("${method}", ${body ? `HttpRequest.BodyPublishers.ofString(${JSON.stringify(body)})` : 'HttpRequest.BodyPublishers.noBody()'})${Object.entries(
-      request.headers,
-    )
-      .map(([key, value]) => `\n  .header(${JSON.stringify(key)}, ${JSON.stringify(value)})`)
-      .join('')}\n  .build();`,
-    kotlin: `val request = Request.Builder().url(${u})${Object.entries(request.headers)
-      .map(([key, value]) => `.addHeader(${JSON.stringify(key)}, ${JSON.stringify(value)})`)
-      .join(
-        '',
-      )}.${method.toLowerCase()}(${body ? `${JSON.stringify(body)}.toRequestBody()` : ''}).build()`,
-    swift: `var request = URLRequest(url: URL(string: ${u})!)\nrequest.httpMethod = "${method}"${Object.entries(
-      request.headers,
-    )
-      .map(
-        ([key, value]) =>
-          `\nrequest.setValue(${JSON.stringify(value)}, forHTTPHeaderField: ${JSON.stringify(key)})`,
-      )
-      .join('')}${body ? `\nrequest.httpBody = ${JSON.stringify(body)}.data(using: .utf8)` : ''}`,
-    csharp: `using var request = new HttpRequestMessage(HttpMethod.${method[0]}${method.slice(1).toLowerCase()}, ${u});${Object.entries(
-      request.headers,
-    )
-      .map(
-        ([key, value]) =>
-          `\nrequest.Headers.TryAddWithoutValidation(${JSON.stringify(key)}, ${JSON.stringify(value)});`,
-      )
-      .join('')}${body ? `\nrequest.Content = new StringContent(${JSON.stringify(body)});` : ''}`,
-    php: `$ch = curl_init(${u});\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, '${method}');${body ? `\ncurl_setopt($ch, CURLOPT_POSTFIELDS, ${JSON.stringify(body)});` : ''}\ncurl_setopt($ch, CURLOPT_HTTPHEADER, ${jsonToPhp(Object.entries(request.headers).map(([key, value]) => `${key}: ${value}`))});\n$response = curl_exec($ch);`,
-    ruby: `uri = URI(${u})\nrequest = Net::HTTP::${method[0]}${method.slice(1).toLowerCase()}.new(uri)${Object.entries(
-      request.headers,
-    )
-      .map(([key, value]) => `\nrequest[${JSON.stringify(key)}] = ${JSON.stringify(value)}`)
-      .join('')}${body ? `\nrequest.body = ${JSON.stringify(body)}` : ''}`,
-    dart: `final response = await http.${method.toLowerCase()}(Uri.parse(${u}), headers: ${headers}${body ? `, body: ${JSON.stringify(body)}` : ''});`,
-    r: `response <- httr::VERB('${method}', ${u}, httr::add_headers(${Object.entries(
-      request.headers,
-    )
-      .map(([key, value]) => `${JSON.stringify(key)} = ${JSON.stringify(value)}`)
-      .join(', ')})${body ? `, body = ${JSON.stringify(body)}` : ''})`,
-    c: `/* libcurl */\nCURL *curl = curl_easy_init();\ncurl_easy_setopt(curl, CURLOPT_URL, ${u});\ncurl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "${method}");${body ? `\ncurl_easy_setopt(curl, CURLOPT_POSTFIELDS, ${JSON.stringify(body)});` : ''}`,
-    httpie: `http ${method} ${request.url} ${Object.entries(request.headers)
-      .map(([key, value]) => `${JSON.stringify(`${key}:${value}`)}`)
-      .join(' ')}${body ? ` <<< ${JSON.stringify(body)}` : ''}`,
+    javascript: `const response = await fetch(${u}, {\n  method: ${method},\n  headers: ${headers}${hasBody ? `,\n  body: ${q(body)}` : ''}\n});\nconsole.log(await response.text());`,
+    node: `import axios from 'axios';\nconst response = await axios({ url: ${u}, method: ${method}, headers: ${headers}${hasBody ? `, data: ${q(body)}` : ''} });\nconsole.log(response.data);`,
+    python: `import requests\nresponse = requests.request(${method}, ${u}, headers=${headers}${hasBody ? `, data=${q(body)}` : ''})\nprint(response.text)`,
+    go: `req, _ := http.NewRequest(${method}, ${u}, ${hasBody ? `strings.NewReader(${q(body)})` : 'nil'})\n${entries.map(([key, value]) => `req.Header.Set(${q(key)}, ${q(value)})`).join('\n')}\nresp, err := http.DefaultClient.Do(req)`,
+    rust: `let client = reqwest::Client::new();\nlet response = client.request(reqwest::Method::from_bytes(${method}.as_bytes())?, ${u})${entries.map(([key, value]) => `\n  .header(${q(key)}, ${q(value)})`).join('')}${hasBody ? `\n  .body(${q(body)})` : ''}\n  .send().await?;`,
+    java: `HttpRequest request = HttpRequest.newBuilder(URI.create(${u}))\n  .method(${method}, ${hasBody ? `HttpRequest.BodyPublishers.ofString(${q(body)})` : 'HttpRequest.BodyPublishers.noBody()'})${entries.map(([key, value]) => `\n  .header(${q(key)}, ${q(value)})`).join('')}\n  .build();`,
+    kotlin: `val request = Request.Builder().url(${u})${entries.map(([key, value]) => `.addHeader(${q(key)}, ${q(value)})`).join('')}.method(${method}, ${hasBody ? `${q(body)}.toRequestBody()` : ['POST', 'PUT', 'PATCH'].includes(request.method) ? '"".toRequestBody()' : 'null'}).build()`,
+    swift: `var request = URLRequest(url: URL(string: ${u})!)\nrequest.httpMethod = ${method}${entries.map(([key, value]) => `\nrequest.setValue(${q(value)}, forHTTPHeaderField: ${q(key)})`).join('')}${hasBody ? `\nrequest.httpBody = ${q(body)}.data(using: .utf8)` : ''}`,
+    csharp: `using var request = new HttpRequestMessage(new HttpMethod(${method}), ${u});${entries.map(([key, value]) => `\nrequest.Headers.TryAddWithoutValidation(${q(key)}, ${q(value)});`).join('')}${hasBody ? `\nrequest.Content = new StringContent(${q(body)});` : ''}`,
+    php: `$ch = curl_init(${u});\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, ${method});${hasBody ? `\ncurl_setopt($ch, CURLOPT_POSTFIELDS, ${q(body)});` : ''}\ncurl_setopt($ch, CURLOPT_HTTPHEADER, ${jsonToPhp(entries.map(([key, value]) => `${key}: ${value}`))});\n$response = curl_exec($ch);`,
+    ruby: `uri = URI(${u})\nrequest = Net::HTTPGenericRequest.new(${method}, ${hasBody ? 'true' : 'false'}, ${request.method === 'HEAD' ? 'false' : 'true'}, uri.request_uri)${entries.map(([key, value]) => `\nrequest[${q(key)}] = ${q(value)}`).join('')}${hasBody ? `\nrequest.body = ${q(body)}` : ''}`,
+    dart: `final request = http.Request(${method}, Uri.parse(${u}));\nrequest.headers.addAll(${headers});${hasBody ? `\nrequest.body = ${q(body)};` : ''}\nfinal response = await request.send();`,
+    r: `response <- httr::VERB(${method}, ${u}, httr::add_headers(${entries.map(([key, value]) => `${q(key)} = ${q(value)}`).join(', ')})${hasBody ? `, body = ${q(body)}` : ''})`,
+    c: `/* libcurl */\nCURL *curl = curl_easy_init();\ncurl_easy_setopt(curl, CURLOPT_URL, ${u});\ncurl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, ${method});${hasBody ? `\ncurl_easy_setopt(curl, CURLOPT_POSTFIELDS, ${q(body)});` : ''}\nstruct curl_slist *headers = NULL;\n${entries.map(([key, value]) => `headers = curl_slist_append(headers, ${q(`${key}: ${value}`)});`).join('\n')}\ncurl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);`,
+    httpie: `http ${method} ${u} ${entries.map(([key, value]) => q(`${key}:${value}`)).join(' ')}${hasBody ? ` <<< ${q(body)}` : ''}`,
   }
   return templates[language] ?? templates.javascript ?? ''
 }
@@ -559,15 +507,30 @@ export const runConvert: OperationRunner = async (id, input, options) => {
     }
     case 'curl-to-code': {
       const request = parseCurl(source)
+      if (request.bodyFromFile)
+        throw new Error(formatEngineMessage({ code: 'diagnostic-curl-file' }))
       const sensitive = Object.keys(request.headers).filter((key) =>
         /authorization|cookie|api[-_]key/i.test(key),
       )
       return textResult(
         requestCode(request, optionString(options, 'language', 'javascript')),
         undefined,
-        sensitive.length
-          ? [`Sensitive headers detected: ${sensitive.join(', ')}`]
-          : ['The cURL command was parsed as text and never executed.'],
+        [
+          sensitive.length
+            ? `Sensitive headers detected: ${sensitive.join(', ')}`
+            : 'The cURL command was parsed as text and never executed.',
+          ...(request.unmodeledOptions
+            ? [
+                formatEngineMessage({
+                  code: 'warning-curl-unmodeled',
+                  params: { optionCount: request.unmodeledOptions.length },
+                }),
+              ]
+            : []),
+          ...(request.shellExpressions
+            ? [formatEngineMessage({ code: 'warning-curl-shell-literal' })]
+            : []),
+        ],
       )
     }
     case 'json-to-code':

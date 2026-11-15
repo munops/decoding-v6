@@ -1,5 +1,17 @@
 // Engine-owned explanation identifiers. Prose belongs to presentation.
 export const engineMessageCodes = [
+  'diagnostic-curl-unclosed',
+  'diagnostic-curl-url',
+  'diagnostic-curl-size',
+  'diagnostic-curl-argument',
+  'diagnostic-curl-method',
+  'diagnostic-curl-header',
+  'diagnostic-curl-file',
+  'warning-curl-text-only',
+  'warning-curl-unmodeled',
+  'warning-curl-shell-literal',
+  'warning-curl-file-body',
+
   'warning-hcert-unverified',
   'warning-wallet-checksum-absent',
   'warning-wallet-unverified',

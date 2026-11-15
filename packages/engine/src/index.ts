@@ -31,3 +31,6 @@ export type { EngineMessageCode } from './message-codes'
 export type { MessageFact, SafeName } from './message-facts'
 export { safeName, algorithmName } from './message-facts'
 export { diagnosticField, withDiagnosticFields } from './diagnostics'
+
+export { parseCurlRequest, CurlParseError } from './formats/curl-request'
+export type { CurlRequest } from './formats/curl-request'

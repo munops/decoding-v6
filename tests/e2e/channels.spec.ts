@@ -1,7 +1,10 @@
 import { chromium, expect, test } from '@playwright/test'
 import { resolve } from 'node:path'
 
-test('unpacked extension decodes locally and keeps values out of requests and storage', async ({}, testInfo) => {
+test('unpacked extension decodes locally and keeps values out of requests and storage', async ({
+  browserName,
+}, testInfo) => {
+  test.skip(browserName !== 'chromium', 'The unpacked extension harness uses Chromium.')
   const extension = resolve('apps/extension/dist')
   const context = await chromium.launchPersistentContext(testInfo.outputPath('extension-profile'), {
     channel: 'chromium',

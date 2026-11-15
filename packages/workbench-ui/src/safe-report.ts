@@ -28,6 +28,7 @@ export function nearbyTools(source: string, result?: DecodeResult): string[] {
   if (source.trim().length < 2) return []
   const candidates = result?.root.candidates.map((item) => item.detector) ?? []
   const byFormat: Record<string, string[]> = {
+    'curl-command': ['curl-to-code', 'url-parser', 'string-inspector'],
     mojibake: ['mojibake-repair', 'string-inspector', 'text-diff'],
     'unicode-normalization': ['string-inspector', 'mojibake-repair', 'text-diff'],
     jwt: ['jwt-debugger', 'base64-string', 'unix-time'],

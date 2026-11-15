@@ -124,6 +124,15 @@ export function AnswerCard({
           </pre>
         </div>
       ) : null}
+      {final?.detector === 'curl-command' && onTool ? (
+        <button
+          type="button"
+          class="button secondary"
+          onClick={() => onTool('curl-to-code', source)}
+        >
+          {copy.curlToCode}
+        </button>
+      ) : null}
       {facts.length ? (
         <section>
           <h3>{copy.facts}</h3>

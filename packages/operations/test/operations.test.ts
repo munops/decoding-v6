@@ -290,3 +290,37 @@ it('chooses decode for encoded input and allows explicit encoding', async () => 
     'hello\nworld',
   )
 })
+it('keeps quoted curl data inert across code outputs and preserves Python quoting', async () => {
+  const source =
+    'curl "https://example.test/$(touch_UNTRUSTED)" -H "X-Name: Bob\'s ${UNTRUSTED}" --data-raw \'{"value":"${UNTRUSTED}","quote":"Bob\'"\'"\'s"}\''
+  const js = await executeOperation('curl-to-code', source, { language: 'javascript' })
+  const calls: unknown[] = []
+  const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor
+  await new AsyncFunction('fetch', 'console', String(js.output))(
+    async (url: unknown, options: unknown) => {
+      calls.push({ url, options })
+      return { text: async () => '' }
+    },
+    { log: () => {} },
+  )
+  expect(calls[0]).toMatchObject({
+    url: 'https://example.test/$(touch_UNTRUSTED)',
+    options: { headers: { 'X-Name': "Bob's ${UNTRUSTED}" } },
+  })
+  for (const language of ['kotlin', 'dart'])
+    expect(String((await executeOperation('curl-to-code', source, { language })).output)).toContain(
+      '\\${UNTRUSTED}',
+    )
+  for (const language of ['php', 'ruby'])
+    expect(String((await executeOperation('curl-to-code', source, { language })).output)).toContain(
+      "Bob\\'s",
+    )
+  const httpie = String(
+    (await executeOperation('curl-to-code', source, { language: 'httpie' })).output,
+  )
+  expect(httpie).toContain("'https://example.test/$(touch_UNTRUSTED)'")
+  const python = String(
+    (await executeOperation('curl-to-code', source, { language: 'python' })).output,
+  )
+  expect(python).toContain('"X-Name": "Bob\'s ${UNTRUSTED}"')
+})
