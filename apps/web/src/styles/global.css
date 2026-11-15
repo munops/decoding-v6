@@ -2921,3 +2921,10 @@ html[data-text-size='large'] :where(p, label, button, summary, a, dt, dd, input,
     padding-top: 20px;
   }
 }
+
+@media (max-width: 360px) {
+  .paste-surface .input-actions .file-action {
+    padding-inline: 6px;
+    white-space: nowrap;
+  }
+}
