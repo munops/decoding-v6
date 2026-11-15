@@ -15,10 +15,10 @@ const en = {
   limits:
     'It cannot inspect Worker request bodies, other tabs, extensions, the operating system, every browser transport, truncated values or arbitrary encodings. This panel is an observation aid. Use the browser’s Network panel or disconnect for a stronger check.',
   inputScope:
-    'Use text from 8 to 65,536 characters. Files, shorter/longer text and unreadable bodies show an unknown result instead of an unearned zero. Checks stay only in page memory and reset when the input changes.',
+    'Compared input and decoded text must each contain 8 to 65,536 characters. Files, shorter/longer text and unreadable bodies show an unknown result instead of an unearned zero. Checks stay only in page memory and reset when the input changes.',
   calls: 'Page API calls',
   resources: 'Resource loads',
-  uninspected: 'Bodies or headers not fully inspected',
+  uninspected: 'Incomplete or pending checks',
   limited: 'Some request details or APIs are outside this observation.',
   unknownInput: 'Paste an eligible text value to start a meaningful comparison.',
   concern:
@@ -52,10 +52,10 @@ const ko: typeof en = {
   limits:
     'Worker의 요청 본문·다른 탭·확장 프로그램·운영체제·모든 브라우저 전송 경로·잘린 값·임의의 다른 표기까지 볼 수는 없어요. 이 칸은 관측을 돕는 도구예요. 더 확인하려면 브라우저 Network 칸을 보거나 인터넷을 끊고 써 보세요.',
   inputScope:
-    '문자 8~65,536자를 관측해요. 파일·너무 짧거나 긴 글·읽을 수 없는 본문은 근거 없이 0으로 표시하지 않아요. 비교 자료는 페이지 메모리에만 두고 입력을 바꾸면 새로 시작해요.',
+    '입력과 풀린 문자 각각 8~65,536자를 관측해요. 파일·너무 짧거나 긴 글·읽을 수 없는 본문은 근거 없이 0으로 표시하지 않아요. 비교 자료는 페이지 메모리에만 두고 입력을 바꾸면 새로 시작해요.',
   calls: '페이지 API 호출',
   resources: '리소스 읽기',
-  uninspected: '끝까지 살펴보지 못한 본문·머리말',
+  uninspected: '끝내지 못했거나 범위 밖인 비교',
   limited: '이 관측으로 볼 수 없는 요청 내용이나 API가 있어요.',
   unknownInput: '관측할 수 있는 길이의 문자 값을 붙여넣어 주세요.',
   concern:

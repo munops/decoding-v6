@@ -107,10 +107,14 @@ export function createProofObservation(now: () => number = () => performance.now
     for (const listener of listeners) listener()
   }
   const add = (text: string) => {
-    if (text.length < MIN || text.length > MAX || signatures.size >= 64) return
+    if (!text) return
+    if (text.length < MIN || text.length > MAX || signatures.size >= 64) {
+      uninspected++
+      return
+    }
     const variants = [text, JSON.stringify(text).slice(1, -1)]
     try {
-      variants.push(encodeURIComponent(text))
+      variants.push(encodeURIComponent(text), new URLSearchParams({ v: text }).toString().slice(2))
     } catch {
       uninspected++
     }
@@ -121,7 +125,14 @@ export function createProofObservation(now: () => number = () => performance.now
     }
     const bytes = new TextEncoder().encode(text)
     variants.push(encodeBase64(bytes), encodeBase64(bytes, true))
-    for (const value of variants) if (value && signatures.size < 64) signatures.add(value)
+    for (const value of variants) {
+      if (!value || signatures.has(value)) continue
+      if (signatures.size >= 64) {
+        uninspected++
+        break
+      }
+      signatures.add(value)
+    }
   }
   const contains = (text: string) =>
     text.length > 0 && [...signatures].some((value) => text.includes(value))
@@ -171,7 +182,10 @@ export function createProofObservation(now: () => number = () => performance.now
     if (revision !== version) return
     let nodes = 0
     const walk = (node: DecodeResult['root']) => {
-      if (++nodes > 64) return
+      if (++nodes > 64) {
+        uninspected++
+        return
+      }
       const detection = node.selected
       if (typeof detection?.decoded === 'string') add(detection.decoded)
       if (typeof detection?.value === 'string') add(detection.value)

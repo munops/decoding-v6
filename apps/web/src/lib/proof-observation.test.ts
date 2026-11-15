@@ -132,3 +132,21 @@ it('shows unknown while an asynchronous body is pending and ignores late work af
   expect(observer.snapshot()).toMatchObject({ matches: 0, uninspected: 0 })
   stop()
 })
+
+it('detects form-encoded spaces and punctuation in both URL and request body', async () => {
+  const { observer, stop } = fixture()
+  const text = 'synthetic text+!*'
+  observer.setInput(text)
+  const form = new URLSearchParams({ q: text })
+  await observer.observeApi('/?' + form.toString())
+  await observer.observeApi('/form', form)
+  expect(observer.snapshot()).toMatchObject({ matches: 2, uninspected: 0 })
+  stop()
+})
+it('reports a decoded value outside the comparison limit instead of a false zero', async () => {
+  const { observer, stop } = fixture()
+  const revision = observer.setInput('SGVsbG8=')
+  observer.addResult(await decode('SGVsbG8='), revision)
+  expect(observer.snapshot().uninspected).toBeGreaterThan(0)
+  stop()
+})
