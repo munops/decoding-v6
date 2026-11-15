@@ -28,3 +28,12 @@ it('summarizes and shares the observed chain when the final value is selected', 
       ?.chain,
   ).toHaveLength(3)
 })
+
+it('keeps browser self-description isolated from token summary logic', async () => {
+  const { decode } = await import('@decoding/engine')
+  const { answerSentence } = await import('../src/answer-copy')
+  const ua = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) Version/17.0 Safari/604.1'
+  expect(answerSentence((await decode(ua)).root, 'ko', ua)).toContain('iPhone의 Safari 17.0')
+  const token = 'eyJhbGciOiJub25lIn0.eyJleHAiOjF9.'
+  expect(answerSentence((await decode(token)).root, 'ko', token)).toContain('로그인 토큰')
+})

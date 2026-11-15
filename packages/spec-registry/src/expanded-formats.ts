@@ -45,5 +45,32 @@ export const expandedSpecs: ExpandedSpec[] = [
       { title: 'RFC 3629 — UTF-8', url: 'https://www.rfc-editor.org/rfc/rfc3629' },
     ],
   },
+  {
+    detector: 'user-agent',
+    slug: 'user-agent',
+    label: 'Browser User-Agent',
+    description:
+      'Read the declared browser, version, operating system and device family. This self-description may be reduced or spoofed; it is not device verification.',
+    korean: {
+      label: '브라우저 이름표',
+      description:
+        '브라우저가 적은 이름·버전·운영체제·기기 종류를 읽어요. 일부 정보가 줄어 있거나 다르게 적힐 수 있어 실제 기기를 확인한 것은 아니에요.',
+    },
+    examples: [
+      'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Version/17.0 Mobile/15E148 Safari/604.1',
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0',
+      'Mozilla/5.0 (X11; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0',
+    ],
+    references: [
+      {
+        title: 'RFC 9110 — User-Agent',
+        url: 'https://httpwg.org/specs/rfc9110.html#field.user-agent',
+      },
+      {
+        title: 'MDN — User-Agent syntax and reduction',
+        url: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent',
+      },
+    ],
+  },
 ]
 export const expandedKoreanCopy = new Map(expandedSpecs.map((spec) => [spec.detector, spec.korean]))

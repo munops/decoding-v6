@@ -156,6 +156,10 @@ const sentences: Record<string, [string, string]> = {
     'This writes bytes as octal numbers. We decoded the next layer.',
     '글자를 8진수로 적은 거예요. 한 겹 풀었어요.',
   ],
+  'user-agent': [
+    "This is a browser's self-description. It reports {browser} {version} on {device}.",
+    '브라우저가 자기를 소개하는 글이에요. {device}의 {browser} {version}이라고 적혀 있어요.',
+  ],
   'binary-bytes': [
     'This writes bytes using zeros and ones. We decoded the next layer.',
     '글자를 0과 1로 적은 거예요. 한 겹 풀었어요.',
@@ -323,6 +327,12 @@ export function answerSentence(root: ChainNode, locale: WorkbenchLocale, source:
       : answerMessages(locale).unknown.replace('{count}', String(summaryFormats.length))
   const ko = locale === 'ko'
   let sentence = sentences[first.detector]?.[ko ? 1 : 0] ?? first.label
+  if (first.detector === 'user-agent') {
+    const value = first.value as Record<string, unknown>
+    sentence = sentence.replace(/\{(browser|version|device)\}/g, (_, key: string) =>
+      String(value[key] ?? ''),
+    )
+  }
   if (first.metadata?.photoRead) {
     sentence = ko
       ? `사진에서 ${first.metadata.photoRead}을 읽었어요. 연결된 곳을 열지 않고 먼저 보여 드려요.`
@@ -582,6 +592,16 @@ export function answerFacts(
   const value = detection.value as Record<string, unknown>,
     copy = answerMessages(locale),
     rows: Array<[string, string]> = []
+  if (detection.detector === 'user-agent')
+    return [
+      ['브라우저', 'Browser'],
+      ['버전', 'Version'],
+      ['운영체제', 'Operating system'],
+      ['기기', 'Device'],
+    ].map((labels, i) => [
+      labels[locale === 'ko' ? 0 : 1]!,
+      String(value[['browser', 'version', 'os', 'device'][i]!] ?? ''),
+    ])
   const payload = (
     value.payload && typeof value.payload === 'object' ? value.payload : value
   ) as Record<string, unknown>

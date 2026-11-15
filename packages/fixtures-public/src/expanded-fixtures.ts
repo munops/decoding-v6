@@ -147,3 +147,59 @@ expandedFixtures.push(
     ],
   ),
 )
+const ua = (tail: string, os = 'Windows NT 10.0; Win64; x64') =>
+  `Mozilla/5.0 (${os}) AppleWebKit/537.36 (KHTML, like Gecko) ${tail}`
+expandedFixtures.push(
+  ...publicCases(
+    'user-agent',
+    [
+      ...[100, 101, 102, 103].map((i) => ua(`Chrome/${i}.0.0.0 Safari/537.36`)),
+      ...[100, 101, 102, 103].map((i) => ua(`Chrome/${i}.0 Safari/537.36 Edg/${i}.0`)),
+      ...[100, 101, 102, 103].map((i) => ua(`Gecko/20100101 Firefox/${i}.0`, 'X11; Linux x86_64')),
+      ...[15, 16, 17, 18].map((i) =>
+        ua(
+          `Version/${i}.0 Mobile/15E148 Safari/604.1`,
+          `iPhone; CPU iPhone OS ${i}_0 like Mac OS X`,
+        ),
+      ),
+      ua('Chrome/131.0 Mobile Safari/537.36', 'Linux; Android 10; K'),
+      ua('Chrome/131.0 Safari/537.36', 'Linux; Android 10; K'),
+      ua('Chrome/131.0 Safari/537.36 OPR/100.0'),
+      ua('Version/17.0 Safari/605.1.15', 'Macintosh; Intel Mac OS X 10_15_7'),
+    ],
+    [
+      ua('CriOS/131.0 Mobile/15E148 Safari/604.1', 'iPhone; CPU iPhone OS 17_0 like Mac OS X'),
+      ua('FxiOS/131.0 Mobile/15E148 Safari/604.1', 'iPad; CPU OS 17_0 like Mac OS X'),
+      ua('Chrome/131.0 Safari/537.36 EdgA/131.0', 'Linux; Android 10; K'),
+      ua('Version/17.0 Safari/604.1', 'iPad; CPU OS 17_0 like Mac OS X'),
+      ua('Chrome/131.0 Safari/537.36', 'X11; CrOS x86_64 0.0.0'),
+      ua('Chrome/131.0 Safari/537.36 EdgiOS/131.0', 'iPhone; CPU iPhone OS 17_0 like Mac OS X'),
+      'User-Agent: ' + ua('Firefox/131.0'),
+      ua('Chrome/131.0 Safari/537.36 OPT/92.0', 'iPhone; CPU iPhone OS 17_0 like Mac OS X'),
+      ' ' + ua('Chrome/131.0') + ' ',
+      ua('Firefox/131.0', 'unknown'),
+    ],
+    [
+      'Mozilla/5.0',
+      'Mozilla/5.0 (Windows)',
+      'Chrome/131.0',
+      'Safari/604.1',
+      'Version/17.0',
+      'User-Agent:',
+      'User-Agent: hello',
+      'Mozilla/5.0 (Windows) Safari/537.36',
+      'Mozilla/5.0 (Windows) Chrome/no',
+      'hello Chrome/131.0',
+      '한국어 문장',
+      'Une phrase française.',
+      'An English sentence.',
+      '{"User-Agent":"Chrome/131.0"}',
+      'From: test@example.test',
+      'SGVsbG8=',
+      '101 102',
+      '01000001 01000010',
+      'https://example.test/Chrome/131.0',
+      ua('Chrome/131.0') + '\nother',
+    ],
+  ),
+)

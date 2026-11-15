@@ -260,6 +260,13 @@ rows.push([
   'Review the metadata before sharing. This tool reads metadata and does not remove it.',
   'https://www.cipa.jp/std/documents/e/DC-008-Translation-2023-E.pdf',
 ])
+rows.push([
+  'UA-SELF-REPORTED',
+  'Self-reported browser information',
+  'A User-Agent may be reduced or spoofed. It does not prove the actual browser or device.',
+  'Treat this as a reading of the supplied string. Do not use it for identity or security decisions.',
+  'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent',
+])
 export const ruleSpecs: RuleSpec[] = rows.map(([id, title, why, fix, reference]) => ({
   id,
   title,

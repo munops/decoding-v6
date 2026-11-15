@@ -1,5 +1,7 @@
 import type { EngineMessageCode } from '@decoding/engine'
 export const englishEngineCopy = {
+  'warning-ua-self-reported':
+    'This is what the browser reports. The string may be reduced or spoofed; it does not verify the actual device.',
   'diagnostic-pem-invalid': 'invalid private key; not interpreted',
   'diagnostic-pem-unknown': 'unknown private key',
   'diagnostic-pem-encrypted': 'encrypted private key; not interpreted',

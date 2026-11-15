@@ -41,3 +41,15 @@ it('decodes octal UTF-8 bytes and preserves bounds and ambiguous numbers', async
   for (const input of ['0o400', '777 101', '101 0o777'])
     expect((await detect(input)).some((item) => item.detector === 'octal-bytes')).toBe(false)
 })
+it('reads declared Safari release and Edge precedence without verifying the device', async () => {
+  const input =
+    'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Version/17.0 Mobile/15E148 Safari/604.1'
+  const result = await detect(input)
+  const ua = result.find((item) => item.detector === 'user-agent')!
+  expect(ua.value).toEqual({ browser: 'Safari', version: '17.0', os: 'iOS', device: 'iPhone' })
+  expect(ua.warnings[0]?.ruleId).toBe('UA-SELF-REPORTED')
+  const edge = (
+    await detect('Mozilla/5.0 (Windows NT 10.0) Chrome/131.0 Safari/537.36 Edg/132.0')
+  ).find((item) => item.detector === 'user-agent')!
+  expect(edge.value).toHaveProperty('browser', 'Edge')
+})

@@ -1,5 +1,10 @@
 import type { RuleSpec } from '@decoding/spec-registry'
 const ko: Record<string, [string, string, string]> = {
+  'UA-SELF-REPORTED': [
+    '브라우저가 적은 정보',
+    '보내는 쪽이 적은 정보라 줄이거나 다르게 적을 수 있어요. 실제 기기를 확인한 것은 아니에요.',
+    '주어진 글을 읽은 결과로만 보세요. 신원이나 보안을 판단하는 근거로 쓰면 안 돼요.',
+  ],
   'JWT-ALG-NONE': [
     '서명 없는 토큰',
     'alg=none 토큰에는 발급자를 증명하는 인증 서명이 없어요.',

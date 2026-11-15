@@ -7,6 +7,8 @@ const ko: Record<MessageFact['code'], string> = {
   'diagnostic-pem-encrypted': '암호화된 비밀 키라 내용을 해석하지 않았어요.',
   'diagnostic-pem-unknown': '종류를 알 수 없는 비밀 키예요.',
   'diagnostic-pem-invalid': '잘못된 비밀 키라 내용을 해석하지 않았어요.',
+  'warning-ua-self-reported':
+    '브라우저가 스스로 적은 정보예요. 일부를 줄이거나 다르게 적을 수 있어 실제 기기를 확인한 것은 아니에요.',
   'photo-read': '사진에서 코드를 읽었어요. 연결되는 곳은 열지 않았어요.',
   'summary-url': '{protocol}//{host}',
   'summary-epoch': '{milliseconds}',
