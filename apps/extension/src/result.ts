@@ -1,10 +1,6 @@
 import './style.css'
 import { decode } from '@decoding/engine'
-import {
-  answerSentence,
-  primaryLayers,
-  warningTitle,
-} from '@decoding/presentation'
+import { answerSentence, primaryLayers, warningTitle } from '@decoding/presentation'
 import {
   displayValue,
   finalSelection,

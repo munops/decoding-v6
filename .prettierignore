@@ -9,3 +9,6 @@ docs/research
 
 # Non-shipped, read-only design exploration
 prototypes
+
+# Immutable pre-migration JSON compatibility evidence; preserve original bytes.
+docs/evidence/decoding-improve-20261115/a13/legacy-json-baseline.json
