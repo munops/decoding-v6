@@ -189,6 +189,10 @@ const sentences: Record<string, [string, string]> = {
     'This value was wrapped in Base45. We decoded the next layer.',
     'Base45로 싼 값이에요. 한 겹 풀었어요.',
   ],
+  sql: [
+    'This looks like SQL. We recognized statement patterns without running or fully validating the query.',
+    'SQL 문으로 보여요. 실행하거나 전체 문법을 검증하지 않고 문장의 모양을 살펴봤어요.',
+  ],
   'json-lines': [
     'Each line is a separate JSON value. We read {lines} records.',
     '한 줄에 JSON 자료 하나씩 적은 거예요. {lines}줄을 읽었어요.',
@@ -664,6 +668,11 @@ export function answerFacts(
         String(value.timestamp),
       ],
       [locale === 'ko' ? '가정한 시작 시각' : 'Assumed epoch', String(value.epochStart)],
+    ]
+  if (detection.detector === 'sql')
+    return [
+      [locale === 'ko' ? '문장 수' : 'Statements', String(value.statements)],
+      [locale === 'ko' ? '명령 종류' : 'Commands', (value.commands as string[]).join(', ')],
     ]
   if (detection.detector === 'json-lines')
     return [[locale === 'ko' ? '자료 줄 수' : 'Records', String(value.lines)]]

@@ -1,3 +1,4 @@
+import { sql, sqlStatements } from '../src/formats/expanded/sql'
 import { jsonLines } from '../src/formats/expanded/json-lines'
 import { filetime } from '../src/formats/expanded/filetime'
 import { asn1Der } from '../src/formats/expanded/asn1-der'
@@ -316,4 +317,15 @@ it('reads JSON Lines with masked credentials and numeric limits disclosed', asyn
     (await jsonLines.detect('9007199254740993\n0', {} as never))?.warnings.map((w) => w.ruleId),
   ).toContain('JSON-NUMBER-PRECISION')
   expect(await jsonLines.detect('1\n2\n\n', {} as never)).toBeNull()
+})
+
+it('keeps SQL quotes/comments inert and exposes only a lexical candidate', async () => {
+  expect(sqlStatements("SELECT 'a;b'; /* comment ; */ SELECT $$x;y$$")).toHaveLength(2)
+  expect((await sql.detect("SELECT 'synthetic-secret'", {} as never))?.confidence).toBeLessThan(
+    0.85,
+  )
+  expect(
+    JSON.stringify((await sql.detect("SELECT 'synthetic-secret'", {} as never))?.value),
+  ).not.toContain('synthetic-secret')
+  expect(await sql.detect("SELECT 'unclosed", {} as never)).toBeNull()
 })

@@ -1,3 +1,4 @@
+import { sql } from './sql'
 import { jsonLines } from './json-lines'
 import { filetime } from './filetime'
 import { asn1Der } from './asn1-der'
@@ -26,4 +27,5 @@ export const expandedDetectors = [
   asn1Der,
   filetime,
   jsonLines,
+  sql,
 ]

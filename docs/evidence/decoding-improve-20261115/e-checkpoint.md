@@ -90,3 +90,9 @@ An independent subtype corpus contains 20 positive/10 edge/20 negative cases, se
 ## JSON Lines
 
 Two or more JSON values are read per LF/CRLF line, with an optional terminal newline. Blank lines, BOM, malformed records and bounded-size/count excess are rejected (256 KiB, 4096 records). Shared credential masking applies to records; numeric display uses existing JavaScript JSON semantics with an explicit precision/range warning for unsafe integers/nonfinite numbers. Original text remains the exact numeric source. 20 positive/10 edge/20 negative public cases plus credential/precision regressions; full suite 272 pass. Relevant type/lint/parity/i18n pass. 59 formats/49 tools.
+
+## SQL statements
+
+A bounded lexical candidate recognizes common SQL command shapes, respecting quotes, comments, dollar strings and balanced parentheses. It never invokes a database and stays at 0.8 confidence; this is explicitly not full dialect/schema/syntax or safety validation. Literal contents are omitted from the detected metadata. Existing SQL formatting remains the transformation owner; nearby tools now use the detected SQL candidate including WITH queries. Limits: 256 KiB/64 statements/64 parenthesis levels.
+
+20 positive/10 edge/20 negative cases and inert-literal regressions. An initial authored fixture quoting error was corrected before the complete retry; full suite 274 pass. Relevant type/lint/parity/i18n pass; targeted nearby-tool regression is additionally run. 60 formats/49 tools.

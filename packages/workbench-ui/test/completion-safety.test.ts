@@ -178,3 +178,10 @@ it('protects complete DER decode paths, byte views, layer previews and saved/cop
     expect(shown).not.toContain(encodeBase64(bytes))
   }
 })
+
+it('uses SQL detection rather than a SELECT-only text guess for nearby tools', async () => {
+  const input = 'WITH report AS (SELECT id FROM logs) SELECT * FROM report'
+  expect(nearbyTools(input, await decode(input, { previewAmbiguous: true }))).toEqual([
+    'sql-format',
+  ])
+})

@@ -300,5 +300,28 @@ export const expandedSpecs: ExpandedSpec[] = [
     examples: ['{"name":"one"}\n{"name":"two"}', '1\ntrue\nnull', '[1,2]\n[3,4]'],
     references: [{ title: 'JSON Lines format definition', url: 'https://jsonlines.org/' }],
   },
+  {
+    detector: 'sql',
+    slug: 'sql-statement',
+    label: 'SQL statement candidate',
+    description:
+      'Recognize common SELECT/WITH/INSERT/UPDATE/DELETE and table-definition statement patterns while respecting quoted text, comments, dollar strings and parentheses. This conservative candidate is not full syntax, dialect, schema or safety validation. SQL is never executed or sent to a database. Continue in the existing SQL formatter. Limits: 256 KiB, 64 statements and 64 parenthesis levels.',
+    korean: {
+      label: 'SQL 문',
+      description:
+        '흔한 조회·추가·수정·삭제·표 정의 문장의 모양을 살펴봐요. 따옴표·주석·달러 문자열·괄호를 구분하지만 모든 문법·방언·자료 틀이나 안전성을 검증하지는 않아요. 실행하거나 DB로 보내지 않아요. 기존 SQL 줄 맞추기 도구로 이어갈 수 있어요. 한도는 256 KiB·64문장·괄호 64겹이에요.',
+    },
+    examples: [
+      'SELECT id FROM logs WHERE active = true;',
+      'INSERT INTO logs (id) VALUES (1);',
+      'UPDATE logs SET active = false WHERE id = 1;',
+    ],
+    references: [
+      {
+        title: 'PostgreSQL — SQL lexical structure',
+        url: 'https://www.postgresql.org/docs/current/sql-syntax-lexical.html',
+      },
+    ],
+  },
 ]
 export const expandedKoreanCopy = new Map(expandedSpecs.map((spec) => [spec.detector, spec.korean]))
