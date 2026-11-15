@@ -28,12 +28,16 @@ function collector(limits: DecodeLimits, inputBytes: number) {
   }
 }
 let brotliModule: Promise<typeof import('brotli-dec-wasm/web')> | undefined
-function loadBrotliModule() {
-  return (brotliModule ??= (async () => {
+// Named async codec method is also the offline-inventory import boundary.
+const parserLoaders = {
+  async brotli() {
     const module = await loadParser(() => import('brotli-dec-wasm/web'))
     await loadParser(() => module.default())
     return module
-  })().catch((error) => {
+  },
+}
+function loadBrotliModule() {
+  return (brotliModule ??= parserLoaders.brotli().catch((error) => {
     brotliModule = undefined
     throw error
   }))
