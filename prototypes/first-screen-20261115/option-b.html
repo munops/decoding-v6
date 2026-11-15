@@ -1,0 +1,29 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>B안 · 무엇을 들고 왔는지부터 고른다</title><link rel="stylesheet" href="proto.css">
+<div class="app">
+  <header class="top"><span class="brand">decod<i>.ing</i></span><a class="local" href="common.html?s=proof" id="local"></a></header>
+  <main class="pad">
+    <h1>무엇을 들고 오셨나요?</h1>
+    <p class="lede">고르면 그 값에 맞는 칸이 열려요.</p>
+    <div class="grid" id="doors"></div>
+    <div id="stage" hidden>
+      <div class="box"><textarea id="in" rows="3" aria-label="풀어 볼 값"></textarea><div class="ins"><button class="btn pri" id="paste"></button><button class="btn" id="eg">예시 넣기</button></div></div>
+    </div>
+    <div id="out"></div>
+    <a class="row" href="option-a.html?v=new" id="dunno"></a>
+  </main>
+</div>
+<div id="nav"></div>
+<script src="proto.js"></script>
+<script>
+var P=Proto,$=function(i){return document.getElementById(i)},S=P.samples,cur=null;
+$('local').innerHTML=P.icon('shield')+'내 기기 안에서만';$('nav').innerHTML=P.nav('풀기');$('paste').innerHTML=P.icon('paste')+'붙여넣기';
+$('dunno').innerHTML=P.icon('search')+'<span>뭔지 전혀 모르겠어요<small>그냥 붙여넣으면 알아서 맞춰 봐요</small></span>'+P.icon('chev');
+var D=[['broken','깨진 글자','메일·문자·파일 이름이 이상한 글자로 보일 때','여기에 깨진 글자를 붙여넣으세요'],['link','긴 주소','눌러도 되는지, 어디로 가는지','여기에 주소를 붙여넣으세요'],['qr','QR 사진','찍기 전에 어디로 가는지','QR 사진을 고르세요'],['token','토큰·열쇠','eyJ…, Bearer…, 끝난 건지','여기에 토큰을 붙여넣으세요'],['nested','알 수 없는 글자','==로 끝나거나 뜻 모를 영문·숫자','여기에 붙여넣으세요'],['mail','메일 원문','제목이 =?UTF-8?…로 보일 때','여기에 메일 제목이나 머리말을 붙여넣으세요']];
+$('doors').innerHTML=D.map(function(d){return '<button class="door" data-k="'+d[0]+'">'+P.icon(S[d[0]].icon)+'<b>'+d[1]+'</b><span>'+d[2]+'</span></button>'}).join('');
+function show(v){$('in').value=v;$('out').innerHTML=v.trim()?P.renderAnswer(P.decode(v)):'';P.wireAnswer($('out'));var a=$('out').querySelector('.ans');if(a&&v)a.scrollIntoView({block:'start',behavior:'smooth'})}
+$('doors').addEventListener('click',function(e){var b=e.target.closest('.door');if(!b)return;cur=b.dataset.k;var d=D.filter(function(x){return x[0]===cur})[0];$('stage').hidden=false;$('in').placeholder=d[3];show('');$('in').focus()});
+$('eg').addEventListener('click',function(){show(S[cur].value)});
+$('in').addEventListener('input',function(){show($('in').value)});
+$('paste').addEventListener('click',function(){try{navigator.clipboard.readText().then(show,function(){})}catch(e){}});
+</script></html>

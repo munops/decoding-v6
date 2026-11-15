@@ -1,0 +1,23 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C안 · 도구부터 찾는다</title><link rel="stylesheet" href="proto.css">
+<div class="app">
+  <header class="top"><span class="brand">decod<i>.ing</i></span><a class="local" href="common.html?s=proof" id="local"></a></header>
+  <main class="pad">
+    <h1>도구 47가지</h1>
+    <div class="box" style="flex-direction:row;align-items:center"><span id="si"></span><input type="search" id="q" placeholder="하고 싶은 일로 찾기 (예: 시간, 한글, 줄 맞추기)" aria-label="도구 찾기"></div>
+    <a class="row" href="option-a.html?v=new" id="auto"></a>
+    <h2 id="h">자주 쓰는 것</h2>
+    <div class="grid" id="list"></div>
+    <p class="note" id="none" hidden>맞는 도구가 없어요. 값을 그냥 붙여넣으면 알아서 맞춰 봐요.</p>
+  </main>
+</div>
+<div id="nav"></div>
+<script src="proto.js"></script>
+<script>
+var P=Proto,$=function(i){return document.getElementById(i)};
+$('local').innerHTML=P.icon('shield')+'내 기기 안에서만';$('nav').innerHTML=P.nav('도구');$('si').innerHTML=P.icon('search');
+$('auto').innerHTML=P.icon('layers')+'<span>뭔지 모르는 값이면 그냥 붙여넣기<small>도구를 고르지 않아도 돼요</small></span>'+P.icon('chev');
+var T=[['Base64 풀기·싸기','글자 ↔ Base64','swap','base64 베이스64 인코딩 디코딩 한글'],['주소 글자 풀기','%EC… ↔ 한글','link','url 퍼센트 인코딩 주소 한글'],['시간 숫자 바꾸기','1763… ↔ 날짜','clock','unix epoch 시간 타임스탬프 날짜'],['로그인 토큰 보기','JWT 속 내용·끝나는 때','key','jwt 토큰 로그인 만료'],['JSON 줄 맞추기','한 줄 → 읽기 좋게','code','json 포맷 정렬 줄 맞추기 예쁘게'],['QR 읽기·만들기','사진 → 주소','qr','qr 큐알 사진 바코드'],['지문 값 만들기','MD5·SHA','hash','hash md5 sha 해시 지문'],['깨진 한글 되돌리기','ì•ˆ… → 안녕','type','한글 깨짐 깨진 글자 모지바케 euc-kr cp949'],['색 값 바꾸기','#ff8800 ↔ rgb','img','color 색 색상 헥스'],['두 글 견주기','달라진 곳 찾기','layers','diff 비교 견주기 차이'],['고유 번호 만들기','UUID·ULID','hash','uuid ulid 고유 번호 아이디'],['인증서 보기','끝나는 날·발급한 곳','shield','x509 pem 인증서 ssl 만료']];
+function draw(f){var n=0;$('list').innerHTML=T.filter(function(t){return !f||(t[0]+t[1]+t[3]).toLowerCase().indexOf(f.toLowerCase())>=0}).map(function(t){n++;return '<a class="tool" href="common.html?s=tool">'+P.icon(t[2])+'<span>'+t[0]+'<small>'+t[1]+'</small></span></a>'}).join('');$('none').hidden=n>0;$('h').textContent=f?'찾은 것 '+n+'개':'자주 쓰는 것'}
+$('q').addEventListener('input',function(){draw($('q').value.trim())});draw('');
+</script></html>
