@@ -1,8 +1,24 @@
+import { readFileSync } from 'node:fs'
+import { createRequire } from 'node:module'
+import * as brotliModule from 'brotli-dec-wasm/web'
 import { brotliCompressSync, brotliDecompressSync, deflateSync } from 'node:zlib'
 import { describe, expect, it } from 'vitest'
 import { decode, detect, DEFAULT_LIMITS, encodeBase64 } from '@decoding/engine'
 import { publicFixtures } from '@decoding/fixtures-public'
-import { webCodecs } from './codecs'
+import { webCodecs as browserCodecs, decodeBrotliStream } from './codecs'
+// Same real WASM and API as the browser; Node cannot fetch file: assets.
+brotliModule.initSync({
+  module: readFileSync(createRequire(import.meta.url).resolve('brotli-dec-wasm/web/bg.wasm')),
+})
+// The filesystem initialization is a Node-only test seam; all stream code/WASM is real.
+const probe = (bytes: Uint8Array, limits: typeof DEFAULT_LIMITS) =>
+  decodeBrotliStream(bytes, limits, async () => brotliModule)
+const webCodecs = {
+  ...browserCodecs,
+  brotliProbe: probe,
+  brotli: async (bytes: Uint8Array, limits: typeof DEFAULT_LIMITS) =>
+    (await probe(bytes, limits)).output,
+}
 describe('injected local codecs and manual decoding', () => {
   it('expands real zstd fixtures and enforces output limits', async () => {
     const bytes = publicFixtures.find((f) => f.detector === 'zstd' && f.class === 'positive')!
@@ -89,4 +105,53 @@ it('opens synthetic HC1 Base45/zlib/CBOR transport without certifying it', async
     ...node.children.flatMap(values),
   ]
   expect(values(result.root)).toContainEqual({ synthetic: true })
+})
+
+it('auto-detects fully consumed Brotli streams with a separate 20/10/20 subtype corpus', async () => {
+  const enc = new TextEncoder()
+  const positives = Array.from({ length: 20 }, (_, i) =>
+    brotliCompressSync(JSON.stringify({ fixture: i, local: true })),
+  )
+  const edges = [
+    'hello',
+    'A',
+    '{}',
+    '[]',
+    'true',
+    'null',
+    '1234567890',
+    'line\ntext',
+    'caf\u00e9',
+    '\ud55c\uae00 \ud83d\ude42',
+  ].map((value) => brotliCompressSync(value))
+  const sample = positives[0]!
+  const negatives = [
+    ...Array.from({ length: 10 }, (_, i) => enc.encode('plain fixture ' + i)),
+    ...Array.from({ length: 5 }, (_, i) => sample.subarray(0, i + 1)),
+    ...Array.from({ length: 5 }, (_, i) => new Uint8Array([...sample, i])),
+  ]
+  expect(positives).toHaveLength(20)
+  expect(edges).toHaveLength(10)
+  expect(negatives).toHaveLength(20)
+  for (const bytes of [...positives, ...edges]) {
+    const found = (await detect(bytes, { codecs: webCodecs })).find(
+      (item) => item.label === 'Brotli stream',
+    )
+    expect(found, Buffer.from(bytes).toString('hex')).toBeDefined()
+    expect(found?.decoded).toBe(brotliDecompressSync(bytes).toString())
+  }
+  for (const bytes of negatives)
+    expect(
+      (await detect(bytes, { codecs: webCodecs })).some((item) => item.label === 'Brotli stream'),
+    ).toBe(false)
+  const result = await decode(positives[0]!, { codecs: webCodecs })
+  expect(result.root.selected?.label).toBe('Brotli stream')
+  expect(result.root.children[0]?.selected?.value).toEqual({ fixture: 0, local: true })
+  await expect(webCodecs.brotli!(new Uint8Array([...sample, 0]), DEFAULT_LIMITS)).rejects.toThrow(
+    'Trailing',
+  )
+  await expect(
+    webCodecs.brotli!(sample, { ...DEFAULT_LIMITS, maxExpandedBytes: 2 }),
+  ).rejects.toThrow()
+  expect((await detect(sample)).some((item) => item.label === 'Brotli stream')).toBe(false)
 })

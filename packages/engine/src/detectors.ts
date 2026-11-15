@@ -1,3 +1,4 @@
+import { detectBrotli } from './formats/brotli'
 import { safeName, algorithmName } from './message-facts'
 import { inspectUrl } from './formats/url-facts'
 import { decodeLegacyPercent } from './formats/garbled'
@@ -504,7 +505,7 @@ const uuidDetector: Detector = {
 
 const compressionDetector: Detector = {
   id: 'compression',
-  detect(input, context) {
+  async detect(input, context) {
     const bytes = inputBytes(input)
     if (bytes.length < 3) return null
     const formats: Array<{
@@ -528,6 +529,7 @@ const compressionDetector: Detector = {
       {
         label: 'deflate',
         confidence: 0.72,
+        // Raw DEFLATE has no reliable header: intentionally manual-only.
         test: false,
         decode: () => boundedInflate(bytes, 'deflate', context.limits),
       },
@@ -612,10 +614,10 @@ const compressionDetector: Detector = {
               ],
             },
           )
-        return null
+        return detectBrotli(input, context)
       }
     }
-    return null
+    return detectBrotli(input, context)
   },
 }
 

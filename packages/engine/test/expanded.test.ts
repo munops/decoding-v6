@@ -364,3 +364,34 @@ it('decodes Morse letters, numbers, words and copied Unicode symbols', async () 
   expect(await morse.detect('... bad ---', {} as never)).toBeNull()
   expect(await morse.detect('.', {} as never)).toBeNull()
 })
+
+it('requires an explicit fully-consumed Brotli probe contract for auto detection', async () => {
+  const { detectBrotli } = await import('../src/formats/brotli')
+  const { DEFAULT_LIMITS } = await import('../src')
+  const input = new Uint8Array([139, 12, 128, 3]),
+    output = new TextEncoder().encode('synthetic')
+  const context = { limits: DEFAULT_LIMITS, now: new Date(), depth: 0 }
+  expect(
+    await detectBrotli(input, { ...context, codecs: { brotli: async () => output } } as never),
+  ).toBeNull()
+  expect(
+    await detectBrotli(input, {
+      ...context,
+      codecs: { brotliProbe: async () => ({ output, complete: true, consumedInputBytes: 3 }) },
+    } as never),
+  ).toBeNull()
+  expect(
+    await detectBrotli(input, {
+      ...context,
+      codecs: { brotliProbe: async () => ({ output, complete: false, consumedInputBytes: 4 }) },
+    } as never),
+  ).toBeNull()
+  expect(
+    (
+      await detectBrotli(input, {
+        ...context,
+        codecs: { brotliProbe: async () => ({ output, complete: true, consumedInputBytes: 4 }) },
+      } as never)
+    )?.label,
+  ).toBe('Brotli stream')
+})

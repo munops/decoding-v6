@@ -34,6 +34,14 @@ export type Detection = {
 export type DecodeCodecs = {
   zstd?: (bytes: Uint8Array, limits: DecodeLimits) => Promise<Uint8Array>
   brotli?: (bytes: Uint8Array, limits: DecodeLimits) => Promise<Uint8Array>
+  brotliProbe?: (
+    bytes: Uint8Array,
+    limits: DecodeLimits,
+  ) => Promise<{
+    output: Uint8Array
+    consumedInputBytes: number
+    complete: boolean
+  }>
   msgpack?: (bytes: Uint8Array) => Promise<unknown>
   cbor?: (bytes: Uint8Array) => Promise<unknown>
   toml?: (text: string) => Promise<unknown>

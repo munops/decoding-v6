@@ -53,8 +53,9 @@ const koreanDetectorCopy = {
     ],
   },
   compression: {
-    label: 'gzip / zlib / deflate 압축',
-    description: '크기와 압축비 제한 안에서 압축을 풀고 나온 값을 다음 단계에서 이어서 확인합니다.',
+    label: 'gzip / zlib / deflate / Brotli 압축',
+    description:
+      'gzip·zlib는 시작 표식과 크기·압축비 한도로 읽어요. 표식 없는 DEFLATE는 직접 고를 때만 풀어요. 로컬 풀이기가 있으면 Brotli도 끝까지 풀리는지 확인해요. 자동 시도는 글자가 아닌 4~65536바이트·풀린 크기 1 MiB 안에서 해요. 초기 로딩을 뺀 풀이 작업의 100ms 예산은 조각마다 끝난 뒤 확인해요. 다른 파일의 표식이 있거나 한도 밖이면 직접 고를 수 있어요. 풀렸다고 출처나 안전성을 보증하지는 않아요.',
     examples: [
       '사용자가 고른 .gz 파일',
       'gzip 시작 표식 1f 8b',

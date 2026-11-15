@@ -112,15 +112,16 @@ export const detectorSpecs: DetectorSpec[] = [
   {
     detector: 'compression',
     slug: 'compression',
-    label: 'gzip / zlib / deflate',
+    label: 'gzip / zlib / deflate / Brotli',
     description:
-      'Expand recognized compressed bytes under strict size and ratio limits, then continue the decode chain.',
+      'Expand recognized gzip/zlib bytes under strict limits. Raw DEFLATE is manual-only. With a local codec, Brotli uses fully consumed trial decoding (4–65536 non-text bytes, up to 1 MiB output, with a 100 ms work budget checked after each chunk; module loading excluded). Known non-compression file signatures and larger/text-like inputs use manual decoding; a successful decode is not a safety or source guarantee.',
     examples: [
       'H4sIAAAAAAAC/6tWSsusKCktSlWyUjDQUVBKzs8tKEotLk5NAQqUFJWm1gIAdxZRKSIAAAA=',
       'H4sIAAAAAAAC/6tWSsusKCktSlWyUjDUUVBKzs8tKEotLk5NAQqUFJWm1gIAt3J5PiIAAAA=',
       'H4sIAAAAAAAC/6tWSsusKCktSlWyUjDSUVBKzs8tKEotLk5NAQqUFJWm1gIA998BByIAAAA=',
     ],
     references: [
+      { title: 'RFC 7932 — Brotli', url: 'https://www.rfc-editor.org/rfc/rfc7932' },
       { title: 'RFC 1950 — ZLIB', url: 'https://www.rfc-editor.org/rfc/rfc1950' },
       { title: 'RFC 1951 — DEFLATE', url: 'https://www.rfc-editor.org/rfc/rfc1951' },
       { title: 'RFC 1952 — GZIP', url: 'https://www.rfc-editor.org/rfc/rfc1952' },

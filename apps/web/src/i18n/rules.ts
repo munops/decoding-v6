@@ -1,5 +1,10 @@
 import type { RuleSpec } from '@decoding/spec-registry'
 const ko: Record<string, [string, string, string]> = {
+  'BROTLI-TRIAL-DECODE': [
+    '고유한 표식 없이 끝까지 풀렸어요',
+    'Brotli를 기기 안에서 끝까지 풀어 후보로 제시했어요. 출처나 안전성의 증명은 아니에요.',
+    '나온 내용을 살펴보세요. 자동 풀이의 크기·내용 한도 밖이면 직접 풀이 방법을 고를 수 있어요.',
+  ],
   'JSON-NUMBER-PRECISION': [
     '숫자를 정확히 나타낼 수 있는 한계가 있어요',
     'JSON 숫자는 JavaScript의 숫자 규칙으로 표시해요. 큰 정수나 지수는 범위를 넘을 수 있어요.',

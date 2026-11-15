@@ -1,3 +1,4 @@
+import { brotliCompressSync } from 'node:zlib'
 import { runTool } from './ui-helpers'
 import { expect, test } from '@playwright/test'
 
@@ -199,5 +200,22 @@ for (const width of [390, 1440]) {
     await page.locator('.caesar-options li').nth(12).getByRole('button').click()
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe('Hello')
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+  })
+}
+
+for (const width of [390, 1440]) {
+  test(`real Brotli browser codec opens a local file at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width === 390 ? 780 : 900 })
+    await page.goto('/')
+    await expect(page.locator('.decoder-shell')).toHaveAttribute('data-hydrated', 'true')
+    const buffer = brotliCompressSync('{"brotli":true,"synthetic":"BROTLI_BROWSER_CANARY_9482"}')
+    await page
+      .locator('input[type="file"]')
+      .first()
+      .setInputFiles({ name: 'synthetic.br', mimeType: 'application/octet-stream', buffer })
+    await expect(page.locator('.answer-final .output-view')).toContainText(
+      'BROTLI_BROWSER_CANARY_9482',
+    )
+    await expect(page.locator('.answer-card')).toContainText('Brotli')
   })
 }

@@ -2,6 +2,13 @@ export type RuleSpec = { id: string; title: string; why: string; fix: string; re
 const jwt = 'https://www.rfc-editor.org/rfc/rfc8725'
 const rows: [string, string, string, string, string][] = [
   [
+    'BROTLI-TRIAL-DECODE',
+    'Brotli decoded without a magic signature',
+    'A complete local decode supports the candidate, but does not establish source or safety.',
+    'Review the decoded data. Use manual decoding for inputs outside automatic size or content limits.',
+    'https://www.rfc-editor.org/rfc/rfc7932',
+  ],
+  [
     'JSON-NUMBER-PRECISION',
     'Numeric precision limit',
     'JSON numbers are displayed using JavaScript numeric semantics. Large integers or exponents can exceed the representable range.',

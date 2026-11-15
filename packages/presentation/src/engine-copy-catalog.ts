@@ -1,5 +1,7 @@
 import type { EngineMessageCode } from '@decoding/engine'
 export const englishEngineCopy = {
+  'warning-brotli-trial':
+    'Brotli has no unique opening signature. This candidate fully decoded locally within automatic limits; it does not identify the source or certify safety.',
   'warning-json-number-precision':
     'A number exceeds JavaScript numeric precision or range. The displayed numeric value may be rounded; keep the original text for exact values.',
   'diagnostic-snowflake-epoch':

@@ -27,6 +27,49 @@ function collector(limits: DecodeLimits, inputBytes: number) {
     },
   }
 }
+let brotliModule: Promise<typeof import('brotli-dec-wasm/web')> | undefined
+function loadBrotliModule() {
+  return (brotliModule ??= (async () => {
+    const module = await loadParser(() => import('brotli-dec-wasm/web'))
+    await loadParser(() => module.default())
+    return module
+  })().catch((error) => {
+    brotliModule = undefined
+    throw error
+  }))
+}
+export async function decodeBrotliStream(
+  bytes: Uint8Array,
+  limits: DecodeLimits,
+  loadBrotli: () => Promise<typeof import('brotli-dec-wasm/web')> = loadBrotliModule,
+) {
+  const brotli = await loadBrotli()
+  const stream = new brotli.DecompressStream()
+  const output = collector(limits, bytes.length)
+  let offset = 0
+  const started = performance.now()
+  try {
+    for (let step = 0; step < Math.ceil(limits.maxExpandedBytes / 16384) + 2; step++) {
+      const next = stream.decompress(bytes.subarray(offset), 16384)
+      try {
+        offset += next.input_offset
+        output.push(next.buf)
+        if (performance.now() - started > limits.maxCpuMs) throw new Error('Brotli CPU limit')
+        if (next.code === brotli.BrotliStreamResultCode.ResultSuccess) {
+          if (offset !== bytes.length) throw new Error('Trailing Brotli data')
+          return { output: output.finish(), consumedInputBytes: offset, complete: true }
+        }
+        if (next.code !== brotli.BrotliStreamResultCode.NeedsMoreOutput)
+          throw new Error('Invalid or incomplete Brotli stream')
+      } finally {
+        next.free()
+      }
+    }
+    throw new Error('Expansion limit')
+  } finally {
+    stream.free()
+  }
+}
 export const webCodecs: DecodeCodecs = {
   async zstd(bytes, limits) {
     const { Decompress } = await loadParser(() => import('fzstd'))
@@ -53,24 +96,6 @@ export const webCodecs: DecodeCodecs = {
     const { parse } = await loadParser(() => import('smol-toml'))
     return parse(text, { integersAsBigInt: 'asNeeded', unsafeKeyBehaviour: 'throw' })
   },
-  async brotli(bytes, limits) {
-    const module = await loadParser(() => import('brotli-dec-wasm'))
-    const brotli = await loadParser(() => module.default)
-    const stream = new brotli.DecompressStream()
-    const output = collector(limits, bytes.length)
-    let offset = 0
-    try {
-      for (let step = 0; step < Math.ceil(limits.maxExpandedBytes / 16384) + 2; step++) {
-        const next = stream.decompress(bytes.subarray(offset), 16384)
-        offset += next.input_offset
-        output.push(next.buf)
-        if (next.code === brotli.BrotliStreamResultCode.ResultSuccess) return output.finish()
-        if (next.code !== brotli.BrotliStreamResultCode.NeedsMoreOutput)
-          throw new Error('Invalid or incomplete Brotli stream')
-      }
-      throw new Error('Expansion limit')
-    } finally {
-      stream.free()
-    }
-  },
+  brotli: async (bytes, limits) => (await decodeBrotliStream(bytes, limits)).output,
+  brotliProbe: decodeBrotliStream,
 }
