@@ -96,3 +96,9 @@ Two or more JSON values are read per LF/CRLF line, with an optional terminal new
 A bounded lexical candidate recognizes common SQL command shapes, respecting quotes, comments, dollar strings and balanced parentheses. It never invokes a database and stays at 0.8 confidence; this is explicitly not full dialect/schema/syntax or safety validation. Literal contents are omitted from the detected metadata. Existing SQL formatting remains the transformation owner; nearby tools now use the detected SQL candidate including WITH queries. Limits: 256 KiB/64 statements/64 parenthesis levels.
 
 20 positive/10 edge/20 negative cases and inert-literal regressions. An initial authored fixture quoting error was corrected before the complete retry; full suite 274 pass. Relevant type/lint/parity/i18n pass; targeted nearby-tool regression is additionally run. 60 formats/49 tools.
+
+## Timestamped log lines
+
+A bounded 64 KiB single-line reader separates a calendar-checked ISO-style timestamp, common severity level and message. Brackets/comma fractions/offsets are supported; original fractions remain intact and UTC display is millisecond precision. Missing time zones remain unspecified, never assumed UTC. Known secret-pattern redaction is reused; this does not promise universal secret detection or event authenticity. Multiline traces, every logging layout and leap seconds are outside the documented subset.
+
+20 positive/10 edge/20 negative cases plus calendar/timezone regressions; full suite 277 pass. Relevant type/lint/parity/i18n pass. 61 formats/49 tools. An authoring command failed before modifying registration/fixtures; that unregistered run was not counted as log-format validation.

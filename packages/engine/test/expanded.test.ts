@@ -329,3 +329,14 @@ it('keeps SQL quotes/comments inert and exposes only a lexical candidate', async
   ).not.toContain('synthetic-secret')
   expect(await sql.detect("SELECT 'unclosed", {} as never)).toBeNull()
 })
+
+it('checks log calendars and does not invent a missing timezone', async () => {
+  const { logLine } = await import('../src/formats/expanded/log-line')
+  expect(
+    (await logLine.detect('2026-11-15T19:20:30+09:00 WARN retry', {} as never))?.value,
+  ).toMatchObject({ utc: '2026-11-15T10:20:30.000Z', level: 'WARN' })
+  const local = (await logLine.detect('2026-11-15 10:20:30 INFO local', {} as never))?.value
+  expect(local).toMatchObject({ timezoneExplicit: false })
+  expect(local).not.toHaveProperty('utc')
+  expect(await logLine.detect('2026-02-29T00:00:00Z INFO bad', {} as never)).toBeNull()
+})

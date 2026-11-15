@@ -324,4 +324,28 @@ export const expandedSpecs: ExpandedSpec[] = [
     ],
   },
 ]
+expandedSpecs.push({
+  detector: 'log-line',
+  slug: 'log-line',
+  label: 'Timestamped log line',
+  description:
+    'Split a common single-line date/time + level + message layout, with optional square brackets. Calendar dates are checked; explicit Z/offsets enable UTC conversion. A missing time zone stays unspecified. Original fractional timestamps are retained; UTC display has millisecond precision. This does not verify events or parse every logging layout. Multiline traces and leap seconds are outside this subset. Limit: 64 KiB.',
+  korean: {
+    label: '시각이 적힌 로그 한 줄',
+    description:
+      '날짜·시각 뒤에 TRACE부터 CRITICAL 수준과 글이 오는 흔한 로그 한 줄을 나눠요. 대괄호 표기도 받고 실제 달력 날짜인지 확인해요. Z·시차가 적혔을 때만 UTC로 바꾸며 시간대가 없으면 추측하지 않아요. 소수점 아래 원문은 보존하고 UTC는 밀리초까지 보여 줘요. 사건의 진위나 모든 로그 형식을 검증하지 않으며 여러 줄 추적·윤초는 범위 밖이에요. 한도는 64 KiB예요.',
+  },
+  examples: [
+    '2026-11-15T10:20:30Z INFO request completed',
+    '[2026-11-15 19:20:30+09:00] [WARN] retry scheduled',
+    '2026-11-15 10:20:30,123 ERROR connection closed',
+  ],
+  references: [
+    {
+      title: 'Apache Log4j — pattern layout',
+      url: 'https://logging.apache.org/log4j/2.x/manual/pattern-layout.html',
+    },
+    { title: 'RFC 3339 — date and time', url: 'https://www.rfc-editor.org/rfc/rfc3339' },
+  ],
+})
 export const expandedKoreanCopy = new Map(expandedSpecs.map((spec) => [spec.detector, spec.korean]))

@@ -889,3 +889,47 @@ expandedFixtures.push(
     ],
   ),
 )
+
+expandedFixtures.push(
+  ...publicCases(
+    'log-line',
+    Array.from(
+      { length: 20 },
+      (_, i) => '2026-11-15T10:20:' + String(i).padStart(2, '0') + 'Z INFO synthetic event ' + i,
+    ),
+    [
+      '[2026-11-15T10:20:30Z] [WARN] retry',
+      '2026-11-15 19:20:30+09:00 ERROR failed',
+      '2026-11-15 10:20:30,123 DEBUG local',
+      '2026-11-15T10:20:30.123456789Z TRACE detail',
+      '2024-02-29T00:00:00Z FATAL stopped',
+      '2026-11-15T10:20:30-0530 CRITICAL unavailable',
+      '2026-11-15T10:20:30+0000 WARNING wait',
+      '2026-11-15T10:20:30Z INFO: hello',
+      '2026-11-15T10:20:30Z [INFO]: hello',
+      '2026-11-15T10:20:30Z info local',
+    ],
+    [
+      '2026-02-29T00:00:00Z INFO bad',
+      '2026-04-31T00:00:00Z INFO bad',
+      '2026-13-01T00:00:00Z INFO bad',
+      '2026-11-00T00:00:00Z INFO bad',
+      '2026-11-15T24:00:00Z INFO bad',
+      '2026-11-15T10:60:00Z INFO bad',
+      '2026-11-15T10:20:60Z INFO bad',
+      '2026-11-15T10:20:30+24:00 INFO bad',
+      '2026-11-15T10:20:30+00:60 INFO bad',
+      '2026-11-15T10:20:30Z NOTICE unsupported',
+      '2026-11-15T10:20:30Z INFO',
+      '2026-11-15T10:20:30Z INFO \nnext',
+      '[2026-11-15T10:20:30Z INFO bad',
+      '2026-11-15T10:20:30Z [INFO bad',
+      'INFO no timestamp',
+      '2026-11-15 no level',
+      '{"level":"INFO"}',
+      'SELECT id FROM logs',
+      'A normal sentence.',
+      'Une phrase fran\u00e7aise.',
+    ],
+  ),
+)

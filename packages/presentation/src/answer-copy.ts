@@ -189,6 +189,10 @@ const sentences: Record<string, [string, string]> = {
     'This value was wrapped in Base45. We decoded the next layer.',
     'Base45로 싼 값이에요. 한 겹 풀었어요.',
   ],
+  'log-line': [
+    'This looks like one log entry. We separated its recorded time, level and message; the event is not verified.',
+    '로그 한 줄로 보여요. 적힌 시각·수준·글을 나눴으며 실제로 일어난 일인지 검증한 것은 아니에요.',
+  ],
   sql: [
     'This looks like SQL. We recognized statement patterns without running or fully validating the query.',
     'SQL 문으로 보여요. 실행하거나 전체 문법을 검증하지 않고 문장의 모양을 살펴봤어요.',
@@ -668,6 +672,19 @@ export function answerFacts(
         String(value.timestamp),
       ],
       [locale === 'ko' ? '가정한 시작 시각' : 'Assumed epoch', String(value.epochStart)],
+    ]
+  if (detection.detector === 'log-line')
+    return [
+      [locale === 'ko' ? '기록 시각' : 'Recorded time', String(value.timestamp)],
+      [locale === 'ko' ? '수준' : 'Level', String(value.level)],
+      [
+        locale === 'ko' ? '시간대' : 'Time zone',
+        value.timezoneExplicit
+          ? String(value.utc)
+          : locale === 'ko'
+            ? '적혀 있지 않아요. UTC로 바꾸지 않았어요.'
+            : 'Not stated; not converted to UTC.',
+      ],
     ]
   if (detection.detector === 'sql')
     return [
