@@ -183,6 +183,10 @@ const sentences: Record<string, [string, string]> = {
     'This value was wrapped in Base45. We decoded the next layer.',
     'Base45로 싼 값이에요. 한 겹 풀었어요.',
   ],
+  mac: [
+    'This looks like a network device address. We read its notation without looking up a device.',
+    '네트워크 장치에 쓰는 주소로 보여요. 실제 장치를 조회하지 않고 표기를 읽었어요.',
+  ],
   cidr: [
     'This describes an IP address range. The count includes every address in the range.',
     'IP 주소의 범위를 적은 거예요. 범위 안의 모든 주소를 세었어요.',
@@ -627,6 +631,34 @@ export function answerFacts(
     rows: Array<[string, string]> = []
   if (detection.detector === 'kv' && Array.isArray(value.entries))
     return [[copy.fields, String(value.entries.length)]]
+  if (detection.detector === 'mac')
+    return [
+      [locale === 'ko' ? '주소' : 'Address', String(value.address)],
+      [
+        locale === 'ko' ? '받는 대상' : 'Delivery',
+        value.broadcast
+          ? locale === 'ko'
+            ? '모두에게'
+            : 'Broadcast'
+          : value.group
+            ? locale === 'ko'
+              ? '여러 장치'
+              : 'Group'
+            : locale === 'ko'
+              ? '한 장치'
+              : 'Individual',
+      ],
+      [
+        locale === 'ko' ? '주소 관리' : 'Administration',
+        value.local
+          ? locale === 'ko'
+            ? '로컬에서 정한 주소'
+            : 'Local'
+          : locale === 'ko'
+            ? '전역 비트 표기'
+            : 'Universal bit pattern',
+      ],
+    ]
   if (detection.detector === 'cidr')
     return [
       [locale === 'ko' ? '주소 종류' : 'Address family', String(value.family)],

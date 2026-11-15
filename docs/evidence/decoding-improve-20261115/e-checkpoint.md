@@ -60,3 +60,7 @@ IPv4/IPv6 prefix notation uses the existing IPv4 reader and an extracted shared 
 Independent curl review found an unsupported-option argument could overwrite the destination, invalid header names could pass, and a JavaScript `__proto__` header could disappear in an object literal. The reader now consumes explicitly known option arguments, rejects unknown syntax and multiple destinations, validates header tokens, and generates JS/Node headers through safe JSON parsing. Regression tests cover these exact cases; option incompleteness is still disclosed.
 
 Review-fix validation: full run 257/259 passed; strict unknown-argument handling exposed an empty token previously emitted for backslash-newline. Line continuation now emits no token, and the two affected suites passed all 69 focused cases. Relevant package type checks, lint and registry/i18n parity passed. No broad rerun is inferred from the focused retry.
+
+## MAC addresses
+
+Separated 48-bit notation accepts consistent colon, hyphen or dotted groups and reports group/local bits and broadcast form. Compact twelve-digit hex remains ambiguous and is not automatically called a device address. No vendor/device/ownership lookup is made. RFC 9542 documentation blocks supply the synthetic corpus. 20 positive/10 edge/20 negative cases plus bit/mixed-delimiter regressions; full suite 261 pass. Relevant package type/lint/parity/i18n pass. 55 formats/49 tools; runtime release gates remain open.

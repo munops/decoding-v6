@@ -1,3 +1,4 @@
+import { mac } from './mac'
 import { cidr } from './cidr'
 import { curlCommand } from './curl-command'
 import { base45 } from './base45'
@@ -16,4 +17,5 @@ export const expandedDetectors = [
   base45,
   curlCommand,
   cidr,
+  mac,
 ]

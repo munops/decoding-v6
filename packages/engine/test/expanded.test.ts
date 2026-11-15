@@ -1,3 +1,4 @@
+import { mac } from '../src/formats/expanded/mac'
 import { cidr } from '../src/formats/expanded/cidr'
 import { decode, detect } from '../src'
 import { describe, it, expect } from 'vitest'
@@ -227,4 +228,16 @@ it('computes exact inclusive CIDR counts and normalizes host bits without routin
     addresses: '340282366920938463463374607431768211456',
     first: '0:0:0:0:0:0:0:0',
   })
+})
+
+it('reads MAC bits without inferring device identity', async () => {
+  expect((await mac.detect('02:00:5e:00:53:01', {} as never))?.value).toMatchObject({
+    local: true,
+    group: false,
+  })
+  expect((await mac.detect('ff:ff:ff:ff:ff:ff', {} as never))?.value).toMatchObject({
+    broadcast: true,
+    group: true,
+  })
+  expect(await mac.detect('00:00-5e:00:53:01', {} as never)).toBeNull()
 })

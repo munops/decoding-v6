@@ -210,5 +210,24 @@ export const expandedSpecs: ExpandedSpec[] = [
       { title: 'RFC 4291 — IPv6 addressing', url: 'https://www.rfc-editor.org/rfc/rfc4291' },
     ],
   },
+  {
+    detector: 'mac',
+    slug: 'mac-address',
+    label: 'MAC address',
+    description:
+      'Recognize separated 48-bit MAC address notation (colon, hyphen or three dotted groups). The low bits identify individual/group and universal/local administration. This is not a device, vendor or ownership lookup; compact hex alone remains ambiguous.',
+    korean: {
+      label: 'MAC 주소',
+      description:
+        '네트워크 장치에 쓰는 48비트 주소 표기를 읽어요. 콜론·붙임표 또는 점으로 나눈 표기를 받아요. 한 장치용인지 여러 장치용인지, 로컬에서 정한 주소인지 비트로 구분해요. 실제 장치나 제조사·소유자는 조회하지 않아요.',
+    },
+    examples: ['00:00:5e:00:53:01', '02-00-5E-00-53-02', '0000.5e00.5303'],
+    references: [
+      {
+        title: 'RFC 9542 — IEEE 802 parameters and address bits',
+        url: 'https://www.rfc-editor.org/rfc/rfc9542.html',
+      },
+    ],
+  },
 ]
 export const expandedKoreanCopy = new Map(expandedSpecs.map((spec) => [spec.detector, spec.korean]))
