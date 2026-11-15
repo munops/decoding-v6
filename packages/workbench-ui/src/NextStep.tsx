@@ -1,3 +1,5 @@
+import { operations } from '@decoding/operations'
+import { uiMessage } from './ui-copy'
 import type { DecodeResult } from '@decoding/engine'
 import type { WorkbenchLocale } from './messages'
 import { completionMessages } from './completion-messages'
@@ -17,7 +19,7 @@ export function NextStep({
   const [message, setMessage] = useState(''),
     copy = completionMessages[locale],
     report = safeReport(source, result),
-    tools = nearbyTools(source)
+    tools = nearbyTools(source, result)
   return (
     <section class="next-step">
       {tools.length ? (
@@ -34,7 +36,7 @@ export function NextStep({
               }}
               key={id}
             >
-              {id}
+              {operations.find((item) => item.id === id)?.name ?? id}
             </a>
           ))}
         </div>
@@ -46,10 +48,7 @@ export function NextStep({
         class="button secondary"
         onClick={() =>
           void navigator.clipboard.writeText(report).then(
-            () =>
-              setMessage(
-                locale === 'ko' ? '값 없는 신고문을 복사했어요.' : 'Value-free report copied.',
-              ),
+            () => setMessage(uiMessage(locale, 'value_free_report_copied')),
             () => setMessage('support@munops.com'),
           )
         }

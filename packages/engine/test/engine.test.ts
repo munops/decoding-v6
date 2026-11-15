@@ -133,3 +133,43 @@ it('preserves invalid UTF-8 bytes through Base64 and hex before zstd decoding', 
     expect(result.root.children[0]?.children[0]?.selected?.value).toEqual({ synthetic: true })
   }
 })
+
+describe('2026-11-15 multilingual Base64 regression', () => {
+  it.each(['안녕하세요 세계', 'こんにちは世界', '你好世界', '😀🎉', 'Bonjour été'])(
+    'decodes valid UTF-8 as text: %s',
+    async (text) => {
+      const encoded = encodeBase64(new TextEncoder().encode(text))
+      const candidate = (await detect(encoded)).find((item) => item.detector === 'base64')
+      expect(candidate?.decoded).toBe(text)
+      expect(candidate?.confidence).toBeGreaterThanOrEqual(0.82)
+    },
+  )
+  it('keeps invalid UTF-8 and control-heavy bytes binary', async () => {
+    for (const bytes of [new Uint8Array([255, 254, 253, 252]), new Uint8Array([0, 1, 2, 3])]) {
+      const candidate = (await detect(encodeBase64(bytes))).find(
+        (item) => item.detector === 'base64',
+      )
+      expect(candidate?.decoded).toEqual(bytes)
+    }
+  })
+})
+
+it('keeps the full URL after double percent decoding without identical child layers', async () => {
+  const href = 'https://example.com/a b?q=한글&x=1'
+  const root = (await decode(encodeURIComponent(encodeURIComponent(href)))).root
+  const final = root.children[0]?.children[0]
+  expect(final?.selected?.value).toHaveProperty('href', new URL(href).href)
+  expect(final?.children).toHaveLength(0)
+})
+
+it('redacted projections omit input-derived summaries and evidence on every consumer', async () => {
+  const { redactedDetection } = await import('../src')
+  const canary = 'SYNTHETIC-PRIVATE-ALGORITHM-ONLY'
+  const token = `${encodeBase64(new TextEncoder().encode(JSON.stringify({ alg: canary })), true)}.${encodeBase64(new TextEncoder().encode('{"sub":"private-user"}'), true)}.`
+  const candidate = (await detect(token)).find((item) => item.detector === 'jwt')!
+  expect(candidate.evidence.some((item) => item.message.includes(canary))).toBe(true)
+  const output = JSON.stringify(redactedDetection(candidate))
+  expect(output).not.toContain(canary)
+  expect(output).not.toContain('private-user')
+  expect(output).not.toContain('summary')
+})

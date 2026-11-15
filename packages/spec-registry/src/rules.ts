@@ -161,6 +161,13 @@ const parseRules: [string, string, string][] = [
   ['JSON-MORE-NODES', 'JSON node limit', 'https://www.rfc-editor.org/rfc/rfc8259'],
   ['CRON-RANGE', 'Bounded schedule search', 'https://man7.org/linux/man-pages/man5/crontab.5.html'],
 ]
+rows.push([
+  'MIME-CHARSET-UNSUPPORTED',
+  'This text uses an unsupported character set',
+  'The declared MIME character set is not supported by this browser. The original encoded words are kept.',
+  'Ask the sender to use UTF-8, or choose a supported character set in the string inspector. Missing characters are never invented.',
+  'https://www.rfc-editor.org/rfc/rfc2047',
+])
 for (const [id, title, reference] of parseRules)
   rows.push([
     id,

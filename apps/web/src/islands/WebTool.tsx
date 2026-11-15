@@ -1,3 +1,4 @@
+import { uiMessage } from '@decoding/workbench-ui'
 import { ErrorBoundary } from '@decoding/workbench-ui'
 import { takeHandoff } from '../lib/handoff'
 import type {
@@ -46,11 +47,7 @@ export default function WebTool({
       for (const request of pending.values()) {
         clearTimeout(request.timer)
         request.reject(
-          new Error(
-            locale === 'ko'
-              ? '작업이 중단됐어요. 입력을 유지했으니 다시 실행해 주세요.'
-              : 'Operation stopped. Your input is preserved; retry.',
-          ),
+          new Error(uiMessage(locale, 'operation_stopped_your_input_is_preserved_retry')),
         )
       }
       pending.clear()

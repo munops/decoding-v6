@@ -77,7 +77,7 @@ test('320px route survives an actual 200 percent root text resize', async ({ pag
   })
 })
 
-test('sticky header does not trap prior input controls after a mobile result', async ({ page }) => {
+test('header does not trap prior input controls after a mobile result', async ({ page }) => {
   const cases = [
     { width: 390, height: 844, textScale: 1 },
     { width: 320, height: 844, textScale: 1 },
@@ -116,8 +116,7 @@ test('sticky header does not trap prior input controls after a mobile result', a
         resultTop: result?.top ?? -1,
       }
     })
-    expect(anchored.actionsBottom).toBeLessThanOrEqual(anchored.headerBottom)
-    expect(anchored.resultTop).toBeGreaterThanOrEqual(anchored.headerBottom)
+    expect(anchored.resultTop).toBeGreaterThanOrEqual(Math.max(0, anchored.headerBottom))
 
     for (const selector of [
       '#decoder-input',
@@ -141,7 +140,7 @@ test('sticky header does not trap prior input controls after a mobile result', a
           centerHitTarget: Boolean(hit && (hit === element || element.contains(hit))),
         }
       })
-      expect(geometry.targetTop).toBeGreaterThanOrEqual(geometry.headerBottom)
+      expect(geometry.targetTop).toBeGreaterThanOrEqual(Math.max(0, geometry.headerBottom))
       expect(geometry.targetBottom).toBeLessThanOrEqual(geometry.viewportHeight)
       expect(geometry.centerHitTarget).toBe(true)
     }

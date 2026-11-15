@@ -1,6 +1,6 @@
 packages:
-- apps/*
-- packages/*
+  - apps/*
+  - packages/*
 allowBuilds:
   cbor-extract@2.2.2: false
   esbuild: true

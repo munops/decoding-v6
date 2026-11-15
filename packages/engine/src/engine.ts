@@ -135,8 +135,11 @@ export async function decode(
     if (selected.decoded !== undefined && stableDigest(selected.decoded) !== digest) {
       node.children.push(await visit(selected.decoded, depth + 1))
     }
-    const embedded = candidates.find((candidate) => Array.isArray(candidate.metadata?.embedded))
-      ?.metadata?.embedded as Array<{ path?: string; encoded: string; offset?: number }> | undefined
+    const embedded = candidates.find(
+      (candidate) =>
+        (candidate.detector !== 'text-scan' || selected.detector === 'text-scan') &&
+        Array.isArray(candidate.metadata?.embedded),
+    )?.metadata?.embedded as Array<{ path?: string; encoded: string; offset?: number }> | undefined
     if (embedded)
       for (const field of embedded) {
         if (nodes >= limits.maxNodes) {

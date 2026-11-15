@@ -1,3 +1,4 @@
+import { uiMessage } from './ui-copy'
 import { Component, type ComponentChildren } from 'preact'
 import type { WorkbenchLocale } from './messages'
 import { completionMessages } from './completion-messages'
@@ -51,7 +52,7 @@ export class ErrorBoundary extends Component<Props, State> {
             this.setState({ failed: false, attempt: this.state.attempt + 1, copied: false })
           }}
         >
-          {this.props.locale === 'ko' ? '입력 지우고 새로 시작' : 'Clear input and restart'}
+          {uiMessage(this.props.locale, 'clear_input_and_restart')}
         </button>
         <button
           class="button secondary"
@@ -69,11 +70,7 @@ export class ErrorBoundary extends Component<Props, State> {
           support@munops.com
         </a>
         {this.state.copied ? (
-          <p role="status">
-            {this.props.locale === 'ko'
-              ? '값 없는 신고문을 복사했어요.'
-              : 'Value-free report copied.'}
-          </p>
+          <p role="status">{uiMessage(this.props.locale, 'value_free_report_copied')}</p>
         ) : null}
       </section>
     )

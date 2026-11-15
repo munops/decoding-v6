@@ -1,9 +1,14 @@
+import { uiMessage } from './ui-copy'
+import { redactedDetection } from '@decoding/engine'
 import type { ComponentChildren } from 'preact'
 import { completionMessages } from './completion-messages'
 import { WorkflowActions } from './WorkflowActions'
 import { BatchCompare } from './BatchCompare'
 import {
   outputText,
+  finalSelection,
+  displayValue,
+  selectionNode,
   privateKeyDetection,
   hasUnavailableParser,
   structureSelection,
@@ -34,25 +39,6 @@ export type DecoderWorkbenchProps = {
   onTool?: (tool: string, text: string) => void
   onEvent?: (name: 'decode_completed' | 'decode_unsupported' | 'share_action') => void
   messages: DecoderMessages
-}
-
-function redactValue(value: unknown, depth = 0): unknown {
-  if (depth > 12) return '[depth limited]'
-  if (Array.isArray(value)) return value.slice(0, 100).map((item) => redactValue(item, depth + 1))
-  if (value && typeof value === 'object') {
-    return Object.fromEntries(
-      Object.entries(value as Record<string, unknown>)
-        .slice(0, 200)
-        .map(([key, item]) => [
-          key,
-          /secret|token|password|authorization|cookie|private|signature|key/i.test(key)
-            ? '[redacted]'
-            : redactValue(item, depth + 1),
-        ]),
-    )
-  }
-  if (value === null) return null
-  return `[${typeof value}]`
 }
 
 export function DecoderWorkbench({
@@ -88,6 +74,7 @@ export function DecoderWorkbench({
   )
   const overrides = useRef<Record<string, string>>({})
   const requestId = useRef(0)
+  const resultRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const lastInput = useRef<DecodeInput | null>(null)
 
@@ -102,11 +89,10 @@ export function DecoderWorkbench({
         const next = await decodeInput(input, overrides.current)
         if (current !== requestId.current) return
         setResult(next)
-        setSelected(
-          privateKeyDetection(next.root) ?? next.root.selected ?? next.root.candidates[0] ?? null,
-        )
+        const final = finalSelection(next.root)
+        setSelected(final ?? null)
         setShowCandidates(next.root.status === 'ambiguous')
-        setActiveChainNode(next.root.id)
+        setActiveChainNode(selectionNode(next.root, final)?.id ?? next.root.id)
         setStatus('done')
         if (typeof input === 'string')
           setSessionHistory((previous) =>
@@ -126,9 +112,10 @@ export function DecoderWorkbench({
         setMessage(
           next.root.status === 'unsupported'
             ? typeof input === 'string' && /\s/.test(input)
-              ? messages.locale === 'ko'
-                ? '평문으로 보여요. 알아볼 수 있는 인코딩 값은 찾지 못했어요.'
-                : 'This looks like plain text. No supported encoded values were found.'
+              ? uiMessage(
+                  messages.locale,
+                  'this_looks_like_plain_text_no_supported_encoded_values_were_found',
+                )
               : messages.unsupported
             : '',
         )
@@ -146,6 +133,16 @@ export function DecoderWorkbench({
     },
     [decodeInput, messages],
   )
+
+  useEffect(() => {
+    if (status !== 'done' || !resultRef.current) return
+    const top = resultRef.current.getBoundingClientRect().top
+    if (top < 0 || top > window.innerHeight - 120)
+      resultRef.current.scrollIntoView({
+        block: 'start',
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+      })
+  }, [result, status])
 
   const handleSource = (value: string) => {
     onInputState?.(value, value)
@@ -171,9 +168,10 @@ export function DecoderWorkbench({
       const text = await navigator.clipboard.readText()
       handleSource(text)
       setMessage(
-        messages.locale === 'ko'
-          ? '누를 때만 클립보드를 읽고 기기에서 처리해요.'
-          : 'Clipboard read only after your tap; processing stays on this device.',
+        uiMessage(
+          messages.locale,
+          'clipboard_read_only_after_your_tap_processing_stays_on_this_devic',
+        ),
       )
     } catch {
       setMessage(copy.pasteHelp)
@@ -220,7 +218,7 @@ export function DecoderWorkbench({
   const copySelected = async () => {
     if (!selected) return
     try {
-      await navigator.clipboard.writeText(outputText(selected.value))
+      await navigator.clipboard.writeText(outputText(displayValue(selected)))
       setMessage(messages.copied)
       void playCopyFeedback(copyFeedback)
     } catch {
@@ -283,19 +281,7 @@ export function DecoderWorkbench({
 
   const exportRedacted = () => {
     if (!selected) return
-    const payload = {
-      version: 1,
-      detector: selected.detector,
-      label: selected.label,
-      confidence: selected.confidence,
-      evidence: selected.evidence.map(({ code, message }) => ({ code, message })),
-      warnings: selected.warnings.map(({ ruleId, severity, message: warningMessage }) => ({
-        ruleId,
-        severity,
-        message: warningMessage,
-      })),
-      structure: redactValue(selected.value),
-    }
+    const payload = { version: 1, ...redactedDetection(selected) }
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' })
     const link = document.createElement('a')
     link.href = URL.createObjectURL(blob)
@@ -414,7 +400,7 @@ export function DecoderWorkbench({
             Ctrl/⌘ + Enter · {copy.retry}
             <br />
             Ctrl/⌘ + Shift + C · {messages.copy}
-            <br />? · {messages.locale === 'ko' ? '단축키' : 'Shortcuts'}
+            <br />? · {uiMessage(messages.locale, 'shortcuts')}
           </p>
         </div>
       ) : null}
@@ -478,7 +464,7 @@ export function DecoderWorkbench({
         </div>
       ) : null}
       {result ? (
-        <div class="result-grid">
+        <div class="result-grid" ref={resultRef} style={{ scrollMarginTop: '90px' }}>
           {(function flatten(node: DecodeResult['root']): DecodeResult['root'][] {
             return [node, ...node.children.flatMap(flatten)]
           })(result.root)

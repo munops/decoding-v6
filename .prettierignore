@@ -6,3 +6,6 @@ coverage
 pnpm-lock.yaml
 docs/prd
 docs/research
+
+# Non-shipped, read-only design exploration
+prototypes

@@ -1,3 +1,4 @@
+import { uiMessage } from './ui-copy'
 import { completionMessages } from './completion-messages'
 import type { WorkbenchLocale } from './messages'
 export function byteStats(bytes: Uint8Array) {
@@ -28,11 +29,7 @@ export function ByteMap({ bytes, locale }: { bytes: Uint8Array; locale: Workbenc
         <>
           <meter min="0" max="8" value={stats.entropy} aria-label={copy.map} />
           {stats.entropy >= 7.5 ? (
-            <p>
-              {locale === 'ko'
-                ? '무작위에 가까워요. 압축됐거나 암호화된 값일 수 있어요.'
-                : 'Near-random bytes: this may be compressed or encrypted.'}
-            </p>
+            <p>{uiMessage(locale, 'near_random_bytes_this_may_be_compressed_or_encrypted')}</p>
           ) : null}
         </>
       ) : null}

@@ -72,9 +72,9 @@ export const infoMessages: Record<Locale, Record<InfoKey, InfoContent>> = {
     },
     about: {
       title: 'About — decod.ing',
-      description: 'Why decod.ing keeps developer utilities free, local, and account-free.',
+      description: 'A free place to decode unfamiliar values on your own device.',
       eyebrow: 'About',
-      heading: 'Developer utilities without the trust tax.',
+      heading: 'Find out what an unfamiliar value means.',
       lead: 'decod.ing is a free, zero-account universal decoder and 47-tool local workbench.',
       sections: [
         {

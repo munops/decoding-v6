@@ -2,7 +2,7 @@
 /* global ServiceWorkerGlobalScope */
 
 const sw = /** @type {ServiceWorkerGlobalScope} */ (self)
-const CACHE = 'decoding-v6-shell-v4'
+const CACHE = 'decoding-v6-shell-v5'
 const shares = new Map()
 const CORE = [
   '/',
@@ -17,6 +17,8 @@ const CORE = [
   '/icon-192.png',
   '/icon-512.png',
   '/apple-touch-icon.png',
+  '/offline/',
+  ...['ko', 'ja', 'zh-cn', 'es', 'pt-br', 'de', 'fr'].map((locale) => `/${locale}/offline/`),
 ]
 
 function cacheable(request) {
@@ -46,13 +48,23 @@ async function networkFirst(request) {
   } catch {
     const cached = await caches.match(request)
     if (cached) return cached
-    if (isNavigation(request)) return (await caches.match('/')) ?? Response.error()
+    if (isNavigation(request)) {
+      const locale = /^\/(ko|ja|zh-cn|es|pt-br|de|fr)\//.exec(new URL(request.url).pathname)?.[1]
+      const fallback = await caches.match(locale ? `/${locale}/offline/` : '/offline/')
+      return fallback
+        ? new Response(await fallback.text(), {
+            status: 503,
+            headers: { 'Content-Type': 'text/html; charset=utf-8' },
+          })
+        : Response.error()
+    }
     return new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } })
   }
 }
 
 async function cacheFirst(request) {
-  const cached = await caches.match(request)
+  // Hashed same-origin assets are representation-invariant; dev servers add Vary: Origin.
+  const cached = await caches.match(request, { ignoreVary: true })
   if (cached) return cached
   try {
     return await remember(request, await fetch(request))
@@ -63,7 +75,14 @@ async function cacheFirst(request) {
 
 sw.addEventListener('install', (event) => {
   event.waitUntil(
-    Promise.all([caches.open(CACHE).then((cache) => cache.addAll(CORE)), sw.skipWaiting()]),
+    Promise.all([
+      caches.open(CACHE).then(async (cache) => {
+        await cache.addAll(CORE)
+        const inventory = await fetch('/offline-assets.json').then((response) => response.json())
+        await cache.addAll(inventory.initial)
+      }),
+      sw.skipWaiting(),
+    ]),
   )
 })
 
@@ -81,6 +100,36 @@ sw.addEventListener('activate', (event) => {
 })
 
 sw.addEventListener('message', (event) => {
+  if (event.data?.type === 'decoding:cache-tools') {
+    const locale = ['ko', 'ja', 'zh-cn', 'es', 'pt-br', 'de', 'fr'].includes(event.data.locale)
+      ? event.data.locale
+      : 'en'
+    event.waitUntil(
+      (async () => {
+        const inventory = await fetch('/offline-assets.json').then((response) => response.json())
+        const cache = await caches.open(CACHE)
+        for (const path of inventory.assets) {
+          if (!(await cache.match(path, { ignoreVary: true }))) {
+            try {
+              await cache.add(path)
+            } catch {
+              /* Retry on the next connected visit. */
+            }
+          }
+        }
+        for (const path of inventory.tools) {
+          const pathLocale = /^\/(ko|ja|zh-cn|es|pt-br|de|fr)\//.exec(path)?.[1] ?? 'en'
+          if (pathLocale === locale && !(await cache.match(path)))
+            try {
+              await cache.add(path)
+            } catch {
+              /* Retry on the next connected visit. */
+            }
+        }
+      })(),
+    )
+    return
+  }
   if (event.data?.type !== 'decoding:take-share') return
   const id = event.source?.id
   const text = id ? shares.get(id) : null

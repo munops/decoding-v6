@@ -24,8 +24,23 @@ export function safeReport(source: string, result?: DecodeResult | null): string
       .join('\n') ?? 'none'
   return `decod.ing format report\nLength bucket: ${length}\nAlphabet class: ${alphabet}\nLines: ${Math.min(200, source.split(/\r?\n/).length)}\nCandidates:\n${candidates}\nInput and output values intentionally omitted.`
 }
-export function nearbyTools(source: string): string[] {
+export function nearbyTools(source: string, result?: DecodeResult): string[] {
   if (source.trim().length < 2) return []
+  const candidates = result?.root.candidates.map((item) => item.detector) ?? []
+  const byFormat: Record<string, string[]> = {
+    jwt: ['jwt-debugger', 'base64-string', 'unix-time'],
+    json: ['json-format', 'json-to-code', 'text-diff'],
+    url: ['url-parser', 'url-codec', 'string-inspector'],
+    epoch: ['unix-time', 'number-base', 'string-inspector'],
+    hex: ['hex-to-ascii', 'number-base', 'hash-generator'],
+    hash: ['hash-generator', 'hex-to-ascii', 'string-inspector'],
+    yaml: ['yaml-to-json', 'json-format', 'text-diff'],
+    'magic-bytes': ['qr-code', 'base64-image', 'string-inspector'],
+  }
+  for (const id of candidates) if (byFormat[id]) return byFormat[id]!
+  if (/^#[a-f0-9]{3,8}$|^(?:rgb|hsl)a?\(/i.test(source.trim()))
+    return ['color-converter', 'string-inspector', 'text-diff']
+  if (/^curl\s/.test(source.trim())) return ['curl-to-code', 'url-parser', 'string-inspector']
   if (/\b(?:SELECT|INSERT|UPDATE|CREATE TABLE)\b/i.test(source))
     return ['sql-format', 'text-diff', 'string-inspector']
   if (source.includes(',') && source.includes('\n'))

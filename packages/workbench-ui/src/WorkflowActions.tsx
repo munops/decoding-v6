@@ -1,3 +1,4 @@
+import { uiMessage } from './ui-copy'
 import { identifyMagic, redactSecrets, type DecodeResult, type Detection } from '@decoding/engine'
 import { useEffect, useState } from 'preact/hooks'
 import type { DecoderMessages } from './messages'
@@ -36,10 +37,7 @@ export function WorkflowActions({
     const pop = () => setOpen(false)
     addEventListener('popstate', pop)
     const viewport = () =>
-      setKeyboard(
-        (window.visualViewport?.height ?? innerHeight) < innerHeight * 0.75 ||
-          document.activeElement?.tagName === 'TEXTAREA',
-      )
+      setKeyboard((window.visualViewport?.height ?? innerHeight) < innerHeight * 0.75)
     viewport()
     window.visualViewport?.addEventListener('resize', viewport)
     addEventListener('focusin', viewport)
@@ -135,7 +133,7 @@ export function WorkflowActions({
             {copy.save}
           </button>
           <a class="button ghost" href="/workspace/">
-            {messages.locale === 'ko' ? '저장한 기록 열기' : 'Open saved records'}
+            {uiMessage(messages.locale, 'open_saved_records')}
           </a>
           {!open && message ? <p role="status">{message}</p> : null}
         </div>
@@ -170,12 +168,8 @@ export function WorkflowActions({
                     >
                       <option value="24h">24 h</option>
                       <option value="7d">7 d</option>
-                      <option value="keep">
-                        {messages.locale === 'ko' ? '직접 지울 때까지' : 'Until deleted'}
-                      </option>
-                      <option value="session">
-                        {messages.locale === 'ko' ? '이 탭' : 'This tab'}
-                      </option>
+                      <option value="keep">{uiMessage(messages.locale, 'until_deleted')}</option>
+                      <option value="session">{uiMessage(messages.locale, 'this_tab')}</option>
                     </select>
                   </label>
                   <button
@@ -191,7 +185,7 @@ export function WorkflowActions({
                     {copy.save}
                   </button>
                   <a class="button ghost" href="/workspace/">
-                    {messages.locale === 'ko' ? '저장한 기록 열기' : 'Open saved records'}
+                    {uiMessage(messages.locale, 'open_saved_records')}
                   </a>
                 </>
               ) : null}
@@ -278,18 +272,15 @@ export function WorkflowActions({
                         const next = reencode(result.root, edited)
                         if (next.unsignedJwt)
                           setMessage(
-                            messages.locale === 'ko'
-                              ? '서명 없이 다시 만들었어요. 이전 서명은 맞지 않아요.'
-                              : 'Rebuilt without a signature. The previous signature is invalid.',
+                            uiMessage(
+                              messages.locale,
+                              'rebuilt_without_a_signature_the_previous_signature_is_invalid',
+                            ),
                           )
                         onInput(next.text)
                         close()
                       } catch {
-                        setMessage(
-                          messages.locale === 'ko'
-                            ? '편집한 JSON 문법을 확인해 주세요.'
-                            : 'Check the edited JSON syntax.',
-                        )
+                        setMessage(uiMessage(messages.locale, 'check_the_edited_json_syntax'))
                       }
                     }}
                   >

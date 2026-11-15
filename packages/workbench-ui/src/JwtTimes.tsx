@@ -1,3 +1,4 @@
+import { uiMessage } from './ui-copy'
 import type { Detection } from '@decoding/engine'
 import { useState } from 'preact/hooks'
 import { completionMessages } from './completion-messages'
@@ -40,7 +41,7 @@ export function JwtTimes({ detection, locale }: { detection: Detection; locale: 
           }}
         >
           <option value="UTC">UTC</option>
-          <option value="local">{locale === 'ko' ? '내 시간대' : 'My time zone'}</option>
+          <option value="local">{uiMessage(locale, 'my_time_zone')}</option>
         </select>
       </label>
       {claims

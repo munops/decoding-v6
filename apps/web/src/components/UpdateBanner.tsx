@@ -1,3 +1,4 @@
+import { uiMessage } from '@decoding/workbench-ui'
 import { useEffect, useState } from 'preact/hooks'
 import type { Locale } from '../i18n/catalog'
 export default function UpdateBanner({ locale }: { locale: Locale }) {
@@ -15,15 +16,13 @@ export default function UpdateBanner({ locale }: { locale: Locale }) {
   return available ? (
     <div class="update-banner" role="status">
       <p>
-        {locale === 'ko'
-          ? '새 버전이 있어요. 필요한 결과를 복사한 뒤 새로고침해 주세요.'
-          : 'A new version is available. Copy any result you need before refreshing.'}
+        {uiMessage(locale, 'a_new_version_is_available_copy_any_result_you_need_before_refres')}
       </p>
       <button class="button secondary" type="button" onClick={() => location.reload()}>
-        {locale === 'ko' ? '새로고침' : 'Refresh'}
+        {uiMessage(locale, 'refresh')}
       </button>
       <button class="button ghost" type="button" onClick={() => setAvailable(false)}>
-        {locale === 'ko' ? '나중에' : 'Later'}
+        {uiMessage(locale, 'later')}
       </button>
     </div>
   ) : null

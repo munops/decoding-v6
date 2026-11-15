@@ -1,3 +1,4 @@
+import { uiMessage } from '@decoding/workbench-ui'
 import { ErrorBoundary } from '@decoding/workbench-ui'
 import type { DecodeInput } from '@decoding/engine'
 import ProofMonitor from '../components/ProofMonitor'
@@ -70,9 +71,7 @@ export default function WebDecoder({
       const timer = setTimeout(
         () =>
           setShareMessage(
-            messages.locale === 'ko'
-              ? '공유된 값을 받지 못했어요. 다시 공유하거나 붙여 넣어 주세요.'
-              : 'The shared value was lost. Share again, or use Paste.',
+            uiMessage(messages.locale, 'the_shared_value_was_lost_share_again_or_use_paste'),
           ),
         2500,
       )
@@ -85,9 +84,7 @@ export default function WebDecoder({
               setExternalInput({ id: Date.now(), value: event.data })
             else
               setShareMessage(
-                messages.locale === 'ko'
-                  ? '공유된 값을 받지 못했어요. 다시 공유하거나 붙여 넣어 주세요.'
-                  : 'The shared value was lost. Share again, or use Paste.',
+                uiMessage(messages.locale, 'the_shared_value_was_lost_share_again_or_use_paste'),
               )
             channel.port1.close()
           }

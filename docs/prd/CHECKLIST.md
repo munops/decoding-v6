@@ -373,3 +373,34 @@ GitHub Issues raw JSON 직독(등급 A)으로 얻은 결과를 제품 작업으�
   같은 입력을 새 worker로 재시도하며, 세 failure fixture와 clean build, production 강제 실패→재시도,
   Cloudflare 100% read-back을 같은 runtime source에 결속했다.
   ([receipt](../evidence/aiint-decoding-01-2026-08-26.md))
+
+
+## 2026-11-15 누구나를 위한 풀이 개선
+
+요청 `DECODING-IMPROVE-20261115-OWNER-01`. 정본 인계: `../../../docs/munops/programs/decoding-improve-2026-11-15/handoff-20261115.md`.
+기준선 `3557cc35c31f`, clean. 순서 A → B → C → J → D → F → G → E → H → I.
+`prd-work-state.json`은 workItems 배열이 없는 legacy 상태이므로 이 절에서 추적한다.
+
+- [ ] **DEC-NEXT-001** `in_progress` — A1~A19: 검사·빌드·성능, 판독 오류, 탐색·접근성·번역·오프라인 복구.
+- [ ] **DEC-NEXT-002** `planned` — B0~B7: A안 답 카드·입력·예시·탭·불확실성·디자인 계약.
+- [ ] **DEC-NEXT-003** `planned` — C1~C5: 깨진 글자·옛 한글·NFC·메일·복구 불가 구분.
+- [ ] **DEC-NEXT-011** `planned` — J1~J7: 확장·CLI·검색 입구·공개 준비와 승인된 채널 출시. J5는 오너 지정 2주 관측 뒤.
+- [ ] **DEC-NEXT-004** `planned` — D1~D4: 주소·QR·사진 정보·파일 공유.
+- [ ] **DEC-NEXT-005** `planned` — F1~F7: 자동 도구·찾기·47개 설명·오프라인.
+- [ ] **DEC-NEXT-006** `planned` — G1~G2: 저장 목록·검색·기간·건네기.
+- [ ] **DEC-NEXT-010** `planned` — G1 값 저장: 명시 선택·비밀 가림·기기 내 보관·내보내기 경고.
+- [ ] **DEC-NEXT-007** `planned` — E0~E4: 형식별 규격·양성/경계/음성/교차 시험·설명·한 문장, 각 형식별 커밋.
+- [ ] **DEC-NEXT-008** `planned` — H1~H6: 제목·검색 지면·구조화 데이터·한국어 우선·미리보기.
+- [ ] **DEC-NEXT-009** `planned` — I1~I3: 기기 내 처리 증명·횟수 설명/설정·비밀 값 주의.
+
+검증: A1은 format/lint/typecheck/unit/benchmark/build/E2E, 최종은 인계 §12 전체.
+실기기·실제 화면 낭독·자연 사용·검색 관측·store review는 자동 검사와 구분한다.
+
+
+A 진행 메모: UTF-8·중첩 URL·최종 선택의 단위 회귀 통과, 1 MiB 판별 p75 28.7ms/전체 46.6ms.
+일반 로컬 빌드가 claim 없이 진행되어 1,073 지면을 만든 것을 확인했다(이후 지면 추가 중).
+모바일 메뉴·13px/44px·중복 버튼·광고 자리 제거·도구 추천/실제 이름·자동 codec 방향·47개 도구 설명과 예시·localized workspace/data/offline/404 경로를 구현 중이다.
+정적 UI 문구 42곳은 메시지 상자로 이동했다. A13의 엔진 문장 계약, A10 메일(C4 의존), A6 경고 통합(B 의존), A14 실제 휴대폰/실제 낭독은 아직 완료하지 않았다.
+
+
+A checkpoint ([evidence](../evidence/decoding-improve-20261115/a-checkpoint.md)): `pnpm verify` passed and `pnpm test:e2e` 58 pass/2 intentional skip. A1/A2/A3/A4/A5 route recovery/A7/A8/A9/A11/A12 docs/A15/A16/A17/A18/A19 implemented and validated at the stated boundaries. A6(B), A10(C4), A13 full engine/copy migration and A14 real-device/real-AT remain open; DEC-NEXT-001 is not marked done. No production release yet.

@@ -134,9 +134,6 @@ export default function ToolSearch({
                     {categoryGlyph[tool.category] ?? tool.name.slice(0, 2).toUpperCase()}
                   </span>
                   <div class="tool-card-actions">
-                    <span class={`pack-badge pack-${tool.pack}`}>
-                      {messages.pack} {tool.pack}
-                    </span>
                     <button
                       class="favorite-button"
                       type="button"

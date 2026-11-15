@@ -1,3 +1,4 @@
+import { uiMessage } from '@decoding/workbench-ui'
 import { useEffect, useState } from 'preact/hooks'
 import type { Locale } from '../i18n/catalog'
 export default function ProofMonitor({ locale }: { locale: Locale }) {
@@ -39,14 +40,13 @@ export default function ProofMonitor({ locale }: { locale: Locale }) {
     <section class="proof-monitor" aria-live="polite">
       <p>
         {!ready
-          ? locale === 'ko'
-            ? '로컬 판별기를 먼저 열고 있어요. 준비되면 네트워크를 끄고 아래에서 시험해 보세요.'
-            : 'Opening the local decoder first. When ready, turn off the network and try below.'
+          ? uiMessage(locale, 'opening_the_local_decoder_first_when_ready_turn_off_the_network_a')
           : supported
-            ? `${paths.length} ${locale === 'ko' ? '이 페이지가 관측한 요청' : 'requests observed by this page'}`
-            : locale === 'ko'
-              ? '관측 API가 없어요. 개발자 도구 Network 탭이나 비행기 모드로 확인해 주세요.'
-              : 'Observation API unavailable. Use developer tools Network or airplane mode.'}
+            ? `${paths.length} ${uiMessage(locale, 'requests_observed_by_this_page')}`
+            : uiMessage(
+                locale,
+                'observation_api_unavailable_use_developer_tools_network_or_airpla',
+              )}
       </p>
       <ul>
         {paths.map((path, i) => (
@@ -56,9 +56,7 @@ export default function ProofMonitor({ locale }: { locale: Locale }) {
         ))}
       </ul>
       <p>
-        {locale === 'ko'
-          ? '이 페이지가 볼 수 있는 요청만 보여요. 확실히 하려면 비행기 모드로 해 보세요. 이 페이지는 집계 이벤트를 보내지 않아요.'
-          : 'This shows only requests the page can observe. For stronger confirmation, use airplane mode. This page sends no count events.'}
+        {uiMessage(locale, 'this_shows_only_requests_the_page_can_observe_for_stronger_confir')}
       </p>
     </section>
   )

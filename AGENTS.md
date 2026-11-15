@@ -15,7 +15,7 @@
 
 > **Paste anything. See what it is — instantly, locally, safely.**
 
-decod.ing v6는 정체불명의 문자열·파일을 자동 판별하고 재귀 디코딩 체인과 결정적 경고를 보여주는 무료 로컬 개발자 도구다.
+decod.ing v6는 정체불명의 문자열·파일을 자동 판별하고 재귀 디코딩 체인과 결정적 경고를 보여주는 무료 로컬 풀이 도구다.
 
 - 제품·기술 SSOT: `docs/prd/README.md`와 `docs/prd/01~10`
 - 실행 순서 SSOT: `docs/prd/CHECKLIST.md`
@@ -34,7 +34,7 @@ decod.ing v6는 정체불명의 문자열·파일을 자동 판별하고 재귀 
 7. **English first, i18n-ready**: 제품 문자열은 message catalog에 두고, 로케일은 실제 수요와 native review gate 후 추가한다. 내부 문서는 한국어다.
 8. **performance budget**: 초기 JS, Web Worker latency, memory, Core Web Vitals 예산 회귀를 local verification gate가 차단한다.
 9. **ads last**: Phase 4 gate 전 광고 DOM·script·request가 없어야 한다. 이후에도 웹 below-the-fold 한 자리만 허용하며 PWA standalone·workspace·CLI·desktop·extension에는 광고가 없다.
-10. **desktop least privilege**: 수요 gate 전 `apps/desktop` 구현을 시작하지 않는다. 시작 후 clipboard는 explicit shortcut/action에서만 읽고 broad filesystem·shell·HTTP capability를 금지한다.
+10. **desktop least privilege**: `apps/desktop`은 구현되어 있다. 내놓는 것은 오너 승인 뒤다. clipboard는 explicit shortcut/action에서만 읽고 broad filesystem·shell·HTTP capability를 금지한다.
 11. **wide catalog, bounded loading**: DevUtils 공개 47개 도구를 Pack 1~4 backlog로 유지하되 각 tool을 독립 operation manifest·fixture·inspector·local lazy chunk로 구현한다. 도구 수를 이유로 startup bundle이나 권한을 넓히지 않는다.
 
 ## 목표 구조
@@ -45,8 +45,8 @@ apps/edge        승인 후 aggregate event collector만
 apps/cli         Phase 2 stdin/file local CLI
 apps/desktop     Phase 3 수요 gate 후 Tauri 2
 apps/extension   Phase 3 별도 수요 gate 후 MV3
-packages/engine, detectors, lint-rules, spec-registry
-packages/workbench-ui, operations, fixtures-public, telemetry-schema, test-kit
+packages/engine, spec-registry
+packages/workbench-ui, operations, fixtures-public, test-kit
 tests/blind, e2e, privacy, performance, accessibility
 ```
 
@@ -124,3 +124,7 @@ publish, DNS, Analytics schema, sponsor, store review나 public native release�
 - Contract: `../docs/engineering/validation-runner-contract.md`; project manifest: `docs/operations/validation-manifest.json`.
 
 <!-- munops-validation:end -->
+
+현재 형식·도구·빌드 지면 수는 `pnpm inventory`로 센다. 문서에 고정된 수를 복제하지 않는다.
+횟수 세기는 `apps/web/src/lib/telemetry.ts#COUNT_NAMES`의 이름 일곱 가지만 보내며 끌 수 있다.
+값·결과·사람 식별자는 보내지 않는다.

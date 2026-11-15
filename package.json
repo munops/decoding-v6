@@ -8,6 +8,7 @@
     "node": ">=22"
   },
   "scripts": {
+    "inventory": "tsx scripts/inventory.ts",
     "dev": "pnpm --filter @decoding/web dev",
     "build": "node scripts/build-local.mjs",
     "typecheck": "pnpm -r --workspace-concurrency=2 --if-present typecheck",

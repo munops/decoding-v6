@@ -1,6 +1,9 @@
 # v6 implementation status
 
-Updated: 2026-08-03
+Updated: 2026-11-15
+
+Current counts: `pnpm inventory` after build. Earlier dated release/validation rows below are historical, not current release evidence.
+Current production revision must be read from `/healthz`; local work is not yet deployed.
 
 ## Released
 
@@ -34,15 +37,15 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for route, version, HTTP, browser, privacy-
 - 2026-07-30 DC-UP-02: recursive decode chain의 단계·detector label·입력 크기를 `tree/treeitem/group`과 roving keyboard로 노출하고, ambiguous 입력은 자동 확정 없이 상태 텍스트와 후보를 표시한다. lint/type/unit 및 desktop/mobile Playwright fixture를 다시 통과했다.
 - 2026-07-30 DC-UP-01: 성공한 explicit Copy 뒤에만 local Web Audio 확인음을 내고, 0.3 기본 볼륨/영속 토글/무음 시각 폴백을 추가했다. raw payload egress·storage는 여전히 0이며 실제 OS mute/AT 청취는 외부 검증 gate다.
 - 2026-07-30 DC-UP-03: code-native SVG에서 install/share-compatible PNG를 파생하고 manifest·OG metadata·query-safe PWA cache를 검증했다. worker는 기존 화면의 강제 update를 하지 않으며, production crawler/install observation은 아직 주장하지 않는다.
-- 8 detector families, recursive chain, confidence/margin selection, cycle and resource limits
+- Detector families counted from `packages/spec-registry` by `pnpm inventory`, recursive chain, confidence/margin selection, cycle and resource limits
 - 20 positive + 10 edge + 20 negative public fixtures per detector; official specification registry and per-format public quality gate
 - 47/47 DevUtils-audited tools, route/search/help/runtime parity, valid fixture for every operation, parser/preview malicious fixtures
-- 484-page static web build: English plus 7 translation-beta locales across 47 tools, 8 detectors, home, privacy, methodology, and about
+- Static web: English and Korean indexed; six technical-beta locales. `pnpm inventory` reports built pages, tools and formats.
 - typed `en/ko/ja/zh-cn/es/pt-br/de/fr` workbench catalogs, locale suggestions without redirects, self-canonical pages, and native-review `noindex` gates
 - responsive light/dark UI, automated serious-impact axe gate, PWA offline cache
 - explicit redacted-only IndexedDB workspace with TTL, export preview, per-record deletion, and clear-all
 - stdin/file-only CLI, local Tauri app, and minimum-permission MV3 extension
-- zero product analytics, account, payment, server decode, advertising, or payload network primitives
+- Fixed event-name counts only (opt out in footer); no account, payment, server decode, advertising, or payload network primitives
 
 The user explicitly requested implementation of the complete 47-tool, desktop, and extension surfaces before the PRD's demand gates. Those surfaces are implemented for evaluation, but their public native-store release and success metrics remain gated below.
 

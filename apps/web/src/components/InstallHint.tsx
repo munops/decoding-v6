@@ -1,3 +1,4 @@
+import { uiMessage } from '@decoding/workbench-ui'
 import { useEffect, useState } from 'preact/hooks'
 import type { Locale } from '../i18n/catalog'
 type InstallEvent = Event & {
@@ -27,9 +28,7 @@ export default function InstallHint({ locale }: { locale: Locale }) {
   if (!visible) return null
   return (
     <section class="install-hint">
-      <h3>
-        {locale === 'ko' ? '다음에는 홈 화면에서 바로 열어요.' : 'Keep it on your home screen.'}
-      </h3>
+      <h3>{uiMessage(locale, 'keep_it_on_your_home_screen')}</h3>
       <button
         class="button secondary"
         type="button"
@@ -38,17 +37,13 @@ export default function InstallHint({ locale }: { locale: Locale }) {
           else setGuide(true)
         }}
       >
-        {locale === 'ko' ? '홈 화면에 추가' : 'Add to Home Screen'}
+        {uiMessage(locale, 'add_to_home_screen')}
       </button>
       {guide ? (
         <ol>
-          <li>
-            {locale === 'ko'
-              ? 'Safari에서 공유 버튼을 눌러요.'
-              : 'In Safari, tap the Share button.'}
-          </li>
-          <li>{locale === 'ko' ? '홈 화면에 추가를 선택해요.' : 'Choose Add to Home Screen.'}</li>
-          <li>{locale === 'ko' ? '추가를 눌러요.' : 'Tap Add.'}</li>
+          <li>{uiMessage(locale, 'in_safari_tap_the_share_button')}</li>
+          <li>{uiMessage(locale, 'choose_add_to_home_screen')}</li>
+          <li>{uiMessage(locale, 'tap_add')}</li>
         </ol>
       ) : null}
       <button
@@ -63,7 +58,7 @@ export default function InstallHint({ locale }: { locale: Locale }) {
           }
         }}
       >
-        {locale === 'ko' ? '닫기' : 'Dismiss'}
+        {uiMessage(locale, 'dismiss')}
       </button>
     </section>
   )

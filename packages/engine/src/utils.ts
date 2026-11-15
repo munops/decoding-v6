@@ -21,7 +21,9 @@ export function decodeBase64(value: string): Uint8Array | null {
   const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, '=')
   try {
     const binary = atob(padded)
-    return Uint8Array.from(binary, (char) => char.charCodeAt(0))
+    const bytes = new Uint8Array(binary.length)
+    for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index)
+    return bytes
   } catch {
     return null
   }
@@ -38,13 +40,20 @@ export function encodeBase64(bytes: Uint8Array, urlSafe = false): string {
 
 export function printableRatio(bytes: Uint8Array): number {
   if (!bytes.length) return 0
-  let printable = 0
-  for (const byte of bytes) {
-    if (byte === 9 || byte === 10 || byte === 13 || (byte >= 32 && byte <= 126) || byte >= 0xc2) {
-      printable += 1
+  try {
+    const text = new TextDecoder('utf-8', { fatal: true }).decode(bytes)
+    let printable = 0
+    let characters = 0
+    for (const character of text) {
+      characters += 1
+      const code = character.codePointAt(0) ?? 0
+      if (code === 9 || code === 10 || code === 13 || (code >= 32 && !(code >= 127 && code <= 159)))
+        printable += 1
     }
+    return characters ? printable / characters : 0
+  } catch {
+    return 0
   }
-  return printable / bytes.length
 }
 
 export function stableDigest(input: DecodeInput): string {

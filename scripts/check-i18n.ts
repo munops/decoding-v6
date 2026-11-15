@@ -1,5 +1,6 @@
+import { toolHelpIds } from '../apps/web/src/i18n/tool-help'
 import { completionMessages } from '../packages/workbench-ui/src/completion-messages'
-import { readFileSync } from 'node:fs'
+import { readdirSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import {
   decoderMessages,
@@ -140,4 +141,26 @@ for (const [file, forbidden] of literalChecks) {
 
 console.log(
   `i18n: ${supportedLocales.length} locales, typed catalogs, localized routes, and UI literal guard OK`,
+)
+
+// A localized sentence belongs to a message catalog, never a component ternary.
+for (const root of [
+  'packages/workbench-ui/src',
+  'apps/web/src/components',
+  'apps/web/src/islands',
+  'apps/web/src/layouts',
+]) {
+  for (const file of readdirSync(root).filter((file) => /\.(tsx|astro)$/.test(file))) {
+    const source = readFileSync(resolve(root, file), 'utf8')
+    invariant(
+      !/(?:[\w.]+locale)\s*===\s*'ko'\s*\?\s*['"][^'"\n]*[가-힣]/.test(source),
+      `${root}/${file}: localized UI literal escaped the catalog`,
+    )
+  }
+}
+
+invariant(
+  new Set(toolHelpIds).size === operations.length &&
+    operations.every((operation) => toolHelpIds.includes(operation.id)),
+  'Every tool needs authored use cases and input/output examples',
 )

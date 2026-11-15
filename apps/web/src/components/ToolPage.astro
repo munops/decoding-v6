@@ -5,6 +5,8 @@ import WebTool from '../islands/WebTool'
 import Layout from '../layouts/Layout.astro'
 import SponsorSlot from './SponsorSlot.astro'
 import { localePath, toolPageMessages, type Locale } from '../i18n/catalog'
+import { toolHelp } from '../i18n/tool-help'
+import { deviceMessages } from '../i18n/device'
 import { localizeOperation } from '../i18n/operations'
 
 interface Props {
@@ -14,7 +16,9 @@ interface Props {
 const { locale, operation } = Astro.props
 const messages = toolPageMessages[locale]
 const displayOperation = localizeOperation(locale, operation)
-const description = messages.description(displayOperation.name)
+const description = displayOperation.description
+const help = toolHelp(locale, operation.id)
+const helpCopy = deviceMessages[locale]
 const routePath = `/${operation.id}/`
 const schema = {
   '@context': 'https://schema.org',
@@ -44,7 +48,7 @@ const boundary =
   <section class="tool-hero container">
     <div>
       <a class="back-link" href={localePath(locale, '/tools/')}>{messages.back}</a>
-      <span class="eyebrow">{messages.localUtility} · {messages.pack} {operation.pack}</span>
+      <span class="eyebrow">{messages.localUtility}</span>
       <h1>{displayOperation.name}</h1>
       <p>{description}</p>
     </div>
@@ -66,7 +70,11 @@ const boundary =
   <section class="container tool-content">
     <article>
       <span class="eyebrow">{messages.howEyebrow}</span><h2>{messages.howTitle}</h2>
-      <p>{messages.operationBody(operation.securityProfile)}</p>
+      <p>{displayOperation.description}</p>
+      <h3>{helpCopy.whenToUse}</h3><p>{help.use}</p>
+      <h3>{helpCopy.example}</h3><pre><code>{help.input}</code></pre><span aria-hidden="true"
+        >↓</span
+      ><pre><code>{help.output}</code></pre>
     </article>
     <article>
       <span class="eyebrow">{messages.boundaryEyebrow}</span><h2>{messages.boundaryTitle}</h2><p>

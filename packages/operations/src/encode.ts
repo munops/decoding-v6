@@ -1,4 +1,4 @@
-import { decodeBase64, encodeBase64, inputBytes, inputText } from '@decoding/engine'
+import { decodeBase64, encodeBase64, inputBytes, inputText, isProbablyUtf8 } from '@decoding/engine'
 import { SubjectAlternativeNameExtension, X509Certificate } from '@peculiar/x509'
 import { optionString, structuredResult, text, textResult } from './shared'
 import type { OperationRunner } from './types'
@@ -75,7 +75,24 @@ function escapeBackslash(source: string): string {
 
 export const runEncode: OperationRunner = async (id, input, options) => {
   const source = text(input)
-  const mode = optionString(options, 'mode', 'encode')
+  const requestedMode = optionString(options, 'mode', 'auto')
+  const mode =
+    requestedMode !== 'auto'
+      ? requestedMode
+      : id === 'url-codec' && /%[a-f0-9]{2}/i.test(source)
+        ? 'decode'
+        : id === 'html-entity' &&
+            /&(?:#(?:x[0-9a-f]+|[0-9]+)|amp|lt|gt|quot|apos|nbsp);/i.test(source)
+          ? 'decode'
+          : id === 'backslash-codec' && /\\(?:u|x|n|r|t|b|f|v|0|\\|"|')/.test(source)
+            ? 'decode'
+            : id === 'base64-string' &&
+                (() => {
+                  const bytes = decodeBase64(source)
+                  return bytes && isProbablyUtf8(bytes)
+                })()
+              ? 'decode'
+              : 'encode'
   switch (id) {
     case 'base64-string': {
       if (mode === 'decode') {

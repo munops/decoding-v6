@@ -1,4 +1,5 @@
 ---
+import { uiMessage } from '@decoding/workbench-ui'
 import { publicOperator } from '../lib/public-operator'
 import { buildRevision } from '../lib/build-info'
 import { detectorSpecs } from '@decoding/spec-registry'
@@ -136,8 +137,17 @@ const localizedPrivacy = localePath(locale, '/privacy/')
         <a href={localizedTools}>{messages.tools} <span class="nav-count">47</span></a>
         <a href={localizedMethod}>{messages.method}</a>
         <a href={localizedPrivacy}>{messages.privacy}</a>
-        {locale === 'en' ? <a href="/workspace/">{messages.workspace}</a> : null}
+        <a href={localePath(locale, '/workspace/')}>{messages.workspace}</a>
       </nav>
+      <details class="mobile-nav">
+        <summary>{messages.primary}</summary>
+        <nav aria-label={messages.primary}>
+          <a href={localizedTools}>{messages.tools}</a>
+          <a href={localizedMethod}>{messages.method}</a>
+          <a href={localizedPrivacy}>{messages.privacy}</a>
+          <a href={localePath(locale, '/workspace/')}>{messages.workspace}</a>
+        </nav>
+      </details>
       {
         translationPath ? (
           <details class="language-menu">
@@ -187,10 +197,9 @@ const localizedPrivacy = localePath(locale, '/privacy/')
         <p>{messages.footer}</p>
       </div>
       <div class="footer-links">
-        <a href="/data/">{locale === 'ko' ? '이 기기 데이터' : 'Device data'}</a>
-        <a href="/proof/">{locale === 'ko' ? '전송 직접 확인' : 'Check local processing'}</a>
-        <a href="/bookmarklet/">Bookmarklet</a><a href="/sponsor/"
-          >{locale === 'ko' ? '스폰서 안내' : 'Sponsor'}</a
+        <a href={localePath(locale, '/data/')}>{uiMessage(locale, 'device_data')}</a>
+        <a href="/proof/">{uiMessage(locale, 'check_local_processing')}</a>
+        <a href="/bookmarklet/">Bookmarklet</a><a href="/sponsor/">{uiMessage(locale, 'sponsor')}</a
         >
         <a href={localizedTools}>47 {messages.tools}</a><a href={localizedPrivacy}
           >{messages.privacy}</a
@@ -218,7 +227,21 @@ const localizedPrivacy = localePath(locale, '/privacy/')
       if (/^\/([a-z]{2}\/)?$/.test(location.pathname)) countOpen('landing_view')
 
       if ('serviceWorker' in navigator && location.protocol === 'https:') {
-        addEventListener('load', () => navigator.serviceWorker.register('/sw.js'))
+        addEventListener('load', () => {
+          void navigator.serviceWorker
+            .register('/sw.js')
+            .then(() => navigator.serviceWorker.ready)
+            .then((registration) => {
+              const cacheTools = () =>
+                registration.active?.postMessage({
+                  type: 'decoding:cache-tools',
+                  locale: document.documentElement.lang,
+                })
+              if ('requestIdleCallback' in window) requestIdleCallback(cacheTools)
+              else setTimeout(cacheTools, 1000)
+            })
+            .catch(() => {})
+        })
       }
 
       const themeToggle = document.querySelector<HTMLButtonElement>('#theme-toggle')

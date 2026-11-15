@@ -1,3 +1,4 @@
+import { uiMessage } from './ui-copy'
 import { useEffect, useState } from 'preact/hooks'
 import { completionMessages } from './completion-messages'
 import type { WorkbenchLocale } from './messages'
@@ -44,9 +45,10 @@ export function JwtVerify({ token, locale }: { token: string; locale: WorkbenchL
                     ? locale === 'ko'
                       ? `키 ${error.line}행 ${error.column}열의 형식을 확인해 주세요.`
                       : error.message
-                    : locale === 'ko'
-                      ? '키 형식이나 알고리즘을 확인해 주세요. 공개키 PEM 또는 JWK를 사용해요.'
-                      : 'Check the key format and algorithm. Use a public SPKI PEM or JWK.',
+                    : uiMessage(
+                        locale,
+                        'check_the_key_format_and_algorithm_use_a_public_spki_pem_or_jwk',
+                      ),
                 ),
             )
             .finally(() => setBusy(false))

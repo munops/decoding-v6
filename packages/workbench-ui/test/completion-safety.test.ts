@@ -110,3 +110,18 @@ it('points to invalid PEM boundaries and Base64 characters without exposing key 
     }
   }
 })
+
+it('selects the final primary decoded value and preserves a full URL', async () => {
+  const { finalSelection, displayValue } = await import('../src/result-text')
+  const { decode, encodeBase64 } = await import('@decoding/engine')
+  const encoded = encodeBase64(
+    new TextEncoder().encode(encodeBase64(new TextEncoder().encode('{"ok":true}'))),
+  )
+  expect(finalSelection((await decode(encoded)).root)?.value).toEqual({ ok: true })
+  const href = 'https://example.invalid/a?q=1&x=2#part'
+  expect(
+    displayValue(
+      finalSelection((await decode(encodeURIComponent(encodeURIComponent(href)))).root)!,
+    ),
+  ).toBe(href)
+})

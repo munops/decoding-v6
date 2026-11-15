@@ -274,3 +274,17 @@ it('round-trips PNG bytes and rejects empty image encoding', async () => {
   ).toEqual(png)
   await expect(executeOperation('base64-image', '')).rejects.toThrow(/Choose an image/)
 })
+
+it('chooses decode for encoded input and allows explicit encoding', async () => {
+  expect((await executeOperation('url-codec', '%ED%95%9C%EA%B8%80%20test')).output).toBe(
+    '한글 test',
+  )
+  expect((await executeOperation('url-codec', '%20', { mode: 'encode' })).output).toBe('%2520')
+  expect((await executeOperation('base64-string', '7JWI64WV7ZWY7IS47JqUIOyEuOqzhA==')).output).toBe(
+    '안녕하세요 세계',
+  )
+  expect((await executeOperation('html-entity', '&lt;b&gt;')).output).toBe('<b>')
+  expect((await executeOperation('backslash-codec', String.raw`hello\nworld`)).output).toBe(
+    'hello\nworld',
+  )
+})

@@ -1,0 +1,292 @@
+import type { Locale } from './catalog'
+type Help = { use: string; input: string; output: string }
+const rows = {
+  'json-format': {
+    en: 'Read or validate a compact JSON response.',
+    ko: '한 줄로 온 JSON 응답을 읽거나 문법을 확인할 때 써요.',
+    input: '{"ok":true}',
+    output: '{\n  "ok": true\n}',
+  },
+  'html-format': {
+    en: 'Read HTML with consistent indentation.',
+    ko: 'HTML 태그의 시작과 끝을 보기 어려울 때 써요.',
+    input: '<main><p>Hello</p></main>',
+    output: '<main>\n  <p>Hello</p>\n</main>',
+  },
+  'css-format': {
+    en: 'Read a stylesheet or remove formatting whitespace.',
+    ko: '스타일 코드의 들여쓰기를 맞추거나 공백을 줄일 때 써요.',
+    input: 'body{color:red}',
+    output: 'body {\n  color: red;\n}',
+  },
+  'javascript-format': {
+    en: 'Read JavaScript without running it.',
+    ko: 'JavaScript를 실행하지 않고 읽기 좋게 정리할 때 써요.',
+    input: 'const x={ok:true}',
+    output: 'const x = { ok: true };',
+  },
+  'erb-format': {
+    en: 'Inspect an ERB template without executing Ruby.',
+    ko: 'ERB 안의 Ruby를 실행하지 않고 템플릿을 볼 때 써요.',
+    input: '<% if ok %><p>Yes</p><% end %>',
+    output: '<% if ok %>\n  <p>Yes</p>\n<% end %>',
+  },
+  'less-format': {
+    en: 'Format LESS source before reviewing it.',
+    ko: 'LESS 소스의 중첩과 변수를 살펴볼 때 써요.',
+    input: '@c:red;.x{color:@c}',
+    output: '@c: red;\n.x {\n  color: @c;\n}',
+  },
+  'scss-format': {
+    en: 'Format SCSS without compiling it.',
+    ko: 'SCSS를 변환하지 않고 들여쓰기만 맞출 때 써요.',
+    input: '$c:red;.x{color:$c}',
+    output: '$c: red;\n.x {\n  color: $c;\n}',
+  },
+  'xml-format': {
+    en: 'Read nested XML without loading external entities.',
+    ko: 'XML이 여러 겹으로 들어 있어 읽기 어려울 때 써요.',
+    input: '<root><item>one</item></root>',
+    output: '<root>\n  <item>one</item>\n</root>',
+  },
+  'sql-format': {
+    en: 'Read a SQL statement without sending it to a database.',
+    ko: 'SQL 문을 실행하지 않고 줄과 들여쓰기를 맞출 때 써요.',
+    input: 'select id from users',
+    output: 'SELECT\n  id\nFROM\n  users',
+  },
+  'line-sort': {
+    en: 'Sort a list and optionally remove repeated lines.',
+    ko: '목록을 가나다순으로 놓거나 같은 줄을 덜어낼 때 써요.',
+    input: 'z\na\na',
+    output: 'a\na\nz',
+  },
+  'url-parser': {
+    en: 'Inspect a long address before opening it.',
+    ko: '긴 주소에서 사이트 이름과 검색 조건을 살펴볼 때 써요.',
+    input: 'https://example.invalid/a?q=1',
+    output: 'host: example.invalid · pathname: /a · q: 1',
+  },
+  'yaml-to-json': {
+    en: 'Turn YAML configuration into JSON.',
+    ko: 'YAML 설정을 JSON을 받는 곳으로 옮길 때 써요.',
+    input: 'ok: true',
+    output: '{\n  "ok": true\n}',
+  },
+  'json-to-yaml': {
+    en: 'Turn JSON configuration into YAML.',
+    ko: 'JSON 설정을 YAML로 적어야 할 때 써요.',
+    input: '{"ok":true}',
+    output: 'ok: true',
+  },
+  'number-base': {
+    en: 'Compare the same number in different bases.',
+    ko: '10진수와 2·8·16진수를 서로 바꿀 때 써요.',
+    input: '255 (10 → 16)',
+    output: 'ff',
+  },
+  'json-to-csv': {
+    en: 'Turn an array of records into a spreadsheet table.',
+    ko: 'JSON 목록을 스프레드시트에 넣을 때 써요.',
+    input: '[{"name":"Lee","count":2}]',
+    output: 'name,count\nLee,2',
+  },
+  'csv-to-json': {
+    en: 'Turn a CSV table into records.',
+    ko: '쉼표로 나눈 표를 JSON으로 옮길 때 써요.',
+    input: 'name,count\nLee,2',
+    output: '[{"name":"Lee","count":"2"}]',
+  },
+  'html-to-jsx': {
+    en: 'Adapt HTML attributes for React or Preact.',
+    ko: 'HTML을 JSX 컴포넌트 안에 넣을 때 써요.',
+    input: '<label class="x" for="a">A</label>',
+    output: '<label className="x" htmlFor="a">A</label>',
+  },
+  'string-case': {
+    en: 'Rename words in camel, snake or other styles.',
+    ko: '이름을 camelCase나 snake_case로 바꿀 때 써요.',
+    input: 'hello world',
+    output: 'helloWorld',
+  },
+  'php-to-json': {
+    en: 'Read inert PHP array data as JSON.',
+    ko: '실행 코드 없이 PHP 배열에 담긴 값만 옮길 때 써요.',
+    input: "['ok' => true]",
+    output: '{"ok":true}',
+  },
+  'json-to-php': {
+    en: 'Express JSON data as a PHP array.',
+    ko: 'JSON에 든 값을 PHP 배열 표기로 바꿀 때 써요.',
+    input: '{"ok":true}',
+    output: "['ok' => true]",
+  },
+  'php-serialize': {
+    en: 'Serialize JSON values using PHP data grammar.',
+    ko: 'PHP가 읽는 직렬화 값으로 바꿔야 할 때 써요.',
+    input: '{"ok":true}',
+    output: 'a:1:{s:2:"ok";b:1;}',
+  },
+  'php-unserialize': {
+    en: 'Inspect PHP serialization without creating objects.',
+    ko: 'PHP 직렬화 값에 무엇이 들어 있는지 볼 때 써요.',
+    input: 'a:1:{s:2:"ok";b:1;}',
+    output: '{"ok":true}',
+  },
+  'svg-to-css': {
+    en: 'Use an inert SVG as a CSS image.',
+    ko: 'SVG를 CSS 배경 이미지로 넣을 때 써요.',
+    input: '<svg xmlns="http://www.w3.org/2000/svg"/>',
+    output: 'background-image: url("data:image/svg+xml,…")',
+  },
+  'curl-to-code': {
+    en: 'Translate a cURL request without making the request.',
+    ko: 'curl 명령을 JavaScript 등 다른 언어 코드로 옮길 때 써요.',
+    input: "curl 'https://example.invalid/'",
+    output: 'fetch("https://example.invalid/")',
+  },
+  'json-to-code': {
+    en: 'Create types from a representative JSON value.',
+    ko: 'JSON 응답을 TypeScript 등 언어의 자료형으로 옮길 때 써요.',
+    input: '{"name":"Lee","count":2}',
+    output: 'interface Root { name: string; count: number; }',
+  },
+  'hex-to-ascii': {
+    en: 'Read bytes written as hexadecimal.',
+    ko: '16진수로 적힌 바이트가 어떤 글자인지 볼 때 써요.',
+    input: '48 65 6c 6c 6f',
+    output: 'Hello',
+  },
+  'ascii-to-hex': {
+    en: 'Write text as hexadecimal bytes.',
+    ko: '글자의 바이트를 16진수로 확인할 때 써요.',
+    input: 'Hello',
+    output: '48 65 6c 6c 6f',
+  },
+  'unix-time': {
+    en: 'Read a numeric timestamp as a date in your time zone.',
+    ko: '10자리나 13자리 시간 숫자를 날짜로 볼 때 써요.',
+    input: '1700000000',
+    output: '2023-11-14T22:13:20.000Z',
+  },
+  'jwt-debugger': {
+    en: 'Read token claims and expiry without sending the token away.',
+    ko: '로그인 토큰의 내용과 끝나는 때를 확인할 때 써요.',
+    input: 'eyJhbGciOiJub25lIn0.eyJleHAiOjF9.',
+    output: 'header.alg: none · payload.exp: 1',
+  },
+  'regex-tester': {
+    en: 'Try a pattern against text locally.',
+    ko: '글에서 원하는 모양이 어디에 나오는지 찾을 때 써요.',
+    input: 'one 123 two 456 · \\d+',
+    output: '123 · 456',
+  },
+  'html-preview': {
+    en: 'Preview HTML with scripts and network disabled.',
+    ko: '스크립트를 실행하지 않고 HTML 배치를 볼 때 써요.',
+    input: '<h1>Hello</h1>',
+    output: 'Hello',
+  },
+  'text-diff': {
+    en: 'Compare two versions line by line.',
+    ko: '두 글에서 어떤 줄이 달라졌는지 볼 때 써요.',
+    input: 'first\nold → first\nnew',
+    output: '− old\n+ new',
+  },
+  'string-inspector': {
+    en: 'Inspect Unicode code points and UTF-8 bytes.',
+    ko: '눈에 보이지 않는 문자나 글자 수를 살펴볼 때 써요.',
+    input: '한',
+    output: 'U+D55C · UTF-8: ED 95 9C',
+  },
+  'markdown-preview': {
+    en: 'Preview Markdown while keeping raw HTML inert.',
+    ko: 'Markdown이 어떻게 보이는지 확인할 때 써요.',
+    input: '**Hello**',
+    output: 'Hello',
+  },
+  'cron-parser': {
+    en: 'Explain a schedule and inspect upcoming times.',
+    ko: 'cron 예약이 언제 도는지 확인할 때 써요.',
+    input: '*/15 * * * *',
+    output: 'Every 15 minutes',
+  },
+  'color-converter': {
+    en: 'Compare a color in Hex, RGB and HSL notation.',
+    ko: '색 코드를 다른 표기로 바꾸거나 견본을 볼 때 써요.',
+    input: '#ff8800',
+    output: 'rgb(255, 136, 0)',
+  },
+  'uuid-ulid-generator': {
+    en: 'Create local identifiers without registering an account.',
+    ko: '시험 자료에 쓸 UUID나 ULID가 필요할 때 써요.',
+    input: 'UUID v4',
+    output: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
+  },
+  'lorem-ipsum': {
+    en: 'Create placeholder text for a layout.',
+    ko: '글이 없는 화면의 길이와 배치를 시험할 때 써요.',
+    input: '1 paragraph',
+    output: 'Lorem ipsum…',
+  },
+  'qr-code': {
+    en: 'Create a QR image, or read an image without opening its destination.',
+    ko: '주소를 QR로 만들거나 QR 사진에 든 값을 먼저 볼 때 써요.',
+    input: 'https://example.invalid/',
+    output: 'QR image ↔ https://example.invalid/',
+  },
+  'hash-generator': {
+    en: 'Calculate a digest; it cannot recover the original text.',
+    ko: '같은 글인지 견줄 지문 값을 만들 때 써요.',
+    input: 'abc · SHA-256',
+    output: 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad',
+  },
+  'random-string': {
+    en: 'Create random characters locally.',
+    ko: '시험에 쓸 임의의 문자열을 만들 때 써요.',
+    input: 'length: 8',
+    output: 'Eight newly generated characters',
+  },
+  'base64-string': {
+    en: 'Decode Base64 text or wrap text in Base64.',
+    ko: 'Base64로 싼 글을 풀거나 글을 Base64로 적을 때 써요.',
+    input: 'SGVsbG8=',
+    output: 'Hello',
+  },
+  'base64-image': {
+    en: 'Turn an image into a data URI or recover its bytes.',
+    ko: '이미지를 글로 적은 data URI로 옮길 때 써요.',
+    input: 'PNG image bytes',
+    output: 'data:image/png;base64,…',
+  },
+  'url-codec': {
+    en: 'Decode percent escapes or prepare text for a URL.',
+    ko: '%로 적힌 주소 글자를 풀거나 주소에 넣을 글을 쌀 때 써요.',
+    input: '%ED%95%9C%EA%B8%80',
+    output: '한글',
+  },
+  'html-entity': {
+    en: 'Read HTML character references or escape special characters.',
+    ko: '&lt;처럼 온 글자를 풀거나 HTML 문자로 적을 때 써요.',
+    input: '&lt;b&gt;',
+    output: '<b>',
+  },
+  'backslash-codec': {
+    en: 'Read backslash escapes or write them explicitly.',
+    ko: '\\n이나 \\u로 적힌 글자를 풀 때 써요.',
+    input: 'hello\\nworld',
+    output: 'hello\nworld',
+  },
+  'x509-decoder': {
+    en: 'Inspect certificate dates and subjects without querying an authority.',
+    ko: '인증서의 주인과 유효 기간을 기기에서 살펴볼 때 써요.',
+    input: '-----BEGIN CERTIFICATE-----…',
+    output: 'subject · issuer · notBefore · notAfter',
+  },
+} as const
+export const toolHelpIds = Object.keys(rows)
+export function toolHelp(locale: Locale, id: string): Help {
+  const row = rows[id as keyof typeof rows]
+  if (!row) throw new Error(`Missing authored tool help: ${id}`)
+  return { use: row[locale === 'ko' ? 'ko' : 'en'], input: row.input, output: row.output }
+}

@@ -237,7 +237,7 @@ pre {
   border: 1px solid var(--line);
   border-radius: 8px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   text-align: center;
   cursor: pointer;
@@ -316,7 +316,7 @@ pre {
   border-radius: 99px;
   background: var(--accent-soft);
   color: var(--accent);
-  font-size: 11px;
+  font-size: 13px;
 }
 .header-trust,
 .privacy-line {
@@ -333,7 +333,7 @@ pre {
   border-radius: 99px;
   background: var(--accent-soft);
   color: var(--accent);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 800;
   text-transform: uppercase;
 }
@@ -376,7 +376,7 @@ pre {
 .copy-feedback-settings summary {
   padding: 7px 11px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 750;
   cursor: pointer;
 }
@@ -397,7 +397,7 @@ pre {
 .copy-feedback-controls p {
   margin: 10px 0 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
 }
 .copy-feedback-toggle,
 .copy-feedback-volume {
@@ -417,7 +417,7 @@ pre {
   min-width: 34px;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 13px;
   text-align: right;
 }
 
@@ -429,7 +429,7 @@ pre {
   margin-bottom: 12px;
   color: var(--accent);
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 760;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -522,7 +522,7 @@ pre {
   background: var(--workbench-ink);
   color: var(--accent-2);
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
 }
 .triage-sample > strong {
@@ -543,7 +543,7 @@ pre {
   display: block;
   margin-bottom: 7px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -566,7 +566,7 @@ pre {
 }
 .sponsor-slot a > span > span {
   color: var(--accent);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 750;
 }
 .decoder-shell,
@@ -654,7 +654,7 @@ textarea {
 .input-actions > span {
   margin-left: auto;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
 }
 .paste-surface .input-actions > span {
   color: var(--workbench-muted);
@@ -808,7 +808,7 @@ textarea {
   max-width: 420px;
   margin: 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.5;
 }
 .safe-share-actions {
@@ -863,7 +863,7 @@ textarea {
   background: var(--surface);
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -893,7 +893,7 @@ textarea {
   background: var(--accent-soft);
   color: var(--accent);
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 13px;
 }
 .evidence-stack p {
   margin: 8px 0;
@@ -904,7 +904,7 @@ textarea {
   margin: 8px 0;
   padding-left: 20px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
 }
 .candidate-list {
   display: grid;
@@ -938,7 +938,7 @@ textarea {
   border-radius: 10px;
   background: color-mix(in srgb, var(--surface-2) 68%, var(--surface));
   color: var(--ink);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .section-heading {
@@ -1002,7 +1002,7 @@ textarea {
   text-align: center;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 13px;
 }
 .tool-group {
   margin-top: 62px;
@@ -1080,7 +1080,7 @@ textarea {
   background: var(--workbench-ink);
   color: var(--accent-2);
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
 }
 .pack-badge {
@@ -1088,7 +1088,7 @@ textarea {
   border-radius: 7px;
   background: var(--accent-soft);
   color: var(--accent);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 800;
 }
 .tool-card h3 {
@@ -1106,7 +1106,7 @@ textarea {
   display: block;
   margin-top: 17px;
   color: var(--accent);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 760;
 }
 .empty-catalog {
@@ -1136,7 +1136,7 @@ textarea {
   padding: 7px 10px;
   border-radius: 8px;
   background: var(--surface-2);
-  font-size: 12px;
+  font-size: 13px;
   text-decoration: none;
 }
 
@@ -1195,7 +1195,7 @@ textarea {
   gap: 5px;
   min-width: 150px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 750;
 }
 .tool-options label.wide {
@@ -1326,7 +1326,7 @@ textarea {
 .download-grid .platform {
   color: var(--accent);
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 13px;
 }
 .download-grid h2 {
   margin: 32px 0 8px;
@@ -1367,7 +1367,7 @@ textarea {
   gap: 6px;
   margin-top: 12px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 750;
 }
 .workspace-editor > label > input {
@@ -1403,7 +1403,7 @@ textarea {
 .workspace-list-heading p {
   margin: 4px 0 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
 }
 .workspace-records {
   display: grid;
@@ -1431,7 +1431,7 @@ textarea {
   margin: 0;
   overflow: auto;
   white-space: pre-wrap;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .site-footer {
@@ -1500,7 +1500,7 @@ html:lang(ko) body .sponsor-label {
   text-transform: none;
 }
 html:lang(ko) body .translation-status {
-  font-size: 11px;
+  font-size: 13px;
 }
 
 @keyframes workbench-in {
@@ -1581,7 +1581,7 @@ html:lang(ko) body .translation-status {
   }
   .site-header nav a {
     padding: 8px 6px;
-    font-size: 12px;
+    font-size: 13px;
   }
   .language-menu summary {
     min-width: 64px;
@@ -1627,7 +1627,7 @@ html:lang(ko) body .translation-status {
   }
   .triage-sample > strong {
     overflow-wrap: normal;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.3;
     word-break: normal;
   }
@@ -1721,7 +1721,7 @@ html:lang(ko) body .translation-status {
   }
   .language-menu summary {
     min-width: 58px;
-    font-size: 11px;
+    font-size: 13px;
   }
   .locale-suggestion {
     width: calc(100% - 24px);
@@ -1743,7 +1743,7 @@ html:lang(ko) body .translation-status {
   }
   .workbench-bar .privacy-line {
     max-width: 210px;
-    font-size: 11px;
+    font-size: 13px;
   }
 }
 
@@ -2093,7 +2093,7 @@ h2,
   width: 100%;
 }
 .hex-inspector pre {
-  font-size: 11px;
+  font-size: 13px;
   overflow-x: auto;
 }
 .candidate-comparison {
@@ -2101,7 +2101,7 @@ h2,
 }
 .candidate-comparison table {
   width: 100%;
-  font-size: 12px;
+  font-size: 13px;
   border-collapse: collapse;
 }
 .candidate-comparison td,
@@ -2134,7 +2134,7 @@ summary {
 }
 .batch-compare table {
   width: 100%;
-  font-size: 12px;
+  font-size: 13px;
 }
 .unified-diff {
   white-space: pre-wrap;
@@ -2314,6 +2314,75 @@ html {
     overflow-wrap: anywhere;
   }
   .batch-compare .unified-diff {
+    display: none;
+  }
+}
+
+/* DEC-NEXT-001: readable labels, reachable navigation and unobscured results. */
+.site-header {
+  position: relative;
+  top: auto;
+}
+.theme-toggle {
+  min-width: 44px;
+  min-height: 44px;
+}
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+input[type='checkbox'] {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+label:has(input[type='checkbox']) {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mobile-nav {
+  display: none;
+  position: relative;
+}
+.mobile-nav summary {
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+@media (max-width: 760px) {
+  .mobile-nav {
+    display: block;
+  }
+  .site-header .mobile-nav nav {
+    display: grid;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 60;
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    padding: 12px;
+    min-width: 210px;
+  }
+  .site-header .mobile-nav:not([open]) nav {
+    display: none;
+  }
+  .site-header .mobile-nav nav a {
+    display: flex;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 760px) {
+  .site-header {
+    gap: 8px;
+  }
+  .site-header > nav {
     display: none;
   }
 }

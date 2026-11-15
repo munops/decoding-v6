@@ -131,7 +131,7 @@ export const runInspect: OperationRunner = async (id, input, options) => {
       return structuredResult({
         ...converted,
         utc: date.toUTCString(),
-        local: date.toLocaleString(),
+        local: date.toLocaleString(optionString(options, 'locale', 'en')),
         relativeSeconds: Math.round((converted.milliseconds - Date.now()) / 1000),
       })
     }

@@ -1,4 +1,5 @@
 ---
+import { uiMessage } from '@decoding/workbench-ui'
 import WebDecoder from '../islands/WebDecoder'
 import Layout from '../layouts/Layout.astro'
 import { homeMessages, type Locale } from '../i18n/catalog'
@@ -28,7 +29,7 @@ const samples = triageSamples.map((sample) => ({
       <h1>{heading} <span>{accentHeading}</span></h1>
       <p>
         {messages.intro}
-        <a href="/proof/">{locale === 'ko' ? '전송 직접 확인' : 'Check local processing'}</a>
+        <a href="/proof/">{uiMessage(locale, 'check_local_processing')}</a>
       </p>
     </div>
   </section>

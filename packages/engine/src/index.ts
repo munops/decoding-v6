@@ -1,6 +1,6 @@
 export { decode, detect, DEFAULT_LIMITS } from './engine'
 export { defaultDetectors } from './detectors'
-export { decodeBase64, encodeBase64, inputBytes, inputText } from './utils'
+export { decodeBase64, encodeBase64, inputBytes, inputText, isProbablyUtf8 } from './utils'
 export type {
   ChainNode,
   DecodeInput,
@@ -20,3 +20,5 @@ export { identifyMagic } from './formats/magic-bytes'
 
 export { LocalParserUnavailableError } from './types'
 export { parserPosition } from './formats/common'
+
+export { redactedDetection } from './redacted-detection'

@@ -86,21 +86,10 @@
     }
   ],
   "modes": {
-    "staged": [
-      "changed-lint",
-      "changed-test"
-    ],
-    "changed": [
-      "project-changed"
-    ],
-    "repo": [
-      "repo-lint",
-      "repo-typecheck",
-      "repo-test"
-    ],
-    "candidate": [
-      "candidate-quality"
-    ],
+    "staged": ["changed-lint", "changed-test"],
+    "changed": ["project-changed"],
+    "repo": ["repo-lint", "repo-typecheck", "repo-test"],
+    "candidate": ["candidate-quality"],
     "ops": []
   },
   "budgets": {
@@ -114,10 +103,7 @@
   "coverage": {
     "complete": true,
     "blockingReasons": [],
-    "advisories": [
-      "project_changed_profile_extended_budget",
-      "candidate_quality_extended_budget"
-    ],
+    "advisories": ["project_changed_profile_extended_budget", "candidate_quality_extended_budget"],
     "notApplicableRoles": {}
   },
   "knownFailureFingerprints": []

@@ -103,3 +103,19 @@ test('anonymous-count opt-out suppresses open, decode and share events', async (
   await expect(page.locator('[data-safe-share]')).toBeVisible()
   expect(counts).toEqual([])
 })
+
+test('redacted export omits input-derived algorithm prose', async ({ page }) => {
+  await page.goto('/')
+  const canary = 'SYNTHETIC-EXPORT-ALGORITHM-PRIVATE'
+  const token = `${Buffer.from(JSON.stringify({ alg: canary })).toString('base64url')}.${Buffer.from('{"sub":"private-test-subject"}').toString('base64url')}.`
+  await page.getByLabel('Paste text or drop a file').fill(token)
+  const downloadPromise = page.waitForEvent('download')
+  await page.getByRole('button', { name: 'Export redacted', exact: true }).click()
+  const download = await downloadPromise
+  const { readFile } = await import('node:fs/promises')
+  const text = await readFile((await download.path())!, 'utf8')
+  expect(text).not.toContain(canary)
+  expect(text).not.toContain('private-test-subject')
+  const projection = JSON.parse(text)
+  expect(projection.evidence.every((item: object) => !('message' in item))).toBe(true)
+})

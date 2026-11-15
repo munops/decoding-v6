@@ -1,3 +1,4 @@
+import { uiMessage } from './ui-copy'
 import { useState } from 'preact/hooks'
 import { completionMessages } from './completion-messages'
 import type { WorkbenchLocale } from './messages'
@@ -41,7 +42,7 @@ export function HexDump({ bytes, locale }: { bytes: Uint8Array; locale: Workbenc
               )
             }
           >
-            {locale === 'ko' ? '덤프 복사' : 'Copy dump'}
+            {uiMessage(locale, 'copy_dump')}
           </button>
           <p role="status">{message}</p>
         </>

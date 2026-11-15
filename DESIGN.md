@@ -3,25 +3,25 @@ version: alpha
 name: decod.ing
 description: 정체를 모르는 개발자 데이터를 브라우저 안에서 판별하고 겹겹이 싼 층과 근거를 보여 주는 로컬 판독 도구의 디자인 기준
 colors:
-  primary: "#33465c"
-  ink: "#1b2128"
-  muted: "#606b78"
-  paper: "#ffffff"
-  surface: "#ffffff"
-  surface-2: "#f0f3f6"
-  surface-3: "#e3e8ee"
-  line: "#cbd2da"
-  line-strong: "#9aa5b1"
-  accent-soft: "#dce7f9"
-  mint: "#296247"
-  mint-soft: "#ddf1e2"
-  danger: "#c4302b"
-  warning: "#925100"
-  layer-1: "#dce7f9"
-  layer-2: "#ddf1e2"
-  layer-3: "#f9edc8"
-  layer-4: "#eee0f4"
-  signal: "#ff6440"
+  primary: '#33465c'
+  ink: '#1b2128'
+  muted: '#606b78'
+  paper: '#ffffff'
+  surface: '#ffffff'
+  surface-2: '#f0f3f6'
+  surface-3: '#e3e8ee'
+  line: '#cbd2da'
+  line-strong: '#9aa5b1'
+  accent-soft: '#dce7f9'
+  mint: '#296247'
+  mint-soft: '#ddf1e2'
+  danger: '#c4302b'
+  warning: '#925100'
+  layer-1: '#dce7f9'
+  layer-2: '#ddf1e2'
+  layer-3: '#f9edc8'
+  layer-4: '#eee0f4'
+  signal: '#ff6440'
 typography:
   h1:
     fontFamily: IBM Plex Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace
@@ -74,47 +74,47 @@ spacing:
   container-max: 1216px
 components:
   button-primary:
-    backgroundColor: "{colors.layer-1}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.button}"
+    backgroundColor: '{colors.layer-1}'
+    textColor: '{colors.ink}'
+    rounded: '{rounded.button}'
     padding: 9px 15px
     height: 44px
   button-secondary:
-    backgroundColor: "{colors.surface}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.button}"
+    backgroundColor: '{colors.surface}'
+    textColor: '{colors.ink}'
+    rounded: '{rounded.button}'
     height: 44px
   button-danger:
-    backgroundColor: "{colors.layer-1}"
-    textColor: "{colors.danger}"
-    rounded: "{rounded.button}"
+    backgroundColor: '{colors.layer-1}'
+    textColor: '{colors.danger}'
+    rounded: '{rounded.button}'
     height: 44px
   site-header:
-    backgroundColor: "{colors.surface}"
-    rounded: "{rounded.header}"
+    backgroundColor: '{colors.surface}'
+    rounded: '{rounded.header}'
     height: 64px
   paste-surface:
-    backgroundColor: "{colors.surface}"
-    textColor: "{colors.ink}"
+    backgroundColor: '{colors.surface}'
+    textColor: '{colors.ink}'
     padding: 20px
   chain-stage-1:
-    backgroundColor: "{colors.layer-1}"
-    textColor: "{colors.ink}"
+    backgroundColor: '{colors.layer-1}'
+    textColor: '{colors.ink}'
   chain-stage-2:
-    backgroundColor: "{colors.layer-2}"
-    textColor: "{colors.ink}"
+    backgroundColor: '{colors.layer-2}'
+    textColor: '{colors.ink}'
   chain-stage-3:
-    backgroundColor: "{colors.layer-3}"
-    textColor: "{colors.ink}"
+    backgroundColor: '{colors.layer-3}'
+    textColor: '{colors.ink}'
   chain-stage-4:
-    backgroundColor: "{colors.layer-4}"
-    textColor: "{colors.ink}"
+    backgroundColor: '{colors.layer-4}'
+    textColor: '{colors.ink}'
   update-banner:
-    backgroundColor: "{colors.layer-3}"
-    textColor: "{colors.ink}"
+    backgroundColor: '{colors.layer-3}'
+    textColor: '{colors.ink}'
   site-footer:
-    backgroundColor: "{colors.surface-2}"
-    textColor: "{colors.ink}"
+    backgroundColor: '{colors.surface-2}'
+    textColor: '{colors.ink}'
     rounded: 18px
     padding: 36px
 ---
@@ -136,6 +136,7 @@ components:
 - 시그니처 화면은 홈의 범용 디코더와 그 아래 `Decode chain + Inspector`다. 층마다 다른 옅은 띠 색이 깔리고, 띠 아래 굵은 선이 그 층의 바이트 크기만큼 그어진다.
 
 **방향 이력**
+
 - 2026-08-01 첫 디자인(DC-DESIGN-01~04)은 따뜻한 종이색 바탕(#F3F1EA)·청흑색 잉크·주황 decode 선·검증 초록, 바탕 장부 격자, 짙은 입력면이었다. 근거는 [2026-08-01 product-design benchmark](docs/research/2026-08-01-product-design-benchmark.md)와 [작업 기록](docs/work/completed/2026-08-01-reveal-ledger-design.md)에 있다.
 - 2026-10-19 완성 서비스 작업에서 "계획6"의 **층 띠·오프셋 거터·흰 바탕**을 그대로 채택했다(`docs/product/decisions.md`). 지금 코드는 흰 바탕, 슬레이트 강조, 층별 파스텔 띠, 고정폭 글꼴 제목, 절 번호 거터다. 주황은 favicon·앱 아이콘의 신호선에만 남았다.
 - 기각한 것: 해커풍 네온 초록 터미널과 코드 비, 그라디언트 구슬·유리 카드·AI 반짝이 hero, 3D·WebGL·AI 생성 일러스트(판단과 근거 추적을 돕지 않고 민감 데이터 도구의 집중을 깬다), 홈의 거대한 도구 아이콘 격자, 같은 결론을 반복하는 기능 카드 절.
@@ -190,18 +191,18 @@ decode 층 띠와 결과 노드는 모서리가 없다(직선 장부). 테마 �
 
 ## Components
 
-| 종류 | 생김새 | 상태·규칙 |
-|---|---|---|
-| 주 버튼 | layer-1 바탕, ink 글자, ink 2px 테두리, 높이 44px | hover 1px 떠오름, disabled 55% 불투명. 한 화면에 꽉 찬 강조색 버튼을 두지 않는다 |
-| 보조 버튼 | surface 바탕, line-strong 1px 테두리 | ghost도 같은 모양으로 맞췄다 |
-| 위험 버튼 | 공통 버튼 바탕(layer-1)에 danger 글자, danger 45% 혼합 2px 테두리 | 이 기기 데이터 전체 삭제(`/data/`, 브라우저 confirm 한 번)와 workspace 비우기(확인 없음, Known gaps)에만 쓴다. 홈 입력칸의 `Clear`는 위험 버튼이 아니라 ghost 버튼이고 확인 없이 지운다 |
-| 입력면 | surface 바탕, line-strong 테두리 textarea, mono 14px | 자동 클립보드 읽기 금지, 사용자의 paste 이벤트만 처리. 최대 10 MiB |
-| Decode chain | 층별 layer 띠, 아래 2px line-strong 선과 바이트 크기만큼 3px ink 선 | `Step N`·형식·입력 크기를 같은 줄에. tree/treeitem/group과 roving tabindex |
-| 후보 비교 | 표와 confidence 숫자 | 숫자와 형식 이름을 함께. 낮은 신뢰도를 정답처럼 자동 확정하지 않는다 |
-| 하단 복사 바 | surface 바탕, line-strong 테두리 | 실제 복사 성공 뒤에만 짧은 확인음(Motion & Sound) |
-| 업데이트 배너 | layer-3 바탕 | 새 버전 안내만 |
-| footer | surface-2 바탕, 18px 모서리, padding 36px(640px 이하 26px·한 열) | 브랜드 심볼, 로컬 처리 한 문장, 링크 Device data(`/data/`)·Check local processing(`/proof/`)·Bookmarklet·Sponsor·47 Tools·Privacy·Terms·Support·Method·Desktop(`/download/`)·Changelog·About, 익명 집계 끄기(`CountControl`), 운영자·build revision·형식 수 한 줄 |
-| 광고 자리 | 광고 도입 전 DOM 없음 | 도입 뒤에도 웹 below-the-fold 한 자리, `Sponsored` 라벨, PWA standalone·workspace·desktop·extension에는 없음 |
+| 종류          | 생김새                                                              | 상태·규칙                                                                                                                                                                                                                                                         |
+| ------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 주 버튼       | layer-1 바탕, ink 글자, ink 2px 테두리, 높이 44px                   | hover 1px 떠오름, disabled 55% 불투명. 한 화면에 꽉 찬 강조색 버튼을 두지 않는다                                                                                                                                                                                  |
+| 보조 버튼     | surface 바탕, line-strong 1px 테두리                                | ghost도 같은 모양으로 맞췄다                                                                                                                                                                                                                                      |
+| 위험 버튼     | 공통 버튼 바탕(layer-1)에 danger 글자, danger 45% 혼합 2px 테두리   | 이 기기 데이터 전체 삭제(`/data/`, 브라우저 confirm 한 번)와 workspace 비우기(확인 없음, Known gaps)에만 쓴다. 홈 입력칸의 `Clear`는 위험 버튼이 아니라 ghost 버튼이고 확인 없이 지운다                                                                           |
+| 입력면        | surface 바탕, line-strong 테두리 textarea, mono 14px                | 자동 클립보드 읽기 금지, 사용자의 paste 이벤트만 처리. 최대 10 MiB                                                                                                                                                                                                |
+| Decode chain  | 층별 layer 띠, 아래 2px line-strong 선과 바이트 크기만큼 3px ink 선 | `Step N`·형식·입력 크기를 같은 줄에. tree/treeitem/group과 roving tabindex                                                                                                                                                                                        |
+| 후보 비교     | 표와 confidence 숫자                                                | 숫자와 형식 이름을 함께. 낮은 신뢰도를 정답처럼 자동 확정하지 않는다                                                                                                                                                                                              |
+| 하단 복사 바  | surface 바탕, line-strong 테두리                                    | 실제 복사 성공 뒤에만 짧은 확인음(Motion & Sound)                                                                                                                                                                                                                 |
+| 업데이트 배너 | layer-3 바탕                                                        | 새 버전 안내만                                                                                                                                                                                                                                                    |
+| footer        | surface-2 바탕, 18px 모서리, padding 36px(640px 이하 26px·한 열)    | 브랜드 심볼, 로컬 처리 한 문장, 링크 Device data(`/data/`)·Check local processing(`/proof/`)·Bookmarklet·Sponsor·47 Tools·Privacy·Terms·Support·Method·Desktop(`/download/`)·Changelog·About, 익명 집계 끄기(`CountControl`), 운영자·build revision·형식 수 한 줄 |
+| 광고 자리     | 광고 도입 전 DOM 없음                                               | 도입 뒤에도 웹 below-the-fold 한 자리, `Sponsored` 라벨, PWA standalone·workspace·desktop·extension에는 없음                                                                                                                                                      |
 
 브랜드 심볼(`BrandMark.astro`)은 layer-1·2·3 색의 길이가 줄어드는 세 띠다. OG 이미지(`og.svg`)도 같은 세 띠를 쓴다.
 
@@ -237,16 +238,16 @@ decode 층 띠와 결과 노드는 모서리가 없다(직선 장부). 테마 �
 
 지금 코드에 있는 대표 문구:
 
-| 상황 | 영어 | 한국어 |
-|---|---|---|
-| 홈 제목 | What is this string? | 이 문자열, 뭔지 알려 드려요. |
-| 홈 소개 | Paste it. See every layer. Copy or share without the value. | 붙여넣기 → 모든 층 확인 → 값을 빼고 복사·공유해요. 기기 밖으로는 안 보내요. |
-| 로컬 처리 줄 | Input stays on this device. No account, upload, or AI. | 입력은 이 기기에만 남습니다. 계정, 업로드, AI가 없습니다. |
-| 머리말 신뢰 배지 | Local only | 기기에서만 처리 |
-| 판별 중 | Checking formats locally… | |
-| 애매한 층 | More than one format is plausible | |
-| 지원 안 함 | We couldn't identify this yet. | |
-| 안전 요약 복사 | Safe summary copied. It contains no input or decoded values. | 입력과 디코딩 값이 없는 안전한 요약을 복사했어요. |
+| 상황             | 영어                                                         | 한국어                                                                      |
+| ---------------- | ------------------------------------------------------------ | --------------------------------------------------------------------------- |
+| 홈 제목          | What is this string?                                         | 이 문자열, 뭔지 알려 드려요.                                                |
+| 홈 소개          | Paste it. See every layer. Copy or share without the value.  | 붙여넣기 → 모든 층 확인 → 값을 빼고 복사·공유해요. 기기 밖으로는 안 보내요. |
+| 로컬 처리 줄     | Input stays on this device. No account, upload, or AI.       | 입력은 이 기기에만 남습니다. 계정, 업로드, AI가 없습니다.                   |
+| 머리말 신뢰 배지 | Local only                                                   | 기기에서만 처리                                                             |
+| 판별 중          | Checking formats locally…                                    |                                                                             |
+| 애매한 층        | More than one format is plausible                            |                                                                             |
+| 지원 안 함       | We couldn't identify this yet.                               |                                                                             |
+| 안전 요약 복사   | Safe summary copied. It contains no input or decoded values. | 입력과 디코딩 값이 없는 안전한 요약을 복사했어요.                           |
 
 PRD-05 초안의 일부 문구(`We found a few possible formats`, `Your input stays in this browser`, `0 bytes of your input sent`, `Not verified`)는 지금 코드에 없어 이 표에 옮기지 않았다. catalog의 `input bytes uploaded`/`서버로 전송된 입력 바이트`는 정의만 있고 화면에 렌더되지 않는다.
 
@@ -267,3 +268,10 @@ PRD-05 초안의 일부 문구(`We found a few possible formats`, `Your input st
 - `apps/web/public/favicon.svg`
 - `apps/extension/src/style.css` (토큰 소비 아님: 같은 #33465c를 고정색으로 둔 확장 결과 페이지. Known gaps 참고)
 - `apps/desktop/src/desktop.css`
+
+## 2026-11-15 A: 접근성 결함 교정
+
+제품의 A안 재설계 전에 글자 최소 13px, 테마 버튼·footer 링크·체크박스의 label 최소 44px를 적용한다.
+머리말을 문서 흐름 안에 두어 결과 제목과 복사 버튼을 덮지 않게 한다.
+모바일 탐색 메뉴에 도구·감지 기준·개인정보·넣어 둔 것 경로를 모두 제공한다.
+기존 층 띠 색과 입력·출력 고정폭 글꼴은 보존한다. 전체 A안 시각 전환은 묶음 B에서 한다.

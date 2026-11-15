@@ -273,6 +273,7 @@ const urlDetector: Detector = {
     const hasEscapes = /%[0-9a-f]{2}/i.test(text)
     const looksPaddedBase64 = text.length % 4 === 0 && /^[A-Za-z0-9+/_-]+={1,2}$/.test(text)
     const hasQuery =
+      !/^Cookie:/i.test(text) &&
       !looksPaddedBase64 &&
       (/&/.test(text)
         ? /^[^\s?#]+=[^\s&]*(?:&[^\s=]+=[^\s&]*)+$/.test(text)
@@ -310,7 +311,7 @@ const urlDetector: Detector = {
             }
           : (query ?? decoded),
         [{ code: 'url-syntax', message: 'Valid URL or percent/query syntax', weight: 0.9 }],
-        hasEscapes ? { decoded } : {},
+        parsedUrl ? { metadata: { originalUrl: text } } : hasEscapes ? { decoded } : {},
       )
     } catch {
       return null

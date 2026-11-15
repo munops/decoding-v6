@@ -54,3 +54,30 @@ export function structureSelection(
       .filter((warning, i, all) => all.findIndex((item) => item.ruleId === warning.ruleId) === i),
   }
 }
+
+/** Follow only the primary decoded branch; embedded fields are a different task. */
+export function finalSelection(
+  root: import('@decoding/engine').ChainNode,
+): import('@decoding/engine').Detection | undefined {
+  const privateKey = privateKeyDetection(root)
+  if (privateKey) return privateKey
+  let node = root
+  while (node.children[0] && !node.children[0].sourcePath && node.children[0].selected)
+    node = node.children[0]
+  return node.selected ?? node.candidates[0]
+}
+
+export function displayValue(selected: import('@decoding/engine').Detection): unknown {
+  return selected.detector === 'url' && typeof selected.metadata?.originalUrl === 'string'
+    ? selected.metadata.originalUrl
+    : selected.value
+}
+
+export function selectionNode(
+  root: import('@decoding/engine').ChainNode,
+  selected: import('@decoding/engine').Detection | undefined,
+): import('@decoding/engine').ChainNode | undefined {
+  return root.selected === selected || root.candidates.includes(selected!)
+    ? root
+    : root.children.map((child) => selectionNode(child, selected)).find(Boolean)
+}

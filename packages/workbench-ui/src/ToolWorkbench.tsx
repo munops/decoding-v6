@@ -1,3 +1,4 @@
+import { uiMessage } from './ui-copy'
 import type {
   OperationDescriptor,
   OperationInput,
@@ -59,6 +60,7 @@ function initialExample(operationId: string, messages: ToolMessages): string {
 function directionLabel(direction: string, messages: ToolMessages): string {
   if (messages.locale !== 'ko') return direction
   const labels: Record<string, string> = {
+    auto: '알아서 고르기',
     format: '읽기 좋게 정리',
     minify: '공백 줄이기',
     validate: '문법 확인',
@@ -180,7 +182,7 @@ export function ToolWorkbench({
     setStatus('processing')
     setMessage(messages.runningMessage)
     try {
-      const next = await execute(operation.id, input, override)
+      const next = await execute(operation.id, input, { ...override, locale: messages.locale })
       setResult(next)
       setStatus('done')
       setMessage(next.summary ?? '')
@@ -465,6 +467,20 @@ export function ToolWorkbench({
                 alt={messages.generatedQrAlt}
               />
             </a>
+          ) : operation.id === 'unix-time' &&
+            result?.output &&
+            typeof result.output === 'object' &&
+            'milliseconds' in result.output ? (
+            <dl class="time-facts">
+              <dt>{uiMessage(messages.locale, 'local_time')}</dt>
+              <dd>
+                {new Date(Number(result.output.milliseconds)).toLocaleString(messages.locale)}
+              </dd>
+              <dt>UTC</dt>
+              <dd>{new Date(Number(result.output.milliseconds)).toISOString()}</dd>
+              <dt>{uiMessage(messages.locale, 'unit')}</dt>
+              <dd>{String('unit' in result.output ? result.output.unit : '')}</dd>
+            </dl>
           ) : (
             <pre class="output-view">
               <code>{output || messages.emptyOutput}</code>

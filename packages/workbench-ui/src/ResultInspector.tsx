@@ -1,3 +1,4 @@
+import { uiMessage } from './ui-copy'
 import { ByteMap } from './ByteMap'
 import { HexDump } from './HexDump'
 import { CandidateCompare } from './CandidateCompare'
@@ -10,7 +11,7 @@ import type { Detection, DecodeResult } from '@decoding/engine'
 import type { DecoderMessages } from './messages'
 import { EvidenceList } from './LayerBand'
 import { detectionLabel } from './detection-copy'
-import { outputText } from './result-text'
+import { outputText, displayValue } from './result-text'
 type Props = {
   source: string
   onTool?: (tool: string, text: string) => void
@@ -69,7 +70,7 @@ export function ResultInspector({
           ) : null}
           {Array.isArray(selected.metadata?.codePoints) ? (
             <p class="code-points">
-              <strong>{messages.locale === 'ko' ? '코드포인트' : 'Code points'}</strong>:{' '}
+              <strong>{uiMessage(messages.locale, 'code_points')}</strong>:{' '}
               {selected.metadata.codePoints.map(String).join(' · ')}
             </p>
           ) : null}
@@ -77,7 +78,7 @@ export function ResultInspector({
           <BinaryPreview detection={selected} />
           <EmbeddedValues detection={selected} messages={messages} onInspect={onInspectValue} />
           <pre class="output-view">
-            <code>{outputText(selected.value)}</code>
+            <code>{outputText(displayValue(selected))}</code>
           </pre>
           {bytes ? (
             <>
@@ -151,7 +152,7 @@ export function ResultInspector({
             setMessage(messages.chooseCandidate)
           }}
         >
-          {messages.wrongFormat}
+          {messages.possibleFormats}
         </button>
       ) : null}
     </aside>

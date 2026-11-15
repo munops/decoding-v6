@@ -4,9 +4,9 @@ import { join } from 'node:path'
 
 const assetDir = 'apps/web/dist/_astro'
 const files = readdirSync(assetDir).filter((file) => file.endsWith('.js'))
-const baseFiles = files.filter((file) =>
-  /WebDecoder|client\.|hooks|signals|preact|jsxRuntime|decoder\.worker/.test(file),
-)
+const offlineInventory = JSON.parse(readFileSync('apps/web/dist/offline-assets.json', 'utf8'))
+const baseFiles = files.filter((file) => offlineInventory.initial.includes(`/_astro/${file}`))
+
 const gzipBytes = baseFiles.reduce(
   (sum, file) => sum + gzipSync(readFileSync(join(assetDir, file))).length,
   0,

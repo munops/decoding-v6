@@ -1,3 +1,4 @@
+import { uiMessage } from './ui-copy'
 import type { Detection } from '@decoding/engine'
 import type { DecoderMessages } from './messages'
 export function CandidateCompare({
@@ -10,17 +11,13 @@ export function CandidateCompare({
   if (candidates.length < 2) return null
   return (
     <details class="candidate-comparison">
-      <summary>{messages.locale === 'ko' ? '왜 이 후보인가요?' : 'Why these candidates?'}</summary>
+      <summary>{uiMessage(messages.locale, 'why_these_candidates')}</summary>
       <table>
         <thead>
           <tr>
             <th>{messages.possibleFormats}</th>
             <th>%</th>
-            <th>
-              {messages.locale === 'ko'
-                ? '근거 / 자동 선택을 멈춘 이유'
-                : 'Evidence / reason automatic selection stopped'}
-            </th>
+            <th>{uiMessage(messages.locale, 'evidence_reason_automatic_selection_stopped')}</th>
           </tr>
         </thead>
         <tbody>
@@ -34,12 +31,14 @@ export function CandidateCompare({
                 {candidate.rejection ? <code>{candidate.rejection.code}</code> : null}
                 <br />
                 {i > 0 && candidates[0]!.confidence - candidate.confidence >= 0.15
-                  ? messages.locale === 'ko'
-                    ? '1위보다 근거 점수가 15점 이상 낮아요.'
-                    : 'At least 15 confidence points below the first candidate.'
-                  : messages.locale === 'ko'
-                    ? '85% 확신과 15점 차이가 없으면 자동 확정하지 않아요.'
-                    : 'Automatic selection requires 85% confidence and a 15-point lead.'}
+                  ? uiMessage(
+                      messages.locale,
+                      'at_least_15_confidence_points_below_the_first_candidate',
+                    )
+                  : uiMessage(
+                      messages.locale,
+                      'automatic_selection_requires_85_confidence_and_a_15_point_lead',
+                    )}
               </td>
             </tr>
           ))}

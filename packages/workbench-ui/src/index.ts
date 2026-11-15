@@ -45,3 +45,5 @@ export type {
 } from './monetization'
 
 export { ErrorBoundary } from './ErrorBoundary'
+
+export { uiMessage } from './ui-copy'

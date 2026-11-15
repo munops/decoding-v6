@@ -48,6 +48,10 @@ node ../scripts/check-ci-delivery-policy.mjs --project decoding-v6 --strict --re
 node ../scripts/check-production-evidence.mjs --project decoding-v6 --strict
 ```
 
+`pnpm build` builds locally with the checkout’s installed dependencies and needs no provider or slot claim.
+`pnpm build -- --prepared --claim-id <id> --holder <holder>` explicitly selects clean-source slot preparation.
+Production deploy keeps its independent exact-wave, claim and clean-source checks.
+
 Development-only preview is `pnpm --filter @decoding/web build` followed by local Astro/Worker tooling. It must not
 call `wrangler versions upload`, create a preview alias, add a GitHub secret, or publish a pull-request URL.
 
