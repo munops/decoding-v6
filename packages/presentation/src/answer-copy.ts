@@ -177,6 +177,10 @@ const sentences: Record<string, [string, string]> = {
     'This looks like an Ethereum-style address. Other EVM networks use the same form, so the network cannot be inferred from it.',
     '이더리움 계열 지갑 주소로 보여요. 같은 모양을 쓰는 다른 EVM 망도 있어 어느 망인지는 확정할 수 없어요.',
   ],
+  base45: [
+    'This value was wrapped in Base45. We decoded the next layer.',
+    'Base45로 싼 값이에요. 한 겹 풀었어요.',
+  ],
   'binary-bytes': [
     'This writes bytes using zeros and ones. We decoded the next layer.',
     '글자를 0과 1로 적은 거예요. 한 겹 풀었어요.',

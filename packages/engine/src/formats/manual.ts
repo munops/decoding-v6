@@ -1,3 +1,4 @@
+import { decode45 } from './expanded/base45'
 import { diagnosticField } from '../diagnostics'
 import { safeName } from '../message-facts'
 import { boundedInflate } from '../bounded-inflate'
@@ -24,6 +25,8 @@ export async function manualDecode(
       output = readable(Uint8Array.from(raw.match(/.{2}/g) ?? [], (pair) => parseInt(pair, 16)))
     } else if (format === 'base32') output = readable(decode32(text))
     else if (format === 'base58') output = readable(decode58(text))
+    else if (format === 'base45')
+      output = readable(decode45(inputText(input).replace(/\r?\n$/, '')))
     else if (format === 'url') output = decodeURIComponent(text.replace(/\+/g, ' '))
     else if (format === 'gzip') output = readable(boundedInflate(bytes, 'gzip', context.limits))
     else if (format === 'zlib') output = readable(boundedInflate(bytes, 'zlib', context.limits))

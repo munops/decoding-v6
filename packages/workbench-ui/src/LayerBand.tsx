@@ -125,6 +125,7 @@ export function LayerBand({
                 'brotli',
                 'base32',
                 'base58',
+                'base45',
                 'html-entities',
               ]),
             ].map((id) => (

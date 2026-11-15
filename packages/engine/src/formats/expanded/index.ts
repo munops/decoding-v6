@@ -1,3 +1,4 @@
+import { base45 } from './base45'
 import { ethereumAddress } from './ethereum-address'
 import { bitcoinAddress } from './bitcoin-address'
 import { color } from './color'
@@ -10,4 +11,5 @@ export const expandedDetectors = [
   color,
   bitcoinAddress,
   ethereumAddress,
+  base45,
 ]

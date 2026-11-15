@@ -378,3 +378,66 @@ expandedFixtures.push(
     ],
   ),
 )
+export function encode45(bytes: Uint8Array): string {
+  const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:'
+  let text = ''
+  for (let index = 0; index < bytes.length; index += 2) {
+    const full = index + 1 < bytes.length
+    let value = full ? bytes[index]! * 256 + bytes[index + 1]! : bytes[index]!
+    text += alphabet[value % 45]
+    value = Math.floor(value / 45)
+    text += alphabet[value % 45]
+    if (full) text += alphabet[Math.floor(value / 45)]
+  }
+  return text
+}
+expandedFixtures.push(
+  ...publicCases(
+    'base45',
+    [
+      'BB8',
+      '%69 VD92EX0',
+      'UJCLQE7W581',
+      'QED8WEX0',
+      ...Array.from({ length: 16 }, (_, index) =>
+        encode45(new TextEncoder().encode('Hello ' + index)),
+      ),
+    ],
+    [
+      ' A8',
+      'BB8\n',
+      'BB8\r\n',
+      ...[
+        'Hello 한글',
+        'Hello 🙂',
+        'Hello 日本語',
+        'Hello 中文',
+        'Hello café',
+        'Hello\nworld',
+        'Hello world!',
+      ].map((text) => encode45(new TextEncoder().encode(text))),
+    ],
+    [
+      '123456',
+      'DANGER',
+      'HELLO',
+      'abcdef',
+      'Hello world',
+      '한글 문장',
+      'Une phrase française.',
+      'BB8=',
+      '0',
+      'ABCD',
+      'ZZ',
+      ':::',
+      'BB8 ',
+      'BB8\t',
+      'BB8\nX',
+      '%41%42%43',
+      'https://example.test/',
+      '0x1234',
+      'eyJsb2NhbCI6dHJ1ZX0=',
+      'Cookie: SID=synthetic',
+    ],
+  ),
+)

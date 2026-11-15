@@ -164,3 +164,32 @@ it('matches ERC-55 vectors and the independent existing Keccak implementation', 
     ),
   ).toBe(false)
 })
+it('decodes RFC Base45 vectors and preserves significant leading spaces', async () => {
+  const { decode45 } = await import('../src/formats/expanded/base45')
+  for (const [encoded, plain] of [
+    ['BB8', 'AB'],
+    ['%69 VD92EX0', 'Hello!!'],
+    ['UJCLQE7W581', 'base-45'],
+    ['QED8WEX0', 'ietf!'],
+    [' A8', 'A.'],
+  ])
+    expect(new TextDecoder().decode(decode45(encoded!))).toBe(plain)
+  expect((await detect(' A8')).find((item) => item.detector === 'base45')?.decoded).toBe('A.')
+  for (const bad of ['0', 'ABCD', 'ZZ', ':::', 'BB8=', 'BB8 '])
+    expect(() => decode45(bad)).toThrow()
+  const manual = await decode('00', { overrides: { '0-1': 'base45' } })
+  expect(manual.root.selected?.decoded).toEqual(new Uint8Array([0]))
+})
+it('keeps invalid UTF-8 bytes intact across byte notations and Base45 manual decoding', async () => {
+  const { encode45 } = await import('../../fixtures-public/src/expanded-fixtures')
+  const bytes = new Uint8Array([...new TextEncoder().encode('Hello world'), 255])
+  const b45 = await decode(encode45(bytes), { overrides: { '0-1': 'base45' } })
+  expect(b45.root.selected?.decoded).toEqual(bytes)
+  for (const [id, radix, width] of [
+    ['binary-bytes', 2, 8],
+    ['octal-bytes', 8, 3],
+  ] as const) {
+    const input = [...bytes].map((value) => value.toString(radix).padStart(width, '0')).join(' ')
+    expect((await detect(input)).find((item) => item.detector === id)?.decoded).toEqual(bytes)
+  }
+})

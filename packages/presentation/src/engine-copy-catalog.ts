@@ -1,5 +1,7 @@
 import type { EngineMessageCode } from '@decoding/engine'
 export const englishEngineCopy = {
+  'warning-hcert-unverified':
+    'The HC1 prefix identifies an encoded health-certificate container. Opening its data does not validate its signature, issuer, schema or current acceptability.',
   'warning-wallet-checksum-absent':
     'This address uses a uniform letter case. It is accepted as legacy syntax without a supplied mixed-case checksum; it can also be ordinary hexadecimal data.',
   'warning-wallet-unverified':

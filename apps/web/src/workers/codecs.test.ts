@@ -1,4 +1,4 @@
-import { brotliCompressSync, brotliDecompressSync } from 'node:zlib'
+import { brotliCompressSync, brotliDecompressSync, deflateSync } from 'node:zlib'
 import { describe, expect, it } from 'vitest'
 import { decode, detect, DEFAULT_LIMITS, encodeBase64 } from '@decoding/engine'
 import { publicFixtures } from '@decoding/fixtures-public'
@@ -71,4 +71,22 @@ describe('injected local codecs and manual decoding', () => {
       webCodecs.zstd!(bytes, { ...DEFAULT_LIMITS, maxExpandedBytes: 1 }),
     ).rejects.toThrow()
   })
+})
+
+it('opens synthetic HC1 Base45/zlib/CBOR transport without certifying it', async () => {
+  const { encode45 } = await import('../../../../packages/fixtures-public/src/expanded-fixtures')
+  // A synthetic CBOR map, not a signed or valid health certificate.
+  const body = new Uint8Array([0xa1, 0x69, ...new TextEncoder().encode('synthetic'), 0xf5])
+  const result = await decode('HC1:' + encode45(deflateSync(body)), {
+    codecs: webCodecs,
+    previewAmbiguous: true,
+  })
+  expect(
+    result.root.candidates.find((item) => item.detector === 'base45')?.warnings[0]?.ruleId,
+  ).toBe('HCERT-UNVERIFIED')
+  const values = (node: typeof result.root): unknown[] => [
+    node.selected?.value,
+    ...node.children.flatMap(values),
+  ]
+  expect(values(result.root)).toContainEqual({ synthetic: true })
 })

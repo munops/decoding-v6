@@ -149,5 +149,25 @@ export const expandedSpecs: ExpandedSpec[] = [
       },
     ],
   },
+  {
+    detector: 'base45',
+    slug: 'base45',
+    label: 'Base45 and HC1 transport',
+    description:
+      'Decode RFC 9285 groups with alphabet, length and overflow checks, preserving significant spaces. Automatic recognition needs readable text, a known byte header or HC1 prefix; choose Base45 manually for ambiguous words/numbers. Inputs are bounded to 1 MiB. HC1 contents can be opened without validating a health certificate.',
+    korean: {
+      label: 'Base45·HC1 겉 표기',
+      description:
+        '규격의 문자·길이·넘침 규칙을 확인하고 공백을 보존해요. 읽을 수 있는 글자, 알려진 파일 표식이나 HC1 표기가 있을 때 자동으로 알아봐요. 애매한 단어·숫자는 수동으로 Base45를 골라 주세요. 입력은 1MiB까지예요. 내용을 읽어도 건강 증명서가 유효하다고 확인한 것은 아니에요.',
+    },
+    examples: ['BB8', '%69 VD92EX0', 'UJCLQE7W581'],
+    references: [
+      { title: 'RFC 9285 — Base45', url: 'https://www.rfc-editor.org/rfc/rfc9285' },
+      {
+        title: 'HCERT — transport encodings',
+        url: 'https://github.com/ehn-dcc-development/hcert-spec/blob/main/hcert_spec.md',
+      },
+    ],
+  },
 ]
 export const expandedKoreanCopy = new Map(expandedSpecs.map((spec) => [spec.detector, spec.korean]))
