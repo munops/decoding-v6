@@ -214,6 +214,52 @@ rows.push(
     'https://www.rfc-editor.org/rfc/rfc5322',
   ],
 )
+for (const [id, title, why, fix] of [
+  [
+    'URL-REDIRECT',
+    'Different embedded destination',
+    'A query field contains an HTTP address with a different host. This is local syntax inspection, not proof of an actual server redirect.',
+    'Inspect the embedded destination before opening the link.',
+  ],
+  [
+    'URL-NO-TLS',
+    'Unencrypted HTTP',
+    'HTTP does not provide TLS encryption for the address.',
+    'Prefer the trusted HTTPS origin when it is available.',
+  ],
+  [
+    'URL-IP-HOST',
+    'Numeric address',
+    'The host is an IPv4 or IPv6 address rather than a domain name.',
+    'Confirm the intended host through a trusted source. A numeric host alone is not a danger verdict.',
+  ],
+  [
+    'URL-USERINFO',
+    'User information before host',
+    'The text before @ is user information, not the destination host.',
+    'Read the host after @. Do not mistake a display-like prefix for the destination.',
+  ],
+  [
+    'URL-PERSONAL',
+    'Personal query fields',
+    'The address has non-empty name, email, phone or address fields.',
+    'Remove personal fields before sharing if they are not needed.',
+  ],
+  [
+    'OTP-SECRET',
+    'Authentication secret',
+    'An otpauth secret can produce the same one-time codes as the authentication app.',
+    'Keep the secret private. Rotate the authentication setup through the trusted issuer if exposed.',
+  ],
+])
+  rows.push([id!, title!, why!, fix!, 'https://url.spec.whatwg.org/'])
+rows.push([
+  'PHOTO-LOCATION',
+  'Photo location metadata',
+  'The JPEG EXIF metadata contains GPS coordinates. Sharing the original photo can disclose its location.',
+  'Review the metadata before sharing. This tool reads metadata and does not remove it.',
+  'https://www.cipa.jp/std/documents/e/DC-008-Translation-2023-E.pdf',
+])
 export const ruleSpecs: RuleSpec[] = rows.map(([id, title, why, fix, reference]) => ({
   id,
   title,

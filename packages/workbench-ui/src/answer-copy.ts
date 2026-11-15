@@ -2,6 +2,8 @@ import type { ChainNode, Detection, LintWarning } from '@decoding/engine'
 import type { WorkbenchLocale } from './messages'
 
 const en = {
+  barcodeUnavailable:
+    'This browser cannot read linear barcodes. If no QR was found, the photo is inspected as a file.',
   title: 'decod.ing — Paste anything. See what it is.',
   footer: 'Unknown text. Clear answers. On this device.',
   largeText: 'Larger text',
@@ -58,6 +60,8 @@ const en = {
   method: 'How decoding works',
 }
 const ko: typeof en = {
+  barcodeUnavailable:
+    '이 브라우저에서는 막대 바코드를 못 읽어요. QR이 없다면 사진 파일 정보를 보여 줘요.',
   title: 'decod.ing — 이게 뭔지 모르겠다면 붙여넣으세요',
   footer: '모르는 글자를 이 기기 안에서 풀어요.',
   largeText: '글자 크게',
@@ -310,7 +314,13 @@ export function answerSentence(root: ChainNode, locale: WorkbenchLocale, source:
       : answerMessages(locale).unknown.replace('{count}', String(summaryFormats.length))
   const ko = locale === 'ko'
   let sentence = sentences[first.detector]?.[ko ? 1 : 0] ?? first.label
-  if (
+  if (first.metadata?.photoRead) {
+    sentence = ko
+      ? `사진에서 ${first.metadata.photoRead}을 읽었어요. 연결된 곳을 열지 않고 먼저 보여 드려요.`
+      : `We read ${first.metadata.photoRead} from the photo without opening its destination.`
+    if (root.children[0]?.selected)
+      sentence += ` ${answerSentence(root.children[0], locale, source)}`
+  } else if (
     first.detector === 'damaged-text' &&
     first.metadata?.placeholders &&
     !first.metadata.replacementCount
@@ -326,6 +336,11 @@ export function answerSentence(root: ChainNode, locale: WorkbenchLocale, source:
     sentence = ko
       ? '메일 머리말이에요. 보낸 곳과 제목, 거쳐 온 곳을 살펴봤어요.'
       : 'These are mail headers. We inspected the sender, subject and delivery hops.'
+  } else if (first.detector === 'url' && first.metadata?.redirect) {
+    const host = (first.value as { host?: string }).host
+    sentence = ko
+      ? `${host} 주소 안에 ${first.metadata.destination} 쪽으로 가는 주소가 들어 있어요. 실제 서버 이동은 조회하지 않았어요.`
+      : `The ${host} address contains a destination at ${first.metadata.destination}. No server redirect was requested.`
   } else if (first.detector === 'jwt') {
     const payload = (first.value as { payload?: { exp?: unknown } })?.payload
     if (typeof payload?.exp === 'number') {
@@ -359,6 +374,32 @@ export function answerSentence(root: ChainNode, locale: WorkbenchLocale, source:
   return `${sentence}${layers.some((layer) => layer.status === 'ambiguous') ? ` ${answerMessages(locale).uncertain}` : ''}`
 }
 const warningTitles: Record<string, [string, string]> = {
+  'PHOTO-LOCATION': [
+    'This photo contains its location. Sharing the file can reveal where it was taken.',
+    '이 사진에는 찍은 곳이 들어 있어요. 그대로 올리면 위치가 알려져요.',
+  ],
+  'URL-REDIRECT': [
+    'The outer and embedded destinations differ.',
+    '겉 주소와 안에 든 주소의 사이트가 달라요.',
+  ],
+  'URL-NO-TLS': ['This address uses unencrypted HTTP.', '잠기지 않은 HTTP 주소예요.'],
+  'URL-IP-HOST': [
+    'This address uses numbers instead of a site name.',
+    '사이트 이름 대신 숫자로 된 주소예요.',
+  ],
+  'URL-USERINFO': [
+    'The part before @ is not the destination.',
+    '주소 앞에 다른 이름이 붙어 있어요. @ 앞은 가는 곳이 아니에요.',
+  ],
+  'URL-PERSONAL': [
+    'Sharing this address also shares personal fields.',
+    '주소에 사람 정보가 들어 있어요. 남에게 보내면 같이 넘어가요.',
+  ],
+  'OTP-SECRET': [
+    'This secret can generate your authentication codes. Do not share it.',
+    '인증 앱에 넣는 비밀 값이에요. 이 값을 아는 사람은 내 인증 번호를 만들 수 있어요.',
+  ],
+
   'TEXT-LOST': [
     'Missing characters cannot be reconstructed.',
     '사라진 글자는 되돌릴 수 없어요. 보낸 쪽에 원본을 요청하세요.',
@@ -501,6 +542,13 @@ export function answerFacts(
   detection: Detection | undefined,
   locale: WorkbenchLocale,
 ): Array<[string, string]> {
+  if (detection?.metadata?.photoRead)
+    return [
+      [
+        locale === 'ko' ? '사진 크기' : 'Photo dimensions',
+        `${detection.metadata.width} × ${detection.metadata.height}`,
+      ],
+    ]
   if (detection?.detector === 'mojibake')
     return [
       [
@@ -541,7 +589,35 @@ export function answerFacts(
       [locale === 'ko' ? '제목' : 'Subject', String(detection.metadata.subject)],
     )
   }
+  if (typeof value.width === 'number' && typeof value.height === 'number')
+    rows.push([
+      locale === 'ko' ? '사진 크기' : 'Photo dimensions',
+      `${value.width} × ${value.height}`,
+    ])
+  if (typeof value.camera === 'string')
+    rows.push([locale === 'ko' ? '기기' : 'Camera', value.camera])
+  if (typeof value.takenAt === 'string')
+    rows.push([locale === 'ko' ? '찍은 때' : 'Photo timestamp', value.takenAt])
+  if (value.gps && typeof value.gps === 'object')
+    rows.push([locale === 'ko' ? '찍은 곳' : 'Photo location', JSON.stringify(value.gps)])
+  if (Array.isArray(value.entries))
+    rows.push([
+      locale === 'ko'
+        ? '압축 안 파일 (최대 1,000개, 풀지 않음)'
+        : 'Archive names (up to 1,000; not extracted)',
+      value.entries.join('\n'),
+    ])
   if (typeof payload.iss === 'string') rows.push([copy.owner, payload.iss])
+  if (typeof detection.metadata?.trackingCount === 'number')
+    rows.push([
+      locale === 'ko' ? '뗀 꼬리표 수' : 'Tracking fields removed',
+      String(detection.metadata.trackingCount),
+    ])
+  if (typeof detection.metadata?.destination === 'string')
+    rows.push([
+      locale === 'ko' ? '안에 든 이동 대상' : 'Embedded destination',
+      detection.metadata.destination,
+    ])
   if (typeof value.host === 'string') rows.push([copy.destination, value.host])
   if (typeof value.iso === 'string')
     rows.push([copy.issued, new Date(value.iso).toLocaleString(locale)])

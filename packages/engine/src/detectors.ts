@@ -1,3 +1,4 @@
+import { inspectUrl } from './formats/url-facts'
 import { decodeLegacyPercent } from './formats/garbled'
 import { identifyMagic } from './formats/magic-bytes'
 import { binaryDetectors } from './formats/binary'
@@ -299,8 +300,9 @@ const urlDetector: Detector = {
           charset = 'euc-kr'
         }
       }
+      const urlFacts = parsedUrl ? inspectUrl(parsedUrl) : null
       const query = parsedUrl
-        ? Object.fromEntries(parsedUrl.searchParams)
+        ? Object.fromEntries(urlFacts!.clean.searchParams)
         : hasQuery
           ? Object.fromEntries(new URLSearchParams(text))
           : undefined
@@ -315,7 +317,7 @@ const urlDetector: Detector = {
             : 'Percent-encoded text',
         parsedUrl
           ? {
-              href: parsedUrl.href,
+              href: urlFacts!.clean.href,
               protocol: parsedUrl.protocol,
               host: parsedUrl.host,
               pathname: parsedUrl.pathname,
@@ -324,7 +326,19 @@ const urlDetector: Detector = {
           : (query ?? decoded),
         [{ code: 'url-syntax', message: 'Valid URL or percent/query syntax', weight: 0.9 }],
         parsedUrl
-          ? { metadata: { originalUrl: text } }
+          ? {
+              warnings: urlFacts!.warnings,
+              ...(urlFacts!.redirect ? { decoded: urlFacts!.redirect } : {}),
+              metadata: {
+                originalUrl:
+                  urlFacts!.trackingCount || parsedUrl.password || parsedUrl.protocol === 'otpauth:'
+                    ? urlFacts!.clean.href
+                    : text,
+                trackingCount: urlFacts!.trackingCount,
+                destination: urlFacts!.redirect ? new URL(urlFacts!.redirect).host : parsedUrl.host,
+                redirect: Boolean(urlFacts!.redirect),
+              },
+            }
           : hasEscapes
             ? { decoded, metadata: { charset } }
             : {},

@@ -13,7 +13,7 @@ export function redactSecrets(text: string): string {
   let masked = text
   for (const pattern of patterns)
     masked = masked.replace(pattern, (token) => `${token.slice(0, 4)}[redacted]`)
-  return masked
+  return masked.replace(/(otpauth:\/\/[^\s]*[?&]secret=)[^&#\s]+/gi, '$1[redacted]')
 }
 export const secretPatterns: Detector = {
   id: 'secret-patterns',
@@ -27,6 +27,7 @@ export const secretPatterns: Detector = {
         test: m[0].startsWith('sk_test_'),
       })),
     )
+    if (!matches.length) return null
     return found('secret-patterns', 'Secret-like credential pattern', masked, 1, {
       warnings: matches.map((m) =>
         warning(

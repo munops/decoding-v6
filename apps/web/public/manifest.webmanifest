@@ -1,7 +1,7 @@
 {
-  "name": "decod.ing \u2014 Local developer workbench",
+  "name": "decod.ing \u2014 Paste anything. See what it is.",
   "short_name": "decod.ing",
-  "description": "Universal local decoder and 47 privacy-first developer tools.",
+  "description": "Identify unfamiliar text, links, QR photos and files on your device.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -28,7 +28,13 @@
     "params": {
       "title": "title",
       "text": "text",
-      "url": "url"
+      "url": "url",
+      "files": [
+        {
+          "name": "files",
+          "accept": ["*/*"]
+        }
+      ]
     }
   }
 }

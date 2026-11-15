@@ -2,7 +2,7 @@
 /* global ServiceWorkerGlobalScope */
 
 const sw = /** @type {ServiceWorkerGlobalScope} */ (self)
-const CACHE = 'decoding-v6-shell-v5'
+const CACHE = 'decoding-v6-shell-v6'
 const shares = new Map()
 const CORE = [
   '/',
@@ -132,9 +132,9 @@ sw.addEventListener('message', (event) => {
   }
   if (event.data?.type !== 'decoding:take-share') return
   const id = event.source?.id
-  const text = id ? shares.get(id) : null
+  const share = id ? shares.get(id) : null
   if (id) shares.delete(id)
-  event.ports[0]?.postMessage(typeof text === 'string' ? text : null)
+  event.ports[0]?.postMessage(share ?? null)
 })
 
 sw.addEventListener('fetch', (event) => {
@@ -151,9 +151,12 @@ sw.addEventListener('fetch', (event) => {
           const text = [form.get('text'), form.get('url')]
             .filter((value) => typeof value === 'string')
             .join('\n')
-          if (event.resultingClientId && text && text.length <= 10 * 1024 * 1024) {
+          const file = form
+            .getAll('files')
+            .find((item) => item instanceof File && item.size > 0 && item.size <= 10 * 1024 * 1024)
+          if (event.resultingClientId && (text || file) && text.length <= 10 * 1024 * 1024) {
             if (shares.size >= 16) shares.delete(shares.keys().next().value)
-            shares.set(event.resultingClientId, text)
+            shares.set(event.resultingClientId, { text, ...(file ? { file } : {}) })
             setTimeout(() => shares.delete(event.resultingClientId), 60000)
           }
         } catch {

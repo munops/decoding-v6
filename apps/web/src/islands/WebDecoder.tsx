@@ -1,3 +1,4 @@
+import { readPhoto } from '../lib/read-photo'
 import { uiMessage } from '@decoding/workbench-ui'
 import { ErrorBoundary } from '@decoding/workbench-ui'
 import type { DecodeInput } from '@decoding/engine'
@@ -94,7 +95,14 @@ export default function WebDecoder({
           const channel = new MessageChannel()
           channel.port1.onmessage = (event) => {
             clearTimeout(timer)
-            if (typeof event.data === 'string' && event.data.length <= 10 * 1024 * 1024)
+            if (event.data?.file instanceof File)
+              setExternalFile({ id: Date.now(), file: event.data.file })
+            else if (
+              typeof event.data?.text === 'string' &&
+              event.data.text.length <= 10 * 1024 * 1024
+            )
+              setExternalInput({ id: Date.now(), value: event.data.text })
+            else if (typeof event.data === 'string' && event.data.length <= 10 * 1024 * 1024)
               setExternalInput({ id: Date.now(), value: event.data })
             else
               setShareMessage(
@@ -206,6 +214,7 @@ export default function WebDecoder({
               restoreInput.current = { input, source }
             }}
             decodeInput={client.decodeInput}
+            readPhoto={readPhoto}
             onEvent={(name) => {
               if (!proofMode) {
                 countOpen(name)

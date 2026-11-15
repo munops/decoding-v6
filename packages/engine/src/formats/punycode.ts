@@ -48,16 +48,19 @@ function unpunycode(label: string): string {
   }
   return String.fromCodePoint(...output)
 }
+export function unicodeDomain(text: string): string {
+  return text
+    .split('.')
+    .map((label) => (/^xn--/i.test(label) ? unpunycode(label) : label))
+    .join('.')
+}
 export const punycode: Detector = {
   id: 'punycode',
   detect(input) {
     const text = inputText(input).trim()
     if (!/(?:^|\.)xn--/i.test(text) || /[\s/]/.test(text)) return null
     try {
-      const domain = text
-        .split('.')
-        .map((label) => (/^xn--/i.test(label) ? unpunycode(label) : label))
-        .join('.')
+      const domain = unicodeDomain(text)
       const nonLatin = /[\p{Script=Cyrillic}\p{Script=Greek}]/u.test(domain),
         mixed = nonLatin && /[a-z]/i.test(domain)
       return found(

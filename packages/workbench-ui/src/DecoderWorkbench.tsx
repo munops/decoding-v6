@@ -1,3 +1,4 @@
+import { withPhotoResult } from './photo-result'
 import { AnswerCard } from './AnswerCard'
 import { answerMessages } from './answer-copy'
 import { uiMessage } from './ui-copy'
@@ -32,6 +33,11 @@ import { ChainStage, LayerBand } from './LayerBand'
 import { safeShareCardPng, safeShareMarkdown, safeShareProjection } from './safe-share'
 
 export type DecoderWorkbenchProps = {
+  readPhoto?:
+    | ((
+        file: File,
+      ) => Promise<{ text: string; format: string; width: number; height: number } | null>)
+    | undefined
   inputAddon?: ComponentChildren
   decodeInput: (input: DecodeInput, overrides?: Record<string, string>) => Promise<DecodeResult>
   externalFile?: { id: number; file: File } | undefined
@@ -45,6 +51,7 @@ export type DecoderWorkbenchProps = {
 }
 
 export function DecoderWorkbench({
+  readPhoto,
   inputAddon,
   decodeInput,
   externalInput,
@@ -56,6 +63,7 @@ export function DecoderWorkbench({
   restoreInput,
   onInputState,
 }: DecoderWorkbenchProps) {
+  const fileRequestId = useRef(0)
   const [sessionHistory, setSessionHistory] = useState<Array<{ input: string; label: string }>>([])
   const [shortcuts, setShortcuts] = useState(false)
   const copy = completionMessages[messages.locale]
@@ -85,14 +93,16 @@ export function DecoderWorkbench({
   const lastInput = useRef<DecodeInput | null>(null)
 
   const run = useCallback(
-    async (input: DecodeInput) => {
+    async (input: DecodeInput, photo?: { format: string; width: number; height: number }) => {
       lastInput.current = input
       const current = ++requestId.current
       setStatus('processing')
       setMessage(messages.checking)
       setDiagnostic('')
       try {
-        const next = await decodeInput(input, overrides.current)
+        const decoded = await decodeInput(input, overrides.current)
+        const next =
+          photo && typeof input === 'string' ? withPhotoResult(decoded, input, photo) : decoded
         if (current !== requestId.current) return
         setResult(next)
         const final = finalSelection(next.root)
@@ -150,6 +160,7 @@ export function DecoderWorkbench({
   }, [result, status])
 
   const handleSource = (value: string, reveal = value.length > source.length + 1) => {
+    fileRequestId.current += 1
     revealRequested.current = reveal
     onInputState?.(value, value)
     overrides.current = {}
@@ -186,18 +197,31 @@ export function DecoderWorkbench({
   }
   const handleFile = async (file?: File) => {
     if (!file) return
+    const pending = ++fileRequestId.current
+    requestId.current += 1
     revealRequested.current = true
     if (file.size > 10 * 1024 * 1024) {
       setStatus('error')
       setMessage(messages.fileLimit)
       return
     }
-    setSource(
-      `[${messages.localFile}: ${file.name}, ${file.size.toLocaleString()} ${messages.bytes}]`,
-    )
-    const bytes = new Uint8Array(await file.arrayBuffer())
-    onInputState?.(bytes, `[${messages.localFile}: ${file.name}, ${file.size} ${messages.bytes}]`)
-    await run(bytes)
+    const label = `[${messages.localFile}: ${file.name}, ${file.size.toLocaleString()} ${messages.bytes}]`
+    setSource(label)
+    setStatus('processing')
+    try {
+      const photo =
+        readPhoto && file.type.startsWith('image/') ? await readPhoto(file).catch(() => null) : null
+      const input = photo ? photo.text : new Uint8Array(await file.arrayBuffer())
+      if (pending !== fileRequestId.current) return
+      onInputState?.(input, label)
+      await run(input, photo ?? undefined)
+      if (!photo && file.type.startsWith('image/') && !('BarcodeDetector' in globalThis))
+        setMessage(answerMessages(messages.locale).barcodeUnavailable)
+    } catch {
+      if (pending !== fileRequestId.current) return
+      setStatus('error')
+      setMessage(messages.decodeFailed)
+    }
   }
 
   const activateLayer = (nodeId: string) => {
@@ -368,7 +392,7 @@ export function DecoderWorkbench({
       const text = event.clipboardData?.getData('text/plain')
       if (text) {
         event.preventDefault()
-        handleSource(text)
+        handleSource(text, true)
       }
     }
     const dragAnywhere = (event: DragEvent) => {
