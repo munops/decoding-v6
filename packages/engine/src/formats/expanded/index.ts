@@ -1,3 +1,4 @@
+import { roman } from './roman'
 import { sql } from './sql'
 import { logLine } from './log-line'
 import { jsonLines } from './json-lines'
@@ -30,4 +31,5 @@ export const expandedDetectors = [
   jsonLines,
   sql,
   logLine,
+  roman,
 ]

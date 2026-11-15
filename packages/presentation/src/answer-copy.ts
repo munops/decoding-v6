@@ -189,6 +189,10 @@ const sentences: Record<string, [string, string]> = {
     'This value was wrapped in Base45. We decoded the next layer.',
     'Base45로 싼 값이에요. 한 겹 풀었어요.',
   ],
+  roman: [
+    'Read as a Roman numeral, this is {number}. The same letters may also be ordinary text.',
+    '로마 숫자로 읽으면 {number}예요. 같은 글자가 보통의 말일 수도 있어요.',
+  ],
   'log-line': [
     'This looks like one log entry. We separated its recorded time, level and message; the event is not verified.',
     '로그 한 줄로 보여요. 적힌 시각·수준·글을 나눴으며 실제로 일어난 일인지 검증한 것은 아니에요.',
@@ -392,6 +396,8 @@ export function answerSentence(root: ChainNode, locale: WorkbenchLocale, source:
       : answerMessages(locale).unknown.replace('{count}', String(summaryFormats.length))
   const ko = locale === 'ko'
   let sentence = sentences[first.detector]?.[ko ? 1 : 0] ?? first.label
+  if (first.detector === 'roman')
+    sentence = sentence.replace('{number}', String((first.value as { decimal: number }).decimal))
   if (first.detector === 'uuid-ulid' && first.label.startsWith('Snowflake'))
     sentence = answerMessages(locale).snowflakeSentence
   if (first.detector === 'json-lines')
@@ -673,6 +679,8 @@ export function answerFacts(
       ],
       [locale === 'ko' ? '가정한 시작 시각' : 'Assumed epoch', String(value.epochStart)],
     ]
+  if (detection.detector === 'roman')
+    return [[locale === 'ko' ? '숫자로 읽으면' : 'Numeric interpretation', String(value.decimal)]]
   if (detection.detector === 'log-line')
     return [
       [locale === 'ko' ? '기록 시각' : 'Recorded time', String(value.timestamp)],

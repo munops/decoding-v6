@@ -348,4 +348,23 @@ expandedSpecs.push({
     { title: 'RFC 3339 — date and time', url: 'https://www.rfc-editor.org/rfc/rfc3339' },
   ],
 })
+expandedSpecs.push({
+  detector: 'roman',
+  slug: 'roman-numeral',
+  label: 'Roman numeral candidate',
+  description:
+    'Read the common canonical subtractive notation for 1–3999, including Unicode number-form equivalents normalized with NFKC. Other historical/additive forms and overbars are outside this subset. Bare letters remain uncertain because I, V, X or MIX can be ordinary text. Prefix Roman: to explicitly choose a numeric interpretation.',
+  korean: {
+    label: '로마 숫자',
+    description:
+      '1~3999를 흔히 쓰는 빼기 표기법으로 읽어요. 유니코드 숫자 글자도 NFKC로 같은 표기로 맞춰요. 다른 옛 표기·덧셈식·윗줄 표기는 범위 밖이에요. I·V·X·MIX는 보통의 글일 수도 있어 접두사 없이 확정하지 않아요. Roman:을 붙이면 숫자로 읽는 뜻을 직접 고를 수 있어요.',
+  },
+  examples: ['Roman: MCMXCIV', 'Roman: XII', 'Roman: MMMCMXCIX'],
+  references: [
+    {
+      title: 'Unicode CLDR — Roman numbering rules',
+      url: 'https://github.com/unicode-org/cldr/blob/main/common/rbnf/root.xml',
+    },
+  ],
+})
 export const expandedKoreanCopy = new Map(expandedSpecs.map((spec) => [spec.detector, spec.korean]))

@@ -102,3 +102,7 @@ A bounded lexical candidate recognizes common SQL command shapes, respecting quo
 A bounded 64 KiB single-line reader separates a calendar-checked ISO-style timestamp, common severity level and message. Brackets/comma fractions/offsets are supported; original fractions remain intact and UTC display is millisecond precision. Missing time zones remain unspecified, never assumed UTC. Known secret-pattern redaction is reused; this does not promise universal secret detection or event authenticity. Multiline traces, every logging layout and leap seconds are outside the documented subset.
 
 20 positive/10 edge/20 negative cases plus calendar/timezone regressions; full suite 277 pass. Relevant type/lint/parity/i18n pass. 61 formats/49 tools. An authoring command failed before modifying registration/fixtures; that unregistered run was not counted as log-format validation.
+
+## Roman numeral candidates
+
+The common canonical subtractive 1–3999 subset accepts ASCII and NFKC-compatible Unicode number forms. Unsupported historical/additive/overbar variants are documented. Bare letters retain 0.65 uncertainty because pronouns, names and words can overlap (I, V, X, MIX); Roman: explicitly selects the numeric interpretation. No automatic ROT13/classical-cipher inference is added. 20 positive/10 edge/20 negative cases, Unicode/canonical/ambiguity regressions; full suite 279 pass. Relevant type/lint/parity/i18n pass. 62 formats/49 tools. E2 local implementation is complete; browser/build/release and E3/E4 remain open.

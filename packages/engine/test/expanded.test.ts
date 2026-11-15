@@ -340,3 +340,14 @@ it('checks log calendars and does not invent a missing timezone', async () => {
   expect(local).not.toHaveProperty('utc')
   expect(await logLine.detect('2026-02-29T00:00:00Z INFO bad', {} as never)).toBeNull()
 })
+
+it('reads canonical Roman numbers while keeping word/pronoun overlap uncertain', async () => {
+  const { roman } = await import('../src/formats/expanded/roman')
+  expect((await roman.detect('Roman: MCMXCIV', {} as never))?.value).toMatchObject({
+    decimal: 1994,
+  })
+  expect((await roman.detect('\u216b', {} as never))?.value).toMatchObject({ decimal: 12 })
+  expect((await roman.detect('I', {} as never))?.confidence).toBeLessThan(0.85)
+  expect((await roman.detect('MIX', {} as never))?.confidence).toBeLessThan(0.85)
+  expect(await roman.detect('IL', {} as never)).toBeNull()
+})
