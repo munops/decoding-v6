@@ -1,5 +1,6 @@
 // Engine-owned explanation identifiers. Prose belongs to presentation.
 export const engineMessageCodes = [
+  'warning-java-inspection',
   'diagnostic-curl-unsupported',
   'diagnostic-curl-unclosed',
   'diagnostic-curl-url',

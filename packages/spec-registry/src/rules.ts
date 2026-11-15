@@ -2,6 +2,13 @@ export type RuleSpec = { id: string; title: string; why: string; fix: string; re
 const jwt = 'https://www.rfc-editor.org/rfc/rfc8725'
 const rows: [string, string, string, string, string][] = [
   [
+    'JAVA-STREAM-INSPECTION',
+    'Java stream inspection only',
+    'A matching header does not validate every object in the stream.',
+    'Inspect untrusted streams as data. Never deserialize them into executable Java classes.',
+    'https://docs.oracle.com/en/java/javase/25/docs/specs/serialization/protocol.html',
+  ],
+  [
     'JWT-ALG-NONE',
     'Unsigned token',
     'An alg=none token does not carry an authentication signature.',

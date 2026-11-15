@@ -1,5 +1,7 @@
 import type { EngineMessageCode } from '@decoding/engine'
 export const englishEngineCopy = {
+  'warning-java-inspection':
+    'We recognized the Java stream header and read standalone strings. Objects are never instantiated; other payloads are not fully validated or deserialized.',
   'diagnostic-curl-unsupported':
     'This curl syntax or multiple-request command is outside the supported request subset.',
   'diagnostic-curl-unclosed': 'Unclosed quote or escape in cURL command.',

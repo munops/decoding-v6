@@ -17,6 +17,8 @@ const ko: Record<MessageFact['code'], string> = {
     '대문자나 소문자 한 가지로만 적혀 있어요. 대소문자를 섞은 확인값이 없는 옛 표기로 읽었어요. 보통의 16진수 자료일 수도 있어요.',
   'warning-hcert-unverified':
     'HC1은 건강 증명서에 쓰는 겉 표기예요. 내용을 읽어도 서명·발급자·자료 틀이나 지금 사용할 수 있는 증명서인지는 확인한 것이 아니에요.',
+  'warning-java-inspection':
+    'Java의 시작 표식을 알아보고 단독 문자열을 읽었어요. 객체를 만들거나 실행하지 않아요. 다른 내용 전체의 유효성을 검증하거나 객체로 복원한 것은 아니에요.',
   'diagnostic-curl-unsupported':
     '이 curl 문법이나 여러 요청을 담은 명령은 여기서 읽을 수 있는 범위를 벗어나요.',
   'diagnostic-curl-unclosed': 'curl 명령의 따옴표나 이어 쓰기가 닫히지 않았어요.',

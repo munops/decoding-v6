@@ -1,3 +1,4 @@
+import { javaSerialization } from './java-serialization'
 import { mac } from './mac'
 import { cidr } from './cidr'
 import { curlCommand } from './curl-command'
@@ -18,4 +19,5 @@ export const expandedDetectors = [
   curlCommand,
   cidr,
   mac,
+  javaSerialization,
 ]

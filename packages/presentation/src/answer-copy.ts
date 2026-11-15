@@ -183,6 +183,10 @@ const sentences: Record<string, [string, string]> = {
     'This value was wrapped in Base45. We decoded the next layer.',
     'Base45로 싼 값이에요. 한 겹 풀었어요.',
   ],
+  'java-serialization': [
+    'This looks like a Java object stream. We inspect it without creating or running objects.',
+    'Java 객체를 저장한 값으로 보여요. 객체를 만들거나 실행하지 않고 살펴봐요.',
+  ],
   mac: [
     'This looks like a network device address. We read its notation without looking up a device.',
     '네트워크 장치에 쓰는 주소로 보여요. 실제 장치를 조회하지 않고 표기를 읽었어요.',
@@ -631,6 +635,11 @@ export function answerFacts(
     rows: Array<[string, string]> = []
   if (detection.detector === 'kv' && Array.isArray(value.entries))
     return [[copy.fields, String(value.entries.length)]]
+  if (detection.detector === 'java-serialization')
+    return [
+      [locale === 'ko' ? '형식 판' : 'Stream version', String(value.version)],
+      [locale === 'ko' ? '크기' : 'Bytes', String(value.bytes)],
+    ]
   if (detection.detector === 'mac')
     return [
       [locale === 'ko' ? '주소' : 'Address', String(value.address)],

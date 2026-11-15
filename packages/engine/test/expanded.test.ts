@@ -1,3 +1,4 @@
+import { javaSerialization } from '../src/formats/expanded/java-serialization'
 import { mac } from '../src/formats/expanded/mac'
 import { cidr } from '../src/formats/expanded/cidr'
 import { decode, detect } from '../src'
@@ -240,4 +241,11 @@ it('reads MAC bits without inferring device identity', async () => {
     group: true,
   })
   expect(await mac.detect('00:00-5e:00:53:01', {} as never)).toBeNull()
+})
+
+it('reads Java modified UTF-8 strings without constructing objects', async () => {
+  const { javaString } = await import('../../fixtures-public/src/expanded-fixtures')
+  for (const value of ['Hello', '한글', '🙂', 'a\0b'])
+    expect((await javaSerialization.detect(javaString(value), {} as never))?.decoded).toBe(value)
+  expect((await javaSerialization.detect('rO0ABXQABUhlbGxv', {} as never))?.decoded).toBe('Hello')
 })

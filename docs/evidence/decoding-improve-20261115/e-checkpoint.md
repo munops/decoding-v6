@@ -64,3 +64,7 @@ Review-fix validation: full run 257/259 passed; strict unknown-argument handling
 ## MAC addresses
 
 Separated 48-bit notation accepts consistent colon, hyphen or dotted groups and reports group/local bits and broadcast form. Compact twelve-digit hex remains ambiguous and is not automatically called a device address. No vendor/device/ownership lookup is made. RFC 9542 documentation blocks supply the synthetic corpus. 20 positive/10 edge/20 negative cases plus bit/mixed-delimiter regressions; full suite 261 pass. Relevant package type/lint/parity/i18n pass. 55 formats/49 tools; runtime release gates remain open.
+
+## Java serialization
+
+AC ED 00 05 is recognized in bytes or Base64. Standalone strings decode with bounded modified UTF-8 (including Java NUL and supplementary UTF-16 pairs), not ordinary UTF-8. Other token-bearing streams show only header metadata and an explicit no-full-validation/no-deserialization notice. No Java class, readObject or readExternal is invoked; metadata recognition is not a safety verdict. 20 positive/10 edge/20 negative public fixtures, MUTF-8 regressions and full suite 263 pass. Relevant package type/lint/parity/i18n pass. 56 formats/49 tools.

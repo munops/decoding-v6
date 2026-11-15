@@ -1,5 +1,10 @@
 import type { RuleSpec } from '@decoding/spec-registry'
 const ko: Record<string, [string, string, string]> = {
+  'JAVA-STREAM-INSPECTION': [
+    'Java의 겉 정보만 살펴봐요',
+    '시작 표식이 맞아도 모든 객체의 내용이 올바르다는 뜻은 아니에요.',
+    '모르는 값은 데이터로만 살펴보세요. 실행 가능한 Java 객체로 복원하지 마세요.',
+  ],
   'CURL-TEXT-ONLY': [
     '명령을 글자로만 읽었어요',
     '셸·파일·HTTP 요청은 실행하지 않았어요.',

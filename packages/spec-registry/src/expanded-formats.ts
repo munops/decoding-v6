@@ -229,5 +229,24 @@ export const expandedSpecs: ExpandedSpec[] = [
       },
     ],
   },
+  {
+    detector: 'java-serialization',
+    slug: 'java-serialization',
+    label: 'Java serialization stream',
+    description:
+      'Recognize the AC ED 00 05 stream header in bytes or Base64. Standalone short/long strings use modified UTF-8; other streams show header metadata only. Never instantiate classes, execute readObject/readExternal or claim full payload validation.',
+    korean: {
+      label: 'Java 직렬화',
+      description:
+        '바이트나 Base64 안의 AC ED 00 05 시작 표식을 알아봐요. 단독 문자열은 Java의 변형 UTF-8로 읽고, 다른 객체는 겉 정보만 보여 줘요. 클래스를 만들거나 readObject·readExternal을 실행하지 않으며 내용 전체를 검증한 것은 아니에요.',
+    },
+    examples: ['rO0ABXQABUhlbGxv', 'rO0ABXA=', 'rO0ABXQAAA=='],
+    references: [
+      {
+        title: 'Java Object Serialization — stream protocol',
+        url: 'https://docs.oracle.com/en/java/javase/25/docs/specs/serialization/protocol.html',
+      },
+    ],
+  },
 ]
 export const expandedKoreanCopy = new Map(expandedSpecs.map((spec) => [spec.detector, spec.korean]))

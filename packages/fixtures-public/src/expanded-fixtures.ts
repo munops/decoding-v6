@@ -605,3 +605,54 @@ expandedFixtures.push(
     ],
   ),
 )
+
+export function javaString(text: string): Uint8Array {
+  const body: number[] = []
+  for (let i = 0; i < text.length; i++) {
+    const c = text.charCodeAt(i)
+    if (c > 0 && c < 128) body.push(c)
+    else if (c < 2048) body.push(192 | (c >> 6), 128 | (c & 63))
+    else body.push(224 | (c >> 12), 128 | ((c >> 6) & 63), 128 | (c & 63))
+  }
+  return new Uint8Array([172, 237, 0, 5, 116, body.length >> 8, body.length & 255, ...body])
+}
+expandedFixtures.push(
+  ...publicCases(
+    'java-serialization',
+    Array.from({ length: 20 }, (_, i) => javaString('synthetic-' + i)),
+    [
+      javaString(''),
+      javaString('한글'),
+      javaString('日本語'),
+      javaString('中文'),
+      javaString('🙂'),
+      javaString('a\0b'),
+      javaString('café'),
+      new Uint8Array([172, 237, 0, 5, 112]),
+      new Uint8Array([172, 237, 0, 5, 121]),
+      'rO0ABXQABUhlbGxv',
+    ],
+    [
+      new Uint8Array([172, 237, 0, 4, 112]),
+      new Uint8Array([172, 237, 0, 5]),
+      new Uint8Array([172, 237, 0, 5, 255]),
+      new Uint8Array([172, 237, 0, 5, 116]),
+      new Uint8Array([172, 237, 0, 5, 116, 0, 2, 65]),
+      new Uint8Array([172, 237, 0, 5, 116, 0, 1, 0]),
+      new Uint8Array([172, 237, 0, 5, 116, 0, 2, 192, 129]),
+      new Uint8Array([172, 237, 0, 5, 116, 0, 3, 224, 128, 128]),
+      new Uint8Array([172, 237, 0, 5, 120]),
+      new Uint8Array([172, 237, 0, 5, 115]),
+      'rO0AB',
+      'rO0ABf8=',
+      'SGVsbG8=',
+      'aced0005',
+      '{"java":true}',
+      '한글 문장',
+      'A normal sentence.',
+      'Une phrase française.',
+      'https://example.test',
+      '00:00:5e:00:53:01',
+    ],
+  ),
+)
