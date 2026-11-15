@@ -1,3 +1,4 @@
+import { openAdvanced } from './ui-helpers'
 import { expect, test, type Browser, type Page } from '@playwright/test'
 import { createHash } from 'node:crypto'
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
@@ -36,12 +37,10 @@ async function assertFirstVisit(page: Page, viewport: { width: number; height: n
   }
   await expect(page.locator('html')).toHaveAttribute('lang', 'en')
   await expect(page.getByRole('heading', { name: /Paste an unfamiliar value here/i })).toBeVisible()
-  await expect(
-    page.getByText('Input stays on this device. No account, upload, or AI.'),
-  ).toBeVisible()
+  await expect(page.getByText('Only on this device', { exact: true })).toBeVisible()
   await expect(page.getByText('0 input bytes uploaded')).toHaveCount(0)
   await expect(page.locator('.copy-feedback-settings')).toHaveCount(0)
-  await expect(page.locator('[data-sample-id]')).toHaveCount(3)
+  await expect(page.locator('[data-sample-id]')).toHaveCount(7)
 
   const input = page.getByLabel('Paste text or drop a file')
   await expect(input).toBeVisible()
@@ -92,7 +91,7 @@ async function assertFirstVisit(page: Page, viewport: { width: number; height: n
       })
       .map((element) => element.textContent?.trim()),
     storage: {
-      local: localStorage.length,
+      local: Object.keys(localStorage),
       session: sessionStorage.length,
     },
   }))
@@ -100,11 +99,14 @@ async function assertFirstVisit(page: Page, viewport: { width: number; height: n
   expect(geometry.mainImages).toBe(0)
   expect(geometry.primaryInputs).toBe(1)
   expect(geometry.wrappedClickables).toEqual([])
-  expect(geometry.storage).toEqual({ local: 0, session: 0 })
-  await expect(page.locator('.hero h1 span')).toHaveCSS(
-    'display',
-    viewport.width > 640 ? 'inline-block' : 'inline',
-  )
+  expect(geometry.storage.session).toBe(0)
+  expect(
+    geometry.storage.local.filter(
+      (key) =>
+        !['decoding-home-seen', 'decoding-home-locale', 'decoding-first-visit'].includes(key),
+    ),
+  ).toEqual([])
+  await expect(page.locator('#decoder-input')).toHaveValue('')
 }
 
 async function capture(page: Page, filename: string, state: string, captures: Capture[]) {
@@ -123,14 +125,19 @@ test('captures deployed clean-profile, core, unsupported, and material error sta
   test.skip(!evidenceDir, 'Run only through the explicit visual-evidence capture command')
   mkdirSync(evidenceDir!, { recursive: true })
 
-  expect(deployedBaseURL).toBe('https://decod.ing')
-
-  const health = await request.get('https://decod.ing/healthz')
-  expect(health.ok()).toBe(true)
-  const healthBody = (await health.json()) as { ok: boolean; service: string; revision: string }
-  expect(healthBody).toMatchObject({ ok: true, service: 'decoding-v6' })
   expect(expectedRevision).toBeTruthy()
-  expect(healthBody.revision).toBe(expectedRevision)
+  let healthBody: { ok: boolean; service: string; revision: string } | null = null
+  if (deployedBaseURL) {
+    expect(deployedBaseURL).toBe('https://decod.ing')
+    const health = await request.get(`${deployedBaseURL}/healthz`)
+    expect(health.ok()).toBe(true)
+    healthBody = await health.json()
+    expect(healthBody).toMatchObject({
+      ok: true,
+      service: 'decoding-v6',
+      revision: expectedRevision,
+    })
+  }
 
   const captures: Capture[] = []
   for (const viewport of [
@@ -140,6 +147,10 @@ test('captures deployed clean-profile, core, unsupported, and material error sta
   ]) {
     const { page, close } = await openCleanPage(browser, viewport)
     await assertFirstVisit(page, viewport)
+    await expect(page.locator('meta[name="application-build"]')).toHaveAttribute(
+      'content',
+      expectedRevision!,
+    )
     await capture(page, `home-first-${viewport.width}.png`, 'first_visit_clean', captures)
     await close()
   }
@@ -178,21 +189,13 @@ test('captures deployed clean-profile, core, unsupported, and material error sta
     expect(Number.parseFloat(focusStyle.outlineWidth)).toBeGreaterThanOrEqual(3)
 
     await sample.click()
-    const tree = page.getByRole('tree', { name: 'Decode chain' })
-    await expect(tree.getByRole('treeitem')).toHaveCount(2)
-    await expect(page.getByText('Local result', { exact: true })).toBeVisible()
-    await expect(page.getByText('Inspector', { exact: true })).toBeVisible()
-    const resultAudio = page.getByRole('region', { name: 'Result audio' })
-    await expect(resultAudio.getByText('Local result audio', { exact: true })).toBeVisible()
+    await expect(page.locator('.answer-verdict')).toContainText('3 layers')
+    await expect(page.locator('.answer-final .output-view')).toContainText('A-20391')
+    await openAdvanced(page)
     await expect(
-      resultAudio.getByText('Audio stopped because reduced motion is enabled.'),
-    ).toBeVisible()
-    await expect(resultAudio.getByRole('button', { name: 'Play audio' })).toBeDisabled()
-    await expect(page.getByText('로컬 결과 음악')).toHaveCount(0)
-    await page.locator('.result-grid').evaluate((element) => {
-      window.scrollTo({ top: element.getBoundingClientRect().top + window.scrollY - 82 })
-    })
-    await page.waitForTimeout(50)
+      page.getByRole('tree', { name: 'Decode chain' }).getByRole('treeitem'),
+    ).toHaveCount(3)
+    await page.locator('.answer-card').scrollIntoViewIfNeeded()
     await capture(page, 'home-core-synthetic-390.png', 'core_synthetic_decode', captures)
     await close()
   }
@@ -203,9 +206,9 @@ test('captures deployed clean-profile, core, unsupported, and material error sta
     const clear = page.getByRole('button', { name: 'Clear' })
     await expect(clear).toBeDisabled()
     await page.getByLabel('Paste text or drop a file').fill('?')
-    await expect(page.getByText("We couldn't identify this yet.")).toBeVisible()
-    await expect(page.getByText('No candidate', { exact: true })).toBeVisible()
-    await page.getByText("We couldn't identify this yet.").scrollIntoViewIfNeeded()
+    await expect(page.locator('.answer-card')).toBeVisible()
+    await expect(page.locator('.answer-card')).toContainText('We could not identify this value.')
+    await page.locator('.answer-card').scrollIntoViewIfNeeded()
     await capture(page, 'home-unsupported-390.png', 'unsupported', captures)
     await close()
   }
@@ -243,11 +246,11 @@ test('captures deployed clean-profile, core, unsupported, and material error sta
   const receipt = {
     schemaVersion: 1,
     checkedAt: new Date().toISOString(),
-    target: 'https://decod.ing/',
+    target: deployedBaseURL ?? 'local-static-preview',
     navigationOrigin: deployedBaseURL,
     captureSourceIdentity: {
-      kind: 'deployed_capture',
-      baseHead: healthBody.revision,
+      kind: deployedBaseURL ? 'deployed_capture' : 'local_static_capture',
+      baseHead: expectedRevision,
       dirtyFingerprint: cleanFingerprint,
     },
     health: healthBody,

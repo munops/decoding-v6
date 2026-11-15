@@ -29,9 +29,7 @@ test('unsigned JWT danger links to an explanation and HS512 verifies locally', a
   await page
     .getByLabel('Paste text or drop a file')
     .fill(`${encoded('{"alg":"none"}')}.${payload}.`)
-  await expect(
-    page.locator('.answer-concerns li').filter({ hasText: 'JWT-ALG-NONE' }),
-  ).toBeVisible()
+  await expect(page.locator('.answer-concerns').filter({ hasText: 'JWT-ALG-NONE' })).toBeVisible()
   await page
     .locator('.answer-concerns li')
     .filter({ hasText: 'JWT-ALG-NONE' })
@@ -77,8 +75,9 @@ test('local Brotli WASM compiles and decodes through a forced binary layer', asy
   const data = brotliCompressSync(Buffer.from('{"brotli":"synthetic"}'))
   await page.goto('/')
   await page
-    .locator('.paste-surface input[type=file]')
+    .locator('.paste-surface input[type=file]:not([accept])')
     .setInputFiles({ name: 'synthetic.br', mimeType: 'application/octet-stream', buffer: data })
+  await openAdvanced(page)
   await page.locator('.manual-format select').first().selectOption('brotli')
   await expect(page.locator('.result-chain')).toContainText('JSON')
   await expect(page.locator('.result-chain')).not.toContainText('MANUAL-DECODE-FAILED')
@@ -101,7 +100,7 @@ test('private-key ancestors stay hidden in output, bytes and copy', async ({ pag
   await page.goto('/')
   const key = '-----BEGIN PRIVATE KEY-----\nZml4dHVyZUtleUJ5dGVz\n-----END PRIVATE KEY-----'
   await page.getByLabel('Paste text or drop a file').fill(Buffer.from(key).toString('base64'))
-  await expect(page.locator('.answer-concerns li')).toContainText('PRIVATE-KEY-EXPOSED')
+  await expect(page.locator('.answer-concerns')).toContainText('PRIVATE-KEY-EXPOSED')
   await openAdvanced(page)
   await page
     .getByRole('treeitem')
@@ -131,10 +130,10 @@ test('proof page decodes offline without count events and data page reads saved 
 }) => {
   const counts: string[] = []
   page.on('request', (request) => {
-    if (new URL(request.url()).pathname === '/e/events') counts.push(request.url())
+    if (/^\/e(?:\/|$)/.test(new URL(request.url()).pathname)) counts.push(request.url())
   })
   await page.goto('/proof/')
-  await expect(page.getByText('0 requests observed by this page')).toBeVisible()
+  await expect(page.locator('[data-proof-matches]')).toHaveText('0')
   await context.setOffline(true)
   await page.getByLabel('Paste text or drop a file').fill('eyJsb2NhbCI6dHJ1ZX0=')
   await expect(page.locator('.result-chain')).toContainText('JSON')

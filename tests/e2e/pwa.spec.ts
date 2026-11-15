@@ -15,7 +15,10 @@ test('ships raster install and share presentation with a no-reload worker update
     'href',
     '/apple-touch-icon.png',
   )
-  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /\/og\.png$/)
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+    'content',
+    /\/images\/og\/tool-en\.png$/,
+  )
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
     'content',
     'summary_large_image',

@@ -104,7 +104,7 @@ test('anonymous-count opt-out suppresses open, decode and share events', async (
   await page.goto('/')
   await expect(page.locator('[data-count-toggle]')).not.toBeChecked()
   await page.getByLabel('Paste text or drop a file').fill('eyJsb2NhbCI6dHJ1ZX0=')
-  await expect(page.locator('.output-view')).toBeVisible()
+  await expect(page.locator('.answer-final .output-view')).toBeVisible()
   await openAdvanced(page)
   await expect(page.locator('[data-safe-share]')).toBeVisible()
   expect(counts).toEqual([])

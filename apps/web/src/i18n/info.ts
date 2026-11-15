@@ -96,7 +96,7 @@ export const infoMessages: Record<Locale, Record<InfoKey, InfoContent>> = {
       description: 'decod.ing이 값의 형식을 좁히고 비슷한 후보와 안전 제한을 다루는 기준입니다.',
       eyebrow: '판단 근거를 공개합니다',
       heading: '가능성만 말하지 않고 이유를 함께 보여 줍니다.',
-      lead: `${detectorSpecs.length}가지 형식의 문법·시작 표식·구조와 값을 풀어 본 결과를 비교해요. 가능성이 85% 이상이고 다음 후보보다 15% 포인트 앞설 때만 다음 겹을 자동으로 열어요.`,
+      lead: `${detectorSpecs.length}가지 형식의 문법과 시작 표식, 구조, 값을 풀어 본 결과를 비교해요. 가능성이 85% 이상이고 다음 후보보다 15% 포인트 앞설 때만 다음 겹을 자동으로 열어요.`,
       sections: [
         {
           heading: '확인할 수 있는 형식',

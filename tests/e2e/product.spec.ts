@@ -184,11 +184,12 @@ test('keeps the Korean journey in user-facing language from discovery through re
     page.getByRole('heading', { name: '이게 뭔지 모르겠다면 여기에 붙여넣으세요' }),
   ).toBeVisible()
   await expect(page.locator('.hero h1 br')).toHaveCount(0)
-  await expect(page.getByRole('group', { name: '알려진 입력으로 판정 근거 보기' })).toContainText(
-    '16진수와 Base64 후보 비교',
-  )
+  await expect(
+    page.getByRole('group', { name: '이런 걸 들고 오셨나요? 눌러서 미리 보기' }),
+  ).toContainText('깨진 글자')
 
   await page.getByLabel('텍스트를 붙여넣거나 파일을 놓으세요').fill('dGVzdA==')
+  await openAdvanced(page)
   await expect(page.locator('.evidence-stack').first()).toContainText('Base64에서 쓰는 문자')
 
   await page.goto('/ko/tools/')
@@ -215,13 +216,11 @@ test('keeps the Korean journey in user-facing language from discovery through re
   await expect(page.getByRole('option', { name: 'camel', exact: true })).toHaveCount(0)
 })
 
-test.describe('Korean locale suggestion', () => {
+test.describe('Korean first-visit selection', () => {
   test.use({ locale: 'ko-KR' })
 
   for (const width of [320, 390]) {
-    test(`keeps the Korean suggestion separate from the main content at ${width}px`, async ({
-      page,
-    }) => {
+    test(`opens Korean without a suggestion banner at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 800 })
       await page.goto('/')
       if (width === 320) {
@@ -230,26 +229,9 @@ test.describe('Korean locale suggestion', () => {
         })
       }
 
-      const suggestion = page.locator('#locale-suggestion')
-      await expect(suggestion).toBeVisible()
-      await expect(suggestion).toContainText('한국어로 볼 수 있어요.')
-      await expect(suggestion.getByRole('link', { name: '한국어로 보기' })).toHaveAttribute(
-        'href',
-        '/ko/',
-      )
-
-      // Read both rectangles in one browser task so the boundary is sampled together.
-      const { suggestionBox, mainBox } = await page.evaluate(() => {
-        const suggestionElement = document.querySelector('#locale-suggestion')
-        const mainElement = document.querySelector('main')
-        return {
-          suggestionBox: suggestionElement?.getBoundingClientRect().toJSON() ?? null,
-          mainBox: mainElement?.getBoundingClientRect().toJSON() ?? null,
-        }
-      })
-      expect(suggestionBox).not.toBeNull()
-      expect(mainBox).not.toBeNull()
-      expect(suggestionBox!.y + suggestionBox!.height).toBeLessThanOrEqual(mainBox!.y)
+      await expect(page).toHaveURL(/\/ko\/$/)
+      await expect(page.locator('#locale-suggestion')).toHaveCount(0)
+      await expect(page.locator('html')).toHaveAttribute('lang', 'ko')
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
         width,
       )
@@ -293,13 +275,15 @@ test('publishes reachable terms and safe support routes from the global footer',
 test.describe('Japanese locale', () => {
   test.use({ locale: 'ja-JP' })
 
-  test('suggests Japanese without redirecting and runs the localized tool UI', async ({ page }) => {
+  test('keeps the English root without a banner and runs the explicitly chosen Japanese UI', async ({
+    page,
+  }) => {
     await page.goto('/')
-    const suggestion = page.locator('#locale-suggestion')
     await expect(page).toHaveURL('/')
-    await expect(suggestion).toBeVisible()
-    await expect(suggestion.getByRole('link', { name: 'Open' })).toHaveAttribute('href', '/ja/')
-
+    await expect(page.locator('#locale-suggestion')).toHaveCount(0)
+    await page.locator('.language-menu summary').click()
+    await page.locator('[data-locale-choice="ja"]').click()
+    await expect(page).toHaveURL(/\/ja\/$/)
     await page.goto('/ja/json-format/')
     await expect(page.locator('html')).toHaveAttribute('lang', 'ja')
     await expect(page.getByRole('button', { name: 'ローカルで実行' })).toBeVisible()

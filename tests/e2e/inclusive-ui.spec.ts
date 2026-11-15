@@ -95,9 +95,7 @@ test('header does not trap prior input controls after a mobile result', async ({
     await expectCoreRouteWithinCanvas(page)
 
     await page.locator('[data-sample-id="nested"]').click()
-    await expect(
-      page.getByRole('tree', { name: 'Decode chain' }).getByRole('treeitem'),
-    ).toHaveCount(3)
+    await expect(page.locator('.answer-verdict')).toContainText('3 layers')
 
     await page.locator('.answer-card').evaluate((element) => {
       window.scrollTo({ top: element.getBoundingClientRect().top + window.scrollY - 82 })
@@ -120,7 +118,7 @@ test('header does not trap prior input controls after a mobile result', async ({
 
     for (const selector of [
       '#decoder-input',
-      '.input-actions .file-action',
+      '.input-actions .file-action:last-of-type',
       '.input-actions button:first-child',
       '.input-label-row button',
     ]) {

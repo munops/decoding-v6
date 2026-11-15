@@ -1,3 +1,4 @@
+import { execFileSync } from 'node:child_process'
 import { chromium } from '@playwright/test'
 
 const baseURL = process.argv
@@ -9,6 +10,9 @@ if (!baseURL) {
   throw new Error('Usage: node scripts/verify-deploy.mjs <base-url>')
 }
 
+const inventory = JSON.parse(
+  execFileSync('pnpm', ['exec', 'tsx', 'scripts/inventory.ts'], { encoding: 'utf8' }),
+)
 const browser = await chromium.launch({ headless: true })
 const page = await browser.newPage({
   viewport: { width: 390, height: 844 },
@@ -63,12 +67,14 @@ try {
   )
   if (brokenAssets.length > 0)
     throw new Error(`Broken linked assets: ${JSON.stringify(brokenAssets)}`)
-  const launchpad = page.getByRole('group', { name: 'See the evidence with a known input' })
+  const launchpad = page.getByRole('group', {
+    name: 'Does one of these look familiar? Try an example.',
+  })
   await launchpad.waitFor()
-  if ((await launchpad.getByRole('button').count()) !== 3) {
-    throw new Error('Expected exactly three synthetic triage cases')
+  if ((await launchpad.getByRole('button').count()) !== 7) {
+    throw new Error('Expected exactly seven synthetic triage cases')
   }
-  await page.getByText('Input stays on this device. No account, upload, or AI.').waitFor()
+  await page.getByText('Only on this device', { exact: true }).waitFor()
   if ((await page.getByText('0 input bytes uploaded').count()) !== 0) {
     throw new Error('Expected the obsolete duplicate upload claim to be absent')
   }
@@ -90,8 +96,14 @@ try {
   if (firstVisitGeometry.surfaceBottom > 844 || firstVisitGeometry.sampleOverflow) {
     throw new Error(`First-visit geometry failed: ${JSON.stringify(firstVisitGeometry)}`)
   }
-  await launchpad.getByRole('button', { name: 'Nested Base64 → JSON' }).click()
-  await page.getByRole('tree', { name: 'Decode chain' }).getByRole('treeitem').nth(1).waitFor()
+  await page.locator('[data-sample-id="nested"]').click()
+  await page
+    .locator('.answer-final .output-view')
+    .getByText(/A-20391/)
+    .waitFor()
+  const advanced = page.locator('.advanced-result')
+  await advanced.locator(':scope > summary').click()
+  await page.getByRole('tree', { name: 'Decode chain' }).getByRole('treeitem').nth(2).waitFor()
 
   await page.getByLabel('Paste text or drop a file').fill(btoa(JSON.stringify({ secret: canary })))
   await page.getByText('Base64', { exact: false }).first().waitFor()
@@ -112,9 +124,9 @@ try {
   if (canaryLeaks.length > 0) throw new Error(`Synthetic canary leaked: ${canaryLeaks.join(', ')}`)
 
   await page.goto(`${baseURL}/tools/`, { waitUntil: 'load' })
-  await page.getByText('47 of 47 tools').waitFor()
-  if ((await page.locator('.tool-card').count()) !== 47)
-    throw new Error('Expected exactly 47 tools')
+  await page.getByText(`${inventory.tools} of ${inventory.tools} tools`).waitFor()
+  if ((await page.locator('.tool-card').count()) !== inventory.tools)
+    throw new Error(`Expected exactly ${inventory.tools} tools`)
 
   await page.goto(`${baseURL}/json-format/`, { waitUntil: 'load' })
   await page.locator('.operation-pane textarea').first().fill('{"answer":42,"local":true}')
@@ -139,9 +151,9 @@ try {
     JSON.stringify(
       {
         baseURL,
-        syntheticTriageCases: 3,
+        syntheticTriageCases: 7,
         autoDetection: 'passed',
-        toolCount: 47,
+        toolCount: inventory.tools,
         localOperation: 'passed',
         canaryEgress: 'none',
         canaryStorage: 'none',

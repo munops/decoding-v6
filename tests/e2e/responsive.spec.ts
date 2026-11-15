@@ -72,7 +72,7 @@ test('mobile first action stays above the fold without a competing filled contro
     }
     const pasteSurface = document.querySelector<HTMLElement>('.paste-surface')
     const fileAction = document.querySelector<HTMLElement>('.input-actions .file-action')
-    const clear = document.querySelector<HTMLButtonElement>('.input-actions button:disabled')
+    const clear = document.querySelector<HTMLButtonElement>('.input-label-row button:disabled')
     const sampleLabel = document.querySelector<HTMLElement>('.triage-launchpad > .eyebrow')
     const samples = [...document.querySelectorAll<HTMLElement>('.triage-sample')].map((sample) => {
       const bounds = sample.getBoundingClientRect()
@@ -82,10 +82,7 @@ test('mobile first action stays above the fold without a competing filled contro
     const surfaceStyle = pasteSurface ? getComputedStyle(pasteSurface) : null
     return {
       pasteTop: pasteSurface?.getBoundingClientRect().top ?? Number.POSITIVE_INFINITY,
-      heroRepeatsDeviceClaim: document
-        .querySelector('.hero-copy > p')
-        ?.textContent?.toLowerCase()
-        .includes('on this device'),
+      heroHasLocalCheck: Boolean(document.querySelector('.hero-copy a[href="/proof/"]')),
       fileBackground: fileAction ? getComputedStyle(fileAction).backgroundColor : '',
       clearOpacity: clearStyle?.opacity,
       clearContrast:
@@ -95,12 +92,13 @@ test('mobile first action stays above the fold without a competing filled contro
     }
   })
   expect(metrics.pasteTop).toBeLessThanOrEqual(300)
-  expect(metrics.heroRepeatsDeviceClaim).toBe(false)
+  expect(metrics.heroHasLocalCheck).toBe(true)
   expect(metrics.fileBackground).toBe('rgba(0, 0, 0, 0)')
   expect(metrics.clearOpacity).toBe('1')
   expect(metrics.clearContrast).toBeGreaterThanOrEqual(4.5)
   expect(metrics.sampleLabelTransform).toBe('none')
-  expect(new Set(metrics.samples.map((sample) => Math.round(sample.top))).size).toBe(1)
+  expect(metrics.samples).toHaveLength(7)
+  expect(new Set(metrics.samples.map((sample) => Math.round(sample.top))).size).toBe(3)
   expect(Math.max(...metrics.samples.map((sample) => sample.width))).toBeLessThanOrEqual(
     Math.min(...metrics.samples.map((sample) => sample.width)) + 1,
   )
