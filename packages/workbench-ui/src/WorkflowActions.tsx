@@ -1,3 +1,5 @@
+import { operationName } from '@decoding/presentation'
+import { operations } from '@decoding/operations'
 import { SavePanel } from './SavePanel'
 import { SendPanel } from './SendPanel'
 import { savedCopy, type SaveOptions } from './saved-copy'
@@ -236,7 +238,11 @@ export function WorkflowActions({
                       type="button"
                       onClick={() => onTool(id, outputText(last?.value ?? selected.value))}
                     >
-                      {id}
+                      {operationName(
+                        id,
+                        operations.find((item) => item.id === id)?.name ?? id,
+                        messages.locale,
+                      )}
                     </button>
                   ))}
                 </div>

@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro'
+import WebDecoder from '../islands/WebDecoder'
+import { decoderMessages } from '@decoding/workbench-ui'
+import { entryTopicCopy, type EntryTopicId } from '../i18n/entry-topics'
+import { pageSchemas } from '../lib/page-schemas'
+const { id, locale } = Astro.props as { id: EntryTopicId; locale: 'en' | 'ko' }
+const copy = entryTopicCopy(id, locale),
+  path = `${locale === 'ko' ? '/ko' : ''}/${id}/`
+const schemas = pageSchemas(copy.title, path, copy.faq, copy.answer, locale)
+---
+
+<Layout
+  availableLocales={['en', 'ko']}
+  locale={locale}
+  title={`${copy.title} — decod.ing`}
+  description={copy.lead}
+  alternatePath={`/${id}/`}
+>
+  <section class="hero container">
+    <div class="hero-copy"><h1>{copy.title}</h1><p>{copy.lead}</p></div>
+  </section>
+  <div class="container workbench-wrap">
+    <WebDecoder
+      messages={decoderMessages[locale]}
+      initialInput={copy.photo ? undefined : copy.samples[0]?.value}
+      samples={copy.samples}
+      sampleLabel={copy.examples}
+      proofMode={copy.proof ?? false}
+      client:load
+    />
+  </div>
+  <section class="tool-content container">
+    <article><h2>{copy.whyTitle}</h2><p>{copy.why}</p></article><article>
+      <h2>{copy.faq}</h2><p>{copy.answer}</p>
+    </article>
+  </section>
+  {
+    schemas.map((schema) => (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
+    ))
+  }
+</Layout>

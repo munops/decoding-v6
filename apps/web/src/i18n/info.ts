@@ -1,4 +1,6 @@
 import type { Locale } from './catalog'
+import { detectorSpecs } from '@decoding/spec-registry'
+import { operations } from '@decoding/operations'
 
 export type InfoContent = {
   title: string
@@ -20,7 +22,7 @@ export const infoMessages: Record<Locale, Record<InfoKey, InfoContent>> = {
         'How decod.ing detects formats, handles ambiguity, and enforces local safety limits.',
       eyebrow: 'Auditable method',
       heading: 'Confidence is evidence, not a guess.',
-      lead: 'Eight detector families score syntax, magic bytes, structure, and decoded output. A result auto-expands only above 85% confidence with at least a 15-point lead.',
+      lead: `${detectorSpecs.length} supported formats compare syntax, opening bytes, structure and decoded output. A result auto-expands only above 85% confidence with at least a 15-point lead.`,
       sections: [
         {
           heading: 'Supported detector families',
@@ -75,11 +77,11 @@ export const infoMessages: Record<Locale, Record<InfoKey, InfoContent>> = {
       description: 'A free place to decode unfamiliar values on your own device.',
       eyebrow: 'About',
       heading: 'Find out what an unfamiliar value means.',
-      lead: 'decod.ing is a free, zero-account universal decoder and 47-tool local workbench.',
+      lead: `Find out what an unfamiliar value means and use ${operations.length} local tools, free and without an account.`,
       sections: [
         {
           heading: 'One product rule',
-          body: "Developer payloads are data to inspect on your device, not content to upload to somebody else's service.",
+          body: 'Unfamiliar values can be inspected on your own device without uploading them to another service.',
         },
         {
           heading: 'Business model',
@@ -94,7 +96,7 @@ export const infoMessages: Record<Locale, Record<InfoKey, InfoContent>> = {
       description: 'decod.ing이 값의 형식을 좁히고 비슷한 후보와 안전 제한을 다루는 기준입니다.',
       eyebrow: '판단 근거를 공개합니다',
       heading: '가능성만 말하지 않고 이유를 함께 보여 줍니다.',
-      lead: '8가지 확인 방식이 문법, 파일 시작 표식, 데이터 구조와 값을 풀어 본 결과를 비교합니다. 가능성이 85% 이상이고 다음 후보보다 15% 포인트 앞설 때만 다음 단계를 자동으로 엽니다.',
+      lead: `${detectorSpecs.length}가지 형식의 문법·시작 표식·구조와 값을 풀어 본 결과를 비교해요. 가능성이 85% 이상이고 다음 후보보다 15% 포인트 앞설 때만 다음 겹을 자동으로 열어요.`,
       sections: [
         {
           heading: '확인할 수 있는 형식',
@@ -146,14 +148,14 @@ export const infoMessages: Record<Locale, Record<InfoKey, InfoContent>> = {
     },
     about: {
       title: '소개 — decod.ing',
-      description: 'decod.ing이 계정이나 서버 전송 없이 개발자 도구를 무료로 제공하는 이유입니다.',
+      description: '모르는 값을 이 기기 안에서 풀고 살펴보는 무료 도구예요.',
       eyebrow: '소개',
       heading: '민감한 값을 다른 서비스에 맡기지 않아도 되는 도구.',
-      lead: 'decod.ing은 알 수 없는 값의 형식을 찾고 근거를 확인하는 기능과 개발자 도구 47개를 계정 없이 무료로 제공합니다.',
+      lead: `알 수 없는 값의 형식과 까닭을 살펴보고 도구 ${operations.length}개를 계정 없이 무료로 쓸 수 있어요.`,
       sections: [
         {
           heading: '지키는 원칙 한 가지',
-          body: '개발자 입력값은 다른 서비스에 올릴 자료가 아니라 자신의 기기에서 확인할 데이터입니다.',
+          body: '모르는 값을 다른 서비스에 올리지 않고 자신의 기기에서 살펴볼 수 있어야 해요.',
         },
         {
           heading: '운영 비용을 마련하는 방식',
@@ -486,4 +488,11 @@ for (const [locale, content] of Object.entries(infoMessages)) {
     ...infoMessages.en.privacy,
     sections: infoMessages.en.privacy.sections.map((section) => ({ ...section })),
   }
+}
+
+// Updated general-audience brand/method copy follows EN until native review.
+for (const [locale, content] of Object.entries(infoMessages)) {
+  if (locale === 'en' || locale === 'ko') continue
+  content.about = infoMessages.en.about
+  content.methodology = infoMessages.en.methodology
 }

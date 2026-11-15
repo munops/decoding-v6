@@ -1,3 +1,4 @@
+import { operationName } from '@decoding/presentation'
 import { operations } from '@decoding/operations'
 import { uiMessage } from './ui-copy'
 import type { DecodeResult } from '@decoding/engine'
@@ -27,7 +28,7 @@ export function NextStep({
           {tools.map((id) => (
             <a
               class="button secondary"
-              href={`/${id}/`}
+              href={`/${locale === 'en' ? '' : `${locale}/`}${id}/`}
               onClick={(event) => {
                 if (onTool) {
                   event.preventDefault()
@@ -36,7 +37,7 @@ export function NextStep({
               }}
               key={id}
             >
-              {operations.find((item) => item.id === id)?.name ?? id}
+              {operationName(id, operations.find((item) => item.id === id)?.name ?? id, locale)}
             </a>
           ))}
         </div>

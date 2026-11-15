@@ -17,15 +17,15 @@ export type TrustPageContent = {
 export const trustMessages: Record<TrustPageKey, TrustPageContent> = {
   terms: {
     title: 'Terms of service — decod.ing',
-    description: 'The terms for using the free, local-only decod.ing developer tools.',
+    description: 'The terms for using the free, local-only decod.ing tools.',
     eyebrow: 'Terms of service',
     heading: 'Use the tool responsibly. Keep control of your data.',
-    lead: 'decod.ing is operated by MUNOPS (문옵스) as a free, zero-account developer utility. These terms describe the current public web service.',
+    lead: 'decod.ing is operated by MUNOPS (문옵스) as a free, zero-account utility. These terms describe the current public web service.',
     effectiveDate: 'Effective 8 August 2026',
     sections: [
       {
         heading: 'Service scope',
-        body: 'The service detects, decodes, inspects, formats, and converts supported developer data in your browser. It does not provide an account, server-side decoding, generative AI, paid features, or a guarantee that detected content is trustworthy.',
+        body: 'The service detects, decodes, inspects, formats, and converts supported data in your browser. It does not provide an account, server-side decoding, generative AI, paid features, or a guarantee that detected content is trustworthy.',
       },
       {
         heading: 'Your responsibility',
@@ -101,10 +101,10 @@ trustMessages.terms.sections.push({
 export const koreanTrustMessages: Record<TrustPageKey, TrustPageContent> = {
   terms: {
     title: '이용약관 — decod.ing',
-    description: '무료 로컬 개발자 도구의 이용 조건이에요.',
+    description: '기기 안에서 무료로 쓰는 도구의 이용 조건이에요.',
     eyebrow: '이용약관',
     heading: '내 데이터를 직접 관리하며 사용해요.',
-    lead: 'decod.ing은 계정 없이 무료로 쓰는 로컬 개발자 도구예요.',
+    lead: 'decod.ing은 계정 없이 무료로 쓰는 로컬 도구예요.',
     effectiveDate: '시행 2026년 10월 19일',
     sections: [
       {

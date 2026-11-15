@@ -31,3 +31,7 @@
 - Chromium/Firefox/Safari 실기기 설치 아이콘과 standalone home screen
 - 실제 social/search crawler card fetch 및 Search Console index
 - 실제 사용자의 PWA install/repeat-use cohort
+
+## 2026-11-15 H5 preview kinds
+
+Current Layout metadata selects `public/images/og/{home,tool,format}-{en,ko}.png`; the corresponding SVGs are the editable source. `node scripts/generate-og.mjs` reproducibly renders all six at 1200x630 with the established bright palette and brand mark. Beta locales use EN artwork. The old `og.svg`/`og.png` remain for existing public references. Local original-size review and independent image-only critique are recorded in `docs/evidence/decoding-improve-20261115/h-checkpoint.md`; external crawler/crop results remain a separate gate.

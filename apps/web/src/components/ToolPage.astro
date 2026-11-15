@@ -25,7 +25,7 @@ const schema = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
   name: displayOperation.name,
-  applicationCategory: 'DeveloperApplication',
+  applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Web browser',
   inLanguage: locale,
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
@@ -40,6 +40,7 @@ const boundary =
 ---
 
 <Layout
+  ogKind="tool"
   locale={locale}
   title={`${displayOperation.name} — decod.ing`}
   description={description}

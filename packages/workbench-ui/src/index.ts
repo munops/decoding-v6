@@ -54,3 +54,5 @@ export { toolCopy } from './tool-copy'
 
 export { savedCopy } from './saved-copy'
 export type { SaveOptions } from './saved-copy'
+
+export { operationCopy, koreanOperationIds } from '@decoding/presentation'

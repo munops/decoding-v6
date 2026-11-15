@@ -38,7 +38,7 @@ export const layoutMessages = {
     workspace: 'Workspace',
     desktop: 'Desktop',
     localOnly: 'Local only',
-    footer: 'Developer data tools that stay on your device.',
+    footer: 'Answers and tools that stay on your device.',
     footerNote: 'No account. No upload. No generative AI. No tracking ads.',
     language: 'Language',
     changelog: 'Changelog',
@@ -58,7 +58,7 @@ export const layoutMessages = {
     workspace: '로컬 보관함',
     desktop: '데스크톱',
     localOnly: '기기에서만 처리',
-    footer: '개발자 데이터가 기기 밖으로 나가지 않는 도구입니다.',
+    footer: '모르는 값을 이 기기 안에서 풀고 살펴봐요.',
     footerNote: '계정, 업로드, 생성형 AI, 추적 광고가 없습니다.',
     language: '언어',
     changelog: '변경 기록',
@@ -206,10 +206,10 @@ export type HomeMessages = {
 
 export const homeMessages: Record<Locale, HomeMessages> = {
   en: {
-    title: 'decod.ing — Identify unknown developer data locally',
+    title: 'decod.ing — Paste anything. See what it is.',
     description:
       'Paste an unknown value, rank plausible formats, and follow nested layers without uploading your input.',
-    eyebrow: 'Local triage for unknown developer data',
+    eyebrow: 'Read unfamiliar text, links and files',
     heading: 'What is this string?',
     intro: 'Paste it. See every layer. Copy or share without the value.',
     uploaded: 'input bytes uploaded',
@@ -219,7 +219,7 @@ export const homeMessages: Record<Locale, HomeMessages> = {
     sampleExpired: 'Expired JWT warning',
   },
   ko: {
-    title: 'decod.ing — 알 수 없는 개발자 데이터를 기기에서 확인',
+    title: 'decod.ing — 이게 뭔지 모르겠다면 붙여넣으세요',
     description:
       '알 수 없는 값을 붙여넣으면 가능한 형식을 좁히고, 겹겹이 감싼 결과와 경고 근거를 확인합니다. 입력은 이 기기를 떠나지 않습니다.',
     eyebrow: '알 수 없는 값, 기기에서 바로 확인',
@@ -448,8 +448,8 @@ export type CatalogMessages = {
 
 export const catalogMessages: Record<Locale, CatalogMessages> = {
   en: {
-    title: `${toolCount} local developer tools — decod.ing`,
-    description: `Format, convert, inspect, generate, encode, and decode with ${toolCount} privacy-first developer tools.`,
+    title: `${toolCount} local tools — decod.ing`,
+    description: `Format, convert, inspect, generate, encode, and decode with ${toolCount} privacy-first tools.`,
     eyebrow: 'Tools',
     heading: `${toolCount} tools. One private workbench.`,
     lead: 'Every tool runs on this device. Heavy parsers load only when you open them.',
@@ -472,7 +472,7 @@ export const catalogMessages: Record<Locale, CatalogMessages> = {
     removeFavorite: 'Remove from favorites',
   },
   ko: {
-    title: '기기에서 쓰는 개발자 도구 47개 — decod.ing',
+    title: `기기에서 쓰는 도구 ${toolCount}개 — decod.ing`,
     description: '서버로 입력을 보내지 않고 데이터 정리·변환·검사·생성을 한곳에서 처리하세요.',
     eyebrow: '기기에서 바로 쓰는 도구',
     heading: '필요한 변환과 검사를 한곳에서.',
@@ -813,4 +813,9 @@ export const toolPageMessages: Record<Locale, ToolPageMessages> = {
       "L'analyseur limite les entrées et ne peut exécuter ni modèle, commande, fichier ou appel réseau.",
     transformBoundary: 'Une transformation locale pure, sans accès au système ni au réseau.',
   },
+}
+
+/** New catalog copy is reviewed in EN/KO; beta locales use the English wording. */
+export function catalogCopy(locale: Locale) {
+  return catalogMessages[locale === 'ko' ? 'ko' : 'en']
 }

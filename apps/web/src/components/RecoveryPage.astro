@@ -3,38 +3,15 @@ import Layout from '../layouts/Layout.astro'
 import WebDecoder from '../islands/WebDecoder'
 import { decoderMessages } from '@decoding/workbench-ui'
 import { recoveryCopy, type RecoveryId } from '../i18n/recovery'
+import { pageSchemas } from '../lib/page-schemas'
 const { locale, id } = Astro.props as { locale: 'en' | 'ko'; id: RecoveryId }
 const copy = recoveryCopy(id, locale)
 const path = `${locale === 'ko' ? '/ko' : ''}/${id}/`
-const schemas = [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: copy.faq,
-        acceptedAnswer: { '@type': 'Answer', text: copy.answer },
-      },
-    ],
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'decod.ing',
-        item: `https://decod.ing/${locale === 'ko' ? 'ko/' : ''}`,
-      },
-      { '@type': 'ListItem', position: 2, name: copy.title, item: `https://decod.ing${path}` },
-    ],
-  },
-]
+const schemas = pageSchemas(copy.title, path, copy.faq, copy.answer, locale)
 ---
 
 <Layout
+  availableLocales={['en', 'ko']}
   locale={locale}
   title={`${copy.title} — decod.ing`}
   description={copy.lead}

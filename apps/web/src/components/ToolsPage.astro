@@ -3,19 +3,20 @@ import { toolCopy } from '@decoding/workbench-ui'
 import { operations } from '@decoding/operations'
 import ToolSearch from '../islands/ToolSearch'
 import Layout from '../layouts/Layout.astro'
-import { catalogMessages, type Locale } from '../i18n/catalog'
+import { catalogCopy, type Locale } from '../i18n/catalog'
 import { localizeOperations } from '../i18n/operations'
 
 interface Props {
   locale: Locale
 }
 const { locale } = Astro.props
-const messages = catalogMessages[locale]
+const messages = catalogCopy(locale)
 const pathPrefix = locale === 'en' ? '' : `/${locale}`
 const tools = localizeOperations(locale, operations)
 ---
 
 <Layout
+  ogKind="tool"
   locale={locale}
   title={messages.title}
   description={messages.description}

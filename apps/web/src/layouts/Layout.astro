@@ -14,7 +14,7 @@ import {
   supportedLocales,
   type Locale,
 } from '../i18n/catalog'
-import LocaleSuggestion from '../components/LocaleSuggestion.astro'
+import LocalePreference from '../components/LocalePreference.astro'
 import BrandMark from '../components/BrandMark.astro'
 import CountControl from '../components/CountControl.astro'
 
@@ -27,14 +27,18 @@ interface Props {
   alternatePath?: string
   englishPath?: string
   koreanPath?: string
+  availableLocales?: readonly Locale[]
+  ogKind?: 'home' | 'tool' | 'format'
 }
 
 const {
-  title = 'decod.ing — Universal local decoder',
-  description = 'Detect, decode, inspect, format, and convert developer data locally. 47 tools, no account, no upload.',
+  locale = 'en',
+  title = answerMessages(locale).title,
+  description = answerMessages(locale).lead,
+  availableLocales = supportedLocales,
+  ogKind = 'home',
   canonical = Astro.url.pathname,
   noindex = false,
-  locale = 'en',
   alternatePath,
   englishPath,
 } = Astro.props
@@ -101,7 +105,15 @@ const localizedPrivacy = localePath(locale, '/privacy/')
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+    <meta
+      property="og:image"
+      content={new URL(`/images/og/${ogKind}-${locale === 'ko' ? 'ko' : 'en'}.png`, Astro.site)}
+    />
+    <meta property="og:image:alt" content={title} />
+    <meta
+      name="twitter:image"
+      content={new URL(`/images/og/${ogKind}-${locale === 'ko' ? 'ko' : 'en'}.png`, Astro.site)}
+    />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -151,10 +163,11 @@ const localizedPrivacy = localePath(locale, '/privacy/')
           <details class="language-menu">
             <summary aria-label={messages.language}>{localeNames[locale]}</summary>
             <div class="language-options">
-              {supportedLocales.map((targetLocale) => (
+              {availableLocales.map((targetLocale) => (
                 <a
                   href={localePath(targetLocale, translationPath)}
                   hreflang={targetLocale}
+                  data-locale-choice={targetLocale}
                   lang={targetLocale}
                   aria-current={targetLocale === locale ? 'page' : undefined}
                 >
@@ -183,7 +196,7 @@ const localizedPrivacy = localePath(locale, '/privacy/')
       </button>
       <div class="header-trust"><span class="privacy-dot"></span> {messages.localOnly}</div>
     </header>
-    {locale === 'en' && translationPath ? <LocaleSuggestion path={translationPath} /> : null}
+    <LocalePreference />
     <UpdateBanner locale={locale} client:load />
     <main id="main"><slot /></main>
     <nav class="bottom-tabs" aria-label={messages.primary}>
