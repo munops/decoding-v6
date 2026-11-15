@@ -367,4 +367,23 @@ expandedSpecs.push({
     },
   ],
 })
+expandedSpecs.push({
+  detector: 'morse',
+  slug: 'morse-code',
+  label: 'International Morse code',
+  description:
+    'Decode International Morse letters, digits and common punctuation. In pasted text, whitespace separates letters; slash, three spaces or a newline separates words. Copied middle dots and long minus signs are normalized. A standalone dot/dash needs a Morse: prefix to avoid ordinary punctuation. The joined SOS signal is recognized. This is written-code decoding, not an audio/timing decoder; unsupported procedural signals are rejected. Limits: 64 KiB and 8192 symbols.',
+  korean: {
+    label: '모스 부호',
+    description:
+      '국제 모스 부호의 글자·숫자·흔한 문장 부호를 풀어요. 붙여넣은 글에서는 공백으로 글자를, /·공백 세 개·줄바꿈으로 단어를 나눠요. 가운데 점·긴 빼기 기호도 같은 부호로 읽어요. 점이나 선 하나는 보통의 문장 부호와 겹쳐 Morse: 접두사가 있어야 읽어요. 이어 쓴 SOS 신호도 받아요. 소리·신호 시간을 분석하는 도구는 아니며 지원하지 않는 절차 신호는 거절해요. 한도는 64 KiB·8192부호예요.',
+  },
+  examples: ['... --- ...', '.... . .-.. .-.. --- / .-- --- .-. .-.. -..', 'Morse: .--.-.'],
+  references: [
+    {
+      title: 'ITU-R M.1677-1 — International Morse code',
+      url: 'https://www.itu.int/rec/R-REC-M.1677-1-200910-I/en',
+    },
+  ],
+})
 export const expandedKoreanCopy = new Map(expandedSpecs.map((spec) => [spec.detector, spec.korean]))

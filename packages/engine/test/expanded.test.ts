@@ -351,3 +351,16 @@ it('reads canonical Roman numbers while keeping word/pronoun overlap uncertain',
   expect((await roman.detect('MIX', {} as never))?.confidence).toBeLessThan(0.85)
   expect(await roman.detect('IL', {} as never)).toBeNull()
 })
+
+it('decodes Morse letters, numbers, words and copied Unicode symbols', async () => {
+  const { morse } = await import('../src/formats/expanded/morse')
+  expect(
+    (await morse.detect('.... . .-.. .-.. --- / .-- --- .-. .-.. -..', {} as never))?.decoded,
+  ).toBe('HELLO WORLD')
+  expect((await morse.detect('...---...', {} as never))?.decoded).toBe('SOS')
+  expect((await morse.detect('\u00b7\u2212 \u2212\u00b7\u00b7\u00b7', {} as never))?.decoded).toBe(
+    'AB',
+  )
+  expect(await morse.detect('... bad ---', {} as never)).toBeNull()
+  expect(await morse.detect('.', {} as never)).toBeNull()
+})

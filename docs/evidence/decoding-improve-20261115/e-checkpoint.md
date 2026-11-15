@@ -106,3 +106,9 @@ A bounded 64 KiB single-line reader separates a calendar-checked ISO-style times
 ## Roman numeral candidates
 
 The common canonical subtractive 1–3999 subset accepts ASCII and NFKC-compatible Unicode number forms. Unsupported historical/additive/overbar variants are documented. Bare letters retain 0.65 uncertainty because pronouns, names and words can overlap (I, V, X, MIX); Roman: explicitly selects the numeric interpretation. No automatic ROT13/classical-cipher inference is added. 20 positive/10 edge/20 negative cases, Unicode/canonical/ambiguity regressions; full suite 279 pass. Relevant type/lint/parity/i18n pass. 62 formats/49 tools. E2 local implementation is complete; browser/build/release and E3/E4 remain open.
+
+## Morse code
+
+International Morse letters/digits/common punctuation decode locally, including copied middle-dot/minus forms, written letter/word separators and the joined SOS signal. A standalone dot/dash needs an explicit Morse: prefix. Unknown groups/procedural signals are rejected; written-text notation is not audio/timing recognition. Limits: 64 KiB/8192 symbols. The result recurses through the normal chain without introducing a cipher guess.
+
+20 positive/10 edge/20 negative cases, official character mappings and word/Unicode regressions; full suite 281 pass. Relevant type/lint/parity/i18n pass. 63 formats/49 tools. E3 inline Caesar choices and E4 still remain.

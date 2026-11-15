@@ -1,3 +1,4 @@
+import { morse } from './morse'
 import { roman } from './roman'
 import { sql } from './sql'
 import { logLine } from './log-line'
@@ -32,4 +33,5 @@ export const expandedDetectors = [
   sql,
   logLine,
   roman,
+  morse,
 ]

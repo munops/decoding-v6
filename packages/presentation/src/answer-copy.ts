@@ -189,6 +189,10 @@ const sentences: Record<string, [string, string]> = {
     'This value was wrapped in Base45. We decoded the next layer.',
     'Base45로 싼 값이에요. 한 겹 풀었어요.',
   ],
+  morse: [
+    'This is text written in Morse code. We converted the dots and dashes into characters.',
+    '모스 부호로 적은 값이에요. 점과 선을 글자로 풀었어요.',
+  ],
   roman: [
     'Read as a Roman numeral, this is {number}. The same letters may also be ordinary text.',
     '로마 숫자로 읽으면 {number}예요. 같은 글자가 보통의 말일 수도 있어요.',
