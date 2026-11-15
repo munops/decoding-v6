@@ -3,6 +3,7 @@ import type { ChainNode, Detection, LintWarning } from '@decoding/engine'
 import type { PresentationLocale as WorkbenchLocale } from './locale'
 
 const en = {
+  colorPreview: 'Color preview',
   barcodeUnavailable:
     'This browser cannot read linear barcodes. If no QR was found, the photo is inspected as a file.',
   title: 'decod.ing — Paste anything. See what it is.',
@@ -61,6 +62,7 @@ const en = {
   method: 'How decoding works',
 }
 const ko: typeof en = {
+  colorPreview: '색 견본',
   barcodeUnavailable:
     '이 브라우저에서는 막대 바코드를 못 읽어요. QR이 없다면 사진 파일 정보를 보여 줘요.',
   title: 'decod.ing — 이게 뭔지 모르겠다면 붙여넣으세요',
@@ -159,6 +161,10 @@ const sentences: Record<string, [string, string]> = {
   'user-agent': [
     "This is a browser's self-description. It reports {browser} {version} on {device}.",
     '브라우저가 자기를 소개하는 글이에요. {device}의 {browser} {version}이라고 적혀 있어요.',
+  ],
+  color: [
+    'This is a color value. Here is the color and other ways to write it.',
+    '색을 적은 값이에요. 색 견본과 다른 적는 법을 보여 드려요.',
   ],
   'binary-bytes': [
     'This writes bytes using zeros and ones. We decoded the next layer.',

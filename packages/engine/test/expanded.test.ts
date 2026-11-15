@@ -53,3 +53,17 @@ it('reads declared Safari release and Edge precedence without verifying the devi
   ).find((item) => item.detector === 'user-agent')!
   expect(edge.value).toHaveProperty('browser', 'Edge')
 })
+it('converts color notations and alpha without evaluating CSS', async () => {
+  const read = async (input: string) =>
+    (await detect(input)).find((item) => item.detector === 'color')?.value
+  expect(await read('#ff8800')).toMatchObject({ hex: '#ff8800', rgb: 'rgb(255 136 0)', alpha: 1 })
+  expect(await read('hsl(120 100% 50%)')).toHaveProperty('hex', '#00ff00')
+  expect(await read('hsl(.5turn 100% 50%)')).toHaveProperty('hex', '#00ffff')
+  expect(await read('#f008')).toHaveProperty('hex', '#ff000088')
+  for (const input of [
+    'rgb(1 2 3 /)',
+    'rgb(1,2,3 / .5)',
+    'hsl(0 100% 50%) url(https://example.test)',
+  ])
+    expect(await read(input)).toBeUndefined()
+})

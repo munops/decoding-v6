@@ -46,6 +46,7 @@ export function AnswerCard({
       formatEngineMessage(item.message, messages.locale, node.selected),
     ),
   )
+  const color = final?.detector === 'color' ? (final.value as { hex?: string }).hex : undefined
   const facts = answerFacts(result.root.selected, messages.locale)
   return (
     <section class="answer-card" aria-label={messages.localResult}>
@@ -101,6 +102,14 @@ export function AnswerCard({
             {...(onTool ? { onTool } : {})}
           />
         </div>
+      ) : null}
+      {color && /^#[a-f\d]{6}(?:[a-f\d]{2})?$/i.test(color) ? (
+        <div
+          class="color-preview"
+          role="img"
+          aria-label={`${copy.colorPreview}: ${color}`}
+          style={{ backgroundColor: color }}
+        />
       ) : null}
       {final ? (
         <div class="answer-final">

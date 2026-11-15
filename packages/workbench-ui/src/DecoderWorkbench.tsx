@@ -68,6 +68,8 @@ export function DecoderWorkbench({
   restoreInput,
   onInputState,
 }: DecoderWorkbenchProps) {
+  const [hydrated, setHydrated] = useState(false)
+  useEffect(() => setHydrated(true), [])
   const fileRequestId = useRef(0)
   const [sessionHistory, setSessionHistory] = useState<Array<{ input: string; label: string }>>([])
   const [shortcuts, setShortcuts] = useState(false)
@@ -452,7 +454,7 @@ export function DecoderWorkbench({
   }, [selected, source, copyFeedback])
 
   return (
-    <section class="decoder-shell" aria-label={messages.ariaLabel}>
+    <section class="decoder-shell" data-hydrated={hydrated} aria-label={messages.ariaLabel}>
       <div class="workbench-bar">
         <a href="/proof/" class="privacy-line">
           <span class="privacy-dot" aria-hidden="true" />

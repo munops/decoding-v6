@@ -72,5 +72,24 @@ export const expandedSpecs: ExpandedSpec[] = [
       },
     ],
   },
+  {
+    detector: 'color',
+    slug: 'color',
+    label: 'Hex, RGB and HSL color',
+    description:
+      'Read common in-range sRGB hex (3/4/6/8 digits), RGB and HSL forms, including alpha, percentages and angle units. Display an 8-bit rounded color and equivalent notations. Named colors, calc(), none and other color spaces are outside this reader.',
+    korean: {
+      label: '색 값',
+      description:
+        '16진수 색, RGB·HSL 색과 투명도를 읽고 8비트로 반올림한 견본과 다른 표기를 보여 줘요. 이름으로 적은 색, calc()·none, 다른 색 공간과 범위를 벗어난 값은 이 풀이기에 포함하지 않아요.',
+    },
+    examples: ['#ff8800', 'rgb(255 136 0 / 50%)', 'hsl(32deg 100% 50%)'],
+    references: [
+      {
+        title: 'W3C CSS Color 4 — sRGB hex, RGB and HSL',
+        url: 'https://www.w3.org/TR/css-color-4/',
+      },
+    ],
+  },
 ]
 export const expandedKoreanCopy = new Map(expandedSpecs.map((spec) => [spec.detector, spec.korean]))

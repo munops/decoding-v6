@@ -2871,3 +2871,9 @@ html[data-text-size='large'] :where(p, label, button, summary, a, dt, dd, input,
     scroll-margin-bottom: 90px;
   }
 }
+
+.color-preview {
+  min-height: 64px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}

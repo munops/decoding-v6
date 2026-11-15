@@ -128,3 +128,27 @@ for (const width of [390, 1440]) {
     await expect(page.locator('.answer-facts')).toContainText('한글')
   })
 }
+
+for (const width of [390, 1440])
+  test(`expanded formats keep plain answers and color preview at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width === 390 ? 780 : 900 })
+    await page.goto('/ko/')
+    await expect(page.locator('.decoder-shell')).toHaveAttribute('data-hydrated', 'true')
+    const field = page.getByLabel('텍스트를 붙여넣거나 파일을 놓으세요')
+    await field.fill('01001000 01101001')
+    await expect(page.locator('.answer-final .output-view')).toHaveText('Hi')
+    await field.fill('355 225 234 352 270 200')
+    await expect(page.locator('.answer-final .output-view')).toHaveText('한글')
+    await field.fill(
+      'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) Version/17.0 Safari/604.1',
+    )
+    await expect(page.locator('.answer-verdict')).toContainText('iPhone의 Safari 17.0')
+    await expect(page.locator('.answer-facts')).toContainText('운영체제')
+    await field.fill('#ff8800')
+    await expect(page.locator('.answer-verdict')).toContainText('색을 적은 값')
+    const swatch = page.getByRole('img', { name: '색 견본: #ff8800' })
+    await expect(swatch).toBeVisible()
+    await expect(swatch).toHaveCSS('background-color', 'rgb(255, 136, 0)')
+    await expect(page.locator('.answer-final .output-view')).toContainText('hsl(')
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+  })
