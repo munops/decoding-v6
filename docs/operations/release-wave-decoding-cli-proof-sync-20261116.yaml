@@ -1,0 +1,195 @@
+schema_version: 6
+wave_id: 'DECODING-CLI-PROOF-SYNC-20261116'
+status: approved
+source_revision: 'b11ccf6607a594903db61b6990744c08b42ee51d'
+prepared_at: '2026-11-15T23:34:18.024Z'
+expires_at: '2026-11-15T23:52:11.464Z'
+legal_entity_ref: 'hq/bootstrap/identity.yaml'
+execution_lane: 'owner_lane'
+approval_authority: 'human_owner'
+work_queue_ref: 'docs/prd/CHECKLIST.md'
+work_claim:
+  registry_ref: '.orchestration/work-claims.sqlite'
+  required_for_mutation: true
+  claim_id: 'claim_51783fba-3443-4e21-bf2b-a8267434c6b7'
+  holder: 'codex:01a1df74-eea0-7c71-b83a-883f85def473'
+  resources:
+    - 'provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6'
+    - 'provider:github:munops/decoding-v6'
+    - 'repo:decoding-v6'
+  fencing_tokens:
+    provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6: 7
+    provider:github:munops/decoding-v6: 6
+    repo:decoding-v6: 73
+  asserted_at: '2026-11-15T23:34:18.024Z'
+  released_at: null
+  release_evidence_ref: 'docs/evidence/decoding-improve-20261115/release-20261116.json'
+intervention_mode: 'normal'
+owner_delegation_ref: 'docs/munops/ops/owner-standing-delegation.json#zeroCostProviderExecution'
+approval:
+  mode: 'standing_delegation'
+  standing_delegation_ref: 'docs/munops/ops/owner-standing-delegation.json#zeroCostProviderExecution'
+  standing_delegation_id: 'MUNOPS-OWNER-STANDING-EXECUTION-20260826'
+  resolved_at: '2026-11-15T23:34:18.024Z'
+  approved_at: '2026-11-15T23:34:18.024Z'
+  approved_action_ids:
+    - 'DECODING-CLI-PROOF-SOURCE-20261116'
+  owner_evidence_ref: 'conversation:DECODING-IMPROVE-20261115-OWNER-01:read-handoff-and-execute'
+  approval_clock_status: 'Standing delegation resolved now; this is not a newly invented human action-time approval.'
+  resolution_policy_version: 1
+  action_exact_fields_digests:
+    DECODING-CLI-PROOF-SOURCE-20261116: '0c31bd31fef644801d9215e3c037876bcd3e694a1f00845843873ada4daa35a4'
+# prettier-ignore
+actions:
+  - action_id: "DECODING-CLI-PROOF-SOURCE-20261116"
+    approval_readiness: "approved"
+    approval_class: "P-REPORT"
+    standing_delegation_eligible: true
+    execution_lane: "owner_lane"
+    product: "decoding-v6"
+    channel: "source"
+    provider: "github"
+    exact_mutation: "Fast-forward existing public main from 18c96bcfac99dc46a8ff33a39a5027842bff5bb1 through documentary CLI-proof commit b11ccf6607a594903db61b6990744c08b42ee51d plus only docs/operations/release-wave-decoding-cli-proof-sync-20261116.yaml. Runtime remains 5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb. No installable archive or runtime/provider/package/store/community mutation."
+    account_ref: "docs/munops/ops/provider-registry.yaml#accounts.github_primary"
+    resource_ref: "github:munops/decoding-v6:refs/heads/main"
+    claim_resource_refs:
+      - "repo:decoding-v6"
+      - "provider:github:munops/decoding-v6"
+    destination: "github:munops/decoding-v6:refs/heads/main"
+    candidate_attestation:
+      applicability: "source_only"
+      candidate:
+        source_repository: "munops/decoding-v6"
+        source_before_sha: "18c96bcfac99dc46a8ff33a39a5027842bff5bb1"
+        candidate_sha: "b11ccf6607a594903db61b6990744c08b42ee51d"
+        artifact_sha256: null
+        release_entrypoint: null
+      identity_transition:
+        mode: "not_applicable"
+        reason: "source synchronization does not itself change a rendered or provider identity surface"
+        surfaces: []
+        provider_before_fingerprint: null
+        candidate_artifact_fingerprint: null
+        migration_action_id: null
+      browser_gate:
+        mode: "not_applicable"
+        reason: "browser evidence belongs to the dependent Cloudflare production action"
+      provider_before:
+        applicability: "not_applicable"
+        reason: "Git fast-forward is fenced by the exact remote SHA instead of a deployment tuple"
+        deployment_id: null
+        version_id: null
+      single_deployment_path: "source_only"
+    price:
+      cost_type: "free"
+      cost_status: "not_applicable"
+      currency: "KRW"
+      subtotal: 0
+      tax_amount: 0
+      total_payable: 0
+      first_charge: 0
+      recurrence: "none"
+      renewal_or_cap: 0
+      checked_at: "2026-11-15T23:34:18.024Z"
+      checkout_evidence_refs: []
+    tax:
+      seller_legal_entity: null
+      billing_country: null
+      business_tax_profile_ref: "hq/bootstrap/identity.yaml"
+      business_tax_id_status: "not_required"
+      treatment: "not_applicable"
+      rate_percent: 0
+      evidence_type: "none"
+      invoice_expected: false
+      input_vat_recoverability: "not_applicable"
+      classification_evidence: []
+      prior_invoice_remediation: "not_applicable"
+      not_applicable_reason: "existing private repository fast-forward has no checkout, purchase, invoice, plan change or recurring commitment"
+    post_purchase:
+      provider_billing_readback: null
+      actual_currency: null
+      actual_subtotal: null
+      actual_tax_amount: null
+      actual_total_paid: null
+      invoice_or_receipt_ref: null
+      ledger_ref: null
+      reconciled_at: null
+    public_impact: "Synchronizes corrected release evidence and documentation on the existing public branch; no runtime, account, permission, package/store or visibility change."
+    transmitted_data:
+      - "Documentation, six synthetic screenshots, compressed validation evidence, and hashes of local-only publication candidates; no installable archive, user input or credential."
+    legal_terms_changed: false
+    preflight_evidence:
+      - "Same frozen CLI archive passed Korean/JSON execution with external package resolution rejected and an OS network-deny profile. Socket control outside profile: ECONNREFUSED; inside profile: EPERM."
+      - "First fetch-only test wording corrected explicitly; original measurement time preserved. No app/runtime source changed."
+    rollback_or_abort: "Abort if the remote branch differs. Preserve history with FF only; any corrective revert uses a newly resolved source action."
+    status: "ready"
+    provider_readback: null
+    channel_smoke: null
+    artifact_digest: "b1d364864ff2e8667f2480288e610c328e8fd38afff03138348a1cd17d9b1d1c"
+    authorization:
+      actionType: "existing_branch_push"
+      effects:
+        secretDisclosure: false
+        authBypass: false
+        newCharge: false
+        recurrenceChange: false
+        ownershipTransfer: false
+        visibilityTransfer: false
+        personalDataExpansion: false
+        destructiveData: false
+        newAccount: false
+        firstExternalContact: false
+        legalAttestation: false
+        hqActivation: false
+      credential:
+        operation: "none"
+      terms:
+        kind: "none"
+        boundaryExpansion: false
+        legalConsent: false
+        evidenceRef: "existing verified CLI deploy/push only; no provider consent surface or new agreement"
+      humanStep:
+        kind: "none"
+      context:
+        outOfScopeProject: false
+        currentInScopeOutcomeRequest: true
+        currentRequestRef: "conversation:DECODING-IMPROVE-20261115-OWNER-01:read-handoff-and-execute"
+        existingVerifiedAccount: true
+        verifiedAccountRef: "Existing authenticated repository and verified 881d1a1 push, plus current exact origin/main read-back."
+        claimFencingAsserted: true
+        claimRef: "claim_51783fba-3443-4e21-bf2b-a8267434c6b7"
+        providerReadbackPlanRef: "git ls-remote origin refs/heads/main must equal the clean source-wave follow-up HEAD; root phase receipt records it."
+        channelSmokePlanRef: "Source-only: branch SHA read-back; Web smoke belongs to the dependent web release."
+        receiptPlanRef: "docs/evidence/decoding-improve-20261115/release-20261116.json"
+    source_digest_method: "SHA256 of exact Git source tree object ID for this source-only evidence commit"
+reapproval_triggers:
+  - 'account_ref_changed'
+  - 'resource_or_destination_changed'
+  - 'seller_or_billing_country_changed'
+  - 'business_tax_profile_changed'
+  - 'subtotal_tax_or_total_payable_changed'
+  - 'price_recurrence_or_cap_changed'
+  - 'expected_invoice_or_tax_treatment_changed'
+  - 'public_impact_changed'
+  - 'transmitted_data_changed'
+  - 'legal_terms_changed'
+human_only_steps:
+  - 'mfa'
+  - 'captcha'
+  - 'legal_consent'
+lane_rules:
+  mixed_lane_actions_allowed: false
+  exact_provider_claim_required_before_mutation: true
+  claim_does_not_replace_resolved_release_authority: true
+  hq_targeting_owner_lane_requires_owner_delegation: true
+  owner_targeting_hq_lane_requires_intervention_mode: 'owner_takeover'
+  owner_takeover_requires_explicit_current_user_instruction: true
+  owner_takeover_requires_hq_park_fence_and_reconciliation: true
+tax_rules:
+  contract_ref: 'docs/munops/ops/tax-purchase-evidence.md'
+  business_registration_is_not_automatic_discount: true
+  checkout_tax_and_input_vat_are_separate: true
+  raw_tax_id_or_payment_data_in_git_forbidden: true
+  paid_action_requires_current_checkout_evidence_before_approval: true
+  paid_done_requires_invoice_and_ledger_reconciliation: true
+runtime_source_revision: '5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb'
