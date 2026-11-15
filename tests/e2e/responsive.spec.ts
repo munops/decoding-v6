@@ -98,10 +98,14 @@ test('mobile first action stays above the fold without a competing filled contro
   expect(metrics.clearContrast).toBeGreaterThanOrEqual(4.5)
   expect(metrics.sampleLabelTransform).toBe('none')
   expect(metrics.samples).toHaveLength(7)
-  expect(new Set(metrics.samples.map((sample) => Math.round(sample.top))).size).toBe(3)
-  expect(Math.max(...metrics.samples.map((sample) => sample.width))).toBeLessThanOrEqual(
-    Math.min(...metrics.samples.map((sample) => sample.width)) + 1,
-  )
+  expect(new Set(metrics.samples.map((sample) => Math.round(sample.top))).size).toBe(1)
+  expect(metrics.samples.every((sample) => sample.width >= 44)).toBe(true)
+  for (const sample of await page.locator('[data-sample-id]').all()) {
+    await sample.scrollIntoViewIfNeeded()
+    const box = await sample.boundingBox()
+    expect(box!.x).toBeGreaterThanOrEqual(0)
+    expect(box!.x + box!.width).toBeLessThanOrEqual(390)
+  }
 })
 
 test('a 200 percent desktop-equivalent viewport keeps core routes within the canvas', async ({

@@ -29,7 +29,9 @@ test('unsigned JWT danger links to an explanation and HS512 verifies locally', a
   await page
     .getByLabel('Paste text or drop a file')
     .fill(`${encoded('{"alg":"none"}')}.${payload}.`)
-  await expect(page.locator('.answer-concerns').filter({ hasText: 'JWT-ALG-NONE' })).toBeVisible()
+  await expect(
+    page.locator('.answer-card section.answer-concerns').filter({ hasText: 'JWT-ALG-NONE' }),
+  ).toBeVisible()
   await page
     .locator('.answer-concerns li')
     .filter({ hasText: 'JWT-ALG-NONE' })
@@ -100,7 +102,9 @@ test('private-key ancestors stay hidden in output, bytes and copy', async ({ pag
   await page.goto('/')
   const key = '-----BEGIN PRIVATE KEY-----\nZml4dHVyZUtleUJ5dGVz\n-----END PRIVATE KEY-----'
   await page.getByLabel('Paste text or drop a file').fill(Buffer.from(key).toString('base64'))
-  await expect(page.locator('.answer-concerns')).toContainText('PRIVATE-KEY-EXPOSED')
+  await expect(page.locator('.answer-card section.answer-concerns')).toContainText(
+    'PRIVATE-KEY-EXPOSED',
+  )
   await openAdvanced(page)
   await page
     .getByRole('treeitem')

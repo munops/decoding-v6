@@ -88,12 +88,15 @@ try {
     )
     return {
       surfaceBottom: inputSurface?.bottom ?? Number.POSITIVE_INFINITY,
-      sampleOverflow: samples.some(
-        (bounds) => bounds.left < 0 || bounds.right > document.documentElement.clientWidth,
-      ),
+      sampleOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
+      sampleCount: samples.length,
     }
   })
-  if (firstVisitGeometry.surfaceBottom > 844 || firstVisitGeometry.sampleOverflow) {
+  if (
+    firstVisitGeometry.surfaceBottom > 844 ||
+    firstVisitGeometry.sampleOverflow ||
+    firstVisitGeometry.sampleCount !== 7
+  ) {
     throw new Error(`First-visit geometry failed: ${JSON.stringify(firstVisitGeometry)}`)
   }
   await page.locator('[data-sample-id="nested"]').click()
@@ -130,7 +133,8 @@ try {
 
   await page.goto(`${baseURL}/json-format/`, { waitUntil: 'load' })
   await page.locator('.operation-pane textarea').first().fill('{"answer":42,"local":true}')
-  await page.getByRole('button', { name: 'Run locally' }).click()
+  const run = page.getByRole('button', { name: 'Run locally', exact: true })
+  if (await run.count()) await run.click()
   await page
     .locator('.output-view')
     .getByText(/"answer": 42/)

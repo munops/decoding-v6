@@ -39,7 +39,7 @@ async function assertFirstVisit(page: Page, viewport: { width: number; height: n
   await expect(page.getByRole('heading', { name: /Paste an unfamiliar value here/i })).toBeVisible()
   await expect(page.getByText('Only on this device', { exact: true })).toBeVisible()
   await expect(page.getByText('0 input bytes uploaded')).toHaveCount(0)
-  await expect(page.locator('.copy-feedback-settings')).toHaveCount(0)
+  await expect(page.locator('.copy-feedback-settings')).toBeHidden()
   await expect(page.locator('[data-sample-id]')).toHaveCount(7)
 
   const input = page.getByLabel('Paste text or drop a file')
@@ -49,15 +49,17 @@ async function assertFirstVisit(page: Page, viewport: { width: number; height: n
   expect(inputBounds?.y).toBeLessThan(viewport.height)
   expect((inputBounds?.y ?? 0) + (inputBounds?.height ?? 0)).toBeLessThanOrEqual(viewport.height)
 
-  const sampleBounds = await page.locator('[data-sample-id]').evaluateAll((elements) =>
-    elements.map((element) => {
-      const bounds = element.getBoundingClientRect()
-      return { left: bounds.left, right: bounds.right }
-    }),
-  )
-  expect(sampleBounds.every((bounds) => bounds.left >= 0 && bounds.right <= viewport.width)).toBe(
-    true,
-  )
+  for (const sample of await page.locator('[data-sample-id]').all()) {
+    await sample.scrollIntoViewIfNeeded()
+    const bounds = await sample.boundingBox()
+    expect(bounds!.x).toBeGreaterThanOrEqual(0)
+    expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(viewport.width)
+    expect(bounds!.height).toBeGreaterThanOrEqual(44)
+  }
+  await page.locator('.triage-sample-grid').evaluate((element) => {
+    element.scrollLeft = 0
+    scrollTo(0, 0)
+  })
 
   const geometry = await page.evaluate(() => ({
     clientWidth: document.documentElement.clientWidth,

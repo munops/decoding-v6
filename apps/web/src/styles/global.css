@@ -1569,7 +1569,7 @@ html:lang(ko) body .translation-status {
   }
   .hero {
     min-height: auto;
-    padding: 20px 0 6px;
+    padding: 20px 0 10px;
   }
   .hero h1 {
     font-size: clamp(36px, 10.8vw, 44px);
@@ -2914,4 +2914,10 @@ html[data-text-size='large'] :where(p, label, button, summary, a, dt, dd, input,
 }
 .proof-monitor details p {
   max-width: 72ch;
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding-top: 20px;
+  }
 }

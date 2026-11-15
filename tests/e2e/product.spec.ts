@@ -203,7 +203,7 @@ test('keeps the Korean journey in user-facing language from discovery through re
   await page.goto('/ko/json-format/')
   await expect(page.getByRole('heading', { name: 'JSON 정리와 문법 확인', level: 1 })).toBeVisible()
   await page.locator('.operation-pane textarea').first().fill('{"answer":42}')
-  await page.getByRole('button', { name: '이 기기에서 실행' }).click()
+  await expect(page.locator('.tool-live-note')).toContainText('치는 대로 결과가 바뀌어요.')
   await expect(page.getByText('JSON 문법을 확인했습니다.')).toBeVisible()
   await expect(page.getByRole('heading', { name: '텍스트 결과' })).toBeVisible()
 
@@ -286,7 +286,8 @@ test.describe('Japanese locale', () => {
     await expect(page).toHaveURL(/\/ja\/$/)
     await page.goto('/ja/json-format/')
     await expect(page.locator('html')).toHaveAttribute('lang', 'ja')
-    await expect(page.getByRole('button', { name: 'ローカルで実行' })).toBeVisible()
+    await page.locator('.operation-pane textarea').first().fill('{"answer":42}')
+    await expect(page.locator('.output-view')).toContainText('"answer": 42')
     await expect(page.locator('link[rel="alternate"][hreflang="x-default"]')).toHaveAttribute(
       'href',
       'https://decod.ing/json-format/',
