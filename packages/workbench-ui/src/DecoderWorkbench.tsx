@@ -1,3 +1,4 @@
+import type { SaveOptions } from './saved-copy'
 import { withPhotoResult } from './photo-result'
 import { AnswerCard } from './AnswerCard'
 import { answerMessages } from './answer-copy'
@@ -44,7 +45,11 @@ export type DecoderWorkbenchProps = {
   externalInput?: { id: number; value: string } | undefined
   restoreInput?: { input: DecodeInput; source: string } | undefined
   onInputState?: (input: DecodeInput, source: string) => void
-  onSave?: (selected: Detection, ttl: 'session' | '24h' | '7d' | 'keep') => Promise<void>
+  onSave?: (
+    selected: Detection,
+    ttl: 'session' | '24h' | '7d' | 'keep',
+    options: SaveOptions,
+  ) => Promise<void>
   onTool?: (tool: string, text: string) => void
   onEvent?: (name: 'decode_completed' | 'decode_unsupported' | 'share_action') => void
   messages: DecoderMessages
@@ -652,13 +657,28 @@ export function DecoderWorkbench({
           {...(onTool ? { onTool } : {})}
           {...(onSave
             ? {
-                onSave: (selection: Detection, ttl: 'session' | '24h' | '7d' | 'keep') =>
-                  onSave(structureSelection(result.root, selection), ttl),
+                onSave: (
+                  selection: Detection,
+                  ttl: 'session' | '24h' | '7d' | 'keep',
+                  options: SaveOptions,
+                ) =>
+                  onSave(
+                    options.valueMode === 'values'
+                      ? {
+                          ...selection,
+                          value: privateKeyDetection(result.root)
+                            ? { privateKey: '[redacted]' }
+                            : displayValue(selection),
+                        }
+                      : structureSelection(result.root, selection),
+                    ttl,
+                    options,
+                  ),
               }
             : {})}
           onInput={handleSource}
           onCopy={() => void copySelected()}
-          onShare={() => void sharePng()}
+          onShare={() => void sharePng(false)}
         />
       ) : null}
       {inputAddon}

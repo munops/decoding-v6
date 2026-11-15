@@ -1,118 +1,243 @@
-import { exportBackup, restoreBackup } from '../lib/backup'
 import { useEffect, useMemo, useState } from 'preact/hooks'
+import { maskCredentialFields } from '@decoding/engine'
+import { savedCopy } from '@decoding/workbench-ui'
+import type { Locale } from '../i18n/catalog'
+import { exportBackup, parseBackup, restoreBackup } from '../lib/backup'
 import {
   clearWorkspace,
   deleteWorkspaceRecord,
   listWorkspaceRecords,
   redactStructure,
   saveWorkspaceRecord,
-  workspaceUsage,
   updateWorkspaceRecord,
   type WorkspaceRecord,
   type WorkspaceTtl,
 } from '../lib/workspace'
-
-const sample = '{\n  "userId": 42,\n  "token": "never stored",\n  "roles": ["admin"]\n}'
-
-function bytes(value: number): string {
-  if (!value) return '0 B'
-  if (value < 1024) return `${value} B`
-  if (value < 1024 * 1024) return `${(value / 1024).toFixed(1)} KiB`
-  return `${(value / 1024 / 1024).toFixed(1)} MiB`
-}
-
-export default function WorkspaceManager() {
-  const [query, setQuery] = useState('')
-  const [editingId, setEditingId] = useState<string | null>(null)
-  const [records, setRecords] = useState<WorkspaceRecord[]>([])
-  const [name, setName] = useState('')
-  const [note, setNote] = useState('')
-  const [format, setFormat] = useState('JSON')
-  const [source, setSource] = useState(sample)
-  const [rules, setRules] = useState('')
-  const [ttl, setTtl] = useState<WorkspaceTtl>('24h')
-  const [message, setMessage] = useState('')
-  const [usage, setUsage] = useState<{ usage: number | null; quota: number | null }>({
-    usage: null,
-    quota: null,
-  })
-
+const sample = '{\n  "count": 42,\n  "token": "synthetic"\n}'
+export default function WorkspaceManager({ locale = 'en' }: { locale?: Locale }) {
+  const copy = savedCopy(locale)
+  const [records, setRecords] = useState<WorkspaceRecord[]>([]),
+    [query, setQuery] = useState(''),
+    [name, setName] = useState(''),
+    [note, setNote] = useState(''),
+    [format, setFormat] = useState('JSON'),
+    [source, setSource] = useState(sample),
+    [rules, setRules] = useState(''),
+    [ttl, setTtl] = useState<WorkspaceTtl>('7d'),
+    [valueMode, setMode] = useState<'structure' | 'values'>('structure'),
+    [message, setMessage] = useState(''),
+    [editing, setEditing] = useState<WorkspaceRecord | null>(null)
+  const refresh = async () => setRecords(await listWorkspaceRecords())
+  useEffect(() => {
+    void refresh().catch(() => setMessage(copy.failed))
+  }, [])
   const preview = useMemo(() => {
     try {
-      return JSON.stringify(redactStructure(JSON.parse(source) as unknown), null, 2)
+      const value = JSON.parse(source)
+      return JSON.stringify(
+        valueMode === 'values' ? maskCredentialFields(value) : redactStructure(value),
+        null,
+        2,
+      )
     } catch {
-      return 'Enter valid JSON to preview its redacted structure.'
+      return copy.invalidJson
     }
-  }, [source])
-
-  const refresh = async () => {
-    setRecords(await listWorkspaceRecords())
-    setUsage(await workspaceUsage())
-  }
-
-  useEffect(() => {
-    void refresh().catch(() =>
-      setMessage(
-        'This browser blocked local storage. You can still use the decoder without saving.',
-      ),
-    )
-  }, [])
-
+  }, [source, valueMode, copy])
   const save = async () => {
     if (!name.trim()) {
-      setMessage('Add a local name before saving.')
-      return
-    }
-    let structure: unknown
-    try {
-      structure = JSON.parse(source) as unknown
-    } catch {
-      setMessage('Structure must be valid JSON. The original text is not stored.')
+      setMessage(copy.nameRequired)
       return
     }
     try {
-      if (editingId) {
-        await updateWorkspaceRecord(editingId, { name, note })
-        setEditingId(null)
-      } else
-        await saveWorkspaceRecord({
-          name,
-          note,
-          format,
-          structure,
-          ruleIds: rules.split(',').map((rule) => rule.trim()),
-          ttl,
-        })
-      setName('')
-      setNote('')
-      setMessage('Redacted structure saved in this browser only.')
+      await saveWorkspaceRecord({
+        name,
+        note,
+        format,
+        structure: JSON.parse(source),
+        ruleIds: rules.split(',').map((rule) => rule.trim()),
+        ttl,
+        valueMode,
+      })
+      setMessage(copy.saved)
       await refresh()
     } catch {
-      setMessage('This browser blocked saving. Your draft is kept; try a redacted export instead.')
+      setMessage(copy.failed)
     }
   }
-
-  const exportRecords = () => {
-    const blob = new Blob(
-      [JSON.stringify({ version: 1, exportedAt: new Date().toISOString(), records }, null, 2)],
-      {
-        type: 'application/json',
-      },
-    )
-    const link = document.createElement('a')
-    link.href = URL.createObjectURL(blob)
-    link.download = 'decoding-redacted-workspace.json'
-    link.click()
-    URL.revokeObjectURL(link.href)
+  const download = async () => {
+    if (records.some((record) => record.valueMode === 'values') && !confirm(copy.backupWarning))
+      return
+    try {
+      const backup = await exportBackup({ allowValues: true }),
+        href = URL.createObjectURL(
+          new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' }),
+        ),
+        link = document.createElement('a')
+      link.href = href
+      link.download = 'decoding-local-backup.json'
+      link.click()
+      setTimeout(() => URL.revokeObjectURL(href), 0)
+      setMessage(copy.exported)
+    } catch {
+      setMessage(copy.backupFailed)
+    }
   }
-
+  const restore = async (file?: File) => {
+    if (!file || file.size > 10 * 1024 * 1024) return
+    try {
+      const text = await file.text(),
+        backup = parseBackup(text)
+      if (
+        backup.records.some((record) => record.valueMode === 'values') &&
+        !confirm(copy.restoreWarning)
+      )
+        return
+      await restoreBackup(text, { allowValues: true })
+      setMessage(copy.restored)
+      await refresh()
+    } catch {
+      setMessage(copy.backupFailed)
+    }
+  }
+  const visible = records.filter((record) =>
+    [record.name, record.format, record.note, ...record.ruleIds]
+      .join(' ')
+      .toLowerCase()
+      .includes(query.toLowerCase()),
+  )
   return (
     <section class="workspace-manager" data-hydrated="true">
-      <div class="privacy-line">
-        <span class="privacy-dot" aria-hidden="true" />
-        IndexedDB on this browser. No sync, account, content hash, or raw payload storage.
+      <label>
+        {copy.search}
+        <input
+          type="search"
+          value={query}
+          onInput={(event) => setQuery(event.currentTarget.value)}
+          placeholder={copy.searchHint}
+        />
+      </label>
+      <div class="workspace-list-heading">
+        <h2>{records.length ? `${copy.records} · ${records.length}` : copy.empty}</h2>
       </div>
-      <div class="workspace-grid">
+      <div class="workspace-records">
+        {visible.map((record) => (
+          <article class="workspace-record" key={record.id}>
+            <div>
+              <span class="eyebrow">{record.format}</span>
+              <h3>{record.name}</h3>
+              <p>{record.valueMode === 'values' ? copy.included : copy.masked}</p>
+              <p>
+                {copy.created}: {new Date(record.createdAt).toLocaleString(locale)} · {copy.expires}
+                : {record.expiresAt ? new Date(record.expiresAt).toLocaleString(locale) : copy.kept}
+              </p>
+            </div>
+            <details>
+              <summary>{copy.open}</summary>
+              <p>{record.note || copy.emptyNote}</p>
+              <pre class="output-view">
+                <code>{JSON.stringify(record.structure, null, 2)}</code>
+              </pre>
+              <button
+                class="button secondary"
+                type="button"
+                onClick={() =>
+                  void navigator.clipboard
+                    .writeText(JSON.stringify(record.structure, null, 2))
+                    .then(() => setMessage(copy.copied))
+                }
+              >
+                {copy.copy}
+              </button>
+            </details>
+            <button
+              class="button secondary"
+              type="button"
+              onClick={() => setEditing({ ...record })}
+            >
+              {copy.edit}
+            </button>
+            <button
+              class="button ghost"
+              type="button"
+              onClick={() => void deleteWorkspaceRecord(record.id).then(refresh)}
+            >
+              {copy.remove}
+            </button>
+          </article>
+        ))}
+      </div>
+      {!visible.length && query ? <p>{copy.noMatch}</p> : null}
+      {editing ? (
+        <form
+          class="save-panel"
+          onSubmit={(event) => {
+            event.preventDefault()
+            void updateWorkspaceRecord(editing.id, { name: editing.name, note: editing.note }).then(
+              () => {
+                setEditing(null)
+                setMessage(copy.editDone)
+                return refresh()
+              },
+              () => setMessage(copy.failed),
+            )
+          }}
+        >
+          <label>
+            {copy.name}
+            <input
+              value={editing.name}
+              maxLength={100}
+              required
+              onInput={(event) => setEditing({ ...editing, name: event.currentTarget.value })}
+            />
+          </label>
+          <label>
+            {copy.note}
+            <textarea
+              value={editing.note}
+              maxLength={2000}
+              onInput={(event) => setEditing({ ...editing, note: event.currentTarget.value })}
+            />
+          </label>
+          <button class="button primary" type="submit">
+            {copy.save}
+          </button>
+          <button class="button ghost" type="button" onClick={() => setEditing(null)}>
+            {copy.cancel}
+          </button>
+        </form>
+      ) : null}
+      <p class="privacy-line">
+        <span class="privacy-dot" aria-hidden="true" />
+        {copy.storage}
+      </p>
+      <div class="backup-actions">
+        <button
+          class="button danger"
+          type="button"
+          disabled={!records.length}
+          onClick={() => {
+            if (confirm(copy.clearConfirm)) void clearWorkspace().then(refresh)
+          }}
+        >
+          {copy.clear}
+        </button>
+        <p>{copy.backupNote}</p>
+        <button class="button secondary" type="button" onClick={() => void download()}>
+          {copy.backup}
+        </button>
+        <label class="button secondary">
+          {copy.restore}
+          <input
+            class="visually-hidden"
+            type="file"
+            accept="application/json,.json"
+            onChange={(event) => void restore(event.currentTarget.files?.[0])}
+          />
+        </label>
+      </div>
+      <details class="workspace-manual">
+        <summary>{copy.manual}</summary>
         <form
           class="workspace-editor"
           onSubmit={(event) => {
@@ -120,45 +245,25 @@ export default function WorkspaceManager() {
             void save()
           }}
         >
-          <div class="panel-heading">
-            <div>
-              <span class="eyebrow">Explicit opt-in</span>
-              <h2>New redacted record</h2>
-            </div>
-          </div>
-          <div class="tool-options">
-            <label>
-              Name
-              <input
-                value={name}
-                maxlength={100}
-                onInput={(event) => setName(event.currentTarget.value)}
-                placeholder="Incident note"
-              />
-            </label>
-            <label>
-              Format
-              <input
-                value={format}
-                maxlength={80}
-                onInput={(event) => setFormat(event.currentTarget.value)}
-              />
-            </label>
-            <label>
-              TTL
-              <select
-                value={ttl}
-                onChange={(event) => setTtl(event.currentTarget.value as WorkspaceTtl)}
-              >
-                <option value="session">Session</option>
-                <option value="24h">24 hours</option>
-                <option value="7d">7 days</option>
-                <option value="keep">Keep locally</option>
-              </select>
-            </label>
-          </div>
           <label>
-            Structure JSON
+            {copy.name}
+            <input
+              value={name}
+              required
+              maxLength={100}
+              onInput={(event) => setName(event.currentTarget.value)}
+            />
+          </label>
+          <label>
+            {copy.format}
+            <input
+              value={format}
+              maxLength={80}
+              onInput={(event) => setFormat(event.currentTarget.value)}
+            />
+          </label>
+          <label>
+            {copy.json}
             <textarea
               value={source}
               onInput={(event) => setSource(event.currentTarget.value)}
@@ -166,215 +271,53 @@ export default function WorkspaceManager() {
             />
           </label>
           <label>
-            Rule IDs, comma-separated
-            <input
-              value={rules}
-              onInput={(event) => setRules(event.currentTarget.value)}
-              placeholder="JWT-EXPIRED"
+            {copy.note}
+            <textarea
+              value={note}
+              maxLength={2000}
+              onInput={(event) => setNote(event.currentTarget.value)}
             />
           </label>
           <label>
-            Note
-            <textarea
-              class="short-textarea"
-              value={note}
-              maxlength={2000}
-              onInput={(event) => setNote(event.currentTarget.value)}
-              placeholder="Do not paste credentials."
-            />
+            {copy.rules}
+            <input value={rules} onInput={(event) => setRules(event.currentTarget.value)} />
           </label>
-          <div class="input-actions">
-            <button class="button primary" type="submit">
-              {editingId ? 'Save name and note' : 'Save redacted structure'}
-            </button>
-          </div>
-        </form>
-        <aside class="workspace-preview">
-          <div class="panel-heading">
-            <div>
-              <span class="eyebrow">Before storage</span>
-              <h2>Redaction preview</h2>
-            </div>
-          </div>
+          <label>
+            {copy.mode}
+            <select
+              value={valueMode}
+              onChange={(event) => setMode(event.currentTarget.value as typeof valueMode)}
+            >
+              <option value="structure">{copy.structure}</option>
+              <option value="values">{copy.values}</option>
+            </select>
+          </label>
+          <label>
+            {copy.retention}
+            <select
+              value={ttl}
+              onChange={(event) => setTtl(event.currentTarget.value as WorkspaceTtl)}
+            >
+              <option value="24h">{copy.day}</option>
+              <option value="7d">{copy.week}</option>
+              <option value="keep">{copy.keep}</option>
+            </select>
+          </label>
+          {valueMode === 'values' ? <p class="notice warning">{copy.localWarning}</p> : null}
+          <h3>{copy.preview}</h3>
           <pre class="output-view">
             <code>{preview}</code>
           </pre>
-          <p>
-            All scalar values become type placeholders. Secret-like fields are always replaced with{' '}
-            <code>[redacted]</code>.
-          </p>
-        </aside>
-      </div>
+          <button class="button primary" type="submit">
+            {copy.save}
+          </button>
+        </form>
+      </details>
       {message ? (
-        <div class="notice info" aria-live="polite">
+        <p class="notice info" role="status">
           {message}
-        </div>
-      ) : null}
-      <div class="backup-actions">
-        <p>
-          This backup contains saved redacted structures, names, notes and settings. Keep the file
-          private.
         </p>
-        <button
-          class="button secondary"
-          type="button"
-          onClick={() =>
-            void exportBackup().then(
-              (backup) => {
-                const href = URL.createObjectURL(
-                    new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' }),
-                  ),
-                  link = document.createElement('a')
-                link.href = href
-                link.download = 'decoding-local-backup.json'
-                link.click()
-                setTimeout(() => URL.revokeObjectURL(href), 0)
-              },
-              () => setMessage('Backup unavailable: this browser blocked local storage.'),
-            )
-          }
-        >
-          Back up this device
-        </button>
-        <label class="button secondary">
-          Restore backup
-          <input
-            class="visually-hidden"
-            type="file"
-            accept="application/json,.json"
-            onChange={(event) => {
-              const file = event.currentTarget.files?.[0]
-              if (file)
-                void file
-                  .text()
-                  .then(restoreBackup)
-                  .then(
-                    async (count) => {
-                      setMessage(`Restored ${count} new records. Existing IDs were kept.`)
-                      await refresh()
-                    },
-                    () =>
-                      setMessage(
-                        'This backup could not be restored. Invalid files change nothing; check browser storage access.',
-                      ),
-                  )
-            }}
-          />
-        </label>
-      </div>
-      <label>
-        Find saved records
-        <input
-          type="search"
-          value={query}
-          onInput={(event) => setQuery(event.currentTarget.value)}
-          placeholder="Name, format or warning rule"
-        />
-      </label>
-      <div class="workspace-list-heading">
-        <div>
-          <span class="eyebrow">Stored locally</span>
-          <h2>
-            {records.length
-              ? `${records.length} redacted records`
-              : 'Save a result to collect it here'}
-          </h2>
-          <p>
-            {usage.usage !== null && usage.quota !== null
-              ? `${bytes(usage.usage)} used of an estimated ${bytes(usage.quota)} browser quota.`
-              : 'Browser storage usage is unavailable.'}
-          </p>
-        </div>
-        <div class="input-actions">
-          <button
-            class="button secondary"
-            type="button"
-            disabled={!records.length}
-            onClick={exportRecords}
-          >
-            Export preview
-          </button>
-          <button
-            class="button danger"
-            type="button"
-            disabled={!records.length}
-            onClick={() => void clearWorkspace().then(refresh)}
-          >
-            Clear workspace
-          </button>
-        </div>
-      </div>
-      <div class="workspace-records">
-        {records
-          .filter(
-            (record) =>
-              !query ||
-              [record.name, record.note, record.format, ...record.ruleIds]
-                .join(' ')
-                .toLowerCase()
-                .includes(query.toLowerCase()),
-          )
-          .map((record) => (
-            <article class="workspace-record" key={record.id}>
-              <div>
-                <span class="pack-badge">{record.format}</span>
-                <h3>{record.name}</h3>
-                <p>{record.note || 'No note.'}</p>
-                <small>
-                  Created {new Date(record.createdAt).toLocaleString()} ·{' '}
-                  {record.expiresAt
-                    ? `expires ${new Date(record.expiresAt).toLocaleString()}`
-                    : 'kept locally'}
-                </small>
-              </div>
-              <pre>
-                <code>{JSON.stringify(record.structure, null, 2)}</code>
-              </pre>
-              <button
-                class="button secondary"
-                type="button"
-                onClick={() => {
-                  setEditingId(record.id)
-                  setName(record.name)
-                  setNote(record.note)
-                  setFormat(record.format)
-                  setSource(JSON.stringify(record.structure, null, 2))
-                  setRules(record.ruleIds.join(', '))
-                  document.querySelector<HTMLInputElement>('.workspace-editor input')?.focus()
-                }}
-              >
-                Open / edit
-              </button>
-              <button
-                class="button ghost small"
-                type="button"
-                onClick={() => void deleteWorkspaceRecord(record.id).then(refresh)}
-              >
-                Delete
-              </button>
-            </article>
-          ))}
-        {records.length &&
-        query &&
-        !records.some((record) =>
-          [record.name, record.note, record.format, ...record.ruleIds]
-            .join(' ')
-            .toLowerCase()
-            .includes(query.toLowerCase()),
-        ) ? (
-          <div class="empty-catalog">
-            No records match.
-            <button class="button ghost" type="button" onClick={() => setQuery('')}>
-              Clear filter
-            </button>
-          </div>
-        ) : null}
-        {!records.length ? (
-          <div class="empty-catalog">
-            Nothing saved. Raw decoder input is never added automatically.
-          </div>
-        ) : null}
-      </div>
+      ) : null}
     </section>
   )
 }

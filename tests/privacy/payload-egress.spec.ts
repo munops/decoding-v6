@@ -67,12 +67,13 @@ test('workspace stores only redacted structure and clear deletes it', async ({ p
   const secret = 'WORKSPACE_CANARY_raw_secret_92f1'
   await page.goto('/workspace/')
   await expect(page.locator('.workspace-manager')).toHaveAttribute('data-hydrated', 'true')
+  await page.locator('.workspace-manual > summary').click()
   await page.getByLabel('Name').fill('Local test')
   await page
     .getByLabel('Structure JSON')
     .fill(JSON.stringify({ userId: 42, token: secret, nested: { value: secret } }))
-  await page.getByRole('button', { name: 'Save redacted structure' }).click()
-  await expect(page.getByText('Redacted structure saved')).toBeVisible()
+  await page.getByRole('button', { name: 'Save', exact: true }).click()
+  await expect(page.getByText('Saved on this device.', { exact: true })).toBeVisible()
   const persisted = await page.evaluate(async () => {
     const database = await new Promise<IDBDatabase>((resolve, reject) => {
       const request = indexedDB.open('decoding-local-workspace')
@@ -89,6 +90,7 @@ test('workspace stores only redacted structure and clear deletes it', async ({ p
   })
   expect(persisted).not.toContain(secret)
   expect(persisted).toContain('[redacted]')
+  page.once('dialog', (dialog) => void dialog.accept())
   await page.getByRole('button', { name: 'Clear workspace' }).click()
   await expect(page.getByText('Save a result to collect it here')).toBeVisible()
 })

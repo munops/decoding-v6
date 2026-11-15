@@ -51,3 +51,6 @@ export { uiMessage } from './ui-copy'
 export { answerMessages, answerSentence, summaryFormats } from './answer-copy'
 
 export { toolCopy } from './tool-copy'
+
+export { savedCopy } from './saved-copy'
+export type { SaveOptions } from './saved-copy'

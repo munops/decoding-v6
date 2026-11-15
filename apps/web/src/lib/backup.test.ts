@@ -49,3 +49,35 @@ describe('backup admission before any write', () => {
     expect(setItem).not.toHaveBeenCalled()
   })
 })
+
+it('keeps explicitly value-inclusive backups local while masking credentials', () => {
+  const value = {
+    ...record,
+    valueMode: 'values',
+    structure: {
+      visible: 'keep this',
+      count: 42,
+      token: 'VALUE_CANARY',
+      nested: { password: 'hidden' },
+    },
+  }
+  expect(
+    parseBackup(JSON.stringify({ ...backup(), records: [value] })).records[0]?.structure,
+  ).toEqual({
+    visible: 'keep this',
+    count: 42,
+    token: '[redacted]',
+    nested: { password: '[redacted]' },
+  })
+})
+it('requires value restore confirmation before any storage mutation', async () => {
+  const open = vi.fn(),
+    setItem = vi.fn()
+  vi.stubGlobal('indexedDB', { open })
+  vi.stubGlobal('localStorage', { setItem })
+  await expect(
+    restoreBackup(JSON.stringify({ ...backup(), records: [{ ...record, valueMode: 'values' }] })),
+  ).rejects.toThrow('VALUES-CONFIRMATION-REQUIRED')
+  expect(open).not.toHaveBeenCalled()
+  expect(setItem).not.toHaveBeenCalled()
+})

@@ -1,3 +1,6 @@
+import { SavePanel } from './SavePanel'
+import { SendPanel } from './SendPanel'
+import { savedCopy, type SaveOptions } from './saved-copy'
 import { uiMessage } from './ui-copy'
 import { identifyMagic, redactSecrets, type DecodeResult, type Detection } from '@decoding/engine'
 import { useEffect, useState } from 'preact/hooks'
@@ -21,7 +24,7 @@ export function WorkflowActions({
   selected: Detection | null
   messages: DecoderMessages
   onTool?: (tool: string, text: string) => void
-  onSave?: (selected: Detection, ttl: Ttl) => Promise<void>
+  onSave?: (selected: Detection, ttl: Ttl, options: SaveOptions) => Promise<void>
   onInput: (text: string) => void
   onShare: () => void
   onCopy: () => void
@@ -30,9 +33,11 @@ export function WorkflowActions({
     [message, setMessage] = useState(''),
     [editing, setEditing] = useState(false),
     [edited, setEdited] = useState(''),
-    [ttl, setTtl] = useState<Ttl>('24h'),
+    [saveOpen, setSaveOpen] = useState(false),
+    [sendOpen, setSendOpen] = useState(false),
     [keyboard, setKeyboard] = useState(false),
-    copy = completionMessages[messages.locale]
+    copy = completionMessages[messages.locale],
+    saved = savedCopy(messages.locale)
   useEffect(() => {
     const pop = () => setOpen(false)
     addEventListener('popstate', pop)
@@ -123,17 +128,15 @@ export function WorkflowActions({
           <button
             class="button secondary"
             type="button"
-            onClick={() =>
-              void onSave(selected, ttl).then(
-                () => setMessage(copy.saved),
-                () => setMessage(copy.storageFailed),
-              )
-            }
+            onClick={() => setSaveOpen((value) => !value)}
           >
-            {copy.save}
+            {saved.save}
           </button>
-          <a class="button ghost" href="/workspace/">
-            {uiMessage(messages.locale, 'open_saved_records')}
+          <a
+            class="button ghost"
+            href={`/${messages.locale === 'en' ? '' : `${messages.locale}/`}workspace/`}
+          >
+            {saved.open}
           </a>
           {!open && message ? <p role="status">{message}</p> : null}
         </div>
@@ -143,13 +146,36 @@ export function WorkflowActions({
           <button class="button" type="button" onClick={onCopy}>
             {messages.copy}
           </button>
-          <button class="button secondary" type="button" onClick={onShare}>
-            {messages.shareTitle}
+          <button
+            class="button secondary"
+            type="button"
+            onClick={() => setSendOpen((value) => !value)}
+          >
+            {saved.send}
           </button>
           <button class="button secondary" type="button" onClick={show}>
             {copy.more}
           </button>
         </div>
+      ) : null}
+      {saveOpen && selected && onSave ? (
+        <SavePanel
+          selected={selected}
+          locale={messages.locale}
+          onSave={onSave}
+          onClose={(savedSuccessfully) => {
+            setSaveOpen(false)
+            setMessage(savedSuccessfully ? saved.saved : '')
+          }}
+        />
+      ) : null}
+      {sendOpen ? (
+        <SendPanel
+          result={result}
+          messages={messages}
+          onCard={onShare}
+          onClose={() => setSendOpen(false)}
+        />
       ) : null}
       {open ? (
         <div class="workflow-sheet" role="dialog" aria-modal="true" aria-label={copy.more}>
@@ -159,35 +185,16 @@ export function WorkflowActions({
           {selected ? (
             <>
               {onSave ? (
-                <>
-                  <label>
-                    TTL{' '}
-                    <select
-                      value={ttl}
-                      onChange={(event) => setTtl(event.currentTarget.value as Ttl)}
-                    >
-                      <option value="24h">24 h</option>
-                      <option value="7d">7 d</option>
-                      <option value="keep">{uiMessage(messages.locale, 'until_deleted')}</option>
-                      <option value="session">{uiMessage(messages.locale, 'this_tab')}</option>
-                    </select>
-                  </label>
-                  <button
-                    class="button"
-                    type="button"
-                    onClick={() =>
-                      void onSave(selected, ttl).then(
-                        () => setMessage(copy.saved),
-                        () => setMessage(copy.storageFailed),
-                      )
-                    }
-                  >
-                    {copy.save}
-                  </button>
-                  <a class="button ghost" href="/workspace/">
-                    {uiMessage(messages.locale, 'open_saved_records')}
-                  </a>
-                </>
+                <button
+                  class="button secondary"
+                  type="button"
+                  onClick={() => {
+                    close()
+                    setSaveOpen(true)
+                  }}
+                >
+                  {saved.save}
+                </button>
               ) : null}
               <button
                 class="button secondary"

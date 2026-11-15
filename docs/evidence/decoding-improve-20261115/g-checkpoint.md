@@ -1,0 +1,13 @@
+# G — 명시 저장·값 포함·건네기
+
+DEC-NEXT-006/010 local implemented/tested. Not deployed.
+
+- Save panel: editable name,24h/7d/until-deleted, structure-only default and7d default. Values require an explicit choice and device-sharing warning. Value-inclusive records go only into IndexedDB. Known credential patterns/secret keys use one central masker; private-key detections remain hidden. Raw input is never auto-saved; intermediate encoded layers are not retained in value mode.
+- Saved page puts search and records first; manual form collapsed. Name/type/creation/expiry/value-mode shown, rename/note edit/delete/clear available. Backup export and restore warn before including values; admission re-masks credentials and rejects unconfirmed value restoration before any storage mutation. Database/store/backup v1 retained for rollback compatibility. Privacy EN/KO updated; other locales use the English notice for the changed policy (handoff permits fallback).
+- One share panel defaults to value-free summary. Masked decoded value, separately confirmed unmasked value, explicit copy/file/native share, and data-free reproduction commands. No payload in links. Actual clipboard checks include all three modes; long preview is keyboard-scrollable and Copy includes full text.
+
+Validation: backup/workflow11 tests plus credential2 tests passed; UI/web typechecks and focused lint/static network/i18n checks passed. Built core flow browser tests3/3; legacy edit/backup/restore and structure-only privacy4/4. Latest visual corrections validated on the real dev runtime: value backup/delete/restore2/2 and actual sharing clipboard/unmask/reproduction/keyboard scroll2/2 at390×780 and1440×900. Test records cleared at flow end; temporary test-context downloads discarded by browser lifecycle.
+
+Independent image-only review found mobile Copy occlusion, missing preview-scroll cue, and saved intro hiding the first row. Fixed: controls above preview, explicit scroll/full-copy hint and keyboard focus;44px controls; compact saved header/search/list-first layout, Clear below records. Follow-up review confirms the identified visual issues resolved in both widths. Evidence in `g/`. The earlier static build measured116.7KiB initial JS; latest visual edits still need the final production build/same-revision suite before release.
+
+Actual clipboard checks also found a missing selected result in summary projection (fixed). Async clipboard writes are polled, not read prematurely. No real user study, phone OS, native share target or production verification claim is made here. ADR-006 records the exact owner-authorized local value scope.

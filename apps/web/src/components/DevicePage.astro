@@ -15,11 +15,15 @@ const title = copy[`${page}Title`]
 ---
 
 <Layout locale={locale} title={`${title} — decod.ing`} alternatePath={`/${page}/`} noindex>
-  <section class="page-hero container narrow"><h1>{title}</h1><p>{copy[`${page}Lead`]}</p></section>
+  <section
+    class:list={['page-hero container narrow', { 'device-hero-compact': page === 'workspace' }]}
+  >
+    <h1>{title}</h1><p>{copy[`${page}Lead`]}</p>
+  </section>
   <div class="container">
     {
       page === 'workspace' ? (
-        <WorkspaceManager client:only="preact" />
+        <WorkspaceManager locale={locale} client:only="preact" />
       ) : page === 'data' ? (
         <>
           <>

@@ -387,8 +387,8 @@ GitHub Issues raw JSON 직독(등급 A)으로 얻은 결과를 제품 작업으�
 - [ ] **DEC-NEXT-011** `in_progress / local_artifacts_tested` — J1~J7: 확장·CLI·검색 입구·공개 준비와 승인된 채널 출시. J5는 오너 지정 2주 관측 뒤.
 - [ ] **DEC-NEXT-004** `implemented / local_test_passed` — D1~D4: 주소·QR·사진 정보·파일 공유.
 - [ ] **DEC-NEXT-005** `implemented / local_test_passed` — F1~F7: 자동 도구·찾기·47개 설명·오프라인.
-- [ ] **DEC-NEXT-006** `planned` — G1~G2: 저장 목록·검색·기간·건네기.
-- [ ] **DEC-NEXT-010** `planned` — G1 값 저장: 명시 선택·비밀 가림·기기 내 보관·내보내기 경고.
+- [ ] **DEC-NEXT-006** `implemented / local_test_passed` — G1~G2: 저장 목록·검색·기간·건네기.
+- [ ] **DEC-NEXT-010** `implemented / local_test_passed` — G1 값 저장: 명시 선택·비밀 가림·기기 내 보관·내보내기 경고.
 - [ ] **DEC-NEXT-007** `planned` — E0~E4: 형식별 규격·양성/경계/음성/교차 시험·설명·한 문장, 각 형식별 커밋.
 - [ ] **DEC-NEXT-008** `planned` — H1~H6: 제목·검색 지면·구조화 데이터·한국어 우선·미리보기.
 - [ ] **DEC-NEXT-009** `planned` — I1~I3: 기기 내 처리 증명·횟수 설명/설정·비밀 값 주의.
@@ -414,3 +414,5 @@ J checkpoint: [로컬 채널·입구 준비](../evidence/decoding-improve-202611
 D checkpoint: [주소·사진·파일](../evidence/decoding-improve-20261115/d-checkpoint.md). Actual device/OS share, provider and public-origin matrix remain open.
 
 F checkpoint: [도구·오프라인 검증](../evidence/decoding-improve-20261115/f-checkpoint.md).49 tools, locale-preserving handoff and offline codec/tool runtime checks passed locally.
+
+G checkpoint: [명시 저장·값 포함·건네기](../evidence/decoding-improve-20261115/g-checkpoint.md). Default masked/7d, value backup admission and sharing flows verified locally; final candidate build and public/device checks pending.

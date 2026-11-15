@@ -49,7 +49,7 @@ export const infoMessages: Record<Locale, Record<InfoKey, InfoContent>> = {
       sections: [
         {
           heading: 'What the application stores',
-          body: 'By default: theme, locale, favorites, recent tools, optional redacted workspace records, anonymous-count opt-out and a first-visit date (maximum 13 months, never renewed). Raw input and results live in page or worker memory until cleared or closed.',
+          body: 'By default: theme, locale, favorites, recent tools, optional redacted workspace records, anonymous-count opt-out and a first-visit date (maximum 13 months, never renewed). Raw input and results stay in page or worker memory until cleared or closed unless you explicitly save decoded values. Value-inclusive records stay only in IndexedDB on this device; secret-looking fields remain hidden and value-inclusive backups require confirmation.',
         },
         {
           heading: 'Network boundary',
@@ -123,7 +123,7 @@ export const infoMessages: Record<Locale, Record<InfoKey, InfoContent>> = {
       sections: [
         {
           heading: '저장하는 정보',
-          body: '기본적으로 화면 테마·언어·즐겨찾기·최근 도구·직접 저장한 가린 구조·익명 집계 끄기 설정·첫 방문 날짜(최대 13개월, 방문해도 연장 안 함)를 기기에 저장해요. 원본 입력과 결과는 현재 페이지의 작업 메모리에만 있다가 지우거나 닫으면 사라집니다.',
+          body: '기본적으로 화면 테마·언어·즐겨찾기·최근 도구·직접 저장한 가린 구조·익명 집계 끄기 설정·첫 방문 날짜(최대 13개월, 방문해도 연장 안 함)를 기기에 저장해요. 원본 입력과 결과는 현재 페이지의 작업 메모리에 있다가 지우거나 닫으면 사라져요. 직접 값까지 넣어 두기를 고르면 풀린 값을 이 기기의 IndexedDB에만 두고 비밀 값으로 보이는 칸은 가려요. 값이 든 백업은 내보내기·되살리기 전에 알려 드려요.',
         },
         {
           heading: '네트워크 경계',
@@ -471,10 +471,19 @@ for (const [locale, content] of Object.entries(infoMessages))
     locale === 'ko'
       ? {
           heading: '이 탭 기록과 백업',
-          body: '기본 세션 이력의 원문은 탭 메모리에만 있어요. 이 탭 보관을 직접 고른 가린 구조는 sessionStorage에 저장하고 탭을 닫으면 사라져요. 기기 백업은 가린 구조·이름·메모·설정을 담으므로 공유하지 마세요. 시간대 설정은 이 기기에만 저장해요.',
+          body: '기본 세션 이력의 원문은 탭 메모리에만 있어요. 이 탭 보관을 직접 고른 가린 구조는 sessionStorage에 저장하고 탭을 닫으면 사라져요. 기기 백업은 직접 고른 값·가린 구조·이름·메모·설정을 담을 수 있으므로 공유하지 마세요. 시간대 설정은 이 기기에만 저장해요.',
         }
       : {
           heading: 'Tab records and backups',
-          body: 'Original-input history stays only in tab memory. Redacted records explicitly saved for This tab use sessionStorage and disappear when the tab closes. Device backup files contain redacted structures, local names, notes and settings; keep them private. Time-zone choices stay on this device.',
+          body: 'Original-input history stays only in tab memory. Redacted records explicitly saved for This tab use sessionStorage and disappear when the tab closes. Device backup files can contain explicitly saved decoded values, structures, local names, notes and settings; keep them private. Time-zone choices stay on this device.',
         },
   )
+
+// New local-storage choices have reviewed EN/KO copy. Other locales use that English notice.
+for (const [locale, content] of Object.entries(infoMessages)) {
+  if (locale === 'en' || locale === 'ko') continue
+  content.privacy = {
+    ...infoMessages.en.privacy,
+    sections: infoMessages.en.privacy.sections.map((section) => ({ ...section })),
+  }
+}

@@ -223,15 +223,17 @@ export default function WebDecoder({
               }
             }}
             onTool={(id, text) => sendToTool(id, text, messages.locale)}
-            onSave={async (selected, ttl) => {
+            onSave={async (selected, ttl, options) => {
               await saveWorkspaceRecord({
-                name: `${selected.label} · ${new Date().toLocaleString()}`,
+                name: options.name,
+                valueMode: options.valueMode,
                 note: '',
                 format: selected.detector,
                 structure: selected.value,
                 ruleIds: selected.warnings.map((warning) => warning.ruleId),
                 ttl,
               })
+              setRecentSaved((await listWorkspaceRecords()).slice(0, 2))
             }}
             externalInput={externalInput}
             externalFile={externalFile}

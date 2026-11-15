@@ -1,4 +1,4 @@
-import { encodeBase64, type ChainNode } from '@decoding/engine'
+import { maskCredentialFields, encodeBase64, type ChainNode } from '@decoding/engine'
 import { linearChain } from './reproduce-commands'
 export function canReencode(root: ChainNode): { allowed: boolean; reason: string } {
   const ids = linearChain(root).flatMap((n) => (n.selected ? [n.selected.detector] : []))
@@ -34,17 +34,4 @@ export function reencode(root: ChainNode, edited: string): { text: string; unsig
   }
   return { text, unsignedJwt }
 }
-export function maskSensitiveFields(value: unknown, depth = 0): unknown {
-  if (depth > 12) return '[depth limited]'
-  if (Array.isArray(value)) return value.map((v) => maskSensitiveFields(v, depth + 1))
-  if (value && typeof value === 'object')
-    return Object.fromEntries(
-      Object.entries(value).map(([key, item]) => [
-        key,
-        /secret|token|password|authorization|cookie|private|signature|api.?key|session/i.test(key)
-          ? '[redacted]'
-          : maskSensitiveFields(item, depth + 1),
-      ]),
-    )
-  return value
-}
+export const maskSensitiveFields = maskCredentialFields

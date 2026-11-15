@@ -1,4 +1,10 @@
-import { importWorkspaceRecords, listWorkspaceRecords, type WorkspaceRecord } from './workspace'
+import { maskCredentialFields, redactSecrets } from '@decoding/engine'
+import {
+  importWorkspaceRecords,
+  listWorkspaceRecords,
+  redactStructure,
+  type WorkspaceRecord,
+} from './workspace'
 const KEYS = [
   'decoding-theme',
   'decoding-locale',
@@ -14,26 +20,6 @@ export type Backup = {
   product: 'decoding-v6'
   records: WorkspaceRecord[]
   settings: Record<string, string>
-}
-function structure(value: unknown, depth = 0): unknown {
-  if (depth > 12) return '[depth limited]'
-  if (Array.isArray(value)) return value.slice(0, 100).map((v) => structure(v, depth + 1))
-  if (value && typeof value === 'object')
-    return Object.fromEntries(
-      Object.entries(value)
-        .slice(0, 200)
-        .map(([key, item]) => [
-          key,
-          /token|secret|password|key|cookie|authorization|session|private|signature/i.test(key)
-            ? '[redacted]'
-            : structure(item, depth + 1),
-        ]),
-    )
-  if (value === null) return null
-  return typeof value === 'string' &&
-    /^\[(?:redacted|string|number|boolean|undefined|object|depth limited)\]$/.test(value)
-    ? value
-    : `[${typeof value}]`
 }
 export function parseBackup(text: string): Backup {
   if (text.length > 10 * 1024 * 1024) throw new Error('Backup size limit')
@@ -66,6 +52,7 @@ export function parseBackup(text: string): Backup {
       !Array.isArray(raw.ruleIds) ||
       raw.ruleIds.length > 50 ||
       !('structure' in raw) ||
+      (raw.valueMode !== undefined && !['structure', 'values'].includes(raw.valueMode)) ||
       !raw.ruleIds.every(
         (rule) => typeof rule === 'string' && /^[A-Za-z0-9_-]{1,80}$/.test(rule),
       ) ||
@@ -77,13 +64,17 @@ export function parseBackup(text: string): Backup {
     seen.add(raw.id)
     records.push({
       id: raw.id,
-      name: raw.name,
-      note: raw.note,
+      name: redactSecrets(raw.name),
+      note: redactSecrets(raw.note),
       format: raw.format,
       ruleIds: raw.ruleIds,
       createdAt: raw.createdAt,
       expiresAt: raw.expiresAt,
-      structure: structure(raw.structure),
+      valueMode: raw.valueMode === 'values' ? 'values' : 'structure',
+      structure:
+        raw.valueMode === 'values'
+          ? maskCredentialFields(raw.structure)
+          : redactStructure(raw.structure, 0, true),
     })
   }
   const settings: Record<string, string> = {}
@@ -131,16 +122,24 @@ export function parseBackup(text: string): Backup {
   }
   return { version: 1, product: 'decoding-v6', records, settings }
 }
-export async function exportBackup(): Promise<Backup> {
+export async function exportBackup(options?: { allowValues?: boolean }): Promise<Backup> {
   const settings: Record<string, string> = {}
   for (const key of KEYS) {
     const value = localStorage.getItem(key)
     if (value !== null) settings[key] = value
   }
-  return { version: 1, product: 'decoding-v6', records: await listWorkspaceRecords(), settings }
+  const records = await listWorkspaceRecords()
+  if (records.some((record) => record.valueMode === 'values') && !options?.allowValues)
+    throw new Error('VALUES-CONFIRMATION-REQUIRED')
+  return { version: 1, product: 'decoding-v6', records, settings }
 }
-export async function restoreBackup(text: string): Promise<number> {
+export async function restoreBackup(
+  text: string,
+  options?: { allowValues?: boolean },
+): Promise<number> {
   const backup = parseBackup(text)
+  if (backup.records.some((record) => record.valueMode === 'values') && !options?.allowValues)
+    throw new Error('VALUES-CONFIRMATION-REQUIRED')
   const before = new Map(
     Object.keys(backup.settings).map((key) => [key, localStorage.getItem(key)]),
   )

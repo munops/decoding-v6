@@ -1,3 +1,4 @@
+import { maskCredentialFields } from './credential-redaction'
 import type { DecodeInput, Detection, LintWarning } from '../types'
 import { inputText, printableRatio } from '../utils'
 export function found(
@@ -42,17 +43,7 @@ export async function digest(bytes: Uint8Array, algorithm = 'SHA-256'): Promise<
 }
 export const sensitiveKey =
   /secret|token|password|authorization|cookie|private|signature|session|credential|api.?key/i
-export function maskFields(value: unknown, depth = 0): unknown {
-  if (depth > 12) return '[depth limited]'
-  if (Array.isArray(value)) return value.slice(0, 64).map((v) => maskFields(v, depth + 1))
-  if (value && typeof value === 'object')
-    return Object.fromEntries(
-      Object.entries(value)
-        .slice(0, 200)
-        .map(([k, v]) => [k, sensitiveKey.test(k) ? '[redacted]' : maskFields(v, depth + 1)]),
-    )
-  return value
-}
+export const maskFields = maskCredentialFields
 
 /** Scan bounded value fields without retaining them in display summaries. */
 export function encodedFields(entries: Array<{ name: string; raw: string }>) {

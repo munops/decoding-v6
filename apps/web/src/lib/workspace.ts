@@ -1,6 +1,8 @@
+import { maskCredentialFields, redactSecrets } from '@decoding/engine'
 export type WorkspaceTtl = 'session' | '24h' | '7d' | 'keep'
 
 export type WorkspaceRecord = {
+  valueMode?: 'structure' | 'values'
   id: string
   name: string
   note: string
@@ -50,20 +52,26 @@ function requestResult<T>(request: IDBRequest<T>): Promise<T> {
   })
 }
 
-export function redactStructure(value: unknown, depth = 0): unknown {
+export function redactStructure(value: unknown, depth = 0, preserveMarkers = false): unknown {
   if (depth > 12) return '[depth limited]'
   if (Array.isArray(value))
-    return value.slice(0, 100).map((item) => redactStructure(item, depth + 1))
+    return value.slice(0, 100).map((item) => redactStructure(item, depth + 1, preserveMarkers))
   if (value && typeof value === 'object') {
     return Object.fromEntries(
       Object.entries(value as Record<string, unknown>)
         .slice(0, 200)
         .map(([key, item]) => [
           key,
-          sensitiveKey.test(key) ? '[redacted]' : redactStructure(item, depth + 1),
+          sensitiveKey.test(key) ? '[redacted]' : redactStructure(item, depth + 1, preserveMarkers),
         ]),
     )
   }
+  if (
+    preserveMarkers &&
+    typeof value === 'string' &&
+    /^\[(?:redacted|string|number|boolean|undefined|object|depth limited)\]$/.test(value)
+  )
+    return value
   if (value === null) return null
   if (typeof value === 'boolean') return '[boolean]'
   if (typeof value === 'number') return '[number]'
@@ -103,21 +111,26 @@ export async function saveWorkspaceRecord(input: {
   structure: unknown
   ruleIds: string[]
   ttl: WorkspaceTtl
+  valueMode?: 'structure' | 'values'
 }): Promise<WorkspaceRecord> {
   const record: WorkspaceRecord = {
     id: crypto.randomUUID(),
-    name: input.name.trim().slice(0, 100),
-    note: input.note.trim().slice(0, 2_000),
+    name: redactSecrets(input.name.trim().slice(0, 100)),
+    note: redactSecrets(input.note.trim().slice(0, 2_000)),
     format: input.format.trim().slice(0, 80),
-    structure: redactStructure(input.structure),
+    valueMode: input.valueMode === 'values' ? 'values' : 'structure',
+    structure:
+      input.valueMode === 'values'
+        ? maskCredentialFields(input.structure)
+        : redactStructure(input.structure),
     ruleIds: input.ruleIds
       .map((rule) => rule.trim())
       .filter(Boolean)
       .slice(0, 50),
     createdAt: new Date().toISOString(),
-    expiresAt: expiry(input.ttl),
+    expiresAt: expiry(input.valueMode === 'values' && input.ttl === 'session' ? '7d' : input.ttl),
   }
-  if (input.ttl === 'session') {
+  if (input.ttl === 'session' && input.valueMode !== 'values') {
     sessionStorage.setItem(SESSION_KEY, JSON.stringify([record, ...tabRecords()]))
     return record
   }
@@ -163,8 +176,8 @@ export async function updateWorkspaceRecord(
   id: string,
   changes: { name: string; note: string },
 ): Promise<void> {
-  const name = changes.name.trim().slice(0, 100),
-    note = changes.note.trim().slice(0, 2000)
+  const name = redactSecrets(changes.name.trim().slice(0, 100)),
+    note = redactSecrets(changes.note.trim().slice(0, 2000))
   if (!name) throw new Error('Name is required')
   const tab = tabRecords()
   if (tab.some((record) => record.id === id)) {
@@ -204,7 +217,13 @@ export async function importWorkspaceRecords(records: WorkspaceRecord[]): Promis
     for (const record of records) {
       if (ids.has(record.id) || (record.expiresAt && Date.parse(record.expiresAt) <= Date.now()))
         continue
-      store.put(record)
+      store.put({
+        ...record,
+        structure:
+          record.valueMode === 'values'
+            ? maskCredentialFields(record.structure)
+            : redactStructure(record.structure, 0, true),
+      })
       ids.add(record.id)
       added++
     }

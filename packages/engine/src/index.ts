@@ -24,3 +24,5 @@ export { parserPosition } from './formats/common'
 export { redactedDetection } from './redacted-detection'
 
 export { repairGarbled } from './formats/garbled'
+
+export { maskCredentialFields } from './formats/credential-redaction'
