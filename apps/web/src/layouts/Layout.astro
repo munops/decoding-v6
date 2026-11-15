@@ -3,6 +3,7 @@ import { uiMessage } from '@decoding/workbench-ui'
 import { answerMessages } from '@decoding/workbench-ui'
 import { publicOperator } from '../lib/public-operator'
 import { buildRevision } from '../lib/build-info'
+import { operations } from '@decoding/operations'
 import { detectorSpecs } from '@decoding/spec-registry'
 import UpdateBanner from '../components/UpdateBanner'
 import '../styles/global.css'
@@ -246,7 +247,7 @@ const localizedPrivacy = localePath(locale, '/privacy/')
         >
         <a href="/bookmarklet/">Bookmarklet</a><a href="/sponsor/">{uiMessage(locale, 'sponsor')}</a
         >
-        <a href={localizedTools}>47 {messages.tools}</a><a href={localizedPrivacy}
+        <a href={localizedTools}>{operations.length} {messages.tools}</a><a href={localizedPrivacy}
           >{messages.privacy}</a
         ><a href={locale === 'ko' ? '/ko/terms/' : '/terms/'}>{messages.terms}</a><a
           href={locale === 'ko' ? '/ko/support/' : '/support/'}>{messages.support}</a

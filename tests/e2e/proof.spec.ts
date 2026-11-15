@@ -33,6 +33,7 @@ for (const locale of ['en', 'ko'])
       await toggles.last().check()
       await expect(toggles.first()).toBeChecked()
       expect(events).toEqual([])
+      await page.evaluate(() => scrollTo(0, 0))
       await page.screenshot({
         path: testInfo.outputPath(`proof-${locale}-${width}.png`),
         fullPage: true,

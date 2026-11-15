@@ -39,7 +39,7 @@ const ko: typeof en = {
   title: '기기 안에서 풀리는지 확인해요.',
   lead: '비밀이 없는 이 시험 값을 풀고, 관측 칸을 본 뒤 인터넷을 끊어 보세요.',
   outgoing: '현재 입력·풀린 문자가 담긴 요청 관측',
-  time: '이 값을 지켜본 시간',
+  time: '지켜본 시간',
   seconds: '초',
   preparing: '기기 안의 풀이기를 여는 중이에요…',
   offlineReady:

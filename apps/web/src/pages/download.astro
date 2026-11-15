@@ -1,4 +1,5 @@
 ---
+import { operations } from '@decoding/operations'
 import Layout from '../layouts/Layout.astro'
 ---
 
@@ -12,7 +13,7 @@ import Layout from '../layouts/Layout.astro'
       Use your browser’s Install app action. On iPhone or iPad, choose Share → Add to Home Screen.
       Open the tools you need once online to cache their local parsers.
     </p>
-    <a class="button" href="/tools/">Open the 47 local tools</a>
+    <a class="button" href="/tools/">Open the {operations.length} local tools</a>
     <h2>Command line from source</h2>
     <p>
       The CLI is available in the source repository; it is not published to npm. With Node 22 and

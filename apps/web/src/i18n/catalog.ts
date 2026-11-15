@@ -477,7 +477,7 @@ export const catalogMessages: Record<Locale, CatalogMessages> = {
     eyebrow: '기기에서 바로 쓰는 도구',
     heading: '필요한 변환과 검사를 한곳에서.',
     lead: '모든 도구는 이 기기에서 실행됩니다. 용량이 큰 처리 기능도 해당 도구를 열 때만 준비합니다.',
-    searchLabel: '도구 47개에서 찾기',
+    searchLabel: `도구 ${toolCount}개에서 찾기`,
     searchPlaceholder: 'JSON 정리, JWT 확인, UUID 만들기…',
     of: '/',
     countSuffix: '개 도구',
@@ -681,7 +681,7 @@ export const toolPageMessages: Record<Locale, ToolPageMessages> = {
   },
   ko: {
     description: (name) => `서버로 보내지 않고 이 기기에서 ${name} 도구를 사용합니다.`,
-    back: '← 도구 47개 보기',
+    back: `← 도구 ${toolCount}개 보기`,
     localUtility: '기기에서 바로 실행',
     pack: '도구 묶음',
     runsHere: '입력은 이 기기에만 남습니다',
