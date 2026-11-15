@@ -17,6 +17,8 @@ const ko: Record<MessageFact['code'], string> = {
     '대문자나 소문자 한 가지로만 적혀 있어요. 대소문자를 섞은 확인값이 없는 옛 표기로 읽었어요. 보통의 16진수 자료일 수도 있어요.',
   'warning-hcert-unverified':
     'HC1은 건강 증명서에 쓰는 겉 표기예요. 내용을 읽어도 서명·발급자·자료 틀이나 지금 사용할 수 있는 증명서인지는 확인한 것이 아니에요.',
+  'warning-json-number-precision':
+    'JavaScript가 정확히 나타낼 수 있는 정밀도나 범위를 넘는 숫자가 있어요. 표시한 값은 반올림되었을 수 있으니 정확한 값은 원문을 보관해 주세요.',
   'diagnostic-snowflake-epoch':
     'Discord의 시작 시각인 2015-01-01을 가정했어요. 다른 Snowflake는 시작 시각이 다를 수 있어요.',
   'warning-der-schema':

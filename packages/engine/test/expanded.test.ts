@@ -1,3 +1,4 @@
+import { jsonLines } from '../src/formats/expanded/json-lines'
 import { filetime } from '../src/formats/expanded/filetime'
 import { asn1Der } from '../src/formats/expanded/asn1-der'
 import { javaSerialization } from '../src/formats/expanded/java-serialization'
@@ -300,4 +301,19 @@ it('keeps the Snowflake subtype corpus independent of UUID public fixture counts
       fixture.class !== 'negative',
     )
   }
+})
+
+it('reads JSON Lines with masked credentials and numeric limits disclosed', async () => {
+  const result = await jsonLines.detect(
+    '{"token":"synthetic-secret","id":1}\n{"id":2}',
+    {} as never,
+  )
+  expect(result?.value).toMatchObject({
+    lines: 2,
+    records: [{ token: '[redacted]', id: 1 }, { id: 2 }],
+  })
+  expect(
+    (await jsonLines.detect('9007199254740993\n0', {} as never))?.warnings.map((w) => w.ruleId),
+  ).toContain('JSON-NUMBER-PRECISION')
+  expect(await jsonLines.detect('1\n2\n\n', {} as never)).toBeNull()
 })

@@ -189,6 +189,10 @@ const sentences: Record<string, [string, string]> = {
     'This value was wrapped in Base45. We decoded the next layer.',
     'Base45로 싼 값이에요. 한 겹 풀었어요.',
   ],
+  'json-lines': [
+    'Each line is a separate JSON value. We read {lines} records.',
+    '한 줄에 JSON 자료 하나씩 적은 거예요. {lines}줄을 읽었어요.',
+  ],
   filetime: [
     'This can represent a Windows FILETIME timestamp: a count of 100-nanosecond ticks since 1601. A number alone does not establish its meaning.',
     'Windows FILETIME으로 읽을 수 있는 값이에요. 1601년부터 100나노초씩 센 값이며 숫자만으로 쓰임을 확정할 수는 없어요.',
@@ -382,6 +386,8 @@ export function answerSentence(root: ChainNode, locale: WorkbenchLocale, source:
   let sentence = sentences[first.detector]?.[ko ? 1 : 0] ?? first.label
   if (first.detector === 'uuid-ulid' && first.label.startsWith('Snowflake'))
     sentence = answerMessages(locale).snowflakeSentence
+  if (first.detector === 'json-lines')
+    sentence = sentence.replace('{lines}', String((first.value as { lines: number }).lines))
   if (first.detector === 'kv' && first.label === 'Cookie header')
     sentence = answerMessages(locale).cookieSentence
   if (first.detector === 'user-agent') {
@@ -659,6 +665,8 @@ export function answerFacts(
       ],
       [locale === 'ko' ? '가정한 시작 시각' : 'Assumed epoch', String(value.epochStart)],
     ]
+  if (detection.detector === 'json-lines')
+    return [[locale === 'ko' ? '자료 줄 수' : 'Records', String(value.lines)]]
   if (detection.detector === 'filetime')
     return [
       [locale === 'ko' ? 'UTC 시각' : 'UTC time', String(value.timestamp)],

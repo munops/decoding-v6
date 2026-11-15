@@ -1,5 +1,10 @@
 import type { RuleSpec } from '@decoding/spec-registry'
 const ko: Record<string, [string, string, string]> = {
+  'JSON-NUMBER-PRECISION': [
+    '숫자를 정확히 나타낼 수 있는 한계가 있어요',
+    'JSON 숫자는 JavaScript의 숫자 규칙으로 표시해요. 큰 정수나 지수는 범위를 넘을 수 있어요.',
+    '정확한 숫자 계산에는 원문을 보관하고 큰 수·소수를 정확히 읽는 도구를 쓰세요.',
+  ],
   'DER-SCHEMA-UNKNOWN': [
     '자료 틀 없이 구조를 살펴봤어요',
     '태그와 길이만으로 인증서·개인키나 서명의 유효성을 알 수 없어요.',

@@ -2,6 +2,13 @@ export type RuleSpec = { id: string; title: string; why: string; fix: string; re
 const jwt = 'https://www.rfc-editor.org/rfc/rfc8725'
 const rows: [string, string, string, string, string][] = [
   [
+    'JSON-NUMBER-PRECISION',
+    'Numeric precision limit',
+    'JSON numbers are displayed using JavaScript numeric semantics. Large integers or exponents can exceed the representable range.',
+    'Keep the original text and use a decimal or arbitrary-precision reader for exact numeric work.',
+    'https://www.rfc-editor.org/rfc/rfc8259#section-6',
+  ],
+  [
     'DER-SCHEMA-UNKNOWN',
     'DER structure without a schema',
     'Tags and lengths do not establish a certificate, private key or signature validity.',

@@ -1,3 +1,4 @@
+import { jsonLines } from './json-lines'
 import { filetime } from './filetime'
 import { asn1Der } from './asn1-der'
 import { javaSerialization } from './java-serialization'
@@ -24,4 +25,5 @@ export const expandedDetectors = [
   javaSerialization,
   asn1Der,
   filetime,
+  jsonLines,
 ]

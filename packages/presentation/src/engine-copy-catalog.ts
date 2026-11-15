@@ -1,5 +1,7 @@
 import type { EngineMessageCode } from '@decoding/engine'
 export const englishEngineCopy = {
+  'warning-json-number-precision':
+    'A number exceeds JavaScript numeric precision or range. The displayed numeric value may be rounded; keep the original text for exact values.',
   'diagnostic-snowflake-epoch':
     'Discord 2015-01-01; other Snowflake deployments use different epochs.',
   'warning-der-schema':

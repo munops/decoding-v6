@@ -286,5 +286,19 @@ export const expandedSpecs: ExpandedSpec[] = [
       },
     ],
   },
+  {
+    detector: 'json-lines',
+    slug: 'json-lines',
+    label: 'JSON Lines',
+    description:
+      'Read two or more JSON values, one per line, with LF or CRLF and an optional single terminal newline. Blank lines and a BOM are rejected. Values use the same JavaScript JSON semantics as the JSON inspector; large-number precision is flagged. Secret-looking fields are masked. Limits: 256 KiB and 4096 records; nothing is executed.',
+    korean: {
+      label: '한 줄씩 적은 JSON',
+      description:
+        'JSON 자료를 한 줄에 하나씩 적은 값이에요. 줄바꿈은 LF·CRLF를 받고 마지막 줄바꿈 하나는 있어도 돼요. 빈 줄과 시작 BOM은 받지 않아요. JSON 도구와 같은 숫자 규칙을 쓰며 큰 숫자의 정밀도 한계는 알려 드려요. 비밀처럼 보이는 칸은 가려요. 한도는 256 KiB·4096줄이며 실행하지 않아요.',
+    },
+    examples: ['{"name":"one"}\n{"name":"two"}', '1\ntrue\nnull', '[1,2]\n[3,4]'],
+    references: [{ title: 'JSON Lines format definition', url: 'https://jsonlines.org/' }],
+  },
 ]
 export const expandedKoreanCopy = new Map(expandedSpecs.map((spec) => [spec.detector, spec.korean]))

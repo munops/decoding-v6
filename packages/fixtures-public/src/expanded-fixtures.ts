@@ -780,3 +780,50 @@ export const snowflakeFixtures = publicCases(
     '00:00:5e:00:53:01',
   ],
 ).map((fixture) => ({ ...fixture, id: 'snowflake-' + fixture.id }))
+
+expandedFixtures.push(
+  ...publicCases(
+    'json-lines',
+    Array.from(
+      { length: 20 },
+      (_, i) =>
+        JSON.stringify({ id: i, name: 'fixture-' + i }) +
+        '\n' +
+        JSON.stringify({ id: i + 1, ok: true }),
+    ),
+    [
+      '1\n2',
+      'true\nfalse',
+      'null\nnull',
+      '"한글"\n"🙂"',
+      '[]\n{}',
+      '{"a":1}\r\n{"b":2}\r\n',
+      '1\n2\n',
+      ' 1 \n 2 ',
+      '9007199254740993\n0',
+      '1e400\n0',
+    ],
+    [
+      '{"a":1}',
+      '[1,2]',
+      '1',
+      'null',
+      '{"a":1}\n',
+      '1\n\n2',
+      '1\n2\n\n',
+      '\n1\n2',
+      '\ufeff1\n2',
+      'undefined\nnull',
+      'NaN\n0',
+      '{"a":}\n{}',
+      '1,2\n3,4',
+      'name,value\na,b',
+      '{"a":1} {"b":2}',
+      'hello\nworld',
+      '한글\n문장',
+      'SELECT 1\nFROM logs',
+      'https://example.test\nhttps://example.test/2',
+      '{"a":1}\n// comment',
+    ],
+  ),
+)

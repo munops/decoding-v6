@@ -1,5 +1,6 @@
 // Engine-owned explanation identifiers. Prose belongs to presentation.
 export const engineMessageCodes = [
+  'warning-json-number-precision',
   'diagnostic-snowflake-epoch',
   'warning-der-schema',
   'warning-java-inspection',
