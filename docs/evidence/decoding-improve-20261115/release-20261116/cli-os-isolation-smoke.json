@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-11-15T23:32:11.719Z",
+  "name": "decoding",
+  "version": "6.0.0",
+  "archiveSha256": "542d5909681218987cd531d2b1ffa6417c383efb72711ae2c7583e485cbfc3b4",
+  "osNetworkDenyProfile": "(version 1)(allow default)(deny network*)",
+  "networkControls": {
+    "outsideProfile": "ECONNREFUSED",
+    "insideProfile": "EPERM"
+  },
+  "workspaceImports": "rejected outside unpacked archive",
+  "globalFetch": "disabled",
+  "humanKorean": "passed",
+  "legacyJSON": "passed",
+  "publication": "not_performed"
+}

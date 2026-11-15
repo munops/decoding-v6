@@ -5,6 +5,7 @@
   "humanKorean": "passed",
   "legacyJSON": "passed",
   "workspaceImports": "forbidden_by_loader",
-  "network": "forbidden_by_loader",
-  "publication": "not_performed"
+  "network": "global fetch disabled; this first test did not assert an OS/socket sandbox",
+  "publication": "not_performed",
+  "scopeCorrection": "Earlier wording was broader than the first loader control. The separate cli-os-isolation-smoke.json now verifies an actual OS network-deny profile with socket controls."
 }

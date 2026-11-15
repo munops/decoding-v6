@@ -259,9 +259,10 @@
         "checkedAt": "2026-11-15T22:56:04.818Z",
         "mutationPerformed": false
       },
-      "isolatedSmokeRef": "docs/evidence/decoding-improve-20261115/release-20261116/cli-isolated-smoke.json",
+      "isolatedSmokeRef": "docs/evidence/decoding-improve-20261115/release-20261116/cli-os-isolation-smoke.json",
       "humanGate": "npm security/email/2FA completion and authenticated publication remain unconfirmed",
-      "artifactVisibility": "local_original_not_public_Git"
+      "artifactVisibility": "local_original_not_public_Git",
+      "initialFetchOnlySmokeRef": "docs/evidence/decoding-improve-20261115/release-20261116/cli-isolated-smoke.json"
     },
     "extensions": [
       {
