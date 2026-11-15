@@ -381,17 +381,17 @@ GitHub Issues raw JSON 직독(등급 A)으로 얻은 결과를 제품 작업으�
 기준선 `3557cc35c31f`, clean. 순서 A → B → C → J → D → F → G → E → H → I.
 `prd-work-state.json`은 workItems 배열이 없는 legacy 상태이므로 이 절에서 추적한다.
 
-- [ ] **DEC-NEXT-001** `in_progress` — A1~A19: 검사·빌드·성능, 판독 오류, 탐색·접근성·번역·오프라인 복구.
-- [ ] **DEC-NEXT-002** `in_progress` — B0~B7: A안 답 카드·입력·예시·탭·불확실성·디자인 계약.
-- [ ] **DEC-NEXT-003** `implemented / local_test_passed` — C1~C5: 깨진 글자·옛 한글·NFC·메일·복구 불가 구분.
-- [ ] **DEC-NEXT-011** `in_progress / local_artifacts_tested` — J1~J7: 확장·CLI·검색 입구·공개 준비와 승인된 채널 출시. J5는 오너 지정 2주 관측 뒤.
-- [ ] **DEC-NEXT-004** `implemented / local_test_passed` — D1~D4: 주소·QR·사진 정보·파일 공유.
-- [ ] **DEC-NEXT-005** `implemented / local_test_passed` — F1~F7: 자동 도구·찾기·47개 설명·오프라인.
-- [ ] **DEC-NEXT-006** `implemented / local_test_passed` — G1~G2: 저장 목록·검색·기간·건네기.
-- [ ] **DEC-NEXT-010** `implemented / local_test_passed` — G1 값 저장: 명시 선택·비밀 가림·기기 내 보관·내보내기 경고.
-- [ ] **DEC-NEXT-007** `in_progress` — E0~E4: 형식별 규격·양성/경계/음성/교차 시험·설명·한 문장, 각 형식별 커밋.
-- [ ] **DEC-NEXT-008** `in_progress` — H1~H6 로컬 구현: 검색 진입 8종 EN/KO·FAQ/현재 위치·한국어 첫 방문·언어 선택 기억·세 종류 미리보기. 최종 빌드/브라우저/배포 확인 대기. [영수증](../evidence/decoding-improve-20261115/h-checkpoint.md).
-- [ ] **DEC-NEXT-009** `in_progress` — I1~I3 로컬 구현: 관측 범위와 한계를 밝힌 증명·횟수 설명/설정·비밀 값 주의. 최종 빌드/브라우저/배포 확인 대기. [영수증](../evidence/decoding-improve-20261115/i-checkpoint.md).
+- [ ] **DEC-NEXT-001** `released_web / wait_external(A14)` — A1~A19의 구현·자동 검증·운영 반영 완료. A13 코드/숫자 설명 계약도 포함. 실제 휴대폰 키보드·실제 화면 낭독은 미확인.
+- [x] **DEC-NEXT-002** `released_web / production_smoke_verified` — B0~B7 답 카드·입력·7개 예시·탭·불확실성·밝은 기본 화면. 공개 origin의 320/390/1440px 독립 이미지 검토 통과.
+- [x] **DEC-NEXT-003** `released_web / production_smoke_verified` — C1~C5 문자 복구·옛 문자·정규화·메일·복구 불가 구분. 알려진 회귀 통과를 새 blind 정확도로 승격하지 않음.
+- [ ] **DEC-NEXT-011** `released_web / prepared_channels / wait_external` — J3/J4 공개 운영 확인, J1/J2 묶음 준비·시험. 네이티브 우클릭·Chrome/npm 발행·커뮤니티 첫 게시·Naver native 확인 대기. J7 기존 승인은 유지. J5는 2026-11-29 이전 관측 완료로 부르지 않음.
+- [ ] **DEC-NEXT-004** `released_web / wait_external(actual_OS_share)` — D1~D4 주소·QR·사진·파일 흐름의 공개 시험 통과. 실제 OS 공유/실휴대폰은 별도.
+- [x] **DEC-NEXT-005** `released_web / production_smoke_verified` — F1~F7, 49개 도구의 즉시 결과·검색·설명과 오프라인 캐시/복구.
+- [x] **DEC-NEXT-006** `released_web / production_smoke_verified` — G1/G2 저장 목록·검색·기간·값 없는 기본 건네기·명시 전달.
+- [x] **DEC-NEXT-010** `released_web / production_smoke_verified` — 값 포함은 명시 선택·기기 IDB만·알려진 비밀 가림·백업/복원 확인. 모든 비밀 식별 보장 아님.
+- [x] **DEC-NEXT-007** `released_web / production_smoke_verified` — E0~E4 형식별 규격·독립 커밋·양성/경계/음성·교차 시험·63개 형식 설명. 실제 공개 Brotli/WASM·색·DER 가림·시저 후보 시험 포함.
+- [x] **DEC-NEXT-008** `released_web / production_smoke_verified` — H1~H6 검색 입구 8종 EN/KO·FAQ/현재 위치·언어 기억·세 종류 미리보기. 검색 노출/클릭을 확인한 것은 아님.
+- [x] **DEC-NEXT-009** `released_web / production_smoke_verified` — I1~I3 범위를 밝힌 메모리 관측·정확한 unknown·횟수 설명/설정·비밀 공유 경고. 공개 offline/copy/positive-control 검증.
 
 검증: A1은 format/lint/typecheck/unit/benchmark/build/E2E, 최종은 인계 §12 전체.
 실기기·실제 화면 낭독·자연 사용·검색 관측·store review는 자동 검사와 구분한다.
@@ -422,3 +422,14 @@ A13 follow-up: [coded explanations](../evidence/decoding-improve-20261115/a13-ch
 E1 local checkpoint: binary/octal, browser User-Agent, colors, request-cookie safety, Bitcoin and Ethereum-family address formats, and Base45/HC1 transport are implemented in separate format commits. [Receipts](../evidence/decoding-improve-20261115/e-checkpoint.md) retain timeout/fixture follow-ups and the unresolved development-server hydration gate. Current registry: 52 formats/49 tools. DEC-NEXT-007 remains in progress for E2–E4 and final immutable-build verification; no production or public-channel release claim.
 
 E local implementation checkpoint: E1–E4 are implemented with format/subtype receipts, separate commits and the final 284-test unit run. [E receipts](../evidence/decoding-improve-20261115/e-checkpoint.md) distinguish authoring/harness failures, focused retries and independent-review fixes. Current inventory is obtained with `pnpm inventory` / `pnpm check:parity`. DEC-NEXT-007 stays open until immutable-build UI/offline/privacy/performance and release acceptance; added color/DER/Caesar/Brotli browser cases have not yet run. H is the next active implementation bundle.
+
+
+## 2026-11-16 운영 반영 — 앞선 중간 메모보다 우선
+
+[출시 영수증](../evidence/decoding-improve-20261115/release-20261116.json) · runtime `5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb` · Cloudflare version `c0075d8d-b5b1-4996-8124-3f07ff01141a`, 100% traffic. 기존 `decod.ing`·`www`·Workers fallback 세 곳에서 같은 SHA를 확인했다. source/wave commit `881d1a1`은 기존 public main에 fast-forward한 것을 read-back했다.
+
+`pnpm verify` 302 unit/30 files, `pnpm test:e2e` 105 pass/2 명시적 skip, 별도 공개 origin 40 pass. 초기 gzip 143.6 KiB/170 KiB, 1 MiB 첫 후보 p75 16.0ms/100ms. 6개 실제 공개 캡처의 독립 검토에서 필수 수정 없음. 아래 초기 checkpoint의 A6/A10/A13·B~I 구현/배포 대기 문구는 당시 기록이며 이 절이 현재 상태다.
+
+`decoding@6.0.0` tarball은 작업공간 의존성과 네트워크를 막은 실제 묶음 실행에서 KO 한 문장/결과·legacy JSON을 확인했다. Chrome/Edge/Firefox unsigned 묶음도 보존한다. 이는 npm 발행·스토어 제출/승인·네이티브 우클릭/실제 OS 공유 증거가 아니다. Npm 보안 확인·가입 메일·2FA 완료는 아직 알려지지 않았다. 기존 사용자 브라우저 handoff의 완료 확인 뒤 같은 공간에서 이어간다. 허가 없는 새 계정/장기 자격증명·Edge/Firefox 약관·외부 게시·HQ 활성화는 실행하지 않았다.
+
+Google 소유 확인/사이트맵 완료는 11월 15일 오너 인계의 보고다. 이번 세션에서 native Search Console 확인으로 바꾸어 말하지 않는다. Naver는 현재 public meta가 없고 실제 console 확인/검증 수단이 미확인이다. J5는 원래 요청대로 2주 뒤(2026-11-29 이후), QA/crawler가 섞인 이름별 횟수를 자연 사용자나 고유 retention cohort로 해석하지 않고 대사한다.

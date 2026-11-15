@@ -1,10 +1,10 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "productId": "decoding-v6",
-  "checkedAt": "2026-09-04T21:51:42+09:00",
-  "status": "done",
+  "checkedAt": "2026-11-15T23:00:42.301Z",
+  "status": "in_progress",
   "evidenceLevel": "release_verified",
-  "sourceRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
+  "sourceRevision": "5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb",
   "scope": {
     "productionEnvironment": "Cloudflare Worker decoding-v6 on decod.ing",
     "publicProduct": true,
@@ -12,7 +12,7 @@
     "selectedChannels": ["web"],
     "releaseCandidateChannels": ["web"],
     "capabilities": {
-      "storesUserData": false,
+      "storesUserData": true,
       "mutableSchema": false,
       "authentication": false,
       "payments": false,
@@ -34,52 +34,53 @@
         "command": "pnpm verify (format, lint, typecheck and policy gates)",
         "result": "pass",
         "exitCode": 0,
-        "checkedAt": "2026-09-04T21:30:13+09:00",
-        "evidenceRef": "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml"
+        "checkedAt": "2026-11-15T23:00:42.301Z",
+        "evidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json"
       },
       {
         "layer": "unit",
-        "command": "pnpm test",
+        "command": "pnpm verify: 302 unit cases",
         "result": "pass",
         "exitCode": 0,
-        "checkedAt": "2026-09-04T21:30:13+09:00",
-        "evidenceRef": "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml"
+        "checkedAt": "2026-11-15T23:00:42.301Z",
+        "evidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json"
       },
       {
         "layer": "integration",
         "command": "node scripts/verify-deploy.mjs https://decod.ing",
         "result": "pass",
         "exitCode": 0,
-        "checkedAt": "2026-09-04T21:33:00+09:00",
-        "evidenceRef": "docs/design/evidence/dc-visual-evidence-03/source-runtime-identity.json"
+        "checkedAt": "2026-11-15T23:00:42.301Z",
+        "evidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json"
       },
       {
         "layer": "e2e",
-        "command": "pnpm test:e2e (43 passed, 2 intentional evidence-project skips) plus production-only visual capture (1 passed)",
+        "command": "pnpm test:e2e: 105 passed/2 explicit skips; public-origin focused profile: 40 passed",
         "result": "pass",
         "exitCode": 0,
-        "checkedAt": "2026-09-04T21:34:52+09:00",
-        "evidenceRef": "docs/design/evidence/dc-visual-evidence-03/capture-receipt.json"
+        "checkedAt": "2026-11-15T23:00:42.301Z",
+        "evidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json"
       },
       {
         "layer": "build",
-        "command": "pnpm --filter @decoding/web build (486 static pages)",
+        "command": "pnpm build: 1511 static pages plus CLI/extension/desktop build; 143.6 KiB initial gzip",
         "result": "pass",
         "exitCode": 0,
-        "checkedAt": "2026-09-04T21:30:13+09:00",
-        "evidenceRef": "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml"
+        "checkedAt": "2026-11-15T23:00:42.301Z",
+        "evidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json"
       },
       {
         "layer": "security",
         "command": "production canary egress/storage, same-origin request and exact health/version read-back",
         "result": "pass",
         "exitCode": 0,
-        "checkedAt": "2026-09-04T21:51:42+09:00",
-        "evidenceRef": "docs/design/evidence/dc-visual-evidence-03/source-runtime-identity.json"
+        "checkedAt": "2026-11-15T23:00:42.301Z",
+        "evidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json"
       }
     ],
     "aiEvaluationEvidenceRef": null,
-    "mandatoryFailures": []
+    "mandatoryFailures": [],
+    "scope": "Only the recorded command/flow scope; no user-value or all-device conclusion."
   },
   "security": {
     "status": "done",
@@ -88,44 +89,52 @@
     "threatModelRef": "docs/security/THREAT_MODEL.md",
     "secretScanEvidenceRef": "docs/audit/2026-08-08-product-readiness.md",
     "dependencyAuditEvidenceRef": "docs/engineering/dependencies.md",
-    "securityHeadersEvidenceRef": "docs/design/evidence/dc-visual-evidence-03/source-runtime-identity.json",
+    "securityHeadersEvidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
     "authAbuseEvidenceRef": null,
     "paymentAbuseEvidenceRef": null,
     "aiAbuseEvidenceRef": null,
     "privacyDataFlowRef": "docs/trust/data-inventory.md",
-    "unresolvedHighCritical": []
+    "unresolvedHighCritical": [],
+    "scope": "Current AST/privacy/canary/header checks; existing dependency/secret audit refs are historical, not a new full audit."
   },
   "accessibility": {
     "status": "done",
     "target": "WCAG-2.2-AA",
     "planRef": "docs/prd/05-uiux.md",
-    "automatedEvidenceRef": "tests/e2e/responsive.spec.ts",
-    "manualEvidenceRef": "docs/design/evidence/dc-visual-evidence-03/original-detail-review.json",
+    "automatedEvidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
+    "manualEvidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
     "representativeFlows": [
       "clean-profile English landing at 320, 390 and 1440",
       "local synthetic nested decode",
       "unsupported and worker-error recovery"
     ],
-    "knownViolations": []
+    "knownViolations": [],
+    "scope": "Eight automated routes, keyboard/text reflow and independent image review; actual phone and screen-reader listening remain A14 external gates. Target is not a certification."
   },
   "performance": {
     "status": "done",
     "budgetRef": "docs/prd/06-architecture.md",
-    "labEvidenceRef": "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml",
+    "labEvidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
     "fieldEvidenceRef": null,
-    "webVitalsTarget": { "percentile": 75, "lcpMs": 2500, "inpMs": 200, "cls": 0.1 },
+    "webVitalsTarget": {
+      "percentile": 75,
+      "lcpMs": 2500,
+      "inpMs": 200,
+      "cls": 0.1
+    },
     "representativeRoutes": ["/ko/", "/ko/tools/", "/ko/json-format/", "/ko/methodology/"],
     "regressions": []
   },
   "dataLifecycle": {
-    "status": "not_applicable",
+    "status": "done",
     "inventoryRef": "docs/trust/data-inventory.md",
-    "migrationPlanRef": null,
+    "migrationPlanRef": "docs/10-decisions/ADR-006-explicit-local-values-20261115.md",
     "migrationRehearsalRef": null,
-    "backupReadbackRef": null,
-    "restoreDrillRef": null,
-    "retentionDeletionEvidenceRef": null,
-    "importExportRoundTripRef": null
+    "backupReadbackRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
+    "restoreDrillRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
+    "retentionDeletionEvidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
+    "importExportRoundTripRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
+    "scope": "Explicit optional browser-only values and masked backups; existing IDB v1 kept. No server schema/data migration."
   },
   "resilience": {
     "status": "done",
@@ -143,27 +152,40 @@
     "runbookRef": "docs/implementation/DEPLOYMENT.md",
     "incidentOwner": "owner_lane",
     "costCapReadbackRef": "docs/evidence/web-product-language-release-2026-08-24.md",
-    "killSwitchEvidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md"
+    "killSwitchEvidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md",
+    "releaseReadbackRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
+    "fieldMonitoringStatus": "data_pending",
+    "scope": "Release/configuration readiness and unchanged historical runbook/alerts; fresh field/alert/cost read-back is not claimed."
   },
   "delivery": {
     "status": "done",
-    "releasePlanRef": "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml",
-    "ciRunRef": "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml",
+    "releasePlanRef": "docs/operations/release-wave-decoding-improve-20261116.yaml",
     "artifact": {
-      "name": "apps/web/dist Cloudflare assets",
-      "sha256": "792453c5173f2bc1627b755aedb067085ab6bc2c4071975746e1752848b31eec",
-      "sourceRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
-      "provenanceKind": "local_clean_build_and_provider_version_readback",
-      "provenanceRef": "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml"
+      "name": "apps/web/dist Cloudflare static assets",
+      "sha256": "7a1a7401fdf69944f074b93c5ea4f1079dc70b06d0040e7efc29ca214e0f8da0",
+      "sourceRevision": "5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb",
+      "provenanceKind": "reproducible_build_manifest",
+      "provenanceRef": "docs/evidence/decoding-improve-20261115/release-20261116/artifact-manifest.json.gz"
     },
-    "previewSmokeRef": "docs/design/evidence/dc-visual-evidence-03/capture-receipt.json",
-    "providerReadbackRef": "docs/design/evidence/dc-visual-evidence-03/source-runtime-identity.json",
-    "realEntrypointSmokeRef": "docs/design/evidence/dc-visual-evidence-03/capture-receipt.json",
-    "releaseEvidenceRef": "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml",
+    "previewSmokeRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
+    "providerReadbackRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
+    "realEntrypointSmokeRef": "docs/evidence/decoding-improve-20261115/release-20261116/capture-receipt.json",
+    "releaseEvidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
     "rollback": {
-      "target": "Cloudflare version 14a86d08-b642-4203-9479-bfd8624b472b",
-      "planRef": "docs/implementation/DEPLOYMENT.md",
-      "drillRef": "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml"
+      "target": "Cloudflare version 13c4f167-2d55-41b4-ad1c-2a5d747a1a96",
+      "planRef": "docs/operations/local-delivery-runbook.md",
+      "drillRef": "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml",
+      "scope": "Target availability read back; no current rollback drill or rollback invocation is claimed. Historical drill ref stays historical."
+    },
+    "execution": {
+      "origin": "local_explicit",
+      "entrypoint": "pnpm delivery:web:deploy -- --execute",
+      "receiptRef": "docs/evidence/decoding-improve-20261115/release-20261116.json"
+    },
+    "verification": {
+      "origin": "local",
+      "entrypoint": "pnpm delivery:web:verify and exact public-origin browser profile",
+      "receiptRef": "docs/evidence/decoding-improve-20261115/release-20261116.json"
     }
   },
   "channels": {
@@ -171,10 +193,10 @@
       "decision": "selected",
       "status": "done",
       "stage": "released",
-      "artifactSha256": "792453c5173f2bc1627b755aedb067085ab6bc2c4071975746e1752848b31eec",
-      "providerReadbackRef": "docs/design/evidence/dc-visual-evidence-03/source-runtime-identity.json",
-      "realConsumerSmokeRef": "docs/design/evidence/dc-visual-evidence-03/capture-receipt.json",
-      "rollbackRef": "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml"
+      "artifactSha256": "7a1a7401fdf69944f074b93c5ea4f1079dc70b06d0040e7efc29ca214e0f8da0",
+      "providerReadbackRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
+      "realConsumerSmokeRef": "docs/evidence/decoding-improve-20261115/release-20261116/capture-receipt.json",
+      "rollbackRef": "docs/operations/release-wave-decoding-improve-20261116.yaml"
     },
     "appsInToss": {
       "decision": "not_applicable",
@@ -221,12 +243,6 @@
       "owner": "owner_lane"
     },
     {
-      "id": "DC-GR-02-SEARCH-CONSOLE",
-      "status": "wait_external",
-      "gate": "domain property ownership requires an owner-approved DNS authorization or credential path before sitemap submission and index read-back",
-      "owner": "owner_lane"
-    },
-    {
       "id": "DC-ADS-01",
       "status": "wait_external",
       "gate": "AdSense site ownership is verified; final policy review submission and any later ad serving remain owner-approved external actions",
@@ -237,6 +253,39 @@
       "status": "wait_external",
       "gate": "desktop signing, notarization, device smoke, and public distribution remain separate",
       "owner": "owner_lane"
+    },
+    {
+      "id": "DEC-NEXT-001-A14",
+      "status": "wait_external",
+      "gate": "Actual phone paste/keyboard and real screen-reader listening are unobserved; emulation/axe/image review are separate."
+    },
+    {
+      "id": "DEC-NEXT-004-D4",
+      "status": "wait_external",
+      "gate": "Actual OS share-sheet/file handoff is unobserved; installed SW synthetic route passed."
+    },
+    {
+      "id": "DEC-NEXT-011-J1",
+      "status": "wait_external",
+      "gate": "Actual native context-menu interaction and public store availability remain unobserved; local protocol/artifact checks passed."
+    },
+    {
+      "id": "DEC-NEXT-011-J7",
+      "status": "wait_external",
+      "gate": "Npm human security/email/2FA completion is unconfirmed; no provider credential creation, npm publication, Chrome payment/registration/submission or community posting was performed."
+    },
+    {
+      "id": "DEC-NEXT-011-NAVER",
+      "status": "wait_external",
+      "gate": "No current authenticated Naver ownership read-back or verification method/token is available; public meta tag is absent. Existing user browser handoff is still active."
+    },
+    {
+      "id": "DEC-NEXT-011-J5",
+      "status": "data_pending",
+      "notBefore": "2026-11-29",
+      "dateBasis": "Owner handoff J5 specifies two weeks after 2026-11-15; no invented observation deadline.",
+      "gate": "Search query impressions/clicks and names-only counts require fresh native provider read-back. Owner-reported GSC verification/sitemap is not relabeled as this run’s native confirmation."
     }
-  ]
+  ],
+  "evidenceScope": "release_verified applies to the selected Web/PWA runtime. Whole handoff acceptance, actual device/AT and natural operating outcomes remain external gates."
 }

@@ -1,34 +1,26 @@
 # decod.ing data inventory
 
-상태: `implemented` — source `fde62a1` 기준 코드 대사, 2026-08-08 확인. 공개 정책 경로와 provider 로그·보존 read-back은 별도 증거입니다.
+현재 웹 런타임 `5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb`의 구현·공개 주소 검증 기준이다. [이번 출시 영수증](../evidence/decoding-improve-20261115/release-20261116.json)은 코드·시험·배포를 구분한다. 제공자의 연결 메타데이터 보존, 실제 휴대폰 공유, 자연 사용은 별도 확인 대상이다.
 
-## 제품 데이터 경계
+| 데이터                                           | 목적·위치                                                              | 보존·삭제                                                                                              | 외부 전송                                                                                                                                                                                 |
+| ------------------------------------------------ | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 입력·파일·풀린 값                                | 페이지와 전용 Worker 메모리에서 풀이                                   | 지우기·다른 입력·탭/프로세스 종료 때 참조 해제. 자동 원문 기록 없음                                    | 앱이 URL·집계·로그·지원 메시지로 구성하지 않음                                                                                                                                            |
+| 명시 저장한 구조·이름·메모                       | IndexedDB `decoding-local-workspace/redacted-records`                  | 기본 모양만 7일. session·24h·7d·keep, 항목/전체 삭제·기기 데이터 삭제                                  | 서버 동기화 없음                                                                                                                                                                          |
+| 명시적으로 포함한 최종 값                        | 같은 IndexedDB의 선택적 `valueMode`                                    | 저장 전 안내. 알려진 비밀 패턴/필드 가림, 개인키 및 중간 겹 제외. 모든 비밀을 식별한다고 보장하지 않음 | 없음. 값 포함 백업·기기 공유는 별도 명시 동작과 확인                                                                                                                                      |
+| 로컬 백업·복원·건네기                            | 사용자가 고른 파일·클립보드·기기 공유. 값 없는 설명이 기본             | 파일은 사용자가 관리. 값 포함 내보내기/복원 및 가림 해제는 확인                                        | 웹 서버 업로드 없음. 사용자가 선택한 앱/수신자의 처리는 그 앱의 경계                                                                                                                      |
+| 테마·글자 크기·복사 소리·도구 즐겨찾기/최근 목록 | 정해진 localStorage 키                                                 | 설정 변경·이 기기 데이터 삭제                                                                          | 없음                                                                                                                                                                                      |
+| 언어 선택·첫 화면 방문 상태                      | `decoding-locale-choice`, `decoding-home-seen`, `decoding-home-locale` | 선택 변경·이 기기 데이터 삭제                                                                          | 입력 값을 URL에 넣지 않음. 저장 불가 시 `lang=en` 고정 enum만 사용                                                                                                                        |
+| 집계 끄기·첫 방문 날짜                           | `decoding-count-optout`, `decoding-first-visit`                        | 날짜만 최대 13개월, 접근 시 만료 처리. 집계 끄면 추가 요청/날짜 쓰기 중지                              | 날짜·식별자는 집계 본문으로 보내지 않음                                                                                                                                                   |
+| 동작 집계                                        | 같은 출처 `/e/events`에 `{name}`만, `credentials: omit`                | 고정 이름당 페이지에서 최대 한 번, `/proof/`·`/ko/proof/` 제외                                         | `app_open`, `landing_view`, `decode_completed`, `decode_unsupported`, `return_7d`, `share_action`, `sponsor_interest`만. 입력·결과·해시·파일명·도구명·식별자·IP를 앱 집계에 저장하지 않음 |
+| 증명 화면의 비교 자료                            | 현재 입력/결과의 허용된 표기와 요청 주소를 페이지 메모리에만 유지      | 입력 변경·관측 종료 때 비교 버퍼 제거. 화면/스냅샷에는 수·시간·범위만                                  | 관측기가 새 요청·로그·영구 저장을 만들지 않음. 읽지 못한 본문·길이/표기 한도는 확인 불가로 표시                                                                                           |
+| 오프라인 정적 파일                               | Cache Storage `decoding-v6-shell-<content hash>`                       | 새 SW 활성화 시 이전 캐시 제거·기기 데이터 삭제                                                        | 같은 출처 정적 파일만. 입력/결과 캐시 없음. 현재 revision과 초기 자산 27개를 읽어서 준비 상태 확인                                                                                        |
+| 다른 앱에서 받은 공유                            | 설치된 SW의 일회성 메모리 → 화면                                       | 전달/기한 종료·SW 종료 때 제거                                                                         | 설치 SW에서 처리하는 글/파일 전달을 시험함. 실제 OS 공유는 미확인. SW가 처리하지 못한 요청의 서버 fallback은 본문을 읽거나 저장하지 않고 이동만 함                                        |
+| 확장 선택 값                                     | 확장 백그라운드의 일회성 메모리 → 확장 결과 탭                         | 한 번 전달·워커 종료 때 제거, URL/영구 저장소에 넣지 않음                                              | 확장 CSP `connect-src 'none'`, host 권한 없음. 실제 네이티브 우클릭과 스토어 상태는 별도                                                                                                  |
+| CLI 입력/파일                                    | 로컬 프로세스·사용자가 지정한 파일                                     | 프로세스 종료, 출력은 사용자가 관리                                                                    | 묶음 실행의 네트워크 및 작업공간 의존 차단 시험 통과. 비밀은 명령줄 인수 대신 stdin/파일 권장                                                                                             |
+| 지원 문의                                        | 사용자가 고른 GitHub issue/advisory 또는 문의 메일                     | 해당 제공자의 정책과 요청 목적에 따름                                                                  | 실제 비밀·입력/결과를 자동 첨부하지 않음                                                                                                                                                  |
 
-| 데이터                                      | 목적                                 | 경로·저장 위치                                                   | 보존·삭제                                                                | 외부 전송                        |
-| ------------------------------------------- | ------------------------------------ | ---------------------------------------------------------------- | ------------------------------------------------------------------------ | -------------------------------- |
-| raw input, file bytes, decoded values       | 로컬 판별·변환                       | page memory → dedicated Web Worker memory                        | Clear·tab close·process 종료 때 reference 해제                           | 금지                             |
-| theme                                       | 명시적 light/dark 선택               | `localStorage: decoding-theme`                                   | site data 삭제                                                           | 없음                             |
-| locale suggestion dismiss                   | 같은 session의 제안 닫기             | `sessionStorage: decoding-locale-suggestion-dismissed`           | session 종료·site data 삭제                                              | 없음                             |
-| favorite/recent tool slugs                  | 로컬 도구 재진입                     | `localStorage: decoding-favorite-tools`, `decoding-recent-tools` | 사용자가 변경하거나 site data 삭제                                       | 없음                             |
-| copy sound enabled/volume                   | 명시적 copy feedback 설정            | `localStorage: decoding-copy-feedback`                           | site data 삭제                                                           | 없음                             |
-| redacted workspace record                   | 사용자가 명시적으로 저장한 구조·메모 | IndexedDB `decoding-local-workspace/redacted-records`            | session·24h·7d·keep TTL, 항목 삭제, Clear workspace, site data 삭제      | 없음                             |
-| static shell and visited same-origin assets | PWA offline 재진입                   | Cache Storage `decoding-v6-shell-v3`                             | 새 worker activate 때 이전 cache 삭제, site data 삭제                    | same-origin fetch only           |
-| support report                              | 사용자가 명시적으로 문의             | GitHub issue/private advisory 또는 support email                 | 해당 provider 정책과 요청 처리 목적에 따름; production payload 첨부 금지 | 사용자가 선택한 support provider |
+웹 호스팅은 Cloudflare Worker/Static Assets이며 기존 `ASSETS`·`EVENTS` 바인딩을 유지한다. 집계 본문과 앱에 저장하는 집계 필드는 위 이름 하나다. 일반 HTTP 연결의 IP·브라우저 헤더·주소 등은 호스팅 제공자의 처리 대상이며, 제공자의 로그·보존을 앱 시험만으로 확인했다고 말하지 않는다. 앱에는 계정·외부 AI·결제·활성 광고·서버 입력 저장소가 없다.
 
-## 구현 근거
+구현 정본: `apps/web/src/lib/{workspace,backup,telemetry,proof-observation}.ts`, `apps/web/public/sw.js`, [ADR-006](../10-decisions/ADR-006-explicit-local-values-20261115.md). 검증: `tests/privacy/payload-egress.spec.ts`, `tests/e2e/{saved-send,proof,photo-file}.spec.ts`, `scripts/check-network-allowlist.ts`. 백업·값 선택과 가림은 [현재 공개 개인정보 지면](https://decod.ing/ko/privacy/)에도 설명한다.
 
-- runtime network primitive: `scripts/check-network-allowlist.ts`가 UI/runtime source의 허용되지 않은 network primitive를 차단한다.
-- payload egress/storage: `tests/privacy/payload-egress.spec.ts`가 request, WebSocket/fetch/beacon, local/session storage, IndexedDB, Cache Storage, history에서 synthetic canary 부재를 검사한다.
-- local workspace: `apps/web/src/lib/workspace.ts`가 scalar를 type marker로 치환하고 sensitive key를 redaction한다.
-- tool preference: `apps/web/src/islands/ToolSearch.tsx`와 `packages/workbench-ui/src/copy-feedback.ts`가 위에 열거한 고정 key만 쓴다.
-- PWA: `apps/web/public/sw.js`는 query가 있는 URL을 cache하지 않고 navigation은 network-first, fingerprinted `/_astro/` asset만 cache-first로 처리한다.
-
-## 외부 provider 경계
-
-- public web은 Cloudflare Worker Static Assets를 사용한다. 제품 코드에는 analytics, crash reporter, auth, payment, advertising, database binding이 없다.
-- Cloudflare의 실제 edge request metadata, 국가, 보존, 관리 설정은 provider read-back 없이는 추측하지 않는다. raw input/result는 URL·request body·event로 구성하지 않는다.
-- `support@munops.com` 전달·발신의 현재 provider와 delivery canary는 shared legal-account evidence이며 제품 Git에는 개인 전달 주소를 기록하지 않는다.
-
-## 변경 트리거
-
-analytics, 광고, auth, payment, crash reporting, 외부 font/image/script, server decoder, update endpoint 또는 새 support provider가 추가되면 이 inventory, privacy/terms/support copy, CSP/network allowlist, provider disclosure와 관련 tests를 같은 work item에서 갱신한다.
+집계 이름/본문, 광고·AI·인증·결제, 원격 디코더, 지원 제공자 또는 저장/전달 범위를 바꾸면 이 목록·공개 고지·중앙 마스커·통신 허용 목록과 해당 회귀를 함께 갱신한다. 개인 전달 주소와 비밀은 Git에 기록하지 않는다.

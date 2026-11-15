@@ -20,7 +20,7 @@ I built decod.ing for unfamiliar strings and reversible encoding mistakes: encod
 
 Decoding runs in a local Web Worker. You can inspect the Network panel with a synthetic example, then disconnect and try again. The website has optional names-only usage counts; pasted text and decoded values are excluded. The extension blocks network connections and the CLI has no network code.
 
-Try the examples: https://decod.ing/fix-garbled-text/ . Source: https://github.com/whoo3474/decoding . I would appreciate feedback on confusing explanations and false positives. Please use synthetic examples rather than real credentials.
+Try the examples: https://decod.ing/fix-garbled-text/ . Source: https://github.com/munops/decoding-v6 . I would appreciate feedback on confusing explanations and false positives. Please use synthetic examples rather than real credentials.
 
 ## Reddit r/webdev
 
@@ -30,4 +30,4 @@ I made decod.ing after repeatedly encountering MIME mail subjects and mojibake. 
 
 The implementation uses a Web Worker, lazy local codecs and a strict no-payload network boundary. To check it, open the Network panel, paste a synthetic example, and try again offline after the local assets load. Optional web usage counts contain event names only; the extension blocks network connections and the CLI has no network code.
 
-This is my project. Source: https://github.com/whoo3474/decoding . I’m interested in feedback on false positives and how to explain ambiguous encodings. No real tokens or private mail are needed.
+This is my project. Source: https://github.com/munops/decoding-v6 . I’m interested in feedback on false positives and how to explain ambiguous encodings. No real tokens or private mail are needed.

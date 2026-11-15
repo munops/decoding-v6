@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "claimId": "claim_51783fba-3443-4e21-bf2b-a8267434c6b7",
+  "holder": "codex:01a1df74-eea0-7c71-b83a-883f85def473",
+  "checkedAt": "2026-11-15T23:09:48.305Z",
+  "taskOwnedConsumersClosed": true,
+  "localPreviewPorts": "4321/4322/4323 have no listeners",
+  "temporaryWorktreesCreated": 0,
+  "dependencyCopiesCreated": 0,
+  "otherSessionsOrSlotsTouched": false,
+  "assets": [
+    {
+      "path": "/Users/minhan/workspace/decoding-v6/apps/web/dist",
+      "disposition": "reclaimed",
+      "reason": "Task-owned producers/consumers ended; immutable audit evidence is committed and original publication candidates are in their registered local-only vault.",
+      "cleanup": {
+        "trigger": "Current implementation/release validation finished; provider rollback uses the existing native version, not local dist.",
+        "action": "reclaim",
+        "afterClaimId": "claim_51783fba-3443-4e21-bf2b-a8267434c6b7"
+      }
+    },
+    {
+      "path": "/Users/minhan/workspace/decoding-v6/apps/cli/dist",
+      "disposition": "reclaimed",
+      "reason": "Task-owned producers/consumers ended; immutable audit evidence is committed and original publication candidates are in their registered local-only vault.",
+      "cleanup": {
+        "trigger": "Current implementation/release validation finished; provider rollback uses the existing native version, not local dist.",
+        "action": "reclaim",
+        "afterClaimId": "claim_51783fba-3443-4e21-bf2b-a8267434c6b7"
+      }
+    },
+    {
+      "path": "/Users/minhan/workspace/decoding-v6/apps/desktop/dist",
+      "disposition": "reclaimed",
+      "reason": "Task-owned producers/consumers ended; immutable audit evidence is committed and original publication candidates are in their registered local-only vault.",
+      "cleanup": {
+        "trigger": "Current implementation/release validation finished; provider rollback uses the existing native version, not local dist.",
+        "action": "reclaim",
+        "afterClaimId": "claim_51783fba-3443-4e21-bf2b-a8267434c6b7"
+      }
+    },
+    {
+      "path": "/Users/minhan/workspace/decoding-v6/apps/extension/dist",
+      "disposition": "reclaimed",
+      "reason": "Task-owned producers/consumers ended; immutable audit evidence is committed and original publication candidates are in their registered local-only vault.",
+      "cleanup": {
+        "trigger": "Current implementation/release validation finished; provider rollback uses the existing native version, not local dist.",
+        "action": "reclaim",
+        "afterClaimId": "claim_51783fba-3443-4e21-bf2b-a8267434c6b7"
+      }
+    },
+    {
+      "path": "/Users/minhan/workspace/decoding-v6/test-results",
+      "disposition": "reclaimed",
+      "reason": "Task-owned producers/consumers ended; immutable audit evidence is committed and original publication candidates are in their registered local-only vault.",
+      "cleanup": {
+        "trigger": "Current implementation/release validation finished; provider rollback uses the existing native version, not local dist.",
+        "action": "reclaim",
+        "afterClaimId": "claim_51783fba-3443-4e21-bf2b-a8267434c6b7"
+      }
+    },
+    {
+      "path": "/Users/minhan/workspace/decoding-v6/playwright-report",
+      "disposition": "reclaimed",
+      "reason": "Task-owned producers/consumers ended; immutable audit evidence is committed and original publication candidates are in their registered local-only vault.",
+      "cleanup": {
+        "trigger": "Current implementation/release validation finished; provider rollback uses the existing native version, not local dist.",
+        "action": "reclaim",
+        "afterClaimId": "claim_51783fba-3443-4e21-bf2b-a8267434c6b7"
+      }
+    },
+    {
+      "path": "/Users/minhan/workspace/decoding-v6/.wrangler/decoding-release-20261116-01a1df74",
+      "disposition": "reclaimed",
+      "reason": "Task-owned producers/consumers ended; immutable audit evidence is committed and original publication candidates are in their registered local-only vault.",
+      "cleanup": {
+        "trigger": "Current implementation/release validation finished; provider rollback uses the existing native version, not local dist.",
+        "action": "reclaim",
+        "afterClaimId": "claim_51783fba-3443-4e21-bf2b-a8267434c6b7"
+      }
+    },
+    {
+      "path": "/Users/minhan/workspace/decoding-v6/docs/evidence/decoding-improve-20261115",
+      "disposition": "retain",
+      "reason": "Committed original source evidence and immutable prepared channel packages remain the audit/handoff record; these are not temporary copies.",
+      "cleanup": {
+        "trigger": "Source originals are the permanent record of this release; no deletion is scheduled.",
+        "action": "preserve_original",
+        "afterClaimId": "claim_51783fba-3443-4e21-bf2b-a8267434c6b7"
+      }
+    },
+    {
+      "path": "/Users/minhan/workspace/decoding-v6/.local-release-artifacts/decoding-improve-20261115",
+      "disposition": "retain",
+      "reason": "Owner handoff J1/J2/J7 requires these original frozen archives for the still-open publisher. They are original deliverables, not a worktree, dependency copy or public channel release.",
+      "cleanup": {
+        "trigger": "Preserve the exact original publication candidates as the channel handoff record; no automatic deletion or invented date.",
+        "action": "preserve_original",
+        "afterClaimId": "claim_51783fba-3443-4e21-bf2b-a8267434c6b7"
+      }
+    }
+  ],
+  "channelCandidatesPublished": false,
+  "localOriginalCandidateVault": ".local-release-artifacts/decoding-improve-20261115"
+}

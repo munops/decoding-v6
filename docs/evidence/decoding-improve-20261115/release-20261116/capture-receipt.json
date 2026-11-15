@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-11-15T22:34:53.161Z",
+  "target": "https://decod.ing",
+  "navigationOrigin": "https://decod.ing",
+  "captureSourceIdentity": {
+    "kind": "deployed_capture",
+    "baseHead": "5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb",
+    "dirtyFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "health": {
+    "ok": true,
+    "service": "decoding-v6",
+    "revision": "5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb"
+  },
+  "cleanProfile": {
+    "locale": "en-US",
+    "colorScheme": "light",
+    "reducedMotion": "reduce",
+    "serviceWorkers": "block",
+    "isolatedContexts": true
+  },
+  "captures": [
+    {
+      "path": "home-first-320.png",
+      "state": "first_visit_clean",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "pixels": {
+        "width": 320,
+        "height": 844
+      },
+      "sha256": "bb2d74a3eae0309a26e78124d3123961c20b0ac2d0275541d555a58d08100ef2"
+    },
+    {
+      "path": "home-first-390.png",
+      "state": "first_visit_clean",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "189d1a4ed2fd2250dac4def7b38f9f0de8e2c0d22c4899bdca21543f966aaefe"
+    },
+    {
+      "path": "home-first-1440.png",
+      "state": "first_visit_clean",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "pixels": {
+        "width": 1440,
+        "height": 1000
+      },
+      "sha256": "33f7c71bdfd511cf28bf333852a46902cbc4eb2cbde22ccb70028a27dce9542a"
+    },
+    {
+      "path": "home-core-synthetic-390.png",
+      "state": "core_synthetic_decode",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "8cc69ad3604a5f1661811f9b04565c7b95597aabceac7ba6868d98191c45bbf0"
+    },
+    {
+      "path": "home-unsupported-390.png",
+      "state": "unsupported",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "7d8b94754fa0119c5cc83720ca391d1ea01e1dbe3f4255de81ceb7285f446ab1"
+    },
+    {
+      "path": "home-worker-error-390.png",
+      "state": "worker_error",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "1d2bffa9ffde344f98f1c9f2aea89c96afe129375c2db1ffaf7f6958e1e3b4a6"
+    }
+  ]
+}

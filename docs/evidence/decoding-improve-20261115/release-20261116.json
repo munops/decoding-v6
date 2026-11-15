@@ -1,0 +1,363 @@
+{
+  "schemaVersion": 1,
+  "requestId": "DECODING-IMPROVE-20261115-OWNER-01",
+  "checkedAt": "2026-11-15T23:00:42.301Z",
+  "scope": "Approved handoff execution; selected public Web/PWA release. Unresolved native/human/provider/future observations remain explicit.",
+  "states": {
+    "documented": true,
+    "implemented": true,
+    "test_passed": true,
+    "built": true,
+    "deployed": true,
+    "released_web": true,
+    "monitored": false,
+    "natural_user_value": "data_pending",
+    "revenue": "data_pending",
+    "profitability": "data_pending"
+  },
+  "source": {
+    "runtimeRevision": "5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb",
+    "executorRevision": "881d1a1c46316c1433836d17643f7969f626740c",
+    "sourceSync": {
+      "checkedAt": "2026-11-15T22:27:21.610Z",
+      "state": "verified",
+      "sourceRevision": "5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb",
+      "pushedHead": "881d1a1c46316c1433836d17643f7969f626740c",
+      "remote": "github:munops/decoding-v6:refs/heads/main",
+      "force": false,
+      "visibilityChanged": false
+    },
+    "repository": "https://github.com/munops/decoding-v6",
+    "metadataOnlyAfterRuntime": [
+      "docs/operations/release-wave-decoding-improve-20261116.yaml",
+      "docs/operations/local-delivery.json"
+    ]
+  },
+  "authority": {
+    "executionLane": "owner_lane",
+    "waveRef": "docs/operations/release-wave-decoding-improve-20261116.yaml",
+    "mode": "current_in_scope_owner_request_plus_active_standing_delegation",
+    "ownerApprovalRef": "handoff-20261115.md; J7 approvals persist separately",
+    "claimId": "claim_51783fba-3443-4e21-bf2b-a8267434c6b7",
+    "holder": "codex:01a1df74-eea0-7c71-b83a-883f85def473",
+    "resources": [
+      {
+        "resourceKey": "provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6",
+        "fencingToken": 7
+      },
+      {
+        "resourceKey": "provider:github:munops/decoding-v6",
+        "fencingToken": 6
+      },
+      {
+        "resourceKey": "repo:decoding-v6",
+        "fencingToken": 73
+      }
+    ],
+    "noNewChargeOrRecurrence": true,
+    "newAccountOrSecretOrDNSOrTermsOrCommunityMutation": false,
+    "hqActivation": false
+  },
+  "artifact": {
+    "sha256": "7a1a7401fdf69944f074b93c5ea4f1079dc70b06d0040e7efc29ca214e0f8da0",
+    "method": "SHA256 of sorted per-file SHA256, two spaces, relative path and LF",
+    "files": 1621,
+    "manifestRef": "docs/evidence/decoding-improve-20261115/release-20261116/artifact-manifest.json.gz",
+    "reproducedAndComparedBeforeProvider": true
+  },
+  "provider": {
+    "checkedAt": "2026-11-15T22:31:04.105Z",
+    "state": "verified",
+    "mode": "after",
+    "deployment": {
+      "id": "aa53f6c6-6182-4052-b03d-0a07da5b2acc",
+      "versions": [
+        {
+          "version_id": "c0075d8d-b5b1-4996-8124-3f07ff01141a",
+          "percentage": 100
+        }
+      ]
+    },
+    "health": [
+      {
+        "origin": "https://decod.ing",
+        "status": 200,
+        "ok": true,
+        "service": "decoding-v6",
+        "revision": "5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb"
+      },
+      {
+        "origin": "https://www.decod.ing",
+        "status": 200,
+        "ok": true,
+        "service": "decoding-v6",
+        "revision": "5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb"
+      },
+      {
+        "origin": "https://decoding-v6.wjstks3474.workers.dev",
+        "status": 200,
+        "ok": true,
+        "service": "decoding-v6",
+        "revision": "5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb"
+      }
+    ],
+    "bindings": [
+      {
+        "name": "ASSETS",
+        "type": "assets"
+      },
+      {
+        "name": "BUILD_SHA",
+        "type": "plain_text"
+      },
+      {
+        "name": "EVENTS",
+        "type": "analytics_engine",
+        "dataset": "decoding_v6_events"
+      }
+    ],
+    "identity": {
+      "origin": "https://decod.ing",
+      "name": "decod.ing — Paste anything. See what it is.",
+      "short_name": "decod.ing",
+      "fingerprint": "0630fe0decac66174b6aebb6e6f89e3730df11046bb61f42c5837d679a981c89"
+    },
+    "sourceRevision": "5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb",
+    "artifactDigest": "7a1a7401fdf69944f074b93c5ea4f1079dc70b06d0040e7efc29ca214e0f8da0",
+    "resource": "cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6",
+    "rollbackTarget": "13c4f167-2d55-41b4-ad1c-2a5d747a1a96",
+    "rollbackState": "native target verified available; rollback not invoked",
+    "bindingsChanged": false,
+    "actualBilledCost": null
+  },
+  "validation": {
+    "mandatoryVerify": "passed",
+    "unit": {
+      "files": 30,
+      "passed": 302
+    },
+    "localBrowser": {
+      "passed": 105,
+      "skipped": 2,
+      "skipReasons": [
+        "Explicit deployed visual suite is a separate profile",
+        "Desktop first-viewport assertion is not applicable to the mobile project"
+      ]
+    },
+    "publicBrowser": {
+      "origin": "https://decod.ing",
+      "passed": 40,
+      "skipped": 0
+    },
+    "publicReleaseEntrypointSmoke": "passed",
+    "privacy": {
+      "syntheticCanaryRequests": "none_observed",
+      "syntheticCanaryAutomaticStorage": "none_observed",
+      "crossOriginRequests": "none_observed",
+      "anonymousOptOut": "passed",
+      "explicitLocalValueAndBackupFlows": "passed"
+    },
+    "accessibility": {
+      "automatedSeriousCritical": "none in the eight tested routes",
+      "keyboardAnd200PercentReflow": "passed",
+      "nativeScreenReaderListening": "unobserved",
+      "actualPhoneKeyboard": "unobserved"
+    },
+    "performance": {
+      "oneMiBFirstP75Ms": 16,
+      "oneMiBCompleteP75Ms": 21.9,
+      "oneMiBFirstBudgetMs": 100,
+      "initialGzipKiB": 143.6,
+      "initialBudgetKiB": 170,
+      "heavyChunksLazy": 14
+    },
+    "staticPages": 1511,
+    "formats": 63,
+    "tools": 49,
+    "originalDetailReview": {
+      "screenshots": 6,
+      "origin": "https://decod.ing",
+      "revision": "5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb",
+      "independentReviewer": "separate image-only reviewer",
+      "requiredFindings": [],
+      "notProved": [
+        "native devices",
+        "actual assistive-technology listening",
+        "natural users",
+        "retention",
+        "revenue",
+        "profitability"
+      ]
+    },
+    "captureReceiptRef": "docs/evidence/decoding-improve-20261115/release-20261116/capture-receipt.json",
+    "publicMetadata": {
+      "checkedAt": "2026-11-15T22:56:04.507Z",
+      "origin": "https://decod.ing",
+      "status": 200,
+      "headers": {
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; worker-src 'self' blob:; frame-src 'self' data: blob:; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+        "referrer-policy": "strict-origin",
+        "x-content-type-options": "nosniff",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=()"
+      },
+      "naverPublicVerificationTagPresent": false,
+      "googlePublicVerificationTagPresent": false,
+      "ownershipConsoleReadback": "not_performed",
+      "npmRegistry": {
+        "status": 404,
+        "name": "decoding",
+        "checkedAt": "2026-11-15T22:56:04.818Z",
+        "mutationPerformed": false
+      }
+    },
+    "guard": {
+      "method": "Unchanged product verify/e2e/deploy entrypoint with additional exact source/artifact/claim/provider/phase checks immediately before mutation. Existing root atomic phase owner used; no guard relaxation.",
+      "sourceNegativeControl": "non-exact provider command rejected before provider/phase",
+      "artifactFilesMatched": 1621,
+      "sources": [
+        {
+          "path": "docs/evidence/decoding-improve-20261115/release-20261116/guard/guard.mjs.gz",
+          "sha256": "f2199b6ecaf89ecb875a53c3121365e0fd5cc003268cc97c36f39676c3408ddc",
+          "uncompressedSha256": "6d44b870f8febcc284d2aab83387416eeb0a993781d153c74c0402e2f780d779",
+          "contentEncoding": "gzip"
+        },
+        {
+          "path": "docs/evidence/decoding-improve-20261115/release-20261116/guard/provider-readback.mjs.gz",
+          "sha256": "eda95ee405db78635c25029377892797badb91d597d195f29009acf40113dd65",
+          "uncompressedSha256": "f6c2e83e928dd1900a8cbd2a0c9497fa7069c88f0129273b12d70d197df770d9",
+          "contentEncoding": "gzip"
+        },
+        {
+          "path": "docs/evidence/decoding-improve-20261115/release-20261116/guard/push-source.mjs.gz",
+          "sha256": "d98d9549869a180b37a561d9274bdbc081b2bff041f638d6c9cb36693f549928",
+          "uncompressedSha256": "c9a3122a155dabf39d292d4dc6f3022117cc85367e49b39fd3ede88a70c4333d",
+          "contentEncoding": "gzip"
+        }
+      ],
+      "durablePhaseStates": {
+        "source": "completed",
+        "web": "completed"
+      },
+      "unknownOutcomeReplay": false
+    }
+  },
+  "channels": {
+    "web": {
+      "state": "released_and_production_smoke_verified",
+      "versionId": "c0075d8d-b5b1-4996-8124-3f07ff01141a"
+    },
+    "npm": {
+      "state": "prepared_not_published",
+      "name": "decoding",
+      "version": "6.0.0",
+      "artifactRef": ".local-release-artifacts/decoding-improve-20261115/decoding-6.0.0.tgz",
+      "sha256": "542d5909681218987cd531d2b1ffa6417c383efb72711ae2c7583e485cbfc3b4",
+      "registryAtReadback": {
+        "status": 404,
+        "name": "decoding",
+        "checkedAt": "2026-11-15T22:56:04.818Z",
+        "mutationPerformed": false
+      },
+      "isolatedSmokeRef": "docs/evidence/decoding-improve-20261115/release-20261116/cli-isolated-smoke.json",
+      "humanGate": "npm security/email/2FA completion and authenticated publication remain unconfirmed",
+      "artifactVisibility": "local_original_not_public_Git"
+    },
+    "extensions": [
+      {
+        "channel": "chrome",
+        "artifactRef": ".local-release-artifacts/decoding-improve-20261115/decoding-chrome-6.0.0.zip",
+        "sha256": "03867ce3a7b4111caca981c784a1d82d9270bbd00f6da692cc6ab3ce26494159",
+        "state": "built_unsigned_not_submitted",
+        "artifactVisibility": "local_original_not_public_Git"
+      },
+      {
+        "channel": "edge",
+        "artifactRef": ".local-release-artifacts/decoding-improve-20261115/decoding-edge-6.0.0.zip",
+        "sha256": "03867ce3a7b4111caca981c784a1d82d9270bbd00f6da692cc6ab3ce26494159",
+        "state": "built_unsigned_not_submitted",
+        "artifactVisibility": "local_original_not_public_Git"
+      },
+      {
+        "channel": "firefox",
+        "artifactRef": ".local-release-artifacts/decoding-improve-20261115/decoding-firefox-6.0.0.zip",
+        "sha256": "d6dff0c805d55e2d663b7bb61aa0cc77b748612baa703f742d34695c99c778b5",
+        "state": "built_unsigned_not_submitted",
+        "artifactVisibility": "local_original_not_public_Git"
+      }
+    ],
+    "chromeStore": {
+      "state": "not_submitted",
+      "existingJ7Approval": "google_munops_owner; one-time USD 5 developer registration/terms; exact name and three permissions only",
+      "nativeRightClick": "not independently observed",
+      "humanBrowserHandoff": "still awaiting completion confirmation"
+    },
+    "community": {
+      "state": "drafts_not_posted",
+      "dependencies": [
+        "Chrome public availability",
+        "npm public availability",
+        "current board rules/authentication"
+      ],
+      "sourceRef": "docs/operations/channels/community-drafts.md"
+    }
+  },
+  "externalGates": [
+    {
+      "id": "DEC-NEXT-001-A14",
+      "status": "wait_external",
+      "gate": "Actual phone paste/keyboard and real screen-reader listening are unobserved; emulation/axe/image review are separate."
+    },
+    {
+      "id": "DEC-NEXT-004-D4",
+      "status": "wait_external",
+      "gate": "Actual OS share-sheet/file handoff is unobserved; installed SW synthetic route passed."
+    },
+    {
+      "id": "DEC-NEXT-011-J1",
+      "status": "wait_external",
+      "gate": "Actual native context-menu interaction and public store availability remain unobserved; local protocol/artifact checks passed."
+    },
+    {
+      "id": "DEC-NEXT-011-J7",
+      "status": "wait_external",
+      "gate": "Npm human security/email/2FA completion is unconfirmed; no provider credential creation, npm publication, Chrome payment/registration/submission or community posting was performed."
+    },
+    {
+      "id": "DEC-NEXT-011-NAVER",
+      "status": "wait_external",
+      "gate": "No current authenticated Naver ownership read-back or verification method/token is available; public meta tag is absent. Existing user browser handoff is still active."
+    },
+    {
+      "id": "DEC-NEXT-011-J5",
+      "status": "data_pending",
+      "notBefore": "2026-11-29",
+      "dateBasis": "Owner handoff J5 specifies two weeks after 2026-11-15; no invented observation deadline.",
+      "gate": "Search query impressions/clicks and names-only counts require fresh native provider read-back. Owner-reported GSC verification/sitemap is not relabeled as this run’s native confirmation."
+    }
+  ],
+  "measurement": {
+    "operatorQAWindowUTC": {
+      "start": "2026-11-15T22:32:24.340Z",
+      "end": "2026-11-15T22:34:59.573Z"
+    },
+    "countsAreNotUniquePeopleOrRetentionCohorts": true,
+    "operatorAndCrawlerTrafficNotNaturalDemand": true,
+    "naturalValueOrRevenueClaim": false
+  },
+  "documentaryReconciliation": {
+    "previousProductionRecord": "Historical September record used an invalid provenance enum and stale source; it was not used to prove this deployment.",
+    "ciPolicy": "0 workflows, 0 errors, 0 warnings",
+    "cockpit": "An unscoped static read-only checker reported unrelated portfolio errors; no root mutation or live cockpit/monitoring pass is claimed."
+  },
+  "storage": {
+    "temporaryWorktreesCreated": 0,
+    "dependencyCopiesCreated": 0,
+    "sourceEvidence": "preserve_original",
+    "generatedOutputs": "reclaimed after immutable evidence/channel-package transfer",
+    "temporaryPacket": "Registered product-owned ignored .wrangler packet; an initially rejected private/tmp packet was transferred here and its original path removed by move.",
+    "closureRef": "docs/evidence/decoding-improve-20261115/release-20261116/storage-cleanup.json",
+    "guardSources": "Losslessly compressed exact executed sources; raw and archive SHA256 recorded.",
+    "channelCandidates": "Four immutable original tar/zip publication deliverables retained locally; no public GitHub binary publication."
+  }
+}

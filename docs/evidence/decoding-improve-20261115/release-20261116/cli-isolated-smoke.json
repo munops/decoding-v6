@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-11-15T22:42:09.285Z",
+  "package": "decoding",
+  "version": "6.0.0",
+  "humanKorean": "passed",
+  "legacyJSON": "passed",
+  "workspaceImports": "forbidden_by_loader",
+  "network": "forbidden_by_loader",
+  "publication": "not_performed"
+}

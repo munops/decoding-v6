@@ -14,5 +14,10 @@
     "Cloudflare fixed aggregate counts and sample sufficiency"
   ],
   "decision": "Keep D onward order until actual observation supports reprioritization. A reminder date is not evidence of completion.",
-  "externalMessagesPublished": []
+  "externalMessagesPublished": [],
+  "operatorQAWindowUTC": {
+    "start": "2026-11-15T22:32:24.340Z",
+    "end": "2026-11-15T22:34:59.573Z"
+  },
+  "interpretation": "Names-only totals include operator/crawler activity and are not unique-user or causal retention proof. Keep the known QA window separate."
 }

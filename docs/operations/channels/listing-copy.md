@@ -14,7 +14,7 @@ Selected text passes once through extension memory. It never enters a URL, persi
 
 Permissions: contextMenus adds the explicit right-click action; activeTab supports the current user-selected tab; storage is the existing minimum permission and contains no selection values. No host permissions are requested.
 
-Privacy: https://decod.ing/privacy/ . Source: https://github.com/whoo3474/decoding . Support: https://decod.ing/support/ .
+Privacy: https://decod.ing/privacy/ . Source: https://github.com/munops/decoding-v6 . Support: https://decod.ing/support/ .
 
 ## 한국어 설명
 
