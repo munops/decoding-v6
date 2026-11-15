@@ -145,42 +145,44 @@ th{font-size:12px;color:var(--muted);font-weight:700}
 </section>
 
 <section class="read">
-  <h2>오너가 정할 것</h2>
+  <h2>정한 것</h2>
+  <p>정할 것 열다섯 가지는 맡겨 주신 대로 직접 확인하고 정했습니다. 구현은 이대로 갑니다. 마음에 안 드는 줄이 있으면 그 줄만 말씀해 주세요.</p>
   <div class="ask">
-    <div><b>1. 첫 화면 안 <span class="rec">A안</span></b>A·B·C 가운데 하나.</div>
+    <div><b>1. 첫 화면 <span class="rec">A안</span></b>누르기 0번에 답이 나옵니다. 처음 온 사람이 빈 칸 앞에서 많이 멈추면 B안의 문을 위로 올립니다.</div>
     <div><b>2. 화면 느낌 <span class="rec">밝게</span></b>밝은 바탕 기본, 제목은 보통 글꼴, 겹 색 넷은 그대로. 어두운 화면은 설정에서.</div>
-    <div><b>3. "개발자"를 빼고 "누구나"로 <span class="rec">뺀다</span></b>제목, 검색 설명, 문서.</div>
-    <div><b>4. 한국어 브라우저면 한국어 화면부터 <span class="rec">그렇게</span></b>지금은 영어 화면에 안내 띠.</div>
-    <div><b>5. 넣어 두기에 "값까지" <span class="rec">넣는다</span></b>이 기기에만, 직접 고를 때만. 기본은 지금처럼 모양만. 지금 규약은 원문을 어디에도 남기지 않습니다.</div>
-    <div><b>6. 주소(링크)에 값을 실어 건네기 <span class="rec">안 한다</span></b>대화방 미리보기와 기록에 남습니다. 대신 다른 앱으로 보내기와 파일.</div>
-    <div><b>7. 옛 암호·퍼즐 범위 <span class="rec">열쇠 없이 풀리는 것만</span></b>모스, ROT13·시저 25가지 펼치기, 0과 1.</div>
-    <div><b>8. 밖에 물어봐야 되는 일 <span class="rec">안 한다</span></b>짧은 주소 펴기, 위험 주소 조회, 지문 값 원문 찾기. 값이 밖으로 나갑니다.</div>
-    <div><b>9. AI로 설명 붙이기 <span class="rec">안 한다</span></b></div>
-    <div><b>10. 확실하지 않을 때 <span class="rec">풀어 보여 주고 다른 가능성을 같이</span></b>지금은 후보 목록에서 멈춥니다.</div>
-    <div><b>11. 화면 말 <span class="rec">쉬운 말 먼저, 원래 이름은 괄호</span></b>로그인 토큰(JWT), 지문 값(해시).</div>
-    <div><b>12. 광고 <span class="rec">계속 끈다</span></b></div>
-    <div><b>13. 데스크톱 앱·확장 내놓기 <span class="rec">웹을 고친 뒤 다시</span></b></div>
-    <div><b>14. 방문·풀기 횟수와 검색 노출 보기</b>Cloudflare와 Search Console에서 열어 주셔야 볼 수 있습니다.</div>
-    <div><b>15. 영어 화면 말 원어민 확인</b>구현은 영어·한국어를 같이 씁니다.</div>
+    <div><b>3. "개발자" <span class="rec">뺀다</span></b>제목, 검색 설명, 문서에서.</div>
+    <div><b>4. 한국어 <span class="rec">한국어 브라우저면 한국어 화면부터</span></b></div>
+    <div><b>5. 넣어 두기에 "값까지" <span class="rec">넣는다</span></b>이 기기에만, 직접 고를 때만, 기본은 모양만, 비밀로 보이는 칸은 늘 가림. 운영에서 넣어 둔 것을 열어 보니 가린 구조만 남아 다시 볼 까닭이 없었습니다. 값은 서버로 가지 않습니다.</div>
+    <div><b>6. 주소(링크)에 값 싣기 <span class="rec">안 한다</span></b>대화방 미리보기와 기록에 남습니다. 대신 다른 앱으로 보내기와 파일.</div>
+    <div><b>7. 옛 암호·퍼즐 <span class="rec">열쇠 없이 풀리는 것만</span></b>모스, ROT13·시저 25가지 펼치기, 0과 1.</div>
+    <div><b>8. 밖에 물어봐야 되는 일 <span class="rec">안 한다</span></b>짧은 주소 펴기, 위험 주소 조회, 지문 값 원문 찾기.</div>
+    <div><b>9. AI 설명 <span class="rec">안 한다</span></b></div>
+    <div><b>10. 확실하지 않을 때 <span class="rec">풀어 보여 주고 다른 가능성을 같이</span></b></div>
+    <div><b>11. 화면 말 <span class="rec">쉬운 말 먼저, 원래 이름은 괄호</span></b></div>
+    <div><b>12. 광고 <span class="rec">끈다</span></b>도구 지면에 보이는 광고 자리 안내도 뺍니다.</div>
+    <div><b>13. 데스크톱 앱·확장 <span class="rec">이번에 내놓지 않는다</span></b>웹 첫 화면이 먼저입니다.</div>
+    <div><b>14. 방문·검색 수치 <span class="rec">수치 없이 진행</span></b>조회 도구가 답을 주지 않았습니다. 고칠 것은 실화면과 코드로 확정됐습니다.</div>
+    <div><b>15. 영어 화면 말 <span class="rec">쉬운 영어로 직접 쓴다</span></b>원어민이 짚으면 그 문장만 고칩니다.</div>
   </div>
-  <p>답 없이 바로 할 수 있는 것은 틀린 것 고치기(인계문 묶음 A) 전부입니다.</p>
 </section>
 
 <section class="read">
-  <h2>못 본 것</h2>
-  <div class="note">실화면 조사가 두 번 멈췄습니다. 브라우저 조종권이 오너 쪽에 있었고 다른 도구로 돌려 보지 않았습니다. 도구 여러 개 써 보기, 넣어 두기·건네기 눌러 보기, 정적 지면, 인터넷 끊고 쓰기, 키보드만으로 쓰기, 화면 낭독기는 못 봤습니다. 구현자가 먼저 확인하도록 인계문에 넣었습니다.</div>
+  <h2>확인한 것과 아직 못 본 것</h2>
+  <p>처음 쓰려던 브라우저가 세 번 멈춰서 접근을 바꿔 운영 화면을 직접 확인했습니다. 도구, 넣어 두기, 건네기, 정적 지면, 키보드 순서, 밖으로 나가는 요청을 봤고 거기서 결함이 다섯 가지 더 나왔습니다.</p>
   <ul>
-    <li>방문 수와 검색 노출은 조회 권한이 없어 모릅니다.</li>
-    <li>진짜 휴대폰이 아니라 폭 390으로 흉내 낸 화면입니다.</li>
-    <li>다른 서비스가 값을 서버로 보내는지는 정책 글만 봤습니다.</li>
-    <li>시안 속 풀이는 눌러 보기용 작은 풀이기입니다. 실제 엔진이 아닙니다. 넣어 둔 것 목록과 "2분 14초"는 예시입니다.</li>
+    <li>3겹 값을 넣으면 맨 위에 첫 겹을 푼 값만 보이고 복사도 그 값입니다.</li>
+    <li>인터넷을 끊으면 도구 주소에서 첫 화면이 나오고 값이 안 풀렸습니다(한 번 본 것).</li>
+    <li>주소 글자 도구에 %로 적힌 값을 넣으면 풀지 않고 한 번 더 감쌉니다.</li>
+    <li>도구 지면에 "This space is available. Sponsor information"이 보입니다.</li>
+    <li>없는 주소의 제목이 "This format of URL is unsupported."입니다.</li>
   </ul>
+  <div class="note">아직 못 본 것: 진짜 휴대폰과 휴대폰 키보드, 화면 낭독기로 실제 듣기, 방문 수와 검색 노출. 시안 속 풀이는 눌러 보기용 작은 풀이기이고 넣어 둔 것 목록과 "2분 14초"는 예시입니다.</div>
   <p class="muted">진단 <code>docs/munops/programs/decoding-improve-2026-11-15/README.md</code>, 구현 인계문 같은 폴더 <code>handoff-20261115.md</code>, 시안 <code>decoding-v6/prototypes/first-screen-20261115/</code>.</p>
 </section>
 </main>
 
 <script>
-var CAP={tool:['도구 한 장','치는 대로 바로 결과가 나옵니다. 지금은 "Run locally"를 눌러야 합니다. 설명이 도구마다 다르고, 결과를 첫 화면으로 넘겨 더 풀 수 있습니다.'],saved:['넣어 둔 것','아래 탭에서 바로 갑니다. 줄마다 값을 가렸는지와 언제 지워지는지가 보입니다. "값까지"는 오너 결정 5가 난 뒤에만 켭니다.'],send:['건네기','값 없이 알려 주기를 먼저 권합니다. 풀린 값은 비밀 칸을 가려서, 받는 사람이 똑같이 풀 명령은 값 없이.'],proof:['내 기기 안에서만','지금의 확인 화면을 쉬운 말로. 밖으로 나간 횟수를 숫자로 보여 주고, 횟수 세기를 여기서 설명하고 끕니다.'],more:['더보기','휴대폰에서 사라졌던 길이 여기 모입니다.']};
+var CAP={tool:['도구 한 장','치는 대로 바로 결과가 나옵니다. 지금은 "Run locally"를 눌러야 합니다. 설명이 도구마다 다르고, 결과를 첫 화면으로 넘겨 더 풀 수 있습니다.'],saved:['넣어 둔 것','아래 탭에서 바로 갑니다. 줄마다 값을 가렸는지와 언제 지워지는지가 보입니다. 기본은 모양만이고 직접 고를 때만 값까지 넣어 둡니다.'],send:['건네기','값 없이 알려 주기를 먼저 권합니다. 풀린 값은 비밀 칸을 가려서, 받는 사람이 똑같이 풀 명령은 값 없이.'],proof:['내 기기 안에서만','지금의 확인 화면을 쉬운 말로. 밖으로 나간 횟수를 숫자로 보여 주고, 횟수 세기를 여기서 설명하고 끕니다.'],more:['더보기','휴대폰에서 사라졌던 길이 여기 모입니다.']};
 function cap(s){document.getElementById('capc').innerHTML='<b>'+CAP[s][0]+'</b><span>'+CAP[s][1]+'</span>'}
 document.querySelectorAll('.tabs').forEach(function(g){g.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;g.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});if(b.dataset.v)document.getElementById('fa').src='option-a.html?v='+b.dataset.v;if(b.dataset.s){document.getElementById('fc').src='common.html?s='+b.dataset.s;cap(b.dataset.s)}})});
 cap('tool');
