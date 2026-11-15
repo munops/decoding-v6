@@ -148,7 +148,11 @@ export const damagedText: Detector = {
       (/[가-힣]/.test(text) && /\?{2,}/.test(text))
     if (!replacementCount && !placeholders) return null
     return found('damaged-text', 'Lost characters', text, replacementCount ? 0.99 : 0.8, {
-      warnings: [warning('TEXT-LOST', 'TEXT-LOST')],
+      warnings: [
+        warning('TEXT-LOST', {
+          code: replacementCount ? 'warning-text-lost' : 'warning-text-maybe-lost',
+        }),
+      ],
       metadata: { replacementCount, placeholders },
     })
   },

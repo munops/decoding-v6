@@ -8,7 +8,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@decoding/engine": "workspace:*"
+    "@decoding/engine": "workspace:*",
+    "@decoding/presentation": "workspace:*"
   },
   "devDependencies": {
     "@types/chrome": "^0.1.1",

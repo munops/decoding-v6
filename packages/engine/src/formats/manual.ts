@@ -1,3 +1,5 @@
+import { diagnosticField } from '../diagnostics'
+import { safeName } from '../message-facts'
 import { boundedInflate } from '../bounded-inflate'
 import type { DecodeInput, Detection, DetectorContext } from '../types'
 import { decodeBase64, inputBytes, inputText } from '../utils'
@@ -45,15 +47,18 @@ export async function manualDecode(
       format,
       `${format} (chosen by you)`,
       {
-        error: `Cannot decode this layer as ${format}. Check the format, or open its local parser online once and retry.`,
+        error: diagnosticField({
+          code: 'diagnostic-manual-error',
+          params: { format: safeName(format) },
+        }),
       },
       1,
       {
         warnings: [
-          warning(
-            'MANUAL-DECODE-FAILED',
-            `This layer cannot be decoded as ${format}. Undo to restore automatic detection.`,
-          ),
+          warning('MANUAL-DECODE-FAILED', {
+            code: 'warning-manual-decode-failed',
+            params: { format: safeName(format) },
+          }),
         ],
       },
     )
@@ -64,14 +69,19 @@ export function manualFailure(format: string): Detection {
   return found(
     format,
     `${format} (chosen by you)`,
-    { error: `Cannot decode this layer as ${format}.` },
+    {
+      error: diagnosticField({
+        code: 'diagnostic-manual-error-2',
+        params: { format: safeName(format) },
+      }),
+    },
     1,
     {
       warnings: [
-        warning(
-          'MANUAL-DECODE-FAILED',
-          `This layer cannot be decoded as ${format}. Undo to restore automatic detection.`,
-        ),
+        warning('MANUAL-DECODE-FAILED', {
+          code: 'warning-manual-decode-failed',
+          params: { format: safeName(format) },
+        }),
       ],
     },
   )

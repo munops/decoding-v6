@@ -1,3 +1,4 @@
+import { safeName } from '../message-facts'
 import { unicodeDomain } from './punycode'
 import type { LintWarning } from '../types'
 import { decodeBase64, inputText } from '../utils'
@@ -7,7 +8,11 @@ export function inspectUrl(url: URL) {
   if (clean.password) clean.password = '[redacted]'
   const warnings: LintWarning[] = []
   const add = (ruleId: string, severity: LintWarning['severity'] = 'warning') =>
-    warnings.push({ ruleId, severity, message: ruleId })
+    warnings.push({
+      ruleId,
+      severity,
+      message: { code: 'warning-url', params: { rule: safeName(ruleId) } },
+    })
   let trackingCount = 0
   for (const key of new Set(clean.searchParams.keys())) {
     if (tracking.test(key)) {

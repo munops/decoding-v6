@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import type { Detector } from '../types'
 import { inputText } from '../utils'
 import { found, warning } from './common'
@@ -69,18 +70,16 @@ export const punycode: Detector = {
         { unicode: domain, ascii: text, mixedScripts: mixed },
         0.999,
         {
-          warnings: nonLatin
-            ? [
-                warning(
-                  'IDN-CONFUSABLE',
-                  'This domain uses Greek/Cyrillic characters that can resemble Latin letters. Inspect every label.',
-                ),
-              ]
-            : [],
+          warnings: nonLatin ? [warning('IDN-CONFUSABLE', { code: 'warning-idn-confusable' })] : [],
         },
       )
     } catch {
-      return found('punycode', 'Punycode / IDN', { error: 'Undecodable Punycode label' }, 0.99)
+      return found(
+        'punycode',
+        'Punycode / IDN',
+        { error: diagnosticField({ code: 'diagnostic-punycode-error' }) },
+        0.99,
+      )
     }
   },
 }

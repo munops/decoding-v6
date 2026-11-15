@@ -1,6 +1,6 @@
 import type { DecodeInput, DecodeResult } from '@decoding/engine'
 
-type DecoderWorkerMessage = { id: number; result?: DecodeResult; error?: string }
+type DecoderWorkerMessage = { id: number; result?: DecodeResult; error?: { code: 'decode-failed' } }
 
 export type DecoderWorkerLike = {
   onmessage: ((event: MessageEvent<DecoderWorkerMessage>) => void) | null
@@ -66,7 +66,7 @@ export function createDecoderWorkerClient(
       if (!request) return
       clearTimeout(request.timeout)
       pending.delete(event.data.id)
-      if (event.data.error) request.reject(new Error(event.data.error))
+      if (event.data.error) request.reject(new Error(event.data.error.code))
       else if (event.data.result) {
         const unavailable = (node: DecodeResult['root']): boolean =>
           [node.selected, ...node.candidates].some((item) =>

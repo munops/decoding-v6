@@ -1,8 +1,5 @@
-import {
-  answerSentence,
-  primaryLayers,
-  warningTitle,
-} from '../../../packages/workbench-ui/src/answer-copy'
+import { toLegacyResult, toLegacyNode } from '@decoding/presentation/legacy'
+import { answerSentence, primaryLayers, warningTitle } from '@decoding/presentation'
 import {
   finalSelection,
   displayValue,
@@ -180,10 +177,12 @@ async function main() {
     ...(options.maxDepth === undefined ? {} : { limits: { maxDepth: options.maxDepth } }),
   })
   if (options.json)
-    stdout.write(`${JSON.stringify(result, (_key, value) => safeValue(value), 2)}\n`)
+    stdout.write(
+      `${JSON.stringify(toLegacyResult(result), (_key, value) => safeValue(value), 2)}\n`,
+    )
   else if (options.ndjson)
     for (const node of flatten(result.root))
-      stdout.write(`${JSON.stringify(node, (_key, value) => safeValue(value))}\n`)
+      stdout.write(`${JSON.stringify(toLegacyNode(node), (_key, value) => safeValue(value))}\n`)
   else {
     const final = finalSelection(result.root)
     const warnings = options.noLint

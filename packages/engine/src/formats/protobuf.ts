@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import type { Detector } from '../types'
 import { inputText } from '../utils'
 import { found, hex } from './common'
@@ -66,7 +67,7 @@ export const protobuf: Detector = {
         'Protobuf wire candidate',
         {
           fields: protobufFields(input),
-          note: 'No schema. Field names and semantic types are unknown.',
+          note: diagnosticField({ code: 'diagnostic-protobuf-note' }),
         },
         0.68,
       )

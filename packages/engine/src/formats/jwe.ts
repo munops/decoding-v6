@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import type { Detector } from '../types'
 import { decodeBase64, inputText } from '../utils'
 import { found } from './common'
@@ -14,7 +15,7 @@ export const jwe: Detector = {
       return found(
         'jwe',
         'JWE encrypted token',
-        { header, note: 'The body is encrypted. It cannot be read without the key.' },
+        { header, note: diagnosticField({ code: 'diagnostic-jwe-note' }) },
         0.999,
       )
     } catch {

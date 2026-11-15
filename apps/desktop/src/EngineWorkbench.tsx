@@ -17,12 +17,12 @@ export default function EngineWorkbench({
     >()
     let id = 0
     worker.onmessage = (
-      event: MessageEvent<{ id: number; result?: DecodeResult; error?: string }>,
+      event: MessageEvent<{ id: number; result?: DecodeResult; error?: { code: 'decode-failed' } }>,
     ) => {
       const request = pending.get(event.data.id)
       if (!request) return
       pending.delete(event.data.id)
-      if (event.data.error) request.reject(new Error(event.data.error))
+      if (event.data.error) request.reject(new Error(event.data.error.code))
       else if (event.data.result) request.resolve(event.data.result)
     }
     return {

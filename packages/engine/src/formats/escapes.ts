@@ -32,7 +32,7 @@ export const htmlEntities: Detector = {
       decoded,
       metadata: { unknownEntities: unknown },
       warnings: unknown.length
-        ? [warning('ENTITY-UNKNOWN', 'Unknown entities were kept unchanged.', 'info')]
+        ? [warning('ENTITY-UNKNOWN', { code: 'warning-entity-unknown' }, 'info')]
         : [],
     })
   },
@@ -62,7 +62,7 @@ export const unicodeEscapes: Detector = {
         ),
       },
       warnings: unpaired
-        ? [warning('UNICODE-SURROGATE', 'Unpaired surrogate in the decoded string.')]
+        ? [warning('UNICODE-SURROGATE', { code: 'warning-unicode-surrogate' })]
         : [],
     })
   },

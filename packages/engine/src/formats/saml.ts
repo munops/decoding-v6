@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import { boundedInflate, ExpansionLimit } from '../bounded-inflate'
 import type { Detector } from '../types'
 import { decodeBase64, inputText } from '../utils'
@@ -17,27 +18,31 @@ export const saml: Detector = {
             expanded.length > context.limits.maxExpandedBytes ||
             expanded.length > bytes.length * context.limits.maxCompressionRatio
           )
-            return found('saml', 'SAML response', { error: 'Expansion limit' }, 0.999, {
-              warnings: [
-                warning(
-                  'COMPRESSION-LIMIT',
-                  'SAML decompression exceeded the output limit.',
-                  'danger',
-                ),
-              ],
-            })
+            return found(
+              'saml',
+              'SAML response',
+              { error: diagnosticField({ code: 'diagnostic-saml-error' }) },
+              0.999,
+              {
+                warnings: [
+                  warning('COMPRESSION-LIMIT', { code: 'warning-compression-limit-2' }, 'danger'),
+                ],
+              },
+            )
           text = inputText(expanded)
         } catch (error) {
           if (error instanceof ExpansionLimit)
-            return found('saml', 'SAML candidate', { error: 'Expansion stopped' }, 0.7, {
-              warnings: [
-                warning(
-                  'COMPRESSION-LIMIT',
-                  'Compressed candidate exceeded the expansion limit.',
-                  'danger',
-                ),
-              ],
-            })
+            return found(
+              'saml',
+              'SAML candidate',
+              { error: diagnosticField({ code: 'diagnostic-saml-error-2' }) },
+              0.7,
+              {
+                warnings: [
+                  warning('COMPRESSION-LIMIT', { code: 'warning-compression-limit-3' }, 'danger'),
+                ],
+              },
+            )
           return null
         }
       }
@@ -48,9 +53,15 @@ export const saml: Detector = {
     )
       return null
     if (!/<\/(?:[\w-]+:)?(?:Response|Assertion)\s*>/.test(text))
-      return found('saml', 'SAML response', { xml: text, error: 'Malformed XML' }, 0.999, {
-        warnings: [warning('XML-MALFORMED', 'The SAML XML is incomplete; raw XML is retained.')],
-      })
+      return found(
+        'saml',
+        'SAML response',
+        { xml: text, error: diagnosticField({ code: 'diagnostic-saml-error-3' }) },
+        0.999,
+        {
+          warnings: [warning('XML-MALFORMED', { code: 'warning-xml-malformed' })],
+        },
+      )
     const issuer = /<(?:[\w-]+:)?Issuer\b[^>]*>([^<]*)<\//.exec(text)?.[1],
       audience = /<(?:[\w-]+:)?Audience\b[^>]*>([^<]*)<\//.exec(text)?.[1],
       notAfter = /\bNotOnOrAfter=["']([^"']+)["']/.exec(text)?.[1],
@@ -69,11 +80,11 @@ export const saml: Detector = {
       {
         warnings: [
           ...(notAfter && new Date(notAfter) < context.now
-            ? [warning('SAML-EXPIRED', 'SAML assertion has expired.', 'danger')]
+            ? [warning('SAML-EXPIRED', { code: 'warning-saml-expired' }, 'danger')]
             : []),
           warning(
             'SAML-SIGNATURE-UNVERIFIED',
-            'Signature presence is not signature verification.',
+            { code: 'warning-saml-signature-unverified' },
             'info',
           ),
         ],

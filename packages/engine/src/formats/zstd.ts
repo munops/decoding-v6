@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import type { Detector } from '../types'
 import { found, readable, warning, parserUnavailable, unavailableDetection } from './common'
 export const zstd: Detector = {
@@ -17,17 +18,11 @@ export const zstd: Detector = {
         'Zstandard compressed stream',
         {
           compressedBytes: input.length,
-          note: 'This surface cannot decompress zstd. Use the web decoder.',
+          note: diagnosticField({ code: 'diagnostic-zstd-note' }),
         },
         0.999,
         {
-          warnings: [
-            warning(
-              'CODEC-UNAVAILABLE',
-              'This local parser is unavailable. Open the web parser once online.',
-              'info',
-            ),
-          ],
+          warnings: [warning('CODEC-UNAVAILABLE', { code: 'warning-codec-unavailable' }, 'info')],
         },
       )
     try {
@@ -52,15 +47,11 @@ export const zstd: Detector = {
       return found(
         'zstd',
         'Zstandard compressed stream',
-        { error: 'Expansion stopped: output limit or invalid stream.' },
+        { error: diagnosticField({ code: 'diagnostic-zstd-error' }) },
         0.999,
         {
           warnings: [
-            warning(
-              'COMPRESSION-LIMIT',
-              'Cannot safely expand this zstd stream. Earlier layers are kept.',
-              'danger',
-            ),
+            warning('COMPRESSION-LIMIT', { code: 'warning-compression-limit-4' }, 'danger'),
           ],
         },
       )

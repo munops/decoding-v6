@@ -1,3 +1,4 @@
+import { safeName } from '../message-facts'
 import { credentialPatterns as patterns, redactSecrets } from './credential-redaction'
 export { redactSecrets } from './credential-redaction'
 import type { Detector } from '../types'
@@ -20,7 +21,7 @@ export const secretPatterns: Detector = {
       warnings: matches.map((m) =>
         warning(
           'SECRET-EXPOSED',
-          `${m.prefix}… matches a public credential prefix. Revoke/rotate exposed credentials. No match does not prove safety.`,
+          { code: 'warning-secret-exposed', params: { prefix: safeName(m.prefix) } },
           m.test ? 'info' : 'danger',
         ),
       ),

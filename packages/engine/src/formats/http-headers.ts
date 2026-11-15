@@ -52,22 +52,16 @@ export const httpHeaders: Detector = {
     const warnings =
       startLine?.startsWith('HTTP/') &&
       !entries.some((x) => x.name.toLowerCase() === 'strict-transport-security')
-        ? [
-            warning(
-              'HTTP-NO-HSTS',
-              'No HSTS header is present. Applicability depends on the response origin.',
-              'info',
-            ),
-          ]
+        ? [warning('HTTP-NO-HSTS', { code: 'warning-http-no-hsts' }, 'info')]
         : []
     if (mail && from && replyTo && replyTo !== from)
-      warnings.push(warning('MAIL-REPLY-TO', 'MAIL-REPLY-TO'))
+      warnings.push(warning('MAIL-REPLY-TO', { code: 'warning-mail-reply-to' }))
     const displayAddress = raw('from')
       .split('<')[0]
       ?.match(/[\w.+-]+@[\w.-]+/)?.[0]
       ?.toLowerCase()
     if (mail && from && displayAddress && displayAddress !== from)
-      warnings.push(warning('MAIL-DISPLAY-ADDRESS', 'MAIL-DISPLAY-ADDRESS'))
+      warnings.push(warning('MAIL-DISPLAY-ADDRESS', { code: 'warning-mail-display-address' }))
     return found(
       'http-headers',
       mail ? 'Mail headers' : 'HTTP headers',

@@ -126,12 +126,7 @@ export async function decode(
             : 'insufficient-margin'
       candidate.rejection = {
         code,
-        message:
-          code === 'below-auto-threshold'
-            ? 'Evidence is below the automatic confidence threshold.'
-            : code === 'lower-ranked'
-              ? 'A stronger candidate was selected.'
-              : 'Candidates are too close to choose automatically.',
+        message: { code: `rejection-${code}` },
       }
     }
     const provisional = !selected && options.previewAmbiguous

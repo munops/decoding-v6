@@ -38,12 +38,7 @@ export const dnsTxt: Detector = {
       0.999,
       {
         warnings: /\+all\b|\bp=none\b/i.test(text)
-          ? [
-              warning(
-                'DNS-WEAK-POLICY',
-                'This DNS policy permits all senders or monitors without enforcement.',
-              ),
-            ]
+          ? [warning('DNS-WEAK-POLICY', { code: 'warning-dns-weak-policy' })]
           : [],
       },
     )

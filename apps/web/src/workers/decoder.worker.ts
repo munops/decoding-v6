@@ -1,7 +1,10 @@
+import { safeName } from '@decoding/engine'
 import { webCodecs } from './codecs'
 /// <reference lib="webworker" />
 import {
   decode,
+  diagnosticField,
+  withDiagnosticFields,
   LocalParserUnavailableError,
   parserPosition,
   type DecodeInput,
@@ -10,7 +13,7 @@ import {
 
 async function enrich(detection: Detection, input: DecodeInput): Promise<Detection> {
   const detail = detection.metadata?.detail
-  if (typeof detail !== 'string') return detection
+  if (typeof detail !== 'string' || detail === 'cron') return detection
   try {
     let operations
     try {
@@ -31,11 +34,9 @@ async function enrich(detection: Detection, input: DecodeInput): Promise<Detecti
     if (detection.warnings.some((item) => item.ruleId === 'XML-MALFORMED')) return detection
     const result = await executeOperation(operation, input)
     const value =
-      detail === 'cron'
-        ? { ...(detection.value as Record<string, unknown>), description: result.output }
-        : detail === 'yaml' && typeof result.output === 'string'
-          ? JSON.parse(result.output)
-          : result.output
+      detail === 'yaml' && typeof result.output === 'string'
+        ? JSON.parse(result.output)
+        : result.output
     return {
       ...detection,
       value,
@@ -50,7 +51,7 @@ async function enrich(detection: Detection, input: DecodeInput): Promise<Detecti
               {
                 ruleId: 'CERT-EXPIRED',
                 severity: 'danger' as const,
-                message: 'This certificate has expired.',
+                message: { code: 'warning-cert-expired' as const },
               },
             ]
           : []),
@@ -60,13 +61,14 @@ async function enrich(detection: Detection, input: DecodeInput): Promise<Detecti
     const unavailable =
       error instanceof LocalParserUnavailableError ||
       (error instanceof TypeError && /fetch|import|module|network/i.test(error.message))
-    return {
+    return withDiagnosticFields({
       ...detection,
       value: {
-        error:
+        error: diagnosticField(
           detail === 'x509'
-            ? 'Certificate DER parsing failed'
-            : `This ${detail} layer could not be parsed.`,
+            ? { code: 'diagnostic-worker-certificate' }
+            : { code: 'diagnostic-worker-layer', params: { format: safeName(detail) } },
+        ),
         ...parserPosition(error),
       },
       warnings: [
@@ -75,11 +77,14 @@ async function enrich(detection: Detection, input: DecodeInput): Promise<Detecti
           ruleId: unavailable ? 'LOCAL-PARSER-UNAVAILABLE' : `${detail.toUpperCase()}-INVALID`,
           severity: 'warning',
           message: unavailable
-            ? new LocalParserUnavailableError().message
-            : `Invalid ${detail.toUpperCase()} syntax. Check the indicated position; earlier layers are kept.`,
+            ? { code: 'warning-local-parser-unavailable' }
+            : {
+                code: 'warning-decoder-worker',
+                params: { format: safeName(detail.toUpperCase()) },
+              },
         },
       ],
-    }
+    })
   }
 }
 self.addEventListener(
@@ -96,7 +101,7 @@ self.addEventListener(
       .catch(() =>
         self.postMessage({
           id,
-          error: 'Local decoding could not finish. Your input is kept; retry or clear it.',
+          error: { code: 'decode-failed' },
         }),
       )
   },

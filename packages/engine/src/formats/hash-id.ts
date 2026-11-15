@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import type { Detector } from '../types'
 import { inputText } from '../utils'
 import { found } from './common'
@@ -40,9 +41,9 @@ export const hashId: Detector = {
           'Possible hash',
           {
             possibleAlgorithm: possible,
-            basis: 'Length only; this may simply be hexadecimal data.',
+            basis: diagnosticField({ code: 'diagnostic-hash-id-basis' }),
             reversible: false,
-            note: 'Hashes cannot be decoded back to the original value.',
+            note: diagnosticField({ code: 'diagnostic-hash-id-note' }),
           },
           0.69,
         )

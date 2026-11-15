@@ -1,4 +1,7 @@
+import { withDiagnosticFields, diagnosticField } from '../diagnostics'
+import { safeName } from '../message-facts'
 import { maskCredentialFields } from './credential-redaction'
+import type { MessageFact } from '../message-facts'
 import type { DecodeInput, Detection, LintWarning } from '../types'
 import { inputText, printableRatio } from '../utils'
 export function found(
@@ -8,26 +11,26 @@ export function found(
   confidence = 0.99,
   options: Partial<Pick<Detection, 'decoded' | 'warnings' | 'metadata'>> = {},
 ): Detection {
-  return {
+  return withDiagnosticFields({
     detector,
     label,
     value,
     confidence,
-    summary: label,
+    summary: { code: 'summary-format-label' },
     evidence: [
       {
         code: `${detector}-grammar`,
-        message: `Matched ${label} grammar and structure`,
+        message: { code: 'evidence-common', params: { label: safeName(label) } },
         weight: confidence,
       },
     ],
     warnings: [],
     ...options,
-  }
+  })
 }
 export function warning(
   ruleId: string,
-  message: string,
+  message: MessageFact,
   severity: LintWarning['severity'] = 'warning',
 ): LintWarning {
   return { ruleId, message, severity }
@@ -72,17 +75,12 @@ export function unavailableDetection(
     id,
     label,
     {
-      error: 'Local parser is not cached. Connect, then choose Try again.',
+      error: diagnosticField({ code: 'diagnostic-common-error' }),
       ...(typeof input === 'string' ? {} : { bytes: input.length }),
     },
     confidence,
     {
-      warnings: [
-        warning(
-          'LOCAL-PARSER-UNAVAILABLE',
-          'Open this local parser once online, then retry. Earlier layers and raw bytes are kept.',
-        ),
-      ],
+      warnings: [warning('LOCAL-PARSER-UNAVAILABLE', { code: 'warning-local-parser-unavailable' })],
     },
   )
 }

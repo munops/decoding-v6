@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import { binaryGrammar } from './binary-grammar'
 import type { Detector } from '../types'
 import { found, parserUnavailable, unavailableDetection } from './common'
@@ -14,13 +15,13 @@ export const cbor: Detector = {
         ? found(
             'cbor',
             'CBOR self-described data',
-            { tag: 55799, note: 'This surface recognizes CBOR but does not have a local parser.' },
+            { tag: 55799, note: diagnosticField({ code: 'diagnostic-cbor-note' }) },
             0.999,
           )
         : found(
             'cbor',
             'CBOR candidate',
-            { bytes: input.length, note: 'Open the web parser for the full tree.' },
+            { bytes: input.length, note: diagnosticField({ code: 'diagnostic-cbor-note-2' }) },
             0.68,
           )
     try {

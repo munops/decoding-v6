@@ -1,0 +1,5085 @@
+{
+  "sourceSha": "e56deacacf3da333f411ab1f8ef314ee41d33699",
+  "now": "2026-11-15T00:00:00Z",
+  "records": [
+    {
+      "id": "mojibake-positive-1",
+      "input": "ì•ˆë…•í•˜ì„¸ìš” ì„¸ê³„ 0",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 53,
+          "candidates": [
+            {
+              "detector": "mojibake",
+              "label": "Garbled text",
+              "value": "안녕하세요 세계 0",
+              "confidence": 0.99,
+              "summary": "Garbled text",
+              "evidence": [
+                {
+                  "code": "mojibake-grammar",
+                  "message": "Matched Garbled text grammar and structure",
+                  "weight": 0.99
+                }
+              ],
+              "warnings": [],
+              "decoded": "안녕하세요 세계 0",
+              "metadata": {
+                "charset": "utf-8",
+                "misreadAs": "windows-1252",
+                "alternatives": []
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "1-2",
+              "depth": 1,
+              "inputKind": "text",
+              "inputSize": 24,
+              "candidates": [],
+              "children": [],
+              "status": "unsupported"
+            }
+          ],
+          "selected": {
+            "detector": "mojibake",
+            "label": "Garbled text",
+            "value": "안녕하세요 세계 0",
+            "confidence": 0.99,
+            "summary": "Garbled text",
+            "evidence": [
+              {
+                "code": "mojibake-grammar",
+                "message": "Matched Garbled text grammar and structure",
+                "weight": 0.99
+              }
+            ],
+            "warnings": [],
+            "decoded": "안녕하세요 세계 0",
+            "metadata": {
+              "charset": "utf-8",
+              "misreadAs": "windows-1252",
+              "alternatives": []
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 2,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "unicode-normalization-positive-1",
+      "input": "한글 파일 0.txt",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 40,
+          "candidates": [
+            {
+              "detector": "unicode-normalization",
+              "label": "Hangul normalization",
+              "value": "한글 파일 0.txt",
+              "confidence": 0.999,
+              "summary": "Hangul normalization",
+              "evidence": [
+                {
+                  "code": "unicode-normalization-grammar",
+                  "message": "Matched Hangul normalization grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": [],
+              "decoded": "한글 파일 0.txt",
+              "metadata": {
+                "from": "NFD",
+                "to": "NFC"
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "1-2",
+              "depth": 1,
+              "inputKind": "text",
+              "inputSize": 19,
+              "candidates": [],
+              "children": [],
+              "status": "unsupported"
+            }
+          ],
+          "selected": {
+            "detector": "unicode-normalization",
+            "label": "Hangul normalization",
+            "value": "한글 파일 0.txt",
+            "confidence": 0.999,
+            "summary": "Hangul normalization",
+            "evidence": [
+              {
+                "code": "unicode-normalization-grammar",
+                "message": "Matched Hangul normalization grammar and structure",
+                "weight": 0.999
+              }
+            ],
+            "warnings": [],
+            "decoded": "한글 파일 0.txt",
+            "metadata": {
+              "from": "NFD",
+              "to": "NFC"
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 2,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "damaged-text-positive-1",
+      "input": "사라진 � 글자 0",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 22,
+          "candidates": [
+            {
+              "detector": "damaged-text",
+              "label": "Lost characters",
+              "value": "사라진 � 글자 0",
+              "confidence": 0.99,
+              "summary": "Lost characters",
+              "evidence": [
+                {
+                  "code": "damaged-text-grammar",
+                  "message": "Matched Lost characters grammar and structure",
+                  "weight": 0.99
+                }
+              ],
+              "warnings": [
+                {
+                  "ruleId": "TEXT-LOST",
+                  "message": "TEXT-LOST",
+                  "severity": "warning"
+                }
+              ],
+              "metadata": {
+                "replacementCount": 1,
+                "placeholders": false
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "damaged-text",
+            "label": "Lost characters",
+            "value": "사라진 � 글자 0",
+            "confidence": 0.99,
+            "summary": "Lost characters",
+            "evidence": [
+              {
+                "code": "damaged-text-grammar",
+                "message": "Matched Lost characters grammar and structure",
+                "weight": 0.99
+              }
+            ],
+            "warnings": [
+              {
+                "ruleId": "TEXT-LOST",
+                "message": "TEXT-LOST",
+                "severity": "warning"
+              }
+            ],
+            "metadata": {
+              "replacementCount": 1,
+              "placeholders": false
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "auth-header-positive-1",
+      "input": "Bearer eyJhbGciOiJub25lIn0.eyJzdWIiOiJmaXh0dXJlLTAifQ.",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 54,
+          "candidates": [
+            {
+              "detector": "auth-header",
+              "label": "Authorization: Bearer",
+              "value": {
+                "scheme": "Bearer"
+              },
+              "confidence": 0.999,
+              "summary": "Authorization: Bearer",
+              "evidence": [
+                {
+                  "code": "auth-header-grammar",
+                  "message": "Matched Authorization: Bearer grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": [],
+              "decoded": "eyJhbGciOiJub25lIn0.eyJzdWIiOiJmaXh0dXJlLTAifQ."
+            },
+            {
+              "detector": "text-scan",
+              "label": "Encoded values in text",
+              "value": {
+                "matches": [
+                  {
+                    "offset": 7,
+                    "length": 47
+                  }
+                ]
+              },
+              "confidence": 0.7,
+              "summary": "Encoded values in text",
+              "evidence": [
+                {
+                  "code": "text-scan-grammar",
+                  "message": "Matched Encoded values in text grammar and structure",
+                  "weight": 0.7
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "embedded": [
+                  {
+                    "offset": 7,
+                    "encoded": "eyJhbGciOiJub25lIn0.eyJzdWIiOiJmaXh0dXJlLTAifQ."
+                  }
+                ]
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "1-2",
+              "depth": 1,
+              "inputKind": "text",
+              "inputSize": 47,
+              "candidates": [
+                {
+                  "detector": "jwt",
+                  "label": "JWT / JWS compact",
+                  "confidence": 0.995,
+                  "summary": "none token with 1 payload claims",
+                  "value": {
+                    "header": {
+                      "alg": "none"
+                    },
+                    "payload": {
+                      "sub": "fixture-0"
+                    },
+                    "signature": ""
+                  },
+                  "evidence": [
+                    {
+                      "code": "three-segments",
+                      "message": "Three Base64URL segments",
+                      "weight": 0.55
+                    },
+                    {
+                      "code": "json-header",
+                      "message": "Header and payload are valid JSON objects",
+                      "weight": 0.4
+                    },
+                    {
+                      "code": "alg",
+                      "message": "Algorithm header: none",
+                      "weight": 0.05
+                    }
+                  ],
+                  "warnings": [
+                    {
+                      "ruleId": "JWT-ALG-NONE",
+                      "severity": "danger",
+                      "message": "This token is unsigned. Never accept it as authenticated."
+                    },
+                    {
+                      "ruleId": "JWT-SIGNATURE-UNVERIFIED",
+                      "severity": "info",
+                      "message": "The signature is decoded but not verified without a trusted key.",
+                      "specUrl": "https://www.rfc-editor.org/rfc/rfc7519"
+                    },
+                    {
+                      "ruleId": "JWT-NO-EXP",
+                      "severity": "warning",
+                      "message": "This token has no numeric expiry claim."
+                    }
+                  ],
+                  "metadata": {
+                    "algorithm": "none",
+                    "token": "eyJhbGciOiJub25lIn0.eyJzdWIiOiJmaXh0dXJlLTAifQ."
+                  }
+                }
+              ],
+              "children": [],
+              "selected": {
+                "detector": "jwt",
+                "label": "JWT / JWS compact",
+                "confidence": 0.995,
+                "summary": "none token with 1 payload claims",
+                "value": {
+                  "header": {
+                    "alg": "none"
+                  },
+                  "payload": {
+                    "sub": "fixture-0"
+                  },
+                  "signature": ""
+                },
+                "evidence": [
+                  {
+                    "code": "three-segments",
+                    "message": "Three Base64URL segments",
+                    "weight": 0.55
+                  },
+                  {
+                    "code": "json-header",
+                    "message": "Header and payload are valid JSON objects",
+                    "weight": 0.4
+                  },
+                  {
+                    "code": "alg",
+                    "message": "Algorithm header: none",
+                    "weight": 0.05
+                  }
+                ],
+                "warnings": [
+                  {
+                    "ruleId": "JWT-ALG-NONE",
+                    "severity": "danger",
+                    "message": "This token is unsigned. Never accept it as authenticated."
+                  },
+                  {
+                    "ruleId": "JWT-SIGNATURE-UNVERIFIED",
+                    "severity": "info",
+                    "message": "The signature is decoded but not verified without a trusted key.",
+                    "specUrl": "https://www.rfc-editor.org/rfc/rfc7519"
+                  },
+                  {
+                    "ruleId": "JWT-NO-EXP",
+                    "severity": "warning",
+                    "message": "This token has no numeric expiry claim."
+                  }
+                ],
+                "metadata": {
+                  "algorithm": "none",
+                  "token": "eyJhbGciOiJub25lIn0.eyJzdWIiOiJmaXh0dXJlLTAifQ."
+                }
+              },
+              "status": "confident"
+            }
+          ],
+          "selected": {
+            "detector": "auth-header",
+            "label": "Authorization: Bearer",
+            "value": {
+              "scheme": "Bearer"
+            },
+            "confidence": 0.999,
+            "summary": "Authorization: Bearer",
+            "evidence": [
+              {
+                "code": "auth-header-grammar",
+                "message": "Matched Authorization: Bearer grammar and structure",
+                "weight": 0.999
+              }
+            ],
+            "warnings": [],
+            "decoded": "eyJhbGciOiJub25lIn0.eyJzdWIiOiJmaXh0dXJlLTAifQ."
+          },
+          "status": "confident"
+        },
+        "nodes": 2,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "datetime-positive-1",
+      "input": "2026-10-01T09:00:00+09:00",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 25,
+          "candidates": [
+            {
+              "detector": "datetime",
+              "label": "Date and time",
+              "value": {
+                "utc": "2026-10-01T00:00:00.000Z",
+                "local": "10/1/2026, 9:00:00 AM",
+                "unixSeconds": 1790812800,
+                "daysFromNow": -45
+              },
+              "confidence": 0.99,
+              "summary": "Date and time",
+              "evidence": [
+                {
+                  "code": "datetime-grammar",
+                  "message": "Matched Date and time grammar and structure",
+                  "weight": 0.99
+                }
+              ],
+              "warnings": []
+            },
+            {
+              "detector": "ascii85",
+              "label": "Ascii85 candidate",
+              "value": {
+                "type": "bytes",
+                "hex": "35734672325632aa9f3dacda2f97b7e02f8f7332"
+              },
+              "confidence": 0.65,
+              "summary": "Ascii85 candidate",
+              "evidence": [
+                {
+                  "code": "ascii85-grammar",
+                  "message": "Matched Ascii85 candidate grammar and structure",
+                  "weight": 0.65
+                }
+              ],
+              "warnings": [],
+              "decoded": {
+                "type": "bytes",
+                "hex": "35734672325632aa9f3dacda2f97b7e02f8f7332"
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "datetime",
+            "label": "Date and time",
+            "value": {
+              "utc": "2026-10-01T00:00:00.000Z",
+              "local": "10/1/2026, 9:00:00 AM",
+              "unixSeconds": 1790812800,
+              "daysFromNow": -45
+            },
+            "confidence": 0.99,
+            "summary": "Date and time",
+            "evidence": [
+              {
+                "code": "datetime-grammar",
+                "message": "Matched Date and time grammar and structure",
+                "weight": 0.99
+              }
+            ],
+            "warnings": []
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "html-entities-positive-1",
+      "input": "&#65; &lt;fixture&gt;",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 21,
+          "candidates": [
+            {
+              "detector": "html-entities",
+              "label": "HTML entities",
+              "value": "A <fixture>",
+              "confidence": 0.995,
+              "summary": "HTML entities",
+              "evidence": [
+                {
+                  "code": "html-entities-grammar",
+                  "message": "Matched HTML entities grammar and structure",
+                  "weight": 0.995
+                }
+              ],
+              "warnings": [],
+              "decoded": "A <fixture>",
+              "metadata": {
+                "unknownEntities": []
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "1-2",
+              "depth": 1,
+              "inputKind": "text",
+              "inputSize": 11,
+              "candidates": [],
+              "children": [],
+              "status": "unsupported"
+            }
+          ],
+          "selected": {
+            "detector": "html-entities",
+            "label": "HTML entities",
+            "value": "A <fixture>",
+            "confidence": 0.995,
+            "summary": "HTML entities",
+            "evidence": [
+              {
+                "code": "html-entities-grammar",
+                "message": "Matched HTML entities grammar and structure",
+                "weight": 0.995
+              }
+            ],
+            "warnings": [],
+            "decoded": "A <fixture>",
+            "metadata": {
+              "unknownEntities": []
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 2,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "unicode-escapes-positive-1",
+      "input": "\\u0041",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 6,
+          "candidates": [
+            {
+              "detector": "unicode-escapes",
+              "label": "Unicode escapes",
+              "value": "A",
+              "confidence": 0.995,
+              "summary": "Unicode escapes",
+              "evidence": [
+                {
+                  "code": "unicode-escapes-grammar",
+                  "message": "Matched Unicode escapes grammar and structure",
+                  "weight": 0.995
+                }
+              ],
+              "warnings": [],
+              "decoded": "A",
+              "metadata": {
+                "codePoints": [
+                  "U+0041"
+                ]
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "1-2",
+              "depth": 1,
+              "inputKind": "text",
+              "inputSize": 1,
+              "candidates": [],
+              "children": [],
+              "status": "unsupported"
+            }
+          ],
+          "selected": {
+            "detector": "unicode-escapes",
+            "label": "Unicode escapes",
+            "value": "A",
+            "confidence": 0.995,
+            "summary": "Unicode escapes",
+            "evidence": [
+              {
+                "code": "unicode-escapes-grammar",
+                "message": "Matched Unicode escapes grammar and structure",
+                "weight": 0.995
+              }
+            ],
+            "warnings": [],
+            "decoded": "A",
+            "metadata": {
+              "codePoints": [
+                "U+0041"
+              ]
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 2,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "pem-positive-1",
+      "input": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=\n-----END PUBLIC KEY-----",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 112,
+          "candidates": [
+            {
+              "detector": "pem",
+              "label": "PEM public key / CSR",
+              "value": {
+                "kind": "PUBLIC KEY",
+                "algorithm": "Ed25519",
+                "keyBits": 256,
+                "derBytes": 44
+              },
+              "confidence": 0.999,
+              "summary": "PEM public key / CSR",
+              "evidence": [
+                {
+                  "code": "pem-grammar",
+                  "message": "Matched PEM public key / CSR grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": [],
+              "metadata": {}
+            },
+            {
+              "detector": "text-scan",
+              "label": "Encoded values in text",
+              "value": {
+                "matches": [
+                  {
+                    "offset": 27,
+                    "length": 60
+                  }
+                ]
+              },
+              "confidence": 0.7,
+              "summary": "Encoded values in text",
+              "evidence": [
+                {
+                  "code": "text-scan-grammar",
+                  "message": "Matched Encoded values in text grammar and structure",
+                  "weight": 0.7
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "embedded": [
+                  {
+                    "offset": 27,
+                    "encoded": "MCowBQYDK2VwAyEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+                  }
+                ]
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "pem",
+            "label": "PEM public key / CSR",
+            "value": {
+              "kind": "PUBLIC KEY",
+              "algorithm": "Ed25519",
+              "keyBits": 256,
+              "derBytes": 44
+            },
+            "confidence": 0.999,
+            "summary": "PEM public key / CSR",
+            "evidence": [
+              {
+                "code": "pem-grammar",
+                "message": "Matched PEM public key / CSR grammar and structure",
+                "weight": 0.999
+              }
+            ],
+            "warnings": [],
+            "metadata": {}
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "ssh-key-positive-1",
+      "input": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA fixture-0",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 90,
+          "candidates": [
+            {
+              "detector": "ssh-key",
+              "label": "OpenSSH public key",
+              "value": {
+                "kind": "ssh-ed25519",
+                "bits": 256,
+                "comment": "fixture-0",
+                "fingerprint": "SHA256:kmYcvdi2GkPeWxB6XLjrZB8JHsy2Hm8luHMFp9GMvqk"
+              },
+              "confidence": 0.999,
+              "summary": "OpenSSH public key",
+              "evidence": [
+                {
+                  "code": "ssh-key-grammar",
+                  "message": "Matched OpenSSH public key grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "ssh-key",
+            "label": "OpenSSH public key",
+            "value": {
+              "kind": "ssh-ed25519",
+              "bits": 256,
+              "comment": "fixture-0",
+              "fingerprint": "SHA256:kmYcvdi2GkPeWxB6XLjrZB8JHsy2Hm8luHMFp9GMvqk"
+            },
+            "confidence": 0.999,
+            "summary": "OpenSSH public key",
+            "evidence": [
+              {
+                "code": "ssh-key-grammar",
+                "message": "Matched OpenSSH public key grammar and structure",
+                "weight": 0.999
+              }
+            ],
+            "warnings": []
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "ip-positive-1",
+      "input": "192.168.0.1",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 11,
+          "candidates": [
+            {
+              "detector": "ip",
+              "label": "IPv4",
+              "value": {
+                "address": "192.168.0.1",
+                "scope": "private",
+                "integer": 3232235521,
+                "hex": "0xc0a80001"
+              },
+              "confidence": 0.999,
+              "summary": "IPv4",
+              "evidence": [
+                {
+                  "code": "ip-grammar",
+                  "message": "Matched IPv4 grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "ip",
+            "label": "IPv4",
+            "value": {
+              "address": "192.168.0.1",
+              "scope": "private",
+              "integer": 3232235521,
+              "hex": "0xc0a80001"
+            },
+            "confidence": 0.999,
+            "summary": "IPv4",
+            "evidence": [
+              {
+                "code": "ip-grammar",
+                "message": "Matched IPv4 grammar and structure",
+                "weight": 0.999
+              }
+            ],
+            "warnings": []
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "cron-positive-1",
+      "input": "0 0 * * *",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 9,
+          "candidates": [
+            {
+              "detector": "cron",
+              "label": "Cron schedule",
+              "value": {
+                "expression": "0 0 * * *",
+                "timezone": "UTC",
+                "nextRuns": [
+                  "2026-11-16T00:00:00.000Z",
+                  "2026-11-17T00:00:00.000Z",
+                  "2026-11-18T00:00:00.000Z",
+                  "2026-11-19T00:00:00.000Z",
+                  "2026-11-20T00:00:00.000Z"
+                ]
+              },
+              "confidence": 0.999,
+              "summary": "Cron schedule",
+              "evidence": [
+                {
+                  "code": "cron-grammar",
+                  "message": "Matched Cron schedule grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "detail": "cron"
+              }
+            },
+            {
+              "detector": "ascii85",
+              "label": "Ascii85 candidate",
+              "value": "/9WI",
+              "confidence": 0.65,
+              "summary": "Ascii85 candidate",
+              "evidence": [
+                {
+                  "code": "ascii85-grammar",
+                  "message": "Matched Ascii85 candidate grammar and structure",
+                  "weight": 0.65
+                }
+              ],
+              "warnings": [],
+              "decoded": "/9WI",
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "cron",
+            "label": "Cron schedule",
+            "value": {
+              "expression": "0 0 * * *",
+              "timezone": "UTC",
+              "nextRuns": [
+                "2026-11-16T00:00:00.000Z",
+                "2026-11-17T00:00:00.000Z",
+                "2026-11-18T00:00:00.000Z",
+                "2026-11-19T00:00:00.000Z",
+                "2026-11-20T00:00:00.000Z"
+              ]
+            },
+            "confidence": 0.999,
+            "summary": "Cron schedule",
+            "evidence": [
+              {
+                "code": "cron-grammar",
+                "message": "Matched Cron schedule grammar and structure",
+                "weight": 0.999
+              }
+            ],
+            "warnings": [],
+            "metadata": {
+              "detail": "cron"
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "punycode-positive-1",
+      "input": "xn--bcher-kva.example0.invalid",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 30,
+          "candidates": [
+            {
+              "detector": "punycode",
+              "label": "Punycode / IDN",
+              "value": {
+                "unicode": "bücher.example0.invalid",
+                "ascii": "xn--bcher-kva.example0.invalid",
+                "mixedScripts": false
+              },
+              "confidence": 0.999,
+              "summary": "Punycode / IDN",
+              "evidence": [
+                {
+                  "code": "punycode-grammar",
+                  "message": "Matched Punycode / IDN grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "punycode",
+            "label": "Punycode / IDN",
+            "value": {
+              "unicode": "bücher.example0.invalid",
+              "ascii": "xn--bcher-kva.example0.invalid",
+              "mixedScripts": false
+            },
+            "confidence": 0.999,
+            "summary": "Punycode / IDN",
+            "evidence": [
+              {
+                "code": "punycode-grammar",
+                "message": "Matched Punycode / IDN grammar and structure",
+                "weight": 0.999
+              }
+            ],
+            "warnings": []
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "mime-positive-1",
+      "input": "=?UTF-8?B?Zml4dHVyZSAwOiBjYWbDqQ==?=",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 36,
+          "candidates": [
+            {
+              "detector": "mime",
+              "label": "MIME encoded words",
+              "value": "fixture 0: café",
+              "confidence": 0.995,
+              "summary": "MIME encoded words",
+              "evidence": [
+                {
+                  "code": "mime-grammar",
+                  "message": "Matched MIME encoded words grammar and structure",
+                  "weight": 0.995
+                }
+              ],
+              "warnings": [],
+              "decoded": "fixture 0: café",
+              "metadata": {
+                "charsets": [
+                  "UTF-8"
+                ]
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "1-2",
+              "depth": 1,
+              "inputKind": "text",
+              "inputSize": 16,
+              "candidates": [],
+              "children": [],
+              "status": "unsupported"
+            }
+          ],
+          "selected": {
+            "detector": "mime",
+            "label": "MIME encoded words",
+            "value": "fixture 0: café",
+            "confidence": 0.995,
+            "summary": "MIME encoded words",
+            "evidence": [
+              {
+                "code": "mime-grammar",
+                "message": "Matched MIME encoded words grammar and structure",
+                "weight": 0.995
+              }
+            ],
+            "warnings": [],
+            "decoded": "fixture 0: café",
+            "metadata": {
+              "charsets": [
+                "UTF-8"
+              ]
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 2,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "kv-positive-1",
+      "input": "Cookie: token=eyJhbGciOiJub25lIn0.eyJmaXh0dXJlIjowfQ.; Path=/",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 61,
+          "candidates": [
+            {
+              "detector": "kv",
+              "label": "Cookie header",
+              "value": {
+                "entries": [
+                  {
+                    "name": "token",
+                    "value": "[redacted]"
+                  },
+                  {
+                    "name": "Path",
+                    "value": "/"
+                  }
+                ]
+              },
+              "confidence": 0.999,
+              "summary": "Cookie header",
+              "evidence": [
+                {
+                  "code": "kv-grammar",
+                  "message": "Matched Cookie header grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "embedded": [
+                  {
+                    "path": "token",
+                    "encoded": "eyJhbGciOiJub25lIn0.eyJmaXh0dXJlIjowfQ."
+                  }
+                ]
+              }
+            },
+            {
+              "detector": "text-scan",
+              "label": "Encoded values in text",
+              "value": {
+                "matches": [
+                  {
+                    "offset": 14,
+                    "length": 39
+                  }
+                ]
+              },
+              "confidence": 0.7,
+              "summary": "Encoded values in text",
+              "evidence": [
+                {
+                  "code": "text-scan-grammar",
+                  "message": "Matched Encoded values in text grammar and structure",
+                  "weight": 0.7
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "embedded": [
+                  {
+                    "offset": 14,
+                    "encoded": "eyJhbGciOiJub25lIn0.eyJmaXh0dXJlIjowfQ."
+                  }
+                ]
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "1-2",
+              "depth": 1,
+              "sourcePath": "token",
+              "inputKind": "text",
+              "inputSize": 39,
+              "candidates": [
+                {
+                  "detector": "jwt",
+                  "label": "JWT / JWS compact",
+                  "confidence": 0.995,
+                  "summary": "none token with 1 payload claims",
+                  "value": {
+                    "header": {
+                      "alg": "none"
+                    },
+                    "payload": {
+                      "fixture": 0
+                    },
+                    "signature": ""
+                  },
+                  "evidence": [
+                    {
+                      "code": "three-segments",
+                      "message": "Three Base64URL segments",
+                      "weight": 0.55
+                    },
+                    {
+                      "code": "json-header",
+                      "message": "Header and payload are valid JSON objects",
+                      "weight": 0.4
+                    },
+                    {
+                      "code": "alg",
+                      "message": "Algorithm header: none",
+                      "weight": 0.05
+                    }
+                  ],
+                  "warnings": [
+                    {
+                      "ruleId": "JWT-ALG-NONE",
+                      "severity": "danger",
+                      "message": "This token is unsigned. Never accept it as authenticated."
+                    },
+                    {
+                      "ruleId": "JWT-SIGNATURE-UNVERIFIED",
+                      "severity": "info",
+                      "message": "The signature is decoded but not verified without a trusted key.",
+                      "specUrl": "https://www.rfc-editor.org/rfc/rfc7519"
+                    },
+                    {
+                      "ruleId": "JWT-NO-EXP",
+                      "severity": "warning",
+                      "message": "This token has no numeric expiry claim."
+                    }
+                  ],
+                  "metadata": {
+                    "algorithm": "none",
+                    "token": "eyJhbGciOiJub25lIn0.eyJmaXh0dXJlIjowfQ."
+                  }
+                }
+              ],
+              "children": [],
+              "selected": {
+                "detector": "jwt",
+                "label": "JWT / JWS compact",
+                "confidence": 0.995,
+                "summary": "none token with 1 payload claims",
+                "value": {
+                  "header": {
+                    "alg": "none"
+                  },
+                  "payload": {
+                    "fixture": 0
+                  },
+                  "signature": ""
+                },
+                "evidence": [
+                  {
+                    "code": "three-segments",
+                    "message": "Three Base64URL segments",
+                    "weight": 0.55
+                  },
+                  {
+                    "code": "json-header",
+                    "message": "Header and payload are valid JSON objects",
+                    "weight": 0.4
+                  },
+                  {
+                    "code": "alg",
+                    "message": "Algorithm header: none",
+                    "weight": 0.05
+                  }
+                ],
+                "warnings": [
+                  {
+                    "ruleId": "JWT-ALG-NONE",
+                    "severity": "danger",
+                    "message": "This token is unsigned. Never accept it as authenticated."
+                  },
+                  {
+                    "ruleId": "JWT-SIGNATURE-UNVERIFIED",
+                    "severity": "info",
+                    "message": "The signature is decoded but not verified without a trusted key.",
+                    "specUrl": "https://www.rfc-editor.org/rfc/rfc7519"
+                  },
+                  {
+                    "ruleId": "JWT-NO-EXP",
+                    "severity": "warning",
+                    "message": "This token has no numeric expiry claim."
+                  }
+                ],
+                "metadata": {
+                  "algorithm": "none",
+                  "token": "eyJhbGciOiJub25lIn0.eyJmaXh0dXJlIjowfQ."
+                }
+              },
+              "status": "confident"
+            }
+          ],
+          "selected": {
+            "detector": "kv",
+            "label": "Cookie header",
+            "value": {
+              "entries": [
+                {
+                  "name": "token",
+                  "value": "[redacted]"
+                },
+                {
+                  "name": "Path",
+                  "value": "/"
+                }
+              ]
+            },
+            "confidence": 0.999,
+            "summary": "Cookie header",
+            "evidence": [
+              {
+                "code": "kv-grammar",
+                "message": "Matched Cookie header grammar and structure",
+                "weight": 0.999
+              }
+            ],
+            "warnings": [],
+            "metadata": {
+              "embedded": [
+                {
+                  "path": "token",
+                  "encoded": "eyJhbGciOiJub25lIn0.eyJmaXh0dXJlIjowfQ."
+                }
+              ]
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 2,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "env-positive-1",
+      "input": "FIXTURE=0\nLOCAL=true\nAPI_TOKEN=synthetic",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 40,
+          "candidates": [
+            {
+              "detector": "env",
+              "label": ".env / key=value",
+              "value": {
+                "entries": [
+                  {
+                    "name": "FIXTURE",
+                    "value": "0"
+                  },
+                  {
+                    "name": "LOCAL",
+                    "value": "true"
+                  },
+                  {
+                    "name": "API_TOKEN",
+                    "value": "[redacted]"
+                  }
+                ]
+              },
+              "confidence": 0.995,
+              "summary": ".env / key=value",
+              "evidence": [
+                {
+                  "code": "env-grammar",
+                  "message": "Matched .env / key=value grammar and structure",
+                  "weight": 0.995
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "embedded": []
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "env",
+            "label": ".env / key=value",
+            "value": {
+              "entries": [
+                {
+                  "name": "FIXTURE",
+                  "value": "0"
+                },
+                {
+                  "name": "LOCAL",
+                  "value": "true"
+                },
+                {
+                  "name": "API_TOKEN",
+                  "value": "[redacted]"
+                }
+              ]
+            },
+            "confidence": 0.995,
+            "summary": ".env / key=value",
+            "evidence": [
+              {
+                "code": "env-grammar",
+                "message": "Matched .env / key=value grammar and structure",
+                "weight": 0.995
+              }
+            ],
+            "warnings": [],
+            "metadata": {
+              "embedded": []
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "base32-positive-1",
+      "input": "JBSWY3DPEBLW64TMMQ======",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 24,
+          "candidates": [
+            {
+              "detector": "base32",
+              "label": "Base32",
+              "value": "Hello World",
+              "confidence": 0.99,
+              "summary": "Base32",
+              "evidence": [
+                {
+                  "code": "base32-grammar",
+                  "message": "Matched Base32 grammar and structure",
+                  "weight": 0.99
+                }
+              ],
+              "warnings": [],
+              "decoded": "Hello World",
+              "rejection": {
+                "code": "insufficient-margin",
+                "message": "Candidates are too close to choose automatically."
+              }
+            },
+            {
+              "detector": "kv",
+              "label": "Query string",
+              "value": {
+                "entries": [
+                  {
+                    "name": "JBSWY3DPEBLW64TMMQ",
+                    "value": "====="
+                  }
+                ]
+              },
+              "confidence": 0.97,
+              "summary": "Query string",
+              "evidence": [
+                {
+                  "code": "kv-grammar",
+                  "message": "Matched Query string grammar and structure",
+                  "weight": 0.97
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "embedded": []
+              },
+              "rejection": {
+                "code": "insufficient-margin",
+                "message": "Candidates are too close to choose automatically."
+              }
+            },
+            {
+              "detector": "env",
+              "label": ".env / key=value",
+              "value": {
+                "entries": [
+                  {
+                    "name": "JBSWY3DPEBLW64TMMQ",
+                    "value": "====="
+                  }
+                ]
+              },
+              "confidence": 0.72,
+              "summary": ".env / key=value",
+              "evidence": [
+                {
+                  "code": "env-grammar",
+                  "message": "Matched .env / key=value grammar and structure",
+                  "weight": 0.72
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "embedded": []
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            },
+            {
+              "detector": "url",
+              "label": "Query string",
+              "confidence": 0.72,
+              "summary": "Key/value query data",
+              "value": {
+                "JBSWY3DPEBLW64TMMQ": "====="
+              },
+              "evidence": [
+                {
+                  "code": "url-syntax",
+                  "message": "Valid URL or percent/query syntax",
+                  "weight": 0.9
+                }
+              ],
+              "warnings": [],
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            },
+            {
+              "detector": "ascii85",
+              "label": "Ascii85 candidate",
+              "value": {
+                "type": "bytes",
+                "hex": "80cc122e394e896587c6a6e88a887340582805"
+              },
+              "confidence": 0.65,
+              "summary": "Ascii85 candidate",
+              "evidence": [
+                {
+                  "code": "ascii85-grammar",
+                  "message": "Matched Ascii85 candidate grammar and structure",
+                  "weight": 0.65
+                }
+              ],
+              "warnings": [],
+              "decoded": {
+                "type": "bytes",
+                "hex": "80cc122e394e896587c6a6e88a887340582805"
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "status": "ambiguous"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "base58-positive-1",
+      "input": "StV1DL6CwTryKyV1",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 16,
+          "candidates": [
+            {
+              "detector": "base58",
+              "label": "Base58 (Bitcoin alphabet)",
+              "value": {
+                "type": "bytes",
+                "hex": "17a6fa90912d5b0f3fec8ea8"
+              },
+              "confidence": 0.7,
+              "summary": "Base58 (Bitcoin alphabet)",
+              "evidence": [
+                {
+                  "code": "base58-grammar",
+                  "message": "Matched Base58 (Bitcoin alphabet) grammar and structure",
+                  "weight": 0.7
+                }
+              ],
+              "warnings": [],
+              "decoded": {
+                "type": "bytes",
+                "hex": "17a6fa90912d5b0f3fec8ea8"
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            },
+            {
+              "detector": "base64",
+              "label": "Base64",
+              "confidence": 0.67,
+              "summary": "12 decoded bytes",
+              "value": {
+                "type": "bytes",
+                "hex": "4ad5750cbe82c13af22b2575"
+              },
+              "evidence": [
+                {
+                  "code": "alphabet",
+                  "message": "Uses a Base64-compatible alphabet",
+                  "weight": 0.45
+                },
+                {
+                  "code": "decode",
+                  "message": "Decodes without invalid bytes",
+                  "weight": 0.3
+                },
+                {
+                  "code": "printable",
+                  "message": "0% printable output",
+                  "weight": 0.2
+                }
+              ],
+              "warnings": [],
+              "decoded": {
+                "type": "bytes",
+                "hex": "4ad5750cbe82c13af22b2575"
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "status": "ambiguous"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "ascii85-positive-1",
+      "input": "<~z~>",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 5,
+          "candidates": [
+            {
+              "detector": "ascii85",
+              "label": "Ascii85",
+              "value": {
+                "type": "bytes",
+                "hex": "00000000"
+              },
+              "confidence": 0.995,
+              "summary": "Ascii85",
+              "evidence": [
+                {
+                  "code": "ascii85-grammar",
+                  "message": "Matched Ascii85 grammar and structure",
+                  "weight": 0.995
+                }
+              ],
+              "warnings": [],
+              "decoded": {
+                "type": "bytes",
+                "hex": "00000000"
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "1-2",
+              "depth": 1,
+              "inputKind": "bytes",
+              "inputSize": 4,
+              "bytes": {
+                "type": "bytes",
+                "hex": "00000000"
+              },
+              "candidates": [],
+              "children": [],
+              "status": "unsupported"
+            }
+          ],
+          "selected": {
+            "detector": "ascii85",
+            "label": "Ascii85",
+            "value": {
+              "type": "bytes",
+              "hex": "00000000"
+            },
+            "confidence": 0.995,
+            "summary": "Ascii85",
+            "evidence": [
+              {
+                "code": "ascii85-grammar",
+                "message": "Matched Ascii85 grammar and structure",
+                "weight": 0.995
+              }
+            ],
+            "warnings": [],
+            "decoded": {
+              "type": "bytes",
+              "hex": "00000000"
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 2,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "hash-positive-1",
+      "input": "$2b$04$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA.",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 60,
+          "candidates": [
+            {
+              "detector": "hash",
+              "label": "bcrypt",
+              "value": {
+                "algorithm": "bcrypt",
+                "cost": 4,
+                "reversible": false
+              },
+              "confidence": 0.99,
+              "summary": "bcrypt",
+              "evidence": [
+                {
+                  "code": "hash-grammar",
+                  "message": "Matched bcrypt grammar and structure",
+                  "weight": 0.99
+                }
+              ],
+              "warnings": []
+            },
+            {
+              "detector": "ascii85",
+              "label": "Ascii85 candidate",
+              "value": {
+                "type": "bytes",
+                "hex": "09fc07573b3d87ca64c005a064c005a064c005a064c005a064c005a064c005a064c005a064c005a064c005a064c0058d"
+              },
+              "confidence": 0.65,
+              "summary": "Ascii85 candidate",
+              "evidence": [
+                {
+                  "code": "ascii85-grammar",
+                  "message": "Matched Ascii85 candidate grammar and structure",
+                  "weight": 0.65
+                }
+              ],
+              "warnings": [],
+              "decoded": {
+                "type": "bytes",
+                "hex": "09fc07573b3d87ca64c005a064c005a064c005a064c005a064c005a064c005a064c005a064c005a064c005a064c0058d"
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "hash",
+            "label": "bcrypt",
+            "value": {
+              "algorithm": "bcrypt",
+              "cost": 4,
+              "reversible": false
+            },
+            "confidence": 0.99,
+            "summary": "bcrypt",
+            "evidence": [
+              {
+                "code": "hash-grammar",
+                "message": "Matched bcrypt grammar and structure",
+                "weight": 0.99
+              }
+            ],
+            "warnings": []
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "secret-patterns-positive-1",
+      "input": "ghp_syntheticfixture00000000000000000000",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 40,
+          "candidates": [
+            {
+              "detector": "secret-patterns",
+              "label": "Secret-like credential pattern",
+              "value": "ghp_[redacted]",
+              "confidence": 1,
+              "summary": "Secret-like credential pattern",
+              "evidence": [
+                {
+                  "code": "secret-patterns-grammar",
+                  "message": "Matched Secret-like credential pattern grammar and structure",
+                  "weight": 1
+                }
+              ],
+              "warnings": [
+                {
+                  "ruleId": "SECRET-EXPOSED",
+                  "message": "ghp_… matches a public credential prefix. Revoke/rotate exposed credentials. No match does not prove safety.",
+                  "severity": "danger"
+                }
+              ],
+              "metadata": {
+                "rotationUrl": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository"
+              }
+            },
+            {
+              "detector": "base64",
+              "label": "Base64URL",
+              "confidence": 0.71,
+              "summary": "30 decoded bytes",
+              "value": {
+                "type": "bytes",
+                "hex": "821a7fb329ed85eb6271f8b1b6eaded34d34d34d34d34d34d34d34d34d34"
+              },
+              "evidence": [
+                {
+                  "code": "alphabet",
+                  "message": "Uses a Base64-compatible alphabet",
+                  "weight": 0.45
+                },
+                {
+                  "code": "decode",
+                  "message": "Decodes without invalid bytes",
+                  "weight": 0.3
+                },
+                {
+                  "code": "printable",
+                  "message": "0% printable output",
+                  "weight": 0.2
+                }
+              ],
+              "warnings": [],
+              "decoded": {
+                "type": "bytes",
+                "hex": "821a7fb329ed85eb6271f8b1b6eaded34d34d34d34d34d34d34d34d34d34"
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "secret-patterns",
+            "label": "Secret-like credential pattern",
+            "value": "ghp_[redacted]",
+            "confidence": 1,
+            "summary": "Secret-like credential pattern",
+            "evidence": [
+              {
+                "code": "secret-patterns-grammar",
+                "message": "Matched Secret-like credential pattern grammar and structure",
+                "weight": 1
+              }
+            ],
+            "warnings": [
+              {
+                "ruleId": "SECRET-EXPOSED",
+                "message": "ghp_… matches a public credential prefix. Revoke/rotate exposed credentials. No match does not prove safety.",
+                "severity": "danger"
+              }
+            ],
+            "metadata": {
+              "rotationUrl": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository"
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "jwe-positive-1",
+      "input": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiZml4dHVyZSI6MH0..aXY.YQ.dGFn",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 68,
+          "candidates": [
+            {
+              "detector": "jwe",
+              "label": "JWE encrypted token",
+              "value": {
+                "header": {
+                  "alg": "dir",
+                  "enc": "A256GCM",
+                  "fixture": 0
+                },
+                "note": "The body is encrypted. It cannot be read without the key."
+              },
+              "confidence": 0.999,
+              "summary": "JWE encrypted token",
+              "evidence": [
+                {
+                  "code": "jwe-grammar",
+                  "message": "Matched JWE encrypted token grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "jwe",
+            "label": "JWE encrypted token",
+            "value": {
+              "header": {
+                "alg": "dir",
+                "enc": "A256GCM",
+                "fixture": 0
+              },
+              "note": "The body is encrypted. It cannot be read without the key."
+            },
+            "confidence": 0.999,
+            "summary": "JWE encrypted token",
+            "evidence": [
+              {
+                "code": "jwe-grammar",
+                "message": "Matched JWE encrypted token grammar and structure",
+                "weight": 0.999
+              }
+            ],
+            "warnings": []
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "http-headers-positive-1",
+      "input": "HTTP/1.1 200 OK\nContent-Type: text/plain\nX-Fixture: 0",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 53,
+          "candidates": [
+            {
+              "detector": "http-headers",
+              "label": "HTTP headers",
+              "value": {
+                "startLine": "HTTP/1.1 200 OK",
+                "headers": [
+                  {
+                    "name": "Content-Type",
+                    "value": "text/plain"
+                  },
+                  {
+                    "name": "X-Fixture",
+                    "value": "0"
+                  }
+                ]
+              },
+              "confidence": 0.999,
+              "summary": "HTTP headers",
+              "evidence": [
+                {
+                  "code": "http-headers-grammar",
+                  "message": "Matched HTTP headers grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": [
+                {
+                  "ruleId": "HTTP-NO-HSTS",
+                  "message": "No HSTS header is present. Applicability depends on the response origin.",
+                  "severity": "info"
+                }
+              ],
+              "metadata": {
+                "kind": "http",
+                "embedded": []
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "http-headers",
+            "label": "HTTP headers",
+            "value": {
+              "startLine": "HTTP/1.1 200 OK",
+              "headers": [
+                {
+                  "name": "Content-Type",
+                  "value": "text/plain"
+                },
+                {
+                  "name": "X-Fixture",
+                  "value": "0"
+                }
+              ]
+            },
+            "confidence": 0.999,
+            "summary": "HTTP headers",
+            "evidence": [
+              {
+                "code": "http-headers-grammar",
+                "message": "Matched HTTP headers grammar and structure",
+                "weight": 0.999
+              }
+            ],
+            "warnings": [
+              {
+                "ruleId": "HTTP-NO-HSTS",
+                "message": "No HSTS header is present. Applicability depends on the response origin.",
+                "severity": "info"
+              }
+            ],
+            "metadata": {
+              "kind": "http",
+              "embedded": []
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "dns-txt-positive-1",
+      "input": "v=spf1 ip4:192.0.2.1 -all",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 25,
+          "candidates": [
+            {
+              "detector": "dns-txt",
+              "label": "SPF policy",
+              "value": {
+                "tags": [
+                  {
+                    "tag": "v=spf1",
+                    "meaning": "Version"
+                  },
+                  {
+                    "tag": "ip4:192.0.2.1",
+                    "meaning": "Allow an IPv4 range"
+                  },
+                  {
+                    "tag": "-all",
+                    "meaning": "Unknown tag; preserved unchanged"
+                  }
+                ]
+              },
+              "confidence": 0.999,
+              "summary": "SPF policy",
+              "evidence": [
+                {
+                  "code": "dns-txt-grammar",
+                  "message": "Matched SPF policy grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": [],
+              "rejection": {
+                "code": "insufficient-margin",
+                "message": "Candidates are too close to choose automatically."
+              }
+            },
+            {
+              "detector": "kv",
+              "label": "Query string",
+              "value": {
+                "entries": [
+                  {
+                    "name": "v",
+                    "value": "spf1 ip4:192.0.2.1 -all"
+                  }
+                ]
+              },
+              "confidence": 0.97,
+              "summary": "Query string",
+              "evidence": [
+                {
+                  "code": "kv-grammar",
+                  "message": "Matched Query string grammar and structure",
+                  "weight": 0.97
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "embedded": []
+              },
+              "rejection": {
+                "code": "insufficient-margin",
+                "message": "Candidates are too close to choose automatically."
+              }
+            },
+            {
+              "detector": "env",
+              "label": ".env / key=value",
+              "value": {
+                "entries": [
+                  {
+                    "name": "v",
+                    "value": "spf1 ip4:192.0.2.1 -all"
+                  }
+                ]
+              },
+              "confidence": 0.72,
+              "summary": ".env / key=value",
+              "evidence": [
+                {
+                  "code": "env-grammar",
+                  "message": "Matched .env / key=value grammar and structure",
+                  "weight": 0.72
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "embedded": []
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            },
+            {
+              "detector": "url",
+              "label": "Query string",
+              "confidence": 0.72,
+              "summary": "Key/value query data",
+              "value": {
+                "v": "spf1 ip4:192.0.2.1 -all"
+              },
+              "evidence": [
+                {
+                  "code": "url-syntax",
+                  "message": "Valid URL or percent/query syntax",
+                  "weight": 0.9
+                }
+              ],
+              "warnings": [],
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            },
+            {
+              "detector": "text-scan",
+              "label": "Encoded values in text",
+              "value": {
+                "matches": [
+                  {
+                    "offset": 11,
+                    "length": 9
+                  }
+                ]
+              },
+              "confidence": 0.7,
+              "summary": "Encoded values in text",
+              "evidence": [
+                {
+                  "code": "text-scan-grammar",
+                  "message": "Matched Encoded values in text grammar and structure",
+                  "weight": 0.7
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "embedded": [
+                  {
+                    "offset": 11,
+                    "encoded": "192.0.2.1"
+                  }
+                ]
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "status": "ambiguous"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "yaml-positive-1",
+      "input": "name: fixture-0\nlocal: true\nitems:\n  - one\n  - two",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 50,
+          "candidates": [
+            {
+              "detector": "yaml",
+              "label": "YAML",
+              "value": {
+                "note": "YAML structure recognized; parsing runs locally when the parser is available."
+              },
+              "confidence": 0.97,
+              "summary": "YAML",
+              "evidence": [
+                {
+                  "code": "yaml-grammar",
+                  "message": "Matched YAML grammar and structure",
+                  "weight": 0.97
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "detail": "yaml"
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "yaml",
+            "label": "YAML",
+            "value": {
+              "note": "YAML structure recognized; parsing runs locally when the parser is available."
+            },
+            "confidence": 0.97,
+            "summary": "YAML",
+            "evidence": [
+              {
+                "code": "yaml-grammar",
+                "message": "Matched YAML grammar and structure",
+                "weight": 0.97
+              }
+            ],
+            "warnings": [],
+            "metadata": {
+              "detail": "yaml"
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "xml-positive-1",
+      "input": "<fixture id=\"0\"><local>true</local></fixture>",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 45,
+          "candidates": [
+            {
+              "detector": "xml",
+              "label": "XML",
+              "value": {
+                "root": "fixture",
+                "xml": "<fixture id=\"0\"><local>true</local></fixture>"
+              },
+              "confidence": 0.98,
+              "summary": "XML",
+              "evidence": [
+                {
+                  "code": "xml-grammar",
+                  "message": "Matched XML grammar and structure",
+                  "weight": 0.98
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "detail": "xml"
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "xml",
+            "label": "XML",
+            "value": {
+              "root": "fixture",
+              "xml": "<fixture id=\"0\"><local>true</local></fixture>"
+            },
+            "confidence": 0.98,
+            "summary": "XML",
+            "evidence": [
+              {
+                "code": "xml-grammar",
+                "message": "Matched XML grammar and structure",
+                "weight": 0.98
+              }
+            ],
+            "warnings": [],
+            "metadata": {
+              "detail": "xml"
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "k8s-secret-positive-1",
+      "input": "apiVersion: v1\nkind: Secret\ndata:\n  user: Zml4dHVyZS0w\n  password: c3ludGhldGljLTA=\n  token: dG9rZW4=",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 101,
+          "candidates": [
+            {
+              "detector": "k8s-secret",
+              "label": "Kubernetes Secret",
+              "value": {
+                "entries": [
+                  {
+                    "name": "user",
+                    "value": "[redacted]"
+                  },
+                  {
+                    "name": "password",
+                    "value": "[redacted]"
+                  },
+                  {
+                    "name": "token",
+                    "value": "[redacted]"
+                  }
+                ]
+              },
+              "confidence": 0.999,
+              "summary": "Kubernetes Secret",
+              "evidence": [
+                {
+                  "code": "k8s-secret-grammar",
+                  "message": "Matched Kubernetes Secret grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": [
+                {
+                  "ruleId": "K8S-SECRET-PLAINTEXT",
+                  "message": "Base64 is encoding, not encryption. Expand values only in a trusted environment.",
+                  "severity": "warning"
+                }
+              ],
+              "metadata": {
+                "secretFields": [
+                  {
+                    "name": "user",
+                    "value": "[redacted]",
+                    "decoded": "fixture-0"
+                  },
+                  {
+                    "name": "password",
+                    "value": "[redacted]",
+                    "decoded": "synthetic-0"
+                  },
+                  {
+                    "name": "token",
+                    "value": "[redacted]",
+                    "decoded": "token"
+                  }
+                ]
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "k8s-secret",
+            "label": "Kubernetes Secret",
+            "value": {
+              "entries": [
+                {
+                  "name": "user",
+                  "value": "[redacted]"
+                },
+                {
+                  "name": "password",
+                  "value": "[redacted]"
+                },
+                {
+                  "name": "token",
+                  "value": "[redacted]"
+                }
+              ]
+            },
+            "confidence": 0.999,
+            "summary": "Kubernetes Secret",
+            "evidence": [
+              {
+                "code": "k8s-secret-grammar",
+                "message": "Matched Kubernetes Secret grammar and structure",
+                "weight": 0.999
+              }
+            ],
+            "warnings": [
+              {
+                "ruleId": "K8S-SECRET-PLAINTEXT",
+                "message": "Base64 is encoding, not encryption. Expand values only in a trusted environment.",
+                "severity": "warning"
+              }
+            ],
+            "metadata": {
+              "secretFields": [
+                {
+                  "name": "user",
+                  "value": "[redacted]",
+                  "decoded": "fixture-0"
+                },
+                {
+                  "name": "password",
+                  "value": "[redacted]",
+                  "decoded": "synthetic-0"
+                },
+                {
+                  "name": "token",
+                  "value": "[redacted]",
+                  "decoded": "token"
+                }
+              ]
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "json-deep-positive-1",
+      "input": "{\"fixture\":0,\"message\":\"Zml4dHVyZSAwOiBsb2NhbCBlbmNvZGVkIHRleHQ\"}",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 65,
+          "candidates": [
+            {
+              "detector": "json",
+              "label": "JSON",
+              "confidence": 0.985,
+              "summary": "Object with 2 top-level entries",
+              "value": {
+                "fixture": 0,
+                "message": "Zml4dHVyZSAwOiBsb2NhbCBlbmNvZGVkIHRleHQ"
+              },
+              "evidence": [
+                {
+                  "code": "json-parse",
+                  "message": "Valid JSON grammar",
+                  "weight": 0.98
+                }
+              ],
+              "warnings": []
+            },
+            {
+              "detector": "json-deep",
+              "label": "Encoded JSON fields",
+              "value": {
+                "structure": {
+                  "fixture": 0,
+                  "message": "Zml4dHVyZSAwOiBsb2NhbCBlbmNvZGVkIHRleHQ"
+                },
+                "fields": [
+                  {
+                    "path": "$.message",
+                    "encoding": "Base64"
+                  }
+                ]
+              },
+              "confidence": 0.7,
+              "summary": "Encoded JSON fields",
+              "evidence": [
+                {
+                  "code": "json-deep-grammar",
+                  "message": "Matched Encoded JSON fields grammar and structure",
+                  "weight": 0.7
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "embedded": [
+                  {
+                    "path": "$.message",
+                    "encoding": "Base64",
+                    "encoded": "Zml4dHVyZSAwOiBsb2NhbCBlbmNvZGVkIHRleHQ"
+                  }
+                ]
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "1-2",
+              "depth": 1,
+              "sourcePath": "$.message",
+              "inputKind": "text",
+              "inputSize": 39,
+              "candidates": [
+                {
+                  "detector": "base64",
+                  "label": "Base64",
+                  "confidence": 0.82,
+                  "summary": "29 decoded bytes, mostly text",
+                  "value": "fixture 0: local encoded text",
+                  "evidence": [
+                    {
+                      "code": "alphabet",
+                      "message": "Uses a Base64-compatible alphabet",
+                      "weight": 0.45
+                    },
+                    {
+                      "code": "decode",
+                      "message": "Decodes without invalid bytes",
+                      "weight": 0.3
+                    },
+                    {
+                      "code": "printable",
+                      "message": "100% printable output",
+                      "weight": 0.2
+                    }
+                  ],
+                  "warnings": [],
+                  "decoded": "fixture 0: local encoded text",
+                  "rejection": {
+                    "code": "below-auto-threshold",
+                    "message": "Evidence is below the automatic confidence threshold."
+                  }
+                }
+              ],
+              "children": [],
+              "status": "ambiguous"
+            }
+          ],
+          "selected": {
+            "detector": "json",
+            "label": "JSON",
+            "confidence": 0.985,
+            "summary": "Object with 2 top-level entries",
+            "value": {
+              "fixture": 0,
+              "message": "Zml4dHVyZSAwOiBsb2NhbCBlbmNvZGVkIHRleHQ"
+            },
+            "evidence": [
+              {
+                "code": "json-parse",
+                "message": "Valid JSON grammar",
+                "weight": 0.98
+              }
+            ],
+            "warnings": []
+          },
+          "status": "confident"
+        },
+        "nodes": 2,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "text-scan-positive-1",
+      "input": "client 192.168.0.1 request https://example.invalid/0 ended",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 58,
+          "candidates": [
+            {
+              "detector": "text-scan",
+              "label": "Encoded values in text",
+              "value": {
+                "matches": [
+                  {
+                    "offset": 7,
+                    "length": 11
+                  },
+                  {
+                    "offset": 27,
+                    "length": 25
+                  }
+                ]
+              },
+              "confidence": 0.7,
+              "summary": "Encoded values in text",
+              "evidence": [
+                {
+                  "code": "text-scan-grammar",
+                  "message": "Matched Encoded values in text grammar and structure",
+                  "weight": 0.7
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "embedded": [
+                  {
+                    "offset": 7,
+                    "encoded": "192.168.0.1"
+                  },
+                  {
+                    "offset": 27,
+                    "encoded": "https://example.invalid/0"
+                  }
+                ]
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "status": "ambiguous"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "pgp-armor-positive-1",
+      "input": "-----BEGIN PGP MESSAGE-----\n\nc3ludGhldGljIGFybW9yIDA=\n-----END PGP MESSAGE-----",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 79,
+          "candidates": [
+            {
+              "detector": "pgp-armor",
+              "label": "PGP armor",
+              "value": {
+                "kind": "MESSAGE",
+                "headers": [],
+                "checksum": "absent",
+                "note": "If this message is encrypted, its body cannot be read without the key."
+              },
+              "confidence": 0.999,
+              "summary": "PGP armor",
+              "evidence": [
+                {
+                  "code": "pgp-armor-grammar",
+                  "message": "Matched PGP armor grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": []
+            },
+            {
+              "detector": "text-scan",
+              "label": "Encoded values in text",
+              "value": {
+                "matches": [
+                  {
+                    "offset": 29,
+                    "length": 24
+                  }
+                ]
+              },
+              "confidence": 0.7,
+              "summary": "Encoded values in text",
+              "evidence": [
+                {
+                  "code": "text-scan-grammar",
+                  "message": "Matched Encoded values in text grammar and structure",
+                  "weight": 0.7
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "embedded": [
+                  {
+                    "offset": 29,
+                    "encoded": "c3ludGhldGljIGFybW9yIDA="
+                  }
+                ]
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "pgp-armor",
+            "label": "PGP armor",
+            "value": {
+              "kind": "MESSAGE",
+              "headers": [],
+              "checksum": "absent",
+              "note": "If this message is encrypted, its body cannot be read without the key."
+            },
+            "confidence": 0.999,
+            "summary": "PGP armor",
+            "evidence": [
+              {
+                "code": "pgp-armor-grammar",
+                "message": "Matched PGP armor grammar and structure",
+                "weight": 0.999
+              }
+            ],
+            "warnings": []
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "data-uri-positive-1",
+      "input": "data:text/plain;base64,Zml4dHVyZS0w",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 35,
+          "candidates": [
+            {
+              "detector": "data-uri",
+              "label": "Data URI",
+              "value": {
+                "mime": "text/plain",
+                "bytes": 9
+              },
+              "confidence": 0.999,
+              "summary": "Data URI",
+              "evidence": [
+                {
+                  "code": "data-uri-grammar",
+                  "message": "Matched Data URI grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": [],
+              "decoded": {
+                "type": "bytes",
+                "hex": "666978747572652d30"
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "1-2",
+              "depth": 1,
+              "inputKind": "bytes",
+              "inputSize": 9,
+              "bytes": {
+                "type": "bytes",
+                "hex": "666978747572652d30"
+              },
+              "candidates": [],
+              "children": [],
+              "status": "unsupported"
+            }
+          ],
+          "selected": {
+            "detector": "data-uri",
+            "label": "Data URI",
+            "value": {
+              "mime": "text/plain",
+              "bytes": 9
+            },
+            "confidence": 0.999,
+            "summary": "Data URI",
+            "evidence": [
+              {
+                "code": "data-uri-grammar",
+                "message": "Matched Data URI grammar and structure",
+                "weight": 0.999
+              }
+            ],
+            "warnings": [],
+            "decoded": {
+              "type": "bytes",
+              "hex": "666978747572652d30"
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 2,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "zstd-positive-1",
+      "input": {
+        "type": "bytes",
+        "hex": "28b52ffd200d6900007b2266697874757265223a307d"
+      },
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "bytes",
+          "inputSize": 22,
+          "bytes": {
+            "type": "bytes",
+            "hex": "28b52ffd200d6900007b2266697874757265223a307d"
+          },
+          "candidates": [
+            {
+              "detector": "zstd",
+              "label": "Zstandard compressed stream",
+              "value": {
+                "compressedBytes": 22,
+                "note": "This surface cannot decompress zstd. Use the web decoder."
+              },
+              "confidence": 0.999,
+              "summary": "Zstandard compressed stream",
+              "evidence": [
+                {
+                  "code": "zstd-grammar",
+                  "message": "Matched Zstandard compressed stream grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": [
+                {
+                  "ruleId": "CODEC-UNAVAILABLE",
+                  "message": "This local parser is unavailable. Open the web parser once online.",
+                  "severity": "info"
+                }
+              ]
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "zstd",
+            "label": "Zstandard compressed stream",
+            "value": {
+              "compressedBytes": 22,
+              "note": "This surface cannot decompress zstd. Use the web decoder."
+            },
+            "confidence": 0.999,
+            "summary": "Zstandard compressed stream",
+            "evidence": [
+              {
+                "code": "zstd-grammar",
+                "message": "Matched Zstandard compressed stream grammar and structure",
+                "weight": 0.999
+              }
+            ],
+            "warnings": [
+              {
+                "ruleId": "CODEC-UNAVAILABLE",
+                "message": "This local parser is unavailable. Open the web parser once online.",
+                "severity": "info"
+              }
+            ]
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "msgpack-positive-1",
+      "input": {
+        "type": "bytes",
+        "hex": "81a16100"
+      },
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "bytes",
+          "inputSize": 4,
+          "bytes": {
+            "type": "bytes",
+            "hex": "81a16100"
+          },
+          "candidates": [
+            {
+              "detector": "msgpack",
+              "label": "MessagePack candidate",
+              "value": {
+                "bytes": 4,
+                "note": "This surface recognizes MessagePack structure but cannot open the full tree. Use the web decoder."
+              },
+              "confidence": 0.7,
+              "summary": "MessagePack candidate",
+              "evidence": [
+                {
+                  "code": "msgpack-grammar",
+                  "message": "Matched MessagePack candidate grammar and structure",
+                  "weight": 0.7
+                }
+              ],
+              "warnings": [],
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "status": "ambiguous"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "cbor-positive-1",
+      "input": {
+        "type": "bytes",
+        "hex": "d9d9f7a1616100"
+      },
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "bytes",
+          "inputSize": 7,
+          "bytes": {
+            "type": "bytes",
+            "hex": "d9d9f7a1616100"
+          },
+          "candidates": [
+            {
+              "detector": "cbor",
+              "label": "CBOR self-described data",
+              "value": {
+                "tag": 55799,
+                "note": "This surface recognizes CBOR but does not have a local parser."
+              },
+              "confidence": 0.999,
+              "summary": "CBOR self-described data",
+              "evidence": [
+                {
+                  "code": "cbor-grammar",
+                  "message": "Matched CBOR self-described data grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "cbor",
+            "label": "CBOR self-described data",
+            "value": {
+              "tag": 55799,
+              "note": "This surface recognizes CBOR but does not have a local parser."
+            },
+            "confidence": 0.999,
+            "summary": "CBOR self-described data",
+            "evidence": [
+              {
+                "code": "cbor-grammar",
+                "message": "Matched CBOR self-described data grammar and structure",
+                "weight": 0.999
+              }
+            ],
+            "warnings": []
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "protobuf-positive-1",
+      "input": {
+        "type": "bytes",
+        "hex": "08001203666f6f"
+      },
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "bytes",
+          "inputSize": 7,
+          "bytes": {
+            "type": "bytes",
+            "hex": "08001203666f6f"
+          },
+          "candidates": [
+            {
+              "detector": "protobuf",
+              "label": "Protobuf wire candidate",
+              "value": {
+                "fields": [
+                  {
+                    "field": 1,
+                    "wire": 0,
+                    "value": "0"
+                  },
+                  {
+                    "field": 2,
+                    "wire": 2,
+                    "value": {
+                      "text": "foo"
+                    }
+                  }
+                ],
+                "note": "No schema. Field names and semantic types are unknown."
+              },
+              "confidence": 0.68,
+              "summary": "Protobuf wire candidate",
+              "evidence": [
+                {
+                  "code": "protobuf-grammar",
+                  "message": "Matched Protobuf wire candidate grammar and structure",
+                  "weight": 0.68
+                }
+              ],
+              "warnings": [],
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "status": "ambiguous"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "saml-positive-1",
+      "input": "<saml:Assertion xmlns:saml=\"urn:oasis:names:tc:SAML:2.0:assertion\"><saml:Issuer>fixture-0</saml:Issuer></saml:Assertion>",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 120,
+          "candidates": [
+            {
+              "detector": "saml",
+              "label": "SAML response / assertion",
+              "value": {
+                "issuer": "fixture-0",
+                "signaturePresent": false,
+                "signatureVerified": false
+              },
+              "confidence": 0.999,
+              "summary": "SAML response / assertion",
+              "evidence": [
+                {
+                  "code": "saml-grammar",
+                  "message": "Matched SAML response / assertion grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": [
+                {
+                  "ruleId": "SAML-SIGNATURE-UNVERIFIED",
+                  "message": "Signature presence is not signature verification.",
+                  "severity": "info"
+                }
+              ]
+            },
+            {
+              "detector": "xml",
+              "label": "XML",
+              "value": {
+                "root": "saml:Assertion",
+                "xml": "<saml:Assertion xmlns:saml=\"urn:oasis:names:tc:SAML:2.0:assertion\"><saml:Issuer>fixture-0</saml:Issuer></saml:Assertion>"
+              },
+              "confidence": 0.98,
+              "summary": "XML",
+              "evidence": [
+                {
+                  "code": "xml-grammar",
+                  "message": "Matched XML grammar and structure",
+                  "weight": 0.98
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "detail": "xml"
+              },
+              "rejection": {
+                "code": "lower-ranked",
+                "message": "A stronger candidate was selected."
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "saml",
+            "label": "SAML response / assertion",
+            "value": {
+              "issuer": "fixture-0",
+              "signaturePresent": false,
+              "signatureVerified": false
+            },
+            "confidence": 0.999,
+            "summary": "SAML response / assertion",
+            "evidence": [
+              {
+                "code": "saml-grammar",
+                "message": "Matched SAML response / assertion grammar and structure",
+                "weight": 0.999
+              }
+            ],
+            "warnings": [
+              {
+                "ruleId": "SAML-SIGNATURE-UNVERIFIED",
+                "message": "Signature presence is not signature verification.",
+                "severity": "info"
+              }
+            ]
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "toml-positive-1",
+      "input": "[package]\nname = \"fixture-0\"\nversion = \"1.0.0\"",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 46,
+          "candidates": [
+            {
+              "detector": "toml",
+              "label": "TOML",
+              "value": {
+                "note": "TOML table and key syntax. Open the web parser once online for the full tree."
+              },
+              "confidence": 0.99,
+              "summary": "TOML",
+              "evidence": [
+                {
+                  "code": "toml-grammar",
+                  "message": "Matched TOML grammar and structure",
+                  "weight": 0.99
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "toml",
+            "label": "TOML",
+            "value": {
+              "note": "TOML table and key syntax. Open the web parser once online for the full tree."
+            },
+            "confidence": 0.99,
+            "summary": "TOML",
+            "evidence": [
+              {
+                "code": "toml-grammar",
+                "message": "Matched TOML grammar and structure",
+                "weight": 0.99
+              }
+            ],
+            "warnings": []
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "magic-bytes-positive-1",
+      "input": {
+        "type": "bytes",
+        "hex": "89504e470d0a1a0a0000000d4948445200000001000000010804000000b51c0c020000000b4944415478da63fcff1f0003030200efbf6b490000000049454e44ae426082666978747572652d30"
+      },
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "bytes",
+          "inputSize": 77,
+          "bytes": {
+            "type": "bytes",
+            "hex": "89504e470d0a1a0a0000000d4948445200000001000000010804000000b51c0c020000000b4944415478da63fcff1f0003030200efbf6b490000000049454e44ae426082666978747572652d30"
+          },
+          "candidates": [
+            {
+              "detector": "magic-bytes",
+              "label": "PNG image",
+              "value": {
+                "label": "PNG image",
+                "mime": "image/png",
+                "extension": "png",
+                "bytes": 77,
+                "width": 1,
+                "height": 1
+              },
+              "confidence": 0.999,
+              "summary": "PNG image",
+              "evidence": [
+                {
+                  "code": "magic-bytes-grammar",
+                  "message": "Matched PNG image grammar and structure",
+                  "weight": 0.999
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "label": "PNG image",
+                "mime": "image/png",
+                "extension": "png",
+                "imageBytes": {
+                  "type": "bytes",
+                  "hex": "89504e470d0a1a0a0000000d4948445200000001000000010804000000b51c0c020000000b4944415478da63fcff1f0003030200efbf6b490000000049454e44ae426082666978747572652d30"
+                }
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "magic-bytes",
+            "label": "PNG image",
+            "value": {
+              "label": "PNG image",
+              "mime": "image/png",
+              "extension": "png",
+              "bytes": 77,
+              "width": 1,
+              "height": 1
+            },
+            "confidence": 0.999,
+            "summary": "PNG image",
+            "evidence": [
+              {
+                "code": "magic-bytes-grammar",
+                "message": "Matched PNG image grammar and structure",
+                "weight": 0.999
+              }
+            ],
+            "warnings": [],
+            "metadata": {
+              "label": "PNG image",
+              "mime": "image/png",
+              "extension": "png",
+              "imageBytes": {
+                "type": "bytes",
+                "hex": "89504e470d0a1a0a0000000d4948445200000001000000010804000000b51c0c020000000b4944415478da63fcff1f0003030200efbf6b490000000049454e44ae426082666978747572652d30"
+              }
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "jwt-positive-1",
+      "input": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmaXh0dXJlLTAiLCJleHAiOjIwMDAwMDAwMDB9.signature0",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 96,
+          "candidates": [
+            {
+              "detector": "jwt",
+              "label": "JWT / JWS compact",
+              "confidence": 0.995,
+              "summary": "RS256 token with 2 payload claims",
+              "value": {
+                "header": {
+                  "alg": "RS256",
+                  "typ": "JWT"
+                },
+                "payload": {
+                  "sub": "fixture-0",
+                  "exp": 2000000000
+                },
+                "signature": "signature0"
+              },
+              "evidence": [
+                {
+                  "code": "three-segments",
+                  "message": "Three Base64URL segments",
+                  "weight": 0.55
+                },
+                {
+                  "code": "json-header",
+                  "message": "Header and payload are valid JSON objects",
+                  "weight": 0.4
+                },
+                {
+                  "code": "alg",
+                  "message": "Algorithm header: RS256",
+                  "weight": 0.05
+                }
+              ],
+              "warnings": [
+                {
+                  "ruleId": "JWT-SIGNATURE-UNVERIFIED",
+                  "severity": "info",
+                  "message": "The signature is decoded but not verified without a trusted key.",
+                  "specUrl": "https://www.rfc-editor.org/rfc/rfc7519"
+                }
+              ],
+              "metadata": {
+                "algorithm": "RS256",
+                "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmaXh0dXJlLTAiLCJleHAiOjIwMDAwMDAwMDB9.signature0"
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "jwt",
+            "label": "JWT / JWS compact",
+            "confidence": 0.995,
+            "summary": "RS256 token with 2 payload claims",
+            "value": {
+              "header": {
+                "alg": "RS256",
+                "typ": "JWT"
+              },
+              "payload": {
+                "sub": "fixture-0",
+                "exp": 2000000000
+              },
+              "signature": "signature0"
+            },
+            "evidence": [
+              {
+                "code": "three-segments",
+                "message": "Three Base64URL segments",
+                "weight": 0.55
+              },
+              {
+                "code": "json-header",
+                "message": "Header and payload are valid JSON objects",
+                "weight": 0.4
+              },
+              {
+                "code": "alg",
+                "message": "Algorithm header: RS256",
+                "weight": 0.05
+              }
+            ],
+            "warnings": [
+              {
+                "ruleId": "JWT-SIGNATURE-UNVERIFIED",
+                "severity": "info",
+                "message": "The signature is decoded but not verified without a trusted key.",
+                "specUrl": "https://www.rfc-editor.org/rfc/rfc7519"
+              }
+            ],
+            "metadata": {
+              "algorithm": "RS256",
+              "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmaXh0dXJlLTAiLCJleHAiOjIwMDAwMDAwMDB9.signature0"
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "base64-positive-1",
+      "input": "YmFzZTY0IGZpeHR1cmUgMTogbG9jYWwtb25seSBkYXRh",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 44,
+          "candidates": [
+            {
+              "detector": "base64",
+              "label": "Base64",
+              "confidence": 0.82,
+              "summary": "33 decoded bytes, mostly text",
+              "value": "base64 fixture 1: local-only data",
+              "evidence": [
+                {
+                  "code": "alphabet",
+                  "message": "Uses a Base64-compatible alphabet",
+                  "weight": 0.45
+                },
+                {
+                  "code": "decode",
+                  "message": "Decodes without invalid bytes",
+                  "weight": 0.3
+                },
+                {
+                  "code": "printable",
+                  "message": "100% printable output",
+                  "weight": 0.2
+                }
+              ],
+              "warnings": [],
+              "decoded": "base64 fixture 1: local-only data",
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "status": "ambiguous"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "json-positive-1",
+      "input": "{\"fixture\":1,\"local\":true,\"values\":[0,1]}",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 41,
+          "candidates": [
+            {
+              "detector": "json",
+              "label": "JSON",
+              "confidence": 0.985,
+              "summary": "Object with 3 top-level entries",
+              "value": {
+                "fixture": 1,
+                "local": true,
+                "values": [
+                  0,
+                  1
+                ]
+              },
+              "evidence": [
+                {
+                  "code": "json-parse",
+                  "message": "Valid JSON grammar",
+                  "weight": 0.98
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "json",
+            "label": "JSON",
+            "confidence": 0.985,
+            "summary": "Object with 3 top-level entries",
+            "value": {
+              "fixture": 1,
+              "local": true,
+              "values": [
+                0,
+                1
+              ]
+            },
+            "evidence": [
+              {
+                "code": "json-parse",
+                "message": "Valid JSON grammar",
+                "weight": 0.98
+              }
+            ],
+            "warnings": []
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "hex-positive-1",
+      "input": "0x6865782d3030",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 14,
+          "candidates": [
+            {
+              "detector": "hex",
+              "label": "Hexadecimal bytes",
+              "confidence": 0.92,
+              "summary": "6 bytes",
+              "value": "hex-00",
+              "evidence": [
+                {
+                  "code": "hex-alphabet",
+                  "message": "Even-length hexadecimal input",
+                  "weight": 0.7
+                },
+                {
+                  "code": "printable",
+                  "message": "100% printable output",
+                  "weight": 0.15
+                }
+              ],
+              "warnings": [],
+              "decoded": "hex-00"
+            },
+            {
+              "detector": "base64",
+              "label": "Base64",
+              "confidence": 0.67,
+              "summary": "10 decoded bytes",
+              "value": {
+                "type": "bytes",
+                "hex": "d31ebceb9efcd9ddf4df"
+              },
+              "evidence": [
+                {
+                  "code": "alphabet",
+                  "message": "Uses a Base64-compatible alphabet",
+                  "weight": 0.45
+                },
+                {
+                  "code": "decode",
+                  "message": "Decodes without invalid bytes",
+                  "weight": 0.3
+                },
+                {
+                  "code": "printable",
+                  "message": "0% printable output",
+                  "weight": 0.2
+                }
+              ],
+              "warnings": [],
+              "decoded": {
+                "type": "bytes",
+                "hex": "d31ebceb9efcd9ddf4df"
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "1-2",
+              "depth": 1,
+              "inputKind": "text",
+              "inputSize": 6,
+              "candidates": [
+                {
+                  "detector": "base64",
+                  "label": "Base64URL",
+                  "confidence": 0.71,
+                  "summary": "4 decoded bytes",
+                  "value": {
+                    "type": "bytes",
+                    "hex": "85ec7ed3"
+                  },
+                  "evidence": [
+                    {
+                      "code": "alphabet",
+                      "message": "Uses a Base64-compatible alphabet",
+                      "weight": 0.45
+                    },
+                    {
+                      "code": "decode",
+                      "message": "Decodes without invalid bytes",
+                      "weight": 0.3
+                    },
+                    {
+                      "code": "printable",
+                      "message": "0% printable output",
+                      "weight": 0.2
+                    }
+                  ],
+                  "warnings": [],
+                  "decoded": {
+                    "type": "bytes",
+                    "hex": "85ec7ed3"
+                  },
+                  "rejection": {
+                    "code": "below-auto-threshold",
+                    "message": "Evidence is below the automatic confidence threshold."
+                  }
+                }
+              ],
+              "children": [],
+              "status": "ambiguous"
+            }
+          ],
+          "selected": {
+            "detector": "hex",
+            "label": "Hexadecimal bytes",
+            "confidence": 0.92,
+            "summary": "6 bytes",
+            "value": "hex-00",
+            "evidence": [
+              {
+                "code": "hex-alphabet",
+                "message": "Even-length hexadecimal input",
+                "weight": 0.7
+              },
+              {
+                "code": "printable",
+                "message": "100% printable output",
+                "weight": 0.15
+              }
+            ],
+            "warnings": [],
+            "decoded": "hex-00"
+          },
+          "status": "confident"
+        },
+        "nodes": 2,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "url-positive-1",
+      "input": "https://example.invalid/path/1?fixture=1&local=true",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 51,
+          "candidates": [
+            {
+              "detector": "url",
+              "label": "URL",
+              "confidence": 0.98,
+              "summary": "https://example.invalid",
+              "value": {
+                "href": "https://example.invalid/path/1?fixture=1&local=true",
+                "protocol": "https:",
+                "host": "example.invalid",
+                "pathname": "/path/1",
+                "query": {
+                  "fixture": "1",
+                  "local": "true"
+                }
+              },
+              "evidence": [
+                {
+                  "code": "url-syntax",
+                  "message": "Valid URL or percent/query syntax",
+                  "weight": 0.9
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "originalUrl": "https://example.invalid/path/1?fixture=1&local=true",
+                "trackingCount": 0,
+                "destination": "example.invalid",
+                "redirect": false
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "url",
+            "label": "URL",
+            "confidence": 0.98,
+            "summary": "https://example.invalid",
+            "value": {
+              "href": "https://example.invalid/path/1?fixture=1&local=true",
+              "protocol": "https:",
+              "host": "example.invalid",
+              "pathname": "/path/1",
+              "query": {
+                "fixture": "1",
+                "local": "true"
+              }
+            },
+            "evidence": [
+              {
+                "code": "url-syntax",
+                "message": "Valid URL or percent/query syntax",
+                "weight": 0.9
+              }
+            ],
+            "warnings": [],
+            "metadata": {
+              "originalUrl": "https://example.invalid/path/1?fixture=1&local=true",
+              "trackingCount": 0,
+              "destination": "example.invalid",
+              "redirect": false
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "epoch-positive-1",
+      "input": "1735689600",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 10,
+          "candidates": [
+            {
+              "detector": "epoch",
+              "label": "Unix time (seconds)",
+              "confidence": 0.93,
+              "summary": "2025-01-01T00:00:00.000Z",
+              "value": {
+                "iso": "2025-01-01T00:00:00.000Z",
+                "unit": "seconds",
+                "milliseconds": 1735689600000
+              },
+              "evidence": [
+                {
+                  "code": "integer-width",
+                  "message": "Digit width matches seconds",
+                  "weight": 0.65
+                },
+                {
+                  "code": "date-range",
+                  "message": "Date is in a common operational range",
+                  "weight": 0.25
+                }
+              ],
+              "warnings": []
+            },
+            {
+              "detector": "hex",
+              "label": "Hexadecimal bytes",
+              "confidence": 0.68,
+              "summary": "5 bytes",
+              "value": {
+                "type": "bytes",
+                "hex": "1735689600"
+              },
+              "evidence": [
+                {
+                  "code": "hex-alphabet",
+                  "message": "Even-length hexadecimal input",
+                  "weight": 0.7
+                },
+                {
+                  "code": "printable",
+                  "message": "0% printable output",
+                  "weight": 0.15
+                }
+              ],
+              "warnings": [],
+              "decoded": {
+                "type": "bytes",
+                "hex": "1735689600"
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            },
+            {
+              "detector": "base64",
+              "label": "Base64",
+              "confidence": 0.67,
+              "summary": "7 decoded bytes",
+              "value": {
+                "type": "bytes",
+                "hex": "d7bdf9ebcf7ad3"
+              },
+              "evidence": [
+                {
+                  "code": "alphabet",
+                  "message": "Uses a Base64-compatible alphabet",
+                  "weight": 0.45
+                },
+                {
+                  "code": "decode",
+                  "message": "Decodes without invalid bytes",
+                  "weight": 0.3
+                },
+                {
+                  "code": "printable",
+                  "message": "0% printable output",
+                  "weight": 0.2
+                }
+              ],
+              "warnings": [],
+              "decoded": {
+                "type": "bytes",
+                "hex": "d7bdf9ebcf7ad3"
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            },
+            {
+              "detector": "ip",
+              "label": "IPv4",
+              "value": {
+                "address": "103.116.133.128",
+                "scope": "public",
+                "integer": 1735689600,
+                "hex": "0x67748580"
+              },
+              "confidence": 0.65,
+              "summary": "IPv4",
+              "evidence": [
+                {
+                  "code": "ip-grammar",
+                  "message": "Matched IPv4 grammar and structure",
+                  "weight": 0.65
+                }
+              ],
+              "warnings": [],
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "epoch",
+            "label": "Unix time (seconds)",
+            "confidence": 0.93,
+            "summary": "2025-01-01T00:00:00.000Z",
+            "value": {
+              "iso": "2025-01-01T00:00:00.000Z",
+              "unit": "seconds",
+              "milliseconds": 1735689600000
+            },
+            "evidence": [
+              {
+                "code": "integer-width",
+                "message": "Digit width matches seconds",
+                "weight": 0.65
+              },
+              {
+                "code": "date-range",
+                "message": "Date is in a common operational range",
+                "weight": 0.25
+              }
+            ],
+            "warnings": []
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "uuid-ulid-positive-1",
+      "input": "123e4567-e89b-42d3-a456-000000000000",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 36,
+          "candidates": [
+            {
+              "detector": "uuid-ulid",
+              "label": "UUID v4",
+              "confidence": 0.995,
+              "summary": "RFC 4122 variant, version 4",
+              "value": {
+                "version": 4,
+                "variant": "RFC 4122"
+              },
+              "evidence": [
+                {
+                  "code": "uuid-layout",
+                  "message": "Canonical UUID layout and variant",
+                  "weight": 0.95
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "version": 4,
+                "variant": "RFC 4122"
+              }
+            },
+            {
+              "detector": "base64",
+              "label": "Base64URL",
+              "confidence": 0.71,
+              "summary": "27 decoded bytes",
+              "value": {
+                "type": "bytes",
+                "hex": "d76ddee39ebbf9ef3d6fee36777f9ae39ebed34d34d34d34d34d34"
+              },
+              "evidence": [
+                {
+                  "code": "alphabet",
+                  "message": "Uses a Base64-compatible alphabet",
+                  "weight": 0.45
+                },
+                {
+                  "code": "decode",
+                  "message": "Decodes without invalid bytes",
+                  "weight": 0.3
+                },
+                {
+                  "code": "printable",
+                  "message": "0% printable output",
+                  "weight": 0.2
+                }
+              ],
+              "warnings": [],
+              "decoded": {
+                "type": "bytes",
+                "hex": "d76ddee39ebbf9ef3d6fee36777f9ae39ebed34d34d34d34d34d34"
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            },
+            {
+              "detector": "hex",
+              "label": "Hexadecimal bytes",
+              "confidence": 0.68,
+              "summary": "16 bytes",
+              "value": {
+                "type": "bytes",
+                "hex": "123e4567e89b42d3a456000000000000"
+              },
+              "evidence": [
+                {
+                  "code": "hex-alphabet",
+                  "message": "Even-length hexadecimal input",
+                  "weight": 0.7
+                },
+                {
+                  "code": "printable",
+                  "message": "0% printable output",
+                  "weight": 0.15
+                }
+              ],
+              "warnings": [],
+              "decoded": {
+                "type": "bytes",
+                "hex": "123e4567e89b42d3a456000000000000"
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "uuid-ulid",
+            "label": "UUID v4",
+            "confidence": 0.995,
+            "summary": "RFC 4122 variant, version 4",
+            "value": {
+              "version": 4,
+              "variant": "RFC 4122"
+            },
+            "evidence": [
+              {
+                "code": "uuid-layout",
+                "message": "Canonical UUID layout and variant",
+                "weight": 0.95
+              }
+            ],
+            "warnings": [],
+            "metadata": {
+              "version": 4,
+              "variant": "RFC 4122"
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "compression-positive-1",
+      "input": {
+        "type": "bytes",
+        "hex": "1f8b080056e6f96a0003ab564acbac28292d4a55b232d4514acecf2d284a2d2e4e4d51b22a292a4dad0500e747c7cd1f000000"
+      },
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "bytes",
+          "inputSize": 51,
+          "bytes": {
+            "type": "bytes",
+            "hex": "1f8b080056e6f96a0003ab564acbac28292d4a55b232d4514acecf2d284a2d2e4e4d51b22a292a4dad0500e747c7cd1f000000"
+          },
+          "candidates": [
+            {
+              "detector": "compression",
+              "label": "gzip",
+              "confidence": 0.999,
+              "summary": "51 → 31 bytes",
+              "value": "{\"fixture\":1,\"compressed\":true}",
+              "evidence": [
+                {
+                  "code": "magic",
+                  "message": "gzip signature and valid stream",
+                  "weight": 0.98
+                }
+              ],
+              "warnings": [],
+              "decoded": "{\"fixture\":1,\"compressed\":true}",
+              "metadata": {
+                "ratio": 0.6078431372549019
+              }
+            },
+            {
+              "detector": "magic-bytes",
+              "label": "gzip stream",
+              "value": {
+                "label": "gzip stream",
+                "mime": "application/gzip",
+                "extension": "gz",
+                "bytes": 51
+              },
+              "confidence": 0.7,
+              "summary": "gzip stream",
+              "evidence": [
+                {
+                  "code": "magic-bytes-grammar",
+                  "message": "Matched gzip stream grammar and structure",
+                  "weight": 0.7
+                }
+              ],
+              "warnings": [],
+              "metadata": {
+                "label": "gzip stream",
+                "mime": "application/gzip",
+                "extension": "gz"
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "1-2",
+              "depth": 1,
+              "inputKind": "text",
+              "inputSize": 31,
+              "candidates": [
+                {
+                  "detector": "json",
+                  "label": "JSON",
+                  "confidence": 0.985,
+                  "summary": "Object with 2 top-level entries",
+                  "value": {
+                    "fixture": 1,
+                    "compressed": true
+                  },
+                  "evidence": [
+                    {
+                      "code": "json-parse",
+                      "message": "Valid JSON grammar",
+                      "weight": 0.98
+                    }
+                  ],
+                  "warnings": []
+                }
+              ],
+              "children": [],
+              "selected": {
+                "detector": "json",
+                "label": "JSON",
+                "confidence": 0.985,
+                "summary": "Object with 2 top-level entries",
+                "value": {
+                  "fixture": 1,
+                  "compressed": true
+                },
+                "evidence": [
+                  {
+                    "code": "json-parse",
+                    "message": "Valid JSON grammar",
+                    "weight": 0.98
+                  }
+                ],
+                "warnings": []
+              },
+              "status": "confident"
+            }
+          ],
+          "selected": {
+            "detector": "compression",
+            "label": "gzip",
+            "confidence": 0.999,
+            "summary": "51 → 31 bytes",
+            "value": "{\"fixture\":1,\"compressed\":true}",
+            "evidence": [
+              {
+                "code": "magic",
+                "message": "gzip signature and valid stream",
+                "weight": 0.98
+              }
+            ],
+            "warnings": [],
+            "decoded": "{\"fixture\":1,\"compressed\":true}",
+            "metadata": {
+              "ratio": 0.6078431372549019
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 2,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "bad-data-uri",
+      "input": "data:text/plain;base64,!",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 24,
+          "candidates": [
+            {
+              "detector": "data-uri",
+              "label": "Data URI",
+              "value": {
+                "mime": "text/plain",
+                "error": "Invalid data URI encoding"
+              },
+              "confidence": 0.99,
+              "summary": "Data URI",
+              "evidence": [
+                {
+                  "code": "data-uri-grammar",
+                  "message": "Matched Data URI grammar and structure",
+                  "weight": 0.99
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "data-uri",
+            "label": "Data URI",
+            "value": {
+              "mime": "text/plain",
+              "error": "Invalid data URI encoding"
+            },
+            "confidence": 0.99,
+            "summary": "Data URI",
+            "evidence": [
+              {
+                "code": "data-uri-grammar",
+                "message": "Matched Data URI grammar and structure",
+                "weight": 0.99
+              }
+            ],
+            "warnings": []
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "bad-percent-uri",
+      "input": "data:text/plain,%ZZ",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 19,
+          "candidates": [
+            {
+              "detector": "data-uri",
+              "label": "Data URI",
+              "value": {
+                "mime": "text/plain",
+                "error": "Invalid data URI encoding"
+              },
+              "confidence": 0.99,
+              "summary": "Data URI",
+              "evidence": [
+                {
+                  "code": "data-uri-grammar",
+                  "message": "Matched Data URI grammar and structure",
+                  "weight": 0.99
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "data-uri",
+            "label": "Data URI",
+            "value": {
+              "mime": "text/plain",
+              "error": "Invalid data URI encoding"
+            },
+            "confidence": 0.99,
+            "summary": "Data URI",
+            "evidence": [
+              {
+                "code": "data-uri-grammar",
+                "message": "Matched Data URI grammar and structure",
+                "weight": 0.99
+              }
+            ],
+            "warnings": []
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "bad-basic",
+      "input": "Basic !",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 7,
+          "candidates": [
+            {
+              "detector": "auth-header",
+              "label": "Authorization: Basic",
+              "value": {
+                "error": "Invalid Base64"
+              },
+              "confidence": 0.99,
+              "summary": "Authorization: Basic",
+              "evidence": [
+                {
+                  "code": "auth-header-grammar",
+                  "message": "Matched Authorization: Basic grammar and structure",
+                  "weight": 0.99
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "auth-header",
+            "label": "Authorization: Basic",
+            "value": {
+              "error": "Invalid Base64"
+            },
+            "confidence": 0.99,
+            "summary": "Authorization: Basic",
+            "evidence": [
+              {
+                "code": "auth-header-grammar",
+                "message": "Matched Authorization: Basic grammar and structure",
+                "weight": 0.99
+              }
+            ],
+            "warnings": []
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "bad-pem",
+      "input": "-----BEGIN PUBLIC KEY-----\n!!!\n-----END PUBLIC KEY-----",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 55,
+          "candidates": [
+            {
+              "detector": "pem",
+              "label": "PEM block",
+              "value": {
+                "kind": "PUBLIC KEY",
+                "error": "Invalid Base64"
+              },
+              "confidence": 0.99,
+              "summary": "PEM block",
+              "evidence": [
+                {
+                  "code": "pem-grammar",
+                  "message": "Matched PEM block grammar and structure",
+                  "weight": 0.99
+                }
+              ],
+              "warnings": []
+            },
+            {
+              "detector": "ascii85",
+              "label": "Ascii85 candidate",
+              "value": {
+                "type": "bytes",
+                "hex": "25c8021c6802b2109427566b6b573d0c25c80210000156b425cab2809427566b6b573d0c25c802"
+              },
+              "confidence": 0.65,
+              "summary": "Ascii85 candidate",
+              "evidence": [
+                {
+                  "code": "ascii85-grammar",
+                  "message": "Matched Ascii85 candidate grammar and structure",
+                  "weight": 0.65
+                }
+              ],
+              "warnings": [],
+              "decoded": {
+                "type": "bytes",
+                "hex": "25c8021c6802b2109427566b6b573d0c25c80210000156b425cab2809427566b6b573d0c25c802"
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "pem",
+            "label": "PEM block",
+            "value": {
+              "kind": "PUBLIC KEY",
+              "error": "Invalid Base64"
+            },
+            "confidence": 0.99,
+            "summary": "PEM block",
+            "evidence": [
+              {
+                "code": "pem-grammar",
+                "message": "Matched PEM block grammar and structure",
+                "weight": 0.99
+              }
+            ],
+            "warnings": []
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "unsupported-mime",
+      "input": "=?not-a-charset?B?SGVsbG8=?=",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 28,
+          "candidates": [
+            {
+              "detector": "mime",
+              "label": "MIME encoded words",
+              "value": {
+                "text": "=?not-a-charset?B?SGVsbG8=?=",
+                "unsupportedCharsets": [
+                  {
+                    "charset": "not-a-charset",
+                    "bytes": [
+                      72,
+                      101,
+                      108,
+                      108,
+                      111
+                    ]
+                  }
+                ]
+              },
+              "confidence": 0.995,
+              "summary": "MIME encoded words",
+              "evidence": [
+                {
+                  "code": "mime-grammar",
+                  "message": "Matched MIME encoded words grammar and structure",
+                  "weight": 0.995
+                }
+              ],
+              "warnings": [
+                {
+                  "ruleId": "MIME-CHARSET-UNSUPPORTED",
+                  "message": "Unsupported charset: original words and decoded raw byte values are retained. Choose a charset in the string inspector.",
+                  "severity": "warning"
+                }
+              ],
+              "decoded": "=?not-a-charset?B?SGVsbG8=?=",
+              "metadata": {
+                "charsets": [
+                  "not-a-charset"
+                ]
+              }
+            },
+            {
+              "detector": "ascii85",
+              "label": "Ascii85 candidate",
+              "value": {
+                "type": "bytes",
+                "hex": "58403a8027af5c69ca2156665e9028b9a7ef17bd583a"
+              },
+              "confidence": 0.65,
+              "summary": "Ascii85 candidate",
+              "evidence": [
+                {
+                  "code": "ascii85-grammar",
+                  "message": "Matched Ascii85 candidate grammar and structure",
+                  "weight": 0.65
+                }
+              ],
+              "warnings": [],
+              "decoded": {
+                "type": "bytes",
+                "hex": "58403a8027af5c69ca2156665e9028b9a7ef17bd583a"
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "mime",
+            "label": "MIME encoded words",
+            "value": {
+              "text": "=?not-a-charset?B?SGVsbG8=?=",
+              "unsupportedCharsets": [
+                {
+                  "charset": "not-a-charset",
+                  "bytes": [
+                    72,
+                    101,
+                    108,
+                    108,
+                    111
+                  ]
+                }
+              ]
+            },
+            "confidence": 0.995,
+            "summary": "MIME encoded words",
+            "evidence": [
+              {
+                "code": "mime-grammar",
+                "message": "Matched MIME encoded words grammar and structure",
+                "weight": 0.995
+              }
+            ],
+            "warnings": [
+              {
+                "ruleId": "MIME-CHARSET-UNSUPPORTED",
+                "message": "Unsupported charset: original words and decoded raw byte values are retained. Choose a charset in the string inspector.",
+                "severity": "warning"
+              }
+            ],
+            "decoded": "=?not-a-charset?B?SGVsbG8=?=",
+            "metadata": {
+              "charsets": [
+                "not-a-charset"
+              ]
+            }
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "bad-date",
+      "input": "2026-02-30T00:00:00Z",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 20,
+          "candidates": [
+            {
+              "detector": "datetime",
+              "label": "Date and time",
+              "value": {
+                "error": "This date does not exist"
+              },
+              "confidence": 0.99,
+              "summary": "Date and time",
+              "evidence": [
+                {
+                  "code": "datetime-grammar",
+                  "message": "Matched Date and time grammar and structure",
+                  "weight": 0.99
+                }
+              ],
+              "warnings": [
+                {
+                  "ruleId": "DATE-INVALID",
+                  "message": "This calendar date does not exist.",
+                  "severity": "warning"
+                }
+              ]
+            },
+            {
+              "detector": "ascii85",
+              "label": "Ascii85 candidate",
+              "value": {
+                "type": "bytes",
+                "hex": "357346722f4c6cd19f3caed92f97b80f"
+              },
+              "confidence": 0.65,
+              "summary": "Ascii85 candidate",
+              "evidence": [
+                {
+                  "code": "ascii85-grammar",
+                  "message": "Matched Ascii85 candidate grammar and structure",
+                  "weight": 0.65
+                }
+              ],
+              "warnings": [],
+              "decoded": {
+                "type": "bytes",
+                "hex": "357346722f4c6cd19f3caed92f97b80f"
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "selected": {
+            "detector": "datetime",
+            "label": "Date and time",
+            "value": {
+              "error": "This date does not exist"
+            },
+            "confidence": 0.99,
+            "summary": "Date and time",
+            "evidence": [
+              {
+                "code": "datetime-grammar",
+                "message": "Matched Date and time grammar and structure",
+                "weight": 0.99
+              }
+            ],
+            "warnings": [
+              {
+                "ruleId": "DATE-INVALID",
+                "message": "This calendar date does not exist.",
+                "severity": "warning"
+              }
+            ]
+          },
+          "status": "confident"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    },
+    {
+      "id": "bad-cron",
+      "input": "99 99 99 99 99",
+      "result": {
+        "root": {
+          "id": "0-1",
+          "depth": 0,
+          "inputKind": "text",
+          "inputSize": 14,
+          "candidates": [
+            {
+              "detector": "cron",
+              "label": "Cron schedule",
+              "value": {
+                "error": "Invalid 5- or 6-field cron expression"
+              },
+              "confidence": 0.7,
+              "summary": "Cron schedule",
+              "evidence": [
+                {
+                  "code": "cron-grammar",
+                  "message": "Matched Cron schedule grammar and structure",
+                  "weight": 0.7
+                }
+              ],
+              "warnings": [],
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            },
+            {
+              "detector": "hex",
+              "label": "Hexadecimal bytes",
+              "confidence": 0.68,
+              "summary": "5 bytes",
+              "value": {
+                "type": "bytes",
+                "hex": "9999999999"
+              },
+              "evidence": [
+                {
+                  "code": "hex-alphabet",
+                  "message": "Even-length hexadecimal input",
+                  "weight": 0.7
+                },
+                {
+                  "code": "printable",
+                  "message": "0% printable output",
+                  "weight": 0.15
+                }
+              ],
+              "warnings": [],
+              "decoded": {
+                "type": "bytes",
+                "hex": "9999999999"
+              },
+              "rejection": {
+                "code": "below-auto-threshold",
+                "message": "Evidence is below the automatic confidence threshold."
+              }
+            }
+          ],
+          "children": [],
+          "status": "ambiguous"
+        },
+        "nodes": 1,
+        "elapsedMs": 0,
+        "limits": {
+          "maxInputBytes": 10485760,
+          "maxExpandedBytes": 33554432,
+          "maxCompressionRatio": 100,
+          "maxDepth": 8,
+          "maxNodes": 64,
+          "maxCpuMs": 2000
+        }
+      }
+    }
+  ]
+}

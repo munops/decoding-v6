@@ -41,13 +41,7 @@ export const jsonDeep: Detector = {
               metadata: { embedded: matches },
               warnings:
                 nodes > context.limits.maxNodes
-                  ? [
-                      warning(
-                        'JSON-MORE-NODES',
-                        'More fields exist beyond the 64-node scan limit.',
-                        'info',
-                      ),
-                    ]
+                  ? [warning('JSON-MORE-NODES', { code: 'warning-json-more-nodes' }, 'info')]
                   : [],
             },
           )

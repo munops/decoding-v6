@@ -25,10 +25,10 @@ export const xml: Detector = {
       warnings:
         errorOffset !== undefined
           ? [
-              warning(
-                'XML-MALFORMED',
-                `Mismatched or unclosed XML element at line ${position.line}, column ${position.column} (offset ${position.offset}). Untrusted XML is never executed.`,
-              ),
+              warning('XML-MALFORMED', {
+                code: 'warning-xml-malformed-2',
+                params: { line: position.line, column: position.column, offset: position.offset },
+              }),
             ]
           : [],
       metadata: { detail: 'xml' },

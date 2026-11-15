@@ -167,7 +167,7 @@ it('redacted projections omit input-derived summaries and evidence on every cons
   const canary = 'SYNTHETIC-PRIVATE-ALGORITHM-ONLY'
   const token = `${encodeBase64(new TextEncoder().encode(JSON.stringify({ alg: canary })), true)}.${encodeBase64(new TextEncoder().encode('{"sub":"private-user"}'), true)}.`
   const candidate = (await detect(token)).find((item) => item.detector === 'jwt')!
-  expect(candidate.evidence.some((item) => item.message.includes(canary))).toBe(true)
+  expect(candidate.evidence.some((item) => JSON.stringify(item.message).includes(canary))).toBe(true)
   const output = JSON.stringify(redactedDetection(candidate))
   expect(output).not.toContain(canary)
   expect(output).not.toContain('private-user')

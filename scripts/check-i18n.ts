@@ -1,3 +1,4 @@
+import ts from 'typescript'
 import { toolAliasIds } from '../apps/web/src/i18n/tool-aliases'
 import { summaryFormats } from '../packages/workbench-ui/src/answer-copy'
 import { toolHelpIds } from '../apps/web/src/i18n/tool-help'
@@ -177,3 +178,28 @@ invariant(
     operations.every((operation) => toolAliasIds.includes(operation.id)),
   'Authored task aliases must cover every tool exactly once.',
 )
+
+// Engine explanations are coded facts. Check producers structurally, without scanning fixture text.
+for (const file of [
+  ...readdirSync('packages/engine/src', { recursive: true })
+    .filter((file) => file.endsWith('.ts'))
+    .map((file) => `packages/engine/src/${file}`),
+  'apps/web/src/workers/decoder.worker.ts',
+  'apps/desktop/src/workers/decoder.worker.ts',
+]) {
+  const source = ts.createSourceFile(file, readFileSync(file, 'utf8'), ts.ScriptTarget.Latest, true)
+  const isProse = (node: ts.Node) => ts.isStringLiteralLike(node) || ts.isTemplateExpression(node)
+  const visit = (node: ts.Node) => {
+    if (ts.isPropertyAssignment(node) && ['message', 'summary'].includes(node.name.getText(source)))
+      invariant(!isProse(node.initializer), `${file}: engine explanation must be a coded fact`)
+    if (
+      ts.isCallExpression(node) &&
+      ts.isIdentifier(node.expression) &&
+      node.expression.text === 'warning' &&
+      node.arguments[1]
+    )
+      invariant(!isProse(node.arguments[1]), `${file}: warning explanation escaped presentation`)
+    ts.forEachChild(node, visit)
+  }
+  visit(source)
+}

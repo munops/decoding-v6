@@ -1,3 +1,4 @@
+import { formatEngineMessage } from '@decoding/presentation'
 import { detect, inputBytes } from '@decoding/engine'
 import cronstrue from 'cronstrue'
 import { diffLines } from 'diff'
@@ -142,7 +143,7 @@ export const runInspect: OperationRunner = async (id, input, options) => {
       return {
         output: jwt.value as Record<string, unknown>,
         kind: 'structured',
-        warnings: jwt.warnings.map((warning) => warning.message),
+        warnings: jwt.warnings.map((warning) => formatEngineMessage(warning.message)),
         metadata: { confidence: jwt.confidence },
       }
     }

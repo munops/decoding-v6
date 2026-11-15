@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import type { Detector } from '../types'
 import { decodeBase64, inputText } from '../utils'
 import { found, digest, hex, warning } from './common'
@@ -56,15 +57,11 @@ export const pgpArmor: Detector = {
       return found(
         'pgp-armor',
         'PGP private key',
-        { kind, note: 'Private key contents hidden; consider rotating this key.' },
+        { kind, note: diagnosticField({ code: 'diagnostic-pgp-armor-note' }) },
         1,
         {
           warnings: [
-            warning(
-              'PRIVATE-KEY-EXPOSED',
-              'A PGP private key was pasted. Contents hidden.',
-              'danger',
-            ),
+            warning('PRIVATE-KEY-EXPOSED', { code: 'warning-private-key-exposed-2' }, 'danger'),
           ],
         },
       )
@@ -76,7 +73,12 @@ export const pgpArmor: Detector = {
         .join('')
     const bytes = decodeBase64(encoded)
     if (!bytes)
-      return found('pgp-armor', 'PGP armor', { kind, error: 'Invalid armor Base64' }, 0.99)
+      return found(
+        'pgp-armor',
+        'PGP armor',
+        { kind, error: diagnosticField({ code: 'diagnostic-pgp-armor-error' }) },
+        0.99,
+      )
     const crc = crcLine ? decodeBase64(crcLine.slice(1)) : null,
       checksum = crc ? crc24(bytes) === ((crc[0]! << 16) | (crc[1]! << 8) | crc[2]!) : null
     const packet = firstPacket(bytes)
@@ -120,20 +122,14 @@ export const pgpArmor: Detector = {
         checksum: checksum === null ? 'absent' : checksum ? 'valid' : 'mismatch',
         key,
         ...(/MESSAGE/.test(kind)
-          ? { note: 'If this message is encrypted, its body cannot be read without the key.' }
+          ? { note: diagnosticField({ code: 'diagnostic-pgp-armor-note-2' }) }
           : {}),
       },
       0.999,
       {
         warnings:
           checksum === false
-            ? [
-                warning(
-                  'PGP-CHECKSUM',
-                  'This block was truncated or changed: CRC24 does not match.',
-                  'danger',
-                ),
-              ]
+            ? [warning('PGP-CHECKSUM', { code: 'warning-pgp-checksum' }, 'danger')]
             : [],
       },
     )

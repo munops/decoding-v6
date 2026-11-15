@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import type { Detector } from '../types'
 import { inputText } from '../utils'
 import { found, warning } from './common'
@@ -15,9 +16,15 @@ export const datetime: Detector = {
     const invalid =
       iso && Number(iso[3]) > new Date(Date.UTC(Number(iso[1]), Number(iso[2]), 0)).getUTCDate()
     if (!Number.isFinite(date.getTime()) || invalid)
-      return found('datetime', 'Date and time', { error: 'This date does not exist' }, 0.99, {
-        warnings: [warning('DATE-INVALID', 'This calendar date does not exist.')],
-      })
+      return found(
+        'datetime',
+        'Date and time',
+        { error: diagnosticField({ code: 'diagnostic-datetime-error' }) },
+        0.99,
+        {
+          warnings: [warning('DATE-INVALID', { code: 'warning-date-invalid' })],
+        },
+      )
     return found('datetime', 'Date and time', {
       utc: date.toISOString(),
       local: date.toLocaleString(),

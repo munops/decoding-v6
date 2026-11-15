@@ -38,10 +38,7 @@ export const mime: Detector = {
           ? {
               value: { text: decoded, unsupportedCharsets: failed },
               warnings: [
-                warning(
-                  'MIME-CHARSET-UNSUPPORTED',
-                  'Unsupported charset: original words and decoded raw byte values are retained. Choose a charset in the string inspector.',
-                ),
+                warning('MIME-CHARSET-UNSUPPORTED', { code: 'warning-mime-charset-unsupported' }),
               ],
             }
           : {}),

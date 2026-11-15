@@ -23,7 +23,8 @@
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
     "@decoding/engine": "workspace:*",
-    "@decoding/operations": "workspace:*"
+    "@decoding/operations": "workspace:*",
+    "@decoding/presentation": "workspace:*"
   },
   "license": "MIT",
   "description": "Identify and decode unfamiliar text locally. No upload, account or network.",

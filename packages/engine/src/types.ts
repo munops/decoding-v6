@@ -1,15 +1,16 @@
+import type { MessageFact } from './message-facts'
 export type DecodeInput = string | Uint8Array
 
 export type Evidence = {
   code: string
-  message: string
+  message: MessageFact
   weight: number
 }
 
 export type LintWarning = {
   ruleId: string
   severity: 'info' | 'warning' | 'danger'
-  message: string
+  message: MessageFact
   specUrl?: string
 }
 
@@ -20,9 +21,10 @@ export type Detection = {
   evidence: Evidence[]
   rejection?: {
     code: 'below-auto-threshold' | 'insufficient-margin' | 'lower-ranked'
-    message: string
+    message: MessageFact
   }
-  summary: string
+  summary: MessageFact
+  diagnostics?: { path: (string | number)[]; message: MessageFact }[]
   value: unknown
   decoded?: DecodeInput
   warnings: LintWarning[]
@@ -82,7 +84,7 @@ export type DecodeResult = {
 /** Loading failed before any parser examined the input. Safe to serialize by name. */
 export class LocalParserUnavailableError extends Error {
   constructor() {
-    super('Open this local parser once online, then retry. Earlier layers and raw bytes are kept.')
+    super('local-parser-unavailable')
     this.name = 'LocalParserUnavailableError'
   }
 }

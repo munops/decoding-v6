@@ -416,3 +416,5 @@ D checkpoint: [주소·사진·파일](../evidence/decoding-improve-20261115/d-c
 F checkpoint: [도구·오프라인 검증](../evidence/decoding-improve-20261115/f-checkpoint.md).49 tools, locale-preserving handoff and offline codec/tool runtime checks passed locally.
 
 G checkpoint: [명시 저장·값 포함·건네기](../evidence/decoding-improve-20261115/g-checkpoint.md). Default masked/7d, value backup admission and sharing flows verified locally; final candidate build and public/device checks pending.
+
+A13 follow-up: [coded explanations](../evidence/decoding-improve-20261115/a13-checkpoint.md) implemented. Shared presentation owns EN/KO engine/worker explanations, nominal diagnostics preserve user data, CLI JSON compatibility is frozen across 52 cases. Unit suite 186 pass; 390/1440 Korean flows 2 pass. A14 actual phone/AT, final release-wide verification and production evidence remain open.

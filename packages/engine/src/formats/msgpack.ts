@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import { binaryGrammar } from './binary-grammar'
 import type { Detector } from '../types'
 import { found, parserUnavailable, unavailableDetection } from './common'
@@ -21,7 +22,7 @@ export const msgpack: Detector = {
         'MessagePack candidate',
         {
           bytes: input.length,
-          note: 'This surface recognizes MessagePack structure but cannot open the full tree. Use the web decoder.',
+          note: diagnosticField({ code: 'diagnostic-msgpack-note' }),
         },
         0.7,
       )

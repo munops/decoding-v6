@@ -1,4 +1,4 @@
-import type { Detection } from '@decoding/engine'
+import { safeName, type Detection } from '@decoding/engine'
 import { describe, expect, it } from 'vitest'
 import { detectionLabel, limitReason, localizedDetection } from '../src/detection-copy'
 import { decoderMessages } from '../src/messages'
@@ -7,14 +7,16 @@ const jwtDetection: Detection = {
   detector: 'jwt',
   label: 'JWT / JWS compact',
   confidence: 0.995,
-  summary: 'none token with 2 payload claims',
+  summary: { code: 'summary-jwt', params: { algorithm: safeName('none'), claimCount: 2 } },
   value: {},
-  evidence: [{ code: 'three-segments', message: 'Three Base64URL segments', weight: 0.55 }],
+  evidence: [
+    { code: 'three-segments', message: { code: 'evidence-three-segments' }, weight: 0.55 },
+  ],
   warnings: [
     {
       ruleId: 'JWT-EXPIRED',
       severity: 'danger',
-      message: 'The exp claim is in the past.',
+      message: { code: 'warning-jwt-expired' },
     },
   ],
 }
@@ -26,9 +28,9 @@ describe('Korean detection copy', () => {
     expect(localized.detector).toBe('jwt')
     expect(localized.confidence).toBe(0.995)
     expect(localized.label).toBe('JWT / JWS 압축 형식')
-    expect(localized.summary).toBe('서명 없음(none)으로 표시된 토큰이며 내용 항목 2개가 있습니다.')
-    expect(localized.evidence[0]?.message).toBe('점으로 나뉜 Base64URL 구간이 세 개입니다.')
-    expect(localized.warnings[0]?.message).toBe('만료 시각(exp)이 이미 지났습니다.')
+    expect(localized.summary).toBe('none 방식의 토큰이며 내용 항목 2개가 있어요.')
+    expect(localized.evidence[0]?.message).toBe('점으로 나뉜 Base64URL 구간이 세 개예요.')
+    expect(localized.warnings[0]?.message).toBe('만료 시각이 이미 지났어요.')
   })
 
   it('keeps technical format names and localizes safety stop reasons', () => {
@@ -37,6 +39,9 @@ describe('Korean detection copy', () => {
   })
 
   it('does not alter the English source copy', () => {
-    expect(localizedDetection(jwtDetection, decoderMessages.en)).toBe(jwtDetection)
+    expect(localizedDetection(jwtDetection, decoderMessages.en).summary).toBe(
+      'none token with 2 payload claims',
+    )
+    expect(jwtDetection.summary).toHaveProperty('code', 'summary-jwt')
   })
 })

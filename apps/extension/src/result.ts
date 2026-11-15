@@ -4,7 +4,7 @@ import {
   answerSentence,
   primaryLayers,
   warningTitle,
-} from '../../../packages/workbench-ui/src/answer-copy'
+} from '@decoding/presentation'
 import {
   displayValue,
   finalSelection,

@@ -64,7 +64,13 @@ export const magicBytes: Detector = {
           magic.extension === 'gz' ? 0.7 : 0.999,
           {
             warnings: photo.gps
-              ? [{ ruleId: 'PHOTO-LOCATION', severity: 'warning', message: 'PHOTO-LOCATION' }]
+              ? [
+                  {
+                    ruleId: 'PHOTO-LOCATION',
+                    severity: 'warning',
+                    message: { code: 'warning-photo-location' },
+                  },
+                ]
               : [],
             metadata: { ...magic, imageBytes: magic.mime.startsWith('image/') ? input : undefined },
           },

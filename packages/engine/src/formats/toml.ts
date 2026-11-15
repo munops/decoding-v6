@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import type { Detector } from '../types'
 import { inputText } from '../utils'
 import { found, warning, parserUnavailable, unavailableDetection, parserPosition } from './common'
@@ -10,7 +11,7 @@ export const toml: Detector = {
       return found(
         'toml',
         'TOML',
-        { note: 'TOML table and key syntax. Open the web parser once online for the full tree.' },
+        { note: diagnosticField({ code: 'diagnostic-toml-note' }) },
         0.99,
       )
     try {
@@ -21,11 +22,11 @@ export const toml: Detector = {
         'toml',
         'TOML',
         {
-          error: 'Invalid TOML',
+          error: diagnosticField({ code: 'diagnostic-toml-error' }),
           ...parserPosition(error),
         },
         0.99,
-        { warnings: [warning('TOML-INVALID', 'The TOML parser could not read this document.')] },
+        { warnings: [warning('TOML-INVALID', { code: 'warning-toml-invalid' })] },
       )
     }
   },

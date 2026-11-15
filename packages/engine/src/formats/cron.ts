@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import type { Detector } from '../types'
 import { inputText } from '../utils'
 import { found, warning } from './common'
@@ -63,7 +64,7 @@ export const cron: Detector = {
       return found(
         'cron',
         'Cron schedule',
-        { error: 'Expected 5 or 6 cron fields.', fields: parts.length },
+        { error: diagnosticField({ code: 'diagnostic-cron-error' }), fields: parts.length },
         0.99,
       )
     if (
@@ -108,13 +109,16 @@ export const cron: Detector = {
         {
           metadata: { detail: 'cron' },
           warnings:
-            next.length < 5
-              ? [warning('CRON-RANGE', 'Fewer than five runs found in the next six years.', 'info')]
-              : [],
+            next.length < 5 ? [warning('CRON-RANGE', { code: 'warning-cron-range' }, 'info')] : [],
         },
       )
     } catch {
-      return found('cron', 'Cron schedule', { error: 'Invalid 5- or 6-field cron expression' }, 0.7)
+      return found(
+        'cron',
+        'Cron schedule',
+        { error: diagnosticField({ code: 'diagnostic-cron-error-2' }) },
+        0.7,
+      )
     }
   },
 }

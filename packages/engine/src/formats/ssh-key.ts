@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import type { Detector } from '../types'
 import { decodeBase64, encodeBase64, inputText } from '../utils'
 import { found, digest, warning } from './common'
@@ -54,12 +55,10 @@ export const sshKey: Detector = {
       return found(
         'ssh-key',
         'OpenSSH public key',
-        { error: 'Truncated or malformed public key' },
+        { error: diagnosticField({ code: 'diagnostic-ssh-key-error' }) },
         0.99,
         {
-          warnings: [
-            warning('SSH-TRUNCATED', 'This public key is truncated or has an invalid structure.'),
-          ],
+          warnings: [warning('SSH-TRUNCATED', { code: 'warning-ssh-truncated' })],
         },
       )
     }

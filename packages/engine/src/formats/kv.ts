@@ -1,3 +1,4 @@
+import { safeName } from '../message-facts'
 import type { Detector } from '../types'
 import { inputText } from '../utils'
 import { encodedFields, found, sensitiveKey, warning } from './common'
@@ -25,7 +26,10 @@ export const kv: Detector = {
               (flag) => !new RegExp(`(?:^|;)\\s*${flag}(?:[=;]|$)`, 'i').test(cookie[2] ?? ''),
             )
             .map((flag) =>
-              warning(`COOKIE-NO-${flag.toUpperCase()}`, `Set-Cookie is missing ${flag}.`),
+              warning(`COOKIE-NO-${flag.toUpperCase()}`, {
+                code: 'warning-kv',
+                params: { flag: safeName(flag) },
+              }),
             )
         : []
     return found(

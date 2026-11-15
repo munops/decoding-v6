@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import type { Detection } from '../types'
 import { found } from './common'
 export function extraTimeId(text: string): Detection | null {
@@ -7,7 +8,7 @@ export function extraTimeId(text: string): Detection | null {
       'MongoDB ObjectId',
       {
         timestamp: new Date(parseInt(text.slice(0, 8), 16) * 1000).toISOString(),
-        note: 'Could also be plain hex.',
+        note: diagnosticField({ code: 'diagnostic-time-ids-note' }),
       },
       0.7,
     )

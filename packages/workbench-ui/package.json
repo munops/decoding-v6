@@ -10,7 +10,8 @@
   "dependencies": {
     "@decoding/engine": "workspace:*",
     "@decoding/operations": "workspace:*",
-    "preact": "^10.27.0"
+    "preact": "^10.27.0",
+    "@decoding/presentation": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.8.3"

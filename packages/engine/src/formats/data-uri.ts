@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import type { Detector } from '../types'
 import { decodeBase64, inputText } from '../utils'
 import { found, warning } from './common'
@@ -13,12 +14,23 @@ export const dataUri: Detector = {
         : new TextEncoder().encode(decodeURIComponent(match[2] ?? ''))
       if (!bytes) throw new Error('Invalid data URI')
       if (bytes.length > context.limits.maxInputBytes)
-        return found('data-uri', 'Data URI', { mime, error: 'Input size limit' }, 0.999, {
-          warnings: [warning('INPUT-LIMIT', 'The data URI exceeds the local input limit.')],
-        })
+        return found(
+          'data-uri',
+          'Data URI',
+          { mime, error: diagnosticField({ code: 'diagnostic-data-uri-error' }) },
+          0.999,
+          {
+            warnings: [warning('INPUT-LIMIT', { code: 'warning-input-limit' })],
+          },
+        )
       return found('data-uri', 'Data URI', { mime, bytes: bytes.length }, 0.999, { decoded: bytes })
     } catch {
-      return found('data-uri', 'Data URI', { mime, error: 'Invalid data URI encoding' }, 0.99)
+      return found(
+        'data-uri',
+        'Data URI',
+        { mime, error: diagnosticField({ code: 'diagnostic-data-uri-error-2' }) },
+        0.99,
+      )
     }
   },
 }

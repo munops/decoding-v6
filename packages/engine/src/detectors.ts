@@ -1,3 +1,4 @@
+import { safeName, algorithmName } from './message-facts'
 import { inspectUrl } from './formats/url-facts'
 import { decodeLegacyPercent } from './formats/garbled'
 import { identifyMagic } from './formats/magic-bytes'
@@ -19,7 +20,7 @@ function result(
   detector: string,
   label: string,
   confidence: number,
-  summary: string,
+  summary: import('./message-facts').MessageFact,
   value: unknown,
   evidence: Detection['evidence'],
   options: Partial<Pick<Detection, 'decoded' | 'warnings' | 'metadata'>> = {},
@@ -46,7 +47,7 @@ function jwtWarnings(
     {
       ruleId: 'JWT-SIGNATURE-UNVERIFIED',
       severity: 'info',
-      message: 'The signature is decoded but not verified without a trusted key.',
+      message: { code: 'warning-jwt-signature-unverified' },
       specUrl: 'https://www.rfc-editor.org/rfc/rfc7519',
     },
   ]
@@ -54,14 +55,14 @@ function jwtWarnings(
     warnings.unshift({
       ruleId: 'JWT-ALG-NONE',
       severity: 'danger',
-      message: 'This token is unsigned. Never accept it as authenticated.',
+      message: { code: 'warning-jwt-alg-none' },
     })
   }
   if (typeof payload.exp !== 'number')
     warnings.push({
       ruleId: 'JWT-NO-EXP',
       severity: 'warning',
-      message: 'This token has no numeric expiry claim.',
+      message: { code: 'warning-jwt-no-exp' },
     })
   if (
     typeof payload.exp === 'number' &&
@@ -71,34 +72,33 @@ function jwtWarnings(
     warnings.push({
       ruleId: 'JWT-LONG-LIFETIME',
       severity: 'info',
-      message: 'The declared token lifetime exceeds 24 hours.',
+      message: { code: 'warning-jwt-long-lifetime' },
     })
   if (header.jku !== undefined || header.x5u !== undefined)
     warnings.push({
       ruleId: 'JWT-REMOTE-KEY-HEADER',
       severity: 'warning',
-      message: 'Remote key URLs are present. Never trust or request them automatically.',
+      message: { code: 'warning-jwt-remote-key-header' },
     })
   if (/^HS\d+$/.test(String(header.alg)))
     warnings.push({
       ruleId: 'JWT-SYMMETRIC-ALG',
       severity: 'info',
-      message:
-        'A symmetric HMAC algorithm requires a shared secret. Do not use a public key as that secret.',
+      message: { code: 'warning-jwt-symmetric-alg' },
     })
   const nowSeconds = Math.floor(now.getTime() / 1000)
   if (typeof payload.exp === 'number' && payload.exp < nowSeconds) {
     warnings.push({
       ruleId: 'JWT-EXPIRED',
       severity: 'danger',
-      message: 'The exp claim is in the past.',
+      message: { code: 'warning-jwt-expired' },
     })
   }
   if (typeof payload.nbf === 'number' && payload.nbf > nowSeconds) {
     warnings.push({
       ruleId: 'JWT-NOT-ACTIVE',
       severity: 'warning',
-      message: 'The nbf claim is in the future.',
+      message: { code: 'warning-jwt-not-active' },
     })
   }
   return warnings
@@ -123,17 +123,32 @@ const jwtDetector: Detector = {
         'jwt',
         'JWT / JWS compact',
         hasAlgorithm ? 0.995 : 0.93,
-        `${String(header.alg ?? 'unknown')} token with ${Object.keys(payload).length} payload claims`,
+        {
+          code: 'summary-jwt',
+          params: {
+            algorithm: algorithmName(header.alg ?? 'unknown'),
+            claimCount: Object.keys(payload).length,
+          },
+        },
         { header, payload, signature: parts[2] },
         [
-          { code: 'three-segments', message: 'Three Base64URL segments', weight: 0.55 },
+          { code: 'three-segments', message: { code: 'evidence-three-segments' }, weight: 0.55 },
           {
             code: 'json-header',
-            message: 'Header and payload are valid JSON objects',
+            message: { code: 'evidence-json-header' },
             weight: 0.4,
           },
           ...(hasAlgorithm
-            ? [{ code: 'alg', message: `Algorithm header: ${String(header.alg)}`, weight: 0.05 }]
+            ? [
+                {
+                  code: 'alg',
+                  message: {
+                    code: 'evidence-alg' as const,
+                    params: { algorithm: algorithmName(header.alg) },
+                  },
+                  weight: 0.05,
+                },
+              ]
             : []),
         ],
         {
@@ -162,10 +177,22 @@ const jsonDetector: Detector = {
         escapedString ? 'JSON string escapes' : 'JSON',
         structured ? 0.985 : 0.94,
         structured
-          ? `${Array.isArray(value) ? 'Array' : 'Object'} with ${Object.keys(value).length} top-level entries`
-          : 'A JSON-escaped string',
+          ? {
+              code: 'summary-json',
+              params: {
+                kind: safeName(Array.isArray(value) ? 'Array' : 'Object'),
+                entryCount: Object.keys(value).length,
+              },
+            }
+          : { code: 'summary-json-2' },
         value,
-        [{ code: 'json-parse', message: 'Valid JSON grammar', weight: structured ? 0.98 : 0.9 }],
+        [
+          {
+            code: 'json-parse',
+            message: { code: 'evidence-json-parse' },
+            weight: structured ? 0.98 : 0.9,
+          },
+        ],
         escapedString ? { decoded: value } : {},
       )
     } catch {
@@ -217,12 +244,21 @@ const base64Detector: Detector = {
       'base64',
       explicitUrl ? 'Base64URL' : 'Base64',
       confidence,
-      `${bytes.byteLength} decoded bytes${ratio > 0.85 ? ', mostly text' : ''}`,
+      ratio > 0.85
+        ? { code: 'summary-base64', params: { bytes: bytes.byteLength } }
+        : { code: 'summary-base64-2', params: { bytes: bytes.byteLength } },
       decoded,
       [
-        { code: 'alphabet', message: 'Uses a Base64-compatible alphabet', weight: 0.45 },
-        { code: 'decode', message: 'Decodes without invalid bytes', weight: 0.3 },
-        { code: 'printable', message: `${Math.round(ratio * 100)}% printable output`, weight: 0.2 },
+        { code: 'alphabet', message: { code: 'evidence-alphabet' }, weight: 0.45 },
+        { code: 'decode', message: { code: 'evidence-decode' }, weight: 0.3 },
+        {
+          code: 'printable',
+          message: {
+            code: 'evidence-printable',
+            params: { printablePercent: Math.round(ratio * 100) },
+          },
+          weight: 0.2,
+        },
       ],
       { decoded },
     )
@@ -253,13 +289,16 @@ const hexDetector: Detector = {
       'hex',
       'Hexadecimal bytes',
       confidence,
-      `${bytes.byteLength} bytes`,
+      { code: 'summary-hex', params: { bytes: bytes.byteLength } },
       decoded,
       [
-        { code: 'hex-alphabet', message: 'Even-length hexadecimal input', weight: 0.7 },
+        { code: 'hex-alphabet', message: { code: 'evidence-hex-alphabet' }, weight: 0.7 },
         {
           code: 'printable',
-          message: `${Math.round(ratio * 100)}% printable output`,
+          message: {
+            code: 'evidence-printable',
+            params: { printablePercent: Math.round(ratio * 100) },
+          },
           weight: 0.15,
         },
       ],
@@ -311,10 +350,13 @@ const urlDetector: Detector = {
         parsedUrl ? 'URL' : hasQuery ? 'Query string' : 'URL-encoded text',
         parsedUrl ? 0.98 : hasQuery ? 0.72 : 0.9,
         parsedUrl
-          ? `${parsedUrl.protocol}//${parsedUrl.host}`
+          ? {
+              code: 'summary-url',
+              params: { protocol: safeName(parsedUrl.protocol), host: safeName(parsedUrl.host) },
+            }
           : hasQuery
-            ? 'Key/value query data'
-            : 'Percent-encoded text',
+            ? { code: 'summary-url-2' }
+            : { code: 'summary-url-3' },
         parsedUrl
           ? {
               href: urlFacts!.clean.href,
@@ -324,7 +366,7 @@ const urlDetector: Detector = {
               query,
             }
           : (query ?? decoded),
-        [{ code: 'url-syntax', message: 'Valid URL or percent/query syntax', weight: 0.9 }],
+        [{ code: 'url-syntax', message: { code: 'evidence-url-syntax' }, weight: 0.9 }],
         parsedUrl
           ? {
               warnings: urlFacts!.warnings,
@@ -386,15 +428,17 @@ const epochDetector: Detector = {
       'epoch',
       `Unix time (${parsed.unit})`,
       plausible ? 0.93 : 0.78,
-      date.toISOString(),
+      { code: 'summary-epoch', params: { milliseconds: date.getTime() } },
       { iso: date.toISOString(), unit: parsed.unit, milliseconds: parsed.milliseconds },
       [
-        { code: 'integer-width', message: `Digit width matches ${parsed.unit}`, weight: 0.65 },
+        {
+          code: 'integer-width',
+          message: { code: 'evidence-integer-width', params: { unit: safeName(parsed.unit) } },
+          weight: 0.65,
+        },
         {
           code: 'date-range',
-          message: plausible
-            ? 'Date is in a common operational range'
-            : 'Date is outside the common range',
+          message: plausible ? { code: 'evidence-date-range' } : { code: 'evidence-date-range-2' },
           weight: plausible ? 0.25 : 0.05,
         },
       ],
@@ -435,9 +479,9 @@ const uuidDetector: Detector = {
         'uuid-ulid',
         `UUID v${version}`,
         0.995,
-        `RFC 4122 variant, version ${version}`,
+        { code: 'summary-uuid-ulid', params: { version: version } },
         metadata,
-        [{ code: 'uuid-layout', message: 'Canonical UUID layout and variant', weight: 0.95 }],
+        [{ code: 'uuid-layout', message: { code: 'evidence-uuid-layout' }, weight: 0.95 }],
         { metadata },
       )
     }
@@ -448,9 +492,9 @@ const uuidDetector: Detector = {
         'uuid-ulid',
         'ULID',
         0.99,
-        `Sortable identifier from ${metadata.timestamp}`,
+        { code: 'summary-uuid-ulid-2', params: { milliseconds: Date.parse(metadata.timestamp) } },
         metadata,
-        [{ code: 'ulid-layout', message: '26-character Crockford Base32 ULID', weight: 0.95 }],
+        [{ code: 'ulid-layout', message: { code: 'evidence-ulid-layout' }, weight: 0.95 }],
         { metadata },
       )
     }
@@ -501,15 +545,24 @@ const compressionDetector: Detector = {
             'compression',
             format.label,
             format.confidence,
-            `Expansion blocked at ${decoded.length} bytes (${ratio.toFixed(1)}:1)`,
+            {
+              code: 'summary-compression',
+              params: { expandedBytes: decoded.length, ratio: ratio },
+            },
             { compressedBytes: bytes.length, expandedBytes: decoded.length, ratio },
-            [{ code: 'magic', message: `${format.label} signature`, weight: 0.98 }],
+            [
+              {
+                code: 'magic',
+                message: { code: 'evidence-magic', params: { format: safeName(format.label) } },
+                weight: 0.98,
+              },
+            ],
             {
               warnings: [
                 {
                   ruleId: 'COMPRESSION-LIMIT',
                   severity: 'danger',
-                  message: 'Expanded output exceeds the safe limit.',
+                  message: { code: 'warning-compression-limit' },
                 },
               ],
             },
@@ -520,9 +573,18 @@ const compressionDetector: Detector = {
           'compression',
           format.label,
           format.confidence,
-          `${bytes.length} → ${decoded.length} bytes`,
+          {
+            code: 'summary-compression-2',
+            params: { compressedBytes: bytes.length, expandedBytes: decoded.length },
+          },
           output,
-          [{ code: 'magic', message: `${format.label} signature and valid stream`, weight: 0.98 }],
+          [
+            {
+              code: 'magic',
+              message: { code: 'evidence-magic-2', params: { format: safeName(format.label) } },
+              weight: 0.98,
+            },
+          ],
           { decoded: output, metadata: { ratio } },
         )
       } catch (error) {
@@ -531,15 +593,21 @@ const compressionDetector: Detector = {
             'compression',
             format.label,
             format.confidence,
-            'Expansion stopped at the safety limit.',
+            { code: 'summary-compression-3' },
             { compressedBytes: bytes.length, expandedBytes: null },
-            [{ code: 'magic', message: `${format.label} signature`, weight: 0.98 }],
+            [
+              {
+                code: 'magic',
+                message: { code: 'evidence-magic', params: { format: safeName(format.label) } },
+                weight: 0.98,
+              },
+            ],
             {
               warnings: [
                 {
                   ruleId: 'COMPRESSION-LIMIT',
                   severity: 'danger',
-                  message: 'Expanded output exceeds the safe limit.',
+                  message: { code: 'warning-compression-limit' },
                 },
               ],
             },

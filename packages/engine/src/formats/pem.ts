@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import type { Detector } from '../types'
 import { decodeBase64, inputText } from '../utils'
 import { found, hex, warning } from './common'
@@ -40,10 +41,11 @@ function der(bytes: Uint8Array, depth = 0): Der {
 function privateMetadata(
   kind: string,
   encoded: string,
-): { algorithm: string; keyBits?: number | undefined } {
-  if (/ENCRYPTED/.test(kind)) return { algorithm: 'encrypted private key; not interpreted' }
+): { algorithm: string | ReturnType<typeof diagnosticField>; keyBits?: number | undefined } {
+  if (/ENCRYPTED/.test(kind))
+    return { algorithm: diagnosticField({ code: 'diagnostic-pem-encrypted' }) }
   const bytes = decodeBase64(encoded)
-  if (!bytes) return { algorithm: 'unknown private key' }
+  if (!bytes) return { algorithm: diagnosticField({ code: 'diagnostic-pem-unknown' }) }
   try {
     const root = der(bytes)
     if (root.tag !== 0x30) throw new Error('Expected sequence')
@@ -89,9 +91,9 @@ function privateMetadata(
               : undefined
       return { algorithm, keyBits }
     }
-    return { algorithm: 'unknown private key' }
+    return { algorithm: diagnosticField({ code: 'diagnostic-pem-unknown' }) }
   } catch {
-    return { algorithm: 'invalid private key; not interpreted' }
+    return { algorithm: diagnosticField({ code: 'diagnostic-pem-invalid' }) }
   }
 }
 export const pem: Detector = {
@@ -110,21 +112,23 @@ export const pem: Detector = {
         {
           kind,
           ...privateMetadata(kind, match[2] ?? ''),
-          note: 'Private key contents are hidden. Consider rotating this key.',
+          note: diagnosticField({ code: 'diagnostic-pem-note' }),
         },
         1,
         {
           warnings: [
-            warning(
-              'PRIVATE-KEY-EXPOSED',
-              'You pasted a private key. Contents are never displayed. Consider replacing it.',
-              'danger',
-            ),
+            warning('PRIVATE-KEY-EXPOSED', { code: 'warning-private-key-exposed' }, 'danger'),
           ],
         },
       )
     const bytes = decodeBase64(match[2] ?? '')
-    if (!bytes) return found('pem', 'PEM block', { kind, error: 'Invalid Base64' }, 0.99)
+    if (!bytes)
+      return found(
+        'pem',
+        'PEM block',
+        { kind, error: diagnosticField({ code: 'diagnostic-pem-error' }) },
+        0.99,
+      )
     try {
       const root = der(bytes)
       if (root.tag !== 0x30) throw new Error('Expected DER sequence')
@@ -162,12 +166,10 @@ export const pem: Detector = {
       return found(
         'pem',
         'PEM block',
-        { kind, error: 'Certificate/key DER parsing failed' },
+        { kind, error: diagnosticField({ code: 'diagnostic-pem-error-2' }) },
         0.99,
         {
-          warnings: [
-            warning('PEM-DER-INVALID', 'PEM armor is present but the DER content is invalid.'),
-          ],
+          warnings: [warning('PEM-DER-INVALID', { code: 'warning-pem-der-invalid' })],
         },
       )
     }

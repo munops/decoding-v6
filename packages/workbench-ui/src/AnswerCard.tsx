@@ -1,3 +1,4 @@
+import { formatEngineMessage } from '@decoding/presentation'
 import { NextStep } from './NextStep'
 import type { DecodeResult } from '@decoding/engine'
 import type { DecoderMessages } from './messages'
@@ -40,6 +41,11 @@ export function AnswerCard({
       ),
     ])
     .filter((item, index, all) => all.findIndex((other) => other.ruleId === item.ruleId) === index)
+  const diagnostics = layers.flatMap((node) =>
+    (node.selected?.diagnostics ?? []).map((item) =>
+      formatEngineMessage(item.message, messages.locale, node.selected),
+    ),
+  )
   const facts = answerFacts(result.root.selected, messages.locale)
   return (
     <section class="answer-card" aria-label={messages.localResult}>
@@ -60,14 +66,21 @@ export function AnswerCard({
                   >
                     {warning.ruleId}
                   </a>
-                  <p>{warning.message}</p>
+                  <p>{formatEngineMessage(warning.message, messages.locale)}</p>
                 </details>
               </li>
             ))}
           </ul>
         </section>
-      ) : final ? (
+      ) : final && !diagnostics.length ? (
         <p class="answer-no-concerns">{copy.none}</p>
+      ) : null}
+      {diagnostics.length ? (
+        <ul class="answer-concerns">
+          {diagnostics.map((message, index) => (
+            <li key={index}>{message}</li>
+          ))}
+        </ul>
       ) : null}
       {!final ? (
         <div class="unknown-actions">
@@ -137,7 +150,11 @@ export function AnswerCard({
                       {index === 0 ? source : outputText(layers[index - 1]?.selected?.decoded)}
                     </code>
                   </pre>
-                  <p>{node.selected?.summary}</p>
+                  <p>
+                    {node.selected
+                      ? formatEngineMessage(node.selected.summary, messages.locale, node.selected)
+                      : ''}
+                  </p>
                   {node.selected?.detector === 'epoch' && node.status === 'ambiguous' ? (
                     <p>{copy.numberAlternative}</p>
                   ) : null}

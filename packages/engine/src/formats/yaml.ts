@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import type { Detector } from '../types'
 import { inputText } from '../utils'
 import { found } from './common'
@@ -12,7 +13,7 @@ export const yaml: Detector = {
     return found(
       'yaml',
       'YAML',
-      { note: 'YAML structure recognized; parsing runs locally when the parser is available.' },
+      { note: diagnosticField({ code: 'diagnostic-yaml-note' }) },
       0.97,
       { metadata: { detail: 'yaml' } },
     )

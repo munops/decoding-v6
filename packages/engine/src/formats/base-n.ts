@@ -1,3 +1,4 @@
+import { diagnosticField } from '../diagnostics'
 import type { Detector } from '../types'
 import { inputText } from '../utils'
 import { found, readable, warning, digest, hex } from './common'
@@ -39,9 +40,15 @@ export const base32: Detector = {
       })
     } catch {
       return /^[A-Z2-7]+=+$/.test(text)
-        ? found('base32', 'Base32', { error: 'Invalid padding position' }, 0.7, {
-            warnings: [warning('BASE32-PADDING', 'Invalid Base32 padding position.')],
-          })
+        ? found(
+            'base32',
+            'Base32',
+            { error: diagnosticField({ code: 'diagnostic-base-n-error' }) },
+            0.7,
+            {
+              warnings: [warning('BASE32-PADDING', { code: 'warning-base32-padding' })],
+            },
+          )
         : null
     }
   },
@@ -146,7 +153,14 @@ export const ascii85: Detector = {
         { decoded: output },
       )
     } catch {
-      return delimited ? found('ascii85', 'Ascii85', { error: 'Invalid Ascii85 block' }, 0.7) : null
+      return delimited
+        ? found(
+            'ascii85',
+            'Ascii85',
+            { error: diagnosticField({ code: 'diagnostic-base-n-error-2' }) },
+            0.7,
+          )
+        : null
     }
   },
 }

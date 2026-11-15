@@ -1,3 +1,4 @@
+import { formatEngineMessage } from '@decoding/presentation'
 import { uiMessage } from './ui-copy'
 import type { Detection } from '@decoding/engine'
 import type { DecoderMessages } from './messages'
@@ -26,7 +27,9 @@ export function CandidateCompare({
               <th>{candidate.label}</th>
               <td>{Math.round(candidate.confidence * 100)}</td>
               <td>
-                {candidate.evidence.map((e) => e.message).join('; ')}
+                {candidate.evidence
+                  .map((e) => formatEngineMessage(e.message, messages.locale, candidate))
+                  .join('; ')}
                 <br />
                 {candidate.rejection ? <code>{candidate.rejection.code}</code> : null}
                 <br />

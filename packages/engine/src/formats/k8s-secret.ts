@@ -51,12 +51,7 @@ export const k8sSecret: Detector = {
               typeof entry.decoded === 'string',
           ),
         },
-        warnings: [
-          warning(
-            'K8S-SECRET-PLAINTEXT',
-            'Base64 is encoding, not encryption. Expand values only in a trusted environment.',
-          ),
-        ],
+        warnings: [warning('K8S-SECRET-PLAINTEXT', { code: 'warning-k8s-secret-plaintext' })],
       },
     )
   },

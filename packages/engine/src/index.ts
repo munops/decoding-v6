@@ -26,3 +26,8 @@ export { redactedDetection } from './redacted-detection'
 export { repairGarbled } from './formats/garbled'
 
 export { maskCredentialFields } from './formats/credential-redaction'
+
+export type { EngineMessageCode } from './message-codes'
+export type { MessageFact, SafeName } from './message-facts'
+export { safeName, algorithmName } from './message-facts'
+export { diagnosticField, withDiagnosticFields } from './diagnostics'
