@@ -193,5 +193,22 @@ export const expandedSpecs: ExpandedSpec[] = [
       },
     ],
   },
+  {
+    detector: 'cidr',
+    slug: 'cidr',
+    label: 'CIDR address range',
+    description:
+      'Read IPv4 and IPv6 prefix notation and show the inclusive address range and total count. This count includes every address, not just assignable hosts. Host bits are normalized to the network boundary; no network request is made.',
+    korean: {
+      label: 'CIDR 주소 범위',
+      description:
+        'IPv4·IPv6 주소 뒤의 /숫자로 주소 범위와 전체 개수를 읽어요. 실제 기기에 줄 수 있는 개수와는 달라요. 시작 주소가 경계에 맞지 않으면 주소 묶음의 시작으로 맞춰 보여 줘요. 망에 접속하지 않아요.',
+    },
+    examples: ['10.0.0.0/8', '192.0.2.129/24', '2001:db8::/32'],
+    references: [
+      { title: 'RFC 4632 — CIDR', url: 'https://www.rfc-editor.org/rfc/rfc4632' },
+      { title: 'RFC 4291 — IPv6 addressing', url: 'https://www.rfc-editor.org/rfc/rfc4291' },
+    ],
+  },
 ]
 export const expandedKoreanCopy = new Map(expandedSpecs.map((spec) => [spec.detector, spec.korean]))

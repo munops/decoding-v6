@@ -50,3 +50,9 @@ Full suite: 252 of 253 passed, with one new test initially importing a package o
 The detector and existing 14-language code conversion tool now share a bounded, literal HTTP(S) request reader. Supported request/method/header/inline-data flags, empty quoted data and line continuation are parsed without executing a shell, evaluating variables, opening files or requesting URLs. Unsupported argument kinds and literal shell expressions are disclosed; file-backed bodies cannot silently become generated inline bodies. The answer card links directly to the existing tool through its transient local handoff. This is a request subset, not a complete shell or curl emulator.
 
 Public corpus: 20 positive/10 edge/20 negative cases. Full suite 256 pass, including curl-to-code JavaScript executed only against a synthetic stub (no network), Python quoting, PHP/Ruby single-quote escaping, Kotlin/Dart dollar escaping and shell-quoted HTTPie arguments. No claim that all generated language snippets were compiled. EN/KO sentences, facts and warning/explanation pages accompany the format. Counts: 53 formats/49 tools. Final immutable-build/browser and release verification remain open.
+
+## CIDR ranges
+
+IPv4/IPv6 prefix notation uses the existing IPv4 reader and an extracted shared IPv6 normalizer. Exact BigInt arithmetic computes inclusive first/last addresses and total addresses, with host-bit normalization explicit in the value. Counts include reserved endpoints and do not promise usable hosts. Ambiguous IPv4 leading-zero notation, zones, invalid prefixes and malformed addresses are rejected.
+
+20 positive/10 edge/20 negative public cases; focused exact /0 and host-bit regressions; full suite 258 pass. Type/lint/parity/i18n pass. 54 formats/49 tools. Browser/release evidence remains pending.

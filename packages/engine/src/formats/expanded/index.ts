@@ -1,3 +1,4 @@
+import { cidr } from './cidr'
 import { curlCommand } from './curl-command'
 import { base45 } from './base45'
 import { ethereumAddress } from './ethereum-address'
@@ -14,4 +15,5 @@ export const expandedDetectors = [
   ethereumAddress,
   base45,
   curlCommand,
+  cidr,
 ]

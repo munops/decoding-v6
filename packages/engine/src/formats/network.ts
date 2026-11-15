@@ -47,37 +47,38 @@ export const network: Detector = {
         integer === null ? 0.999 : 0.65,
       )
     }
-    if (!text.includes(':') || !/^[\da-f:.]+$/i.test(text)) return null
-    try {
-      const host = new URL(`http://[${text}]/`).hostname.slice(1, -1)
-      const kind =
-        host === '::1'
-          ? 'loopback'
-          : host === '::'
-            ? 'unspecified'
-            : /^(fc|fd)/i.test(host)
-              ? 'private'
-              : /^fe[89ab]/i.test(host)
-                ? 'link-local'
-                : /^ff/i.test(host)
-                  ? 'multicast'
-                  : 'public'
-      const halves = host.split('::'),
-        left = halves[0]?.split(':').filter(Boolean) ?? [],
-        right = halves[1]?.split(':').filter(Boolean) ?? []
-      const words =
-        halves.length === 2
-          ? [...left, ...Array(8 - left.length - right.length).fill('0'), ...right]
-          : left
-      const expanded = words.map((x) => x.padStart(4, '0')).join(':')
-      return found('ip', 'IPv6', {
-        address: host,
-        expanded,
-        scope: kind,
-        integer: BigInt(`0x${expanded.replaceAll(':', '')}`).toString(),
-      })
-    } catch {
-      return null
-    }
+    const parsed = ipv6(text)
+    if (!parsed) return null
+    const host = parsed.address
+    const kind =
+      host === '::1'
+        ? 'loopback'
+        : host === '::'
+          ? 'unspecified'
+          : /^(fc|fd)/i.test(host)
+            ? 'private'
+            : /^fe[89ab]/i.test(host)
+              ? 'link-local'
+              : /^ff/i.test(host)
+                ? 'multicast'
+                : 'public'
+    return found('ip', 'IPv6', { ...parsed, scope: kind })
   },
+}
+export function ipv6(text: string): { address: string; expanded: string; integer: string } | null {
+  if (!text.includes(':') || !/^[\da-f:.]+$/i.test(text)) return null
+  try {
+    const address = new URL(`http://[${text}]/`).hostname.slice(1, -1)
+    const halves = address.split('::'),
+      left = halves[0]?.split(':').filter(Boolean) ?? [],
+      right = halves[1]?.split(':').filter(Boolean) ?? []
+    const words =
+      halves.length === 2
+        ? [...left, ...Array(8 - left.length - right.length).fill('0'), ...right]
+        : left
+    const expanded = words.map((word) => word.padStart(4, '0')).join(':')
+    return { address, expanded, integer: BigInt(`0x${expanded.replaceAll(':', '')}`).toString() }
+  } catch {
+    return null
+  }
 }

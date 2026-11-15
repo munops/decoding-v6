@@ -1,3 +1,4 @@
+import { cidr } from '../src/formats/expanded/cidr'
 import { decode, detect } from '../src'
 import { describe, it, expect } from 'vitest'
 describe('explicit byte notation', () => {
@@ -211,4 +212,19 @@ it('reads curl without executing shell expressions, files or requests', async ()
   expect(
     parseCurlRequest('curl --data-raw @literal https://example.test').bodyFromFile,
   ).toBeUndefined()
+})
+
+it('computes exact inclusive CIDR counts and normalizes host bits without routing', async () => {
+  const v4 = await cidr.detect('192.0.2.129/24', {} as never)
+  expect(v4?.value).toMatchObject({
+    first: '192.0.2.0',
+    last: '192.0.2.255',
+    addresses: '256',
+    hostBitsPresent: true,
+  })
+  const v6 = await cidr.detect('::/0', {} as never)
+  expect(v6?.value).toMatchObject({
+    addresses: '340282366920938463463374607431768211456',
+    first: '0:0:0:0:0:0:0:0',
+  })
 })

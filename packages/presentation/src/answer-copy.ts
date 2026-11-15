@@ -183,6 +183,10 @@ const sentences: Record<string, [string, string]> = {
     'This value was wrapped in Base45. We decoded the next layer.',
     'Base45로 싼 값이에요. 한 겹 풀었어요.',
   ],
+  cidr: [
+    'This describes an IP address range. The count includes every address in the range.',
+    'IP 주소의 범위를 적은 거예요. 범위 안의 모든 주소를 세었어요.',
+  ],
   'curl-command': [
     'This is a curl HTTP request command. We read its settings without sending the request.',
     'curl로 서버에 요청하는 명령이에요. 보내지 않고 요청 내용을 읽었어요.',
@@ -623,6 +627,13 @@ export function answerFacts(
     rows: Array<[string, string]> = []
   if (detection.detector === 'kv' && Array.isArray(value.entries))
     return [[copy.fields, String(value.entries.length)]]
+  if (detection.detector === 'cidr')
+    return [
+      [locale === 'ko' ? '주소 종류' : 'Address family', String(value.family)],
+      [locale === 'ko' ? '첫 주소' : 'First address', String(value.first)],
+      [locale === 'ko' ? '마지막 주소' : 'Last address', String(value.last)],
+      [locale === 'ko' ? '전체 주소 수' : 'Total addresses', String(value.addresses)],
+    ]
   if (detection.detector === 'curl-command')
     return [
       [locale === 'ko' ? '요청 방식' : 'Method', String(value.method)],
