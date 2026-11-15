@@ -2,6 +2,13 @@ export type RuleSpec = { id: string; title: string; why: string; fix: string; re
 const jwt = 'https://www.rfc-editor.org/rfc/rfc8725'
 const rows: [string, string, string, string, string][] = [
   [
+    'DER-SCHEMA-UNKNOWN',
+    'DER structure without a schema',
+    'Tags and lengths do not establish a certificate, private key or signature validity.',
+    'Keep primitive key contents private and use a trusted schema-aware verifier for authentication.',
+    'https://www.itu.int/rec/T-REC-X.690-202102-I/en',
+  ],
+  [
     'JAVA-STREAM-INSPECTION',
     'Java stream inspection only',
     'A matching header does not validate every object in the stream.',

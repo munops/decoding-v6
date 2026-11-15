@@ -248,5 +248,24 @@ export const expandedSpecs: ExpandedSpec[] = [
       },
     ],
   },
+  {
+    detector: 'asn1-der',
+    slug: 'asn1-der',
+    label: 'ASN.1 DER structure',
+    description:
+      'Inspect bytes or Base64 containing a nonempty sequence of definite, minimally length-encoded ASN.1 fields with low-number tags. Common primitive bounds are checked; limits are 1 MiB, depth 12, 128 children per container and 2048 nodes. The tree shows tags and lengths, never primitive contents that might contain private keys. This is not complete schema/canonical-SET/certificate/signature validation.',
+    korean: {
+      label: 'ASN.1 DER 구조',
+      description:
+        '바이트나 Base64에서 길이를 먼저 적는 ASN.1 DER의 구조를 살펴봐요. 짧은 태그와 기본 항목의 일부 규칙을 확인하며 1 MiB·12겹·한 묶음당 128항목·전체 2048항목을 넘지 않아요. 개인키가 들어 있을 수 있어 항목의 내용 대신 태그와 길이만 보여 줘요. 자료 틀·정렬 규칙·인증서·서명 전체를 검증하지는 않아요.',
+    },
+    examples: ['MAMCAQE=', 'MAUCAQEFAA==', 'MAMBAf8='],
+    references: [
+      {
+        title: 'ITU-T X.690 — ASN.1 DER encoding rules',
+        url: 'https://www.itu.int/rec/T-REC-X.690-202102-I/en',
+      },
+    ],
+  },
 ]
 export const expandedKoreanCopy = new Map(expandedSpecs.map((spec) => [spec.detector, spec.korean]))

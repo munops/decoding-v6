@@ -183,6 +183,10 @@ const sentences: Record<string, [string, string]> = {
     'This value was wrapped in Base45. We decoded the next layer.',
     'Base45로 싼 값이에요. 한 겹 풀었어요.',
   ],
+  'asn1-der': [
+    'This looks like ASN.1 DER data. We show its structure and keep possible key contents hidden.',
+    'ASN.1 DER로 적은 데이터로 보여요. 구조를 보여 주고 키일 수 있는 내용은 가려요.',
+  ],
   'java-serialization': [
     'This looks like a Java object stream. We inspect it without creating or running objects.',
     'Java 객체를 저장한 값으로 보여요. 객체를 만들거나 실행하지 않고 살펴봐요.',

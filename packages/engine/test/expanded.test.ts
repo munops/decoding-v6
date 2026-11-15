@@ -1,3 +1,4 @@
+import { asn1Der } from '../src/formats/expanded/asn1-der'
 import { javaSerialization } from '../src/formats/expanded/java-serialization'
 import { mac } from '../src/formats/expanded/mac'
 import { cidr } from '../src/formats/expanded/cidr'
@@ -248,4 +249,14 @@ it('reads Java modified UTF-8 strings without constructing objects', async () =>
   for (const value of ['Hello', '한글', '🙂', 'a\0b'])
     expect((await javaSerialization.detect(javaString(value), {} as never))?.decoded).toBe(value)
   expect((await javaSerialization.detect('rO0ABXQABUhlbGxv', {} as never))?.decoded).toBe('Hello')
+})
+
+it('shows DER tag lengths without exposing primitive key-like values', async () => {
+  const input = new Uint8Array([48, 6, 4, 4, 65, 66, 67, 68])
+  const result = await asn1Der.detect(input, {} as never)
+  expect(result?.value).toMatchObject({
+    structure: { tag: '0x30', children: [{ tag: '0x4', bytes: 4 }] },
+  })
+  expect(JSON.stringify(result)).not.toContain('ABCD')
+  expect(await asn1Der.detect(new Uint8Array([48, 129, 3, 2, 1, 1]), {} as never)).toBeNull()
 })

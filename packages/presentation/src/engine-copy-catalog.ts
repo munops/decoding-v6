@@ -1,5 +1,7 @@
 import type { EngineMessageCode } from '@decoding/engine'
 export const englishEngineCopy = {
+  'warning-der-schema':
+    'This is a bounded DER structural interpretation, not full ASN.1 schema, certificate or signature validation. Primitive contents stay hidden because they may include private keys.',
   'warning-java-inspection':
     'We recognized the Java stream header and read standalone strings. Objects are never instantiated; other payloads are not fully validated or deserialized.',
   'diagnostic-curl-unsupported':

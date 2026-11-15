@@ -1,3 +1,4 @@
+import { asn1Der } from './asn1-der'
 import { javaSerialization } from './java-serialization'
 import { mac } from './mac'
 import { cidr } from './cidr'
@@ -20,4 +21,5 @@ export const expandedDetectors = [
   cidr,
   mac,
   javaSerialization,
+  asn1Der,
 ]

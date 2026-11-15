@@ -1,5 +1,10 @@
 import type { RuleSpec } from '@decoding/spec-registry'
 const ko: Record<string, [string, string, string]> = {
+  'DER-SCHEMA-UNKNOWN': [
+    '자료 틀 없이 구조를 살펴봤어요',
+    '태그와 길이만으로 인증서·개인키나 서명의 유효성을 알 수 없어요.',
+    '키 내용은 비공개로 두고 인증에는 자료 틀을 아는 믿을 수 있는 검증기를 쓰세요.',
+  ],
   'JAVA-STREAM-INSPECTION': [
     'Java의 겉 정보만 살펴봐요',
     '시작 표식이 맞아도 모든 객체의 내용이 올바르다는 뜻은 아니에요.',

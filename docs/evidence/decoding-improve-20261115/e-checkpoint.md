@@ -68,3 +68,9 @@ Separated 48-bit notation accepts consistent colon, hyphen or dotted groups and 
 ## Java serialization
 
 AC ED 00 05 is recognized in bytes or Base64. Standalone strings decode with bounded modified UTF-8 (including Java NUL and supplementary UTF-16 pairs), not ordinary UTF-8. Other token-bearing streams show only header metadata and an explicit no-full-validation/no-deserialization notice. No Java class, readObject or readExternal is invoked; metadata recognition is not a safety verdict. 20 positive/10 edge/20 negative public fixtures, MUTF-8 regressions and full suite 263 pass. Relevant package type/lint/parity/i18n pass. 56 formats/49 tools.
+
+## ASN.1 DER structures
+
+PEM private-key metadata and the new byte/Base64 inspector share the extracted pre-existing DER tree reader. A bounded structural subset checks definite minimal lengths, low-number tags, common primitive constraints and nested boundaries, with depth 12, 128 children per container and 2048 nodes. Tag/length trees omit all primitive content, including possible private keys. The sentence, rule page and explanation explicitly distinguish this from complete schema, canonical-SET, certificate and signature validation.
+
+20 positive/10 edge/20 negative cases plus key-content-hiding and nonminimal-length regressions. Full suite 263/265 passed initially; two new examples exposed a four-byte minimum and the pre-existing conservative binary-Base64 auto threshold. Four-byte nonempty containers are supported, and the DER detector now directly recognizes structurally checked Base64 rather than relaxing the global threshold. All 95 affected suite cases then passed. Relevant package type/lint/parity/i18n pass. 57 formats/49 tools.
