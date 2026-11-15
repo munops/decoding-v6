@@ -267,5 +267,24 @@ export const expandedSpecs: ExpandedSpec[] = [
       },
     ],
   },
+  {
+    detector: 'filetime',
+    slug: 'windows-filetime',
+    label: 'Windows FILETIME',
+    description:
+      'Read an unsigned decimal or 0x hexadecimal FILETIME count using 100-nanosecond ticks since 1601 UTC. Prefix FILETIME: for an explicit interpretation (1601–9999); bare plausible contemporary counters remain uncertain. The millisecond UTC display retains remaining 100 ns ticks separately. Numeric order is not a raw little-endian byte dump, and sentinel values are not dates.',
+    korean: {
+      label: 'Windows FILETIME',
+      description:
+        '1601년 UTC부터 100나노초씩 센 부호 없는 10진수·0x 16진수를 읽어요. FILETIME:을 붙이면 그 뜻으로 읽고, 접두사 없는 숫자는 다른 번호일 수도 있어 확정하지 않아요. 밀리초 아래의 나머지도 따로 보존해요. 바이트 순서를 바꾼 덤프나 특수 제어 값을 날짜로 보지는 않아요.',
+    },
+    examples: ['FILETIME: 133444736000000000', 'FILETIME: 0', 'FILETIME: 116444736000000001'],
+    references: [
+      {
+        title: 'Microsoft — FILETIME structure',
+        url: 'https://learn.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-filetime',
+      },
+    ],
+  },
 ]
 export const expandedKoreanCopy = new Map(expandedSpecs.map((spec) => [spec.detector, spec.korean]))

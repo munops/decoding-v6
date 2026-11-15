@@ -185,6 +185,10 @@ const sentences: Record<string, [string, string]> = {
     'This value was wrapped in Base45. We decoded the next layer.',
     'Base45로 싼 값이에요. 한 겹 풀었어요.',
   ],
+  filetime: [
+    'This can represent a Windows FILETIME timestamp: a count of 100-nanosecond ticks since 1601. A number alone does not establish its meaning.',
+    'Windows FILETIME으로 읽을 수 있는 값이에요. 1601년부터 100나노초씩 센 값이며 숫자만으로 쓰임을 확정할 수는 없어요.',
+  ],
   'asn1-der': [
     'This looks like ASN.1 DER data. We show its structure and keep possible key contents hidden.',
     'ASN.1 DER로 적은 데이터로 보여요. 구조를 보여 주고 키일 수 있는 내용은 가려요.',
@@ -641,6 +645,14 @@ export function answerFacts(
     rows: Array<[string, string]> = []
   if (detection.detector === 'kv' && Array.isArray(value.entries))
     return [[copy.fields, String(value.entries.length)]]
+  if (detection.detector === 'filetime')
+    return [
+      [locale === 'ko' ? 'UTC 시각' : 'UTC time', String(value.timestamp)],
+      [
+        locale === 'ko' ? '밀리초 미만의 눈금' : 'Sub-millisecond ticks',
+        String(value.subMillisecondTicks),
+      ],
+    ]
   if (detection.detector === 'java-serialization')
     return [
       [locale === 'ko' ? '형식 판' : 'Stream version', String(value.version)],

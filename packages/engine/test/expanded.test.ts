@@ -1,3 +1,4 @@
+import { filetime } from '../src/formats/expanded/filetime'
 import { asn1Der } from '../src/formats/expanded/asn1-der'
 import { javaSerialization } from '../src/formats/expanded/java-serialization'
 import { mac } from '../src/formats/expanded/mac'
@@ -259,4 +260,15 @@ it('shows DER tag lengths without exposing primitive key-like values', async () 
   })
   expect(JSON.stringify(result)).not.toContain('ABCD')
   expect(await asn1Der.detect(new Uint8Array([48, 129, 3, 2, 1, 1]), {} as never)).toBeNull()
+})
+
+it('keeps FILETIME epoch and sub-millisecond ticks exact without promoting arbitrary numbers', async () => {
+  expect((await filetime.detect('FILETIME: 116444736000000001', {} as never))?.value).toMatchObject(
+    { timestamp: '1970-01-01T00:00:00.000Z', subMillisecondTicks: 1 },
+  )
+  expect((await filetime.detect('FILETIME: 116444735999999999', {} as never))?.value).toMatchObject(
+    { timestamp: '1969-12-31T23:59:59.999Z', subMillisecondTicks: 9999 },
+  )
+  expect((await filetime.detect('133444736000000000', {} as never))?.confidence).toBeLessThan(0.85)
+  expect(await filetime.detect('FILETIME: 18446744073709551615', {} as never)).toBeNull()
 })

@@ -697,3 +697,47 @@ expandedFixtures.push(
     ],
   ),
 )
+
+expandedFixtures.push(
+  ...publicCases(
+    'filetime',
+    Array.from(
+      { length: 20 },
+      (_, i) => 'FILETIME: ' + (116444736000000000n + BigInt(i) * 864000000000n),
+    ),
+    [
+      'FILETIME: 0',
+      'FILETIME: 1',
+      'FILETIME: 9999',
+      'FILETIME: 10000',
+      'FILETIME: 116444735999999999',
+      'FILETIME: 116444736000000001',
+      'FILETIME: 0x019db1ded53e8000',
+      '133444736000000000',
+      '0x01da1747c66d0000',
+      'FILETIME: 2650467743999999999',
+    ],
+    [
+      'FILETIME: -1',
+      'FILETIME: 18446744073709551615',
+      'FILETIME: 18446744073709551616',
+      'FILETIME: 2650467744000000000',
+      'FILETIME: NaN',
+      'FILETIME: 1.5',
+      'FILETIME: 0x',
+      'FILETIME: 0xGG',
+      'FILETIME: 1e17',
+      'FILETIME: 1 2',
+      'FILETIME:',
+      '133444736000000000000',
+      '1700000000',
+      '01234567890123456',
+      '0xffffffffffffffff',
+      '00000000000000000',
+      '한글 문장',
+      'A normal sentence.',
+      'Une phrase française.',
+      'https://example.test',
+    ],
+  ),
+)

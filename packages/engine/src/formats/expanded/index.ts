@@ -1,3 +1,4 @@
+import { filetime } from './filetime'
 import { asn1Der } from './asn1-der'
 import { javaSerialization } from './java-serialization'
 import { mac } from './mac'
@@ -22,4 +23,5 @@ export const expandedDetectors = [
   mac,
   javaSerialization,
   asn1Der,
+  filetime,
 ]
