@@ -56,3 +56,7 @@ Public corpus: 20 positive/10 edge/20 negative cases. Full suite 256 pass, inclu
 IPv4/IPv6 prefix notation uses the existing IPv4 reader and an extracted shared IPv6 normalizer. Exact BigInt arithmetic computes inclusive first/last addresses and total addresses, with host-bit normalization explicit in the value. Counts include reserved endpoints and do not promise usable hosts. Ambiguous IPv4 leading-zero notation, zones, invalid prefixes and malformed addresses are rejected.
 
 20 positive/10 edge/20 negative public cases; focused exact /0 and host-bit regressions; full suite 258 pass. Type/lint/parity/i18n pass. 54 formats/49 tools. Browser/release evidence remains pending.
+
+Independent curl review found an unsupported-option argument could overwrite the destination, invalid header names could pass, and a JavaScript `__proto__` header could disappear in an object literal. The reader now consumes explicitly known option arguments, rejects unknown syntax and multiple destinations, validates header tokens, and generates JS/Node headers through safe JSON parsing. Regression tests cover these exact cases; option incompleteness is still disclosed.
+
+Review-fix validation: full run 257/259 passed; strict unknown-argument handling exposed an empty token previously emitted for backslash-newline. Line continuation now emits no token, and the two affected suites passed all 69 focused cases. Relevant package type checks, lint and registry/i18n parity passed. No broad rerun is inferred from the focused retry.

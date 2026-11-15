@@ -316,12 +316,13 @@ function requestCode(request: HttpRequest, language: string): string {
       )
     return JSON.stringify(value)
   }
-  const headers =
-    '{' +
-    Object.entries(request.headers)
-      .map(([key, value]) => `${q(key)}: ${q(value)}`)
-      .join(', ') +
-    '}'
+  const headers = ['javascript', 'node'].includes(language)
+    ? `JSON.parse(${JSON.stringify(JSON.stringify(request.headers))})`
+    : '{' +
+      Object.entries(request.headers)
+        .map(([key, value]) => `${q(key)}: ${q(value)}`)
+        .join(', ') +
+      '}'
   const body = request.body,
     hasBody = body !== undefined,
     u = q(request.url),

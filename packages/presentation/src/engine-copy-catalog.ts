@@ -1,5 +1,7 @@
 import type { EngineMessageCode } from '@decoding/engine'
 export const englishEngineCopy = {
+  'diagnostic-curl-unsupported':
+    'This curl syntax or multiple-request command is outside the supported request subset.',
   'diagnostic-curl-unclosed': 'Unclosed quote or escape in cURL command.',
   'diagnostic-curl-url':
     'A literal HTTP(S) URL is required; command substitution is not supported.',

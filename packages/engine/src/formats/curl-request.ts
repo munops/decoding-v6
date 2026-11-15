@@ -34,7 +34,8 @@ function words(source: string) {
     }
     if (char === '\\' && quote !== "'") {
       escaped = true
-      started = true
+      if (source[index + 1] !== '\n' && !(source[index + 1] === '\r' && source[index + 2] === '\n'))
+        started = true
       continue
     }
     if (
@@ -101,6 +102,8 @@ export function parseCurlRequest(source: string): CurlRequest {
       if (separator < 1 || /[\r\n]/.test(header)) throw new CurlParseError('diagnostic-curl-header')
       const name = header.slice(0, separator).trim(),
         value = header.slice(separator + 1).trim()
+      if (!/^[!#$%&'*+.^_`|~A-Za-z0-9-]+$/.test(name))
+        throw new CurlParseError('diagnostic-curl-header')
       if (Object.keys(headers).some((key) => key.toLowerCase() === name.toLowerCase()))
         unmodeledOptions.push('--header')
       headers[name] = value
@@ -109,20 +112,48 @@ export function parseCurlRequest(source: string): CurlRequest {
       body = body === undefined ? value : body + '&' + value
       if (!explicit) method = 'POST'
       if (option !== '--data-raw' && value.startsWith('@')) bodyFromFile = true
-    } else if (option === '--url') url = next()
-    else if (['-I', '--head'].includes(option)) {
+    } else if (option === '--url') {
+      if (url) throw new CurlParseError('diagnostic-curl-unsupported')
+      url = next()
+    } else if (['-I', '--head'].includes(option)) {
       method = 'HEAD'
       explicit = true
     } else if (
-      ['-s', '-S', '--silent', '--show-error', '-v', '--verbose', '-i', '--include'].includes(
-        option,
-      )
+      [
+        '-s',
+        '-S',
+        '-sS',
+        '--silent',
+        '--show-error',
+        '-v',
+        '--verbose',
+        '-i',
+        '--include',
+      ].includes(option)
     ) {
       /* output-only flags */
-    } else if (/^https?:\/\//i.test(option)) url = option
-    else if (option.startsWith('-'))
-      unmodeledOptions.push(/^--?[A-Za-z0-9-]+/.exec(option)?.[0] ?? 'unknown-option')
-    else unmodeledOptions.push('unparsed-argument')
+    } else if (/^https?:\/\//i.test(option)) {
+      if (url) throw new CurlParseError('diagnostic-curl-unsupported')
+      url = option
+    } else if (['-L', '--location', '--compressed', '-k', '--insecure'].includes(option)) {
+      unmodeledOptions.push(option)
+    } else if (
+      [
+        '-o',
+        '--output',
+        '-A',
+        '--user-agent',
+        '-u',
+        '--user',
+        '-x',
+        '--proxy',
+        '--connect-timeout',
+        '--max-time',
+      ].includes(option)
+    ) {
+      next()
+      unmodeledOptions.push(option)
+    } else throw new CurlParseError('diagnostic-curl-unsupported')
   }
   try {
     const parsed = new URL(url)

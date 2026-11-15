@@ -1,5 +1,6 @@
 // Engine-owned explanation identifiers. Prose belongs to presentation.
 export const engineMessageCodes = [
+  'diagnostic-curl-unsupported',
   'diagnostic-curl-unclosed',
   'diagnostic-curl-url',
   'diagnostic-curl-size',

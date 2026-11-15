@@ -324,3 +324,29 @@ it('keeps quoted curl data inert across code outputs and preserves Python quotin
   )
   expect(python).toContain('"X-Name": "Bob\'s ${UNTRUSTED}"')
 })
+
+it('preserves curl destination boundaries and prototype-named headers', async () => {
+  const { parseCurlRequest } = await import('@decoding/engine')
+  expect(parseCurlRequest('curl https://one.example -o https://two.example').url).toBe(
+    'https://one.example',
+  )
+  expect(() => parseCurlRequest('curl --unknown https://one.example')).toThrow()
+  expect(() => parseCurlRequest('curl https://one.example https://two.example')).toThrow()
+  expect(() => parseCurlRequest('curl -H " : x" https://one.example')).toThrow()
+  const result = await executeOperation(
+    'curl-to-code',
+    'curl -H "__proto__: synthetic" https://example.test',
+    { language: 'javascript' },
+  )
+  const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor
+  let headers: Record<string, string> = {}
+  await new AsyncFunction('fetch', 'console', String(result.output))(
+    async (_url: unknown, options: { headers: Record<string, string> }) => {
+      headers = options.headers
+      return { text: async () => '' }
+    },
+    { log: () => {} },
+  )
+  expect(Object.hasOwn(headers, '__proto__')).toBe(true)
+  expect(headers['__proto__']).toBe('synthetic')
+})
