@@ -27,7 +27,7 @@ p {
   color: #5c6573;
 }
 pre {
-  min-height: 240px;
+  min-height: 64px;
   max-height: 60vh;
   overflow: auto;
   padding: 20px;
@@ -81,4 +81,11 @@ button {
 }
 h2 {
   font-size: 22px;
+}
+
+pre,
+pre code {
+  font:
+    16px/1.6 ui-monospace,
+    monospace;
 }

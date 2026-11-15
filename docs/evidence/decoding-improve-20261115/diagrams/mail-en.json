@@ -16,6 +16,14 @@
       "label": "MIME encoded word"
     },
     {
+      "id": "decode",
+      "label": "Decode transport word"
+    },
+    {
+      "id": "read",
+      "label": "Read the charset"
+    },
+    {
       "id": "3",
       "label": "Readable subject",
       "kind": "document",
@@ -33,7 +41,19 @@
     },
     {
       "from": "2",
+      "to": "decode"
+    },
+    {
+      "from": "decode",
+      "to": "read"
+    },
+    {
+      "from": "read",
       "to": "3"
     }
-  ]
+  ],
+  "gap": {
+    "rank": 60,
+    "node": 32
+  }
 }

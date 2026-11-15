@@ -47,6 +47,8 @@ test('unpacked extension decodes locally and keeps values out of requests and st
     })
     expect(JSON.stringify(storage)).not.toContain('channel-canary')
     expect(storage).toEqual([{}, {}, 0, 0])
+    await page.locator('#input').fill('7JWI64WV7ZWY7IS47JqUIOyEuOqzhA==')
+    await expect(page.locator('#output')).toHaveText('안녕하세요 세계')
     await page.screenshot({ path: testInfo.outputPath('extension-1280x800.png') })
   } finally {
     await context.close()
