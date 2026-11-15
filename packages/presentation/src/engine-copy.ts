@@ -13,6 +13,8 @@ const ko: Record<MessageFact['code'], string> = {
     '로그인 값이 들어 있을 수 있어요. 채팅방·AI·다른 사이트에 붙여넣지 마세요.',
   'warning-wallet-unverified':
     '글자의 모양과 확인값만 살펴봤어요. 소유자·잔액·실제 망은 조회하지 않았어요. 같은 주소 모양을 쓰는 다른 망도 있어요.',
+  'warning-wallet-checksum-absent':
+    '대문자나 소문자 한 가지로만 적혀 있어요. 대소문자를 섞은 확인값이 없는 옛 표기로 읽었어요. 보통의 16진수 자료일 수도 있어요.',
   'photo-read': '사진에서 코드를 읽었어요. 연결되는 곳은 열지 않았어요.',
   'summary-url': '{protocol}//{host}',
   'summary-epoch': '{milliseconds}',

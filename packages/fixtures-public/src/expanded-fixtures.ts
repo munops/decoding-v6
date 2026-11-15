@@ -327,3 +327,54 @@ expandedFixtures.push(
     ],
   ),
 )
+export const erc55Vectors = [
+  '0x52908400098527886E0F7030069857D2E4169EE7',
+  '0x8617E340B3D01FA5F11F306F4090FD50E238070D',
+  '0xde709f2102306220921060314715629080e2fb77',
+  '0x27b1fdb04752bbc536007a920d24acb045561c26',
+  '0x5aAeb6053F3E94C9b9A09f33669435E7Ef1BeAed',
+  '0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359',
+  '0xdbF03B407c01E7cD3CBea99509d93f8DDDC8C6FB',
+  '0xD1220A0cf47c7B9Be7A2E6BA89F429762e7b9aDb',
+]
+expandedFixtures.push(
+  ...publicCases(
+    'ethereum-address',
+    [
+      ...erc55Vectors,
+      ...Array.from(
+        { length: 12 },
+        (_, index) => '0x' + (index + 1).toString(16).padStart(40, 'a'),
+      ),
+    ],
+    [
+      '0x' + '0'.repeat(40),
+      '0x' + 'f'.repeat(40),
+      '0x' + 'F'.repeat(40),
+      ...erc55Vectors.slice(0, 4).map((address) => address.toLowerCase()),
+      ...erc55Vectors.slice(0, 3).map((address) => ' ' + address + ' '),
+    ],
+    [
+      '0x' + '1'.repeat(39),
+      '0x' + '1'.repeat(41),
+      '1'.repeat(40),
+      '0X' + '1'.repeat(40),
+      '0x' + 'g'.repeat(40),
+      '0x5aaeb6053F3E94C9b9A09f33669435E7Ef1BeAed',
+      '0xfB6916095cA1df60bB79Ce92cE3Ea74c37c5d359',
+      '0xdbF03B407c01E7cD3CBea99509d93f8DDDC8C6Fb',
+      '0xD1220A0cf47c7B9Be7A2E6BA89F429762e7b9aDB',
+      '0x5aAeb6053F3E94C9b9A09f33669435E7Ef1BeAeD',
+      'hello world',
+      '보통 한국어 문장이에요.',
+      'Une phrase française.',
+      '{"address":"0x' + '1'.repeat(40) + '"}',
+      'https://example.test/0x' + '1'.repeat(40),
+      'SGVsbG8=',
+      '0x1234',
+      '01000001 01000010',
+      '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
+      '0x' + 'aa '.repeat(20),
+    ],
+  ),
+)

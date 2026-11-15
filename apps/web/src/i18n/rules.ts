@@ -1,5 +1,10 @@
 import type { RuleSpec } from '@decoding/spec-registry'
 const ko: Record<string, [string, string, string]> = {
+  'WALLET-CHECKSUM-ABSENT': [
+    '대소문자 확인값이 없는 표기',
+    '한 가지 대소문자로만 적은 이더리움 모양의 주소는 옛 표기로 읽을 수 있지만, 대소문자를 섞은 확인값은 없어요. 보통의 16진수일 수도 있어요.',
+    '믿을 수 있는 곳에서 망과 받는 쪽을 확인하세요. 여기서 계산한 대소문자 표기가 소유자를 확인해 주지는 않아요.',
+  ],
   'WALLET-UNVERIFIED': [
     '주소 글자만 확인했어요',
     '확인값이 맞아도 소유자·잔액·보낼 망까지 확인한 것은 아니에요. 같은 주소 모양을 다른 망도 쓸 수 있어요.',

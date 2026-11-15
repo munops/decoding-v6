@@ -1,5 +1,7 @@
 import type { EngineMessageCode } from '@decoding/engine'
 export const englishEngineCopy = {
+  'warning-wallet-checksum-absent':
+    'This address uses a uniform letter case. It is accepted as legacy syntax without a supplied mixed-case checksum; it can also be ordinary hexadecimal data.',
   'warning-wallet-unverified':
     'Only the text format and supplied checksum were inspected. We did not check ownership, funds or a live network. Related networks may reuse an address format.',
   'warning-cookie-credential':

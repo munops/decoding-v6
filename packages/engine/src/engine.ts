@@ -53,6 +53,8 @@ function selectedCandidate(
     'http-headers': ['yaml', 'mime'],
     'data-uri': ['url'],
   }
+  if (first.detector === 'ethereum-address' && first.metadata?.verifiedChecksum)
+    subsumed['ethereum-address'] = ['hex', 'hash']
   const second = candidates.find(
     (candidate, index) => index > 0 && !subsumed[first.detector]?.includes(candidate.detector),
   )

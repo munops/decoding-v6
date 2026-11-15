@@ -173,6 +173,10 @@ const sentences: Record<string, [string, string]> = {
     'This looks like a Bitcoin-family address. Its text checksum matches; this does not verify the owner or funds.',
     '비트코인 계열 지갑 주소로 보여요. 글자의 확인값은 맞지만 소유자나 잔액을 확인한 것은 아니에요.',
   ],
+  'ethereum-address': [
+    'This looks like an Ethereum-style address. Other EVM networks use the same form, so the network cannot be inferred from it.',
+    '이더리움 계열 지갑 주소로 보여요. 같은 모양을 쓰는 다른 EVM 망도 있어 어느 망인지는 확정할 수 없어요.',
+  ],
   'binary-bytes': [
     'This writes bytes using zeros and ones. We decoded the next layer.',
     '글자를 0과 1로 적은 거예요. 한 겹 풀었어요.',
@@ -609,6 +613,20 @@ export function answerFacts(
     rows: Array<[string, string]> = []
   if (detection.detector === 'kv' && Array.isArray(value.entries))
     return [[copy.fields, String(value.entries.length)]]
+  if (detection.detector === 'ethereum-address')
+    return [
+      [locale === 'ko' ? '주소 모양' : 'Address format', 'Ethereum / EVM'],
+      [
+        locale === 'ko' ? '대소문자 확인값' : 'Mixed-case checksum',
+        value.checksum === 'valid'
+          ? locale === 'ko'
+            ? '일치'
+            : 'Matches'
+          : locale === 'ko'
+            ? '확인값 없는 표기'
+            : 'Not supplied',
+      ],
+    ]
   if (detection.detector === 'bitcoin-address')
     return [
       [locale === 'ko' ? '주소 표기' : 'Address format', String(value.encoding)],

@@ -58,6 +58,8 @@ describe('completed local workflows', () => {
 })
 
 it('executes copied JavaScript for the actual Base64 gzip JSON chain', async () => {
+  // Two isolated Node processes: bound each child, as the CLI integration tests do.
+  // The separate engine 1 MiB/100 ms performance contract is unchanged.
   const expected = { synthetic: 'gzip_roundtrip', count: 18 }
   const value = encodeBase64(gzipSync(JSON.stringify(expected)))
   const result = await decode(value)
@@ -66,7 +68,7 @@ it('executes copied JavaScript for the actual Base64 gzip JSON chain', async () 
   const output = execFileSync(
     process.execPath,
     ['--input-type=module', '-e', `const VALUE = process.env.VALUE;\n${commands.javascript}`],
-    { encoding: 'utf8', env: { ...process.env, VALUE: value } },
+    { encoding: 'utf8', timeout: 15_000, env: { ...process.env, VALUE: value } },
   )
   expect(output).toContain(expected.synthetic)
   expect(output).toContain('18')
@@ -80,11 +82,11 @@ it('executes copied JavaScript for the actual Base64 gzip JSON chain', async () 
       execFileSync(
         process.execPath,
         ['--input-type=module', '-e', `const VALUE = process.env.VALUE;\n${code}`],
-        { encoding: 'utf8', env: { ...process.env, VALUE: value } },
+        { encoding: 'utf8', timeout: 15_000, env: { ...process.env, VALUE: value } },
       ),
     ),
   ).toEqual(expected)
-})
+}, 35_000)
 
 import { structureSelection } from '../src/result-text'
 import { redactStructure } from '../../../apps/web/src/lib/workspace'

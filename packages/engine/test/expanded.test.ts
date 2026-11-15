@@ -131,3 +131,36 @@ it('binds Bitcoin witness checksums to versions and rejects mistyped legacy addr
   ])
     expect(await find(bad)).toBeUndefined()
 })
+it('matches ERC-55 vectors and the independent existing Keccak implementation', async () => {
+  const { createRequire } = await import('node:module')
+  const require = createRequire(import.meta.url)
+  const reference = require(
+    require.resolve('hash-wasm', {
+      paths: [new URL('../../operations/', import.meta.url).pathname],
+    }),
+  ) as { keccak: (text: string, bits: number) => Promise<string> }
+  const { erc55Vectors } = await import('../../fixtures-public/src/expanded-fixtures')
+  const { ethereumChecksum, addressKeccak } =
+    await import('../src/formats/expanded/ethereum-address')
+  for (const vector of erc55Vectors) {
+    expect(ethereumChecksum(vector)).toBe(vector)
+    expect(addressKeccak(vector.slice(2).toLowerCase())).toBe(
+      await reference.keccak(vector.slice(2).toLowerCase(), 256),
+    )
+  }
+  for (let index = 0; index < 20; index++) {
+    const hex = index.toString(16).padStart(40, 'a')
+    expect(addressKeccak(hex)).toBe(await reference.keccak(hex, 256))
+  }
+  const mixed = await decode(erc55Vectors[4]!)
+  expect(mixed.root.selected?.detector).toBe('ethereum-address')
+  const legacy = (await detect(erc55Vectors[4]!.toLowerCase())).find(
+    (item) => item.detector === 'ethereum-address',
+  )!
+  expect(legacy.warnings.some((item) => item.ruleId === 'WALLET-CHECKSUM-ABSENT')).toBe(true)
+  expect(
+    (await detect('0x5aaeb6053F3E94C9b9A09f33669435E7Ef1BeAed')).some(
+      (item) => item.detector === 'ethereum-address',
+    ),
+  ).toBe(false)
+})

@@ -122,5 +122,32 @@ export const expandedSpecs: ExpandedSpec[] = [
       },
     ],
   },
+  {
+    detector: 'ethereum-address',
+    slug: 'ethereum-address',
+    label: 'Ethereum / EVM address',
+    description:
+      'Recognize 20-byte 0x-prefixed addresses and verify supplied mixed-case ERC-55 checksums with Keccak-256. Uniform-case legacy syntax is accepted without claiming a supplied checksum. Other EVM networks share this form; no owner, funds or network lookup is made.',
+    korean: {
+      label: '이더리움 계열 지갑 주소',
+      description:
+        '0x로 시작하는 20바이트 주소를 읽고 대소문자를 섞어 적은 ERC-55 확인값을 Keccak-256으로 확인해요. 한 가지 대소문자로만 적은 옛 표기는 확인값이 없는 것으로 안내해요. 같은 모양을 다른 EVM 망도 쓰므로 어느 망인지는 확정하지 않아요.',
+    },
+    examples: [
+      '0x5aAeb6053F3E94C9b9A09f33669435E7Ef1BeAed',
+      '0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359',
+      '0xde709f2102306220921060314715629080e2fb77',
+    ],
+    references: [
+      {
+        title: 'ERC-55 — Mixed-case checksum address encoding',
+        url: 'https://eips.ethereum.org/EIPS/eip-55',
+      },
+      {
+        title: 'Keccak Team — permutation and sponge specification summary',
+        url: 'https://keccak.team/keccak_specs_summary.html',
+      },
+    ],
+  },
 ]
 export const expandedKoreanCopy = new Map(expandedSpecs.map((spec) => [spec.detector, spec.korean]))

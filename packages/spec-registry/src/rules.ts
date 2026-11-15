@@ -281,6 +281,13 @@ rows.push([
   'Confirm the network and recipient through your trusted wallet before taking any action. This reader does not contact a blockchain.',
   'https://github.com/bitcoin/bips/blob/master/bip-0350.mediawiki',
 ])
+rows.push([
+  'WALLET-CHECKSUM-ABSENT',
+  'No supplied mixed-case checksum',
+  'A uniformly cased Ethereum-style address may be valid legacy syntax, but it supplies no mixed-case checksum and can also be ordinary hexadecimal data.',
+  'Confirm the intended network and recipient using a trusted source. The computed checksummed spelling does not verify ownership.',
+  'https://eips.ethereum.org/EIPS/eip-55',
+])
 export const ruleSpecs: RuleSpec[] = rows.map(([id, title, why, fix, reference]) => ({
   id,
   title,
