@@ -6,9 +6,15 @@ for (const locale of ['en', 'ko'])
       await context.grantPermissions(['clipboard-read', 'clipboard-write'])
       const events: string[] = []
       page.on('request', (request) => {
-        if (new URL(request.url()).pathname === '/api/event') events.push(request.postData() ?? '')
+        if (/^\/e(?:\/|$)/.test(new URL(request.url()).pathname))
+          events.push(request.postData() ?? '')
       })
       await page.goto(`${locale === 'ko' ? '/ko' : ''}/proof/`)
+      // Static HTTP preview intentionally omits the production HTTPS registration.
+      await page.evaluate(async () => {
+        await navigator.serviceWorker.register('/sw.js')
+        await navigator.serviceWorker.ready
+      })
       await expect(page.locator('.answer-final .output-view')).toHaveText('Hello, local world!')
       const matches = page.locator('[data-proof-matches]')
       await expect(matches).toHaveText('0')
