@@ -222,14 +222,13 @@ importers:
         version: 4.110.0
 
   apps/cli:
-    dependencies:
+    devDependencies:
       '@decoding/engine':
         specifier: workspace:*
         version: link:../../packages/engine
       '@decoding/operations':
         specifier: workspace:*
         version: link:../../packages/operations
-    devDependencies:
       '@types/node':
         specifier: ^24.1.0
         version: 24.13.3

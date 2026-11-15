@@ -7,15 +7,15 @@
   </head>
   <body>
     <main>
-      <span class="status">LOCAL ONLY</span>
-      <h1>Selection result</h1>
-      <p id="summary">Reading the in-memory result…</p>
+      <span class="status" id="local">Only on this device</span>
+      <h1 id="heading">Decode on this device</h1>
+      <label for="input" id="input-label">Paste an unfamiliar value</label>
+      <textarea id="input" rows="4" spellcheck="false"></textarea>
+      <h2 id="summary" aria-live="polite"></h2>
+      <p id="concerns"></p>
       <pre><code id="output"></code></pre>
-      <button id="copy" type="button">Copy redacted result</button>
-      <p class="note">
-        The selected text was decoded in the extension service worker and was not persisted. Only
-        this redacted structure is held in session storage until this page reads and deletes it.
-      </p>
+      <button id="copy" type="button">Copy decoded value</button>
+      <p class="note" id="note"></p>
     </main>
     <script type="module" src="/src/result.ts"></script>
   </body>

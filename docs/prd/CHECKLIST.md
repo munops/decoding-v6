@@ -384,7 +384,7 @@ GitHub Issues raw JSON 직독(등급 A)으로 얻은 결과를 제품 작업으�
 - [ ] **DEC-NEXT-001** `in_progress` — A1~A19: 검사·빌드·성능, 판독 오류, 탐색·접근성·번역·오프라인 복구.
 - [ ] **DEC-NEXT-002** `in_progress` — B0~B7: A안 답 카드·입력·예시·탭·불확실성·디자인 계약.
 - [ ] **DEC-NEXT-003** `implemented / local_test_passed` — C1~C5: 깨진 글자·옛 한글·NFC·메일·복구 불가 구분.
-- [ ] **DEC-NEXT-011** `planned` — J1~J7: 확장·CLI·검색 입구·공개 준비와 승인된 채널 출시. J5는 오너 지정 2주 관측 뒤.
+- [ ] **DEC-NEXT-011** `in_progress / local_artifacts_tested` — J1~J7: 확장·CLI·검색 입구·공개 준비와 승인된 채널 출시. J5는 오너 지정 2주 관측 뒤.
 - [ ] **DEC-NEXT-004** `planned` — D1~D4: 주소·QR·사진 정보·파일 공유.
 - [ ] **DEC-NEXT-005** `planned` — F1~F7: 자동 도구·찾기·47개 설명·오프라인.
 - [ ] **DEC-NEXT-006** `planned` — G1~G2: 저장 목록·검색·기간·건네기.
@@ -408,3 +408,5 @@ A checkpoint ([evidence](../evidence/decoding-improve-20261115/a-checkpoint.md))
 B checkpoint: [receipt](../evidence/decoding-improve-20261115/b-checkpoint.md). Core B implemented, focused unit/browser and independent screenshots verified at the stated boundaries. A6 duplicate warnings now consolidate in the answer. QR interpretation remains D2; A13 DTO migration remains open. Proceed to C with these explicit dependencies retained.
 
 C checkpoint: [문자 복원·메일 검증](../evidence/decoding-improve-20261115/c-checkpoint.md). C1~C5 local implemented; legacy charset provisional, production validation pending. A10 mail/YAML correction included.
+
+J checkpoint: [로컬 채널·입구 준비](../evidence/decoding-improve-20261115/j-checkpoint.md). Publication, account gates and J5 future observation remain open; no public release claim.

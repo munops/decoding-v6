@@ -1,0 +1,39 @@
+{
+  "title": "메일 제목은 전송 표기를 풀어요",
+  "direction": "TB",
+  "nodes": [
+    {
+      "id": "0",
+      "label": "메일 제목",
+      "kind": "document"
+    },
+    {
+      "id": "1",
+      "label": "UTF-8 바이트"
+    },
+    {
+      "id": "2",
+      "label": "MIME 전송 표기"
+    },
+    {
+      "id": "3",
+      "label": "제목으로 읽기",
+      "kind": "document",
+      "accent": "green"
+    }
+  ],
+  "edges": [
+    {
+      "from": "0",
+      "to": "1"
+    },
+    {
+      "from": "1",
+      "to": "2"
+    },
+    {
+      "from": "2",
+      "to": "3"
+    }
+  ]
+}

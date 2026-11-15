@@ -1,0 +1,38 @@
+{
+  "title": "Same bytes, wrong reading",
+  "direction": "TB",
+  "nodes": [
+    {
+      "id": "original",
+      "label": "Original text",
+      "kind": "document"
+    },
+    {
+      "id": "bytes",
+      "label": "Encode to bytes"
+    },
+    {
+      "id": "wrong",
+      "label": "Read with wrong encoding"
+    },
+    {
+      "id": "broken",
+      "label": "Garbled text",
+      "accent": "yellow"
+    }
+  ],
+  "edges": [
+    {
+      "from": "original",
+      "to": "bytes"
+    },
+    {
+      "from": "bytes",
+      "to": "wrong"
+    },
+    {
+      "from": "wrong",
+      "to": "broken"
+    }
+  ]
+}

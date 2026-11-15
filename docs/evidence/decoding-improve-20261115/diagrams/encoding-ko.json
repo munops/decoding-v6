@@ -1,0 +1,38 @@
+{
+  "title": "같은 바이트, 다른 읽기",
+  "direction": "TB",
+  "nodes": [
+    {
+      "id": "original",
+      "label": "원래 글",
+      "kind": "document"
+    },
+    {
+      "id": "bytes",
+      "label": "글자를 바이트로"
+    },
+    {
+      "id": "wrong",
+      "label": "다른 방식으로 읽음"
+    },
+    {
+      "id": "broken",
+      "label": "깨진 글자",
+      "accent": "yellow"
+    }
+  ],
+  "edges": [
+    {
+      "from": "original",
+      "to": "bytes"
+    },
+    {
+      "from": "bytes",
+      "to": "wrong"
+    },
+    {
+      "from": "wrong",
+      "to": "broken"
+    }
+  ]
+}

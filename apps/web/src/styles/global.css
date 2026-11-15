@@ -2720,3 +2720,26 @@ html[data-text-size='large'] :where(p, label, button, summary, a, dt, dd, input,
 .answer-final .output-view {
   min-height: 0;
 }
+
+.recovery-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  padding-block: 40px;
+}
+.recovery-content dd {
+  margin: 8px 0 24px;
+  overflow-wrap: anywhere;
+}
+.recovery-content img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 420px;
+  margin-inline: auto;
+}
+@media (max-width: 700px) {
+  .recovery-content {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,9 +1,21 @@
+import {
+  answerSentence,
+  primaryLayers,
+  warningTitle,
+} from '../../../packages/workbench-ui/src/answer-copy'
+import {
+  finalSelection,
+  displayValue,
+  outputText,
+} from '../../../packages/workbench-ui/src/result-text'
 import { readFile } from 'node:fs/promises'
 import { stdin, stdout, stderr } from 'node:process'
 import { decode, type ChainNode, type DecodeInput } from '@decoding/engine'
 import { executeOperation, operationById, operations } from '@decoding/operations'
 
 type CliOptions = {
+  payload?: string
+  locale: 'en' | 'ko'
   file?: string
   format: string
   json: boolean
@@ -15,18 +27,20 @@ type CliOptions = {
   operationOptions: Record<string, string | number | boolean>
 }
 
-const usage = `decoding — local-only universal decoder and 47-tool CLI
+const usage = `decoding — local text decoder
 
 Usage:
+  decoding 'SGVsbG8='
   cat payload.txt | decoding
   pbpaste | decoding --json
   decoding --file sample.bin
   cat input.txt | decoding --format json-format --option mode=minify
 
 Options:
-  --file <path>       Read a local file (positional payloads are rejected)
-  --format <id>       auto or one of the 47 operation IDs
+  --file <path>       Read a local file
+  --format <id>       auto or an operation ID
   --option k=v        Operation option; repeatable
+  --locale <en|ko>    Human output language
   --json              Print one JSON document
   --ndjson            Print each chain node as NDJSON
   --max-depth <n>     Override recursive chain depth, 1-8
@@ -34,6 +48,7 @@ Options:
   --list-tools        Print all operation IDs
   --help              Show this help
 
+Use stdin or --file for secrets: positional values may remain in shell history.
 No update check, telemetry, account, or network code is included.`
 
 function parseValue(value: string): string | number | boolean {
@@ -45,6 +60,7 @@ function parseValue(value: string): string | number | boolean {
 
 function parseArgs(args: string[]): CliOptions {
   const output: CliOptions = {
+    locale: /^(?:ko)/i.test(process.env.LC_ALL ?? process.env.LANG ?? '') ? 'ko' : 'en',
     format: 'auto',
     json: false,
     ndjson: false,
@@ -56,7 +72,14 @@ function parseArgs(args: string[]): CliOptions {
   for (let index = 0; index < args.length; index += 1) {
     const arg = args[index] ?? ''
     const next = args[index + 1]
-    if (arg === '--file' && next) {
+    if (arg === '--locale' && next) {
+      if (next !== 'ko' && next !== 'en') throw new Error('--locale expects en or ko.')
+      output.locale = next
+      index += 1
+    } else if (arg === '--' && next && index + 2 === args.length) {
+      output.payload = next
+      index += 1
+    } else if (arg === '--file' && next) {
       output.file = next
       index += 1
     } else if (arg === '--format' && next) {
@@ -79,11 +102,11 @@ function parseArgs(args: string[]): CliOptions {
     else if (arg === '--no-lint') output.noLint = true
     else if (arg === '--help' || arg === '-h') output.help = true
     else if (arg.startsWith('-')) throw new Error(`Unknown option: ${arg}`)
-    else
-      throw new Error(
-        'Positional payloads are disabled to avoid shell-history and process-list leaks. Use stdin or --file.',
-      )
+    else if (output.payload === undefined) output.payload = arg
+    else throw new Error('Only one positional value is accepted. Use stdin for multiline input.')
   }
+  if (output.file && output.payload !== undefined)
+    throw new Error('Choose a positional value or --file, not both.')
   if (output.json && output.ndjson) throw new Error('Choose --json or --ndjson, not both.')
   return output
 }
@@ -115,27 +138,6 @@ function flatten(node: ChainNode): ChainNode[] {
   return [node, ...node.children.flatMap(flatten)]
 }
 
-function humanNode(node: ChainNode, noLint: boolean): string {
-  const indent = '  '.repeat(node.depth)
-  const title = node.selected
-    ? `${node.selected.label} ${Math.round(node.selected.confidence * 100)}%`
-    : node.status
-  const lines = [`${indent}${node.depth === 0 ? '●' : '↳'} ${title} (${node.inputSize} bytes)`]
-  if (node.selected) {
-    lines.push(`${indent}  ${node.selected.summary}`)
-    if (!noLint)
-      for (const warning of node.selected.warnings)
-        lines.push(
-          `${indent}  ${warning.severity.toUpperCase()} ${warning.ruleId}: ${warning.message}`,
-        )
-    lines.push(
-      `${indent}  ${JSON.stringify(safeValue(node.selected.value), null, 2).split('\n').join(`\n${indent}  `)}`,
-    )
-  }
-  if (node.limitReason) lines.push(`${indent}  LIMIT: ${node.limitReason}`)
-  return lines.join('\n')
-}
-
 async function main() {
   const options = parseArgs(process.argv.slice(2))
   if (options.help) {
@@ -148,7 +150,12 @@ async function main() {
     )
     return
   }
-  const bytes = options.file ? new Uint8Array(await readFile(options.file)) : await readStdin()
+  const bytes =
+    options.payload !== undefined
+      ? new TextEncoder().encode(options.payload)
+      : options.file
+        ? new Uint8Array(await readFile(options.file))
+        : await readStdin()
   if (!bytes.length) throw new Error('No input received. Pipe data to stdin or use --file.')
   const asText = new TextDecoder('utf-8', { fatal: false }).decode(bytes)
   const input: DecodeInput = asText.includes('\ufffd') ? bytes : asText.replace(/\n$/, '')
@@ -169,6 +176,7 @@ async function main() {
   }
 
   const result = await decode(input, {
+    previewAmbiguous: !options.json && !options.ndjson,
     ...(options.maxDepth === undefined ? {} : { limits: { maxDepth: options.maxDepth } }),
   })
   if (options.json)
@@ -176,12 +184,15 @@ async function main() {
   else if (options.ndjson)
     for (const node of flatten(result.root))
       stdout.write(`${JSON.stringify(node, (_key, value) => safeValue(value))}\n`)
-  else
+  else {
+    const final = finalSelection(result.root)
+    const warnings = options.noLint
+      ? []
+      : primaryLayers(result.root).flatMap((node) => node.selected?.warnings ?? [])
     stdout.write(
-      `${flatten(result.root)
-        .map((node) => humanNode(node, options.noLint))
-        .join('\n')}\n`,
+      `${answerSentence(result.root, options.locale, asText)}\n${warnings.map((item) => warningTitle(item, options.locale)).join('\n')}${warnings.length ? '\n' : ''}${final ? outputText(displayValue(final)) : asText}\n`,
     )
+  }
 
   if (result.root.status === 'unsupported') process.exitCode = 3
   else if (result.root.status === 'ambiguous') process.exitCode = 2

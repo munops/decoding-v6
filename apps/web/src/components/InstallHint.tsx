@@ -8,9 +8,11 @@ type InstallEvent = Event & {
 export default function InstallHint({
   locale,
   alwaysShow = false,
+  eligible = false,
 }: {
   locale: Locale
   alwaysShow?: boolean
+  eligible?: boolean
 }) {
   const [visible, setVisible] = useState(false),
     [prompt, setPrompt] = useState<InstallEvent | null>(null),
@@ -18,11 +20,8 @@ export default function InstallHint({
   useEffect(() => {
     if (matchMedia('(display-mode: standalone)').matches) return
     try {
-      const visits = Number(localStorage.getItem('decoding-visits') ?? '0') + 1
-      localStorage.setItem('decoding-visits', String(visits))
       setVisible(
-        alwaysShow ||
-          (visits >= 3 && localStorage.getItem('decoding-install-dismissed') !== 'true'),
+        alwaysShow || (eligible && localStorage.getItem('decoding-install-dismissed') !== 'true'),
       )
     } catch {
       /* Optional hint is skipped when storage is blocked. */
@@ -33,7 +32,7 @@ export default function InstallHint({
     }
     addEventListener('beforeinstallprompt', listener)
     return () => removeEventListener('beforeinstallprompt', listener)
-  }, [])
+  }, [alwaysShow, eligible])
   if (!visible) return null
   return (
     <section class="install-hint">

@@ -1,0 +1,39 @@
+{
+  "title": "같은 한글, 다른 조합",
+  "direction": "TB",
+  "nodes": [
+    {
+      "id": "0",
+      "label": "한글 파일 이름",
+      "kind": "document"
+    },
+    {
+      "id": "1",
+      "label": "자음·모음 분리 (NFD)"
+    },
+    {
+      "id": "2",
+      "label": "자음·모음 합침 (NFC)"
+    },
+    {
+      "id": "3",
+      "label": "붙인 파일 이름",
+      "kind": "document",
+      "accent": "green"
+    }
+  ],
+  "edges": [
+    {
+      "from": "0",
+      "to": "1"
+    },
+    {
+      "from": "1",
+      "to": "2"
+    },
+    {
+      "from": "2",
+      "to": "3"
+    }
+  ]
+}

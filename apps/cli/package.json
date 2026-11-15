@@ -1,5 +1,5 @@
 {
-  "name": "@decoding/cli",
+  "name": "decoding",
   "version": "6.0.0",
   "type": "module",
   "bin": {
@@ -7,21 +7,25 @@
   },
   "exports": "./dist/index.js",
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "start": "tsx src/index.ts",
     "build": "tsup",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {
-    "@decoding/engine": "workspace:*",
-    "@decoding/operations": "workspace:*"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^24.1.0",
     "tsup": "^8.5.0",
     "tsx": "^4.20.3",
-    "typescript": "^5.8.3"
-  }
+    "typescript": "^5.8.3",
+    "@decoding/engine": "workspace:*",
+    "@decoding/operations": "workspace:*"
+  },
+  "license": "MIT",
+  "description": "Identify and decode unfamiliar text locally. No upload, account or network.",
+  "repository": "https://github.com/whoo3474/decoding"
 }

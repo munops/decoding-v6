@@ -16,7 +16,7 @@ const workspaceQualityInputs = new Set([
   'vitest.config.ts',
 ])
 const typecheckScopes = [
-  ['apps/cli/', ['@decoding/cli']],
+  ['apps/cli/', ['decoding']],
   ['apps/desktop/', ['@decoding/desktop']],
   ['apps/extension/', ['@decoding/extension']],
   ['apps/web/', ['@decoding/web']],
@@ -27,7 +27,7 @@ const typecheckScopes = [
       '@decoding/workbench-ui',
       '@decoding/web',
       '@decoding/desktop',
-      '@decoding/cli',
+      'decoding',
       '@decoding/extension',
     ],
   ],

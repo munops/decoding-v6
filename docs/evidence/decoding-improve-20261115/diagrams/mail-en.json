@@ -1,0 +1,39 @@
+{
+  "title": "Mail transport words need decoding",
+  "direction": "TB",
+  "nodes": [
+    {
+      "id": "0",
+      "label": "Mail subject",
+      "kind": "document"
+    },
+    {
+      "id": "1",
+      "label": "UTF-8 bytes"
+    },
+    {
+      "id": "2",
+      "label": "MIME encoded word"
+    },
+    {
+      "id": "3",
+      "label": "Readable subject",
+      "kind": "document",
+      "accent": "green"
+    }
+  ],
+  "edges": [
+    {
+      "from": "0",
+      "to": "1"
+    },
+    {
+      "from": "1",
+      "to": "2"
+    },
+    {
+      "from": "2",
+      "to": "3"
+    }
+  ]
+}

@@ -18,6 +18,7 @@ export type WebDecoderSample = {
 }
 
 type Props = {
+  initialInput?: string | undefined
   proofMode?: boolean
   messages: DecoderMessages
   sampleLabel?: string
@@ -26,6 +27,7 @@ type Props = {
 
 export default function WebDecoder({
   messages,
+  initialInput,
   sampleLabel,
   samples = [],
   proofMode = false,
@@ -40,8 +42,12 @@ export default function WebDecoder({
       () => {},
     )
   }, [])
+  const [decodeCount, setDecodeCount] = useState(0)
   const [shareMessage, setShareMessage] = useState('')
   const [externalInput, setExternalInput] = useState<{ id: number; value: string }>()
+  useEffect(() => {
+    if (initialInput) setExternalInput({ id: Date.now(), value: initialInput })
+  }, [initialInput])
   const client = useMemo(
     () =>
       createDecoderWorkerClient(
@@ -200,7 +206,12 @@ export default function WebDecoder({
               restoreInput.current = { input, source }
             }}
             decodeInput={client.decodeInput}
-            onEvent={proofMode ? () => undefined : countOpen}
+            onEvent={(name) => {
+              if (!proofMode) {
+                countOpen(name)
+                if (name === 'decode_completed') setDecodeCount((n) => n + 1)
+              }
+            }}
             onTool={sendToTool}
             onSave={async (selected, ttl) => {
               await saveWorkspaceRecord({
@@ -218,7 +229,7 @@ export default function WebDecoder({
           />
         )}
       />
-      {!proofMode ? <InstallHint locale={messages.locale} /> : null}
+      {!proofMode ? <InstallHint locale={messages.locale} eligible={decodeCount >= 2} /> : null}
     </div>
   )
 }

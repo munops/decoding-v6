@@ -1,0 +1,18 @@
+{
+  "requestId": "DECODING-IMPROVE-20261115-OWNER-01",
+  "taskId": "DEC-NEXT-011",
+  "status": "data_pending",
+  "observationNotBefore": "2026-11-29",
+  "dateBasis": "J5: owner requested observation two weeks after 2026-11-15 ownership verification and sitemap submission",
+  "sources": [
+    "Google Search Console query impressions/clicks",
+    "Cloudflare decode_completed/return_7d counts"
+  ],
+  "needsLiveVerification": [
+    "Google Search Console exact property and query rows",
+    "Naver site ownership pending verification",
+    "Cloudflare fixed aggregate counts and sample sufficiency"
+  ],
+  "decision": "Keep D onward order until actual observation supports reprioritization. A reminder date is not evidence of completion.",
+  "externalMessagesPublished": []
+}

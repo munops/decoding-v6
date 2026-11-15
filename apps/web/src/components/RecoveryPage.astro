@@ -1,0 +1,99 @@
+---
+import Layout from '../layouts/Layout.astro'
+import WebDecoder from '../islands/WebDecoder'
+import { decoderMessages } from '@decoding/workbench-ui'
+import { recoveryCopy, type RecoveryId } from '../i18n/recovery'
+const { locale, id } = Astro.props as { locale: 'en' | 'ko'; id: RecoveryId }
+const copy = recoveryCopy(id, locale)
+const path = `${locale === 'ko' ? '/ko' : ''}/${id}/`
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: copy.faq,
+        acceptedAnswer: { '@type': 'Answer', text: copy.answer },
+      },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'decod.ing',
+        item: `https://decod.ing/${locale === 'ko' ? 'ko/' : ''}`,
+      },
+      { '@type': 'ListItem', position: 2, name: copy.title, item: `https://decod.ing${path}` },
+    ],
+  },
+]
+---
+
+<Layout
+  locale={locale}
+  title={`${copy.title} — decod.ing`}
+  description={copy.lead}
+  alternatePath={`/${id}/`}
+>
+  <section class="hero container">
+    <div class="hero-copy"><h1>{copy.title}</h1><p>{copy.lead}</p></div>
+  </section>
+  <div class="container workbench-wrap">
+    <WebDecoder
+      messages={decoderMessages[locale]}
+      initialInput={copy.examples[0]?.[1]}
+      samples={copy.examples.map(([result, value], i) => ({
+        id: `${id}-${i}`,
+        label: result!,
+        value: value!,
+      }))}
+      sampleLabel={copy.try}
+      client:load
+    />
+  </div>
+  <section class="tool-content container recovery-content">
+    <article>
+      <h2>{copy.examplesTitle}</h2><dl>
+        {
+          copy.examples.map(([result, value]) => (
+            <>
+              <>
+                <dt>{copy.before}</dt>
+                <dd>
+                  <code>{value}</code>
+                </dd>
+                <dt>{copy.after}</dt>
+                <dd>
+                  <code>{result}</code>
+                </dd>
+              </>
+            </>
+          ))
+        }
+      </dl>
+    </article>
+    <article>
+      <h2>{copy.diagram}</h2><p>{copy.why}</p><img
+        src={`/images/recovery/${copy.asset}-${locale}.png`}
+        width="760"
+        height="850"
+        loading="lazy"
+        alt={copy.why}
+      /><h2>{copy.faq}</h2><p>{copy.answer}</p><p>{copy.local}</p>
+    </article>
+  </section>
+  {
+    schemas.map((schema) => (
+      <script
+        is:inline
+        type="application/ld+json"
+        set:html={JSON.stringify(schema).replaceAll('<', '\\u003c')}
+      />
+    ))
+  }
+</Layout>

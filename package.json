@@ -37,7 +37,7 @@
     "deploy": "pnpm delivery:web:deploy",
     "deploy:production": "pnpm delivery:web:deploy",
     "verify:deploy": "node scripts/verify-deploy.mjs",
-    "cli": "pnpm --filter @decoding/cli start",
+    "cli": "pnpm --filter decoding start",
     "desktop:dev": "pnpm --filter @decoding/desktop tauri dev",
     "desktop:build": "pnpm --filter @decoding/desktop tauri build",
     "desktop:verify": "pnpm --filter @decoding/desktop typecheck && pnpm --filter @decoding/desktop build",

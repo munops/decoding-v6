@@ -7,11 +7,10 @@ function runCli(
   input = '',
 ): Promise<{ stdout: string; stderr: string; code: number | null }> {
   return new Promise((resolve) => {
-    const child = spawn(
-      'pnpm',
-      ['--filter', '@decoding/cli', 'exec', 'tsx', 'src/index.ts', ...args],
-      { cwd: process.cwd(), stdio: ['pipe', 'pipe', 'pipe'] },
-    )
+    const child = spawn('pnpm', ['--filter', 'decoding', 'exec', 'tsx', 'src/index.ts', ...args], {
+      cwd: process.cwd(),
+      stdio: ['pipe', 'pipe', 'pipe'],
+    })
     let stdout = ''
     let stderr = ''
     child.stdout.on('data', (chunk) => {
@@ -39,9 +38,10 @@ describe('CLI process contract', () => {
     )
   }, 30_000)
 
-  it('rejects positional payloads before reading or processing them', async () => {
-    const cli = await runCli(['secret-on-command-line'])
-    expect(cli.code).toBe(1)
-    expect(cli.stderr).toContain('Positional payloads are disabled')
+  it('accepts an explicit positional value with the shared plain answer', async () => {
+    const cli = await runCli(['--locale', 'ko', '7JWI64WV7ZWY7IS47JqUIOyEuOqzhA=='])
+    expect(cli.code).toBe(0)
+    expect(cli.stdout).toContain('안녕하세요 세계')
+    expect(cli.stdout).toContain('Base64')
   }, 30_000)
 })
