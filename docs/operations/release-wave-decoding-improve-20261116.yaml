@@ -3,7 +3,7 @@ wave_id: 'DECODING-IMPROVE-20261116'
 status: approved
 source_revision: '5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb'
 prepared_at: '2026-11-15T22:16:53.908Z'
-expires_at: '2026-11-15T22:34:26.213Z'
+expires_at: 2026-11-15T22:41:55.791Z
 legal_entity_ref: 'hq/bootstrap/identity.yaml'
 execution_lane: 'owner_lane'
 approval_authority: 'human_owner'
@@ -21,7 +21,7 @@ work_claim:
     provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6: 7
     provider:github:munops/decoding-v6: 6
     repo:decoding-v6: 73
-  asserted_at: '2026-11-15T22:16:53.908Z'
+  asserted_at: 2026-11-15T22:21:55.791Z
   released_at: null
   release_evidence_ref: 'docs/evidence/decoding-improve-20261115/release-20261116.json'
 intervention_mode: 'normal'
