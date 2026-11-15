@@ -152,6 +152,10 @@ const sentences: Record<string, [string, string]> = {
     'This is an IP address. We show its notation and address range.',
     'IP 주소예요. 주소의 표기와 쓰이는 범위를 살펴봤어요.',
   ],
+  'binary-bytes': [
+    'This writes bytes using zeros and ones. We decoded the next layer.',
+    '글자를 0과 1로 적은 거예요. 한 겹 풀었어요.',
+  ],
   cron: [
     'This is a schedule expression. It describes when a task should run.',
     '작업을 언제 할지 적은 예약식이에요.',

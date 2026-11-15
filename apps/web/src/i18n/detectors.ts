@@ -1,3 +1,4 @@
+import { expandedKoreanCopy } from '../../../../packages/spec-registry/src/expanded-formats'
 import { completeKoreanLabels } from '../../../../packages/spec-registry/src/complete-formats'
 import type { DetectorSpec } from '@decoding/spec-registry'
 import type { Locale } from './catalog'
@@ -62,6 +63,8 @@ const koreanDetectorCopy = {
 
 export function localizeDetectorSpec(locale: Locale, spec: DetectorSpec): DetectorSpec {
   if (locale !== 'ko') return spec
+  const expanded = expandedKoreanCopy.get(spec.detector)
+  if (expanded) return { ...spec, ...expanded }
   const copy = koreanDetectorCopy[spec.detector as keyof typeof koreanDetectorCopy]
   if (copy) return { ...spec, ...copy, examples: spec.examples }
   const label = completeKoreanLabels.get(spec.detector)
@@ -72,5 +75,6 @@ export function localizeDetectorSpec(locale: Locale, spec: DetectorSpec): Detect
 
 export const koreanDetectorIds = Object.freeze([
   ...Object.keys(koreanDetectorCopy),
+  ...expandedKoreanCopy.keys(),
   ...completeKoreanLabels.keys(),
 ])

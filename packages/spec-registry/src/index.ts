@@ -1,3 +1,4 @@
+import { expandedSpecs } from './expanded-formats'
 import { binarySpecs } from './binary-formats'
 import { completeTextSpecs } from './complete-formats'
 export type DetectorSpec = {
@@ -10,6 +11,7 @@ export type DetectorSpec = {
 }
 
 export const detectorSpecs: DetectorSpec[] = [
+  ...expandedSpecs,
   ...completeTextSpecs,
   ...binarySpecs,
   {
