@@ -391,7 +391,7 @@ GitHub Issues raw JSON 직독(등급 A)으로 얻은 결과를 제품 작업으�
 - [ ] **DEC-NEXT-010** `implemented / local_test_passed` — G1 값 저장: 명시 선택·비밀 가림·기기 내 보관·내보내기 경고.
 - [ ] **DEC-NEXT-007** `in_progress` — E0~E4: 형식별 규격·양성/경계/음성/교차 시험·설명·한 문장, 각 형식별 커밋.
 - [ ] **DEC-NEXT-008** `in_progress` — H1~H6 로컬 구현: 검색 진입 8종 EN/KO·FAQ/현재 위치·한국어 첫 방문·언어 선택 기억·세 종류 미리보기. 최종 빌드/브라우저/배포 확인 대기. [영수증](../evidence/decoding-improve-20261115/h-checkpoint.md).
-- [ ] **DEC-NEXT-009** `planned` — I1~I3: 기기 내 처리 증명·횟수 설명/설정·비밀 값 주의.
+- [ ] **DEC-NEXT-009** `in_progress` — I1~I3 로컬 구현: 관측 범위와 한계를 밝힌 증명·횟수 설명/설정·비밀 값 주의. 최종 빌드/브라우저/배포 확인 대기. [영수증](../evidence/decoding-improve-20261115/i-checkpoint.md).
 
 검증: A1은 format/lint/typecheck/unit/benchmark/build/E2E, 최종은 인계 §12 전체.
 실기기·실제 화면 낭독·자연 사용·검색 관측·store review는 자동 검사와 구분한다.

@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro'
+import WebDecoder from '../islands/WebDecoder'
+import CountControl from './CountControl.astro'
+import { decoderMessages } from '@decoding/workbench-ui'
+import { proofCopy, proofResearchUrl } from '../i18n/proof'
+const { locale = 'en' } = Astro.props as { locale?: 'en' | 'ko' }
+const copy = proofCopy(locale)
+---
+
+<Layout
+  locale={locale}
+  availableLocales={['en', 'ko']}
+  alternatePath="/proof/"
+  title={`${copy.title} — decod.ing`}
+  description={copy.lead}
+>
+  <section class="hero container">
+    <div class="hero-copy"><h1>{copy.title}</h1><p>{copy.lead}</p></div>
+  </section>
+  <div class="container workbench-wrap">
+    <WebDecoder
+      messages={decoderMessages[locale]}
+      initialInput="SGVsbG8sIGxvY2FsIHdvcmxkIQ=="
+      proofMode
+      client:load
+    />
+  </div>
+  <section class="tool-content container">
+    <article>
+      <h2>{copy.whyTitle}</h2><p>{copy.why}</p><a
+        href={proofResearchUrl}
+        target="_blank"
+        rel="noopener noreferrer">{copy.source}</a>
+    </article>
+    <article>
+      <h2>{copy.countsTitle}</h2><p>{copy.counts}</p><p>{copy.countsMore}</p><CountControl
+        locale={locale}
+      /><p><a href={`${locale === 'ko' ? '/ko' : ''}/data/`}>{copy.data}</a></p>
+    </article>
+  </section>
+</Layout>

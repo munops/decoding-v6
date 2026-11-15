@@ -83,6 +83,8 @@ export default defineConfig({
           await writeFile(
             `${root}/offline-assets.json`,
             JSON.stringify({
+              sourceRevision:
+                home.match(/<meta name="application-build" content="([a-f0-9]+)"/i)?.[1] ?? null,
               initial: [...initial],
               assets: allAssets,
               tools: files

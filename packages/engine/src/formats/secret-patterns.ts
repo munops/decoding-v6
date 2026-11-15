@@ -3,7 +3,7 @@ import { credentialPatterns as patterns, redactSecrets } from './credential-reda
 export { redactSecrets } from './credential-redaction'
 import type { Detector } from '../types'
 import { inputText } from '../utils'
-import { found, warning } from './common'
+import { found, warning, credentialWarning } from './common'
 export const secretPatterns: Detector = {
   id: 'secret-patterns',
   detect(input) {
@@ -18,13 +18,16 @@ export const secretPatterns: Detector = {
     )
     if (!matches.length) return null
     return found('secret-patterns', 'Secret-like credential pattern', masked, 1, {
-      warnings: matches.map((m) =>
-        warning(
-          'SECRET-EXPOSED',
-          { code: 'warning-secret-exposed', params: { prefix: safeName(m.prefix) } },
-          m.test ? 'info' : 'danger',
+      warnings: [
+        ...matches.map((m) =>
+          warning(
+            'SECRET-EXPOSED',
+            { code: 'warning-secret-exposed', params: { prefix: safeName(m.prefix) } },
+            m.test ? 'info' : 'danger',
+          ),
         ),
-      ),
+        ...(matches.some((m) => !m.test) ? [credentialWarning()] : []),
+      ],
       metadata: {
         rotationUrl:
           'https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository',

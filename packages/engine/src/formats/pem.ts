@@ -2,7 +2,7 @@ import { der } from './der'
 import { diagnosticField } from '../diagnostics'
 import type { Detector } from '../types'
 import { decodeBase64, inputText } from '../utils'
-import { found, hex, warning } from './common'
+import { found, hex, warning, credentialWarning } from './common'
 function privateMetadata(
   kind: string,
   encoded: string,
@@ -83,6 +83,7 @@ export const pem: Detector = {
         {
           warnings: [
             warning('PRIVATE-KEY-EXPOSED', { code: 'warning-private-key-exposed' }, 'danger'),
+            credentialWarning(),
           ],
         },
       )

@@ -1,7 +1,7 @@
 import { diagnosticField } from '../diagnostics'
 import type { Detector } from '../types'
 import { decodeBase64, inputText } from '../utils'
-import { found, digest, hex, warning } from './common'
+import { found, digest, hex, warning, credentialWarning } from './common'
 export function crc24(bytes: Uint8Array): number {
   let crc = 0xb704ce
   for (const byte of bytes) {
@@ -62,6 +62,7 @@ export const pgpArmor: Detector = {
         {
           warnings: [
             warning('PRIVATE-KEY-EXPOSED', { code: 'warning-private-key-exposed-2' }, 'danger'),
+            credentialWarning(),
           ],
         },
       )

@@ -22,6 +22,7 @@ export const engineMessageCodes = [
   'warning-wallet-checksum-absent',
   'warning-wallet-unverified',
   'warning-cookie-credential',
+  'warning-credential-no-paste',
   'warning-ua-self-reported',
   'warning-text-maybe-lost',
   'diagnostic-pem-invalid',

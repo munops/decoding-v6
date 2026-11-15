@@ -30,6 +30,45 @@ function approvedCookieWarning(value: unknown): unknown {
   return record
 }
 
+// I3 adds a credential-sharing caution only to these pinned corpus records.
+// The original baseline remains immutable; all old fields and messages stay exact.
+function approvedCredentialWarning(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(approvedCredentialWarning)
+  if (!value || typeof value !== 'object') return value
+  const record = Object.fromEntries(
+    Object.entries(value).map(([key, item]) => [key, approvedCredentialWarning(item)]),
+  )
+  const data = record.value as { payload?: { exp?: unknown } } | undefined
+  const exp = data?.payload?.exp
+  if (
+    record.detector === 'auth-header' ||
+    record.detector === 'secret-patterns' ||
+    (record.detector === 'jwt' &&
+      (typeof exp !== 'number' || exp > Date.parse(baseline.now) / 1000))
+  ) {
+    record.warnings = [
+      ...(record.warnings as unknown[]),
+      {
+        ruleId: 'CREDENTIAL-NO-PASTE',
+        severity: 'warning',
+        message:
+          'This may contain usable access credentials. Keep it out of chats, AI tools and other sites: sharing it could let someone access your account. Reading it does not verify whether it works.',
+      },
+    ]
+  }
+  return record
+}
+const credentialCases = new Set([
+  'auth-header-positive-1',
+  'kv-positive-1',
+  'secret-patterns-positive-1',
+  'jwt-positive-1',
+])
+function approvedAdditions(id: string, result: unknown) {
+  const cookie = id === 'kv-positive-1' ? approvedCookieWarning(result) : result
+  return credentialCases.has(id) ? approvedCredentialWarning(cookie) : cookie
+}
+
 // Normalize elapsed time and the single approved E1 warning addition. No fields are dropped.
 describe('v6 CLI JSON compatibility', () => {
   for (const item of baseline.records)
@@ -41,7 +80,7 @@ describe('v6 CLI JSON compatibility', () => {
       const native = await decode(input, { now: new Date(baseline.now) })
       const result = toLegacyResult({ ...native, elapsedMs: 0 })
       expect(JSON.parse(JSON.stringify(result, (_key, value) => bytes(value)))).toEqual(
-        item.id === 'kv-positive-1' ? approvedCookieWarning(item.result) : item.result,
+        approvedAdditions(item.id, item.result),
       )
     })
   it('keeps user-owned error and note fields as data', async () => {

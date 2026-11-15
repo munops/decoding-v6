@@ -2894,3 +2894,24 @@ html[data-text-size='large'] :where(p, label, button, summary, a, dt, dd, input,
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+
+.proof-counters {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 16px;
+  margin: 0 0 12px;
+}
+.proof-counters dt {
+  overflow-wrap: anywhere;
+}
+.proof-counters dd {
+  margin: 6px 0 0;
+}
+.proof-counters output,
+.proof-counters [data-proof-seconds] {
+  font-size: 28px;
+  font-weight: 700;
+}
+.proof-monitor details p {
+  max-width: 72ch;
+}

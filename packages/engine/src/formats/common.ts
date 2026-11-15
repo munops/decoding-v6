@@ -101,3 +101,7 @@ export function parserPosition(error: unknown): { line?: number; column?: number
     ...(Number(column) > 0 ? { column: Number(column) } : {}),
   }
 }
+
+export function credentialWarning(): LintWarning {
+  return warning('CREDENTIAL-NO-PASTE', { code: 'warning-credential-no-paste' })
+}

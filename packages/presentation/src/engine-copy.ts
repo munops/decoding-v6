@@ -2,6 +2,8 @@ import type { Detection, MessageFact } from '@decoding/engine'
 import { englishEngineCopy, legacyParamFormats } from './engine-copy-catalog'
 import type { PresentationLocale } from './locale'
 const ko: Record<MessageFact['code'], string> = {
+  'warning-credential-no-paste':
+    '아직 쓸 수 있는 로그인 정보일 수 있어요. 다른 곳에 붙여넣지 마세요. 채팅방이나 AI에 공유하면 남이 내 계정에 들어올 수 있어요. 내용을 읽었다고 실제로 쓸 수 있는지 확인한 것은 아니에요.',
   'diagnostic-worker-certificate': '인증서의 DER 구조를 읽지 못했어요.',
   'diagnostic-worker-layer': '이 겹을 {format}로 읽지 못했어요.',
   'diagnostic-pem-encrypted': '암호화된 비밀 키라 내용을 해석하지 않았어요.',

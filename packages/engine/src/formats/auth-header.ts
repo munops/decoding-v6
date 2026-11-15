@@ -1,7 +1,7 @@
 import { diagnosticField } from '../diagnostics'
 import type { Detector } from '../types'
 import { decodeBase64, inputText } from '../utils'
-import { found, warning } from './common'
+import { found, warning, credentialWarning } from './common'
 export const authHeader: Detector = {
   id: 'auth-header',
   detect(input) {
@@ -19,6 +19,7 @@ export const authHeader: Detector = {
     if (scheme === 'bearer')
       return found('auth-header', 'Authorization: Bearer', { scheme: 'Bearer' }, 0.999, {
         decoded: body,
+        warnings: [credentialWarning()],
       })
     const bytes = decodeBase64(body)
     if (!bytes)
@@ -35,7 +36,10 @@ export const authHeader: Detector = {
       { user, password: password.length ? '****' : '(missing)' },
       0.999,
       {
-        warnings: [warning('BASIC-CREDENTIAL', { code: 'warning-basic-credential' })],
+        warnings: [
+          warning('BASIC-CREDENTIAL', { code: 'warning-basic-credential' }),
+          credentialWarning(),
+        ],
       },
     )
   },

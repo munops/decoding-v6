@@ -241,7 +241,9 @@ const localizedPrivacy = localePath(locale, '/privacy/')
       </div>
       <div class="footer-links">
         <a href={localePath(locale, '/data/')}>{uiMessage(locale, 'device_data')}</a>
-        <a href="/proof/">{uiMessage(locale, 'check_local_processing')}</a>
+        <a href={locale === 'ko' ? '/ko/proof/' : '/proof/'}
+          >{uiMessage(locale, 'check_local_processing')}</a
+        >
         <a href="/bookmarklet/">Bookmarklet</a><a href="/sponsor/">{uiMessage(locale, 'sponsor')}</a
         >
         <a href={localizedTools}>47 {messages.tools}</a><a href={localizedPrivacy}

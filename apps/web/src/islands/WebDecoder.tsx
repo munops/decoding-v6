@@ -1,3 +1,5 @@
+import { createProofObservation } from '../lib/proof-observation'
+import { offlineDecoderReady } from '../lib/offline-readiness'
 import { readPhoto } from '../lib/read-photo'
 import { uiMessage } from '@decoding/workbench-ui'
 import { ErrorBoundary } from '@decoding/workbench-ui'
@@ -8,7 +10,7 @@ import { listWorkspaceRecords, saveWorkspaceRecord, type WorkspaceRecord } from 
 import { sendToTool, takeHandoff } from '../lib/handoff'
 import { DecoderWorkbench, answerMessages } from '@decoding/workbench-ui'
 import type { DecoderMessages } from '@decoding/workbench-ui'
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks'
 import { countOpen } from '../lib/telemetry'
 import { createDecoderWorkerClient } from '../lib/decoder-worker-client'
 
@@ -33,6 +35,10 @@ export default function WebDecoder({
   samples = [],
   proofMode = false,
 }: Props) {
+  const proof = useMemo(() => (proofMode ? createProofObservation() : undefined), [proofMode])
+  const [proofReady, setProofReady] = useState(false)
+  const [offlineState, setOfflineState] = useState<'waiting' | 'ready' | 'unavailable'>('waiting')
+  useEffect(() => proof?.start(), [proof])
   const restoreInput = useRef<{ input: DecodeInput; source: string }>()
   const [boundaryAttempt, setBoundaryAttempt] = useState(0)
   const [externalFile, setExternalFile] = useState<{ id: number; file: File }>()
@@ -61,13 +67,34 @@ export default function WebDecoder({
     [],
   )
   useEffect(() => () => client.terminate(), [client])
+  const decodeObserved = useCallback(
+    async (input: DecodeInput, overrides?: Record<string, string>) => {
+      const revision = proof?.revision()
+      const result = await client.decodeInput(input, overrides)
+      if (revision !== undefined) proof?.addResult(result, revision)
+      return result
+    },
+    [client, proof],
+  )
   useEffect(() => {
-    if (proofMode)
-      void client
-        .decodeInput('{"local":true}')
-        .then(() => dispatchEvent(new Event('decoding:proof-ready')))
-        .catch(() => setShareMessage(messages.decodeFailed))
-  }, [proofMode, client])
+    if (!proofMode) return
+    const controller = new AbortController()
+    void client
+      .decodeInput('{"local":true}')
+      .then(async () => {
+        if (controller.signal.aborted) return
+        setProofReady(true)
+        const ready = await offlineDecoderReady(controller.signal)
+        if (!controller.signal.aborted) setOfflineState(ready ? 'ready' : 'unavailable')
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) {
+          setOfflineState('unavailable')
+          setShareMessage(messages.decodeFailed)
+        }
+      })
+    return () => controller.abort()
+  }, [proofMode, client, messages.decodeFailed])
   useEffect(() => {
     const opener = window.opener
     const receive = (event: MessageEvent) => {
@@ -196,7 +223,14 @@ export default function WebDecoder({
           {shareMessage}
         </p>
       ) : null}
-      {proofMode ? <ProofMonitor locale={messages.locale} /> : null}
+      {proof ? (
+        <ProofMonitor
+          locale={messages.locale}
+          observer={proof}
+          ready={proofReady}
+          offline={offlineState}
+        />
+      ) : null}
       <ErrorBoundary
         locale={messages.locale}
         onReset={() => {
@@ -211,10 +245,11 @@ export default function WebDecoder({
             key={boundaryAttempt}
             inputAddon={inputAddon}
             restoreInput={restoreInput.current}
-            onInputState={(input, source) => {
+            onInputState={(input, source, kind) => {
+              proof?.setInput(input, kind ?? (typeof input === 'string' ? 'text' : 'file'))
               restoreInput.current = { input, source }
             }}
-            decodeInput={client.decodeInput}
+            decodeInput={proof ? decodeObserved : client.decodeInput}
             readPhoto={readPhoto}
             onEvent={(name) => {
               if (!proofMode) {

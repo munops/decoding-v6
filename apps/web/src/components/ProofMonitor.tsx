@@ -1,63 +1,91 @@
-import { uiMessage } from '@decoding/workbench-ui'
 import { useEffect, useState } from 'preact/hooks'
 import type { Locale } from '../i18n/catalog'
-export default function ProofMonitor({ locale }: { locale: Locale }) {
-  const [ready, setReady] = useState(false),
-    [paths, setPaths] = useState<string[]>([]),
-    [supported, setSupported] = useState(true)
+import { proofCopy } from '../i18n/proof'
+import type { ProofObservation } from '../lib/proof-observation'
+export default function ProofMonitor({
+  locale,
+  observer,
+  ready,
+  offline,
+}: {
+  locale: Locale
+  observer: ProofObservation
+  ready: boolean
+  offline: 'waiting' | 'ready' | 'unavailable'
+}) {
+  const [state, setState] = useState(() => observer.snapshot()),
+    copy = proofCopy(locale)
   useEffect(() => {
-    let observer: PerformanceObserver | undefined
-    const start = () => {
-      setReady(true)
-      setPaths([])
-      if (!('PerformanceObserver' in window)) {
-        setSupported(false)
-        return
-      }
-      const from = performance.now()
-      observer = new PerformanceObserver((list) => {
-        const next = list
-          .getEntries()
-          .filter((entry) => entry.startTime >= from)
-          .map((entry) => {
-            try {
-              return new URL(entry.name).pathname
-            } catch {
-              return 'local resource'
-            }
-          })
-        if (next.length) setPaths((previous) => [...previous, ...next])
-      })
-      observer.observe({ type: 'resource', buffered: true })
-    }
-    addEventListener('decoding:proof-ready', start)
+    const update = () => setState(observer.snapshot()),
+      unsubscribe = observer.subscribe(update)
+    update()
+    const timer = setInterval(update, 1000)
     return () => {
-      removeEventListener('decoding:proof-ready', start)
-      observer?.disconnect()
+      unsubscribe()
+      clearInterval(timer)
     }
-  }, [])
+  }, [observer])
+  const covered = Object.values(state.coverage).every(Boolean)
+  const known =
+    ready && state.running && state.inputKind === 'text' && !state.uninspected && covered
+  const count = state.matches ? state.matches : known ? 0 : '—'
   return (
-    <section class="proof-monitor" aria-live="polite">
-      <p>
+    <section class="proof-monitor" data-proof-state={known ? 'observing' : 'limited'}>
+      <dl class="proof-counters">
+        <div>
+          <dt>{copy.outgoing}</dt>
+          <dd>
+            <output data-proof-matches aria-live="polite">
+              {count}
+            </output>
+          </dd>
+        </div>
+        <div>
+          <dt>{copy.time}</dt>
+          <dd>
+            <span data-proof-seconds aria-live="off">
+              {state.seconds}
+            </span>{' '}
+            {copy.seconds}
+          </dd>
+        </div>
+      </dl>
+      {state.matches ? (
+        <p class="notice warning" role="alert">
+          {copy.concern}
+        </p>
+      ) : null}
+      <p data-offline-ready={ready && offline === 'ready' ? 'true' : 'false'}>
         {!ready
-          ? uiMessage(locale, 'opening_the_local_decoder_first_when_ready_turn_off_the_network_a')
-          : supported
-            ? `${paths.length} ${uiMessage(locale, 'requests_observed_by_this_page')}`
-            : uiMessage(
-                locale,
-                'observation_api_unavailable_use_developer_tools_network_or_airpla',
-              )}
+          ? copy.preparing
+          : offline === 'ready'
+            ? copy.offlineReady
+            : offline === 'waiting'
+              ? copy.offlineWaiting
+              : copy.offlineUnavailable}
       </p>
-      <ul>
-        {paths.map((path, i) => (
-          <li key={i}>
-            <code>{path}</code>
-          </li>
-        ))}
-      </ul>
-      <p>
-        {uiMessage(locale, 'this_shows_only_requests_the_page_can_observe_for_stronger_confir')}
-      </p>
+      <details>
+        <summary>{copy.scope}</summary>
+        <p>{copy.scopeBody}</p>
+        <p>{copy.limits}</p>
+        <p>{copy.inputScope}</p>
+        <dl>
+          <div>
+            <dt>{copy.calls}</dt>
+            <dd>{state.calls}</dd>
+          </div>
+          <div>
+            <dt>{copy.resources}</dt>
+            <dd>{state.resources}</dd>
+          </div>
+          <div>
+            <dt>{copy.uninspected}</dt>
+            <dd data-proof-uninspected>{state.uninspected}</dd>
+          </div>
+        </dl>
+        {!covered || state.uninspected ? <p>{copy.limited}</p> : null}
+        {state.inputKind !== 'text' ? <p>{copy.unknownInput}</p> : null}
+      </details>
     </section>
   )
 }

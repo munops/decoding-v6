@@ -61,11 +61,11 @@ describe('anonymous counts', () => {
     telemetry.countOpen('app_open')
     expect(request).not.toHaveBeenCalled()
   })
-  it('never sends an event from the proof page', async () => {
+  it.each(['/proof/', '/ko/proof/'])('never sends an event from %s', async (pathname) => {
     const request = vi.fn()
     vi.stubGlobal('fetch', request)
     vi.stubGlobal('localStorage', memory())
-    vi.stubGlobal('location', { pathname: '/proof/' })
+    vi.stubGlobal('location', { pathname })
     const telemetry = await import('./telemetry')
     telemetry.countOpen('app_open')
     telemetry.countReturn()

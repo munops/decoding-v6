@@ -1,5 +1,7 @@
 import type { EngineMessageCode } from '@decoding/engine'
 export const englishEngineCopy = {
+  'warning-credential-no-paste':
+    'This may contain usable access credentials. Keep it out of chats, AI tools and other sites: sharing it could let someone access your account. Reading it does not verify whether it works.',
   'warning-brotli-trial':
     'Brotli has no unique opening signature. This candidate fully decoded locally within automatic limits; it does not identify the source or certify safety.',
   'warning-json-number-precision':

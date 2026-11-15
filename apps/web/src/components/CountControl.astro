@@ -1,30 +1,14 @@
 ---
 import type { Locale } from '../i18n/catalog'
+import { proofCopy } from '../i18n/proof'
 const { locale = 'en' } = Astro.props as { locale?: Locale }
-const labels: Record<Locale, string> = {
-  en: 'Anonymous counts',
-  ko: '익명 집계',
-  ja: '匿名集計',
-  'zh-cn': '匿名统计',
-  es: 'Recuentos anónimos',
-  'pt-br': 'Contagens anônimas',
-  de: 'Anonyme Zählung',
-  fr: 'Comptages anonymes',
-}
-const notices: Record<Locale, string> = {
-  en: 'This browser cannot remember this setting. Counts are off in this tab only.',
-  ko: '이 브라우저는 설정을 기억하지 못해요. 이 탭에서만 꺼져요.',
-  ja: '設定を保存できません。このタブでのみ無効です。',
-  'zh-cn': '无法保存设置，仅在此标签页停用。',
-  es: 'No se puede guardar. Desactivado solo en esta pestaña.',
-  'pt-br': 'Não é possível salvar. Desativado apenas nesta aba.',
-  de: 'Nicht speicherbar. Nur in diesem Tab deaktiviert.',
-  fr: 'Réglage non enregistré. Désactivé dans cet onglet seulement.',
-}
+const copy = proofCopy(locale)
+const label = copy.countLabel,
+  notice = copy.countFailure
 ---
 
-<label class="count-control"><input type="checkbox" data-count-toggle /> {labels[locale]}</label>
-<p hidden data-count-notice data-notice={notices[locale]} role="status"></p>
+<label class="count-control"><input type="checkbox" data-count-toggle /> {label}</label>
+<p hidden data-count-notice data-notice={notice} role="status"></p>
 <script>
   import { countingDisabled, setCountingDisabled } from '../lib/telemetry'
   addEventListener('decoding:settings-cleared', () => {
@@ -37,8 +21,7 @@ const notices: Record<Locale, string> = {
       const saved = setCountingDisabled(!checkbox.checked)
       for (const other of document.querySelectorAll<HTMLInputElement>('[data-count-toggle]'))
         other.checked = checkbox.checked
-      const notice = document.querySelector<HTMLElement>('[data-count-notice]')
-      if (notice) {
+      for (const notice of document.querySelectorAll<HTMLElement>('[data-count-notice]')) {
         notice.textContent = saved ? '' : (notice.dataset.notice ?? '')
         notice.hidden = !notice.textContent
       }

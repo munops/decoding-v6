@@ -1,3 +1,4 @@
+import { credentialWarning } from './formats/common'
 import { detectBrotli } from './formats/brotli'
 import { safeName, algorithmName } from './message-facts'
 import { inspectUrl } from './formats/url-facts'
@@ -88,7 +89,7 @@ function jwtWarnings(
       message: { code: 'warning-jwt-symmetric-alg' },
     })
   const nowSeconds = Math.floor(now.getTime() / 1000)
-  if (typeof payload.exp === 'number' && payload.exp < nowSeconds) {
+  if (typeof payload.exp === 'number' && payload.exp <= nowSeconds) {
     warnings.push({
       ruleId: 'JWT-EXPIRED',
       severity: 'danger',
@@ -102,6 +103,8 @@ function jwtWarnings(
       message: { code: 'warning-jwt-not-active' },
     })
   }
+  if (typeof payload.exp !== 'number' || payload.exp > nowSeconds)
+    warnings.push(credentialWarning())
   return warnings
 }
 

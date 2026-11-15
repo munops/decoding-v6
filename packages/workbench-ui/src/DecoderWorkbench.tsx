@@ -44,7 +44,7 @@ export type DecoderWorkbenchProps = {
   externalFile?: { id: number; file: File } | undefined
   externalInput?: { id: number; value: string } | undefined
   restoreInput?: { input: DecodeInput; source: string } | undefined
-  onInputState?: (input: DecodeInput, source: string) => void
+  onInputState?: (input: DecodeInput, source: string, kind?: 'text' | 'file') => void
   onSave?: (
     selected: Detection,
     ttl: 'session' | '24h' | '7d' | 'keep',
@@ -169,7 +169,7 @@ export function DecoderWorkbench({
   const handleSource = (value: string, reveal = value.length > source.length + 1) => {
     fileRequestId.current += 1
     revealRequested.current = reveal
-    onInputState?.(value, value)
+    onInputState?.(value, value, 'text')
     overrides.current = {}
     setSource(value)
     if (!value) {
@@ -220,7 +220,7 @@ export function DecoderWorkbench({
         readPhoto && file.type.startsWith('image/') ? await readPhoto(file).catch(() => null) : null
       const input = photo ? photo.text : new Uint8Array(await file.arrayBuffer())
       if (pending !== fileRequestId.current) return
-      onInputState?.(input, label)
+      onInputState?.(input, label, 'file')
       await run(input, photo ?? undefined)
       if (!photo && file.type.startsWith('image/') && !('BarcodeDetector' in globalThis))
         setMessage(answerMessages(messages.locale).barcodeUnavailable)

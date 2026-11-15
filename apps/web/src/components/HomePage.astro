@@ -21,7 +21,9 @@ const samples = triageSamples.map((sample) => ({ ...sample, label: copy[sample.l
       <h1>{copy.summary}</h1>
       <p>
         {copy.lead}
-        <a href="/proof/">{uiMessage(locale, 'check_local_processing')}</a>
+        <a href={locale === 'ko' ? '/ko/proof/' : '/proof/'}
+          >{uiMessage(locale, 'check_local_processing')}</a
+        >
       </p>
     </div>
   </section>

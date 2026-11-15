@@ -2,6 +2,13 @@ export type RuleSpec = { id: string; title: string; why: string; fix: string; re
 const jwt = 'https://www.rfc-editor.org/rfc/rfc8725'
 const rows: [string, string, string, string, string][] = [
   [
+    'CREDENTIAL-NO-PASTE',
+    'Keep access credentials private',
+    'Sharing a usable token or secret can grant account access. Decoding does not check its current validity.',
+    'Keep it out of chats and AI tools. If exposed, revoke or rotate it through the issuer.',
+    'https://www.rfc-editor.org/rfc/rfc6750#section-5.3',
+  ],
+  [
     'BROTLI-TRIAL-DECODE',
     'Brotli decoded without a magic signature',
     'A complete local decode supports the candidate, but does not establish source or safety.',

@@ -18,6 +18,8 @@ const CORE = [
   '/icon-512.png',
   '/apple-touch-icon.png',
   '/offline/',
+  '/proof/',
+  '/ko/proof/',
   ...['ko', 'ja', 'zh-cn', 'es', 'pt-br', 'de', 'fr'].map((locale) => `/${locale}/offline/`),
 ]
 
@@ -78,8 +80,10 @@ sw.addEventListener('install', (event) => {
     Promise.all([
       caches.open(CACHE).then(async (cache) => {
         await cache.addAll(CORE)
-        const inventory = await fetch('/offline-assets.json').then((response) => response.json())
+        const response = await fetch('/offline-assets.json')
+        const inventory = await response.clone().json()
         await cache.addAll(inventory.initial)
+        await cache.put('/offline-assets.json', response)
       }),
       sw.skipWaiting(),
     ]),

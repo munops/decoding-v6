@@ -480,6 +480,10 @@ export function answerSentence(root: ChainNode, locale: WorkbenchLocale, source:
   return `${sentence}${layers.some((layer) => layer.status === 'ambiguous') ? ` ${answerMessages(locale).uncertain}` : ''}`
 }
 const warningTitles: Record<string, [string, string]> = {
+  'CREDENTIAL-NO-PASTE': [
+    'Keep access credentials private',
+    '계정에 들어갈 수 있는 값은 비공개로 두세요',
+  ],
   'PHOTO-LOCATION': [
     'This photo contains its location. Sharing the file can reveal where it was taken.',
     '이 사진에는 찍은 곳이 들어 있어요. 그대로 올리면 위치가 알려져요.',

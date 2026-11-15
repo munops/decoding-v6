@@ -36,7 +36,7 @@ export function countOpen(name: CountName): void {
   if (
     !COUNT_NAMES.includes(name) ||
     countingDisabled() ||
-    location.pathname === '/proof/' ||
+    /^(?:\/ko)?\/proof\/?$/.test(location.pathname) ||
     SENT.has(name)
   )
     return
@@ -56,7 +56,7 @@ export function countOpen(name: CountName): void {
 
 /** Date only, no ID. Fixed 13-month expiry, never extended on return. */
 export function countReturn(now = new Date()): void {
-  if (countingDisabled() || location.pathname === '/proof/') return
+  if (countingDisabled() || /^(?:\/ko)?\/proof\/?$/.test(location.pathname)) return
   try {
     const stored = localStorage.getItem('decoding-first-visit')
     const first = stored ? new Date(stored) : null
