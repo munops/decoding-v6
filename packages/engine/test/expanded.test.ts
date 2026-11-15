@@ -272,3 +272,32 @@ it('keeps FILETIME epoch and sub-millisecond ticks exact without promoting arbit
   expect((await filetime.detect('133444736000000000', {} as never))?.confidence).toBeLessThan(0.85)
   expect(await filetime.detect('FILETIME: 18446744073709551615', {} as never)).toBeNull()
 })
+
+it('reads Snowflake fields with an explicit epoch while keeping bare identifiers uncertain', async () => {
+  const { extraTimeId } = await import('../src/formats/time-ids')
+  const known = extraTimeId('Discord: 175928847299117063')!
+  expect(known.value).toMatchObject({
+    timestamp: '2016-04-30T11:18:25.796Z',
+    worker: 1,
+    process: 0,
+    increment: 7,
+    explicitEpoch: true,
+  })
+  expect(extraTimeId('175928847299117063')!.confidence).toBe(0.6)
+  expect(extraTimeId('18446744073709551616')).toBeNull()
+  expect(JSON.stringify(known.value)).not.toContain('other Snowflake')
+})
+
+it('keeps the Snowflake subtype corpus independent of UUID public fixture counts', async () => {
+  const { snowflakeFixtures } = await import('../../fixtures-public/src/expanded-fixtures')
+  const { extraTimeId } = await import('../src/formats/time-ids')
+  expect(snowflakeFixtures.filter((f) => f.class === 'positive')).toHaveLength(20)
+  expect(snowflakeFixtures.filter((f) => f.class === 'edge')).toHaveLength(10)
+  expect(snowflakeFixtures.filter((f) => f.class === 'negative')).toHaveLength(20)
+  for (const fixture of snowflakeFixtures) {
+    const candidate = extraTimeId(String(fixture.input))
+    expect(candidate?.label.startsWith('Snowflake') ?? false, fixture.id).toBe(
+      fixture.class !== 'negative',
+    )
+  }
+})

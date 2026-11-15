@@ -43,11 +43,13 @@ const koreanDetectorCopy = {
   },
   'uuid-ulid': {
     label: 'UUID와 ULID 식별값',
-    description: 'UUID 종류와 버전, UUID v7 시간 또는 ULID 정렬 시간을 확인합니다.',
+    description:
+      'UUID·ULID·ObjectId·KSUID와 Snowflake의 시간 정보를 읽어요. Snowflake는 Discord의 시작 시각을 가정하며, 숫자만 있으면 확정하지 않아요. Discord: 접두사로 그 기준을 직접 고를 수 있어요. 출처·소유자는 조회하지 않아요.',
     examples: [
       '123e4567-e89b-42d3-a456-426614174000',
       '01890f2e-9b8a-7cc2-98fc-000000000001',
       '01ARZ3NDEKTSV4RRFFQ69G5FAV',
+      'Discord: 175928847299117063',
     ],
   },
   compression: {

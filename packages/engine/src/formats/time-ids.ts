@@ -12,16 +12,24 @@ export function extraTimeId(text: string): Detection | null {
       },
       0.7,
     )
-  if (/^\d{17,20}$/.test(text)) {
-    const timestamp = Number(BigInt(text) >> 22n) + 1420070400000
+  const explicit = /^Discord(?: Snowflake)?\s*:\s*(\d{1,20})$/i.exec(text)
+  if (explicit || /^\d{17,20}$/.test(text)) {
+    const id = BigInt(explicit?.[1] ?? text)
+    if (id > 0xffffffffffffffffn) return null
+    const timestamp = Number(id >> 22n) + 1420070400000
     return found(
       'uuid-ulid',
       'Snowflake (Discord epoch candidate)',
       {
         timestamp: new Date(timestamp).toISOString(),
-        epoch: 'Discord 2015-01-01; other Snowflake deployments use different epochs.',
+        epoch: diagnosticField({ code: 'diagnostic-snowflake-epoch' }),
+        epochStart: '2015-01-01T00:00:00.000Z',
+        worker: Number((id >> 17n) & 31n),
+        process: Number((id >> 12n) & 31n),
+        increment: Number(id & 4095n),
+        explicitEpoch: !!explicit,
       },
-      0.6,
+      explicit ? 0.999 : 0.6,
     )
   }
   if (/^[0-9A-Za-z]{27}$/.test(text)) {

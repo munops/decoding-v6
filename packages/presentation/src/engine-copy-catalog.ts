@@ -1,5 +1,7 @@
 import type { EngineMessageCode } from '@decoding/engine'
 export const englishEngineCopy = {
+  'diagnostic-snowflake-epoch':
+    'Discord 2015-01-01; other Snowflake deployments use different epochs.',
   'warning-der-schema':
     'This is a bounded DER structural interpretation, not full ASN.1 schema, certificate or signature validation. Primitive contents stay hidden because they may include private keys.',
   'warning-java-inspection':

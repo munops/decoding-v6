@@ -80,3 +80,9 @@ Independent DER review found the detector-only hiding check omitted ancestor byt
 ## Windows FILETIME
 
 Unsigned decimal/hex counters use exact BigInt tick arithmetic (100 ns from 1601 UTC), including pre-Unix-epoch millisecond flooring and separately retained sub-millisecond ticks. An explicit FILETIME: prefix supports 1601–9999; bare plausible modern counters remain low-confidence alternatives rather than confirmed times. Sentinel/overflow/invalid syntax is rejected; raw little-endian byte dumps are not inferred. 20 positive/10 edge/20 negative cases plus exact epoch/remainder regressions; full suite 268 pass. Relevant package type/lint/parity/i18n pass. 58 formats/49 tools.
+
+## Snowflake (existing identifier detector)
+
+The existing uuid-ulid Snowflake branch is extended rather than duplicated: uint64 bounds, exact worker/process/increment fields, an explicit Discord: epoch choice, a plain EN/KO sentence and labeled UTC/assumed-epoch facts. Bare 17–20-digit counters retain the prior 0.6 confidence and do not prove origin. The remaining English epoch explanation moved into the presentation message catalog; the legacy JSON adapter restores its prior English wording. UUID/ULID explanation pages now include this supported subtype and the official Discord reference.
+
+An independent subtype corpus contains 20 positive/10 edge/20 negative cases, separately named so the existing UUID public fixture contract remains unchanged. The full run had 268/269 pass with one corpus-count failure from initially mixing the subtype into that exact-count set. After separating it, all 79 affected public/expanded cases passed. Relevant type/lint/parity/i18n pass. Count stays 58 formats/49 tools.

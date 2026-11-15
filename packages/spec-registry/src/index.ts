@@ -92,13 +92,19 @@ export const detectorSpecs: DetectorSpec[] = [
     detector: 'uuid-ulid',
     slug: 'uuid-ulid',
     label: 'UUID / ULID',
-    description: 'Inspect UUID variant and version, UUID v7 time, and ULID sortable time.',
+    description:
+      'Inspect UUID variant/version, UUID v7 time, ULID time, ObjectId, KSUID and Discord-epoch Snowflake candidates. Bare Snowflake numbers stay uncertain; prefix Discord: to choose that epoch. Origin and ownership are not looked up.',
     examples: [
       '123e4567-e89b-42d3-a456-426614174000',
       '01890f2e-9b8a-7cc2-98fc-000000000001',
       '01ARZ3NDEKTSV4RRFFQ69G5FAV',
+      'Discord: 175928847299117063',
     ],
     references: [
+      {
+        title: 'Discord — Snowflakes',
+        url: 'https://docs.discord.com/developers/reference#snowflakes',
+      },
       { title: 'RFC 9562 — UUIDs', url: 'https://www.rfc-editor.org/rfc/rfc9562' },
       { title: 'ULID canonical specification', url: 'https://github.com/ulid/spec' },
     ],

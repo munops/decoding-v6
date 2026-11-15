@@ -7,6 +7,8 @@ const en = {
     'These are cookies: values a site asks your browser to remember so it can recognize you.',
   curlToCode: 'Convert this request to code',
   colorPreview: 'Color preview',
+  snowflakeSentence:
+    'This can be a Snowflake identifier. Its time uses the Discord epoch; the number alone does not prove where it came from.',
   contentsHidden: 'Possible key contents stay hidden.',
   barcodeUnavailable:
     'This browser cannot read linear barcodes. If no QR was found, the photo is inspected as a file.',
@@ -69,6 +71,8 @@ const ko: typeof en = {
   cookieSentence: '사이트가 나를 알아보려고 브라우저에 둔 값이에요.',
   curlToCode: '다른 언어 코드로 보기',
   colorPreview: '색 견본',
+  snowflakeSentence:
+    'Snowflake 식별값으로 읽을 수 있어요. Discord의 시작 시각으로 날짜를 계산하며 숫자만으로 출처를 확정하지 않아요.',
   contentsHidden: '키일 수 있는 내용은 가려요.',
   barcodeUnavailable:
     '이 브라우저에서는 막대 바코드를 못 읽어요. QR이 없다면 사진 파일 정보를 보여 줘요.',
@@ -376,6 +380,8 @@ export function answerSentence(root: ChainNode, locale: WorkbenchLocale, source:
       : answerMessages(locale).unknown.replace('{count}', String(summaryFormats.length))
   const ko = locale === 'ko'
   let sentence = sentences[first.detector]?.[ko ? 1 : 0] ?? first.label
+  if (first.detector === 'uuid-ulid' && first.label.startsWith('Snowflake'))
+    sentence = answerMessages(locale).snowflakeSentence
   if (first.detector === 'kv' && first.label === 'Cookie header')
     sentence = answerMessages(locale).cookieSentence
   if (first.detector === 'user-agent') {
@@ -645,6 +651,14 @@ export function answerFacts(
     rows: Array<[string, string]> = []
   if (detection.detector === 'kv' && Array.isArray(value.entries))
     return [[copy.fields, String(value.entries.length)]]
+  if (detection.detector === 'uuid-ulid' && value.epochStart)
+    return [
+      [
+        locale === 'ko' ? '만든 때 (Discord 기준)' : 'Time (Discord epoch)',
+        String(value.timestamp),
+      ],
+      [locale === 'ko' ? '가정한 시작 시각' : 'Assumed epoch', String(value.epochStart)],
+    ]
   if (detection.detector === 'filetime')
     return [
       [locale === 'ko' ? 'UTC 시각' : 'UTC time', String(value.timestamp)],
