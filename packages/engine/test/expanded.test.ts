@@ -25,3 +25,19 @@ describe('explicit byte notation', () => {
       expect((await detect(text)).some((item) => item.detector === 'binary-bytes')).toBe(false)
   })
 })
+
+it('decodes octal UTF-8 bytes and preserves bounds and ambiguous numbers', async () => {
+  expect(
+    (await detect('355 225 234 352 270 200')).find((item) => item.detector === 'octal-bytes')
+      ?.decoded,
+  ).toBe('한글')
+  expect(
+    (await detect('101102')).find((item) => item.detector === 'octal-bytes')?.confidence,
+  ).toBeLessThan(0.85)
+  expect((await detect('0O101')).find((item) => item.detector === 'octal-bytes')?.decoded).toBe('A')
+  expect(
+    (await detect('0B01000001')).find((item) => item.detector === 'binary-bytes')?.decoded,
+  ).toBe('A')
+  for (const input of ['0o400', '777 101', '101 0o777'])
+    expect((await detect(input)).some((item) => item.detector === 'octal-bytes')).toBe(false)
+})

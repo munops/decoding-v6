@@ -9,12 +9,12 @@ export function byteNotation(id: string, radix: 2 | 8): Detector {
     detect(input) {
       if (typeof input !== 'string') return null
       const text = input.trim()
-      if (!text || !/^[01]/.test(text)) return null
+      if (!text || !(radix === 2 ? /^[01]/ : /^[0-3]/).test(text)) return null
       const explicit = text.toLowerCase().includes(prefix)
       const separated = /\s/.test(text)
       const groups = separated
         ? text.split(/\s+/)
-        : text.startsWith(prefix)
+        : explicit
           ? [text]
           : (text.match(new RegExp(`.{1,${width}}`, 'g')) ?? [])
       if (!groups.length || (!separated && !explicit && text.length < width * 2)) return null
@@ -35,3 +35,5 @@ export function byteNotation(id: string, radix: 2 | 8): Detector {
   }
 }
 export const binaryBytes = byteNotation('binary-bytes', 2)
+
+export const octalBytes = byteNotation('octal-bytes', 8)
