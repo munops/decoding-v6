@@ -39,7 +39,8 @@ async function assertFirstVisit(page: Page, viewport: { width: number; height: n
   await expect(page.getByRole('heading', { name: /Paste an unfamiliar value here/i })).toBeVisible()
   await expect(page.getByText('Only on this device', { exact: true })).toBeVisible()
   await expect(page.getByText('0 input bytes uploaded')).toHaveCount(0)
-  await expect(page.locator('.copy-feedback-settings')).toBeHidden()
+  // This preference existed before the handoff; its details stay collapsed on entry.
+  await expect(page.locator('.copy-feedback-settings')).toHaveJSProperty('open', false)
   await expect(page.locator('[data-sample-id]')).toHaveCount(7)
 
   const input = page.getByLabel('Paste text or drop a file')
