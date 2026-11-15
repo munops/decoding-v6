@@ -14,4 +14,4 @@ Human output starts with the same plain answer as decod.ing, followed by concern
 
 Use stdin or `--file` for private values: positional arguments can remain in shell history and process listings. Decoding a token does not verify its signature or make it safe to share. Hashes and already lost characters cannot be reversed.
 
-Run `decoding --list-tools` for the current operation list, or `decoding --help` for options. MIT license. Source and issue reporting: https://github.com/whoo3474/decoding . Web: https://decod.ing .
+Run `decoding --list-tools` for the current operation list, or `decoding --help` for options. MIT license. Source and issue reporting: https://github.com/munops/decoding-v6 . Web: https://decod.ing .
