@@ -185,3 +185,22 @@ it('uses SQL detection rather than a SELECT-only text guess for nearby tools', a
     'sql-format',
   ])
 })
+
+it('offers all Caesar choices only for unclear short Latin text without cipher selection', async () => {
+  const { canCompareCaesar } = await import('../src/ClassicalCandidates')
+  const { caesarCandidates } = await import('@decoding/operations')
+  expect(canCompareCaesar((await decode('Uryyb', { previewAmbiguous: true })).root, 'Uryyb')).toBe(
+    true,
+  )
+  expect(caesarCandidates('Uryyb')).toHaveLength(25)
+  expect(caesarCandidates('Uryyb')).toContainEqual({ shift: 13, text: 'Hello' })
+  expect(
+    canCompareCaesar(
+      (await decode('SELECT id FROM logs', { previewAmbiguous: true })).root,
+      'SELECT id FROM logs',
+    ),
+  ).toBe(false)
+  expect(canCompareCaesar((await decode('A normal sentence.')).root, 'A normal sentence.')).toBe(
+    false,
+  )
+})

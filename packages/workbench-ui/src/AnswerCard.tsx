@@ -1,5 +1,6 @@
 import { formatEngineMessage } from '@decoding/presentation'
 import { NextStep } from './NextStep'
+import { ClassicalCandidates } from './ClassicalCandidates'
 import type { DecodeResult } from '@decoding/engine'
 import type { DecoderMessages } from './messages'
 import {
@@ -146,6 +147,9 @@ export function AnswerCard({
             ))}
           </dl>
         </section>
+      ) : null}
+      {!protectedContent ? (
+        <ClassicalCandidates root={result.root} source={source} messages={messages} />
       ) : null}
       {layers.length ? (
         <section class="answer-layers">

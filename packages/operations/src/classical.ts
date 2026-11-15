@@ -1,12 +1,7 @@
+import { rotate, caesarCandidates } from './classical-candidates'
 import { repairGarbled } from '@decoding/engine'
 import { optionString, text, textResult, structuredResult } from './shared'
 import type { OperationRunner } from './types'
-function rotate(source: string, shift: number) {
-  return source.replace(/[A-Za-z]/g, (letter) => {
-    const base = letter <= 'Z' ? 65 : 97
-    return String.fromCharCode(base + ((letter.charCodeAt(0) - base + shift + 26) % 26))
-  })
-}
 export const runClassical: OperationRunner = async (id, input, options) => {
   const source = text(input)
   if (id === 'mojibake-repair') {
@@ -23,10 +18,7 @@ export const runClassical: OperationRunner = async (id, input, options) => {
     }
   }
   const mode = optionString(options, 'mode', 'caesar')
-  if (mode === 'caesar')
-    return structuredResult(
-      Array.from({ length: 25 }, (_, i) => ({ shift: i + 1, text: rotate(source, -(i + 1)) })),
-    )
+  if (mode === 'caesar') return structuredResult(caesarCandidates(source))
   if (mode === 'atbash')
     return textResult(
       source.replace(/[A-Za-z]/g, (letter) =>

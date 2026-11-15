@@ -112,3 +112,9 @@ The common canonical subtractive 1–3999 subset accepts ASCII and NFKC-compatib
 International Morse letters/digits/common punctuation decode locally, including copied middle-dot/minus forms, written letter/word separators and the joined SOS signal. A standalone dot/dash needs an explicit Morse: prefix. Unknown groups/procedural signals are rejected; written-text notation is not audio/timing recognition. Limits: 64 KiB/8192 symbols. The result recurses through the normal chain without introducing a cipher guess.
 
 20 positive/10 edge/20 negative cases, official character mappings and word/Unicode regressions; full suite 281 pass. Relevant type/lint/parity/i18n pass. 63 formats/49 tools. E3 inline Caesar choices and E4 still remain.
+
+## Explicit Caesar alternatives
+
+The existing Caesar rotation routine now has one pure shared owner used by the tool and the answer-card alternatives. Unclear short Latin-only text (3–256 characters) shows all 25 shifts at once with per-row copy; recognized formats and protected key/DER contents do not trigger this panel. No shift or ROT13 is inferred as the answer. Longer inputs still have the existing explicit tool. Atbash/A1Z26 and user-keyed Vigenere remain in that tool; no key search was added.
+
+Full suite 282 pass, including the shared 25-result/tool parity and uncertainty eligibility. Relevant type/lint/i18n pass. Actual clipboard/layout regressions at 390/1440px are added to the final immutable-build batch and remain unrun. E3 local implementation is complete; E4 and final runtime/release remain open.

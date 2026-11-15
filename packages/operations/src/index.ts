@@ -32,3 +32,5 @@ export type {
   OperationResult,
   SecurityProfile,
 } from './types'
+
+export { caesarCandidates } from './classical-candidates'

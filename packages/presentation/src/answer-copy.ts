@@ -7,6 +7,9 @@ const en = {
     'These are cookies: values a site asks your browser to remember so it can recognize you.',
   curlToCode: 'Convert this request to code',
   colorPreview: 'Color preview',
+  cipherChoicesTitle: 'Could this be a letter-shift puzzle?',
+  cipherChoicesHelp:
+    'Here are all 25 Caesar shifts. We have not identified a cipher or selected an answer. Read them and copy one if it makes sense.',
   snowflakeSentence:
     'This can be a Snowflake identifier. Its time uses the Discord epoch; the number alone does not prove where it came from.',
   contentsHidden: 'Possible key contents stay hidden.',
@@ -71,6 +74,9 @@ const ko: typeof en = {
   cookieSentence: '사이트가 나를 알아보려고 브라우저에 둔 값이에요.',
   curlToCode: '다른 언어 코드로 보기',
   colorPreview: '색 견본',
+  cipherChoicesTitle: '글자를 밀어 쓴 퍼즐일까요?',
+  cipherChoicesHelp:
+    '시저 방식으로 25가지 밀어 쓴 결과예요. 어떤 암호인지 확정하거나 답을 고르지 않았어요. 읽어 보고 뜻이 통하는 것을 복사해 주세요.',
   snowflakeSentence:
     'Snowflake 식별값으로 읽을 수 있어요. Discord의 시작 시각으로 날짜를 계산하며 숫자만으로 출처를 확정하지 않아요.',
   contentsHidden: '키일 수 있는 내용은 가려요.',

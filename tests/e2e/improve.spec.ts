@@ -183,3 +183,21 @@ for (const width of [390, 1440]) {
     await expect(page.locator('.answer-card')).not.toContainText(buffer.toString('base64'))
   })
 }
+
+for (const width of [390, 1440]) {
+  test(`unclear Latin text shows every Caesar alternative without choosing at ${width}px`, async ({
+    page,
+    context,
+  }) => {
+    await page.setViewportSize({ width, height: width === 390 ? 780 : 900 })
+    await context.grantPermissions(['clipboard-read', 'clipboard-write'])
+    await page.goto('/')
+    await expect(page.locator('.decoder-shell')).toHaveAttribute('data-hydrated', 'true')
+    await page.getByLabel('Paste text or drop a file').fill('Uryyb')
+    await expect(page.locator('.caesar-options li')).toHaveCount(25)
+    await expect(page.locator('.caesar-options li').nth(12)).toContainText('Hello')
+    await page.locator('.caesar-options li').nth(12).getByRole('button').click()
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe('Hello')
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+  })
+}

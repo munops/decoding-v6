@@ -2877,3 +2877,20 @@ html[data-text-size='large'] :where(p, label, button, summary, a, dt, dd, input,
   border: 1px solid var(--line);
   border-radius: 12px;
 }
+
+.caesar-options {
+  display: grid;
+  gap: 8px;
+  padding: 0;
+  list-style: none;
+}
+.caesar-options li {
+  display: grid;
+  grid-template-columns: 2ch minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+}
+.caesar-options code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
