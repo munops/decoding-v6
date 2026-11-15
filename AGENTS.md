@@ -30,8 +30,8 @@ decod.ing v6는 정체불명의 문자열·파일을 자동 판별하고 재귀 
 3. **deterministic only**: 생성형 AI와 서버 디코딩이 없다. 설명과 경고는 결정적 rule, 계산 근거, 공식 spec으로 만든다.
 4. **greenfield**: v3~v5 소스를 복사·이동·import하지 않는다. 필요한 동작은 공식 스펙과 새 fixture를 기준으로 다시 작성한다.
 5. **detector quality**: public positive/edge/negative와 blind fixture, cross-negative, precision/recall gate 없이 detector를 merge하지 않는다.
-6. **ambiguity honesty**: 낮은 신뢰도나 유사 후보를 임의의 정답으로 자동 확정하지 않는다.
-7. **English first, i18n-ready**: 제품 문자열은 message catalog에 두고, 로케일은 실제 수요와 native review gate 후 추가한다. 내부 문서는 한국어다.
+6. **ambiguity honesty**: 기본 엔진의 확정 기준은 유지한다. 화면은 잠정 풀이와 불확실성·다른 가능성을 함께 보이며 정답으로 확정하지 않는다.
+7. **Korean and English, catalog-owned**: 한국어와 쉬운 영어를 같은 뜻으로 작성하고 나머지 여섯 언어는 영어를 따른다. 제품 문자열은 message catalog에 두고, 로케일은 실제 수요와 native review gate 후 추가한다. 내부 문서는 한국어다.
 8. **performance budget**: 초기 JS, Web Worker latency, memory, Core Web Vitals 예산 회귀를 local verification gate가 차단한다.
 9. **ads last**: Phase 4 gate 전 광고 DOM·script·request가 없어야 한다. 이후에도 웹 below-the-fold 한 자리만 허용하며 PWA standalone·workspace·CLI·desktop·extension에는 광고가 없다.
 10. **desktop least privilege**: `apps/desktop`은 구현되어 있다. 내놓는 것은 오너 승인 뒤다. clipboard는 explicit shortcut/action에서만 읽고 broad filesystem·shell·HTTP capability를 금지한다.

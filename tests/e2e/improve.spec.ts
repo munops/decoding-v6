@@ -4,15 +4,15 @@ for (const width of [390, 1440]) {
   test(`final Unicode and URL results are visible and copied at ${width}px`, async ({
     page,
     context,
-  }) => {
+  }, testInfo) => {
     await page.setViewportSize({ width, height: width === 390 ? 780 : 900 })
     await context.grantPermissions(['clipboard-read', 'clipboard-write'])
     await page.goto('/')
     const input = page.getByLabel('Paste text or drop a file')
     await input.fill('7JWI64WV7ZWY7IS47JqUIOyEuOqzhA==')
-    const output = page.locator('.inspector-panel .output-view')
+    const output = page.locator('.answer-final .output-view')
     await expect(output).toHaveText('안녕하세요 세계')
-    const result = page.locator('.result-grid')
+    const result = page.locator('.answer-card')
     await expect.poll(async () => (await result.boundingBox())?.y ?? -1).toBeGreaterThanOrEqual(0)
     await expect
       .poll(async () => (await result.boundingBox())?.y ?? 10000)
@@ -20,18 +20,18 @@ for (const width of [390, 1440]) {
     const href = 'https://example.com/a b?q=한글&x=1'
     await input.fill(encodeURIComponent(encodeURIComponent(href)))
     await expect(output).toHaveText(href)
-    await page.getByRole('button', { name: 'Copy', exact: true }).click()
+    await page.getByRole('button', { name: 'Copy decoded value', exact: true }).click()
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(href)
     await expect(page.locator('[data-sponsor-empty]')).toHaveCount(0)
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+    await page.screenshot({ path: testInfo.outputPath(`answer-${width}.png`) })
   })
 }
 
 test('mobile navigation keeps local records and privacy reachable', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 780 })
   await page.goto('/ko/')
-  await page.locator('.mobile-nav summary').click()
-  await page.locator('.mobile-nav a[href="/ko/workspace/"]').click()
+  await page.locator('.bottom-tabs a[href="/ko/workspace/"]').click()
   await expect(page.getByRole('heading', { name: '넣어 둔 것', exact: true })).toBeVisible()
   await page.goto('/ko/data/')
   await expect(page.getByRole('heading', { name: '이 기기에 남은 것', exact: true })).toBeVisible()
@@ -64,9 +64,35 @@ test('offline install includes the decoder and shows an honest missing-page reco
   await context.setOffline(true)
   await page.reload()
   await page.getByLabel('Paste text or drop a file').fill('7JWI64WV7ZWY7IS47JqUIOyEuOqzhA==')
-  await expect(page.locator('.inspector-panel .output-view')).toHaveText('안녕하세요 세계')
+  await expect(page.locator('.answer-final .output-view')).toHaveText('안녕하세요 세계')
   await page.goto('/not-downloaded-yet/')
   await expect(
     page.getByRole('heading', { name: 'This tool has not been downloaded yet.' }),
   ).toBeVisible()
+})
+
+test('an uncertain hash gets a provisional answer and a reachable advanced view', async ({
+  page,
+}) => {
+  await page.goto('/')
+  await page.getByLabel('Paste text or drop a file').fill('a'.repeat(32))
+  await expect(page.locator('.answer-verdict')).toContainText('hash')
+  await expect(page.locator('.answer-verdict')).toContainText('not certain')
+  await expect(page.locator('.advanced-result')).not.toHaveAttribute('open', '')
+  await page.locator('.advanced-result > summary').click()
+  await expect(page.getByRole('tree', { name: 'Decode chain' })).toBeVisible()
+})
+
+test('More exposes explicit appearance choices and seven examples are real controls', async ({
+  page,
+}) => {
+  await page.goto('/')
+  await expect(page.locator('[data-sample-id]')).toHaveCount(7)
+  await page.goto('/more/')
+  await page.locator('[data-more-theme]').click()
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
+  await page.locator('[data-large-text]').click()
+  await expect(page.locator('html')).toHaveAttribute('data-text-size', 'large')
+  await page.goto('/')
+  await expect(page.locator('html')).toHaveAttribute('data-text-size', 'large')
 })

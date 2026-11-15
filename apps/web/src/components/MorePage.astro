@@ -1,0 +1,58 @@
+---
+import Layout from '../layouts/Layout.astro'
+import InstallHint from './InstallHint'
+import { answerMessages } from '@decoding/workbench-ui'
+import { localePath, localeNames, supportedLocales, type Locale } from '../i18n/catalog'
+interface Props {
+  locale: Locale
+}
+const { locale } = Astro.props
+const copy = answerMessages(locale)
+---
+
+<Layout locale={locale} title={`${copy.more} — decod.ing`} alternatePath="/more/" noindex>
+  <section class="page-hero container narrow"><h1>{copy.moreHeading}</h1></section>
+  <div class="container narrow more-settings">
+    <a class="settings-row" href="/proof/">{copy.local}</a>
+    <section><h2>{copy.offline}</h2><InstallHint locale={locale} alwaysShow client:load /></section>
+    <a class="settings-row" href="/bookmarklet/">{copy.share}</a>
+    <section>
+      <h2>{copy.display}</h2><div class="inline-actions">
+        <button class="button secondary" type="button" data-large-text>{copy.largeText}</button
+        ><button class="button secondary" type="button" data-normal-text>{copy.normalText}</button
+        ><button class="button secondary" type="button" data-more-theme
+          >{copy.dark} / {copy.light}</button>
+      </div>
+    </section>
+    <section>
+      <h2>{copy.language}</h2><div class="language-list">
+        {
+          supportedLocales.map((target) => (
+            <a href={localePath(target)} lang={target}>
+              {localeNames[target]}
+            </a>
+          ))
+        }
+      </div>
+    </section>
+    <a class="settings-row" href={localePath(locale, '/support/')}>{copy.support}</a>
+    <a class="settings-row" href={localePath(locale, '/privacy/')}>{copy.privacy}</a>
+    <a class="settings-row" href={localePath(locale, '/terms/')}>{copy.privacy}</a>
+    <a class="settings-row" href={localePath(locale, '/methodology/')}>{copy.method}</a>
+  </div>
+</Layout>
+<script>
+  const size = (value: string) => {
+    document.documentElement.dataset.textSize = value
+    try {
+      localStorage.setItem('decoding-text-size', value)
+    } catch {}
+  }
+  document.querySelector('[data-large-text]')?.addEventListener('click', () => size('large'))
+  document.querySelector('[data-normal-text]')?.addEventListener('click', () => size('normal'))
+  document
+    .querySelector('[data-more-theme]')
+    ?.addEventListener('click', () =>
+      document.querySelector<HTMLButtonElement>('#theme-toggle')?.click(),
+    )
+</script>

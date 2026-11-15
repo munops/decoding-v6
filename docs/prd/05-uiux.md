@@ -254,3 +254,10 @@
 | DC-DESIGN-02 | 홈 hierarchy와 시그니처 universal decoder 작업면 | desktop 첫 viewport에서 입력 시작 영역 노출, synthetic 3 case·local proof·결과 chain 보존, mobile horizontal overflow 0 | item_ready |
 | DC-DESIGN-03 | catalog, tool, detector, workspace, info/download surface의 일관된 component anatomy | 공통 header/button/panel/type/focus token 소비, 47 tool route/parity 유지, 기능 제거 0 | item_ready |
 | DC-DESIGN-04 | visual/accessibility/performance/privacy 검증과 presentation derivative 갱신 | desktop/mobile/dark screenshot inspection, axe/keyboard/200% zoom, `pnpm verify`, payload/network/storage gate 통과 | item_ready_with_constraints — 실제 사용자·AT·social crawler 평가는 data_pending |
+
+
+## 2026-11-15 채택 계약 (이전 화면 계약보다 우선)
+
+대상은 값을 풀어 봐야 하는 누구나다. A안의 한 문장→조심할 점→최종 값·복사→사실→접힌 층→건네기 순서를 쓴다. 밝게 시작하고 sans 제목·네 경로 탐색·일곱 사례를 쓴다. 바이트 지도·서명 확인·수동 선택·배치·비교는 자세히에서 보존한다. 한국어 문장이 기준이며 영어와 나머지 여섯 언어의 영어 fallback을 같은 뜻으로 제공한다.
+
+엔진의 기본 확정 기준은 바꾸지 않는다. 화면 전용 previewAmbiguous는 잠정 후보와 재귀 결과를 반환하면서 status=ambiguous를 유지한다. 잠정 결과에 확실하지 않다는 문장과 후보 변경을 함께 둔다. 위험·보안 검증 성공을 의미하는 “안전해요”는 쓰지 않는다.

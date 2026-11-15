@@ -1,12 +1,14 @@
+import { openAdvanced } from './ui-helpers'
 import { expect, test } from '@playwright/test'
 
 test('auto-detects a nested Base64 JSON payload locally', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: /What is this string/i })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /Paste an unfamiliar value here/i })).toBeVisible()
   const input = page.getByLabel('Paste text or drop a file')
   await input.fill('eyJsb2NhbCI6dHJ1ZSwidG9vbHMiOjQ3fQ==')
   await expect(page.getByText('Base64', { exact: false }).first()).toBeVisible()
   await expect(page.getByText('JSON', { exact: false }).first()).toBeVisible()
+  await openAdvanced(page)
   const chain = page.getByRole('tree', { name: 'Decode chain' })
   const stages = chain.getByRole('treeitem')
   await expect(stages).toHaveCount(2)
@@ -18,37 +20,17 @@ test('auto-detects a nested Base64 JSON payload locally', async ({ page }) => {
   await expect(stages.nth(1)).toBeFocused()
   await page.keyboard.press('ArrowLeft')
   await expect(stages.first()).toBeFocused()
-  await expect(
-    page.getByText('Input stays on this device. No account, upload, or AI.'),
-  ).toBeVisible()
+  await expect(page.getByText('Only on this device', { exact: true })).toBeVisible()
 })
 
-test('lets a visitor experience three evidence-first synthetic triage cases', async ({ page }) => {
+test('offers seven examples and reaches a real layered answer', async ({ page }) => {
   await page.goto('/')
-  const launchpad = page.getByRole('group', { name: 'See the evidence with a known input' })
-  await expect(launchpad.getByRole('button')).toHaveCount(3)
-  await expect(page.locator('.hero-proof')).toHaveCount(0)
-  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
-    'content',
-    /rank plausible formats/i,
-  )
-
-  await launchpad.getByRole('button', { name: 'Nested Base64 → JSON' }).click()
-  await expect(page.getByLabel('Paste text or drop a file')).toHaveValue(
-    'eyJsb2NhbCI6dHJ1ZSwidG9vbHMiOjQ3fQ==',
-  )
-  await expect(page.getByRole('tree', { name: 'Decode chain' }).getByRole('treeitem')).toHaveCount(
-    2,
-  )
-
-  await launchpad.getByRole('button', { name: 'Ambiguous Hex or Base64' }).click()
-  await expect(page.getByRole('status')).toContainText('More than one format is plausible')
-  await expect(
-    page.getByRole('listbox', { name: 'Possible formats' }).getByRole('option'),
-  ).toHaveCount(2)
-
-  await launchpad.getByRole('button', { name: 'Expired JWT warning' }).click()
-  await expect(page.locator('.result-chain .notice.danger')).toContainText('JWT-EXPIRED')
+  await expect(page.locator('[data-sample-id]')).toHaveCount(7)
+  await page.locator('[data-sample-id="nested"]').click()
+  await expect(page.locator('.answer-verdict')).toContainText('3 layers')
+  await expect(page.locator('.answer-final .output-view')).toContainText('A-20391')
+  await page.locator('[data-sample-id="expired-jwt"]').click()
+  await expect(page.locator('.answer-concerns')).toContainText('expired')
 })
 
 test('ships the Reveal Ledger mark and persists an explicit theme choice locally', async ({
@@ -74,11 +56,12 @@ test('keeps ambiguous formats explicit instead of auto-selecting a chain stage',
 }) => {
   await page.goto('/')
   await page.getByLabel('Paste text or drop a file').fill('deadbeef')
-  await expect(page.getByRole('status')).toContainText('More than one format is plausible')
+  await expect(page.locator('.answer-verdict')).toContainText('not certain')
+  await openAdvanced(page)
   const chain = page.getByRole('tree', { name: 'Decode chain' })
-  await expect(chain.getByRole('treeitem')).toHaveCount(1)
   await expect(chain.getByLabel(/^Step 1:/)).toBeVisible()
   await expect(chain.getByText(/Input: 8 bytes/)).toBeVisible()
+  await page.getByRole('button', { name: 'Possible formats', exact: true }).click()
   const options = page.getByRole('listbox', { name: 'Possible formats' }).getByRole('option')
   await expect(options).toHaveCount(2)
   await expect(options.first()).toContainText(/Hexadecimal bytes|Base64/)
@@ -196,7 +179,9 @@ test('keeps the Korean journey in user-facing language from discovery through re
     'https://decod.ing/ko/',
   )
   await expect(page.getByText('한국어 번역 검토 중')).toHaveCount(0)
-  await expect(page.getByRole('heading', { name: '이 문자열, 뭔지 알려 드려요.' })).toBeVisible()
+  await expect(
+    page.getByRole('heading', { name: '이게 뭔지 모르겠다면 여기에 붙여넣으세요' }),
+  ).toBeVisible()
   await expect(page.locator('.hero h1 br')).toHaveCount(0)
   await expect(page.getByRole('group', { name: '알려진 입력으로 판정 근거 보기' })).toContainText(
     '16진수와 Base64 후보 비교',

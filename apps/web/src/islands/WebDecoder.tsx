@@ -3,9 +3,9 @@ import { ErrorBoundary } from '@decoding/workbench-ui'
 import type { DecodeInput } from '@decoding/engine'
 import ProofMonitor from '../components/ProofMonitor'
 import InstallHint from '../components/InstallHint'
-import { saveWorkspaceRecord } from '../lib/workspace'
+import { listWorkspaceRecords, saveWorkspaceRecord, type WorkspaceRecord } from '../lib/workspace'
 import { sendToTool } from '../lib/handoff'
-import { DecoderWorkbench } from '@decoding/workbench-ui'
+import { DecoderWorkbench, answerMessages } from '@decoding/workbench-ui'
 import type { DecoderMessages } from '@decoding/workbench-ui'
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
 import { countOpen } from '../lib/telemetry'
@@ -32,6 +32,14 @@ export default function WebDecoder({
 }: Props) {
   const restoreInput = useRef<{ input: DecodeInput; source: string }>()
   const [boundaryAttempt, setBoundaryAttempt] = useState(0)
+  const [externalFile, setExternalFile] = useState<{ id: number; file: File }>()
+  const [recentSaved, setRecentSaved] = useState<WorkspaceRecord[]>([])
+  useEffect(() => {
+    void listWorkspaceRecords().then(
+      (records) => setRecentSaved(records.slice(0, 2)),
+      () => {},
+    )
+  }, [])
   const [shareMessage, setShareMessage] = useState('')
   const [externalInput, setExternalInput] = useState<{ id: number; value: string }>()
   const client = useMemo(
@@ -104,18 +112,66 @@ export default function WebDecoder({
               class="triage-sample"
               type="button"
               data-sample-id={sample.id}
-              onClick={() =>
-                setExternalInput((previous) => ({
-                  id: (previous?.id ?? 0) + 1,
-                  value: sample.value,
-                }))
-              }
+              onClick={() => {
+                if (sample.id === 'qr') {
+                  void import('@decoding/operations')
+                    .then(async ({ executeOperation }) => {
+                      const result = await executeOperation('qr-code', sample.value)
+                      const image = new Image()
+                      const url = URL.createObjectURL(
+                        new Blob(
+                          [decodeURIComponent(String(result.output).split(',').slice(1).join(','))],
+                          { type: 'image/svg+xml' },
+                        ),
+                      )
+                      try {
+                        await new Promise<void>((resolve, reject) => {
+                          image.onload = () => resolve()
+                          image.onerror = () => reject(new Error())
+                          image.src = url
+                        })
+                        const canvas = document.createElement('canvas')
+                        canvas.width = image.naturalWidth
+                        canvas.height = image.naturalHeight
+                        canvas.getContext('2d')?.drawImage(image, 0, 0)
+                        const blob = await new Promise<Blob | null>((resolve) =>
+                          canvas.toBlob(resolve, 'image/png'),
+                        )
+                        if (blob)
+                          setExternalFile({
+                            id: Date.now(),
+                            file: new File([blob], 'example-qr.png', { type: 'image/png' }),
+                          })
+                      } finally {
+                        URL.revokeObjectURL(url)
+                      }
+                    })
+                    .catch(() => setShareMessage(messages.decodeFailed))
+                } else
+                  setExternalInput((previous) => ({
+                    id: (previous?.id ?? 0) + 1,
+                    value: sample.value,
+                  }))
+              }}
             >
-              <span aria-hidden="true">0{index + 1}</span>
+              <span aria-hidden="true">{['文', '↗', '◇', '≡', '@', '#', '▦'][index]}</span>
               <strong>{sample.label}</strong>
             </button>
           ))}
         </div>
+        {recentSaved.length ? (
+          <div class="returning-saved">
+            <h3>{answerMessages(messages.locale).saved}</h3>
+            {recentSaved.map((record) => (
+              <a
+                href={`${messages.locale === 'en' ? '' : `/${messages.locale}`}/workspace/`}
+                key={record.id}
+              >
+                {record.name} · {record.format}
+              </a>
+            ))}
+          </div>
+        ) : null}
       </div>
     ) : null
   return (
@@ -157,6 +213,7 @@ export default function WebDecoder({
               })
             }}
             externalInput={externalInput}
+            externalFile={externalFile}
             messages={messages}
           />
         )}

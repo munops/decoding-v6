@@ -1,3 +1,5 @@
+import { AnswerCard } from './AnswerCard'
+import { answerMessages } from './answer-copy'
 import { uiMessage } from './ui-copy'
 import { redactedDetection } from '@decoding/engine'
 import type { ComponentChildren } from 'preact'
@@ -32,6 +34,7 @@ import { safeShareCardPng, safeShareMarkdown, safeShareProjection } from './safe
 export type DecoderWorkbenchProps = {
   inputAddon?: ComponentChildren
   decodeInput: (input: DecodeInput, overrides?: Record<string, string>) => Promise<DecodeResult>
+  externalFile?: { id: number; file: File } | undefined
   externalInput?: { id: number; value: string } | undefined
   restoreInput?: { input: DecodeInput; source: string } | undefined
   onInputState?: (input: DecodeInput, source: string) => void
@@ -45,6 +48,7 @@ export function DecoderWorkbench({
   inputAddon,
   decodeInput,
   externalInput,
+  externalFile,
   messages,
   onEvent,
   onTool,
@@ -74,6 +78,8 @@ export function DecoderWorkbench({
   )
   const overrides = useRef<Record<string, string>>({})
   const requestId = useRef(0)
+  const advancedRef = useRef<HTMLDetailsElement>(null)
+  const revealRequested = useRef(false)
   const resultRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const lastInput = useRef<DecodeInput | null>(null)
@@ -91,7 +97,7 @@ export function DecoderWorkbench({
         setResult(next)
         const final = finalSelection(next.root)
         setSelected(final ?? null)
-        setShowCandidates(next.root.status === 'ambiguous')
+        setShowCandidates(false)
         setActiveChainNode(selectionNode(next.root, final)?.id ?? next.root.id)
         setStatus('done')
         if (typeof input === 'string')
@@ -135,16 +141,16 @@ export function DecoderWorkbench({
   )
 
   useEffect(() => {
-    if (status !== 'done' || !resultRef.current) return
-    const top = resultRef.current.getBoundingClientRect().top
-    if (top < 0 || top > window.innerHeight - 120)
-      resultRef.current.scrollIntoView({
-        block: 'start',
-        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
-      })
+    if (status !== 'done' || !resultRef.current || !revealRequested.current) return
+    revealRequested.current = false
+    resultRef.current.scrollIntoView({
+      block: 'start',
+      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+    })
   }, [result, status])
 
-  const handleSource = (value: string) => {
+  const handleSource = (value: string, reveal = value.length > source.length + 1) => {
+    revealRequested.current = reveal
     onInputState?.(value, value)
     overrides.current = {}
     setSource(value)
@@ -166,7 +172,7 @@ export function DecoderWorkbench({
   const paste = async () => {
     try {
       const text = await navigator.clipboard.readText()
-      handleSource(text)
+      handleSource(text, true)
       setMessage(
         uiMessage(
           messages.locale,
@@ -180,6 +186,7 @@ export function DecoderWorkbench({
   }
   const handleFile = async (file?: File) => {
     if (!file) return
+    revealRequested.current = true
     if (file.size > 10 * 1024 * 1024) {
       setStatus('error')
       setMessage(messages.fileLimit)
@@ -215,10 +222,10 @@ export function DecoderWorkbench({
     else overrides.current[nodeId] = format
     if (lastInput.current) void run(lastInput.current)
   }
-  const copySelected = async () => {
-    if (!selected) return
+  const copySelected = async (selection = selected) => {
+    if (!selection) return
     try {
-      await navigator.clipboard.writeText(outputText(displayValue(selected)))
+      await navigator.clipboard.writeText(outputText(displayValue(selection)))
       setMessage(messages.copied)
       void playCopyFeedback(copyFeedback)
     } catch {
@@ -338,8 +345,52 @@ export function DecoderWorkbench({
   }, [])
 
   useEffect(() => {
-    if (externalInput?.value) handleSource(externalInput.value)
+    if (externalFile?.file) void handleFile(externalFile.file)
+  }, [externalFile?.id])
+
+  useEffect(() => {
+    if (externalInput?.value) handleSource(externalInput.value, true)
   }, [externalInput?.id])
+
+  useEffect(() => {
+    const pasteAnywhere = (event: ClipboardEvent) => {
+      if (
+        event.target instanceof HTMLElement &&
+        event.target.closest('input,textarea,[contenteditable="true"]')
+      )
+        return
+      const file = event.clipboardData?.files[0]
+      if (file) {
+        event.preventDefault()
+        void handleFile(file)
+        return
+      }
+      const text = event.clipboardData?.getData('text/plain')
+      if (text) {
+        event.preventDefault()
+        handleSource(text)
+      }
+    }
+    const dragAnywhere = (event: DragEvent) => {
+      if (event.dataTransfer?.types.includes('Files')) event.preventDefault()
+    }
+    const dropAnywhere = (event: DragEvent) => {
+      if (event.defaultPrevented) return
+      const file = event.dataTransfer?.files[0]
+      if (file) {
+        event.preventDefault()
+        void handleFile(file)
+      }
+    }
+    addEventListener('paste', pasteAnywhere)
+    addEventListener('dragover', dragAnywhere)
+    addEventListener('drop', dropAnywhere)
+    return () => {
+      removeEventListener('paste', pasteAnywhere)
+      removeEventListener('dragover', dragAnywhere)
+      removeEventListener('drop', dropAnywhere)
+    }
+  }, [])
 
   useEffect(() => {
     const focusInput = (event: KeyboardEvent) => {
@@ -374,10 +425,10 @@ export function DecoderWorkbench({
   return (
     <section class="decoder-shell" aria-label={messages.ariaLabel}>
       <div class="workbench-bar">
-        <div class="privacy-line">
+        <a href="/proof/" class="privacy-line">
           <span class="privacy-dot" aria-hidden="true" />
-          {messages.privacy}
-        </div>
+          {answerMessages(messages.locale).local}
+        </a>
       </div>
       <DecoderInput
         onPaste={() => void paste()}
@@ -388,7 +439,6 @@ export function DecoderWorkbench({
         handleFile={handleFile}
       />
 
-      {inputAddon}
       {shortcuts ? (
         <div class="notice info">
           <button class="button ghost" type="button" onClick={() => setShortcuts(false)}>
@@ -404,27 +454,6 @@ export function DecoderWorkbench({
           </p>
         </div>
       ) : null}
-      {sessionHistory.length > 1 ? (
-        <section class="session-history" aria-label={copy.history}>
-          <p>{copy.history}</p>
-          {sessionHistory.map((entry, i) => (
-            <button
-              class="button ghost"
-              type="button"
-              key={i}
-              onClick={() => handleSource(entry.input)}
-            >
-              {i + 1} · {entry.label}
-            </button>
-          ))}
-        </section>
-      ) : null}
-      <BatchCompare
-        source={source}
-        decodeInput={decodeInput}
-        messages={messages}
-        onInput={handleSource}
-      />
       {status === 'processing' ? (
         <div class="processing" aria-live="polite">
           {message}
@@ -464,110 +493,132 @@ export function DecoderWorkbench({
         </div>
       ) : null}
       {result ? (
-        <div class="result-grid" ref={resultRef} style={{ scrollMarginTop: '90px' }}>
-          {(function flatten(node: DecodeResult['root']): DecodeResult['root'][] {
-            return [node, ...node.children.flatMap(flatten)]
-          })(result.root)
-            .flatMap((node) =>
-              [node.selected, ...node.candidates].filter(
-                (candidate): candidate is Detection => !!candidate,
-              ),
-            )
-            .flatMap((candidate) => candidate.warnings)
-            .filter((warning) => warning.severity === 'danger')
-            .filter(
-              (warning, i, list) =>
-                list.findIndex((other) => other.ruleId === warning.ruleId) === i,
-            )
-            .map((warning) => (
-              <div class="notice danger result-alert" role="status" key={warning.ruleId}>
-                <strong>
-                  <a href={`/rules/${warning.ruleId.toLowerCase()}/`}>{warning.ruleId}</a>
-                </strong>{' '}
-                {warning.message}
-              </div>
-            ))}
-          <div class="result-chain">
-            <div class="panel-heading">
-              <div>
-                <span class="eyebrow">{messages.decodeChain}</span>
-                <h2>
-                  {result.root.status === 'ambiguous'
-                    ? messages.possibleFormats
-                    : messages.localResult}
-                </h2>
-              </div>
-              <small>{result.elapsedMs.toFixed(1)} ms</small>
-            </div>
-            {showCandidates ? (
-              <>
-                <ol class="chain-list" role="tree" aria-label={messages.decodeChain}>
-                  <li
-                    class="chain-node"
-                    style={{ '--depth': result.root.depth }}
-                    role="treeitem"
-                    aria-level={result.root.depth + 1}
-                    tabIndex={activeChainNode === result.root.id ? 0 : -1}
-                    data-chain-node-id={result.root.id}
-                    onFocus={() => setActiveChainNode(result.root.id)}
-                    onKeyDown={handleChainKeyDown}
-                  >
-                    <ChainStage node={result.root} messages={messages} />
-                  </li>
-                </ol>
-                <p class="notice warning" role="status">
-                  {messages.ambiguousStep}
-                </p>
-                <div class="candidate-list" role="listbox" aria-label={messages.possibleFormats}>
-                  {result.root.candidates.map((candidate) => (
-                    <button
-                      type="button"
-                      class={
-                        selected?.detector === candidate.detector
-                          ? 'candidate selected'
-                          : 'candidate'
-                      }
-                      role="option"
-                      aria-selected={selected?.detector === candidate.detector}
-                      onClick={() => {
-                        setSelected(privateKeyDetection(result.root) ?? candidate)
-                        overrideLayer(result.root.id, candidate.detector)
-                      }}
-                      key={candidate.detector}
-                    >
-                      <span>{detectionLabel(candidate.label, messages)}</span>
-                      <strong>{Math.round(candidate.confidence * 100)}%</strong>
-                    </button>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <ol class="chain-list" role="tree" aria-label={messages.decodeChain}>
-                <LayerBand
-                  node={result.root}
-                  onOverride={overrideLayer}
-                  messages={messages}
-                  activeNodeId={activeChainNode}
-                  onActivate={activateLayer}
-                  onKeyDown={handleChainKeyDown}
-                />
-              </ol>
-            )}
-          </div>
-          <ResultInspector
-            source={source}
-            {...(onTool ? { onTool } : {})}
-            onInspectValue={handleSource}
-            selected={selected}
+        <div ref={resultRef} style={{ scrollMarginTop: '16px' }}>
+          <AnswerCard
             result={result}
+            source={source}
             messages={messages}
-            exportRedacted={exportRedacted}
-            copySafeSummary={copySafeSummary}
-            downloadSafeShareCard={() => void sharePng(false)}
-            setShowCandidates={setShowCandidates}
-            setMessage={setMessage}
+            onTool={onTool}
+            onManual={() => {
+              setShowCandidates(false)
+              if (advancedRef.current) advancedRef.current.open = true
+            }}
+            onCopy={() => {
+              const final = finalSelection(result.root)
+              if (final) void copySelected(final)
+            }}
           />
         </div>
+      ) : null}
+      {result ? (
+        <details class="advanced-result" ref={advancedRef}>
+          <summary>{answerMessages(messages.locale).details}</summary>
+          <div class="result-grid">
+            {sessionHistory.length > 1 ? (
+              <section class="session-history" aria-label={copy.history}>
+                <p>{copy.history}</p>
+                {sessionHistory.map((entry, i) => (
+                  <button
+                    class="button ghost"
+                    type="button"
+                    key={i}
+                    onClick={() => handleSource(entry.input)}
+                  >
+                    {i + 1} · {entry.label}
+                  </button>
+                ))}
+              </section>
+            ) : null}
+
+            <BatchCompare
+              source={source}
+              decodeInput={decodeInput}
+              messages={messages}
+              onInput={handleSource}
+            />
+
+            <div class="result-chain">
+              <div class="panel-heading">
+                <div>
+                  <span class="eyebrow">{messages.decodeChain}</span>
+                  <h2>
+                    {result.root.status === 'ambiguous'
+                      ? messages.possibleFormats
+                      : messages.localResult}
+                  </h2>
+                </div>
+                <small>{result.elapsedMs.toFixed(1)} ms</small>
+              </div>
+              {showCandidates ? (
+                <>
+                  <ol class="chain-list" role="tree" aria-label={messages.decodeChain}>
+                    <li
+                      class="chain-node"
+                      style={{ '--depth': result.root.depth }}
+                      role="treeitem"
+                      aria-level={result.root.depth + 1}
+                      tabIndex={activeChainNode === result.root.id ? 0 : -1}
+                      data-chain-node-id={result.root.id}
+                      onFocus={() => setActiveChainNode(result.root.id)}
+                      onKeyDown={handleChainKeyDown}
+                    >
+                      <ChainStage node={result.root} messages={messages} />
+                    </li>
+                  </ol>
+                  <p class="notice warning" role="status">
+                    {messages.ambiguousStep}
+                  </p>
+                  <div class="candidate-list" role="listbox" aria-label={messages.possibleFormats}>
+                    {result.root.candidates.map((candidate) => (
+                      <button
+                        type="button"
+                        class={
+                          selected?.detector === candidate.detector
+                            ? 'candidate selected'
+                            : 'candidate'
+                        }
+                        role="option"
+                        aria-selected={selected?.detector === candidate.detector}
+                        onClick={() => {
+                          setSelected(privateKeyDetection(result.root) ?? candidate)
+                          overrideLayer(result.root.id, candidate.detector)
+                        }}
+                        key={candidate.detector}
+                      >
+                        <span>{detectionLabel(candidate.label, messages)}</span>
+                        <strong>{Math.round(candidate.confidence * 100)}%</strong>
+                      </button>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <ol class="chain-list" role="tree" aria-label={messages.decodeChain}>
+                  <LayerBand
+                    node={result.root}
+                    onOverride={overrideLayer}
+                    messages={messages}
+                    activeNodeId={activeChainNode}
+                    onActivate={activateLayer}
+                    onKeyDown={handleChainKeyDown}
+                  />
+                </ol>
+              )}
+            </div>
+            <ResultInspector
+              source={source}
+              {...(onTool ? { onTool } : {})}
+              onInspectValue={handleSource}
+              selected={selected}
+              result={result}
+              messages={messages}
+              exportRedacted={exportRedacted}
+              copySafeSummary={copySafeSummary}
+              downloadSafeShareCard={() => void sharePng(false)}
+              setShowCandidates={setShowCandidates}
+              setMessage={setMessage}
+            />
+          </div>
+        </details>
       ) : null}
       {result ? (
         <WorkflowActions
@@ -586,6 +637,7 @@ export function DecoderWorkbench({
           onShare={() => void sharePng()}
         />
       ) : null}
+      {inputAddon}
       <details class="copy-feedback-settings result-preference">
         <summary>{messages.copyFeedback}</summary>
         <div class="copy-feedback-controls">

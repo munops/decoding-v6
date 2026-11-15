@@ -1,3 +1,4 @@
+import { openAdvanced } from './ui-helpers'
 import { createHmac } from 'node:crypto'
 import { brotliCompressSync } from 'node:zlib'
 import { expect, test } from '@playwright/test'
@@ -13,6 +14,7 @@ test('unsigned JWT danger links to an explanation and HS512 verifies locally', a
   page.on('request', (request) => requests.push(request.url() + ' ' + (request.postData() ?? '')))
   await page.goto('/')
   await page.getByLabel('Paste text or drop a file').fill(token)
+  await openAdvanced(page)
   await page.locator('.jwt-verifier summary').click()
   await page.getByLabel('Test secret / public key / JWK').fill(key)
   await page.getByRole('button', { name: 'Verify JWT signature', exact: true }).click()
@@ -27,8 +29,15 @@ test('unsigned JWT danger links to an explanation and HS512 verifies locally', a
   await page
     .getByLabel('Paste text or drop a file')
     .fill(`${encoded('{"alg":"none"}')}.${payload}.`)
-  await expect(page.locator('.result-alert').filter({ hasText: 'JWT-ALG-NONE' })).toBeVisible()
-  await page.locator('.result-alert a').filter({ hasText: 'JWT-ALG-NONE' }).click()
+  await expect(
+    page.locator('.answer-concerns li').filter({ hasText: 'JWT-ALG-NONE' }),
+  ).toBeVisible()
+  await page
+    .locator('.answer-concerns li')
+    .filter({ hasText: 'JWT-ALG-NONE' })
+    .locator('summary')
+    .click()
+  await page.locator('.answer-concerns a').filter({ hasText: 'JWT-ALG-NONE' }).click()
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Unsigned token')
 })
 test('result save, reopen, edit, backup, delete and restore preserve redaction', async ({
@@ -92,7 +101,8 @@ test('private-key ancestors stay hidden in output, bytes and copy', async ({ pag
   await page.goto('/')
   const key = '-----BEGIN PRIVATE KEY-----\nZml4dHVyZUtleUJ5dGVz\n-----END PRIVATE KEY-----'
   await page.getByLabel('Paste text or drop a file').fill(Buffer.from(key).toString('base64'))
-  await expect(page.locator('.result-alert')).toContainText('PRIVATE-KEY-EXPOSED')
+  await expect(page.locator('.answer-concerns li')).toContainText('PRIVATE-KEY-EXPOSED')
+  await openAdvanced(page)
   await page
     .getByRole('treeitem')
     .first()

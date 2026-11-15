@@ -1,0 +1,11 @@
+# B implementation checkpoint
+
+Request DECODING-IMPROVE-20261115-OWNER-01 / DEC-NEXT-002; base 15f67ce; same repo writer/fence 71.
+
+A-answer direction implemented: light default independent of OS, system-sans headings, navy action/orange caution/green local roles, one sentence per 42 formats, one warning collection, final primary value + copy, facts and collapsed colored layers. Advanced bytes, signature verification, candidate overrides, batch, compare and history remain under Details. Four desktop paths and four bottom mobile tabs connect decoder/tools/saved/more. More exposes appearance/text size/language/install/privacy/support; seven examples include an actual locally generated QR image input. Saved records show two recent local names only. Explicit paste/drop are accepted outside editable controls; no background clipboard access.
+
+The engine's default 0.85/0.15 decision stays unchanged. Web-only previewAmbiguous follows a provisional candidate while status remains ambiguous. Hash-shaped input previews the hash explanation; numeric alternatives remain explicit. Unit tests cover default decisions, preview uncertainty, 42-format sentence coverage and whole-chain safe sharing from final selection.
+
+Observed validation: lint/types and web build passed; focused answer/engine/shared UI tests passed after the whole-chain-share regression was repaired. Focused browser/a11y 13/13 passed. After independent screenshot review identified final-value occlusion, history moved under Details, sticky action bar became normal flow, and paste/file/example reveal targets the answer. Changed visual/copy flows then passed 4/4. Initial JS 72.3 KiB gzip, 14 heavy chunks lazy, 1,118 pages at that build. Two source-bound candidate screenshots are in b/. Independent screenshot-only follow-up confirmed that answer/caution/value/copy are all visible at 390 and 1440 without overlap. A tiny inherited 210px output minimum was subsequently removed; final C/runtime render must include that CSS change.
+
+Still open: QR-content reading is D2 (B already supplies the real photo input), full engine explanatory DTO migration is A13, and actual phone/screen-reader observations are unverified. No deployment or provider publication occurred. The original full A–J queue remains unchanged.

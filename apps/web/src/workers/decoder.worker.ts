@@ -86,7 +86,12 @@ self.addEventListener(
   'message',
   (event: MessageEvent<{ id: number; input: DecodeInput; overrides?: Record<string, string> }>) => {
     const { id, input, overrides } = event.data
-    void decode(input, { enrich, codecs: webCodecs, ...(overrides ? { overrides } : {}) })
+    void decode(input, {
+      previewAmbiguous: true,
+      enrich,
+      codecs: webCodecs,
+      ...(overrides ? { overrides } : {}),
+    })
       .then((result) => self.postMessage({ id, result }))
       .catch(() =>
         self.postMessage({

@@ -1,0 +1,161 @@
+import { NextStep } from './NextStep'
+import type { DecodeResult } from '@decoding/engine'
+import type { DecoderMessages } from './messages'
+import {
+  answerMessages,
+  answerSentence,
+  primaryLayers,
+  warningTitle,
+  answerFacts,
+} from './answer-copy'
+import { displayValue, finalSelection, outputText } from './result-text'
+
+export function AnswerCard({
+  result,
+  source,
+  messages,
+  onCopy,
+  onManual,
+  onTool,
+}: {
+  result: DecodeResult
+  source: string
+  messages: DecoderMessages
+  onCopy: () => void
+  onManual: () => void
+  onTool?: ((tool: string, text: string) => void) | undefined
+}) {
+  const copy = answerMessages(messages.locale),
+    final = finalSelection(result.root),
+    layers = primaryLayers(result.root)
+  const allNodes = (node: DecodeResult['root']): DecodeResult['root'][] => [
+    node,
+    ...node.children.flatMap(allNodes),
+  ]
+  const warnings = allNodes(result.root)
+    .flatMap((node) => [
+      ...(node.selected?.warnings ?? []),
+      ...node.candidates.flatMap((candidate) =>
+        candidate.warnings.filter((warning) => warning.severity === 'danger'),
+      ),
+    ])
+    .filter((item, index, all) => all.findIndex((other) => other.ruleId === item.ruleId) === index)
+  const facts = answerFacts(result.root.selected, messages.locale)
+  return (
+    <section class="answer-card" aria-label={messages.localResult}>
+      <h2 class="answer-verdict">{answerSentence(result.root, messages.locale, source)}</h2>
+      {warnings.length ? (
+        <section class="answer-concerns">
+          <h3>
+            {copy.concerns} · {warnings.length}
+          </h3>
+          <ul>
+            {warnings.map((warning) => (
+              <li key={warning.ruleId}>
+                <strong>{warningTitle(warning, messages.locale)}</strong>
+                <details>
+                  <summary>{messages.diagnosticDetails}</summary>
+                  <a
+                    href={`/${messages.locale === 'en' ? '' : `${messages.locale}/`}rules/${warning.ruleId.toLowerCase()}/`}
+                  >
+                    {warning.ruleId}
+                  </a>
+                  <p>{warning.message}</p>
+                </details>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : final ? (
+        <p class="answer-no-concerns">{copy.none}</p>
+      ) : null}
+      {!final ? (
+        <div class="unknown-actions">
+          <button
+            class="button secondary"
+            type="button"
+            onClick={() => onTool?.('string-inspector', source)}
+          >
+            {copy.inspect}
+          </button>
+          <button class="button secondary" type="button" onClick={onManual}>
+            {copy.manual}
+          </button>
+          <NextStep
+            source={source}
+            result={result}
+            locale={messages.locale}
+            {...(onTool ? { onTool } : {})}
+          />
+        </div>
+      ) : null}
+      {final ? (
+        <div class="answer-final">
+          <div class="answer-final-heading">
+            <h3>{copy.final}</h3>
+            <button class="button primary" type="button" onClick={onCopy} aria-label={copy.copy}>
+              {messages.copy}
+            </button>
+          </div>
+          <pre class="output-view">
+            <code>{outputText(displayValue(final))}</code>
+          </pre>
+        </div>
+      ) : null}
+      {facts.length ? (
+        <section>
+          <h3>{copy.facts}</h3>
+          <dl class="answer-facts">
+            {facts.map(([label, value]) => (
+              <div key={label}>
+                <dt>{label}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      ) : null}
+      {layers.length ? (
+        <section class="answer-layers">
+          <h3>
+            {copy.layers} · {layers.length}
+          </h3>
+          <ol>
+            {layers.map((node, index) => (
+              <li
+                key={node.id}
+                data-layer={index % 4}
+                style={{ marginInlineStart: `${Math.min(index, 3) * 10}px` }}
+              >
+                <details>
+                  <summary>
+                    {index + 1} · {node.selected?.label}
+                    {node.status === 'ambiguous' ? ` · ${copy.uncertain}` : ''}
+                  </summary>
+                  <pre>
+                    <code>
+                      {index === 0 ? source : outputText(layers[index - 1]?.selected?.decoded)}
+                    </code>
+                  </pre>
+                  <p>{node.selected?.summary}</p>
+                  {node.selected?.detector === 'epoch' && node.status === 'ambiguous' ? (
+                    <p>{copy.numberAlternative}</p>
+                  ) : null}
+                  {node.candidates.length > 1 ? (
+                    <p>
+                      {copy.alternate}:{' '}
+                      {node.candidates
+                        .filter((candidate) => candidate !== node.selected)
+                        .map((candidate) => candidate.label)
+                        .join(' · ')}
+                    </p>
+                  ) : null}
+                </details>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ) : null}
+    </section>
+  )
+}

@@ -30,6 +30,7 @@ export type DecodeOptions = {
   now?: Date
   autoConfidence?: number
   enrich?: (detection: Detection, input: DecodeInput) => Promise<Detection>
+  previewAmbiguous?: boolean
   autoMargin?: number
 }
 
@@ -129,9 +130,21 @@ export async function decode(
               : 'Candidates are too close to choose automatically.',
       }
     }
+    const provisional = !selected && options.previewAmbiguous
+    if (provisional)
+      selected =
+        typeof value === 'string' &&
+        /^(?:[a-f0-9]{32}|[a-f0-9]{40}|[a-f0-9]{64}|[a-f0-9]{128})$/i.test(value.trim())
+          ? (candidates.find((candidate) => candidate.detector === 'hash') ?? candidates[0])
+          : candidates[0]
     if (!selected) return { ...base, candidates, status: 'ambiguous' }
     if (options.enrich) selected = await options.enrich(selected, value)
-    const node: ChainNode = { ...base, candidates, selected, status: 'confident' }
+    const node: ChainNode = {
+      ...base,
+      candidates,
+      selected,
+      status: provisional ? 'ambiguous' : 'confident',
+    }
     if (selected.decoded !== undefined && stableDigest(selected.decoded) !== digest) {
       node.children.push(await visit(selected.decoded, depth + 1))
     }

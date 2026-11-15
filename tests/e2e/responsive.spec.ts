@@ -1,3 +1,4 @@
+import { openAdvanced } from './ui-helpers'
 import { expect, test, type TestInfo } from '@playwright/test'
 import { mkdirSync } from 'node:fs'
 import { resolve } from 'node:path'
@@ -25,6 +26,7 @@ test('recursive chain stage badges remain readable without horizontal overflow',
 }) => {
   await page.goto('/')
   await page.getByLabel('Paste text or drop a file').fill('eyJsb2NhbCI6dHJ1ZSwidG9vbHMiOjQ3fQ==')
+  await openAdvanced(page)
   const chain = page.getByRole('tree', { name: 'Decode chain' })
   await expect(chain.getByRole('treeitem')).toHaveCount(2)
   await expect(chain.getByLabel(/^Step 1:/)).toBeVisible()
@@ -120,7 +122,7 @@ test('a 200 percent desktop-equivalent viewport keeps core routes within the can
 
 test('captures representative desktop and mobile visual evidence', async ({ page }, testInfo) => {
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: /What is this string/i })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /Paste an unfamiliar value here/i })).toBeVisible()
   await page.screenshot({
     path: screenshotPath(testInfo, `home-${testInfo.project.name}.png`),
     fullPage: true,

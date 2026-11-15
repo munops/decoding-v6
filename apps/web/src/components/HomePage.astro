@@ -1,8 +1,9 @@
 ---
+import { answerMessages } from '@decoding/workbench-ui'
 import { uiMessage } from '@decoding/workbench-ui'
 import WebDecoder from '../islands/WebDecoder'
 import Layout from '../layouts/Layout.astro'
-import { homeMessages, type Locale } from '../i18n/catalog'
+import { type Locale } from '../i18n/catalog'
 import { triageSamples } from '../lib/triage-samples'
 import { decoderMessages } from '@decoding/workbench-ui'
 
@@ -10,25 +11,16 @@ interface Props {
   locale: Locale
 }
 const { locale } = Astro.props
-const messages = homeMessages[locale]
-const [heading, accentHeading] = messages.heading.split('\n')
-const samples = triageSamples.map((sample) => ({
-  ...sample,
-  label:
-    sample.id === 'nested'
-      ? messages.sampleNested
-      : sample.id === 'ambiguous'
-        ? messages.sampleAmbiguous
-        : messages.sampleExpired,
-}))
+const copy = answerMessages(locale)
+const samples = triageSamples.map((sample) => ({ ...sample, label: copy[sample.labelKey] }))
 ---
 
-<Layout locale={locale} title={messages.title} description={messages.description} alternatePath="/">
+<Layout locale={locale} title={copy.title} description={copy.lead} alternatePath="/">
   <section class="hero container">
     <div class="hero-copy">
-      <h1>{heading} <span>{accentHeading}</span></h1>
+      <h1>{copy.summary}</h1>
       <p>
-        {messages.intro}
+        {copy.lead}
         <a href="/proof/">{uiMessage(locale, 'check_local_processing')}</a>
       </p>
     </div>
@@ -36,7 +28,7 @@ const samples = triageSamples.map((sample) => ({
   <div class="container workbench-wrap">
     <WebDecoder
       messages={decoderMessages[locale]}
-      sampleLabel={messages.examplesLabel}
+      sampleLabel={copy.examples}
       samples={samples}
       client:load
     />

@@ -1,3 +1,4 @@
+import { summaryFormats } from '../packages/workbench-ui/src/answer-copy'
 import { toolHelpIds } from '../apps/web/src/i18n/tool-help'
 import { completionMessages } from '../packages/workbench-ui/src/completion-messages'
 import { readdirSync, readFileSync } from 'node:fs'
@@ -163,4 +164,9 @@ invariant(
   new Set(toolHelpIds).size === operations.length &&
     operations.every((operation) => toolHelpIds.includes(operation.id)),
   'Every tool needs authored use cases and input/output examples',
+)
+
+invariant(
+  detectorSpecs.every((spec) => summaryFormats.includes(spec.detector)),
+  'Every detector needs an authored answer sentence',
 )

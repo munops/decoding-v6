@@ -5,7 +5,13 @@ type InstallEvent = Event & {
   prompt: () => Promise<void>
   userChoice: Promise<{ outcome: string }>
 }
-export default function InstallHint({ locale }: { locale: Locale }) {
+export default function InstallHint({
+  locale,
+  alwaysShow = false,
+}: {
+  locale: Locale
+  alwaysShow?: boolean
+}) {
   const [visible, setVisible] = useState(false),
     [prompt, setPrompt] = useState<InstallEvent | null>(null),
     [guide, setGuide] = useState(false)
@@ -14,7 +20,10 @@ export default function InstallHint({ locale }: { locale: Locale }) {
     try {
       const visits = Number(localStorage.getItem('decoding-visits') ?? '0') + 1
       localStorage.setItem('decoding-visits', String(visits))
-      setVisible(visits >= 3 && localStorage.getItem('decoding-install-dismissed') !== 'true')
+      setVisible(
+        alwaysShow ||
+          (visits >= 3 && localStorage.getItem('decoding-install-dismissed') !== 'true'),
+      )
     } catch {
       /* Optional hint is skipped when storage is blocked. */
     }

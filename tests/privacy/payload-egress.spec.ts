@@ -1,3 +1,4 @@
+import { openAdvanced } from '../e2e/ui-helpers'
 import { readFile } from 'node:fs/promises'
 import { expect, test } from '@playwright/test'
 
@@ -23,6 +24,7 @@ test('synthetic canary never enters requests or browser storage after explicit c
   await page.getByLabel('Paste text or drop a file').blur()
   await page.getByRole('button', { name: 'Copy', exact: true }).click()
   await expect(page.getByText('Selected result copied.')).toBeVisible()
+  await openAdvanced(page)
   const safeShare = page.locator('[data-safe-share]')
   await safeShare.getByRole('button', { name: 'Copy safe summary' }).click()
   await expect(
@@ -100,6 +102,7 @@ test('anonymous-count opt-out suppresses open, decode and share events', async (
   await expect(page.locator('[data-count-toggle]')).not.toBeChecked()
   await page.getByLabel('Paste text or drop a file').fill('eyJsb2NhbCI6dHJ1ZX0=')
   await expect(page.locator('.output-view')).toBeVisible()
+  await openAdvanced(page)
   await expect(page.locator('[data-safe-share]')).toBeVisible()
   expect(counts).toEqual([])
 })
@@ -109,6 +112,7 @@ test('redacted export omits input-derived algorithm prose', async ({ page }) => 
   const canary = 'SYNTHETIC-EXPORT-ALGORITHM-PRIVATE'
   const token = `${Buffer.from(JSON.stringify({ alg: canary })).toString('base64url')}.${Buffer.from('{"sub":"private-test-subject"}').toString('base64url')}.`
   await page.getByLabel('Paste text or drop a file').fill(token)
+  await openAdvanced(page)
   const downloadPromise = page.waitForEvent('download')
   await page.getByRole('button', { name: 'Export redacted', exact: true }).click()
   const download = await downloadPromise

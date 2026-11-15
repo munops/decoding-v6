@@ -63,7 +63,10 @@ export function safeShareProjection(
   if (!selected) return null
   const chain: string[] = []
   const warningRuleIds: string[] = []
-  appendNode(root, selected, messages, chain, warningRuleIds)
+  const contains = (node: ChainNode): boolean =>
+    node.selected === selected || node.candidates.includes(selected) || node.children.some(contains)
+  const rootOverride = root.children.some(contains) ? null : selected
+  appendNode(root, rootOverride, messages, chain, warningRuleIds)
   return { format: publicLabel(detectionLabel(selected.label, messages)), chain, warningRuleIds }
 }
 

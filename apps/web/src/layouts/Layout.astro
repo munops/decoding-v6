@@ -1,5 +1,6 @@
 ---
 import { uiMessage } from '@decoding/workbench-ui'
+import { answerMessages } from '@decoding/workbench-ui'
 import { publicOperator } from '../lib/public-operator'
 import { buildRevision } from '../lib/build-info'
 import { detectorSpecs } from '@decoding/spec-registry'
@@ -39,6 +40,7 @@ const {
 } = Astro.props
 const canonicalUrl = new URL(canonical, Astro.site)
 const messages = layoutMessages[locale]
+const navigation = answerMessages(locale)
 const preventIndexing = noindex || !indexedLocales.includes(locale)
 const translationPath = alternatePath ?? englishPath
 const localizedHome = localePath(locale)
@@ -108,8 +110,12 @@ const localizedPrivacy = localePath(locale, '/privacy/')
     <script is:inline>
       try {
         const theme = localStorage.getItem('decoding-theme')
-        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme
-      } catch {}
+        document.documentElement.dataset.theme = theme === 'dark' ? 'dark' : 'light'
+        document.documentElement.dataset.textSize =
+          localStorage.getItem('decoding-text-size') === 'large' ? 'large' : 'normal'
+      } catch {
+        document.documentElement.dataset.theme = 'light'
+      }
     </script>
     <script
       type="application/ld+json"
@@ -119,7 +125,7 @@ const localizedPrivacy = localePath(locale, '/privacy/')
         '@type': 'WebApplication',
         name: 'decod.ing',
         url: 'https://decod.ing',
-        applicationCategory: 'DeveloperApplication',
+        applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'Web, macOS, Windows, Linux',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
         description,
@@ -134,20 +140,12 @@ const localizedPrivacy = localePath(locale, '/privacy/')
         <span class="brand-name">decod<span class="brand-dot">.</span>ing</span>
       </a>
       <nav aria-label={messages.primary}>
-        <a href={localizedTools}>{messages.tools} <span class="nav-count">47</span></a>
-        <a href={localizedMethod}>{messages.method}</a>
-        <a href={localizedPrivacy}>{messages.privacy}</a>
-        <a href={localePath(locale, '/workspace/')}>{messages.workspace}</a>
+        <a href={localizedHome}>{navigation.decode}</a><a href={localizedTools}
+          >{navigation.tools}</a
+        ><a href={localePath(locale, '/workspace/')}>{navigation.saved}</a><a
+          href={localePath(locale, '/more/')}>{navigation.more}</a
+        >
       </nav>
-      <details class="mobile-nav">
-        <summary>{messages.primary}</summary>
-        <nav aria-label={messages.primary}>
-          <a href={localizedTools}>{messages.tools}</a>
-          <a href={localizedMethod}>{messages.method}</a>
-          <a href={localizedPrivacy}>{messages.privacy}</a>
-          <a href={localePath(locale, '/workspace/')}>{messages.workspace}</a>
-        </nav>
-      </details>
       {
         translationPath ? (
           <details class="language-menu">
@@ -188,13 +186,45 @@ const localizedPrivacy = localePath(locale, '/privacy/')
     {locale === 'en' && translationPath ? <LocaleSuggestion path={translationPath} /> : null}
     <UpdateBanner locale={locale} client:load />
     <main id="main"><slot /></main>
+    <nav class="bottom-tabs" aria-label={messages.primary}>
+      <a
+        href={localizedHome}
+        aria-current={Astro.url.pathname === localizedHome ? 'page' : undefined}
+        ><svg viewBox="0 0 24 24" aria-hidden="true"
+          ><path d="M3 11 12 3l9 8v10h-6v-7H9v7H3Z"></path></svg
+        >{navigation.decode}</a
+      >
+      <a
+        href={localizedTools}
+        aria-current={Astro.url.pathname === localizedTools ? 'page' : undefined}
+        ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"></path></svg
+        >{navigation.tools}</a
+      >
+      <a
+        href={localePath(locale, '/workspace/')}
+        aria-current={Astro.url.pathname.includes('/workspace/') ? 'page' : undefined}
+        ><svg viewBox="0 0 24 24" aria-hidden="true"
+          ><path d="m3 7 9-4 9 4-9 4Z M3 7v11l9 4 9-4V7 M12 11v11"></path></svg
+        >{navigation.saved}</a
+      >
+      <a
+        href={localePath(locale, '/more/')}
+        aria-current={Astro.url.pathname.includes('/more/') ? 'page' : undefined}
+        ><svg viewBox="0 0 24 24" aria-hidden="true"
+          ><circle cx="5" cy="12" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle
+            cx="19"
+            cy="12"
+            r="1"></circle></svg
+        >{navigation.more}</a
+      >
+    </nav>
     <footer class="site-footer">
       <div>
         <a class="brand footer-brand" href={localizedHome}>
           <BrandMark />
           <span class="brand-name">decod<span class="brand-dot">.</span>ing</span>
         </a>
-        <p>{messages.footer}</p>
+        <p>{navigation.footer}</p>
       </div>
       <div class="footer-links">
         <a href={localePath(locale, '/data/')}>{uiMessage(locale, 'device_data')}</a>
@@ -245,15 +275,12 @@ const localizedPrivacy = localePath(locale, '/privacy/')
       }
 
       const themeToggle = document.querySelector<HTMLButtonElement>('#theme-toggle')
-      const themeMedia = matchMedia('(prefers-color-scheme: dark)')
       const syncThemeToggle = () => {
-        const activeTheme =
-          document.documentElement.dataset.theme ?? (themeMedia.matches ? 'dark' : 'light')
+        const activeTheme = document.documentElement.dataset.theme ?? 'light'
         themeToggle?.setAttribute('aria-pressed', String(activeTheme === 'dark'))
       }
       themeToggle?.addEventListener('click', () => {
-        const activeTheme =
-          document.documentElement.dataset.theme ?? (themeMedia.matches ? 'dark' : 'light')
+        const activeTheme = document.documentElement.dataset.theme ?? 'light'
         const nextTheme = activeTheme === 'dark' ? 'light' : 'dark'
         document.documentElement.dataset.theme = nextTheme
         try {
@@ -261,7 +288,6 @@ const localizedPrivacy = localePath(locale, '/privacy/')
         } catch {}
         syncThemeToggle()
       })
-      themeMedia.addEventListener('change', syncThemeToggle)
       syncThemeToggle()
     </script>
   </body>

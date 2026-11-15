@@ -10,7 +10,7 @@ function evidencePath(testInfo: TestInfo, filename: string) {
 }
 
 async function expectCoreRouteWithinCanvas(page: Page) {
-  await expect(page.getByRole('heading', { name: /What is this string/i })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /Paste an unfamiliar value here/i })).toBeVisible()
   await expect(page.getByLabel('Paste text or drop a file')).toBeVisible()
   const dimensions = await page.evaluate(() => ({
     clientWidth: document.documentElement.clientWidth,
@@ -97,19 +97,19 @@ test('header does not trap prior input controls after a mobile result', async ({
     await page.locator('[data-sample-id="nested"]').click()
     await expect(
       page.getByRole('tree', { name: 'Decode chain' }).getByRole('treeitem'),
-    ).toHaveCount(2)
+    ).toHaveCount(3)
 
-    await page.locator('.result-grid').evaluate((element) => {
+    await page.locator('.answer-card').evaluate((element) => {
       window.scrollTo({ top: element.getBoundingClientRect().top + window.scrollY - 82 })
     })
     await page.waitForFunction(
-      () => (document.querySelector('.result-grid')?.getBoundingClientRect().top ?? Infinity) <= 83,
+      () => (document.querySelector('.answer-card')?.getBoundingClientRect().top ?? Infinity) <= 83,
     )
 
     const anchored = await page.evaluate(() => {
       const header = document.querySelector('.site-header')?.getBoundingClientRect()
       const actions = document.querySelector('.input-actions')?.getBoundingClientRect()
-      const result = document.querySelector('.result-grid')?.getBoundingClientRect()
+      const result = document.querySelector('.answer-card')?.getBoundingClientRect()
       return {
         headerBottom: header?.bottom ?? -1,
         actionsBottom: actions?.bottom ?? -1,
@@ -122,7 +122,7 @@ test('header does not trap prior input controls after a mobile result', async ({
       '#decoder-input',
       '.input-actions .file-action',
       '.input-actions button:first-child',
-      '.input-actions button:last-of-type',
+      '.input-label-row button',
     ]) {
       const target = page.locator(selector)
       await target.scrollIntoViewIfNeeded()

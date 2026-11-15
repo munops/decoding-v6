@@ -1,22 +1,22 @@
 ---
 version: alpha
 name: decod.ing
-description: 정체를 모르는 개발자 데이터를 브라우저 안에서 판별하고 겹겹이 싼 층과 근거를 보여 주는 로컬 판독 도구의 디자인 기준
+description: 정체를 모르는 값을 브라우저 안에서 판별하고 겹겹이 싼 층과 근거를 보여 주는 로컬 판독 도구의 디자인 기준
 colors:
-  primary: '#33465c'
+  primary: '#2d4a73'
   ink: '#1b2128'
-  muted: '#606b78'
-  paper: '#ffffff'
+  muted: '#5b6673'
+  paper: '#f3f5f8'
   surface: '#ffffff'
   surface-2: '#f0f3f6'
   surface-3: '#e3e8ee'
-  line: '#cbd2da'
+  line: '#d6dce4'
   line-strong: '#9aa5b1'
   accent-soft: '#dce7f9'
-  mint: '#296247'
+  mint: '#1f6a48'
   mint-soft: '#ddf1e2'
   danger: '#c4302b'
-  warning: '#925100'
+  warning: '#b0440f'
   layer-1: '#dce7f9'
   layer-2: '#ddf1e2'
   layer-3: '#f9edc8'
@@ -24,15 +24,15 @@ colors:
   signal: '#ff6440'
 typography:
   h1:
-    fontFamily: IBM Plex Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace
-    fontSize: 44px
-    fontWeight: 400
+    fontFamily: ui-sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif
+    fontSize: 36px
+    fontWeight: 800
     lineHeight: 1.25
     letterSpacing: -0.03em
   h2:
-    fontFamily: IBM Plex Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace
-    fontSize: 28px
-    fontWeight: 400
+    fontFamily: ui-sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif
+    fontSize: 22px
+    fontWeight: 800
     letterSpacing: -0.04em
   brand:
     fontFamily: ui-sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif
@@ -128,7 +128,7 @@ components:
 
 ## Overview
 
-정체를 모르는 문자열·파일을 붙여넣으면 가능한 형식, 겹겹이 싼 디코딩 층, 판단 근거와 경고를 **기기 안에서** 보여 주는 개발자 도구다.
+정체를 모르는 문자열·파일을 붙여넣으면 가능한 형식, 겹겹이 싼 디코딩 층, 판단 근거와 경고를 **기기 안에서** 보여 주는 누구나를 위한 도구다.
 핵심 인상은 "해커 도구"도 범용 SaaS도 아닌 **값이 근거 있는 단계로 정리되는 판독 장부(Reveal Ledger)**다.
 
 - 첫 화면은 기능 소개가 아니라 작업면이다. 한 줄 약속(h1)과 소개 한 줄 끝의 `Check local processing`(`/proof/`) 링크, 작업면 맨 위 로컬 처리 줄(민트 점 + `Input stays on this device. No account, upload, or AI.`), 실제 입력칸, 실행 가능한 합성 사례 세 개만 둔다(DC-LANDING-05). catalog의 `uploaded`("서버로 전송된 입력 바이트") 문자열은 지금 홈에 렌더되지 않는다.
@@ -145,7 +145,7 @@ components:
 
 밝은 모드 값이다. 어두운 모드 값은 같은 파일의 `prefers-color-scheme: dark`와 `[data-theme='dark']` 블록에 있다
 (예: ink #eef1f5, paper #15191e, surface #1d232b, primary #c3d5ef, 층 띠 #29364a/#263d30/#403a26/#3b2e42).
-OS 설정을 따르고 머리말의 테마 버튼으로 바꾸며, 선택은 localStorage `decoding-theme` 하나에만 저장한다.
+처음은 밝게 열고 더보기 또는 머리말의 테마 버튼으로 바꾸며, 선택은 localStorage `decoding-theme` 하나에만 저장한다.
 
 - **primary (#33465c, 코드 이름 `--accent`)**: 링크 밑줄, 포커스 윤곽(68% 혼합 3px), 텍스트 선택, eyebrow 글자. 버튼 바탕이 아니다.
 - **ink (#1b2128)**: 본문·제목·주 버튼 2px 테두리·바이트 크기 선. **muted (#606b78)**: 보조 설명, 절 번호, 단계 배지.
@@ -275,3 +275,13 @@ PRD-05 초안의 일부 문구(`We found a few possible formats`, `Your input st
 머리말을 문서 흐름 안에 두어 결과 제목과 복사 버튼을 덮지 않게 한다.
 모바일 탐색 메뉴에 도구·감지 기준·개인정보·넣어 둔 것 경로를 모두 제공한다.
 기존 층 띠 색과 입력·출력 고정폭 글꼴은 보존한다. 전체 A안 시각 전환은 묶음 B에서 한다.
+
+## 2026-11-15 B: 한 문장 답을 먼저
+
+채택한 A안(`prototypes/first-screen-20261115/option-a.html`)을 실제품에 옮긴다. 밝은 바탕 #f3f5f8, 흰 작업면 #ffffff, 남색 행동 #2d4a73, 주황 주의 #b0440f/#fdeadf, 초록 기기 내 처리 #1f6a48를 쓴다. 제목은 시스템 sans, 26~~36px/800, 답의 한 문장은 20~~22px/800이다. IBM Plex Mono는 입력·출력·형식 이름에만 쓴다.
+
+붙여넣기 → 한 문장 → 조심할 점 한 곳 → 최종 값과 복사 → 사실 → 접힌 층 띠 순서다. 예시는 그 아래 가로 줄, 기존 바이트/서명/비교 도구는 자세히 아래로 옮긴다. 절 번호 거터를 없애고 모바일의 풀기·도구·넣어 둔 것·더보기 탭을 아래에 둔다. 데스크톱은 같은 네 경로를 위에서 쓴다.
+
+OS 어두움과 관계없이 첫 방문은 밝게, 사용자가 고른 모드만 기억한다. 크게 보기는 root 125%와 본문/조작문 1rem으로 적용한다. 낮은 확신 결과도 잠정 풀이를 보여 주되 확실하지 않다는 문장을 붙인다. 엔진의 기본 0.85/0.15 기준은 그대로이고 웹 표시에서만 previewAmbiguous를 쓴다.
+
+이유와 절제: 사용자에게 형식 선택을 먼저 요구하지 않는다. 사진은 사용자가 눌러 고른 뒤에만 읽는다. 일러스트와 장식은 더하지 않는다. 한 겹 한 색만 유지하고 warnings를 여러 층에서 반복하지 않는다. 완성도·유용성은 이 방향 기록이 아니라 실제 렌더·사용 흐름으로 판정한다.
