@@ -152,3 +152,34 @@ for (const width of [390, 1440])
     await expect(page.locator('.answer-final .output-view')).toContainText('hsl(')
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
   })
+
+for (const width of [390, 1440]) {
+  test(`DER possible key contents stay out of results and clipboard at ${width}px`, async ({
+    page,
+    context,
+  }) => {
+    await page.setViewportSize({ width, height: width === 390 ? 780 : 900 })
+    await context.grantPermissions(['clipboard-read', 'clipboard-write'])
+    await page.goto('/')
+    await expect(page.locator('.decoder-shell')).toHaveAttribute('data-hydrated', 'true')
+    const canary = 'DER_PRIVATE_BROWSER_CANARY_3951'
+    const body = Buffer.from(canary)
+    const buffer = Buffer.concat([Buffer.from([48, body.length + 2, 4, body.length]), body])
+    await page
+      .locator('input[type="file"]')
+      .first()
+      .setInputFiles({ name: 'synthetic.der', mimeType: 'application/octet-stream', buffer })
+    await expect(page.locator('.answer-verdict')).toContainText('ASN.1 DER')
+    await expect(page.locator('.answer-card')).not.toContainText(canary)
+    await page.getByRole('button', { name: 'Copy decoded value', exact: true }).click()
+    expect(await page.evaluate(() => navigator.clipboard.readText())).not.toContain(canary)
+    await page.locator('.advanced-result > summary').click()
+    await expect(page.locator('.inspector-panel')).not.toContainText(canary)
+    await expect(
+      page.locator('.inspector-panel .hex-dump, .inspector-panel .byte-map'),
+    ).toHaveCount(0)
+    await page.getByLabel('Paste text or drop a file').fill(buffer.toString('base64'))
+    await expect(page.locator('.answer-verdict')).toContainText('ASN.1 DER')
+    await expect(page.locator('.answer-card')).not.toContainText(buffer.toString('base64'))
+  })
+}

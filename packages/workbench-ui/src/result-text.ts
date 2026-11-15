@@ -12,12 +12,14 @@ export function outputText(value: unknown): string {
   }
 }
 
-/** A detected private key stays hidden even when an ancestor decoded its raw bytes. */
+/** Known private keys and schema-less DER stay hidden, including ancestor byte views. */
 export function privateKeyDetection(
   root: import('@decoding/engine').ChainNode,
 ): import('@decoding/engine').Detection | undefined {
-  const own = [root.selected, ...root.candidates].find((candidate) =>
-    candidate?.warnings.some((warning) => warning.ruleId === 'PRIVATE-KEY-EXPOSED'),
+  const own = [root.selected, ...root.candidates].find(
+    (candidate) =>
+      candidate?.detector === 'asn1-der' ||
+      candidate?.warnings.some((warning) => warning.ruleId === 'PRIVATE-KEY-EXPOSED'),
   )
   return own ?? root.children.map(privateKeyDetection).find(Boolean)
 }
@@ -39,6 +41,13 @@ export function structureSelection(
     node: import('@decoding/engine').ChainNode,
   ): import('@decoding/engine').ChainNode[] => [node, ...node.children.flatMap(nodes)]
   const chain = nodes(root)
+  const protectedContent = privateKeyDetection(root)
+  if (protectedContent) {
+    const safe = { ...protectedContent }
+    delete safe.decoded
+    delete safe.metadata
+    return safe
+  }
   return {
     ...selected,
     value:

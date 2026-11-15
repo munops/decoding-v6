@@ -125,3 +125,56 @@ it('selects the final primary decoded value and preserves a full URL', async () 
     ),
   ).toBe(href)
 })
+
+it('protects complete DER decode paths, byte views, layer previews and saved/copy values', async () => {
+  const { ResultInspector } = await import('../src/ResultInspector')
+  const { AnswerCard } = await import('../src/AnswerCard')
+  const { privateKeyDetection, finalSelection, structureSelection, outputText } =
+    await import('../src/result-text')
+  const { decoderMessages } = await import('../src/messages')
+  const canary = 'DER_PRIVATE_CANARY_4817'
+  const body = new TextEncoder().encode(canary)
+  const bytes = new Uint8Array([48, body.length + 2, 4, body.length, ...body])
+  for (const input of [bytes, encodeBase64(bytes)]) {
+    const result = await decode(input, { previewAmbiguous: true })
+    const final = finalSelection(result.root)!
+    expect(privateKeyDetection(result.root)?.detector).toBe('asn1-der')
+    expect(outputText(final.value)).not.toContain(canary)
+    expect(JSON.stringify(structureSelection(result.root, final))).not.toContain(canary)
+    const noop = () => {}
+    const inspector = ResultInspector({
+      source: '',
+      selected: result.root.selected ?? null,
+      result,
+      messages: decoderMessages.en,
+      onInspectValue: noop,
+      exportRedacted: noop,
+      copySafeSummary: async () => {},
+      downloadSafeShareCard: noop,
+      setShowCandidates: noop,
+      setMessage: noop,
+    })
+    const card = AnswerCard({
+      source: encodeBase64(bytes),
+      result,
+      messages: decoderMessages.en,
+      onCopy: noop,
+      onManual: noop,
+    })
+    // Inspect the actual component output, not unrendered child props carrying the decode state.
+    const componentNames: string[] = []
+    const domText = (value: unknown): string => {
+      if (Array.isArray(value)) return value.map(domText).join(' ')
+      if (typeof value === 'string' || typeof value === 'number') return String(value)
+      if (!value || typeof value !== 'object') return ''
+      const vnode = value as { type: unknown; props?: { children?: unknown } }
+      if (typeof vnode.type === 'function') componentNames.push(vnode.type.name)
+      return domText(vnode.props?.children)
+    }
+    const shown = domText([inspector, card])
+    expect(componentNames).not.toContain('ByteMap')
+    expect(componentNames).not.toContain('HexDump')
+    expect(shown).not.toContain(canary)
+    expect(shown).not.toContain(encodeBase64(bytes))
+  }
+})

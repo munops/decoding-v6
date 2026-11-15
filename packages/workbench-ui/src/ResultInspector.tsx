@@ -11,7 +11,7 @@ import type { Detection, DecodeResult } from '@decoding/engine'
 import type { DecoderMessages } from './messages'
 import { EvidenceList } from './LayerBand'
 import { detectionLabel } from './detection-copy'
-import { outputText, displayValue } from './result-text'
+import { outputText, displayValue, privateKeyDetection } from './result-text'
 type Props = {
   source: string
   onTool?: (tool: string, text: string) => void
@@ -41,7 +41,8 @@ export function ResultInspector({
   const nodeFor = (node: DecodeResult['root']): DecodeResult['root'] | undefined =>
     node.selected === selected ? node : node.children.map(nodeFor).find(Boolean)
   const node = nodeFor(result.root)
-  const privateKey = selected?.warnings.some((warning) => warning.ruleId === 'PRIVATE-KEY-EXPOSED')
+  const privateKey = privateKeyDetection(result.root)
+  selected = privateKey ?? selected
   const bytes = privateKey
     ? null
     : (node?.bytes ?? (selected?.decoded instanceof Uint8Array ? selected.decoded : null))
@@ -118,7 +119,7 @@ export function ResultInspector({
       ) : (
         <>
           <p>{messages.trySupported}</p>
-          {result.root.bytes ? (
+          {result.root.bytes && !privateKey ? (
             <>
               <ByteMap bytes={result.root.bytes} locale={messages.locale} />
               <HexDump bytes={result.root.bytes} locale={messages.locale} />

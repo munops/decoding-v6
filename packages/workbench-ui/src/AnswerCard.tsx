@@ -9,7 +9,7 @@ import {
   warningTitle,
   answerFacts,
 } from './answer-copy'
-import { displayValue, finalSelection, outputText } from './result-text'
+import { displayValue, finalSelection, outputText, privateKeyDetection } from './result-text'
 
 export function AnswerCard({
   result,
@@ -28,7 +28,8 @@ export function AnswerCard({
 }) {
   const copy = answerMessages(messages.locale),
     final = finalSelection(result.root),
-    layers = primaryLayers(result.root)
+    layers = primaryLayers(result.root),
+    protectedContent = privateKeyDetection(result.root)
   const allNodes = (node: DecodeResult['root']): DecodeResult['root'][] => [
     node,
     ...node.children.flatMap(allNodes),
@@ -165,7 +166,11 @@ export function AnswerCard({
                   </summary>
                   <pre>
                     <code>
-                      {index === 0 ? source : outputText(layers[index - 1]?.selected?.decoded)}
+                      {protectedContent
+                        ? copy.contentsHidden
+                        : index === 0
+                          ? source
+                          : outputText(layers[index - 1]?.selected?.decoded)}
                     </code>
                   </pre>
                   <p>

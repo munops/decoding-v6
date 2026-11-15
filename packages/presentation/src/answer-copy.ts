@@ -7,6 +7,7 @@ const en = {
     'These are cookies: values a site asks your browser to remember so it can recognize you.',
   curlToCode: 'Convert this request to code',
   colorPreview: 'Color preview',
+  contentsHidden: 'Possible key contents stay hidden.',
   barcodeUnavailable:
     'This browser cannot read linear barcodes. If no QR was found, the photo is inspected as a file.',
   title: 'decod.ing — Paste anything. See what it is.',
@@ -68,6 +69,7 @@ const ko: typeof en = {
   cookieSentence: '사이트가 나를 알아보려고 브라우저에 둔 값이에요.',
   curlToCode: '다른 언어 코드로 보기',
   colorPreview: '색 견본',
+  contentsHidden: '키일 수 있는 내용은 가려요.',
   barcodeUnavailable:
     '이 브라우저에서는 막대 바코드를 못 읽어요. QR이 없다면 사진 파일 정보를 보여 줘요.',
   title: 'decod.ing — 이게 뭔지 모르겠다면 붙여넣으세요',
