@@ -83,3 +83,52 @@ describe('memory-only current-value observation', () => {
     expect(scope.fetch).toBe(request)
   })
 })
+
+it('keeps malformed UTF-16 usable while reporting an incomplete comparison', async () => {
+  const { observer, stop } = fixture()
+  expect(() => observer.setInput('synthetic\ud800value')).not.toThrow()
+  expect(observer.snapshot().uninspected).toBeGreaterThan(0)
+  await observer.observeApi('/body', 'synthetic\ud800value')
+  expect(observer.snapshot().matches).toBe(1)
+  stop()
+})
+it('checks header names as well as values without invoking record accessors', async () => {
+  const { observer, stop } = fixture()
+  observer.setInput('synthetic-key')
+  for (const headers of [
+    { 'synthetic-key': 'other' },
+    [['synthetic-key', 'other']],
+    new Headers({ 'synthetic-key': 'other' }),
+  ])
+    await observer.observeApi('/headers', undefined, headers)
+  expect(observer.snapshot().matches).toBe(3)
+  const getter = vi.fn(() => 'secret')
+  const headers = Object.defineProperty({}, 'unreadable', { enumerable: true, get: getter })
+  await observer.observeApi('/headers', undefined, headers)
+  expect(getter).not.toHaveBeenCalled()
+  expect(observer.snapshot().uninspected).toBe(1)
+  stop()
+})
+it('shows unknown while an asynchronous body is pending and ignores late work after reset', async () => {
+  const { observer, stop } = fixture()
+  observer.setInput('synthetic pending text')
+  let resolve!: (text: string) => void
+  const body = new Blob(['synthetic pending text'])
+  vi.spyOn(body, 'text').mockImplementation(
+    () =>
+      new Promise((done) => {
+        resolve = done
+      }),
+  )
+  const work = observer.observeApi('/body', body)
+  expect(observer.snapshot()).toMatchObject({ matches: 0, uninspected: 1 })
+  resolve('synthetic pending text')
+  await work
+  expect(observer.snapshot()).toMatchObject({ matches: 1, uninspected: 0 })
+  const late = observer.observeApi('/body', body)
+  observer.setInput('another eligible text')
+  resolve('synthetic pending text')
+  await late
+  expect(observer.snapshot()).toMatchObject({ matches: 0, uninspected: 0 })
+  stop()
+})

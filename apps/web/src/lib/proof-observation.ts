@@ -51,17 +51,39 @@ async function bodyText(body: unknown): Promise<{ text: string; unknown: boolean
 function headerText(headers: unknown): { text: string; unknown: boolean } {
   if (headers == null) return { text: '', unknown: false }
   try {
-    const values =
-      headers instanceof Headers
-        ? [...headers.values()]
-        : Array.isArray(headers)
-          ? headers.map((pair) => (Array.isArray(pair) ? String(pair[1]) : ''))
-          : typeof headers === 'object'
-            ? Object.values(headers).map(String)
-            : null
-    if (!values) return { text: '', unknown: true }
-    const text = values.join('\n')
-    return text.length <= MAX ? { text, unknown: false } : { text: '', unknown: true }
+    let pairs: unknown[][] = [],
+      unknown = false
+    if (headers instanceof Headers) pairs = [...Headers.prototype.entries.call(headers)]
+    else if (Array.isArray(headers)) {
+      for (const pair of headers) {
+        if (Array.isArray(pair) && pair.length === 2) pairs.push(pair)
+        else unknown = true
+      }
+    } else if (typeof headers === 'object') {
+      for (const [name, descriptor] of Object.entries(Object.getOwnPropertyDescriptors(headers))) {
+        if (!descriptor.enumerable) continue
+        if ('value' in descriptor) pairs.push([name, descriptor.value])
+        else {
+          pairs.push([name, ''])
+          unknown = true
+        }
+      }
+    } else return { text: '', unknown: true }
+    const parts: string[] = []
+    let size = 0
+    for (const pair of pairs) {
+      for (const part of pair) {
+        if (!['string', 'number', 'boolean'].includes(typeof part)) {
+          unknown = true
+          continue
+        }
+        const text = String(part)
+        size += text.length + 1
+        if (size > MAX) return { text: parts.join('\n'), unknown: true }
+        parts.push(text)
+      }
+    }
+    return { text: parts.join('\n'), unknown }
   } catch {
     return { text: '', unknown: true }
   }
@@ -74,6 +96,7 @@ export function createProofObservation(now: () => number = () => performance.now
     calls = 0,
     resources = 0,
     uninspected = 0,
+    pending = 0,
     since = 0,
     version = 0
   const signatures = new Set<string>(),
@@ -85,7 +108,12 @@ export function createProofObservation(now: () => number = () => performance.now
   }
   const add = (text: string) => {
     if (text.length < MIN || text.length > MAX || signatures.size >= 64) return
-    const variants = [text, encodeURIComponent(text), JSON.stringify(text).slice(1, -1)]
+    const variants = [text, JSON.stringify(text).slice(1, -1)]
+    try {
+      variants.push(encodeURIComponent(text))
+    } catch {
+      uninspected++
+    }
     try {
       variants.push(JSON.stringify(JSON.parse(text)))
     } catch {
@@ -115,7 +143,7 @@ export function createProofObservation(now: () => number = () => performance.now
     matches,
     calls,
     resources,
-    uninspected,
+    uninspected: uninspected + pending,
     seconds: running ? Math.max(0, Math.floor((now() - since) / 1000)) : 0,
     coverage: { ...coverage },
   })
@@ -123,7 +151,7 @@ export function createProofObservation(now: () => number = () => performance.now
     version++
     signatures.clear()
     apiUrls.clear()
-    matches = calls = resources = uninspected = 0
+    matches = calls = resources = uninspected = pending = 0
     since = running ? now() : 0
     inputKind =
       kind === 'file' || typeof input !== 'string'
@@ -150,6 +178,7 @@ export function createProofObservation(now: () => number = () => performance.now
       for (const child of node.children) walk(child)
     }
     walk(result.root)
+    emit()
   }
   const observeApi = async (
     url: string,
@@ -163,6 +192,7 @@ export function createProofObservation(now: () => number = () => performance.now
       urlMatch = contains(normalized),
       head = headerText(headers)
     calls++
+    pending++
     if (url.length > MAX) uninspected++
     if (apiUrls.size < 64) apiUrls.set(normalized, (apiUrls.get(normalized) ?? 0) + 1)
     else uninspected++
@@ -177,6 +207,7 @@ export function createProofObservation(now: () => number = () => performance.now
       read = { text: '', unknown: true }
     }
     if (revision !== version || !running) return
+    pending--
     if (read.unknown) uninspected++
     if (!earlyMatch && contains(read.text)) matches++
     emit()
@@ -233,7 +264,7 @@ export function createProofObservation(now: () => number = () => performance.now
           setHeader = prototype.setRequestHeader
         const metadata = new WeakMap<
           XMLHttpRequest,
-          { url: string; headers: string[]; unknown: boolean }
+          { url: string; headers: [string, string][]; unknown: boolean }
         >()
         const wrappedOpen = function (
           this: XMLHttpRequest,
@@ -249,7 +280,8 @@ export function createProofObservation(now: () => number = () => performance.now
           const result = Reflect.apply(setHeader, this, [name, value])
           const meta = metadata.get(this)
           if (meta) {
-            if (meta.headers.length < 64 && value.length <= MAX) meta.headers.push(value)
+            if (meta.headers.length < 64 && name.length + value.length <= MAX)
+              meta.headers.push([name, value])
             else meta.unknown = true
           }
           return result
@@ -259,15 +291,12 @@ export function createProofObservation(now: () => number = () => performance.now
           body?: Document | XMLHttpRequestBodyInit | null,
         ) {
           const meta = metadata.get(this)
-          void observeApi(
-            meta?.url ?? '',
-            body,
-            meta?.headers.map((value) => ['header', value]),
-            meta?.unknown ?? false,
-          ).catch(() => {
-            uninspected++
-            emit()
-          })
+          void observeApi(meta?.url ?? '', body, meta?.headers, meta?.unknown ?? false).catch(
+            () => {
+              uninspected++
+              emit()
+            },
+          )
           return Reflect.apply(send, this, [body])
         }
         prototype.open = wrappedOpen
@@ -323,6 +352,8 @@ export function createProofObservation(now: () => number = () => performance.now
     return () => {
       for (const undo of restore.reverse()) undo()
       running = false
+      version++
+      pending = 0
       inputKind = 'none'
       signatures.clear()
       apiUrls.clear()
