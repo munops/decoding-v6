@@ -72,6 +72,22 @@ export function decode58(text: string): Uint8Array {
   }
   return new Uint8Array(out.reverse())
 }
+export const base58AddressVersions: Record<number, { network: string; scriptType: string }> = {
+  0: { network: 'mainnet', scriptType: 'P2PKH' },
+  5: { network: 'mainnet', scriptType: 'P2SH' },
+  111: { network: 'testnet', scriptType: 'P2PKH' },
+  196: { network: 'testnet', scriptType: 'P2SH' },
+}
+export async function inspectBase58Address(bytes: Uint8Array) {
+  if (bytes.length !== 25 || !base58AddressVersions[bytes[0]!]) return null
+  const payload = bytes.slice(0, -4),
+    checksum = (await digest(await digest(payload))).slice(0, 4)
+  return {
+    version: bytes[0]!,
+    payload: hex(payload.slice(1)),
+    checksum: hex(checksum) === hex(bytes.slice(-4)) ? 'valid' : 'mismatch',
+  }
+}
 export const base58: Detector = {
   id: 'base58',
   async detect(input) {
@@ -85,21 +101,8 @@ export const base58: Detector = {
       return null
     const bytes = decode58(text),
       output = readable(bytes)
-    const checked = bytes.length === 25 && [0, 5, 111, 196].includes(bytes[0]!)
-    if (checked) {
-      const payload = bytes.slice(0, -4),
-        checksum = (await digest(await digest(payload))).slice(0, 4)
-      return found(
-        'base58',
-        'Base58Check candidate',
-        {
-          version: bytes[0],
-          payload: hex(payload.slice(1)),
-          checksum: hex(checksum) === hex(bytes.slice(-4)) ? 'valid' : 'mismatch',
-        },
-        0.7,
-      )
-    }
+    const checked = await inspectBase58Address(bytes)
+    if (checked) return found('base58', 'Base58Check candidate', checked, 0.7)
     return found('base58', 'Base58 (Bitcoin alphabet)', output, 0.7, { decoded: output })
   },
 }

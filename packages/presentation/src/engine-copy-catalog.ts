@@ -1,5 +1,7 @@
 import type { EngineMessageCode } from '@decoding/engine'
 export const englishEngineCopy = {
+  'warning-wallet-unverified':
+    'Only the text format and supplied checksum were inspected. We did not check ownership, funds or a live network. Related networks may reuse an address format.',
   'warning-cookie-credential':
     'This cookie may contain login credentials. Keep it out of chats, AI tools and other sites.',
   'warning-ua-self-reported':

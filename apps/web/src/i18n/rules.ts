@@ -1,5 +1,10 @@
 import type { RuleSpec } from '@decoding/spec-registry'
 const ko: Record<string, [string, string, string]> = {
+  'WALLET-UNVERIFIED': [
+    '주소 글자만 확인했어요',
+    '확인값이 맞아도 소유자·잔액·보낼 망까지 확인한 것은 아니에요. 같은 주소 모양을 다른 망도 쓸 수 있어요.',
+    '어떤 행동을 하기 전에 평소 믿고 쓰는 지갑에서 망과 받는 쪽을 확인하세요. 이 풀이기는 블록체인에 접속하지 않아요.',
+  ],
   'COOKIE-CREDENTIAL': [
     '로그인 값일 수 있는 쿠키',
     'SID·session·token 같은 이름에는 로그인 값이 들어 있을 수 있어요. 이름만으로 용도를 확정하지는 않아요.',

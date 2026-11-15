@@ -1,5 +1,6 @@
 // Engine-owned explanation identifiers. Prose belongs to presentation.
 export const engineMessageCodes = [
+  'warning-wallet-unverified',
   'warning-cookie-credential',
   'warning-ua-self-reported',
   'warning-text-maybe-lost',

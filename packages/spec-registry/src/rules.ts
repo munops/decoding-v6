@@ -274,6 +274,13 @@ rows.push([
   'Do not paste these values into chats, AI tools or other sites. If exposed, sign out or revoke sessions through the trusted site.',
   'https://httpwg.org/specs/rfc6265.html#section-8.4',
 ])
+rows.push([
+  'WALLET-UNVERIFIED',
+  'Address text is not ownership verification',
+  'A matching address checksum checks the text, not its owner, balance or intended network. Related networks may reuse an address format.',
+  'Confirm the network and recipient through your trusted wallet before taking any action. This reader does not contact a blockchain.',
+  'https://github.com/bitcoin/bips/blob/master/bip-0350.mediawiki',
+])
 export const ruleSpecs: RuleSpec[] = rows.map(([id, title, why, fix, reference]) => ({
   id,
   title,

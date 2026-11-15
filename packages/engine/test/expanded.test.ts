@@ -109,3 +109,25 @@ it('allows cookie whitespace tabs but rejects control values', async () => {
     ),
   ).toBe(false)
 })
+it('binds Bitcoin witness checksums to versions and rejects mistyped legacy addresses', async () => {
+  const find = async (text: string) =>
+    (await detect(text)).find((item) => item.detector === 'bitcoin-address')
+  expect(
+    (await find('bc1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqzk5jj0'))?.value,
+  ).toMatchObject({ encoding: 'Bech32m', witnessVersion: 1, programBytes: 32 })
+  expect((await find('BC1QW508D6QEJXTDG4Y5R3ZARVARY0C5XW7KV8F3T4'))?.value).toMatchObject({
+    encoding: 'Bech32',
+    witnessVersion: 0,
+    programBytes: 20,
+  })
+  expect((await find('1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa'))?.value).toHaveProperty(
+    'checksum',
+    'valid',
+  )
+  for (const bad of [
+    '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNb',
+    'bc1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqh2y7hd',
+    'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kemeawh',
+  ])
+    expect(await find(bad)).toBeUndefined()
+})

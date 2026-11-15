@@ -11,6 +11,8 @@ const ko: Record<MessageFact['code'], string> = {
     '브라우저가 스스로 적은 정보예요. 일부를 줄이거나 다르게 적을 수 있어 실제 기기를 확인한 것은 아니에요.',
   'warning-cookie-credential':
     '로그인 값이 들어 있을 수 있어요. 채팅방·AI·다른 사이트에 붙여넣지 마세요.',
+  'warning-wallet-unverified':
+    '글자의 모양과 확인값만 살펴봤어요. 소유자·잔액·실제 망은 조회하지 않았어요. 같은 주소 모양을 쓰는 다른 망도 있어요.',
   'photo-read': '사진에서 코드를 읽었어요. 연결되는 곳은 열지 않았어요.',
   'summary-url': '{protocol}//{host}',
   'summary-epoch': '{milliseconds}',

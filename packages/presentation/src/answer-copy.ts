@@ -169,6 +169,10 @@ const sentences: Record<string, [string, string]> = {
     'This is a color value. Here is the color and other ways to write it.',
     '색을 적은 값이에요. 색 견본과 다른 적는 법을 보여 드려요.',
   ],
+  'bitcoin-address': [
+    'This looks like a Bitcoin-family address. Its text checksum matches; this does not verify the owner or funds.',
+    '비트코인 계열 지갑 주소로 보여요. 글자의 확인값은 맞지만 소유자나 잔액을 확인한 것은 아니에요.',
+  ],
   'binary-bytes': [
     'This writes bytes using zeros and ones. We decoded the next layer.',
     '글자를 0과 1로 적은 거예요. 한 겹 풀었어요.',
@@ -605,6 +609,11 @@ export function answerFacts(
     rows: Array<[string, string]> = []
   if (detection.detector === 'kv' && Array.isArray(value.entries))
     return [[copy.fields, String(value.entries.length)]]
+  if (detection.detector === 'bitcoin-address')
+    return [
+      [locale === 'ko' ? '주소 표기' : 'Address format', String(value.encoding)],
+      [locale === 'ko' ? '망 표기' : 'Network format', String(value.network)],
+    ]
   if (detection.detector === 'user-agent')
     return [
       ['브라우저', 'Browser'],

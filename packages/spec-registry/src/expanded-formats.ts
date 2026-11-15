@@ -91,5 +91,36 @@ export const expandedSpecs: ExpandedSpec[] = [
       },
     ],
   },
+  {
+    detector: 'bitcoin-address',
+    slug: 'bitcoin-address',
+    label: 'Bitcoin-family address',
+    description:
+      'Recognize 20-byte Base58Check address payloads and Bech32/Bech32m witness addresses with version, length and padding checks. No blockchain lookup is made. Related networks can reuse legacy address forms; matching text does not prove ownership or funds.',
+    korean: {
+      label: '비트코인 계열 지갑 주소',
+      description:
+        'Base58Check와 Bech32·Bech32m의 확인값·버전·길이·채움 규칙을 확인해요. 소유자나 잔액은 조회하지 않아요. 옛 주소 모양은 다른 망도 쓸 수 있어요.',
+    },
+    examples: [
+      '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
+      'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4',
+      'bc1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqzk5jj0',
+    ],
+    references: [
+      {
+        title: 'BIP173 — Bech32',
+        url: 'https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki',
+      },
+      {
+        title: 'BIP350 — Bech32m',
+        url: 'https://github.com/bitcoin/bips/blob/master/bip-0350.mediawiki',
+      },
+      {
+        title: 'Bitcoin Core — Base58Check',
+        url: 'https://github.com/bitcoin/bitcoin/blob/master/src/base58.cpp',
+      },
+    ],
+  },
 ]
 export const expandedKoreanCopy = new Map(expandedSpecs.map((spec) => [spec.detector, spec.korean]))
