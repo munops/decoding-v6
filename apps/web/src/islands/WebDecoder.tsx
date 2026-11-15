@@ -5,7 +5,7 @@ import type { DecodeInput } from '@decoding/engine'
 import ProofMonitor from '../components/ProofMonitor'
 import InstallHint from '../components/InstallHint'
 import { listWorkspaceRecords, saveWorkspaceRecord, type WorkspaceRecord } from '../lib/workspace'
-import { sendToTool } from '../lib/handoff'
+import { sendToTool, takeHandoff } from '../lib/handoff'
 import { DecoderWorkbench, answerMessages } from '@decoding/workbench-ui'
 import type { DecoderMessages } from '@decoding/workbench-ui'
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
@@ -47,7 +47,8 @@ export default function WebDecoder({
   const [shareMessage, setShareMessage] = useState('')
   const [externalInput, setExternalInput] = useState<{ id: number; value: string }>()
   useEffect(() => {
-    if (initialInput) setExternalInput({ id: Date.now(), value: initialInput })
+    const value = initialInput ?? takeHandoff('decoder')
+    if (value) setExternalInput({ id: Date.now(), value })
   }, [initialInput])
   const client = useMemo(
     () =>
@@ -221,7 +222,7 @@ export default function WebDecoder({
                 if (name === 'decode_completed') setDecodeCount((n) => n + 1)
               }
             }}
-            onTool={sendToTool}
+            onTool={(id, text) => sendToTool(id, text, messages.locale)}
             onSave={async (selected, ttl) => {
               await saveWorkspaceRecord({
                 name: `${selected.label} · ${new Date().toLocaleString()}`,

@@ -70,7 +70,26 @@ export function localizeOperationResult(locale: Locale, result: OperationResult)
   }
 }
 
+const newOperationErrors: Record<string, [string, string]> = {
+  'MOJIBAKE-NO-REVERSIBLE-PATH': [
+    'No reversible path was found with that encoding. Missing bytes cannot be recovered.',
+    '그 문자 방식으로 되돌릴 수 있는 경로를 찾지 못했어요. 사라진 바이트는 복구할 수 없어요.',
+  ],
+  'CIPHER-A1Z26-RANGE': [
+    'Enter numbers from 1 to 26, separated by spaces, commas or hyphens.',
+    '1부터 26까지 숫자를 공백·쉼표·붙임표로 나눠 넣으세요.',
+  ],
+  'CIPHER-KEY-REQUIRED': [
+    'Enter your Vigenere key using letters. This tool does not recover keys.',
+    '영문자로 된 비즈네르 열쇠를 넣으세요. 이 도구는 열쇠를 찾아 주지 않아요.',
+  ],
+  'CIPHER-UNKNOWN-MODE': [
+    'Choose one of the listed cipher methods.',
+    '목록에 있는 암호 방식을 고르세요.',
+  ],
+}
 export function localizeOperationError(locale: Locale, message: string): string {
+  if (newOperationErrors[message]) return newOperationErrors[message][locale === 'ko' ? 1 : 0]
   if (locale !== 'ko') return message
   if (/JSON must be an array/i.test(message)) return 'JSON의 첫 단계가 배열인지 확인해 주세요.'
   if (/Base64|Base64URL/i.test(message)) return 'Base64 또는 Base64URL 형식인지 확인해 주세요.'

@@ -1,4 +1,5 @@
 ---
+import { toolCopy } from '@decoding/workbench-ui'
 import { operations } from '@decoding/operations'
 import ToolSearch from '../islands/ToolSearch'
 import Layout from '../layouts/Layout.astro'
@@ -20,6 +21,9 @@ const tools = localizeOperations(locale, operations)
   description={messages.description}
   alternatePath="/tools/"
 >
+  <p class="container tool-decoder-link">
+    <a href={locale === 'en' ? '/' : `/${locale}/`}>{toolCopy(locale).unknown}</a>
+  </p>
   <section class="page-hero container narrow">
     <span class="eyebrow">{messages.eyebrow}</span>
     <h1>{messages.heading}</h1>

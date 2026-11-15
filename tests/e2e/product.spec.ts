@@ -1,3 +1,4 @@
+import { runTool } from './ui-helpers'
 import { openAdvanced } from './ui-helpers'
 import { expect, test } from '@playwright/test'
 
@@ -125,11 +126,11 @@ test('plays a local copy cue only after an explicit successful copy and persists
   )
 })
 
-test('lists exactly 47 searchable tools', async ({ page }) => {
+test('lists all searchable tools', async ({ page }) => {
   await page.goto('/tools/')
   await expect(page.locator('.catalog-shell')).toHaveAttribute('data-hydrated', 'true')
-  await expect(page.getByText('47 of 47 tools')).toBeVisible()
-  await expect(page.locator('.tool-card')).toHaveCount(47)
+  await expect(page.getByText('49 of 49 tools')).toBeVisible()
+  await expect(page.locator('.tool-card')).toHaveCount(49)
   await page.getByPlaceholder(/format JSON/).fill('certificate')
   await expect(page.locator('.tool-card')).toHaveCount(1)
   await expect(page.getByRole('heading', { name: /Certificate Decoder/ })).toBeVisible()
@@ -164,7 +165,7 @@ test('runs a dedicated JSON formatter operation', async ({ page }) => {
   await page.goto('/json-format/')
   await expect(page.locator('.tool-workbench')).toHaveAttribute('data-hydrated', 'true')
   await page.locator('.operation-pane textarea').first().fill('{"answer":42,"local":true}')
-  await page.getByRole('button', { name: 'Run locally' }).click()
+  await runTool(page)
   await expect(page.locator('.output-view')).toContainText('"answer": 42')
   await expect(page.getByText('Valid JSON')).toBeVisible()
 })
@@ -259,7 +260,7 @@ test.describe('Korean locale suggestion', () => {
 test('renders HTML preview inside a locked sandbox', async ({ page }) => {
   await page.goto('/html-preview/')
   await expect(page.locator('.tool-workbench')).toHaveAttribute('data-hydrated', 'true')
-  await page.getByRole('button', { name: 'Run locally' }).click()
+  await runTool(page)
   const frame = page.locator('iframe.safe-preview')
   await expect(frame).toHaveAttribute('sandbox', '')
   await expect(frame).toHaveAttribute('srcdoc', /default-src 'none'/)
@@ -312,7 +313,7 @@ test.describe('Japanese locale', () => {
 test('hash generator can compile its local WASM under the production CSP', async ({ page }) => {
   await page.goto('/hash-generator/')
   await page.locator('textarea').first().fill('hello')
-  await page.getByRole('button', { name: 'Run locally', exact: true }).click()
+  await runTool(page)
   await expect(page.locator('.output-view')).toContainText(
     '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824',
   )

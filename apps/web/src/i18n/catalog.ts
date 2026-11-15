@@ -1,3 +1,5 @@
+import { operations } from '@decoding/operations'
+const toolCount = operations.length
 export const supportedLocales = ['en', 'ko', 'ja', 'zh-cn', 'es', 'pt-br', 'de', 'fr'] as const
 export type Locale = (typeof supportedLocales)[number]
 
@@ -231,8 +233,7 @@ export const homeMessages: Record<Locale, HomeMessages> = {
   },
   ja: {
     title: 'decod.ing — デバイスで動くユニバーサルデコーダー',
-    description:
-      '開発者データをデバイス上で検出、デコード、検査、変換。47 ツール、アカウントもアップロードも不要です。',
+    description: `開発者データをデバイス上で検出、デコード、検査、変換。${toolCount} ツール、アカウントもアップロードも不要です。`,
     eyebrow: 'アカウント不要のユニバーサルデコーダー',
     heading: '値をたどり、\n根拠を残す。',
     intro: '値を貼り付けると、候補形式、入れ子の層、各判定の根拠と警告を表示します。',
@@ -244,7 +245,7 @@ export const homeMessages: Record<Locale, HomeMessages> = {
   },
   'zh-cn': {
     title: 'decod.ing — 在您设备上运行的通用解码器',
-    description: '在设备上检测、解码、检查和转换开发者数据。47 个工具，无需账户或上传。',
+    description: `在设备上检测、解码、检查和转换开发者数据。${toolCount} 个工具，无需账户或上传。`,
     eyebrow: '无需账户的通用解码器',
     heading: '追溯这个值，\n保留判定依据。',
     intro: '粘贴未知值，即可查看候选格式、嵌套层以及每项判断的依据和警告。',
@@ -256,8 +257,7 @@ export const homeMessages: Record<Locale, HomeMessages> = {
   },
   es: {
     title: 'decod.ing — Decodificador universal en tu dispositivo',
-    description:
-      'Detecta, decodifica, inspecciona y convierte datos de desarrollo en tu dispositivo. 47 herramientas, sin cuenta ni subidas.',
+    description: `Detecta, decodifica, inspecciona y convierte datos de desarrollo en tu dispositivo. ${toolCount} herramientas, sin cuenta ni subidas.`,
     eyebrow: 'Decodificador universal sin cuenta',
     heading: 'Sigue el valor.\nConserva la evidencia.',
     intro:
@@ -270,8 +270,7 @@ export const homeMessages: Record<Locale, HomeMessages> = {
   },
   'pt-br': {
     title: 'decod.ing — Decodificador universal no seu dispositivo',
-    description:
-      'Detecte, decodifique, inspecione e converta dados de desenvolvimento no seu dispositivo. 47 ferramentas, sem conta ou upload.',
+    description: `Detecte, decodifique, inspecione e converta dados de desenvolvimento no seu dispositivo. ${toolCount} ferramentas, sem conta ou upload.`,
     eyebrow: 'Decodificador universal sem conta',
     heading: 'Rastreie o valor.\nGuarde as evidências.',
     intro:
@@ -284,8 +283,7 @@ export const homeMessages: Record<Locale, HomeMessages> = {
   },
   de: {
     title: 'decod.ing — Universeller Decoder auf Ihrem Gerät',
-    description:
-      'Entwicklerdaten auf Ihrem Gerät erkennen, decodieren, prüfen und konvertieren. 47 Tools, kein Konto oder Upload.',
+    description: `Entwicklerdaten auf Ihrem Gerät erkennen, decodieren, prüfen und konvertieren. ${toolCount} Tools, kein Konto oder Upload.`,
     eyebrow: 'Universeller Decoder ohne Konto',
     heading: 'Wert verfolgen.\nNachweise behalten.',
     intro:
@@ -298,8 +296,7 @@ export const homeMessages: Record<Locale, HomeMessages> = {
   },
   fr: {
     title: 'decod.ing — Décodeur universel sur votre appareil',
-    description:
-      'Détectez, décodez, inspectez et convertissez des données de développement sur votre appareil. 47 outils, sans compte ni transfert.',
+    description: `Détectez, décodez, inspectez et convertissez des données de développement sur votre appareil. ${toolCount} outils, sans compte ni transfert.`,
     eyebrow: 'Décodeur universel sans compte',
     heading: 'Suivez la valeur.\nGardez les preuves.',
     intro:
@@ -451,13 +448,12 @@ export type CatalogMessages = {
 
 export const catalogMessages: Record<Locale, CatalogMessages> = {
   en: {
-    title: '47 local developer tools — decod.ing',
-    description:
-      'Format, convert, inspect, generate, encode, and decode with 47 privacy-first developer tools.',
+    title: `${toolCount} local developer tools — decod.ing`,
+    description: `Format, convert, inspect, generate, encode, and decode with ${toolCount} privacy-first developer tools.`,
     eyebrow: 'Tools',
-    heading: '47 tools. One private workbench.',
+    heading: `${toolCount} tools. One private workbench.`,
     lead: 'Every tool runs on this device. Heavy parsers load only when you open them.',
-    searchLabel: 'Search all 47 local tools',
+    searchLabel: `Search all ${toolCount} local tools`,
     searchPlaceholder: 'format JSON, inspect JWT, generate UUID…',
     of: 'of',
     countSuffix: 'tools',
@@ -500,12 +496,12 @@ export const catalogMessages: Record<Locale, CatalogMessages> = {
     removeFavorite: '즐겨찾기에서 제거',
   },
   ja: {
-    title: '47 個のローカル開発ツール — decod.ing',
-    description: 'プライバシー重視の 47 ツールで整形、変換、検査、生成、エンコード、デコード。',
+    title: `${toolCount} 個のローカル開発ツール — decod.ing`,
+    description: `プライバシー重視の ${toolCount} ツールで整形、変換、検査、生成、エンコード、デコード。`,
     eyebrow: 'すべてのローカルツール',
-    heading: '47 ツール、1 つのプライベート作業台。',
+    heading: `${toolCount} ツール、1 つのプライベート作業台。`,
     lead: 'すべてこのデバイス上で実行。重いパーサーは必要なときだけ読み込みます。',
-    searchLabel: '47 個のローカルツールを検索',
+    searchLabel: `${toolCount} 個のローカルツールを検索`,
     searchPlaceholder: 'JSON 整形、JWT 検査、UUID 生成…',
     of: '/',
     countSuffix: 'ツール',
@@ -524,12 +520,12 @@ export const catalogMessages: Record<Locale, CatalogMessages> = {
     removeFavorite: 'お気に入りから削除',
   },
   'zh-cn': {
-    title: '47 个本地开发者工具 — decod.ing',
-    description: '使用 47 个隐私优先的开发工具进行格式化、转换、检查、生成、编码和解码。',
+    title: `${toolCount} 个本地开发者工具 — decod.ing`,
+    description: `使用 ${toolCount} 个隐私优先的开发工具进行格式化、转换、检查、生成、编码和解码。`,
     eyebrow: '完整本地目录',
-    heading: '47 个工具，一个私密工作台。',
+    heading: `${toolCount} 个工具，一个私密工作台。`,
     lead: '每个工具都在此设备上运行，大型解析器仅在打开时加载。',
-    searchLabel: '搜索全部 47 个本地工具',
+    searchLabel: `搜索全部 ${toolCount} 个本地工具`,
     searchPlaceholder: '格式化 JSON、检查 JWT、生成 UUID…',
     of: '/',
     countSuffix: '个工具',
@@ -548,13 +544,12 @@ export const catalogMessages: Record<Locale, CatalogMessages> = {
     removeFavorite: '从收藏中移除',
   },
   es: {
-    title: '47 herramientas locales para desarrollo — decod.ing',
-    description:
-      'Formatea, convierte, inspecciona, genera, codifica y decodifica con 47 herramientas privadas.',
+    title: `${toolCount} herramientas locales para desarrollo — decod.ing`,
+    description: `Formatea, convierte, inspecciona, genera, codifica y decodifica con ${toolCount} herramientas privadas.`,
     eyebrow: 'Catálogo local completo',
-    heading: '47 herramientas. Un espacio privado.',
+    heading: `${toolCount} herramientas. Un espacio privado.`,
     lead: 'Cada herramienta se ejecuta en este dispositivo. Los analizadores pesados solo cargan al abrirlos.',
-    searchLabel: 'Buscar en las 47 herramientas locales',
+    searchLabel: `Buscar en las ${toolCount} herramientas locales`,
     searchPlaceholder: 'formatear JSON, inspeccionar JWT, generar UUID…',
     of: 'de',
     countSuffix: 'herramientas',
@@ -573,13 +568,12 @@ export const catalogMessages: Record<Locale, CatalogMessages> = {
     removeFavorite: 'Quitar de favoritos',
   },
   'pt-br': {
-    title: '47 ferramentas locais para desenvolvimento — decod.ing',
-    description:
-      'Formate, converta, inspecione, gere, codifique e decodifique com 47 ferramentas privadas.',
+    title: `${toolCount} ferramentas locais para desenvolvimento — decod.ing`,
+    description: `Formate, converta, inspecione, gere, codifique e decodifique com ${toolCount} ferramentas privadas.`,
     eyebrow: 'Catálogo local completo',
-    heading: '47 ferramentas. Uma bancada privada.',
+    heading: `${toolCount} ferramentas. Uma bancada privada.`,
     lead: 'Cada ferramenta roda neste dispositivo. Analisadores pesados carregam somente ao abrir.',
-    searchLabel: 'Pesquisar nas 47 ferramentas locais',
+    searchLabel: `Pesquisar nas ${toolCount} ferramentas locais`,
     searchPlaceholder: 'formatar JSON, inspecionar JWT, gerar UUID…',
     of: 'de',
     countSuffix: 'ferramentas',
@@ -598,13 +592,12 @@ export const catalogMessages: Record<Locale, CatalogMessages> = {
     removeFavorite: 'Remover dos favoritos',
   },
   de: {
-    title: '47 lokale Entwickler-Tools — decod.ing',
-    description:
-      'Formatieren, konvertieren, prüfen, erzeugen, codieren und decodieren mit 47 datenschutzfreundlichen Tools.',
+    title: `${toolCount} lokale Entwickler-Tools — decod.ing`,
+    description: `Formatieren, konvertieren, prüfen, erzeugen, codieren und decodieren mit ${toolCount} datenschutzfreundlichen Tools.`,
     eyebrow: 'Vollständiger lokaler Katalog',
-    heading: '47 Tools. Eine private Werkbank.',
+    heading: `${toolCount} Tools. Eine private Werkbank.`,
     lead: 'Jedes Tool läuft auf diesem Gerät. Große Parser laden erst beim Öffnen.',
-    searchLabel: 'Alle 47 lokalen Tools durchsuchen',
+    searchLabel: `Alle ${toolCount} lokalen Tools durchsuchen`,
     searchPlaceholder: 'JSON formatieren, JWT prüfen, UUID erzeugen…',
     of: 'von',
     countSuffix: 'Tools',
@@ -623,13 +616,12 @@ export const catalogMessages: Record<Locale, CatalogMessages> = {
     removeFavorite: 'Aus Favoriten entfernen',
   },
   fr: {
-    title: '47 outils de développement locaux — decod.ing',
-    description:
-      'Formatez, convertissez, inspectez, générez, encodez et décodez avec 47 outils respectueux de la vie privée.',
+    title: `${toolCount} outils de développement locaux — decod.ing`,
+    description: `Formatez, convertissez, inspectez, générez, encodez et décodez avec ${toolCount} outils respectueux de la vie privée.`,
     eyebrow: 'Catalogue local complet',
-    heading: '47 outils. Un atelier privé.',
+    heading: `${toolCount} outils. Un atelier privé.`,
     lead: "Chaque outil s'exécute sur cet appareil. Les analyseurs lourds ne chargent qu'à l'ouverture.",
-    searchLabel: 'Rechercher parmi les 47 outils locaux',
+    searchLabel: `Rechercher parmi les ${toolCount} outils locaux`,
     searchPlaceholder: 'formater JSON, inspecter JWT, générer UUID…',
     of: 'sur',
     countSuffix: 'outils',
@@ -669,7 +661,7 @@ export type ToolPageMessages = {
 export const toolPageMessages: Record<Locale, ToolPageMessages> = {
   en: {
     description: (name) => `Use ${name} locally with no account or upload.`,
-    back: '← All 47 tools',
+    back: `← All ${toolCount} tools`,
     localUtility: 'Local utility',
     pack: 'Utility Pack',
     runsHere: 'Runs on this device',
@@ -709,7 +701,7 @@ export const toolPageMessages: Record<Locale, ToolPageMessages> = {
   },
   ja: {
     description: (name) => `${name} をアカウントやアップロードなしでローカル実行します。`,
-    back: '← 47 ツール一覧',
+    back: `← ${toolCount} ツール一覧`,
     localUtility: 'ローカルツール',
     pack: 'ツールパック',
     runsHere: 'このデバイスで実行',
@@ -728,7 +720,7 @@ export const toolPageMessages: Record<Locale, ToolPageMessages> = {
   },
   'zh-cn': {
     description: (name) => `无需账户或上传，在本地使用 ${name}。`,
-    back: '← 全部 47 个工具',
+    back: `← 全部 ${toolCount} 个工具`,
     localUtility: '本地工具',
     pack: '工具包',
     runsHere: '在此设备上运行',
@@ -745,7 +737,7 @@ export const toolPageMessages: Record<Locale, ToolPageMessages> = {
   },
   es: {
     description: (name) => `Usa ${name} localmente, sin cuenta ni subidas.`,
-    back: '← Las 47 herramientas',
+    back: `← Las ${toolCount} herramientas`,
     localUtility: 'Utilidad local',
     pack: 'Paquete',
     runsHere: 'Se ejecuta en este dispositivo',
@@ -764,7 +756,7 @@ export const toolPageMessages: Record<Locale, ToolPageMessages> = {
   },
   'pt-br': {
     description: (name) => `Use ${name} localmente, sem conta ou upload.`,
-    back: '← Todas as 47 ferramentas',
+    back: `← Todas as ${toolCount} ferramentas`,
     localUtility: 'Utilitário local',
     pack: 'Pacote',
     runsHere: 'Roda neste dispositivo',
@@ -783,7 +775,7 @@ export const toolPageMessages: Record<Locale, ToolPageMessages> = {
   },
   de: {
     description: (name) => `${name} lokal ohne Konto oder Upload verwenden.`,
-    back: '← Alle 47 Tools',
+    back: `← Alle ${toolCount} Tools`,
     localUtility: 'Lokales Tool',
     pack: 'Tool-Paket',
     runsHere: 'Läuft auf diesem Gerät',
@@ -804,7 +796,7 @@ export const toolPageMessages: Record<Locale, ToolPageMessages> = {
   },
   fr: {
     description: (name) => `Utilisez ${name} localement, sans compte ni transfert.`,
-    back: '← Les 47 outils',
+    back: `← Les ${toolCount} outils`,
     localUtility: 'Outil local',
     pack: 'Pack',
     runsHere: "S'exécute sur cet appareil",

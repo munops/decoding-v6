@@ -1,6 +1,8 @@
+import { operations } from '@decoding/operations'
+import { localizeOperations } from '../i18n/operations'
 import { uiMessage } from '@decoding/workbench-ui'
 import { ErrorBoundary } from '@decoding/workbench-ui'
-import { takeHandoff } from '../lib/handoff'
+import { takeHandoff, sendToTool } from '../lib/handoff'
 import type {
   OperationDescriptor,
   OperationInput,
@@ -111,6 +113,11 @@ export default function WebTool({
           initialInput={draft.current}
           operation={operation}
           execute={client.execute}
+          relatedTools={localizeOperations(locale, operations)
+            .filter((item) => item.id !== operation.id && item.category === operation.category)
+            .slice(0, 3)}
+          onDecode={(text) => sendToTool('decoder', text, locale)}
+          onTool={(id, text) => sendToTool(id, text, locale)}
           messages={messages}
         />
       )}

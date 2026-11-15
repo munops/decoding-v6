@@ -75,11 +75,11 @@ export default function ToolSearch({
     .map((id) => tools.find((tool) => tool.id === id))
     .filter((tool): tool is OperationDescriptor => Boolean(tool))
   const visible = useMemo(() => {
-    const term = query.trim().toLowerCase()
+    const term = query.trim().toLowerCase().replace(/\s/g, '')
     if (!term) return tools
     return tools.filter((tool) =>
       [tool.name, tool.description, tool.category, ...tool.aliases].some((value) =>
-        value.toLowerCase().includes(term),
+        value.toLowerCase().replace(/\s/g, '').includes(term),
       ),
     )
   }, [query, tools])

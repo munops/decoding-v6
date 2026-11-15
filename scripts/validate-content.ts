@@ -5,12 +5,13 @@ import { operations } from '@decoding/operations'
 import { detectorSpecs } from '@decoding/spec-registry'
 
 const ids = new Set(operations.map((operation) => operation.id))
-if (operations.length !== 47 || ids.size !== 47)
-  throw new Error('Expected exactly 47 unique operation IDs.')
+if (operations.length < 47 || ids.size !== operations.length)
+  throw new Error('Expected unique operation IDs including the original catalog.')
 const packs = [1, 2, 3, 4].map(
   (pack) => operations.filter((operation) => operation.pack === pack).length,
 )
-if (packs.join(',') !== '16,11,10,10') throw new Error(`Pack coverage mismatch: ${packs.join('+')}`)
+if (packs.reduce((a, b) => a + b, 0) !== operations.length)
+  throw new Error(`Pack coverage mismatch: ${packs.join('+')}`)
 
 for (const operation of operations) {
   if (!operation.description.endsWith('.'))
@@ -57,7 +58,7 @@ for (const forbidden of ['shell:', 'fs:', 'http:', 'sql:']) {
 }
 
 console.log(
-  `Content validation passed: 47 tools, Pack ${packs.join('+')}, ${detectorSpecs.length} detector pages, least-privilege desktop and extension.`,
+  `Content validation passed: ${operations.length} tools, Pack ${packs.join('+')}, ${detectorSpecs.length} detector pages, least-privilege desktop and extension.`,
 )
 
 for (const spec of detectorSpecs)

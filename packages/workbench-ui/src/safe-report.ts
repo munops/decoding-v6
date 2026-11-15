@@ -28,6 +28,8 @@ export function nearbyTools(source: string, result?: DecodeResult): string[] {
   if (source.trim().length < 2) return []
   const candidates = result?.root.candidates.map((item) => item.detector) ?? []
   const byFormat: Record<string, string[]> = {
+    mojibake: ['mojibake-repair', 'string-inspector', 'text-diff'],
+    'unicode-normalization': ['string-inspector', 'mojibake-repair', 'text-diff'],
     jwt: ['jwt-debugger', 'base64-string', 'unix-time'],
     json: ['json-format', 'json-to-code', 'text-diff'],
     url: ['url-parser', 'url-codec', 'string-inspector'],
@@ -48,5 +50,7 @@ export function nearbyTools(source: string, result?: DecodeResult): string[] {
   if (/^\d+$/.test(source.trim())) return ['number-base', 'unix-time', 'string-inspector']
   if (/^(?:0x)?[\da-f\s]+$/i.test(source.trim()))
     return ['hex-to-ascii', 'hash-generator', 'string-inspector']
-  return ['string-inspector', 'base64-string', 'regex-tester']
+  return /^[A-Za-z][A-Za-z\s.,!?'-]*$/.test(source.trim())
+    ? ['string-inspector', 'classical-cipher', 'base64-string']
+    : ['string-inspector', 'base64-string', 'regex-tester']
 }

@@ -1,3 +1,4 @@
+import { runTool } from '../e2e/ui-helpers'
 import { openAdvanced } from '../e2e/ui-helpers'
 import { readFile } from 'node:fs/promises'
 import { expect, test } from '@playwright/test'
@@ -57,7 +58,7 @@ test('all network destinations remain same-origin before ads', async ({ page }) 
   page.on('request', (request) => origins.add(new URL(request.url()).origin))
   await page.goto('/curl-to-code/')
   await expect(page.locator('.tool-workbench')).toHaveAttribute('data-hydrated', 'true')
-  await page.getByRole('button', { name: 'Run locally' }).click()
+  await runTool(page)
   await expect(page.locator('.output-view')).toContainText('fetch')
   expect([...origins]).toEqual([new URL(page.url()).origin])
 })

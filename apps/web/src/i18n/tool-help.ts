@@ -1,6 +1,18 @@
 import type { Locale } from './catalog'
 type Help = { use: string; input: string; output: string }
 const rows = {
+  'mojibake-repair': {
+    en: 'Try a known encoding when the automatic repair is uncertain.',
+    ko: '깨진 글자의 원래 문자 방식을 알고 있거나 다른 읽기를 직접 고를 때 써요.',
+    input: 'ÇÑ±Û',
+    output: '한글 (EUC-KR)',
+  },
+  'classical-cipher': {
+    en: 'Compare the 25 Caesar shifts yourself. The tool does not guess a cipher or recover a key.',
+    ko: '뜻 모를 영문을 25가지로 밀어 사람이 읽어 고를 때 써요. 암호를 확정하거나 열쇠를 찾아 주지는 않아요.',
+    input: 'Uryyb',
+    output: 'shift 13: Hello',
+  },
   'json-format': {
     en: 'Read or validate a compact JSON response.',
     ko: '한 줄로 온 JSON 응답을 읽거나 문법을 확인할 때 써요.',

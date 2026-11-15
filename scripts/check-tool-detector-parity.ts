@@ -14,8 +14,11 @@ if (
     `Detector parity mismatch: engine=${detectorIds} specs=${specIds} fixtures=${fixtureIds}`,
   )
 }
-if (operations.length !== 47 || new Set(operations.map((operation) => operation.id)).size !== 47)
-  throw new Error('Operation route/search parity requires 47 unique IDs.')
+if (
+  operations.length < 47 ||
+  new Set(operations.map((operation) => operation.id)).size !== operations.length
+)
+  throw new Error('Operation route/search parity requires unique IDs.')
 console.log(
   `Parity passed: ${detectorIds.length} detectors with specs/fixtures/pages; ${operations.length} operation routes.`,
 )

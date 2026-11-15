@@ -1,12 +1,13 @@
 const KEY = 'decoding-handoff'
-export function sendToTool(tool: string, text: string): void {
+export function sendToTool(tool: string, text: string, locale = 'en'): void {
   if (!/^[a-z0-9-]+$/.test(tool)) return
   try {
     sessionStorage.setItem(KEY, JSON.stringify({ tool, text, at: Date.now() }))
   } catch {
     /* The tool remains usable with its example and explicit paste. */
   }
-  location.assign(`/${tool}/`)
+  const prefix = locale === 'en' ? '' : `/${locale}`
+  location.assign(`${prefix}/${tool === 'decoder' ? '' : `${tool}/`}`)
 }
 export function takeHandoff(tool: string): string | undefined {
   try {

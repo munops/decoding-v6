@@ -1,9 +1,18 @@
+import { taskAliases } from './tool-aliases'
 import type { OperationDescriptor } from '@decoding/operations'
 import type { Locale } from './catalog'
 
 type OperationCopy = Pick<OperationDescriptor, 'name' | 'description'>
 
 const koreanOperationCopy = {
+  'mojibake-repair': {
+    name: '깨진 한글·글자 되돌리기',
+    description: '원래 문자 방식을 골라 잘못 읽은 글자를 기기 안에서 되돌립니다.',
+  },
+  'classical-cipher': {
+    name: '옛 암호 풀기',
+    description: '시저 암호의 25가지 결과를 견주거나 아트배시·A1Z26·열쇠가 있는 비즈네르를 풉니다.',
+  },
   'json-format': {
     name: 'JSON 정리와 문법 확인',
     description: 'JSON 들여쓰기를 정리하거나 한 줄로 줄이고 문법 오류를 확인합니다.',
@@ -198,9 +207,10 @@ export function localizeOperation(
   locale: Locale,
   operation: OperationDescriptor,
 ): OperationDescriptor {
-  if (locale !== 'ko') return operation
+  const aliased = { ...operation, aliases: [...operation.aliases, ...taskAliases(operation.id)] }
+  if (locale !== 'ko') return aliased
   const copy = koreanOperationCopy[operation.id as keyof typeof koreanOperationCopy]
-  return copy ? { ...operation, ...copy } : operation
+  return copy ? { ...aliased, ...copy } : aliased
 }
 
 export function localizeOperations(

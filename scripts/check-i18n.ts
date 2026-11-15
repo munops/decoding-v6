@@ -1,3 +1,4 @@
+import { toolAliasIds } from '../apps/web/src/i18n/tool-aliases'
 import { summaryFormats } from '../packages/workbench-ui/src/answer-copy'
 import { toolHelpIds } from '../apps/web/src/i18n/tool-help'
 import { completionMessages } from '../packages/workbench-ui/src/completion-messages'
@@ -169,4 +170,10 @@ invariant(
 invariant(
   detectorSpecs.every((spec) => summaryFormats.includes(spec.detector)),
   'Every detector needs an authored answer sentence',
+)
+
+invariant(
+  toolAliasIds.length === operations.length &&
+    operations.every((operation) => toolAliasIds.includes(operation.id)),
+  'Authored task aliases must cover every tool exactly once.',
 )

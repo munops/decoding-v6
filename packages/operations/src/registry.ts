@@ -441,12 +441,31 @@ export const operations: OperationDescriptor[] = [
     securityProfile: 'parser',
     pack: 1,
   },
+  {
+    id: 'mojibake-repair',
+    name: 'Repair garbled text',
+    description: 'Reverse a wrong character encoding with a selectable original charset.',
+    category: 'encode',
+    aliases: ['mojibake', 'garbled', 'korean', 'encoding repair'],
+    securityProfile: 'pure',
+    pack: 2,
+  },
+  {
+    id: 'classical-cipher',
+    name: 'Classical cipher alternatives',
+    description: 'Compare all Caesar shifts, or use Atbash, A1Z26 and Vigenere with your key.',
+    category: 'encode',
+    aliases: ['cipher', 'caesar', 'rot13', 'atbash', 'a1z26', 'vigenere'],
+    directions: ['caesar', 'atbash', 'a1z26', 'vigenere'],
+    securityProfile: 'pure',
+    pack: 2,
+  },
 ]
 
 export const operationById = new Map(operations.map((operation) => [operation.id, operation]))
 
-if (operations.length !== 47 || operationById.size !== 47) {
+if (operations.length < 47 || operationById.size !== operations.length) {
   throw new Error(
-    `Operation registry must contain exactly 47 unique tools; got ${operations.length}/${operationById.size}`,
+    `Operation registry must contain at least the original 47 unique tools; got ${operations.length}/${operationById.size}`,
   )
 }

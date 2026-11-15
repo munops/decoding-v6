@@ -41,6 +41,8 @@ jLMi6Et8Vcad+qMUu2WFbm5PEn4KPJ2V
 
 type Smoke = { input: string; options?: Record<string, string | number | boolean> }
 const smoke: Record<string, Smoke> = {
+  'mojibake-repair': { input: 'ÇÑ±Û', options: { charset: 'euc-kr' } },
+  'classical-cipher': { input: 'Uryyb', options: { mode: 'caesar' } },
   'json-format': { input: '{"ok":true}' },
   'html-format': { input: '<main><p>local</p></main>' },
   'css-format': { input: 'body{color:red}' },
@@ -93,12 +95,12 @@ const smoke: Record<string, Smoke> = {
   'x509-decoder': { input: certificate },
 }
 
-describe('47-tool operation registry', () => {
-  it('contains exactly 47 unique tools split 16+11+10+10', () => {
-    expect(operations).toHaveLength(47)
-    expect(operationById.size).toBe(47)
+describe('operation registry', () => {
+  it('contains 49 unique tools with the two approved additions', () => {
+    expect(operations).toHaveLength(49)
+    expect(operationById.size).toBe(49)
     expect(operations.filter((operation) => operation.pack === 1)).toHaveLength(16)
-    expect(operations.filter((operation) => operation.pack === 2)).toHaveLength(11)
+    expect(operations.filter((operation) => operation.pack === 2)).toHaveLength(13)
     expect(operations.filter((operation) => operation.pack === 3)).toHaveLength(10)
     expect(operations.filter((operation) => operation.pack === 4)).toHaveLength(10)
   })

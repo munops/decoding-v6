@@ -1,4 +1,5 @@
 ---
+import { toolCopy } from '@decoding/workbench-ui'
 import type { OperationDescriptor } from '@decoding/operations'
 import { toolMessages } from '@decoding/workbench-ui'
 import WebTool from '../islands/WebTool'
@@ -45,6 +46,9 @@ const boundary =
   alternatePath={routePath}
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
+  <p class="container tool-decoder-link">
+    <a href={locale === 'en' ? '/' : `/${locale}/`}>{toolCopy(locale).unknown}</a>
+  </p>
   <section class="tool-hero container">
     <div>
       <a class="back-link" href={localePath(locale, '/tools/')}>{messages.back}</a>

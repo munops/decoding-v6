@@ -1,3 +1,4 @@
+import { toolCopy } from './tool-copy'
 import { uiMessage } from './ui-copy'
 import type {
   OperationDescriptor,
@@ -5,10 +6,13 @@ import type {
   OperationOptions,
   OperationResult,
 } from '@decoding/operations'
-import { useEffect, useMemo, useState } from 'preact/hooks'
+import { useEffect, useMemo, useState, useRef } from 'preact/hooks'
 import type { ToolMessages } from './messages'
 
 export type ToolWorkbenchProps = {
+  relatedTools?: Array<{ id: string; name: string }> | undefined
+  onDecode?: ((text: string) => void) | undefined
+  onTool?: ((id: string, text: string) => void) | undefined
   onSourceChange?: (source: string) => void
   initialInput?: string | undefined
   operation: OperationDescriptor
@@ -21,6 +25,8 @@ export type ToolWorkbenchProps = {
 }
 
 const examples: Record<string, string> = {
+  'mojibake-repair': 'ÇÑ±Û',
+  'classical-cipher': 'Uryyb',
   'json-format': '{"project":"decod.ing","local":true,"tools":47}',
   'jwt-debugger':
     'eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiJleGFtcGxlIiwiZXhwIjoyMDAwMDAwMDAwfQ.',
@@ -154,7 +160,13 @@ export function ToolWorkbench({
   messages,
   initialInput,
   onSourceChange,
+  onDecode,
+  onTool,
+  relatedTools = [],
 }: ToolWorkbenchProps) {
+  const copy = toolCopy(messages.locale)
+  const generation = useRef(0)
+  const fileGeneration = useRef(0)
   const [hydrated, setHydrated] = useState(false)
   const [source, assignSource] = useState(() =>
     initialInput !== undefined
@@ -166,6 +178,11 @@ export function ToolWorkbench({
   )
   const [fileInput, setFileInput] = useState<Uint8Array | null>(null)
   const setSource = (text: string) => {
+    generation.current += 1
+    fileGeneration.current += 1
+    setResult(null)
+    setStatus('idle')
+    setMessage('')
     setFileInput(null)
     assignSource(text)
     onSourceChange?.(text)
@@ -178,56 +195,96 @@ export function ToolWorkbench({
 
   useEffect(() => setHydrated(true), [])
 
+  const live =
+    operation.securityProfile === 'pure' &&
+    operation.category !== 'generate' &&
+    operation.id !== 'regex-tester' &&
+    source.length <= 65536 &&
+    !fileInput
+  const related = relatedTools
   const run = async (input: OperationInput = fileInput ?? source, override = options) => {
+    const current = ++generation.current
     setStatus('processing')
     setMessage(messages.runningMessage)
     try {
       const next = await execute(operation.id, input, { ...override, locale: messages.locale })
+      if (current !== generation.current) return
       setResult(next)
       setStatus('done')
       setMessage(next.summary ?? '')
     } catch (error) {
+      if (current !== generation.current) return
       setResult(null)
       setStatus('error')
       setMessage(error instanceof Error ? error.message : messages.operationFailed)
     }
   }
 
+  const runRef = useRef(run)
+  runRef.current = run
+  useEffect(() => {
+    if (!hydrated || !live || !source) return
+    const timer = setTimeout(() => void runRef.current(), 150)
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [hydrated, live, source, options])
+
   const handleFile = async (file?: File) => {
     if (!file) return
+    const current = ++fileGeneration.current
+    generation.current += 1
     if (file.size > 10 * 1024 * 1024) {
       setStatus('error')
       setMessage(messages.fileLimit)
       return
     }
-    if (operation.id === 'qr-code' && file.type.startsWith('image/')) {
-      const bitmap = await createImageBitmap(file)
-      const canvas = new OffscreenCanvas(bitmap.width, bitmap.height)
-      const context = canvas.getContext('2d')
-      context?.drawImage(bitmap, 0, 0)
-      const pixels = context?.getImageData(0, 0, bitmap.width, bitmap.height)
-      if (!pixels) throw new Error(messages.imageReadFailed)
-      const nextOptions = { ...options, mode: 'read', width: bitmap.width, height: bitmap.height }
-      setOptions(nextOptions)
-      await run(new Uint8Array(pixels.data), nextOptions)
-      return
-    }
-    const bytes = new Uint8Array(await file.arrayBuffer())
-    if (operation.id === 'base64-image' || operation.id === 'x509-decoder') {
-      setFileInput(bytes)
-      const nextOptions =
-        operation.id === 'base64-image' ? { ...options, mime: file.type || 'image/png' } : options
-      setOptions(nextOptions)
-      await run(bytes, nextOptions)
-    } else {
-      const value = new TextDecoder().decode(bytes)
-      setSource(value)
-      await run(value)
+    try {
+      if (operation.id === 'qr-code' && file.type.startsWith('image/')) {
+        const bitmap = await createImageBitmap(file)
+        if (current !== fileGeneration.current) {
+          bitmap.close()
+          return
+        }
+        if (bitmap.width * bitmap.height > 16_000_000) {
+          bitmap.close()
+          throw new Error(messages.fileLimit)
+        }
+        const canvas = new OffscreenCanvas(bitmap.width, bitmap.height),
+          context = canvas.getContext('2d')
+        context?.drawImage(bitmap, 0, 0)
+        bitmap.close()
+        const pixels = context?.getImageData(0, 0, canvas.width, canvas.height)
+        if (!pixels) throw new Error(messages.imageReadFailed)
+        const nextOptions = { ...options, mode: 'read', width: canvas.width, height: canvas.height }
+        setOptions(nextOptions)
+        await run(new Uint8Array(pixels.data), nextOptions)
+        return
+      }
+      const bytes = new Uint8Array(await file.arrayBuffer())
+      if (current !== fileGeneration.current) return
+      if (operation.id === 'base64-image' || operation.id === 'x509-decoder') {
+        setFileInput(bytes)
+        const nextOptions =
+          operation.id === 'base64-image' ? { ...options, mime: file.type || 'image/png' } : options
+        setOptions(nextOptions)
+        await run(bytes, nextOptions)
+      } else {
+        const value = new TextDecoder().decode(bytes)
+        setSource(value)
+        await run(value)
+      }
+    } catch (error) {
+      if (current !== fileGeneration.current) return
+      setStatus('error')
+      setMessage(error instanceof Error ? error.message : messages.operationFailed)
     }
   }
 
-  const setOption = (key: string, value: string | number | boolean) =>
+  const setOption = (key: string, value: string | number | boolean) => {
+    generation.current += 1
     setOptions((current) => ({ ...current, [key]: value }))
+  }
 
   return (
     <section
@@ -240,6 +297,43 @@ export function ToolWorkbench({
         {messages.privacy}
       </div>
       <div class="tool-options">
+        {operation.id === 'mojibake-repair' ? (
+          <label>
+            {copy.charset}
+            <select
+              value={String(options.charset ?? 'auto')}
+              onChange={(event) => setOption('charset', event.currentTarget.value)}
+            >
+              {['auto', 'utf-8', 'euc-kr', 'shift_jis', 'euc-jp', 'gbk', 'big5'].map((charset) => (
+                <option value={charset}>{charset === 'auto' ? copy.auto : charset}</option>
+              ))}
+            </select>
+          </label>
+        ) : null}
+        {operation.id === 'classical-cipher' && options.mode === 'vigenere' ? (
+          <>
+            <label>
+              {copy.key}
+              <input
+                value={String(options.key ?? '')}
+                onInput={(event) => setOption('key', event.currentTarget.value)}
+                autoComplete="off"
+                spellcheck={false}
+              />
+            </label>
+            <label>
+              {copy.direction}
+              <select
+                value={String(options.direction ?? 'decode')}
+                onChange={(event) => setOption('direction', event.currentTarget.value)}
+              >
+                <option value="decode">{copy.decode}</option>
+                <option value="encode">{copy.encode}</option>
+              </select>
+            </label>
+          </>
+        ) : null}
+
         {operation.directions?.length ? (
           <label>
             {messages.direction}
@@ -248,7 +342,11 @@ export function ToolWorkbench({
               onChange={(event) => setOption('mode', event.currentTarget.value)}
             >
               {operation.directions.map((direction) => (
-                <option value={direction}>{directionLabel(direction, messages)}</option>
+                <option value={direction}>
+                  {operation.id === 'classical-cipher'
+                    ? copy[direction as 'caesar' | 'atbash' | 'a1z26' | 'vigenere']
+                    : directionLabel(direction, messages)}
+                </option>
               ))}
             </select>
           </label>
@@ -424,13 +522,28 @@ export function ToolWorkbench({
             placeholder={messages.enterInput}
           />
           <div class="input-actions">
+            {!live ? (
+              <button
+                class="button primary"
+                type="button"
+                onClick={() => void run()}
+                disabled={status === 'processing'}
+              >
+                {status === 'processing' ? messages.running : messages.runLocally}
+              </button>
+            ) : (
+              <span class="tool-live-note">{copy.automatic}</span>
+            )}
             <button
-              class="button primary"
+              class="button secondary"
               type="button"
-              onClick={() => void run()}
-              disabled={status === 'processing'}
+              onClick={() => {
+                void navigator.clipboard
+                  .readText()
+                  .then(setSource, () => setMessage(copy.pasteFailed))
+              }}
             >
-              {status === 'processing' ? messages.running : messages.runLocally}
+              {copy.paste}
             </button>
             <button class="button ghost" type="button" onClick={() => setSource('')}>
               {messages.clear}
@@ -493,6 +606,24 @@ export function ToolWorkbench({
           ) : null}
         </div>
       </div>
+      {operation.id === 'classical-cipher' ? <p class="notice info">{copy.noGuess}</p> : null}
+      {result && onDecode ? (
+        <div class="tool-next">
+          <button class="button primary" type="button" onClick={() => onDecode(output)}>
+            {copy.continue}
+          </button>
+          <h3>{copy.related}</h3>
+          {related.map((item) => (
+            <button
+              class="button secondary"
+              type="button"
+              onClick={() => onTool?.(item.id, output)}
+            >
+              {item.name}
+            </button>
+          ))}
+        </div>
+      ) : null}
       {message ? (
         <div class={`notice ${status === 'error' ? 'danger' : 'info'}`} aria-live="polite">
           {message}

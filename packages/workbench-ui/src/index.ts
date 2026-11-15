@@ -49,3 +49,5 @@ export { ErrorBoundary } from './ErrorBoundary'
 export { uiMessage } from './ui-copy'
 
 export { answerMessages, answerSentence, summaryFormats } from './answer-copy'
+
+export { toolCopy } from './tool-copy'

@@ -2743,3 +2743,29 @@ html[data-text-size='large'] :where(p, label, button, summary, a, dt, dd, input,
     grid-template-columns: 1fr;
   }
 }
+
+.tool-next {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-block: 20px;
+}
+.tool-next h3 {
+  width: 100%;
+  margin: 8px 0;
+}
+.tool-live-note {
+  font-size: 13px;
+  align-self: center;
+  color: var(--muted);
+}
+.tool-decoder-link {
+  margin-top: 20px;
+}
+
+.tool-decoder-link a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}

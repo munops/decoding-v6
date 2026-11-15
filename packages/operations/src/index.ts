@@ -14,6 +14,8 @@ export async function executeOperation(
   input: OperationInput,
   options?: OperationOptions,
 ): Promise<OperationResult> {
+  if (id === 'mojibake-repair' || id === 'classical-cipher')
+    return (await import('./classical')).runClassical(id, input, options)
   const descriptor = operationById.get(id)
   if (!descriptor) throw new Error(`Unknown operation: ${id}`)
   const load = loaders[descriptor.category]

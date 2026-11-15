@@ -1,3 +1,4 @@
+import { runTool } from './ui-helpers'
 import { expect, test } from '@playwright/test'
 
 for (const width of [390, 1440]) {
@@ -42,7 +43,7 @@ test('URL codec defaults to reading encoded text and still offers manual directi
 }) => {
   await page.goto('/url-codec/')
   await page.locator('.operation-pane textarea').first().fill('%ED%95%9C%EA%B8%80%20test')
-  await page.getByRole('button', { name: 'Run locally', exact: true }).click()
+  await runTool(page)
   await expect(page.locator('.output-pane .output-view')).toHaveText('한글 test')
 })
 
