@@ -8,7 +8,29 @@ const baseline = JSON.parse(
 )
 const bytes = (value: unknown) =>
   value instanceof Uint8Array ? { type: 'bytes', hex: Buffer.from(value).toString('hex') } : value
-// Freeze elapsed time only. No candidate, metadata, warning, value or explanation is dropped.
+
+// E1 intentionally adds one safety warning to the existing cookie format. The frozen
+// pre-migration corpus stays untouched; every other field and record remains exact.
+function approvedCookieWarning(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(approvedCookieWarning)
+  if (!value || typeof value !== 'object') return value
+  const record = Object.fromEntries(
+    Object.entries(value).map(([key, item]) => [key, approvedCookieWarning(item)]),
+  )
+  if (record.detector === 'kv' && record.label === 'Cookie header')
+    record.warnings = [
+      ...(record.warnings as unknown[]),
+      {
+        ruleId: 'COOKIE-CREDENTIAL',
+        severity: 'warning',
+        message:
+          'This cookie may contain login credentials. Keep it out of chats, AI tools and other sites.',
+      },
+    ]
+  return record
+}
+
+// Normalize elapsed time and the single approved E1 warning addition. No fields are dropped.
 describe('v6 CLI JSON compatibility', () => {
   for (const item of baseline.records)
     it(item.id, async () => {
@@ -18,7 +40,9 @@ describe('v6 CLI JSON compatibility', () => {
           : item.input
       const native = await decode(input, { now: new Date(baseline.now) })
       const result = toLegacyResult({ ...native, elapsedMs: 0 })
-      expect(JSON.parse(JSON.stringify(result, (_key, value) => bytes(value)))).toEqual(item.result)
+      expect(JSON.parse(JSON.stringify(result, (_key, value) => bytes(value)))).toEqual(
+        item.id === 'kv-positive-1' ? approvedCookieWarning(item.result) : item.result,
+      )
     })
   it('keeps user-owned error and note fields as data', async () => {
     const original = { error: 'user text', note: { code: 'diagnostic-pem-error' } }

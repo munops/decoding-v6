@@ -267,6 +267,13 @@ rows.push([
   'Treat this as a reading of the supplied string. Do not use it for identity or security decisions.',
   'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent',
 ])
+rows.push([
+  'COOKIE-CREDENTIAL',
+  'Possible login cookie',
+  'Names such as SID, session and token can carry login credentials. Names alone cannot prove the cookie purpose.',
+  'Do not paste these values into chats, AI tools or other sites. If exposed, sign out or revoke sessions through the trusted site.',
+  'https://httpwg.org/specs/rfc6265.html#section-8.4',
+])
 export const ruleSpecs: RuleSpec[] = rows.map(([id, title, why, fix, reference]) => ({
   id,
   title,

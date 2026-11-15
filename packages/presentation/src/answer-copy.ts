@@ -3,6 +3,8 @@ import type { ChainNode, Detection, LintWarning } from '@decoding/engine'
 import type { PresentationLocale as WorkbenchLocale } from './locale'
 
 const en = {
+  cookieSentence:
+    'These are cookies: values a site asks your browser to remember so it can recognize you.',
   colorPreview: 'Color preview',
   barcodeUnavailable:
     'This browser cannot read linear barcodes. If no QR was found, the photo is inspected as a file.',
@@ -62,6 +64,7 @@ const en = {
   method: 'How decoding works',
 }
 const ko: typeof en = {
+  cookieSentence: '사이트가 나를 알아보려고 브라우저에 둔 값이에요.',
   colorPreview: '색 견본',
   barcodeUnavailable:
     '이 브라우저에서는 막대 바코드를 못 읽어요. QR이 없다면 사진 파일 정보를 보여 줘요.',
@@ -333,6 +336,8 @@ export function answerSentence(root: ChainNode, locale: WorkbenchLocale, source:
       : answerMessages(locale).unknown.replace('{count}', String(summaryFormats.length))
   const ko = locale === 'ko'
   let sentence = sentences[first.detector]?.[ko ? 1 : 0] ?? first.label
+  if (first.detector === 'kv' && first.label === 'Cookie header')
+    sentence = answerMessages(locale).cookieSentence
   if (first.detector === 'user-agent') {
     const value = first.value as Record<string, unknown>
     sentence = sentence.replace(/\{(browser|version|device)\}/g, (_, key: string) =>
@@ -598,6 +603,8 @@ export function answerFacts(
   const value = detection.value as Record<string, unknown>,
     copy = answerMessages(locale),
     rows: Array<[string, string]> = []
+  if (detection.detector === 'kv' && Array.isArray(value.entries))
+    return [[copy.fields, String(value.entries.length)]]
   if (detection.detector === 'user-agent')
     return [
       ['브라우저', 'Browser'],

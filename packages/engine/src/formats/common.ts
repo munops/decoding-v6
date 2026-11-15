@@ -1,6 +1,6 @@
 import { withDiagnosticFields, diagnosticField } from '../diagnostics'
 import { safeName } from '../message-facts'
-import { maskCredentialFields } from './credential-redaction'
+import { maskCredentialFields, credentialFieldName } from './credential-redaction'
 import type { MessageFact } from '../message-facts'
 import type { DecodeInput, Detection, LintWarning } from '../types'
 import { inputText, printableRatio } from '../utils'
@@ -44,8 +44,7 @@ export function hex(bytes: Uint8Array): string {
 export async function digest(bytes: Uint8Array, algorithm = 'SHA-256'): Promise<Uint8Array> {
   return new Uint8Array(await crypto.subtle.digest(algorithm, new Uint8Array(bytes)))
 }
-export const sensitiveKey =
-  /secret|token|password|authorization|cookie|private|signature|session|credential|api.?key/i
+export const sensitiveKey = credentialFieldName
 export const maskFields = maskCredentialFields
 
 /** Scan bounded value fields without retaining them in display summaries. */

@@ -1,5 +1,10 @@
 import type { RuleSpec } from '@decoding/spec-registry'
 const ko: Record<string, [string, string, string]> = {
+  'COOKIE-CREDENTIAL': [
+    '로그인 값일 수 있는 쿠키',
+    'SID·session·token 같은 이름에는 로그인 값이 들어 있을 수 있어요. 이름만으로 용도를 확정하지는 않아요.',
+    '채팅방·AI·다른 사이트에 붙여넣지 마세요. 노출됐다면 원래 사이트에서 로그아웃하거나 세션을 끝내 주세요.',
+  ],
   'UA-SELF-REPORTED': [
     '브라우저가 적은 정보',
     '보내는 쪽이 적은 정보라 줄이거나 다르게 적을 수 있어요. 실제 기기를 확인한 것은 아니에요.',

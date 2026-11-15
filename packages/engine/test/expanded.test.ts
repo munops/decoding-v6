@@ -67,3 +67,45 @@ it('converts color notations and alpha without evaluating CSS', async () => {
   ])
     expect(await read(input)).toBeUndefined()
 })
+it('counts request cookies, masks SID and warns without declaring their purpose certain', async () => {
+  const { maskCredentialFields } = await import('../src')
+  const { answerFacts, answerSentence } = await import('../../presentation/src/answer-copy')
+  const input = 'Cookie: SID=synthetic-session; theme=light'
+  const result = await decode(input, { previewAmbiguous: true })
+  const cookie = result.root.candidates.find((item) => item.detector === 'kv')!
+  expect(cookie.value).toEqual({
+    entries: [
+      { name: 'SID', value: '[redacted]' },
+      { name: 'theme', value: 'light' },
+    ],
+  })
+  expect(cookie.warnings.some((item) => item.ruleId === 'COOKIE-CREDENTIAL')).toBe(true)
+  expect(answerSentence(result.root, 'ko', input)).toContain('사이트가 나를 알아보려고')
+  expect(answerFacts(cookie, 'ko')[0]?.[1]).toBe('2')
+  expect(maskCredentialFields({ sid: 'synthetic', outside: 'ordinary' })).toEqual({
+    sid: '[redacted]',
+    outside: 'ordinary',
+  })
+  expect(
+    (await detect('Cookie: theme=light')).find((item) => item.detector === 'kv')?.warnings,
+  ).toHaveLength(0)
+  for (const bad of [
+    'Cookie:',
+    'Cookie: not-a-pair',
+    'Cookie: =missing',
+    'Set-Cookie: Secure',
+    'Cookie: x=y\nOther: z',
+  ])
+    expect((await detect(bad)).some((item) => item.detector === 'kv')).toBe(false)
+})
+
+it('allows cookie whitespace tabs but rejects control values', async () => {
+  expect(
+    (await detect('Cookie: theme=light;\tSID=synthetic')).some((item) => item.detector === 'kv'),
+  ).toBe(true)
+  expect(
+    (await detect('Cookie: value=' + String.fromCharCode(1) + 'x')).some(
+      (item) => item.detector === 'kv',
+    ),
+  ).toBe(false)
+})

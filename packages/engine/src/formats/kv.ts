@@ -9,8 +9,19 @@ export const kv: Detector = {
       cookie = /^(Set-Cookie|Cookie):\s*(.*)$/is.exec(text)
     if (!cookie && /^[A-Za-z0-9+/_-]+={1,2}$/.test(text)) return null
     if (!cookie && !/^[?]?[\w.%+-]+=[^\n]*(?:&[^\n]*)?$/.test(text)) return null
+    const cookieParts = (cookie?.[2] ?? '').split(';').filter((part) => part.trim())
+    if (cookie) {
+      if (!cookieParts.length) return null
+      const body = cookie[2] ?? ''
+      for (let index = 0; index < body.length; index++) {
+        const code = body.charCodeAt(index)
+        if ((code < 32 && code !== 9) || code === 127) return null
+      }
+      const pairs = cookie[1]!.toLowerCase() === 'cookie' ? cookieParts : cookieParts.slice(0, 1)
+      if (!pairs.every((part) => /^[!#$%&'*+\-.^_`|~\w]+\s*=/.test(part.trim()))) return null
+    }
     const entries = cookie
-      ? (cookie[2] ?? '').split(';').map((x) => {
+      ? cookieParts.map((x) => {
           const i = x.indexOf('=')
           return [x.slice(0, i < 0 ? undefined : i).trim(), i < 0 ? '' : x.slice(i + 1)] as const
         })
@@ -32,6 +43,8 @@ export const kv: Detector = {
               }),
             )
         : []
+    if (cookie && entries.some(([name, value]) => sensitiveKey.test(name) && value))
+      warnings.push(warning('COOKIE-CREDENTIAL', { code: 'warning-cookie-credential' }))
     return found(
       'kv',
       cookie ? 'Cookie header' : 'Query string',

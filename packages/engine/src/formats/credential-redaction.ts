@@ -1,4 +1,6 @@
 import { decodeBase64 } from '../utils'
+export const credentialFieldName =
+  /secret|token|password|passwd|authorization|cookie|private|signature|credential|api.?key|session|csrf|xsrf|^(?:sid|ssid|connect\.sid|auth)$/i
 export const credentialPatterns = [
   /\bAKIA[A-Z0-9]{16}\b/g,
   /\bgh[pousr]_[A-Za-z0-9]{20,}\b/g,
@@ -28,14 +30,18 @@ export function redactSecrets(text: string): string {
     }
   })
   masked = masked.replace(/(https?:\/\/[^\s:/]+:)[^@\s]+@/gi, '$1[redacted]@')
-  return masked.replace(/otpauth:\/\/[^\s"'<>]+/gi, (value) => {
+  return masked.replace(/(?:https?|otpauth):\/\/[^\s"'<>]+/gi, (value) => {
     try {
       const url = new URL(value)
+      let changed = false
       for (const key of new Set(url.searchParams.keys()))
-        if (/^secret$/i.test(key)) url.searchParams.set(key, '[redacted]')
-      return url.href
+        if (credentialFieldName.test(key)) {
+          url.searchParams.set(key, '[redacted]')
+          changed = true
+        }
+      return changed ? url.href : value
     } catch {
-      return 'otpauth:[redacted]'
+      return /^otpauth:/i.test(value) ? 'otpauth:[redacted]' : value
     }
   })
 }
@@ -50,11 +56,7 @@ export function maskCredentialFields(value: unknown, depth = 0): unknown {
         .slice(0, 200)
         .map(([key, item]) => [
           key,
-          /secret|token|password|passwd|authorization|cookie|private|signature|credential|api.?key|session/i.test(
-            key,
-          )
-            ? '[redacted]'
-            : maskCredentialFields(item, depth + 1),
+          credentialFieldName.test(key) ? '[redacted]' : maskCredentialFields(item, depth + 1),
         ]),
     )
   return typeof value === 'string' ? redactSecrets(value.slice(0, 2_000_000)) : value

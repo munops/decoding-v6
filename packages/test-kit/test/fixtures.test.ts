@@ -25,16 +25,18 @@ describe('public detector fixture gate', () => {
     }
   })
 
-  it('meets public precision and recall thresholds per detector', async () => {
-    for (const detector of fixturesByDetector.keys()) {
+  // Independent format contracts keep the same corpus and thresholds. A single
+  // shared timer must not aggregate every format as the registry grows.
+  for (const detector of fixturesByDetector.keys()) {
+    it(`${detector}: public precision and recall`, async () => {
       const quality = await measureDetector(
         detector,
         publicFixtures.filter((fixture) => fixture.detector === detector),
       )
       expect(quality.precision, `${detector} precision`).toBeGreaterThanOrEqual(0.95)
       expect(quality.recall, `${detector} recall`).toBeGreaterThanOrEqual(0.9)
-    }
-  })
+    })
+  }
 
   it('recognizes every documented edge fixture without crashing', async () => {
     for (const fixture of publicFixtures.filter((item) => item.class === 'edge')) {

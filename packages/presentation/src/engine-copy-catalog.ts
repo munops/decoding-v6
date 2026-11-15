@@ -1,5 +1,7 @@
 import type { EngineMessageCode } from '@decoding/engine'
 export const englishEngineCopy = {
+  'warning-cookie-credential':
+    'This cookie may contain login credentials. Keep it out of chats, AI tools and other sites.',
   'warning-ua-self-reported':
     'This is what the browser reports. The string may be reduced or spoofed; it does not verify the actual device.',
   'diagnostic-pem-invalid': 'invalid private key; not interpreted',

@@ -23,7 +23,11 @@ describe('new format outcomes and cross-negative regressions', () => {
     expect((await candidate('datetime', '2026-02-30T00:00:00Z'))?.warnings[0]?.ruleId).toBe(
       'DATE-INVALID',
     )
-    expect((await candidate('kv', 'Set-Cookie: session=synthetic'))?.warnings).toHaveLength(3)
+    expect(
+      (await candidate('kv', 'Set-Cookie: session=synthetic'))?.warnings
+        .map((item) => item.ruleId)
+        .sort(),
+    ).toEqual(['COOKIE-CREDENTIAL', 'COOKIE-NO-HTTPONLY', 'COOKIE-NO-SAMESITE', 'COOKIE-NO-SECURE'])
   })
   it('implements published Base32/Base58/Ascii85 vectors and rejects malformed padding', () => {
     expect(inputText(decode32('MZXW6YTBOI======'))).toBe('foobar')

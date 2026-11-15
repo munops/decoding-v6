@@ -26,3 +26,15 @@ it('preserves ordinary domains and prose', () => {
     'www.example.com café 안녕하세요',
   )
 })
+it('uses the same credential names in URL queries and structured fields', () => {
+  const value = maskCredentialFields({
+    url: 'https://example.test/path?SID=FIRST_CANARY&SID=SECOND_CANARY&csrf=THIRD_CANARY&theme=light',
+    outside: 'ordinary',
+    csrf: 'FOURTH_CANARY',
+  })
+  expect(JSON.stringify(value)).not.toContain('CANARY')
+  expect(value).toMatchObject({ outside: 'ordinary', csrf: '[redacted]' })
+  expect(String((value as { url: string }).url)).toContain('theme=light')
+  const ordinary = 'HTTPS://Example.test/path?theme=light'
+  expect(maskCredentialFields(ordinary)).toBe(ordinary)
+})
