@@ -1,0 +1,337 @@
+schema_version: 6
+wave_id: 'DECODING-FOOTER-20261116'
+status: 'approved'
+source_revision: '5baeff9b0a8c28dd7a44afe5cecb6a0e9c8045e6'
+prepared_at: '2026-11-16T03:42:18.217Z'
+expires_at: '2026-11-16T04:37:47.857Z'
+legal_entity_ref: 'hq/bootstrap/identity.yaml'
+execution_lane: 'owner_lane'
+approval_authority: 'human_owner'
+work_queue_ref: 'docs/prd/CHECKLIST.md#work-request-plan'
+work_claim:
+  registry_ref: '.orchestration/work-claims.sqlite'
+  required_for_mutation: true
+  claim_id: 'claim_f2652de7-6442-4c0e-bb77-6a3dd8a1da1c'
+  holder: 'codex:01a1df74-eea0-7c71-b83a-883f85def473:footer-release'
+  resources:
+    - 'provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6'
+    - 'provider:github:munops/decoding-v6'
+    - 'repo:decoding-v6'
+  fencing_tokens:
+    provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6: 8
+    provider:github:munops/decoding-v6: 7
+    repo:decoding-v6: 76
+  asserted_at: '2026-11-16T03:42:18.217Z'
+  released_at: null
+  release_evidence_ref: 'docs/evidence/decoding-ui-feedback-20261116.md'
+intervention_mode: 'normal'
+owner_delegation_ref: 'docs/munops/ops/owner-standing-delegation.json#zeroCostProviderExecution'
+approval:
+  mode: 'standing_delegation'
+  standing_delegation_ref: 'docs/munops/ops/owner-standing-delegation.json#zeroCostProviderExecution'
+  standing_delegation_id: 'MUNOPS-OWNER-STANDING-EXECUTION-20260826'
+  resolved_at: '2026-11-16T03:42:18.217Z'
+  approved_at: '2026-11-16T03:42:18.217Z'
+  approved_action_ids:
+    - 'DECODING-FOOTER-SOURCE-20261116'
+    - 'DECODING-FOOTER-WEB-20261116'
+  owner_evidence_ref: 'conversation:DECODING-UI-FEEDBACK-20261116:fix-footer-and-input-spacing'
+  approval_clock_status: 'Standing delegation resolved now; this is not a newly invented human action-time approval.'
+  resolution_policy_version: 1
+  action_exact_fields_digests:
+    DECODING-FOOTER-SOURCE-20261116: 'd6ecfafab22deae2189a9ac8f43d20e7df45dd18a1b0e2226d5bf8d2dba999ec'
+    DECODING-FOOTER-WEB-20261116: 'b4167d3e9ed71c221186da42e4c77451fde582311fa63e7e47d7001d2cd75862'
+actions:
+  - action_id: 'DECODING-FOOTER-SOURCE-20261116'
+    approval_readiness: 'approved'
+    approval_class: 'P-REPORT'
+    standing_delegation_eligible: true
+    execution_lane: 'owner_lane'
+    product: 'decoding-v6'
+    channel: 'source'
+    provider: 'github'
+    exact_mutation: 'Fast-forward existing munops/decoding-v6 main from ae4350f82f6d261adaa7ba43a69404a6cbef64d6 through footer/input source 5baeff9b0a8c28dd7a44afe5cecb6a0e9c8045e6 and only this wave/local-delivery metadata. No force, branch, visibility or workflow change.'
+    account_ref: 'docs/munops/ops/provider-registry.yaml#accounts.github_primary'
+    resource_ref: 'github:munops/decoding-v6:refs/heads/main'
+    claim_resource_refs:
+      - 'repo:decoding-v6'
+      - 'provider:github:munops/decoding-v6'
+    destination: 'github:munops/decoding-v6:refs/heads/main'
+    candidate_attestation:
+      applicability: 'source_only'
+      candidate:
+        source_repository: 'munops/decoding-v6'
+        source_before_sha: 'ae4350f82f6d261adaa7ba43a69404a6cbef64d6'
+        candidate_sha: '5baeff9b0a8c28dd7a44afe5cecb6a0e9c8045e6'
+        artifact_sha256: null
+        release_entrypoint: null
+      identity_transition:
+        mode: 'not_applicable'
+        reason: 'source synchronization does not itself change a rendered or provider identity surface'
+        surfaces: []
+        provider_before_fingerprint: null
+        candidate_artifact_fingerprint: null
+        migration_action_id: null
+      browser_gate:
+        mode: 'not_applicable'
+        reason: 'browser evidence belongs to the dependent Cloudflare production action'
+      provider_before:
+        applicability: 'not_applicable'
+        reason: 'Git fast-forward is fenced by the exact remote SHA instead of a deployment tuple'
+        deployment_id: null
+        version_id: null
+      single_deployment_path: 'source_only'
+    price:
+      cost_type: 'free'
+      cost_status: 'not_applicable'
+      currency: 'KRW'
+      subtotal: 0
+      tax_amount: 0
+      total_payable: 0
+      first_charge: 0
+      recurrence: 'none'
+      renewal_or_cap: 0
+      checked_at: '2026-11-16T03:42:18.217Z'
+      checkout_evidence_refs: []
+    tax:
+      seller_legal_entity: null
+      billing_country: null
+      business_tax_profile_ref: 'hq/bootstrap/identity.yaml'
+      business_tax_id_status: 'not_required'
+      treatment: 'not_applicable'
+      rate_percent: 0
+      evidence_type: 'none'
+      invoice_expected: false
+      input_vat_recoverability: 'not_applicable'
+      classification_evidence: []
+      prior_invoice_remediation: 'not_applicable'
+      not_applicable_reason: 'existing private repository fast-forward has no checkout, purchase, invoice, plan change or recurring commitment'
+    post_purchase:
+      provider_billing_readback: null
+      actual_currency: null
+      actual_subtotal: null
+      actual_tax_amount: null
+      actual_total_paid: null
+      invoice_or_receipt_ref: null
+      ledger_ref: null
+      reconciled_at: null
+    public_impact: 'Existing public source branch only; no npm/store/community publication.'
+    transmitted_data:
+      - 'Approved source code, authored synthetic fixtures, documentation and release metadata; no runtime user input or credentials.'
+    legal_terms_changed: false
+    preflight_evidence:
+      - 'Astro check 122 files no diagnostics; affected KO/EN 320/390/1440 selector geometry, 320px 200% text reflow, decode/count/privacy flows verified.'
+      - 'Existing mandatory pnpm verify and E2E remain unchanged and must pass in the guarded local delivery entrypoint before upload.'
+      - 'No font, dependency, engine, API, privacy, permission, identity, cost or channel changes; original payload-local-only and least-privilege boundaries retained.'
+    rollback_or_abort: 'Abort on remote SHA drift before push. Preserve Git history; any corrective revert requires a newly resolved source action, never force-push.'
+    status: 'ready'
+    provider_readback: null
+    channel_smoke: null
+    artifact_digest: '851265bb6c721135618349f39b103e9bd91d0a213333cb5968564dc6dd664cb2'
+    authorization:
+      actionType: 'existing_branch_push'
+      effects:
+        secretDisclosure: false
+        authBypass: false
+        newCharge: false
+        recurrenceChange: false
+        ownershipTransfer: false
+        visibilityTransfer: false
+        personalDataExpansion: false
+        destructiveData: false
+        newAccount: false
+        firstExternalContact: false
+        legalAttestation: false
+        hqActivation: false
+      credential:
+        operation: 'none'
+      terms:
+        kind: 'none'
+        boundaryExpansion: false
+        legalConsent: false
+        evidenceRef: 'existing verified CLI deploy/push only; no provider consent surface or new agreement'
+      humanStep:
+        kind: 'none'
+      context:
+        outOfScopeProject: false
+        currentInScopeOutcomeRequest: true
+        currentRequestRef: 'conversation:DECODING-UI-FEEDBACK-20261116:fix-footer-and-input-spacing'
+        existingVerifiedAccount: true
+        verifiedAccountRef: 'Fresh existing origin/main read-back and existing gh repository access; same legal account.'
+        claimFencingAsserted: true
+        claimRef: 'claim_f2652de7-6442-4c0e-bb77-6a3dd8a1da1c'
+        providerReadbackPlanRef: 'git ls-remote origin refs/heads/main must equal the clean metadata HEAD after FF push.'
+        channelSmokePlanRef: 'Source-only: branch SHA read-back; Web smoke belongs to the dependent web release.'
+        receiptPlanRef: 'docs/evidence/decoding-ui-feedback-20261116.md'
+  - action_id: 'DECODING-FOOTER-WEB-20261116'
+    approval_readiness: 'approved'
+    approval_class: 'P-REPORT'
+    standing_delegation_eligible: true
+    execution_lane: 'owner_lane'
+    product: 'decoding-v6'
+    channel: 'web'
+    provider: 'cloudflare_workers'
+    exact_mutation: 'Deploy only footer layout and 12px input-label spacing runtime 5baeff9b0a8c28dd7a44afe5cecb6a0e9c8045e6, artifact 851265bb6c721135618349f39b103e9bd91d0a213333cb5968564dc6dd664cb2, to existing decoding-v6 Worker. Keep manifest identity, bindings, routes, DNS, secrets, permissions, data, billing and native/npm channels unchanged.'
+    account_ref: 'docs/munops/ops/provider-registry.yaml#accounts.cloudflare_primary'
+    resource_ref: 'cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6'
+    claim_resource_refs:
+      - 'repo:decoding-v6'
+      - 'provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6'
+    destination: 'https://decod.ing, https://www.decod.ing, https://decoding-v6.wjstks3474.workers.dev'
+    artifact:
+      format: 'cloudflare_worker_with_static_assets'
+      local_ref: 'apps/web/dist'
+      sha256: '851265bb6c721135618349f39b103e9bd91d0a213333cb5968564dc6dd664cb2'
+      build_command: 'pnpm build'
+      digest_method: 'SHA256 of sorted per-file SHA256, two spaces, relative path and LF'
+      built_from_clean_runtime_commit: true
+    candidate_attestation:
+      applicability: 'release_candidate'
+      candidate:
+        source_repository: 'munops/decoding-v6'
+        source_before_sha: '5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb'
+        candidate_sha: '5baeff9b0a8c28dd7a44afe5cecb6a0e9c8045e6'
+        artifact_sha256: '851265bb6c721135618349f39b103e9bd91d0a213333cb5968564dc6dd664cb2'
+        release_entrypoint: 'DECODING_RELEASE_WAVE=docs/operations/release-wave-decoding-footer-20261116.yaml DECODING_DELIVERY_TARGET=production pnpm delivery:web:deploy -- --execute'
+      identity_transition:
+        mode: 'preserve'
+        surfaces:
+          - 'canonical origin'
+          - 'manifest application name'
+          - 'manifest short name'
+        provider_before_fingerprint: '0630fe0decac66174b6aebb6e6f89e3730df11046bb61f42c5837d679a981c89'
+        candidate_artifact_fingerprint: '0630fe0decac66174b6aebb6e6f89e3730df11046bb61f42c5837d679a981c89'
+        migration_action_id: null
+      browser_gate:
+        mode: 'release'
+        source_sha: '5baeff9b0a8c28dd7a44afe5cecb6a0e9c8045e6'
+        artifact_sha256: '851265bb6c721135618349f39b103e9bd91d0a213333cb5968564dc6dd664cb2'
+        target_environment: 'production'
+        build_environment: 'production'
+        assertion_profile: 'production'
+        fresh_server_required: true
+        reuse_existing_server: false
+        capture_receipt_sha256: '7721b19873465f82254f5ab0c0bcb3e07fdbc72e45dfaea8a1d3f9be85285499'
+        server_identity_receipt_sha256: 'cd5cd3e2e4780b722e684359bdb86371e3e0f111a09eeb6e1f588e25237b34e8'
+        server_identity_receipt_payload: '{"source_sha":"5baeff9b0a8c28dd7a44afe5cecb6a0e9c8045e6","artifact_sha256":"851265bb6c721135618349f39b103e9bd91d0a213333cb5968564dc6dd664cb2","target_environment":"production","build_environment":"production","assertion_profile":"production","fresh_server_required":true,"reuse_existing_server":false,"capture_receipt_sha256":"7721b19873465f82254f5ab0c0bcb3e07fdbc72e45dfaea8a1d3f9be85285499"}'
+      provider_before:
+        applicability: 'deployment'
+        deployment_id: 'aa53f6c6-6182-4052-b03d-0a07da5b2acc'
+        version_id: 'c0075d8d-b5b1-4996-8124-3f07ff01141a'
+      single_deployment_path: 'decoding_local_delivery_existing_worker_once'
+    provider_before:
+      deployment_id: 'aa53f6c6-6182-4052-b03d-0a07da5b2acc'
+      version_id: 'c0075d8d-b5b1-4996-8124-3f07ff01141a'
+    price:
+      cost_type: 'free'
+      cost_status: 'not_applicable'
+      currency: 'KRW'
+      subtotal: 0
+      tax_amount: 0
+      total_payable: 0
+      first_charge: 0
+      recurrence: 'none'
+      renewal_or_cap: 0
+      checked_at: '2026-11-16T03:42:18.217Z'
+      checkout_evidence_refs: []
+    tax:
+      seller_legal_entity: null
+      billing_country: null
+      business_tax_profile_ref: 'hq/bootstrap/identity.yaml'
+      business_tax_id_status: 'not_required'
+      treatment: 'not_applicable'
+      rate_percent: 0
+      evidence_type: 'none'
+      invoice_expected: false
+      input_vat_recoverability: 'not_applicable'
+      classification_evidence: []
+      prior_invoice_remediation: 'not_applicable'
+      not_applicable_reason: 'Existing Worker code/static replacement; approved incremental ceiling0 with no purchase or plan change; actual billing not read and remains null.'
+    post_purchase:
+      provider_billing_readback: null
+      actual_currency: null
+      actual_subtotal: null
+      actual_tax_amount: null
+      actual_total_paid: null
+      invoice_or_receipt_ref: null
+      ledger_ref: null
+      reconciled_at: null
+    public_impact: 'Updates existing public Web/PWA footer and input spacing only; no identity, legal, telemetry schema or native/channel publication.'
+    transmitted_data:
+      - 'Compiled Worker code, static Web/PWA assets, authored synthetic examples and plain BUILD_SHA; no runtime user input/result/identifier.'
+    legal_terms_changed: false
+    preflight_evidence:
+      - 'Astro check 122 files no diagnostics; affected KO/EN 320/390/1440 selector geometry, 320px 200% text reflow, decode/count/privacy flows verified.'
+      - 'Existing mandatory pnpm verify and E2E remain unchanged and must pass in the guarded local delivery entrypoint before upload.'
+      - 'No font, dependency, engine, API, privacy, permission, identity, cost or channel changes; original payload-local-only and least-privilege boundaries retained.'
+    rollback_or_abort: 'Abort on preflight/source/artifact/binding/provider drift. If public smoke fails, roll back only existing decoding-v6 Worker to freshly confirmed c0075d8d-b5b1-4996-8124-3f07ff01141a; no schema change.'
+    status: 'ready'
+    provider_readback: null
+    channel_smoke: null
+    channel_smoke_plan: 'Within10min canonical HTTP200/exact source/new native version and actual-view390 first value; same-origin names-only count receive; actual key/payload never transmitted.'
+    artifact_digest: '851265bb6c721135618349f39b103e9bd91d0a213333cb5968564dc6dd664cb2'
+    authorization:
+      actionType: 'deploy'
+      effects:
+        secretDisclosure: false
+        authBypass: false
+        newCharge: false
+        recurrenceChange: false
+        ownershipTransfer: false
+        visibilityTransfer: false
+        personalDataExpansion: false
+        destructiveData: false
+        newAccount: false
+        firstExternalContact: false
+        legalAttestation: false
+        hqActivation: false
+      credential:
+        operation: 'none'
+      terms:
+        kind: 'none'
+        boundaryExpansion: false
+        legalConsent: false
+        evidenceRef: 'existing verified CLI deploy/push only; no provider consent surface or new agreement'
+      humanStep:
+        kind: 'none'
+      context:
+        outOfScopeProject: false
+        currentInScopeOutcomeRequest: true
+        currentRequestRef: 'conversation:DECODING-UI-FEEDBACK-20261116:fix-footer-and-input-spacing'
+        existingVerifiedAccount: true
+        verifiedAccountRef: 'Existing wrangler authenticated expected account 69abd904cab5ffd103e569e7e050a884 and deployment/binding read-back.'
+        claimFencingAsserted: true
+        claimRef: 'claim_f2652de7-6442-4c0e-bb77-6a3dd8a1da1c'
+        providerReadbackPlanRef: 'Worker deployments/version/bindings plus all three /healthz origins must match the frozen runtime; manifest identity is rechecked.'
+        channelSmokePlanRef: 'scripts/verify-deploy.mjs on https://decod.ing plus real-origin proof/offline/entry routes and static capture.'
+        receiptPlanRef: 'docs/evidence/decoding-ui-feedback-20261116.md'
+reapproval_triggers:
+  - 'account_ref_changed'
+  - 'resource_or_destination_changed'
+  - 'seller_or_billing_country_changed'
+  - 'business_tax_profile_changed'
+  - 'subtotal_tax_or_total_payable_changed'
+  - 'price_recurrence_or_cap_changed'
+  - 'expected_invoice_or_tax_treatment_changed'
+  - 'public_impact_changed'
+  - 'transmitted_data_changed'
+  - 'legal_terms_changed'
+human_only_steps:
+  - 'mfa'
+  - 'captcha'
+  - 'legal_consent'
+lane_rules:
+  mixed_lane_actions_allowed: false
+  exact_provider_claim_required_before_mutation: true
+  claim_does_not_replace_resolved_release_authority: true
+  hq_targeting_owner_lane_requires_owner_delegation: true
+  owner_targeting_hq_lane_requires_intervention_mode: 'owner_takeover'
+  owner_takeover_requires_explicit_current_user_instruction: true
+  owner_takeover_requires_hq_park_fence_and_reconciliation: true
+tax_rules:
+  contract_ref: 'docs/munops/ops/tax-purchase-evidence.md'
+  business_registration_is_not_automatic_discount: true
+  checkout_tax_and_input_vat_are_separate: true
+  raw_tax_id_or_payment_data_in_git_forbidden: true
+  paid_action_requires_current_checkout_evidence_before_approval: true
+  paid_done_requires_invoice_and_ledger_reconciliation: true
