@@ -40,7 +40,9 @@ export default function WebDecoder({
 }: Props) {
   const [hydrated, setHydrated] = useState(false)
   const sampleGeneration = useRef(0)
-  const pendingSampleValue = useRef<string>(initialExampleLabel ? initialInput : undefined)
+  const pendingSampleValue = useRef<string | undefined>(
+    initialExampleLabel ? initialInput : undefined,
+  )
   const generatedExampleFile = useRef<File>()
   useEffect(() => setHydrated(true), [])
   const [example, setExample] = useState(
