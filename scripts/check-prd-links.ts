@@ -7,7 +7,7 @@ const missing: string[] = []
 for (const file of files) {
   const source = readFileSync(file, 'utf8')
   for (const match of source.matchAll(/\[[^\]]*]\(([^)]+)\)/g)) {
-    const target = match[1]?.split('#')[0]
+    const target = match[1]?.replace(/^<([^>]+)>$/, '$1').split('#')[0]
     if (!target || /^(?:https?:|mailto:)/.test(target)) continue
     if (!existsSync(resolve(dirname(file), decodeURIComponent(target))))
       missing.push(`${file} -> ${target}`)
