@@ -37,10 +37,10 @@ test('QR examples stay labelled and late generation cannot replace the visitor�
   await expect(page.locator('.answer-final')).toBeVisible()
   await expect(page.locator('.example-context')).toBeVisible()
   await page.locator('[data-sample-id="qr"]').click()
-  await page.locator('#decoder-input').fill(Buffer.from('keep-my-text').toString('base64'))
-  await expect(page.locator('.answer-final .output-view')).toContainText('keep-my-text')
+  await page.locator('#decoder-input').fill(Buffer.from('내 글: 안녕하세요').toString('base64'))
+  await expect(page.locator('.answer-final .output-view')).toContainText('내 글: 안녕하세요')
   await page.waitForTimeout(900) // Outlive the intentionally delayed QR generation.
-  await expect(page.locator('.answer-final .output-view')).toContainText('keep-my-text')
+  await expect(page.locator('.answer-final .output-view')).toContainText('내 글: 안녕하세요')
   await expect(page.locator('.example-context')).toHaveCount(0)
 })
 
@@ -53,8 +53,8 @@ test('example becomes an empty focused input for the visitor’s own value', asy
   await expect(page.locator('#decoder-input')).toBeFocused()
   await expect(page.locator('.example-context')).toHaveCount(0)
   await expect(page.locator('.answer-final')).toHaveCount(0)
-  await page.locator('#decoder-input').fill(Buffer.from('visitor-owned-value').toString('base64'))
-  await expect(page.locator('.answer-final .output-view')).toContainText('visitor-owned-value')
+  await page.locator('#decoder-input').fill(Buffer.from('내 값: 안녕하세요').toString('base64'))
+  await expect(page.locator('.answer-final .output-view')).toContainText('내 값: 안녕하세요')
   await expect(page.locator('.example-context')).toHaveCount(0)
 })
 
