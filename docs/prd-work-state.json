@@ -3,15 +3,15 @@
   "product": "decoding-v6",
   "note": "이 파일은 작업 단위의 정본이 아니다. 실행 순서 SSOT는 docs/prd/CHECKLIST.md이고, 여기에는 포트폴리오 provenance 판정(scripts/check-release-provenance.mjs)이 요구하는 '지금 무엇이 배포돼 있는가'만 둔다. 값은 provider read-back과 실서비스 /healthz 실측으로만 갱신한다.",
   "workUnitOwner": "docs/prd/CHECKLIST.md",
-  "sourceRevision": "e0afc68ab79a8ce0618e49071090e59778be678e",
+  "sourceRevision": "6684b871544602f27ad6e0d6fbb669eb7adb6d39",
   "environments": [
     {
       "name": "production",
       "status": "released",
       "url": "https://decod.ing",
-      "revision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
-      "workerVersionId": "eb355be7-d553-4447-b333-2d938f89fe45",
-      "verifiedAt": "2026-09-04T21:51:42+09:00",
+      "revision": "6684b871544602f27ad6e0d6fbb669eb7adb6d39",
+      "workerVersionId": "b77d8054-e9aa-4a99-82a0-c1897954445a",
+      "verifiedAt": "2026-11-16T10:03:34.606Z",
       "evidence": [
         "DC-VISUAL-EVIDENCE-01 runtime source=3233ef31b91c2b4d9a70c76de609d1ed253b86ac; Cloudflare deployment=69495344-6a72-414d-9783-bf5a26515134, version=eb355be7-d553-4447-b333-2d938f89fe45 (100%)",
         "canonical/www/technical /healthz exact revision match; clean-profile 320/390/1440 first visit and core/unsupported/worker-error evidence captured from that runtime",
@@ -32,7 +32,8 @@
         "managed browser b2193a67-3900-4321-8b20-a3d2ff411b6e: 320/390/1440 × Korean 4 routes, overflow/clipping/mid-word/orphan 0, local JSON operation 통과",
         "배포 전 check:i18n·lint·typecheck·37 unit tests·486-page build 통과",
         "provider version binding BUILD_SHA exact match; ASSETS·기존 EVENTS 외 새 resource/binding 0",
-        "release evidence: docs/evidence/web-product-language-release-2026-08-24.md"
+        "release evidence: docs/evidence/web-product-language-release-2026-08-24.md",
+        "docs/evidence/completion-2026-10/decoding-return-20261116/release.json"
       ]
     }
   ],
@@ -85,7 +86,7 @@
     },
     {
       "id": "DEC-RETURN-001",
-      "status": "in_progress",
+      "status": "done",
       "readiness": "item_ready",
       "summary": "DEC-RETURN-001",
       "origin": {
@@ -93,11 +94,14 @@
         "requestId": "DECODING-COMPLETE-20261116-OWNER-01",
         "outcomeIds": ["DEC-RETURN-001"]
       },
-      "evidenceRefs": ["docs/product/product-card.md"]
+      "evidenceRefs": [
+        "docs/product/product-card.md",
+        "docs/evidence/completion-2026-10/decoding-return-20261116/release.json"
+      ]
     },
     {
       "id": "DEC-FIRST-001",
-      "status": "in_progress",
+      "status": "done",
       "readiness": "item_ready",
       "summary": "DEC-FIRST-001",
       "origin": {
@@ -105,11 +109,14 @@
         "requestId": "DECODING-COMPLETE-20261116-OWNER-01",
         "outcomeIds": ["DEC-FIRST-001"]
       },
-      "evidenceRefs": ["docs/product/product-card.md"]
+      "evidenceRefs": [
+        "docs/product/product-card.md",
+        "docs/evidence/completion-2026-10/decoding-return-20261116/release.json"
+      ]
     },
     {
       "id": "DEC-DISCOVERY-001",
-      "status": "in_progress",
+      "status": "done",
       "readiness": "item_ready",
       "summary": "DEC-DISCOVERY-001",
       "origin": {
@@ -117,12 +124,15 @@
         "requestId": "DECODING-COMPLETE-20261116-OWNER-01",
         "outcomeIds": ["DEC-DISCOVERY-001"]
       },
-      "evidenceRefs": ["docs/product/product-card.md"]
+      "evidenceRefs": [
+        "docs/product/product-card.md",
+        "docs/evidence/completion-2026-10/decoding-return-20261116/release.json"
+      ]
     }
   ],
   "workPlan": {
     "schemaVersion": 1,
-    "revision": 3,
+    "revision": 4,
     "requestId": "DECODING-COMPLETE-20261116-OWNER-01",
     "requestDigest": "853bf73cb641642c0f19c971921e20c0515ba18e2eb67ecd4185463fad77b0b1",
     "request": {
@@ -288,8 +298,8 @@
         "traceability": "docs/prd/CHECKLIST.md"
       },
       "ownerDigests": {
-        "masterChecklist": "6e9aafc1d36c5cb333b94bb0060ee43070a81b2c8a72295ef478ff6e626ba3bd",
-        "traceability": "6e9aafc1d36c5cb333b94bb0060ee43070a81b2c8a72295ef478ff6e626ba3bd"
+        "masterChecklist": "6e2c30e339df973333095ea837f144d41082a8bc423d6e58102a24fd9e69c014",
+        "traceability": "6e2c30e339df973333095ea837f144d41082a8bc423d6e58102a24fd9e69c014"
       },
       "outcomeWorkItemIds": {
         "DIRECTION": ["COMPLETE-FB-FEB64171066A45A8"],
@@ -297,8 +307,8 @@
         "DEC-FIRST-001": ["DEC-FIRST-001"],
         "DEC-DISCOVERY-001": ["DEC-DISCOVERY-001"]
       },
-      "workItemsDigest": "a9f37277ec63920167a6955663a3987467141c17f345f2d7c5955b3dc6da58d9"
+      "workItemsDigest": "41612f13b2f3d5c55185e838471285a6e024ddaa9a2cf28dab54f115e69ab228"
     },
-    "digest": "278f76d205f4045820a3878e36f353b2c44ab27f8b0d9dba1766f77690eb8d5f"
+    "digest": "93dea112b242a1013306e3a8edcd704ec932f8603803ca686f9ef596145198e6"
   }
 }

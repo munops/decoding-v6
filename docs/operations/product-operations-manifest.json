@@ -248,7 +248,7 @@
       "decision": "selected",
       "status": "done",
       "stage": "released",
-      "evidence": []
+      "evidence": ["docs/evidence/completion-2026-10/decoding-return-20261116/release.json"]
     },
     "appsInToss": {
       "decision": "not_applicable",

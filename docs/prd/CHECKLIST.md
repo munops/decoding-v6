@@ -440,7 +440,7 @@ Google 소유 확인/사이트맵 완료는 11월 15일 오너 인계의 보고�
 
 ### 현재 요청과 작업계획
 
-- 요청: DECODING-COMPLETE-20261116-OWNER-01 · 계획 revision: 3 · 범위: complete_product
+- 요청: DECODING-COMPLETE-20261116-OWNER-01 · 계획 revision: 4 · 범위: complete_product
 - 목표: Improve service readiness through first-use, discovery and repeat-use gaps; implement, verify and release existing web preserving privacy/provider gates.
 - 증거 경계: 계획 동기화이며 구현·검증·배포·사용자 가치 완료 선언이 아님
 
