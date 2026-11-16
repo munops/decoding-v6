@@ -131,7 +131,7 @@
     },
     {
       "id": "COMPLETE-FB-245ECDE5756B2160",
-      "status": "in_progress",
+      "status": "completed",
       "readiness": "item_ready",
       "acceptance": "Foreign competitor discovery, primary and user sources, identical-task testing and three directions; bind evidence-backed changes and release scope without inventing demand.",
       "origin": {
@@ -140,7 +140,10 @@
         "feedbackId": "DECODING-MARKET-REBUILD-20261116-01",
         "eventDigest": "245ecde5756b2160904e5a3b334249ac43812ccd1b3a70a18d381785f23505cd"
       },
-      "evidenceRefs": ["docs/product/product-card.md"]
+      "evidenceRefs": [
+        "docs/evidence/completion-2026-10/market-20261116/release.json",
+        "docs/evidence/completion-2026-10/market-20261116/research.md"
+      ]
     },
     {
       "id": "DEC-MARKET-001",
@@ -152,39 +155,45 @@
         "requestId": "DECODING-MARKET-REBUILD-20261116-01",
         "outcomeIds": ["DEC-MARKET-001"]
       },
-      "evidenceRefs": ["docs/evidence/completion-2026-10/market-20261116/research.md"]
+      "evidenceRefs": [
+        "docs/evidence/completion-2026-10/market-20261116/release.json",
+        "docs/evidence/completion-2026-10/market-20261116/research.md"
+      ]
     },
     {
       "id": "DEC-RESULT-001",
-      "status": "in_progress",
-      "readiness": "item_ready_with_constraints",
-      "summary": "Readable default, explicit chosen layer, copy/save and prefix reproduction aligned; focused tests pass, final release pending",
+      "status": "completed",
+      "readiness": "item_ready",
+      "summary": "Readable recommendation, explicit layer choice and selected copy/save/edit/tool/reproduction verified on deployed source05b9542",
       "origin": {
         "kind": "work_request",
         "requestId": "DECODING-MARKET-REBUILD-20261116-01",
         "outcomeIds": ["DEC-RESULT-001"]
       },
       "evidenceRefs": [
-        "packages/workbench-ui/test/answer.test.ts",
-        "packages/workbench-ui/test/market-tasks.test.ts"
+        "docs/evidence/completion-2026-10/market-20261116/release.json",
+        "docs/evidence/completion-2026-10/market-20261116/research.md"
       ]
     },
     {
       "id": "DEC-WORKFLOW-001",
-      "status": "in_progress",
-      "readiness": "item_ready_with_constraints",
-      "summary": "Whole MIME subject and garbled-text journey, actionable recovery, JWT handoff/verification race protection and example-free completion counts; final validation/release pending",
+      "status": "completed",
+      "readiness": "item_ready",
+      "summary": "Whole-subject and garbled-text recovery, local JWT verification, example counting and cold/retry/readiness flows deployed and verified",
       "origin": {
         "kind": "work_request",
         "requestId": "DECODING-MARKET-REBUILD-20261116-01",
         "outcomeIds": ["DEC-WORKFLOW-001"]
       },
-      "evidenceRefs": ["tests/e2e/return-paths.spec.ts"]
+      "evidenceRefs": [
+        "docs/evidence/completion-2026-10/market-20261116/release.json",
+        "docs/evidence/completion-2026-10/market-20261116/research.md"
+      ]
     }
   ],
   "workPlan": {
     "schemaVersion": 1,
-    "revision": 6,
+    "revision": 7,
     "requestId": "DECODING-MARKET-REBUILD-20261116-01",
     "requestDigest": "00c78a2e64e97461bb3267695444370d29d2bf8f6fc0cb843ede2f3ea69eba7a",
     "request": {
@@ -416,8 +425,8 @@
         "traceability": "docs/prd/CHECKLIST.md"
       },
       "ownerDigests": {
-        "masterChecklist": "d5036ed3badece237715d7cd25fa3de1a06c4804d6a11af8be824150f7a422e1",
-        "traceability": "d5036ed3badece237715d7cd25fa3de1a06c4804d6a11af8be824150f7a422e1"
+        "masterChecklist": "30b8fc4747988fc136d61de69b271dea728561c39d8246d036dc84323ac204ca",
+        "traceability": "30b8fc4747988fc136d61de69b271dea728561c39d8246d036dc84323ac204ca"
       },
       "outcomeWorkItemIds": {
         "DIRECTION": ["COMPLETE-FB-245ECDE5756B2160"],
@@ -425,8 +434,8 @@
         "DEC-RESULT-001": ["DEC-RESULT-001"],
         "DEC-WORKFLOW-001": ["DEC-WORKFLOW-001"]
       },
-      "workItemsDigest": "53e0b67c28775bc65126305e4e0ac199d3473ebe8fd25bc883e81518ee17c944"
+      "workItemsDigest": "b9b5e518e63f4a808ee33438a287747a36014e6a12ba42352435d206f4486fbf"
     },
-    "digest": "622e13307089e235db8025ee201946d7fd57f1f2af681bfef0ebd7ce165c70bf"
+    "digest": "d15406f0a87fe1b856e3aa06712a8c85d829c417f6f520bfe1c891c9ac8362af"
   }
 }

@@ -440,7 +440,7 @@ Google 소유 확인/사이트맵 완료는 11월 15일 오너 인계의 보고�
 
 ### 현재 요청과 작업계획
 
-- 요청: DECODING-MARKET-REBUILD-20261116-01 · 계획 revision: 6 · 범위: complete_product
+- 요청: DECODING-MARKET-REBUILD-20261116-01 · 계획 revision: 7 · 범위: complete_product
 - 목표: Review overseas alternatives and actual user situations thoroughly, select defensible improvements, implement and verify existing web release.
 - 증거 경계: 계획 동기화이며 구현·검증·배포·사용자 가치 완료 선언이 아님
 
