@@ -1,9 +1,9 @@
 schema_version: 6
-wave_id: 'DECODING-FOOTER-20261116'
+wave_id: 'DECODING-FOOTER-20261116-R2'
 status: approved
-source_revision: '5baeff9b0a8c28dd7a44afe5cecb6a0e9c8045e6'
-prepared_at: '2026-11-16T03:42:18.217Z'
-expires_at: '2026-11-16T04:37:47.857Z'
+source_revision: 'e0afc68ab79a8ce0618e49071090e59778be678e'
+prepared_at: '2026-11-16T04:07:34.982Z'
+expires_at: '2026-11-16T05:04:22.110Z'
 legal_entity_ref: 'hq/bootstrap/identity.yaml'
 execution_lane: 'owner_lane'
 approval_authority: 'human_owner'
@@ -21,7 +21,7 @@ work_claim:
     provider:cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6: 8
     provider:github:munops/decoding-v6: 7
     repo:decoding-v6: 76
-  asserted_at: '2026-11-16T03:42:18.217Z'
+  asserted_at: '2026-11-16T04:07:34.982Z'
   released_at: null
   release_evidence_ref: 'docs/evidence/decoding-ui-feedback-20261116.md'
 intervention_mode: 'normal'
@@ -30,19 +30,19 @@ approval:
   mode: 'standing_delegation'
   standing_delegation_ref: 'docs/munops/ops/owner-standing-delegation.json#zeroCostProviderExecution'
   standing_delegation_id: 'MUNOPS-OWNER-STANDING-EXECUTION-20260826'
-  resolved_at: '2026-11-16T03:42:18.217Z'
-  approved_at: '2026-11-16T03:42:18.217Z'
+  resolved_at: '2026-11-16T04:07:34.982Z'
+  approved_at: '2026-11-16T04:07:34.982Z'
   approved_action_ids:
-    - 'DECODING-FOOTER-SOURCE-20261116'
-    - 'DECODING-FOOTER-WEB-20261116'
+    - 'DECODING-FOOTER-SOURCE-20261116-R2'
+    - 'DECODING-FOOTER-WEB-20261116-R2'
   owner_evidence_ref: 'conversation:DECODING-UI-FEEDBACK-20261116:fix-footer-and-input-spacing'
   approval_clock_status: 'Standing delegation resolved now; this is not a newly invented human action-time approval.'
   resolution_policy_version: 1
   action_exact_fields_digests:
-    DECODING-FOOTER-SOURCE-20261116: 'd6ecfafab22deae2189a9ac8f43d20e7df45dd18a1b0e2226d5bf8d2dba999ec'
-    DECODING-FOOTER-WEB-20261116: 'b4167d3e9ed71c221186da42e4c77451fde582311fa63e7e47d7001d2cd75862'
+    DECODING-FOOTER-SOURCE-20261116-R2: '0d1a181bf634d71695a719dce1ebec47874d5c73f52f0e0795afea51520354cb'
+    DECODING-FOOTER-WEB-20261116-R2: '51733d0e117cd0527f45aed494bea98587f1184ac9c18f9935c6da7588e2fbe5'
 actions:
-  - action_id: 'DECODING-FOOTER-SOURCE-20261116'
+  - action_id: 'DECODING-FOOTER-SOURCE-20261116-R2'
     approval_readiness: 'approved'
     approval_class: 'P-REPORT'
     standing_delegation_eligible: true
@@ -50,7 +50,7 @@ actions:
     product: 'decoding-v6'
     channel: 'source'
     provider: 'github'
-    exact_mutation: 'Fast-forward existing munops/decoding-v6 main from ae4350f82f6d261adaa7ba43a69404a6cbef64d6 through footer/input source 5baeff9b0a8c28dd7a44afe5cecb6a0e9c8045e6 and only this wave/local-delivery metadata. No force, branch, visibility or workflow change.'
+    exact_mutation: 'Fast-forward existing munops/decoding-v6 main from a41199fac991e2f21ae69a8e39f0612345ee83a7 through footer/input source e0afc68ab79a8ce0618e49071090e59778be678e and only this wave/local-delivery metadata. No force, branch, visibility or workflow change.'
     account_ref: 'docs/munops/ops/provider-registry.yaml#accounts.github_primary'
     resource_ref: 'github:munops/decoding-v6:refs/heads/main'
     claim_resource_refs:
@@ -61,8 +61,8 @@ actions:
       applicability: 'source_only'
       candidate:
         source_repository: 'munops/decoding-v6'
-        source_before_sha: 'ae4350f82f6d261adaa7ba43a69404a6cbef64d6'
-        candidate_sha: '5baeff9b0a8c28dd7a44afe5cecb6a0e9c8045e6'
+        source_before_sha: 'a41199fac991e2f21ae69a8e39f0612345ee83a7'
+        candidate_sha: 'e0afc68ab79a8ce0618e49071090e59778be678e'
         artifact_sha256: null
         release_entrypoint: null
       identity_transition:
@@ -91,7 +91,7 @@ actions:
       first_charge: 0
       recurrence: 'none'
       renewal_or_cap: 0
-      checked_at: '2026-11-16T03:42:18.217Z'
+      checked_at: '2026-11-16T04:07:34.982Z'
       checkout_evidence_refs: []
     tax:
       seller_legal_entity: null
@@ -127,7 +127,7 @@ actions:
     status: 'ready'
     provider_readback: null
     channel_smoke: null
-    artifact_digest: '851265bb6c721135618349f39b103e9bd91d0a213333cb5968564dc6dd664cb2'
+    artifact_digest: 'dbb94f4b1b36e7512394fb460bb1aeb6e4b2f88670a1fd45a925d006c53a8d2f'
     authorization:
       actionType: 'existing_branch_push'
       effects:
@@ -163,7 +163,7 @@ actions:
         providerReadbackPlanRef: 'git ls-remote origin refs/heads/main must equal the clean metadata HEAD after FF push.'
         channelSmokePlanRef: 'Source-only: branch SHA read-back; Web smoke belongs to the dependent web release.'
         receiptPlanRef: 'docs/evidence/decoding-ui-feedback-20261116.md'
-  - action_id: 'DECODING-FOOTER-WEB-20261116'
+  - action_id: 'DECODING-FOOTER-WEB-20261116-R2'
     approval_readiness: 'approved'
     approval_class: 'P-REPORT'
     standing_delegation_eligible: true
@@ -171,7 +171,7 @@ actions:
     product: 'decoding-v6'
     channel: 'web'
     provider: 'cloudflare_workers'
-    exact_mutation: 'Deploy only footer layout and 12px input-label spacing runtime 5baeff9b0a8c28dd7a44afe5cecb6a0e9c8045e6, artifact 851265bb6c721135618349f39b103e9bd91d0a213333cb5968564dc6dd664cb2, to existing decoding-v6 Worker. Keep manifest identity, bindings, routes, DNS, secrets, permissions, data, billing and native/npm channels unchanged.'
+    exact_mutation: 'Deploy only footer layout and 12px input-label spacing runtime e0afc68ab79a8ce0618e49071090e59778be678e, artifact dbb94f4b1b36e7512394fb460bb1aeb6e4b2f88670a1fd45a925d006c53a8d2f, to existing decoding-v6 Worker. Keep manifest identity, bindings, routes, DNS, secrets, permissions, data, billing and native/npm channels unchanged.'
     account_ref: 'docs/munops/ops/provider-registry.yaml#accounts.cloudflare_primary'
     resource_ref: 'cloudflare:account:69abd904cab5ffd103e569e7e050a884:worker:decoding-v6'
     claim_resource_refs:
@@ -181,7 +181,7 @@ actions:
     artifact:
       format: 'cloudflare_worker_with_static_assets'
       local_ref: 'apps/web/dist'
-      sha256: '851265bb6c721135618349f39b103e9bd91d0a213333cb5968564dc6dd664cb2'
+      sha256: 'dbb94f4b1b36e7512394fb460bb1aeb6e4b2f88670a1fd45a925d006c53a8d2f'
       build_command: 'pnpm build'
       digest_method: 'SHA256 of sorted per-file SHA256, two spaces, relative path and LF'
       built_from_clean_runtime_commit: true
@@ -190,8 +190,8 @@ actions:
       candidate:
         source_repository: 'munops/decoding-v6'
         source_before_sha: '5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb'
-        candidate_sha: '5baeff9b0a8c28dd7a44afe5cecb6a0e9c8045e6'
-        artifact_sha256: '851265bb6c721135618349f39b103e9bd91d0a213333cb5968564dc6dd664cb2'
+        candidate_sha: 'e0afc68ab79a8ce0618e49071090e59778be678e'
+        artifact_sha256: 'dbb94f4b1b36e7512394fb460bb1aeb6e4b2f88670a1fd45a925d006c53a8d2f'
         release_entrypoint: 'DECODING_RELEASE_WAVE=docs/operations/release-wave-decoding-footer-20261116.yaml DECODING_DELIVERY_TARGET=production pnpm delivery:web:deploy -- --execute'
       identity_transition:
         mode: 'preserve'
@@ -204,16 +204,16 @@ actions:
         migration_action_id: null
       browser_gate:
         mode: 'release'
-        source_sha: '5baeff9b0a8c28dd7a44afe5cecb6a0e9c8045e6'
-        artifact_sha256: '851265bb6c721135618349f39b103e9bd91d0a213333cb5968564dc6dd664cb2'
+        source_sha: 'e0afc68ab79a8ce0618e49071090e59778be678e'
+        artifact_sha256: 'dbb94f4b1b36e7512394fb460bb1aeb6e4b2f88670a1fd45a925d006c53a8d2f'
         target_environment: 'production'
         build_environment: 'production'
         assertion_profile: 'production'
         fresh_server_required: true
         reuse_existing_server: false
-        capture_receipt_sha256: '7721b19873465f82254f5ab0c0bcb3e07fdbc72e45dfaea8a1d3f9be85285499'
-        server_identity_receipt_sha256: 'cd5cd3e2e4780b722e684359bdb86371e3e0f111a09eeb6e1f588e25237b34e8'
-        server_identity_receipt_payload: '{"source_sha":"5baeff9b0a8c28dd7a44afe5cecb6a0e9c8045e6","artifact_sha256":"851265bb6c721135618349f39b103e9bd91d0a213333cb5968564dc6dd664cb2","target_environment":"production","build_environment":"production","assertion_profile":"production","fresh_server_required":true,"reuse_existing_server":false,"capture_receipt_sha256":"7721b19873465f82254f5ab0c0bcb3e07fdbc72e45dfaea8a1d3f9be85285499"}'
+        capture_receipt_sha256: '08ff99f2ea9c53a5104e25419e9179f53be454b672cec37690c8d391b70ffce5'
+        server_identity_receipt_sha256: '391429f6aa7296ff412eee0daa6578df6272295649e71cbf1b423bfe78924cff'
+        server_identity_receipt_payload: '{"source_sha":"e0afc68ab79a8ce0618e49071090e59778be678e","artifact_sha256":"dbb94f4b1b36e7512394fb460bb1aeb6e4b2f88670a1fd45a925d006c53a8d2f","target_environment":"production","build_environment":"production","assertion_profile":"production","fresh_server_required":true,"reuse_existing_server":false,"capture_receipt_sha256":"08ff99f2ea9c53a5104e25419e9179f53be454b672cec37690c8d391b70ffce5"}'
       provider_before:
         applicability: 'deployment'
         deployment_id: 'aa53f6c6-6182-4052-b03d-0a07da5b2acc'
@@ -232,7 +232,7 @@ actions:
       first_charge: 0
       recurrence: 'none'
       renewal_or_cap: 0
-      checked_at: '2026-11-16T03:42:18.217Z'
+      checked_at: '2026-11-16T04:07:34.982Z'
       checkout_evidence_refs: []
     tax:
       seller_legal_entity: null
@@ -269,7 +269,7 @@ actions:
     provider_readback: null
     channel_smoke: null
     channel_smoke_plan: 'Within10min canonical HTTP200/exact source/new native version and actual-view390 first value; same-origin names-only count receive; actual key/payload never transmitted.'
-    artifact_digest: '851265bb6c721135618349f39b103e9bd91d0a213333cb5968564dc6dd664cb2'
+    artifact_digest: 'dbb94f4b1b36e7512394fb460bb1aeb6e4b2f88670a1fd45a925d006c53a8d2f'
     authorization:
       actionType: 'deploy'
       effects:
