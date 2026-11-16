@@ -17,3 +17,11 @@
 로컬 Astro check: 122 files, 0 errors/warnings/hints. 실제 브라우저에서 KO/EN 각각 320/390/1440px의 overflow=0, 입력 간격=12px, 모든 링크/설정 target≥44px, 링크 13개(브랜드 포함) 유지. 320px root 200% reflow overflow=0. 실제 Hello 합성 디코딩·횟수 toggle/복원·privacy 링크 이동 통과. KO 390px 푸터 약 474→385px, desktop 약 287→241px. 배포는 아직 준비 중이다. 폰트 수정 없음으로 planner의 global.css 파일 수준 font_delivery 감지는 이번 diff에 해당하지 않는다. 영향 selector의 실제 EN/KO·320/390/1440·320px 200% reflow와 target build를 확인한다. 전체 제품의 가치/수익이나 미출시 native 채널 완료를 주장하지 않는다.
 
 `validate:changed`는 기존 validation manifest가 현재 package scripts/lockfile/Node 계약보다 오래되어 `MANIFEST_STALE`로 실행 전에 중단됐다. 이번 diff는 package/lockfile/Node/폰트를 바꾸지 않는다. 기존 오류를 통과로 표시하지 않고 직접 Astro check와 selector/browser 검증을 수행했다. 릴리스 entrypoint의 기존 필수 verify/E2E는 유지한다.
+
+## 최종 공개 검증
+
+Runtime `e0afc68ab79a8ce0618e49071090e59778be678e`, Cloudflare version `4778d4e5-3acc-407c-aa27-9c0ba9894e30`, 100% traffic. [출시 영수증](decoding-ui-feedback-20261116/release.json). 기존 계정/Worker/binding/앱 이름은 유지했다. 세 origin health가 같은 SHA로 HTTP 200이며 실제 공개 6개 viewport·320px root 200%·12px 간격·모바일 브랜드 이름·44px target 및 실제 decode/privacy smoke를 확인했다.
+
+최종 `pnpm verify` 302 unit/30 files, 143.6 KiB 초기 gzip, 1 MiB 첫 p75 29.7ms/전체 44.6ms. 표준 release E2E 105 pass/2 명시적 skip, trust strict/live errors 0 warnings 0. 초기 두 브라우저 실패와 unchanged focused retry pass는 원본 로그·trace로 보존하며 최종 전체 green을 대신하지 않았다. 출시 전 문서 검사기는 정상 angle-wrapped Markdown 링크를 오독해 한 줄 보정했다. 최초 부정확한 release status 문자열과 임시 helper lint 문제도 실제 provider upload 이전에 수정했다.
+
+이전 6개 first-viewport 중심 캡처가 푸터·입력 간격의 마감을 증명하지 못한 점은 이번 실제 target 관측으로 보완했다. 전체 제품 품질·실기기·실제 화면낭독·자연 사용·매출을 이번 제한된 수정으로 완료 처리하지 않는다.

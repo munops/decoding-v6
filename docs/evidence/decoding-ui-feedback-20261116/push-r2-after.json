@@ -1,0 +1,9 @@
+{
+  "checkedAt": "2026-11-16T04:07:43.149Z",
+  "state": "verified",
+  "sourceRevision": "e0afc68ab79a8ce0618e49071090e59778be678e",
+  "pushedHead": "d2c180751ad38545615253ddd7f94fe34e6c15ec",
+  "remote": "github:munops/decoding-v6:refs/heads/main",
+  "force": false,
+  "visibilityChanged": false
+}

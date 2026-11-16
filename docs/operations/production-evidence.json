@@ -1,10 +1,10 @@
 {
   "schemaVersion": 2,
   "productId": "decoding-v6",
-  "checkedAt": "2026-11-15T23:00:42.301Z",
+  "checkedAt": "2026-11-16T04:27:16.998Z",
   "status": "in_progress",
   "evidenceLevel": "release_verified",
-  "sourceRevision": "5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb",
+  "sourceRevision": "e0afc68ab79a8ce0618e49071090e59778be678e",
   "scope": {
     "productionEnvironment": "Cloudflare Worker decoding-v6 on decod.ing",
     "publicProduct": true,
@@ -34,48 +34,48 @@
         "command": "pnpm verify (format, lint, typecheck and policy gates)",
         "result": "pass",
         "exitCode": 0,
-        "checkedAt": "2026-11-15T23:00:42.301Z",
-        "evidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json"
+        "checkedAt": "2026-11-16T04:27:16.998Z",
+        "evidenceRef": "docs/evidence/decoding-ui-feedback-20261116/release.json"
       },
       {
         "layer": "unit",
         "command": "pnpm verify: 302 unit cases",
         "result": "pass",
         "exitCode": 0,
-        "checkedAt": "2026-11-15T23:00:42.301Z",
-        "evidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json"
+        "checkedAt": "2026-11-16T04:27:16.998Z",
+        "evidenceRef": "docs/evidence/decoding-ui-feedback-20261116/release.json"
       },
       {
         "layer": "integration",
         "command": "node scripts/verify-deploy.mjs https://decod.ing",
         "result": "pass",
         "exitCode": 0,
-        "checkedAt": "2026-11-15T23:00:42.301Z",
-        "evidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json"
+        "checkedAt": "2026-11-16T04:27:16.998Z",
+        "evidenceRef": "docs/evidence/decoding-ui-feedback-20261116/release.json"
       },
       {
         "layer": "e2e",
-        "command": "pnpm test:e2e: 105 passed/2 explicit skips; public-origin focused profile: 40 passed",
+        "command": "pnpm test:e2e:105 passed/2 explicit skips; public UI EN/KO 320/390/1440 and 320px root 200%",
         "result": "pass",
         "exitCode": 0,
-        "checkedAt": "2026-11-15T23:00:42.301Z",
-        "evidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json"
+        "checkedAt": "2026-11-16T04:27:16.998Z",
+        "evidenceRef": "docs/evidence/decoding-ui-feedback-20261116/release.json"
       },
       {
         "layer": "build",
         "command": "pnpm build: 1511 static pages plus CLI/extension/desktop build; 143.6 KiB initial gzip",
         "result": "pass",
         "exitCode": 0,
-        "checkedAt": "2026-11-15T23:00:42.301Z",
-        "evidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json"
+        "checkedAt": "2026-11-16T04:27:16.998Z",
+        "evidenceRef": "docs/evidence/decoding-ui-feedback-20261116/release.json"
       },
       {
         "layer": "security",
         "command": "production canary egress/storage, same-origin request and exact health/version read-back",
         "result": "pass",
         "exitCode": 0,
-        "checkedAt": "2026-11-15T23:00:42.301Z",
-        "evidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json"
+        "checkedAt": "2026-11-16T04:27:16.998Z",
+        "evidenceRef": "docs/evidence/decoding-ui-feedback-20261116/release.json"
       }
     ],
     "aiEvaluationEvidenceRef": null,
@@ -101,20 +101,20 @@
     "status": "done",
     "target": "WCAG-2.2-AA",
     "planRef": "docs/prd/05-uiux.md",
-    "automatedEvidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
-    "manualEvidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
+    "automatedEvidenceRef": "docs/evidence/decoding-ui-feedback-20261116/release.json",
+    "manualEvidenceRef": "docs/evidence/decoding-ui-feedback-20261116.md",
     "representativeFlows": [
       "clean-profile English landing at 320, 390 and 1440",
       "local synthetic nested decode",
       "unsupported and worker-error recovery"
     ],
     "knownViolations": [],
-    "scope": "Eight automated routes, keyboard/text reflow and independent image review; actual phone and screen-reader listening remain A14 external gates. Target is not a certification."
+    "scope": "Eight automated routes, keyboard/root text-reflow checks and actual target image inspection. No independent whole-product audit, actual phone or screen-reader listening claimed. Target is not a certification."
   },
   "performance": {
     "status": "done",
     "budgetRef": "docs/prd/06-architecture.md",
-    "labEvidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
+    "labEvidenceRef": "docs/evidence/decoding-ui-feedback-20261116/release.json",
     "fieldEvidenceRef": null,
     "webVitalsTarget": {
       "percentile": 75,
@@ -153,26 +153,26 @@
     "incidentOwner": "owner_lane",
     "costCapReadbackRef": "docs/evidence/web-product-language-release-2026-08-24.md",
     "killSwitchEvidenceRef": "docs/evidence/web-product-language-release-2026-08-24.md",
-    "releaseReadbackRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
+    "releaseReadbackRef": "docs/evidence/decoding-ui-feedback-20261116/release.json",
     "fieldMonitoringStatus": "data_pending",
     "scope": "Release/configuration readiness and unchanged historical runbook/alerts; fresh field/alert/cost read-back is not claimed."
   },
   "delivery": {
     "status": "done",
-    "releasePlanRef": "docs/operations/release-wave-decoding-improve-20261116.yaml",
+    "releasePlanRef": "docs/operations/release-wave-decoding-footer-20261116.yaml",
     "artifact": {
       "name": "apps/web/dist Cloudflare static assets",
-      "sha256": "7a1a7401fdf69944f074b93c5ea4f1079dc70b06d0040e7efc29ca214e0f8da0",
-      "sourceRevision": "5e3ba4d8d4e7cd55d444a48010cd9aff15428eeb",
+      "sha256": "dbb94f4b1b36e7512394fb460bb1aeb6e4b2f88670a1fd45a925d006c53a8d2f",
+      "sourceRevision": "e0afc68ab79a8ce0618e49071090e59778be678e",
       "provenanceKind": "reproducible_build_manifest",
-      "provenanceRef": "docs/evidence/decoding-improve-20261115/release-20261116/artifact-manifest.json.gz"
+      "provenanceRef": "docs/evidence/decoding-ui-feedback-20261116/candidate.json.gz"
     },
-    "previewSmokeRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
-    "providerReadbackRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
-    "realEntrypointSmokeRef": "docs/evidence/decoding-improve-20261115/release-20261116/capture-receipt.json",
-    "releaseEvidenceRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
+    "previewSmokeRef": "docs/evidence/decoding-ui-feedback-20261116/release.json",
+    "providerReadbackRef": "docs/evidence/decoding-ui-feedback-20261116/release.json",
+    "realEntrypointSmokeRef": "docs/evidence/decoding-ui-feedback-20261116/release.json",
+    "releaseEvidenceRef": "docs/evidence/decoding-ui-feedback-20261116/release.json",
     "rollback": {
-      "target": "Cloudflare version 13c4f167-2d55-41b4-ad1c-2a5d747a1a96",
+      "target": "Cloudflare version c0075d8d-b5b1-4996-8124-3f07ff01141a",
       "planRef": "docs/operations/local-delivery-runbook.md",
       "drillRef": "docs/operations/release-wave-dc-visual-evidence-2026-09-04.yaml",
       "scope": "Target availability read back; no current rollback drill or rollback invocation is claimed. Historical drill ref stays historical."
@@ -180,12 +180,12 @@
     "execution": {
       "origin": "local_explicit",
       "entrypoint": "pnpm delivery:web:deploy -- --execute",
-      "receiptRef": "docs/evidence/decoding-improve-20261115/release-20261116.json"
+      "receiptRef": "docs/evidence/decoding-ui-feedback-20261116/release.json"
     },
     "verification": {
       "origin": "local",
       "entrypoint": "pnpm delivery:web:verify and exact public-origin browser profile",
-      "receiptRef": "docs/evidence/decoding-improve-20261115/release-20261116.json"
+      "receiptRef": "docs/evidence/decoding-ui-feedback-20261116/release.json"
     }
   },
   "channels": {
@@ -193,10 +193,10 @@
       "decision": "selected",
       "status": "done",
       "stage": "released",
-      "artifactSha256": "7a1a7401fdf69944f074b93c5ea4f1079dc70b06d0040e7efc29ca214e0f8da0",
-      "providerReadbackRef": "docs/evidence/decoding-improve-20261115/release-20261116.json",
-      "realConsumerSmokeRef": "docs/evidence/decoding-improve-20261115/release-20261116/capture-receipt.json",
-      "rollbackRef": "docs/operations/release-wave-decoding-improve-20261116.yaml"
+      "artifactSha256": "dbb94f4b1b36e7512394fb460bb1aeb6e4b2f88670a1fd45a925d006c53a8d2f",
+      "providerReadbackRef": "docs/evidence/decoding-ui-feedback-20261116/release.json",
+      "realConsumerSmokeRef": "docs/evidence/decoding-ui-feedback-20261116/public-capture.json",
+      "rollbackRef": "docs/operations/release-wave-decoding-footer-20261116.yaml"
     },
     "appsInToss": {
       "decision": "not_applicable",

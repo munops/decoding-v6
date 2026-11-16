@@ -1,0 +1,261 @@
+{
+  "requestId": "DECODING-UI-FEEDBACK-20261116",
+  "checkedAt": "2026-11-16T04:27:16.998Z",
+  "status": "released_web_and_production_smoke_verified",
+  "runtimeSource": "e0afc68ab79a8ce0618e49071090e59778be678e",
+  "executorSource": "d2c180751ad38545615253ddd7f94fe34e6c15ec",
+  "artifactSha256": "dbb94f4b1b36e7512394fb460bb1aeb6e4b2f88670a1fd45a925d006c53a8d2f",
+  "artifactFiles": 1621,
+  "provider": {
+    "checkedAt": "2026-11-16T04:20:37.253Z",
+    "state": "verified",
+    "mode": "after",
+    "deployment": {
+      "id": "96ba403b-7e9d-40c0-ad03-16ea23d30fb8",
+      "versions": [
+        {
+          "version_id": "4778d4e5-3acc-407c-aa27-9c0ba9894e30",
+          "percentage": 100
+        }
+      ]
+    },
+    "health": [
+      {
+        "origin": "https://decod.ing",
+        "status": 200,
+        "ok": true,
+        "service": "decoding-v6",
+        "revision": "e0afc68ab79a8ce0618e49071090e59778be678e"
+      },
+      {
+        "origin": "https://www.decod.ing",
+        "status": 200,
+        "ok": true,
+        "service": "decoding-v6",
+        "revision": "e0afc68ab79a8ce0618e49071090e59778be678e"
+      },
+      {
+        "origin": "https://decoding-v6.wjstks3474.workers.dev",
+        "status": 200,
+        "ok": true,
+        "service": "decoding-v6",
+        "revision": "e0afc68ab79a8ce0618e49071090e59778be678e"
+      }
+    ],
+    "bindings": [
+      {
+        "name": "ASSETS",
+        "type": "assets"
+      },
+      {
+        "name": "BUILD_SHA",
+        "type": "plain_text"
+      },
+      {
+        "name": "EVENTS",
+        "type": "analytics_engine",
+        "dataset": "decoding_v6_events"
+      }
+    ],
+    "identity": {
+      "origin": "https://decod.ing",
+      "name": "decod.ing — Paste anything. See what it is.",
+      "short_name": "decod.ing",
+      "fingerprint": "0630fe0decac66174b6aebb6e6f89e3730df11046bb61f42c5837d679a981c89"
+    },
+    "sourceRevision": "e0afc68ab79a8ce0618e49071090e59778be678e",
+    "artifactDigest": "dbb94f4b1b36e7512394fb460bb1aeb6e4b2f88670a1fd45a925d006c53a8d2f"
+  },
+  "rollback": {
+    "versionId": "c0075d8d-b5b1-4996-8124-3f07ff01141a",
+    "scope": "Existing Worker only; no rollback invocation/drill claimed."
+  },
+  "validation": {
+    "mandatoryVerify": {
+      "exitCode": 0,
+      "unitTests": 302,
+      "unitFiles": 30,
+      "initialGzipKiB": 143.6,
+      "first1MiBP75ms": 29.7,
+      "complete1MiBP75ms": 44.6,
+      "staticPages": 1511
+    },
+    "mandatoryE2E": {
+      "exitCode": 0,
+      "passed": 105,
+      "intentionalSkipped": 2
+    },
+    "publicUI": {
+      "exitCode": 0,
+      "viewports": 6,
+      "root200PercentOverflow": 0,
+      "inputGapPx": 12,
+      "footerLinkTargetsMinPx": 44
+    },
+    "deliveryVerify": {
+      "exitCode": 0,
+      "actualDecode": true,
+      "syntheticCanaryNoEgressOrPersistence": true,
+      "trustRoutes": ["privacy", "terms", "support"]
+    },
+    "trustStrictLive": {
+      "exitCode": 0,
+      "errors": 0,
+      "warnings": 0
+    }
+  },
+  "initialFailures": {
+    "changedRunner": "Existing MANIFEST_STALE; direct checks and unchanged mandatory release entrypoint used. No package/lockfile/Node/font modification.",
+    "releasePreparation": "Quoted status rejected before preflight; normalized approved status. Temporary helper unused import fixed. PRD validator corrected to accept standard angle-wrapped Markdown destinations.",
+    "candidateBrowser": "103 passed/2 failed/2 intentional skips; extension assertions completed before teardown timeout; example click happened before client initialization. Both cases passed unchanged in focused replay, and the final entire mandatory suite passed 105/2 skips."
+  },
+  "scope": {
+    "changed": [
+      "Footer hierarchy/wrapping/mobile brand",
+      "12px input label-to-field spacing",
+      "One-line standard Markdown link validator compatibility"
+    ],
+    "unchanged": [
+      "Engine behavior",
+      "Payload/data/permissions/telemetry schema",
+      "Manifest product identity",
+      "ASSETS/EVENTS bindings",
+      "DNS/routes/secrets/accounts/plans",
+      "Native/store/npm/community publication"
+    ],
+    "value": "Organic acquisition, causal retention, sponsor revenue and profitability remain unverified; no actual earnings claim."
+  },
+  "transferred": [
+    {
+      "path": "before-footer-390.png",
+      "sha256": "2f087cc709b97339d118937dbb15a2eb4f394e4f830c7deed4fed5e108da46c5"
+    },
+    {
+      "path": "before-input-desktop.png",
+      "sha256": "4e9feb26960ee2f84b9837684d88f7886e387aae19c966acf4edc553b29543a1"
+    },
+    {
+      "path": "after-footer-390.png",
+      "sha256": "162bd0133c298bceb14d6db1c6928f4fa9c854666fcb166c389894d94193825a"
+    },
+    {
+      "path": "public-footer-320-200.png",
+      "sha256": "8f6ec8f14dccd10333d1f7c0a8abd0438568955eee1176bced467eb2b9efb0f0"
+    },
+    {
+      "path": "candidate-capture.json",
+      "sha256": "08ff99f2ea9c53a5104e25419e9179f53be454b672cec37690c8d391b70ffce5"
+    },
+    {
+      "path": "public-capture.json",
+      "sha256": "f4b51925a5d25d7b18587e124e44e57910c3752dafbe6e8d05c8dcb023da3f33"
+    },
+    {
+      "path": "deploy-after.json",
+      "sha256": "c3db41a7c1b8caab490e3eb36bbfb40cc988ac40a9be41a0bad17a0528aad96c"
+    },
+    {
+      "path": "push-after.json",
+      "sha256": "c82a4933717a2df6eab49830084bba7c41304f790da6ae0fbb4cf7ba51a8e9b7"
+    },
+    {
+      "path": "push-r2-after.json",
+      "sha256": "e6dec0372be3100afe200b8bdc6bf50402ebd8500ba074fbbbc846143538bfc8"
+    },
+    {
+      "path": "public-qa-window.json",
+      "sha256": "7320157c641ea8e10816c52d429b1bcadf3a37fc35bb6692c7f17d55216943b3"
+    },
+    {
+      "path": "candidate.json.gz",
+      "sha256": "71bed7eea689b778a8261f0affd7b43a3c3b5bcff7ea61dceed20d739468906d",
+      "uncompressedSha256": "a385b4e2083f3a3601e81a663ae0e631d6c039824ebb1185fe97dfbd0eb011e4"
+    },
+    {
+      "path": "execution.json.gz",
+      "sha256": "b8ebcab75575028a1f0a7f63421f06b8cb61275f59ec44d9e597da0845dc43c1",
+      "uncompressedSha256": "5a189c60ee5abfd57b3bf9f7169c17f43a7f429bb291b7ea39924c7eaf78f52a"
+    },
+    {
+      "path": "deploy-run.log.gz",
+      "sha256": "24425de8dce3360a664acf5e7a79a7a702c1548c7d1a0f5b6cdc70675ed47727",
+      "uncompressedSha256": "d71056cff2a3780b490936d5dbc76f1f6f00b8a86035c2c4986cbafa4fe13996"
+    },
+    {
+      "path": "candidate-verify.log.gz",
+      "sha256": "fd4132f6a4a3d9e6bcb9a216956fa3dfc97b22896274d9e7d0fe9349741f9ef8",
+      "uncompressedSha256": "f916ff1d8e434ce6b29eab67b647034742482878225df81494930abe7e2f3889"
+    },
+    {
+      "path": "candidate-e2e.log.gz",
+      "sha256": "a64a45b8771bf9860f890d36daccf7bc71487730fe05817ac090ea4b87316960",
+      "uncompressedSha256": "e3ce3914f2c5f531b91a687749a2649686fac7bcaf082538b917397ffaee02d6"
+    },
+    {
+      "path": "focused-retry.log.gz",
+      "sha256": "56c64c3af6f49d20fb5fc59d8924f78ca5ec9d7a0a743165f75b340a10a72b78",
+      "uncompressedSha256": "592fc05b5faf76e37f30cbf5c0f13b1a070f9b7369cfa8f3d0b221d4a9ab6745"
+    },
+    {
+      "path": "live-verify.log.gz",
+      "sha256": "95d84f429226dc1d470e35e927b2c8253c0b855308a0480b7942e7e183d82307",
+      "uncompressedSha256": "30bdbc9a96afb7b6b2338f0ca2bb4b4ed066d8673bd429fe53f8bee990ee64ea"
+    },
+    {
+      "path": "trust-live.log.gz",
+      "sha256": "2dbf12df128a8926950bb377bac6f4886017dbe6a84ef19eb8dd46b75c9ca221",
+      "uncompressedSha256": "fb4ce79359ad2a9ba17ecc2738eb8beade33c1f3b0b644bfa8f36d47068408a1"
+    },
+    {
+      "path": "preflight-unused-helper.log.gz",
+      "sha256": "2fc52bc8c7586d5e8e3158466e2872909ac77214f76b665425ccbcab0bae990e",
+      "uncompressedSha256": "4b9eebbc60858232e45c2eecd205c1bb88d9c312ec6ad2de871e6bedc77b474b"
+    },
+    {
+      "path": "preflight-angle-links.log.gz",
+      "sha256": "cbde2e6ec53669546854211db2e3ca65c72d84169fa0139a9387f2bb008ef6e9",
+      "uncompressedSha256": "4a889e4a915290acce03bd01a2cf5f7f6797915e844f0679616fa9df5ed2431e"
+    },
+    {
+      "path": "guard.mjs.gz",
+      "sha256": "6d9c7a750c07f2131434e3c5575f2fde0e6231e1fe94b170680555e7fea56faa",
+      "uncompressedSha256": "9f6d9c39fbb25d800b846d1e09cf0076d07c9ef02004ad012d1a6de1a9d150b7"
+    },
+    {
+      "path": "provider-readback.mjs.gz",
+      "sha256": "a8217387f2b9f41d56b9b4c63c4df4f968f4ff31d7385f6a861df1babbd0b9f5",
+      "uncompressedSha256": "47736b6af0e83a111abb8531ac0b4af077a09e85ce0c6e054e6da4b323da133a"
+    },
+    {
+      "path": "push-source.mjs.gz",
+      "sha256": "17bcbb68ee7a2d697774965fa0f9bb8c8e15a4e704258de06047858fb92cb789",
+      "uncompressedSha256": "4ac64da61aa5cd3e67ff10f1a765376100b2921d143d747dc32fdcd5cb46920c"
+    },
+    {
+      "path": "candidate-browser.mjs.gz",
+      "sha256": "4bdb87b2d01fea8b139549a96cd38b3aff70f30874346619cd3c1399077b5a15",
+      "uncompressedSha256": "69593890a20bde287bbaf7f300915c1ef994038d664ae5477ae296f8f3f64615"
+    },
+    {
+      "path": "public-browser.mjs.gz",
+      "sha256": "9e311dd14b659cf9704ec9d7ad751703b8b72f5892f91dd67d09a0c75661b17b",
+      "uncompressedSha256": "8a5a095fb0b23be1a87bb6e39c86ac16792ba01f1653cb58b985adab5f09da72"
+    },
+    {
+      "path": "transient-failures/extension-error-context.md",
+      "sha256": "33ee7d7793f3b82e8db5ec686b93a9d53c8b0e7d12ea44f7fceadef945f3ad03"
+    },
+    {
+      "path": "transient-failures/extension-trace.zip",
+      "sha256": "098b84baf9b4cd27f0f35af60ca50d2aba0fa5b1f72fefc591d260633b6652ec"
+    },
+    {
+      "path": "transient-failures/sample-first-click-error-context.md",
+      "sha256": "c11bd9165ce702958d1fc5e6b301ae88943ac09807862826419ac544b92d139c"
+    },
+    {
+      "path": "transient-failures/sample-first-click-trace.zip",
+      "sha256": "f07e6aa1e91192a898d4e147173aa13d78470ace09eb3f3fb8d9011d4009b13d"
+    }
+  ]
+}

@@ -3,7 +3,7 @@
   "product": "decoding-v6",
   "note": "이 파일은 작업 단위의 정본이 아니다. 실행 순서 SSOT는 docs/prd/CHECKLIST.md이고, 여기에는 포트폴리오 provenance 판정(scripts/check-release-provenance.mjs)이 요구하는 '지금 무엇이 배포돼 있는가'만 둔다. 값은 provider read-back과 실서비스 /healthz 실측으로만 갱신한다.",
   "workUnitOwner": "docs/prd/CHECKLIST.md",
-  "sourceRevision": "3233ef31b91c2b4d9a70c76de609d1ed253b86ac",
+  "sourceRevision": "e0afc68ab79a8ce0618e49071090e59778be678e",
   "environments": [
     {
       "name": "production",
@@ -43,28 +43,36 @@
   "workItems": [
     {
       "id": "DEC-UI-FOOTER-01",
-      "status": "in_progress",
+      "status": "done",
       "summary": "Footer layout and input label spacing repair",
       "origin": {
         "kind": "work_request",
         "requestId": "DECODING-UI-FEEDBACK-20261116",
         "outcomeIds": ["DEC-UI-FOOTER-01"]
-      }
+      },
+      "evidenceRefs": [
+        "docs/evidence/decoding-ui-feedback-20261116.md",
+        "docs/evidence/decoding-ui-feedback-20261116/release.json"
+      ]
     },
     {
       "id": "DEC-BUSINESS-REALITY-01",
-      "status": "in_progress",
+      "status": "done",
       "summary": "Evidence-led organic growth and sponsor revenue assessment",
       "origin": {
         "kind": "work_request",
         "requestId": "DECODING-UI-FEEDBACK-20261116",
         "outcomeIds": ["DEC-BUSINESS-REALITY-01"]
-      }
+      },
+      "evidenceRefs": [
+        "docs/evidence/decoding-ui-feedback-20261116.md",
+        "docs/evidence/decoding-ui-feedback-20261116/release.json"
+      ]
     }
   ],
   "workPlan": {
     "schemaVersion": 1,
-    "revision": 1,
+    "revision": 2,
     "requestId": "DECODING-UI-FEEDBACK-20261116",
     "requestDigest": "22d5b7305229f7fa1abef36bcbf962eb2a2e17d53882632e68dea641a903ea4a",
     "request": {
@@ -124,15 +132,15 @@
         "traceability": "docs/prd/CHECKLIST.md"
       },
       "ownerDigests": {
-        "masterChecklist": "08eeafbf0bbacfa6e054615462f37e6ba053c8db9bceae5c52f7e23f4bebff95",
-        "traceability": "08eeafbf0bbacfa6e054615462f37e6ba053c8db9bceae5c52f7e23f4bebff95"
+        "masterChecklist": "1d08e675c446d514f16ae2436136868f9c0f5cc6337941a2d31a772a88a57971",
+        "traceability": "1d08e675c446d514f16ae2436136868f9c0f5cc6337941a2d31a772a88a57971"
       },
       "outcomeWorkItemIds": {
         "DEC-UI-FOOTER-01": ["DEC-UI-FOOTER-01"],
         "DEC-BUSINESS-REALITY-01": ["DEC-BUSINESS-REALITY-01"]
       },
-      "workItemsDigest": "4ebb88a8f32d2f557b7b1e2251ffc4d28a14aa72020b69b5dd05baadd7999b1e"
+      "workItemsDigest": "98a38180150caf47c699b8d4e94d9e0c731f7694de5504e674573ade154b7516"
     },
-    "digest": "658ade3ad47f17b084b8a14b302777a0ff0309bd3672ad22e88b33efd31454e9"
+    "digest": "437719b6098a86b6794d2d7a89c12eda8c636db90090fb64c62aa3b4f29874a1"
   }
 }

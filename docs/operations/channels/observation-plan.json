@@ -19,5 +19,14 @@
     "start": "2026-11-15T22:32:24.340Z",
     "end": "2026-11-15T22:34:59.573Z"
   },
-  "interpretation": "Names-only totals include operator/crawler activity and are not unique-user or causal retention proof. Keep the known QA window separate."
+  "interpretation": "Names-only totals include operator/crawler activity and are not unique-user or causal retention proof. Keep the known QA window separate.",
+  "operatorQAWindowsUTC": [
+    {
+      "start": "2026-11-16T04:22:17.806Z",
+      "end": "2026-11-16T04:24:22.155Z",
+      "interpretation": "Known operator verification activity window; not all traffic in this interval is operator traffic, and totals are not unique users or causal retention.",
+      "sourceRevision": "e0afc68ab79a8ce0618e49071090e59778be678e",
+      "purpose": "Bounded footer/input public release verification"
+    }
+  ]
 }

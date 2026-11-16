@@ -12,3 +12,13 @@ prototypes
 
 # Immutable pre-migration JSON compatibility evidence; preserve original bytes.
 docs/evidence/decoding-improve-20261115/a13/legacy-json-baseline.json
+
+# Immutable original capture/provider receipts and failure text; hashes are in release.json.
+docs/evidence/decoding-ui-feedback-20261116/candidate-capture.json
+docs/evidence/decoding-ui-feedback-20261116/public-capture.json
+docs/evidence/decoding-ui-feedback-20261116/deploy-after.json
+docs/evidence/decoding-ui-feedback-20261116/push-after.json
+docs/evidence/decoding-ui-feedback-20261116/push-r2-after.json
+docs/evidence/decoding-ui-feedback-20261116/public-qa-window.json
+docs/evidence/decoding-ui-feedback-20261116/transient-failures/extension-error-context.md
+docs/evidence/decoding-ui-feedback-20261116/transient-failures/sample-first-click-error-context.md

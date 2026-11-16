@@ -1,0 +1,35 @@
+{
+  "checkedAt": "2026-11-16T07:02:21.748Z",
+  "deployment": {
+    "id": "96ba403b-7e9d-40c0-ad03-16ea23d30fb8",
+    "versions": [
+      {
+        "version_id": "4778d4e5-3acc-407c-aa27-9c0ba9894e30",
+        "percentage": 100
+      }
+    ]
+  },
+  "health": [
+    {
+      "origin": "https://decod.ing",
+      "status": 200,
+      "ok": true,
+      "service": "decoding-v6",
+      "revision": "e0afc68ab79a8ce0618e49071090e59778be678e"
+    },
+    {
+      "origin": "https://www.decod.ing",
+      "status": 200,
+      "ok": true,
+      "service": "decoding-v6",
+      "revision": "e0afc68ab79a8ce0618e49071090e59778be678e"
+    },
+    {
+      "origin": "https://decoding-v6.wjstks3474.workers.dev",
+      "status": 200,
+      "ok": true,
+      "service": "decoding-v6",
+      "revision": "e0afc68ab79a8ce0618e49071090e59778be678e"
+    }
+  ]
+}

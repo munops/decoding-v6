@@ -440,7 +440,7 @@ Google 소유 확인/사이트맵 완료는 11월 15일 오너 인계의 보고�
 
 ### 현재 요청과 작업계획
 
-- 요청: DECODING-UI-FEEDBACK-20261116 · 계획 revision: 1 · 범위: bounded_change
+- 요청: DECODING-UI-FEEDBACK-20261116 · 계획 revision: 2 · 범위: bounded_change
 - 목표: Fix footer wrapping/hierarchy and zero input-label spacing on /ko/; report realistic growth and sponsor revenue evidence.
 - 증거 경계: 계획 동기화이며 구현·검증·배포·사용자 가치 완료 선언이 아님
 
@@ -450,3 +450,10 @@ Google 소유 확인/사이트맵 완료는 11월 15일 오너 인계의 보고�
 <!-- prettier-ignore-end -->
 
 <!-- work-request-plan:end -->
+
+## DECODING-UI-FEEDBACK-20261116
+
+- [x] DEC-UI-FOOTER-01 — footer grouping/mobile brand and 12px input gap deployed; EN/KO 320/390/1440 and 320px 200% verified on actual public origin.
+- [x] DEC-BUSINESS-REALITY-01 — sponsor model and current official benchmark checked; organic growth/revenue/profitability remain unverified.
+
+[Release and validation](../evidence/decoding-ui-feedback-20261116/release.json). Existing native/npm/store/search-console/human gates and J5 2026-11-29 observation remain separate.
