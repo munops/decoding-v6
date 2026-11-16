@@ -302,10 +302,16 @@ export default function WebDecoder({
         locale={messages.locale}
         onReset={() => {
           client.terminate()
+          setExternalInput(undefined)
+          setExternalFile(undefined)
           setBoundaryAttempt((previous) => previous + 1)
         }}
         onClear={() => {
           restoreInput.current = undefined
+          sampleGeneration.current += 1
+          pendingSampleValue.current = undefined
+          generatedExampleFile.current = undefined
+          setExample(undefined)
         }}
         render={() => (
           <DecoderWorkbench

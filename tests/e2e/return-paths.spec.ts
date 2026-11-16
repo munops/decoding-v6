@@ -280,3 +280,44 @@ test('typing before a situational page hydrates wins over its automatic example'
   await expect(page.locator('.answer-final .output-view')).toHaveText('안녕하세요')
   await expect(page.locator('.example-context')).toHaveCount(0)
 })
+
+test('retry restores the latest situational input and clear restart never replays an example', async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    const NativeWorker = window.Worker
+    class FaultWorker extends NativeWorker {
+      constructor(url: string | URL, options?: WorkerOptions) {
+        super(url, options)
+        if (String(url).includes('decoder.worker'))
+          this.addEventListener('message', (event) => {
+            if (document.documentElement.dataset.failNext === 'true' && event.data.result) {
+              document.documentElement.dataset.failNext = 'false'
+              event.data.result.root.selected.evidence = null
+            }
+          })
+      }
+    }
+    window.Worker = FaultWorker
+  })
+  await page.goto('/ko/decode-mail-subject/')
+  await expect(page.locator('.answer-final')).toBeVisible()
+  const input = Buffer.from('내가 복구할 최근 입력').toString('base64')
+  await page.evaluate(() => {
+    document.documentElement.dataset.failNext = 'true'
+  })
+  await page.locator('#decoder-input').fill(input)
+  await expect(page.getByRole('alert')).toBeVisible()
+  await page.getByRole('button', { name: '다시 시도', exact: true }).click()
+  await expect(page.locator('#decoder-input')).toHaveValue(input)
+  await expect(page.locator('.answer-final .output-view')).toHaveText('내가 복구할 최근 입력')
+  await page.evaluate(() => {
+    document.documentElement.dataset.failNext = 'true'
+  })
+  await page.locator('#decoder-input').fill(Buffer.from('또 다른 내 입력').toString('base64'))
+  await expect(page.getByRole('alert')).toBeVisible()
+  await page.getByRole('alert').getByRole('button').nth(1).click()
+  await expect(page.locator('#decoder-input')).toHaveValue('')
+  await expect(page.locator('.example-context')).toHaveCount(0)
+  await expect(page.locator('.answer-final')).toHaveCount(0)
+})
