@@ -1417,17 +1417,30 @@ textarea {
 .site-footer {
   width: min(1320px, calc(100% - 32px));
   margin: 0 auto 16px;
-  padding: 36px;
+  padding: 28px 32px;
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 24px 60px;
-  border: 1px solid #28364a;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  border: 1px solid var(--line);
   border-radius: 18px;
   background: var(--workbench-ink);
   color: var(--workbench-text);
 }
 .footer-brand {
   color: var(--workbench-text);
+  flex-shrink: 0;
+}
+.footer-brand .brand-name {
+  display: inline;
+}
+.footer-heading {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+.site-footer .footer-heading p {
+  margin: 0;
 }
 .footer-brand .brand-symbol {
   width: 30px;
@@ -1441,7 +1454,7 @@ textarea {
 .footer-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 4px 24px;
   align-items: center;
 }
 .footer-links a {
@@ -1449,10 +1462,25 @@ textarea {
   font-size: 13px;
   text-decoration: none;
 }
-.footer-note {
-  grid-column: 1 / -1;
-  padding-top: 18px;
-  border-top: 1px solid #28364a;
+.footer-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.site-footer .footer-note {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+}
+.footer-count {
+  font-size: 13px;
+}
+.footer-links a {
+  max-width: 100%;
 }
 
 html:lang(ko) body :where(h1, h2, h3, p, li, label, button, a, span, summary, small, strong) {
@@ -1684,7 +1712,7 @@ html:lang(ko) body .translation-status {
   }
   .site-footer {
     width: calc(100% - 16px);
-    padding: 26px;
+    padding: 24px 20px;
     grid-template-columns: 1fr;
   }
   .footer-note {
@@ -2699,6 +2727,7 @@ html[data-text-size='large'] :where(p, label, button, summary, a, dt, dd, input,
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  margin-bottom: 12px;
 }
 .input-label-row .button {
   min-height: 44px;

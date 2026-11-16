@@ -433,3 +433,20 @@ E local implementation checkpoint: E1–E4 are implemented with format/subtype r
 `decoding@6.0.0` tarball은 작업공간 의존성과 네트워크를 막은 실제 묶음 실행에서 KO 한 문장/결과·legacy JSON을 확인했다. Chrome/Edge/Firefox unsigned 묶음도 보존한다. 이는 npm 발행·스토어 제출/승인·네이티브 우클릭/실제 OS 공유 증거가 아니다. Npm 보안 확인·가입 메일·2FA 완료는 아직 알려지지 않았다. 기존 사용자 브라우저 handoff의 완료 확인 뒤 같은 공간에서 이어간다. 허가 없는 새 계정/장기 자격증명·Edge/Firefox 약관·외부 게시·HQ 활성화는 실행하지 않았다.
 
 Google 소유 확인/사이트맵 완료는 11월 15일 오너 인계의 보고다. 이번 세션에서 native Search Console 확인으로 바꾸어 말하지 않는다. Naver는 현재 public meta가 없고 실제 console 확인/검증 수단이 미확인이다. J5는 원래 요청대로 2주 뒤(2026-11-29 이후), QA/crawler가 섞인 이름별 횟수를 자연 사용자나 고유 retention cohort로 해석하지 않고 대사한다.
+
+<!-- work-request-plan:start -->
+
+<!-- prettier-ignore-start -->
+
+### 현재 요청과 작업계획
+
+- 요청: DECODING-UI-FEEDBACK-20261116 · 계획 revision: 1 · 범위: bounded_change
+- 목표: Fix footer wrapping/hierarchy and zero input-label spacing on /ko/; report realistic growth and sponsor revenue evidence.
+- 증거 경계: 계획 동기화이며 구현·검증·배포·사용자 가치 완료 선언이 아님
+
+- DEC-UI-FOOTER-01: Compact readable footer and 12px input-label gap on Korean and English at mobile/desktop/200% text; verify and release existing web. — required_request_acceptance/planned; 작업 ID: [DEC-UI-FOOTER-01](<../prd-work-state.json>)
+- DEC-BUSINESS-REALITY-01: Separate possible sponsor revenue from unproven organic growth and actual revenue using current official benchmark. — required_request_acceptance/planned; 작업 ID: [DEC-BUSINESS-REALITY-01](<../prd-work-state.json>)
+
+<!-- prettier-ignore-end -->
+
+<!-- work-request-plan:end -->

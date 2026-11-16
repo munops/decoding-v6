@@ -233,7 +233,7 @@ const localizedPrivacy = localePath(locale, '/privacy/')
       >
     </nav>
     <footer class="site-footer">
-      <div>
+      <div class="footer-heading">
         <a class="brand footer-brand" href={localizedHome}>
           <BrandMark />
           <span class="brand-name">decod<span class="brand-dot">.</span>ing</span>
@@ -256,12 +256,16 @@ const localizedPrivacy = localePath(locale, '/privacy/')
           >{messages.about}</a
         >
       </div>
-      <CountControl locale={locale} />
-      <p class="footer-note">
-        {messages.footerNote} · {publicOperator.name} ({publicOperator.koreanName}) · Build {
-          buildRevision.slice(0, 7)
-        } · {detectorSpecs.length} formats
-      </p>
+      <div class="footer-meta">
+        <p class="footer-note">
+          <span>{messages.footerNote}</span>
+          <span
+            >{publicOperator.name} ({publicOperator.koreanName}) · Build {buildRevision.slice(0, 7)} ·
+            {detectorSpecs.length} formats</span
+          >
+        </p>
+        <div class="footer-count"><CountControl locale={locale} /></div>
+      </div>
     </footer>
     <script>
       import { countOpen, countReturn } from '../lib/telemetry'

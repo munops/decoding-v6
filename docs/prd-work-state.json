@@ -39,5 +39,100 @@
   "externalGates": [
     "Analytics Engine에 실제 행이 쌓였는지는 SQL API 조회 권한이 필요해 data_pending. 지금 증명된 것은 전송 성공(200)과 binding 연결이다",
     "리텐션 측정(30일 회전 cohort token)은 동의 게이트가 필요해 미구현 — docs/prd/09-security-privacy.md §13-A"
-  ]
+  ],
+  "workItems": [
+    {
+      "id": "DEC-UI-FOOTER-01",
+      "status": "in_progress",
+      "summary": "Footer layout and input label spacing repair",
+      "origin": {
+        "kind": "work_request",
+        "requestId": "DECODING-UI-FEEDBACK-20261116",
+        "outcomeIds": ["DEC-UI-FOOTER-01"]
+      }
+    },
+    {
+      "id": "DEC-BUSINESS-REALITY-01",
+      "status": "in_progress",
+      "summary": "Evidence-led organic growth and sponsor revenue assessment",
+      "origin": {
+        "kind": "work_request",
+        "requestId": "DECODING-UI-FEEDBACK-20261116",
+        "outcomeIds": ["DEC-BUSINESS-REALITY-01"]
+      }
+    }
+  ],
+  "workPlan": {
+    "schemaVersion": 1,
+    "revision": 1,
+    "requestId": "DECODING-UI-FEEDBACK-20261116",
+    "requestDigest": "22d5b7305229f7fa1abef36bcbf962eb2a2e17d53882632e68dea641a903ea4a",
+    "request": {
+      "requestId": "DECODING-UI-FEEDBACK-20261116",
+      "kind": "feedback",
+      "summary": "Fix footer wrapping/hierarchy and zero input-label spacing on /ko/; report realistic growth and sponsor revenue evidence.",
+      "mode": "bounded_change",
+      "outcomes": [
+        {
+          "id": "DEC-UI-FOOTER-01",
+          "description": "Compact readable footer and 12px input-label gap on Korean and English at mobile/desktop/200% text; verify and release existing web.",
+          "classification": "required_request_acceptance",
+          "workItemIds": ["DEC-UI-FOOTER-01"],
+          "disposition": "planned"
+        },
+        {
+          "id": "DEC-BUSINESS-REALITY-01",
+          "description": "Separate possible sponsor revenue from unproven organic growth and actual revenue using current official benchmark.",
+          "classification": "required_request_acceptance",
+          "workItemIds": ["DEC-BUSINESS-REALITY-01"],
+          "disposition": "planned"
+        }
+      ]
+    },
+    "history": [
+      {
+        "requestId": "DECODING-UI-FEEDBACK-20261116",
+        "requestDigest": "22d5b7305229f7fa1abef36bcbf962eb2a2e17d53882632e68dea641a903ea4a",
+        "request": {
+          "requestId": "DECODING-UI-FEEDBACK-20261116",
+          "kind": "feedback",
+          "summary": "Fix footer wrapping/hierarchy and zero input-label spacing on /ko/; report realistic growth and sponsor revenue evidence.",
+          "mode": "bounded_change",
+          "outcomes": [
+            {
+              "id": "DEC-UI-FOOTER-01",
+              "description": "Compact readable footer and 12px input-label gap on Korean and English at mobile/desktop/200% text; verify and release existing web.",
+              "classification": "required_request_acceptance",
+              "workItemIds": ["DEC-UI-FOOTER-01"],
+              "disposition": "planned"
+            },
+            {
+              "id": "DEC-BUSINESS-REALITY-01",
+              "description": "Separate possible sponsor revenue from unproven organic growth and actual revenue using current official benchmark.",
+              "classification": "required_request_acceptance",
+              "workItemIds": ["DEC-BUSINESS-REALITY-01"],
+              "disposition": "planned"
+            }
+          ]
+        }
+      }
+    ],
+    "bindings": {
+      "owners": {
+        "workState": "docs/prd-work-state.json",
+        "masterChecklist": "docs/prd/CHECKLIST.md",
+        "traceability": "docs/prd/CHECKLIST.md"
+      },
+      "ownerDigests": {
+        "masterChecklist": "08eeafbf0bbacfa6e054615462f37e6ba053c8db9bceae5c52f7e23f4bebff95",
+        "traceability": "08eeafbf0bbacfa6e054615462f37e6ba053c8db9bceae5c52f7e23f4bebff95"
+      },
+      "outcomeWorkItemIds": {
+        "DEC-UI-FOOTER-01": ["DEC-UI-FOOTER-01"],
+        "DEC-BUSINESS-REALITY-01": ["DEC-BUSINESS-REALITY-01"]
+      },
+      "workItemsDigest": "4ebb88a8f32d2f557b7b1e2251ffc4d28a14aa72020b69b5dd05baadd7999b1e"
+    },
+    "digest": "658ade3ad47f17b084b8a14b302777a0ff0309bd3672ad22e88b33efd31454e9"
+  }
 }
