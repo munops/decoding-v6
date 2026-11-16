@@ -30,6 +30,8 @@ test('classical tools compare shifts and require an explicit Vigenere key', asyn
   await page.goto('/classical-cipher/')
   await page.locator('.operation-pane textarea').fill('Uryyb')
   await expect(page.locator('.output-pane .output-view')).toContainText('Hello')
+  await page.locator('.operation-pane textarea').fill('Uryyb')
+  await expect(page.locator('.output-pane .output-view')).toContainText('Hello')
   await expect(page.locator('.output-pane .output-view')).toContainText('"shift": 25')
   await page
     .getByRole('combobox', { name: 'Direction', exact: true })

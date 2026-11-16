@@ -153,11 +153,19 @@ test('command palette focus, favorites, and recent tools store slugs only', asyn
   expect(await page.evaluate(() => localStorage.getItem('decoding-first-visit'))).toMatch(
     /^\d{4}-\d\d-\d\d$/,
   )
-  await page.getByRole('link', { name: /JSON Format \/ Validate/ }).click()
+  await page
+    .locator('section[aria-labelledby="favorite-tools"]')
+    .getByRole('link', { name: 'JSON Format / Validate' })
+    .click()
+  await expect
+    .poll(() => page.evaluate(() => localStorage.getItem('decoding-recent-tools')))
+    .toContain('json-format')
   await page.goto('/tools/')
-  await expect(page.getByRole('heading', { name: 'Recent tools' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Recently opened tools' })).toBeVisible()
   await expect(
-    page.locator('.recent-links').getByRole('link', { name: 'JSON Format / Validate' }),
+    page
+      .locator('section[aria-labelledby="recent-tools"]')
+      .getByRole('link', { name: 'JSON Format / Validate' }),
   ).toBeVisible()
 })
 

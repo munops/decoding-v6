@@ -178,6 +178,8 @@ export function ToolWorkbench({
   )
   const [fileInput, setFileInput] = useState<Uint8Array | null>(null)
   const setSource = (text: string) => {
+    // Re-pasting the same text must keep the current result or in-flight run.
+    if (text === source && !fileInput) return
     generation.current += 1
     fileGeneration.current += 1
     setResult(null)
