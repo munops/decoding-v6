@@ -1,6 +1,6 @@
 schema_version: 6
 wave_id: 'DECODING-FOOTER-20261116'
-status: 'approved'
+status: approved
 source_revision: '5baeff9b0a8c28dd7a44afe5cecb6a0e9c8045e6'
 prepared_at: '2026-11-16T03:42:18.217Z'
 expires_at: '2026-11-16T04:37:47.857Z'
