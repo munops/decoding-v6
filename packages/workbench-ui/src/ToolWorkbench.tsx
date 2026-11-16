@@ -176,12 +176,13 @@ export function ToolWorkbench({
         : (document.querySelector<HTMLTextAreaElement>('textarea')?.value ??
           initialExample(operation.id, messages)),
   )
+  const [editRevision, setEditRevision] = useState(0)
   const [fileInput, setFileInput] = useState<Uint8Array | null>(null)
   const setSource = (text: string) => {
-    // Re-pasting the same text must keep the current result or in-flight run.
-    if (text === source && !fileInput) return
     generation.current += 1
     fileGeneration.current += 1
+    // An explicit same-value edit still invalidates reads and schedules a live run.
+    setEditRevision((previous) => previous + 1)
     setResult(null)
     setStatus('idle')
     setMessage('')
@@ -230,7 +231,7 @@ export function ToolWorkbench({
     return () => {
       clearTimeout(timer)
     }
-  }, [hydrated, live, source, options])
+  }, [hydrated, live, source, options, editRevision])
 
   const handleFile = async (file?: File) => {
     if (!file) return

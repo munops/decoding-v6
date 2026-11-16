@@ -42,6 +42,31 @@ test('classical tools compare shifts and require an explicit Vigenere key', asyn
   await expect(page.locator('.output-pane .output-view')).toHaveText('ATTACKATDAWN')
 })
 
+test('a same-value text edit cancels an older pending tool file read', async ({ page }) => {
+  await page.addInitScript(() => {
+    const original = File.prototype.arrayBuffer
+    File.prototype.arrayBuffer = async function () {
+      document.documentElement.dataset.toolFileRead = 'started'
+      await new Promise((resolve) => setTimeout(resolve, 500))
+      const bytes = await original.call(this)
+      document.documentElement.dataset.toolFileRead = 'finished'
+      return bytes
+    }
+  })
+  await page.goto('/classical-cipher/')
+  await expect(page.locator('.output-pane .output-view')).toContainText('Hello')
+  await page.locator('.operation-pane input[type="file"]').setInputFiles({
+    name: 'pending.txt',
+    mimeType: 'text/plain',
+    buffer: Buffer.from('late-file-text'),
+  })
+  await page.waitForFunction(() => document.documentElement.dataset.toolFileRead === 'started')
+  await page.locator('.operation-pane textarea').fill('Uryyb')
+  await page.waitForFunction(() => document.documentElement.dataset.toolFileRead === 'finished')
+  await expect(page.locator('.operation-pane textarea')).toHaveValue('Uryyb')
+  await expect(page.locator('.output-pane .output-view')).toContainText('Hello')
+})
+
 test('decoder codecs are available immediately after service worker installation', async ({
   page,
   context,
