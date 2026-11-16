@@ -238,7 +238,7 @@ test('situational input reaches copied text and lost input reaches honest recove
   await page.locator('#decoder-input').fill('����')
   await expect(page.locator('.answer-verdict')).toContainText('되돌릴 수 없어요')
   await page.locator('#decoder-input').fill('abcde')
-  await expect(page.locator('.next-step')).toContainText('원문을 끝까지 복사')
+  await expect(page.locator('.answer-card .next-step')).toContainText('원문을 끝까지 복사')
 })
 
 test('layer choices reflow at small widths and enlarged text', async ({ page }) => {
