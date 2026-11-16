@@ -6,6 +6,10 @@ import Layout from '../layouts/Layout.astro'
 import { type Locale } from '../i18n/catalog'
 import { triageSamples } from '../lib/triage-samples'
 import { decoderMessages } from '@decoding/workbench-ui'
+import { operations } from '@decoding/operations'
+import { localizeOperations } from '../i18n/operations'
+import ToolShortcuts from './ToolShortcuts'
+import RelatedGuides from './RelatedGuides.astro'
 
 interface Props {
   locale: Locale
@@ -13,6 +17,7 @@ interface Props {
 const { locale } = Astro.props
 const copy = answerMessages(locale)
 const samples = triageSamples.map((sample) => ({ ...sample, label: copy[sample.labelKey] }))
+const shortcuts = localizeOperations(locale, operations).map(({ id, name }) => ({ id, name }))
 ---
 
 <Layout locale={locale} title={copy.title} description={copy.lead} alternatePath="/">
@@ -35,4 +40,6 @@ const samples = triageSamples.map((sample) => ({ ...sample, label: copy[sample.l
       client:load
     />
   </div>
+  <div class="container"><ToolShortcuts tools={shortcuts} locale={locale} client:load /></div>
+  <RelatedGuides locale={locale} />
 </Layout>

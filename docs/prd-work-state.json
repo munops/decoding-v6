@@ -68,34 +68,124 @@
         "docs/evidence/decoding-ui-feedback-20261116.md",
         "docs/evidence/decoding-ui-feedback-20261116/release.json"
       ]
+    },
+    {
+      "id": "COMPLETE-FB-FEB64171066A45A8",
+      "status": "done",
+      "readiness": "item_ready",
+      "acceptance": "Compare current routes, three directions and bind first-use/discovery/reuse without deleting external gates",
+      "origin": {
+        "kind": "owner_feedback",
+        "feedback": "insufficient",
+        "feedbackId": "DECODING-COMPLETE-20261116-OWNER-01",
+        "eventDigest": "feb64171066a45a86735781eb0083dae0a16c0c428ad48d382b9d2f0c6b329eb"
+      },
+      "evidenceRefs": ["docs/product/product-card.md"],
+      "selectedDirection": "First-use and repeat-use connection"
+    },
+    {
+      "id": "DEC-RETURN-001",
+      "status": "in_progress",
+      "readiness": "item_ready",
+      "summary": "DEC-RETURN-001",
+      "origin": {
+        "kind": "work_request",
+        "requestId": "DECODING-COMPLETE-20261116-OWNER-01",
+        "outcomeIds": ["DEC-RETURN-001"]
+      },
+      "evidenceRefs": ["docs/product/product-card.md"]
+    },
+    {
+      "id": "DEC-FIRST-001",
+      "status": "in_progress",
+      "readiness": "item_ready",
+      "summary": "DEC-FIRST-001",
+      "origin": {
+        "kind": "work_request",
+        "requestId": "DECODING-COMPLETE-20261116-OWNER-01",
+        "outcomeIds": ["DEC-FIRST-001"]
+      },
+      "evidenceRefs": ["docs/product/product-card.md"]
+    },
+    {
+      "id": "DEC-DISCOVERY-001",
+      "status": "in_progress",
+      "readiness": "item_ready",
+      "summary": "DEC-DISCOVERY-001",
+      "origin": {
+        "kind": "work_request",
+        "requestId": "DECODING-COMPLETE-20261116-OWNER-01",
+        "outcomeIds": ["DEC-DISCOVERY-001"]
+      },
+      "evidenceRefs": ["docs/product/product-card.md"]
     }
   ],
   "workPlan": {
     "schemaVersion": 1,
-    "revision": 2,
-    "requestId": "DECODING-UI-FEEDBACK-20261116",
-    "requestDigest": "22d5b7305229f7fa1abef36bcbf962eb2a2e17d53882632e68dea641a903ea4a",
+    "revision": 3,
+    "requestId": "DECODING-COMPLETE-20261116-OWNER-01",
+    "requestDigest": "853bf73cb641642c0f19c971921e20c0515ba18e2eb67ecd4185463fad77b0b1",
     "request": {
-      "requestId": "DECODING-UI-FEEDBACK-20261116",
+      "requestId": "DECODING-COMPLETE-20261116-OWNER-01",
       "kind": "feedback",
-      "summary": "Fix footer wrapping/hierarchy and zero input-label spacing on /ko/; report realistic growth and sponsor revenue evidence.",
-      "mode": "bounded_change",
+      "summary": "Improve service readiness through first-use, discovery and repeat-use gaps; implement, verify and release existing web preserving privacy/provider gates.",
+      "mode": "complete_product",
       "outcomes": [
         {
-          "id": "DEC-UI-FOOTER-01",
-          "description": "Compact readable footer and 12px input-label gap on Korean and English at mobile/desktop/200% text; verify and release existing web.",
+          "id": "DIRECTION",
+          "description": "Bind evidence-led direction and preserve gates",
           "classification": "required_request_acceptance",
-          "workItemIds": ["DEC-UI-FOOTER-01"],
-          "disposition": "planned"
+          "disposition": "planned",
+          "workItemIds": ["COMPLETE-FB-FEB64171066A45A8"]
         },
         {
-          "id": "DEC-BUSINESS-REALITY-01",
-          "description": "Separate possible sponsor revenue from unproven organic growth and actual revenue using current official benchmark.",
+          "id": "DEC-RETURN-001",
+          "description": "DEC-RETURN-001 acceptance in product-card",
           "classification": "required_request_acceptance",
-          "workItemIds": ["DEC-BUSINESS-REALITY-01"],
-          "disposition": "planned"
+          "disposition": "planned",
+          "workItemIds": ["DEC-RETURN-001"]
+        },
+        {
+          "id": "DEC-FIRST-001",
+          "description": "DEC-FIRST-001 acceptance in product-card",
+          "classification": "required_request_acceptance",
+          "disposition": "planned",
+          "workItemIds": ["DEC-FIRST-001"]
+        },
+        {
+          "id": "DEC-DISCOVERY-001",
+          "description": "DEC-DISCOVERY-001 acceptance in product-card",
+          "classification": "required_request_acceptance",
+          "disposition": "planned",
+          "workItemIds": ["DEC-DISCOVERY-001"]
         }
-      ]
+      ],
+      "qualityTargets": {
+        "scope": {
+          "expectedOutcome": "Preserve universal decode/tools and original external gates; close first-use/reuse/discovery gaps"
+        },
+        "functional": {
+          "expectedOutcome": "Favorites survive13+; recent direct entries; blocked storage cannot break tools"
+        },
+        "design": {
+          "expectedOutcome": "Settled A direction, contextual links and44px targets"
+        },
+        "ux": {
+          "expectedOutcome": "Reliable first click, explicit examples, one-tap return to tools"
+        },
+        "content": {
+          "expectedOutcome": "Connect8 existing EN/KO guides to real decoder results"
+        },
+        "recovery": {
+          "expectedOutcome": "Malformed metadata and unavailable storage recover without payload loss"
+        },
+        "delivery": {
+          "expectedOutcome": "Existing web release with immutable source/native read-back/public smoke"
+        },
+        "value": {
+          "expectedOutcome": "Measure task reachability and preserve data_pending for natural growth/retention/revenue"
+        }
+      }
     },
     "history": [
       {
@@ -123,6 +213,72 @@
             }
           ]
         }
+      },
+      {
+        "requestId": "DECODING-COMPLETE-20261116-OWNER-01",
+        "requestDigest": "853bf73cb641642c0f19c971921e20c0515ba18e2eb67ecd4185463fad77b0b1",
+        "request": {
+          "requestId": "DECODING-COMPLETE-20261116-OWNER-01",
+          "kind": "feedback",
+          "summary": "Improve service readiness through first-use, discovery and repeat-use gaps; implement, verify and release existing web preserving privacy/provider gates.",
+          "mode": "complete_product",
+          "outcomes": [
+            {
+              "id": "DIRECTION",
+              "description": "Bind evidence-led direction and preserve gates",
+              "classification": "required_request_acceptance",
+              "disposition": "planned",
+              "workItemIds": ["COMPLETE-FB-FEB64171066A45A8"]
+            },
+            {
+              "id": "DEC-RETURN-001",
+              "description": "DEC-RETURN-001 acceptance in product-card",
+              "classification": "required_request_acceptance",
+              "disposition": "planned",
+              "workItemIds": ["DEC-RETURN-001"]
+            },
+            {
+              "id": "DEC-FIRST-001",
+              "description": "DEC-FIRST-001 acceptance in product-card",
+              "classification": "required_request_acceptance",
+              "disposition": "planned",
+              "workItemIds": ["DEC-FIRST-001"]
+            },
+            {
+              "id": "DEC-DISCOVERY-001",
+              "description": "DEC-DISCOVERY-001 acceptance in product-card",
+              "classification": "required_request_acceptance",
+              "disposition": "planned",
+              "workItemIds": ["DEC-DISCOVERY-001"]
+            }
+          ],
+          "qualityTargets": {
+            "scope": {
+              "expectedOutcome": "Preserve universal decode/tools and original external gates; close first-use/reuse/discovery gaps"
+            },
+            "functional": {
+              "expectedOutcome": "Favorites survive13+; recent direct entries; blocked storage cannot break tools"
+            },
+            "design": {
+              "expectedOutcome": "Settled A direction, contextual links and44px targets"
+            },
+            "ux": {
+              "expectedOutcome": "Reliable first click, explicit examples, one-tap return to tools"
+            },
+            "content": {
+              "expectedOutcome": "Connect8 existing EN/KO guides to real decoder results"
+            },
+            "recovery": {
+              "expectedOutcome": "Malformed metadata and unavailable storage recover without payload loss"
+            },
+            "delivery": {
+              "expectedOutcome": "Existing web release with immutable source/native read-back/public smoke"
+            },
+            "value": {
+              "expectedOutcome": "Measure task reachability and preserve data_pending for natural growth/retention/revenue"
+            }
+          }
+        }
       }
     ],
     "bindings": {
@@ -132,15 +288,17 @@
         "traceability": "docs/prd/CHECKLIST.md"
       },
       "ownerDigests": {
-        "masterChecklist": "1d08e675c446d514f16ae2436136868f9c0f5cc6337941a2d31a772a88a57971",
-        "traceability": "1d08e675c446d514f16ae2436136868f9c0f5cc6337941a2d31a772a88a57971"
+        "masterChecklist": "6e9aafc1d36c5cb333b94bb0060ee43070a81b2c8a72295ef478ff6e626ba3bd",
+        "traceability": "6e9aafc1d36c5cb333b94bb0060ee43070a81b2c8a72295ef478ff6e626ba3bd"
       },
       "outcomeWorkItemIds": {
-        "DEC-UI-FOOTER-01": ["DEC-UI-FOOTER-01"],
-        "DEC-BUSINESS-REALITY-01": ["DEC-BUSINESS-REALITY-01"]
+        "DIRECTION": ["COMPLETE-FB-FEB64171066A45A8"],
+        "DEC-RETURN-001": ["DEC-RETURN-001"],
+        "DEC-FIRST-001": ["DEC-FIRST-001"],
+        "DEC-DISCOVERY-001": ["DEC-DISCOVERY-001"]
       },
-      "workItemsDigest": "98a38180150caf47c699b8d4e94d9e0c731f7694de5504e674573ade154b7516"
+      "workItemsDigest": "a9f37277ec63920167a6955663a3987467141c17f345f2d7c5955b3dc6da58d9"
     },
-    "digest": "437719b6098a86b6794d2d7a89c12eda8c636db90090fb64c62aa3b4f29874a1"
+    "digest": "278f76d205f4045820a3878e36f353b2c44ab27f8b0d9dba1766f77690eb8d5f"
   }
 }

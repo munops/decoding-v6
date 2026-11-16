@@ -14,6 +14,8 @@ import type { ToolMessages } from '@decoding/workbench-ui'
 import { useEffect, useMemo, useState, useRef } from 'preact/hooks'
 import type { Locale } from '../i18n/catalog'
 import { localizeOperationError, localizeOperationResult } from '../i18n/operation-results'
+import { rememberOpenedTool } from '../lib/tool-preferences'
+import { toolNavigationCopy } from '../i18n/tool-navigation'
 
 type Pending = {
   resolve: (result: OperationResult) => void
@@ -35,6 +37,15 @@ export default function WebTool({
   )
   const draft = useRef(initialInput)
   const [attempt, setAttempt] = useState(0)
+  const [preferencesUnavailable, setPreferencesUnavailable] = useState(false)
+  useEffect(() => {
+    setPreferencesUnavailable(
+      !rememberOpenedTool(
+        operation.id,
+        operations.map((tool) => tool.id),
+      ),
+    )
+  }, [operation.id])
   const client = useMemo(() => {
     const createWorker = () =>
       new Worker(new URL('../workers/operation.worker.ts', import.meta.url), {
@@ -95,32 +106,39 @@ export default function WebTool({
   }, [locale])
   useEffect(() => () => client.terminate(), [client])
   return (
-    <ErrorBoundary
-      locale={messages.locale}
-      onReset={() => {
-        client.terminate()
-        setAttempt((previous) => previous + 1)
-      }}
-      onClear={() => {
-        draft.current = ''
-      }}
-      render={() => (
-        <ToolWorkbench
-          key={attempt}
-          onSourceChange={(text) => {
-            draft.current = text
-          }}
-          initialInput={draft.current}
-          operation={operation}
-          execute={client.execute}
-          relatedTools={localizeOperations(locale, operations)
-            .filter((item) => item.id !== operation.id && item.category === operation.category)
-            .slice(0, 3)}
-          onDecode={(text) => sendToTool('decoder', text, locale)}
-          onTool={(id, text) => sendToTool(id, text, locale)}
-          messages={messages}
-        />
-      )}
-    />
+    <>
+      {preferencesUnavailable ? (
+        <p class="notice info" role="status">
+          {toolNavigationCopy(locale).unavailable}
+        </p>
+      ) : null}
+      <ErrorBoundary
+        locale={messages.locale}
+        onReset={() => {
+          client.terminate()
+          setAttempt((previous) => previous + 1)
+        }}
+        onClear={() => {
+          draft.current = ''
+        }}
+        render={() => (
+          <ToolWorkbench
+            key={attempt}
+            onSourceChange={(text) => {
+              draft.current = text
+            }}
+            initialInput={draft.current}
+            operation={operation}
+            execute={client.execute}
+            relatedTools={localizeOperations(locale, operations)
+              .filter((item) => item.id !== operation.id && item.category === operation.category)
+              .slice(0, 3)}
+            onDecode={(text) => sendToTool('decoder', text, locale)}
+            onTool={(id, text) => sendToTool(id, text, locale)}
+            messages={messages}
+          />
+        )}
+      />
+    </>
   )
 }

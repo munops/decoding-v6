@@ -13,6 +13,7 @@ import type { DecoderMessages } from '@decoding/workbench-ui'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks'
 import { countOpen } from '../lib/telemetry'
 import { createDecoderWorkerClient } from '../lib/decoder-worker-client'
+import { toolNavigationCopy } from '../i18n/tool-navigation'
 
 export type WebDecoderSample = {
   id: string
@@ -26,6 +27,7 @@ type Props = {
   messages: DecoderMessages
   sampleLabel?: string
   samples?: WebDecoderSample[]
+  initialExampleLabel?: string
 }
 
 export default function WebDecoder({
@@ -34,7 +36,19 @@ export default function WebDecoder({
   sampleLabel,
   samples = [],
   proofMode = false,
+  initialExampleLabel,
 }: Props) {
+  const [hydrated, setHydrated] = useState(false)
+  const sampleGeneration = useRef(0)
+  const pendingSampleValue = useRef<string>(initialExampleLabel ? initialInput : undefined)
+  const generatedExampleFile = useRef<File>()
+  useEffect(() => setHydrated(true), [])
+  const [example, setExample] = useState(
+    initialInput && initialExampleLabel
+      ? { value: initialInput, label: initialExampleLabel }
+      : undefined,
+  )
+  const navigation = toolNavigationCopy(messages.locale)
   const proof = useMemo(() => (proofMode ? createProofObservation() : undefined), [proofMode])
   const [proofReady, setProofReady] = useState(false)
   const [offlineState, setOfflineState] = useState<'waiting' | 'ready' | 'unavailable'>('waiting')
@@ -51,7 +65,11 @@ export default function WebDecoder({
   }, [])
   const [decodeCount, setDecodeCount] = useState(0)
   const [shareMessage, setShareMessage] = useState('')
-  const [externalInput, setExternalInput] = useState<{ id: number; value: string }>()
+  const [externalInput, setExternalInput] = useState<{
+    id: number
+    value: string
+    focus?: boolean
+  }>()
   useEffect(() => {
     const value = initialInput ?? takeHandoff('decoder')
     if (value) setExternalInput({ id: Date.now(), value })
@@ -145,7 +163,7 @@ export default function WebDecoder({
   }, [])
   const inputAddon =
     sampleLabel && samples.length ? (
-      <div class="triage-launchpad" role="group" aria-label={sampleLabel}>
+      <div class="triage-launchpad" role="group" aria-label={sampleLabel} aria-busy={!hydrated}>
         <span class="eyebrow">{sampleLabel}</span>
         <div class="triage-sample-grid">
           {samples.map((sample, index) => (
@@ -154,7 +172,13 @@ export default function WebDecoder({
               class="triage-sample"
               type="button"
               data-sample-id={sample.id}
+              disabled={!hydrated}
               onClick={() => {
+                const generation = ++sampleGeneration.current
+                pendingSampleValue.current = sample.value
+                setExample(
+                  sample.id === 'qr' ? undefined : { value: sample.value, label: sample.label },
+                )
                 if (sample.id === 'qr') {
                   void import('@decoding/operations')
                     .then(async ({ executeOperation }) => {
@@ -179,16 +203,26 @@ export default function WebDecoder({
                         const blob = await new Promise<Blob | null>((resolve) =>
                           canvas.toBlob(resolve, 'image/png'),
                         )
-                        if (blob)
+                        if (!blob) throw new Error('QR image unavailable')
+                        if (generation === sampleGeneration.current) {
+                          const file = new File([blob], 'example-qr.png', { type: 'image/png' })
+                          generatedExampleFile.current = file
+                          setExample({ value: sample.value, label: sample.label })
                           setExternalFile({
                             id: Date.now(),
-                            file: new File([blob], 'example-qr.png', { type: 'image/png' }),
+                            file,
                           })
+                        }
                       } finally {
                         URL.revokeObjectURL(url)
                       }
                     })
-                    .catch(() => setShareMessage(messages.decodeFailed))
+                    .catch(() => {
+                      if (generation === sampleGeneration.current) {
+                        setExample(undefined)
+                        setShareMessage(messages.decodeFailed)
+                      }
+                    })
                 } else
                   setExternalInput((previous) => ({
                     id: (previous?.id ?? 0) + 1,
@@ -218,6 +252,30 @@ export default function WebDecoder({
     ) : null
   return (
     <div class="decoder-frame">
+      {example ? (
+        <div class="example-context" role="status">
+          <p>
+            <strong>{navigation.example}</strong> {example.label}
+          </p>
+          <button
+            class="button secondary"
+            type="button"
+            disabled={!hydrated}
+            onClick={() => {
+              sampleGeneration.current += 1
+              pendingSampleValue.current = undefined
+              setExample(undefined)
+              setExternalInput((previous) => ({
+                id: (previous?.id ?? 0) + 1,
+                value: '',
+                focus: true,
+              }))
+            }}
+          >
+            {navigation.ownInput}
+          </button>
+        </div>
+      ) : null}
       {shareMessage ? (
         <p role="status" class="notice warning">
           {shareMessage}
@@ -245,7 +303,23 @@ export default function WebDecoder({
             key={boundaryAttempt}
             inputAddon={inputAddon}
             restoreInput={restoreInput.current}
+            onFileStart={(file) => {
+              if (file !== generatedExampleFile.current) {
+                sampleGeneration.current += 1
+                pendingSampleValue.current = undefined
+                setExample(undefined)
+              }
+            }}
             onInputState={(input, source, kind) => {
+              if (
+                kind !== 'file' &&
+                typeof input === 'string' &&
+                input !== pendingSampleValue.current
+              ) {
+                sampleGeneration.current += 1
+                pendingSampleValue.current = undefined
+                setExample(undefined)
+              }
               proof?.setInput(input, kind ?? (typeof input === 'string' ? 'text' : 'file'))
               restoreInput.current = { input, source }
             }}

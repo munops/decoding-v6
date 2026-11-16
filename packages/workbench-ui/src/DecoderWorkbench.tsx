@@ -42,9 +42,10 @@ export type DecoderWorkbenchProps = {
   inputAddon?: ComponentChildren
   decodeInput: (input: DecodeInput, overrides?: Record<string, string>) => Promise<DecodeResult>
   externalFile?: { id: number; file: File } | undefined
-  externalInput?: { id: number; value: string } | undefined
+  externalInput?: { id: number; value: string; focus?: boolean } | undefined
   restoreInput?: { input: DecodeInput; source: string } | undefined
   onInputState?: (input: DecodeInput, source: string, kind?: 'text' | 'file') => void
+  onFileStart?: (file: File) => void
   onSave?: (
     selected: Detection,
     ttl: 'session' | '24h' | '7d' | 'keep',
@@ -67,6 +68,7 @@ export function DecoderWorkbench({
   onSave,
   restoreInput,
   onInputState,
+  onFileStart,
 }: DecoderWorkbenchProps) {
   const [hydrated, setHydrated] = useState(false)
   useEffect(() => setHydrated(true), [])
@@ -204,6 +206,7 @@ export function DecoderWorkbench({
   }
   const handleFile = async (file?: File) => {
     if (!file) return
+    onFileStart?.(file)
     const pending = ++fileRequestId.current
     requestId.current += 1
     revealRequested.current = true
@@ -380,7 +383,10 @@ export function DecoderWorkbench({
   }, [externalFile?.id])
 
   useEffect(() => {
-    if (externalInput?.value) handleSource(externalInput.value, true)
+    if (externalInput) {
+      handleSource(externalInput.value, true)
+      if (externalInput.focus) inputRef.current?.focus()
+    }
   }, [externalInput?.id])
 
   useEffect(() => {

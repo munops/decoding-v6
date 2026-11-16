@@ -440,12 +440,22 @@ Google 소유 확인/사이트맵 완료는 11월 15일 오너 인계의 보고�
 
 ### 현재 요청과 작업계획
 
-- 요청: DECODING-UI-FEEDBACK-20261116 · 계획 revision: 2 · 범위: bounded_change
-- 목표: Fix footer wrapping/hierarchy and zero input-label spacing on /ko/; report realistic growth and sponsor revenue evidence.
+- 요청: DECODING-COMPLETE-20261116-OWNER-01 · 계획 revision: 3 · 범위: complete_product
+- 목표: Improve service readiness through first-use, discovery and repeat-use gaps; implement, verify and release existing web preserving privacy/provider gates.
 - 증거 경계: 계획 동기화이며 구현·검증·배포·사용자 가치 완료 선언이 아님
 
-- DEC-UI-FOOTER-01: Compact readable footer and 12px input-label gap on Korean and English at mobile/desktop/200% text; verify and release existing web. — required_request_acceptance/planned; 작업 ID: [DEC-UI-FOOTER-01](<../prd-work-state.json>)
-- DEC-BUSINESS-REALITY-01: Separate possible sponsor revenue from unproven organic growth and actual revenue using current official benchmark. — required_request_acceptance/planned; 작업 ID: [DEC-BUSINESS-REALITY-01](<../prd-work-state.json>)
+- DIRECTION: Bind evidence-led direction and preserve gates — required_request_acceptance/planned; 작업 ID: [COMPLETE-FB-FEB64171066A45A8](<../prd-work-state.json>)
+- DEC-RETURN-001: DEC-RETURN-001 acceptance in product-card — required_request_acceptance/planned; 작업 ID: [DEC-RETURN-001](<../prd-work-state.json>)
+- DEC-FIRST-001: DEC-FIRST-001 acceptance in product-card — required_request_acceptance/planned; 작업 ID: [DEC-FIRST-001](<../prd-work-state.json>)
+- DEC-DISCOVERY-001: DEC-DISCOVERY-001 acceptance in product-card — required_request_acceptance/planned; 작업 ID: [DEC-DISCOVERY-001](<../prd-work-state.json>)
+- 품질 scope: Preserve universal decode/tools and original external gates; close first-use/reuse/discovery gaps
+- 품질 functional: Favorites survive13+; recent direct entries; blocked storage cannot break tools
+- 품질 design: Settled A direction, contextual links and44px targets
+- 품질 ux: Reliable first click, explicit examples, one-tap return to tools
+- 품질 content: Connect8 existing EN/KO guides to real decoder results
+- 품질 recovery: Malformed metadata and unavailable storage recover without payload loss
+- 품질 delivery: Existing web release with immutable source/native read-back/public smoke
+- 품질 value: Measure task reachability and preserve data_pending for natural growth/retention/revenue
 
 <!-- prettier-ignore-end -->
 

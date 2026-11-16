@@ -4,6 +4,7 @@ import WebDecoder from '../islands/WebDecoder'
 import { decoderMessages } from '@decoding/workbench-ui'
 import { entryTopicCopy, type EntryTopicId } from '../i18n/entry-topics'
 import { pageSchemas } from '../lib/page-schemas'
+import RelatedGuides from './RelatedGuides.astro'
 const { id, locale } = Astro.props as { id: EntryTopicId; locale: 'en' | 'ko' }
 const copy = entryTopicCopy(id, locale),
   path = `${locale === 'ko' ? '/ko' : ''}/${id}/`
@@ -24,6 +25,7 @@ const schemas = pageSchemas(copy.title, path, copy.faq, copy.answer, locale)
     <WebDecoder
       messages={decoderMessages[locale]}
       initialInput={copy.photo ? undefined : copy.samples[0]?.value}
+      initialExampleLabel={copy.photo ? undefined : copy.samples[0]?.label}
       samples={copy.samples}
       sampleLabel={copy.examples}
       proofMode={copy.proof ?? false}
@@ -35,6 +37,7 @@ const schemas = pageSchemas(copy.title, path, copy.faq, copy.answer, locale)
       <h2>{copy.faq}</h2><p>{copy.answer}</p>
     </article>
   </section>
+  <RelatedGuides locale={locale} current={id} />
   {
     schemas.map((schema) => (
       <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />

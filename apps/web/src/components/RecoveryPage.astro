@@ -4,6 +4,7 @@ import WebDecoder from '../islands/WebDecoder'
 import { decoderMessages } from '@decoding/workbench-ui'
 import { recoveryCopy, type RecoveryId } from '../i18n/recovery'
 import { pageSchemas } from '../lib/page-schemas'
+import RelatedGuides from './RelatedGuides.astro'
 const { locale, id } = Astro.props as { locale: 'en' | 'ko'; id: RecoveryId }
 const copy = recoveryCopy(id, locale)
 const path = `${locale === 'ko' ? '/ko' : ''}/${id}/`
@@ -24,6 +25,7 @@ const schemas = pageSchemas(copy.title, path, copy.faq, copy.answer, locale)
     <WebDecoder
       messages={decoderMessages[locale]}
       initialInput={copy.examples[0]?.[1]}
+      initialExampleLabel={copy.examples[0]?.[0]}
       samples={copy.examples.map(([result, value], i) => ({
         id: `${id}-${i}`,
         label: result!,
@@ -64,6 +66,7 @@ const schemas = pageSchemas(copy.title, path, copy.faq, copy.answer, locale)
       /><h2>{copy.faq}</h2><p>{copy.answer}</p><p>{copy.local}</p>
     </article>
   </section>
+  <RelatedGuides locale={locale} current={id} />
   {
     schemas.map((schema) => (
       <script

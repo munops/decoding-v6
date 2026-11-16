@@ -1,0 +1,34 @@
+---
+import { entryTopicIds, entryTopicCopy } from '../i18n/entry-topics'
+import { recoveryIds, recoveryCopy } from '../i18n/recovery'
+import { toolNavigationCopy } from '../i18n/tool-navigation'
+import type { Locale } from '../i18n/catalog'
+const { locale, current } = Astro.props as { locale: Locale; current?: string }
+const language = locale === 'ko' ? 'ko' : 'en'
+const prefix = language === 'ko' ? '/ko' : ''
+const copy = toolNavigationCopy(language)
+const guides = [
+  ...recoveryIds.map((id) => ({ id, title: recoveryCopy(id, language).title })),
+  ...entryTopicIds.map((id) => ({ id, title: entryTopicCopy(id, language).title })),
+].filter((guide) => guide.id !== current)
+---
+
+<section class="container task-guides" aria-labelledby="situational-guides">
+  <div class="section-heading compact">
+    <h2 id="situational-guides">{current ? copy.related : copy.guides}</h2>
+  </div>
+  <nav aria-labelledby="situational-guides">
+    <ul class="guide-links">
+      {
+        guides.map((guide) => (
+          <li>
+            <a href={`${prefix}/${guide.id}/`}>
+              {guide.title}
+              <span aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</section>

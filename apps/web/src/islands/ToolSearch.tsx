@@ -1,6 +1,12 @@
 import type { OperationDescriptor } from '@decoding/operations'
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
-import type { CatalogMessages } from '../i18n/catalog'
+import type { CatalogMessages, Locale } from '../i18n/catalog'
+import { toolNavigationCopy } from '../i18n/tool-navigation'
+import {
+  readToolPreferences,
+  subscribeToolPreferences,
+  toggleFavoriteTool,
+} from '../lib/tool-preferences'
 
 const categoryGlyph: Record<string, string> = {
   format: '{ }',
@@ -22,32 +28,29 @@ export default function ToolSearch({
   tools,
   messages,
   pathPrefix = '',
+  locale = 'en',
 }: {
   tools: OperationDescriptor[]
   messages: CatalogMessages
   pathPrefix?: string
+  locale?: Locale
 }) {
+  const copy = toolNavigationCopy(locale)
   const [hydrated, setHydrated] = useState(false)
   const [query, setQuery] = useState('')
   const [favorites, setFavorites] = useState<string[]>([])
   const [recent, setRecent] = useState<string[]>([])
+  const [temporary, setTemporary] = useState(false)
   const search = useRef<HTMLInputElement>(null)
   useEffect(() => {
-    const valid = new Set(tools.map((tool) => tool.id))
-    const readSlugs = (key: string) => {
-      try {
-        const value = JSON.parse(localStorage.getItem(key) ?? '[]') as unknown
-        return Array.isArray(value)
-          ? value
-              .filter((slug): slug is string => typeof slug === 'string' && valid.has(slug))
-              .slice(0, 12)
-          : []
-      } catch {
-        return []
-      }
+    const load = () => {
+      const preferences = readToolPreferences(tools.map((tool) => tool.id))
+      setFavorites(preferences.favorites)
+      setRecent(preferences.recent)
+      setTemporary(preferences.temporary)
     }
-    setFavorites(readSlugs('decoding-favorite-tools'))
-    setRecent(readSlugs('decoding-recent-tools'))
+    load()
+    const unsubscribe = subscribeToolPreferences(load)
     setHydrated(true)
     const shortcut = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
@@ -56,21 +59,23 @@ export default function ToolSearch({
       }
     }
     addEventListener('keydown', shortcut)
-    return () => removeEventListener('keydown', shortcut)
+    return () => {
+      removeEventListener('keydown', shortcut)
+      unsubscribe()
+    }
   }, [tools])
 
   const toggleFavorite = (id: string) => {
-    setFavorites((current) => {
-      const next = current.includes(id) ? current.filter((slug) => slug !== id) : [id, ...current]
-      localStorage.setItem('decoding-favorite-tools', JSON.stringify(next))
-      return next
-    })
+    const next = toggleFavoriteTool(
+      id,
+      tools.map((tool) => tool.id),
+    )
+    setFavorites(next.ids)
+    setTemporary(!next.persisted)
   }
-  const remember = (id: string) => {
-    const next = [id, ...recent.filter((slug) => slug !== id)].slice(0, 8)
-    localStorage.setItem('decoding-recent-tools', JSON.stringify(next))
-    setRecent(next)
-  }
+  const favoriteTools = favorites
+    .map((id) => tools.find((tool) => tool.id === id))
+    .filter((tool): tool is OperationDescriptor => Boolean(tool))
   const recentTools = recent
     .map((id) => tools.find((tool) => tool.id === id))
     .filter((tool): tool is OperationDescriptor => Boolean(tool))
@@ -99,21 +104,40 @@ export default function ToolSearch({
           value={query}
           onInput={(event) => setQuery(event.currentTarget.value)}
           placeholder={messages.searchPlaceholder}
-          autofocus
+          disabled={!hydrated}
         />
       </label>
       <p class="catalog-count" aria-live="polite">
         {visible.length} {messages.of} {tools.length} {messages.countSuffix}
       </p>
+      {temporary ? (
+        <p class="notice info" role="status">
+          {copy.unavailable}
+        </p>
+      ) : null}
+      {favoriteTools.length && !query ? (
+        <section class="recent-tools" aria-labelledby="favorite-tools">
+          <div class="section-heading compact">
+            <h2 id="favorite-tools">{copy.favorites}</h2>
+          </div>
+          <div class="recent-links">
+            {favoriteTools.map((tool) => (
+              <a key={tool.id} href={`${pathPrefix}/${tool.id}/`}>
+                {tool.name}
+              </a>
+            ))}
+          </div>
+        </section>
+      ) : null}
       {recentTools.length && !query ? (
         <section class="recent-tools" aria-labelledby="recent-tools">
           <div class="section-heading compact">
             <span class="eyebrow">{messages.recentEyebrow}</span>
-            <h2 id="recent-tools">{messages.recentTitle}</h2>
+            <h2 id="recent-tools">{copy.recent}</h2>
           </div>
           <div class="recent-links">
             {recentTools.map((tool) => (
-              <a href={`${pathPrefix}/${tool.id}/`} onClick={() => remember(tool.id)}>
+              <a href={`${pathPrefix}/${tool.id}/`} key={tool.id}>
                 {tool.name}
               </a>
             ))}
@@ -139,17 +163,14 @@ export default function ToolSearch({
                       type="button"
                       aria-label={`${favorites.includes(tool.id) ? messages.removeFavorite : messages.addFavorite}: ${tool.name}`}
                       aria-pressed={favorites.includes(tool.id)}
+                      disabled={!hydrated}
                       onClick={() => toggleFavorite(tool.id)}
                     >
                       {favorites.includes(tool.id) ? '★' : '☆'}
                     </button>
                   </div>
                 </div>
-                <a
-                  class="tool-card-link"
-                  href={`${pathPrefix}/${tool.id}/`}
-                  onClick={() => remember(tool.id)}
-                >
+                <a class="tool-card-link" href={`${pathPrefix}/${tool.id}/`}>
                   <h3>{tool.name}</h3>
                   <p>{tool.description}</p>
                   <span class="card-link">{messages.open}</span>
