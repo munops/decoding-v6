@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceRevision": "9047f355cff08c113db11fc1308af00a36a6bb1c",
+  "sourceRevision": "6684b871544602f27ad6e0d6fbb669eb7adb6d39",
   "declarationScope": "Bounded first-use, ID-only tool reuse and existing situational guide improvement; existing Worker and FF source sync only.",
   "infrastructure": {
     "inventoryRef": "docs/operations/product-operations-manifest.json",
@@ -8,7 +8,7 @@
       {
         "provider": "Cloudflare",
         "service": "Workers with Static Assets",
-        "resourceRef": "account:69abd904cab5ffd103e569e7e050a884;worker:decoding-v6;assets:apps/web/dist;routes:decod.ing/*,www.decod.ing/*;rollback version:4778d4e5-3acc-407c-aa27-9c0ba9894e30;artifact:0d61307b753fcc4f9366f155269936a9a3a4ddc5cfb5944e939c08c356c2689b",
+        "resourceRef": "account:69abd904cab5ffd103e569e7e050a884;worker:decoding-v6;assets:apps/web/dist;routes:decod.ing/*,www.decod.ing/*;rollback version:4778d4e5-3acc-407c-aa27-9c0ba9894e30;artifact:7befd3dbcfb6fcda909cb4c63291bbbfe2016b6eda31fbcaebcfaebb4073077c",
         "environment": "owner_lane_public_web_production",
         "destination": "https://decod.ing, https://www.decod.ing and technical fallback https://decoding-v6.wjstks3474.workers.dev",
         "mutationBoundary": "Only an exact current owner-lane Web wave may deploy the existing Worker. Domain/DNS/routes, new Worker/binding/secret/resource/cost, indexing, sponsor activation, desktop release and public channel changes are excluded."
@@ -47,7 +47,7 @@
   "commands": {
     "preflight": "test -z \"$(git status --porcelain=v1 --untracked-files=all)\" && git diff --check && pnpm install --frozen-lockfile && pnpm verify && pnpm test:e2e && pnpm test:privacy && pnpm test:a11y",
     "deploy": "test -n \"$DECODING_RELEASE_WAVE\" && test -n \"$DECODING_DELIVERY_TARGET\" && pnpm delivery:web:deploy -- --execute",
-    "verify": "DECODING_RELEASE_WAVE=docs/operations/release-wave-decoding-return-20261116.yaml DECODING_DELIVERY_TARGET=production DECODING_EXPECTED_BUILD_SHA=9047f355cff08c113db11fc1308af00a36a6bb1c pnpm delivery:web:verify"
+    "verify": "DECODING_RELEASE_WAVE=docs/operations/release-wave-decoding-return-20261116.yaml DECODING_DELIVERY_TARGET=production DECODING_EXPECTED_BUILD_SHA=6684b871544602f27ad6e0d6fbb669eb7adb6d39 pnpm delivery:web:verify"
   },
   "receipts": {
     "directory": "docs/evidence/releases/local-owner-wave"
