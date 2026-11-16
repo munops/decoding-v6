@@ -9,7 +9,8 @@ test('a cold page marks examples unavailable until their actions are ready', asy
     await ready
     await route.continue()
   })
-  await page.goto('/ko/', { waitUntil: 'domcontentloaded' })
+  // Module loading delays DOMContentLoaded; inspect SSR before releasing that load.
+  await page.goto('/ko/', { waitUntil: 'commit' })
   await expect(page.locator('[data-sample-id="broken"]')).toBeDisabled()
   release()
   await page.locator('[data-sample-id="broken"]').click()
