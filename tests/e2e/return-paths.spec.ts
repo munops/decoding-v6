@@ -259,3 +259,24 @@ test('layer choices reflow at small widths and enlarged text', async ({ page }) 
     }
   }
 })
+
+test('typing before a situational page hydrates wins over its automatic example', async ({
+  page,
+}) => {
+  let release!: () => void
+  const ready = new Promise<void>((resolve) => {
+    release = resolve
+  })
+  await page.route('**/_astro/*.js', async (route) => {
+    await ready
+    await route.continue()
+  })
+  await page.goto('/ko/decode-mail-subject/', { waitUntil: 'commit' })
+  const ownInput = '=?UTF-8?B?7JWI64WV7ZWY7IS47JqU?='
+  await page.locator('#decoder-input').fill(ownInput)
+  release()
+  await expect(page.locator('[data-sample-id]:enabled').first()).toBeVisible()
+  await expect(page.locator('#decoder-input')).toHaveValue(ownInput)
+  await expect(page.locator('.answer-final .output-view')).toHaveText('안녕하세요')
+  await expect(page.locator('.example-context')).toHaveCount(0)
+})

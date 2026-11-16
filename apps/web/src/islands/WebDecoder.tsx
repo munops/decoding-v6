@@ -39,14 +39,20 @@ export default function WebDecoder({
   initialExampleLabel,
 }: Props) {
   const [hydrated, setHydrated] = useState(false)
+  const earlyInput = useRef(
+    typeof document === 'undefined'
+      ? ''
+      : (document.querySelector<HTMLTextAreaElement>('#decoder-input')?.value ?? ''),
+  )
+  const ownInputBeforeReady = Boolean(earlyInput.current && earlyInput.current !== initialInput)
   const sampleGeneration = useRef(0)
   const pendingSampleValue = useRef<string | undefined>(
-    initialExampleLabel ? initialInput : undefined,
+    initialExampleLabel && !ownInputBeforeReady ? initialInput : undefined,
   )
   const generatedExampleFile = useRef<File>()
   useEffect(() => setHydrated(true), [])
   const [example, setExample] = useState(
-    initialInput && initialExampleLabel
+    initialInput && initialExampleLabel && !ownInputBeforeReady
       ? { value: initialInput, label: initialExampleLabel }
       : undefined,
   )
@@ -73,7 +79,8 @@ export default function WebDecoder({
     focus?: boolean
   }>()
   useEffect(() => {
-    const value = initialInput ?? takeHandoff('decoder')
+    const handoff = initialInput ?? takeHandoff('decoder')
+    const value = earlyInput.current || handoff
     if (value) setExternalInput({ id: Date.now(), value })
   }, [initialInput])
   const client = useMemo(
