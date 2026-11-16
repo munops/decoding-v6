@@ -1,4 +1,8 @@
 import type { Page } from '@playwright/test'
+/** Native file actions need the attached handlers; synthetic setInputFiles bypasses disabled. */
+export async function decoderReady(page: Page) {
+  await page.locator('.decoder-shell[data-hydrated="true"]').waitFor()
+}
 export async function openAdvanced(page: Page) {
   const details = page.locator('.advanced-result')
   await details.waitFor({ state: 'visible' })

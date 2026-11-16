@@ -12,8 +12,12 @@ test('a cold page marks examples unavailable until their actions are ready', asy
   // Module loading delays DOMContentLoaded; inspect SSR before releasing that load.
   await page.goto('/ko/', { waitUntil: 'commit' })
   await expect(page.locator('[data-sample-id="broken"]')).toBeDisabled()
+  await expect(page.locator('.paste-surface input[type=file]').first()).toBeDisabled()
+  await expect(page.locator('.paste-surface input[type=file]').last()).toBeDisabled()
+  await expect(page.locator('.paste-surface .input-actions > button')).toBeDisabled()
   release()
   await page.locator('[data-sample-id="broken"]').click()
+  await expect(page.locator('.paste-surface input[type=file]').last()).toBeEnabled()
   await expect(page.locator('.answer-final .output-view')).toContainText('안녕하세요')
 })
 

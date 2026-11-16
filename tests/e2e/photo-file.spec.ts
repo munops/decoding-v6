@@ -1,5 +1,6 @@
 import { syntheticJpeg } from '../../packages/fixtures-public/src/file-samples'
 import { expect, test } from '@playwright/test'
+import { decoderReady } from './ui-helpers'
 
 test('photo example reads its QR locally before interpreting the embedded address', async ({
   page,
@@ -22,6 +23,7 @@ test('a delayed file read cannot replace a more recent pasted value', async ({ p
     }
   })
   await page.goto('/')
+  await decoderReady(page)
   await page
     .locator('input[type=file]')
     .last()

@@ -3049,3 +3049,8 @@ html[data-text-size='large'] :where(p, label, button, summary, a, dt, dd, input,
 .result-selection-note {
   margin-block: 12px;
 }
+
+.paste-surface label[aria-disabled='true'] {
+  opacity: 0.55;
+  cursor: wait;
+}

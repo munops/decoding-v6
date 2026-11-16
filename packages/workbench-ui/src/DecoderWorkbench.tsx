@@ -473,6 +473,7 @@ export function DecoderWorkbench({
         </a>
       </div>
       <DecoderInput
+        ready={hydrated}
         onPaste={() => void paste()}
         source={source}
         messages={messages}

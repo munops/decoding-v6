@@ -4,6 +4,7 @@ import type { RefObject } from 'preact'
 import type { DecoderMessages } from './messages'
 type Props = {
   onPaste: () => void
+  ready: boolean
 
   source: string
   messages: DecoderMessages
@@ -13,6 +14,7 @@ type Props = {
 }
 export function DecoderInput({
   onPaste,
+  ready,
   source,
   messages,
   inputRef,
@@ -34,7 +36,7 @@ export function DecoderInput({
           type="button"
           class="button ghost"
           onClick={() => handleSource('')}
-          disabled={!source}
+          disabled={!ready || !source}
         >
           {messages.clear}
         </button>
@@ -50,23 +52,25 @@ export function DecoderInput({
         autocapitalize="off"
       />
       <div class="input-actions">
-        <button class="button" type="button" onClick={onPaste}>
+        <button class="button" type="button" onClick={onPaste} disabled={!ready}>
           {completionMessages[messages.locale].paste}
         </button>
-        <label class="button ghost photo-action">
+        <label class="button ghost photo-action" aria-disabled={!ready}>
           {answerMessages(messages.locale).photo}
           <input
             class="visually-hidden"
             type="file"
+            disabled={!ready}
             accept="image/*"
             onChange={(event) => void handleFile(event.currentTarget.files?.[0])}
           />
         </label>
-        <label class="button ghost file-action">
+        <label class="button ghost file-action" aria-disabled={!ready}>
           {messages.openFile}
           <input
             class="visually-hidden"
             type="file"
+            disabled={!ready}
             onChange={(event) => void handleFile(event.currentTarget.files?.[0])}
           />
         </label>

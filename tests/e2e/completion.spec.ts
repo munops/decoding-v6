@@ -1,4 +1,4 @@
-import { openAdvanced } from './ui-helpers'
+import { decoderReady, openAdvanced } from './ui-helpers'
 import { createHmac } from 'node:crypto'
 import { brotliCompressSync } from 'node:zlib'
 import { expect, test } from '@playwright/test'
@@ -76,6 +76,7 @@ test('result save, reopen, edit, backup, delete and restore preserve redaction',
 test('local Brotli WASM compiles and decodes through a forced binary layer', async ({ page }) => {
   const data = brotliCompressSync(Buffer.from('{"brotli":"synthetic"}'))
   await page.goto('/')
+  await decoderReady(page)
   await page
     .locator('.paste-surface input[type=file]:not([accept])')
     .setInputFiles({ name: 'synthetic.br', mimeType: 'application/octet-stream', buffer: data })
