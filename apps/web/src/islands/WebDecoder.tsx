@@ -10,7 +10,7 @@ import { listWorkspaceRecords, saveWorkspaceRecord, type WorkspaceRecord } from 
 import { sendToTool, takeHandoff } from '../lib/handoff'
 import { DecoderWorkbench, answerMessages } from '@decoding/workbench-ui'
 import type { DecoderMessages } from '@decoding/workbench-ui'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'preact/hooks'
 import { countOpen } from '../lib/telemetry'
 import { createDecoderWorkerClient } from '../lib/decoder-worker-client'
 import { toolNavigationCopy } from '../i18n/tool-navigation'
@@ -78,7 +78,7 @@ export default function WebDecoder({
     value: string
     focus?: boolean
   }>()
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handoff = initialInput ?? takeHandoff('decoder')
     const value = earlyInput.current || handoff
     if (value) setExternalInput({ id: Date.now(), value })

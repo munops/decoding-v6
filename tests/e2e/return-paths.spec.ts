@@ -325,3 +325,38 @@ test('retry restores the latest situational input and clear restart never replay
   await expect(page.locator('.example-context')).toHaveCount(0)
   await expect(page.locator('.answer-final')).toHaveCount(0)
 })
+
+test('input after hydration commits but before passive startup effects is not replaced by a sample', async ({
+  page,
+}) => {
+  const ownInput = Buffer.from('초기 화면에서 내가 붙인 글').toString('base64')
+  await page.addInitScript((value) => {
+    const observer = new MutationObserver((records) => {
+      for (const record of records) {
+        const island = record.target
+        if (
+          !(island instanceof HTMLElement) ||
+          island.tagName !== 'ASTRO-ISLAND' ||
+          island.hasAttribute('ssr')
+        )
+          continue
+        const input = island.querySelector<HTMLTextAreaElement>('#decoder-input')
+        if (!input) continue
+        observer.disconnect()
+        input.value = value
+        input.dispatchEvent(
+          new InputEvent('input', { bubbles: true, inputType: 'insertFromPaste' }),
+        )
+        document.documentElement.dataset.injectedBeforeStartup = 'true'
+        break
+      }
+    })
+    observer.observe(document, { subtree: true, attributes: true, attributeFilter: ['ssr'] })
+  }, ownInput)
+  await page.goto('/ko/decode-mail-subject/')
+  await expect(page.locator('html')).toHaveAttribute('data-injected-before-startup', 'true')
+  await expect(page.locator('[data-sample-id]:enabled').first()).toBeVisible()
+  await expect(page.locator('#decoder-input')).toHaveValue(ownInput)
+  await expect(page.locator('.answer-final .output-view')).toHaveText('초기 화면에서 내가 붙인 글')
+  await expect(page.locator('.example-context')).toHaveCount(0)
+})

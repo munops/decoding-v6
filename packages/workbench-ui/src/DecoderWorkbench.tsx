@@ -20,7 +20,7 @@ import {
 import { DecoderInput } from './DecoderInput'
 import { ResultInspector } from './ResultInspector'
 import type { DecodeInput, DecodeResult, Detection } from '@decoding/engine'
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks'
 import { PortfolioThemeControl } from './PortfolioThemeControl'
 import {
   playCopyFeedback,
@@ -378,16 +378,16 @@ export function DecoderWorkbench({
     }
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (restoreInput) void run(restoreInput.input)
     else if (source) void run(source)
   }, [])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (externalFile?.file) void handleFile(externalFile.file)
   }, [externalFile?.id])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (externalInput) {
       handleSource(externalInput.value, true)
       if (externalInput.focus) inputRef.current?.focus()
