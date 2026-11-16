@@ -211,7 +211,8 @@ export const homeMessages: Record<Locale, HomeMessages> = {
       'Paste an unknown value, rank plausible formats, and follow nested layers without uploading your input.',
     eyebrow: 'Read unfamiliar text, links and files',
     heading: 'What is this string?',
-    intro: 'Paste it. See every layer. Copy or share without the value.',
+    intro:
+      'Paste an unfamiliar value. Read the result, compare possible steps and copy what you choose.',
     uploaded: 'input bytes uploaded',
     examplesLabel: 'See the evidence with a known input',
     sampleNested: 'Nested Base64 → JSON',
@@ -224,7 +225,8 @@ export const homeMessages: Record<Locale, HomeMessages> = {
       '알 수 없는 값을 붙여넣으면 가능한 형식을 좁히고, 겹겹이 감싼 결과와 경고 근거를 확인합니다. 입력은 이 기기를 떠나지 않습니다.',
     eyebrow: '알 수 없는 값, 기기에서 바로 확인',
     heading: '이 문자열, 뭔지 알려 드려요.',
-    intro: '붙여넣기 → 모든 층 확인 → 값을 빼고 복사·공유해요. 기기 밖으로는 안 보내요.',
+    intro:
+      '모르는 값을 붙여넣으세요. 읽힌 결과와 다른 가능성을 비교하고, 고른 결과를 복사해요. 이 기기 안에서 처리해요.',
     uploaded: '서버로 전송된 입력 바이트',
     examplesLabel: '알려진 입력으로 판정 근거 보기',
     sampleNested: 'Base64 안의 JSON 확인',

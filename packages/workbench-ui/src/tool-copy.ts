@@ -4,6 +4,7 @@ const en = {
   paste: 'Paste',
   pasteFailed: 'Paste was unavailable. Use your keyboard to paste.',
   automatic: 'Results update as you type.',
+  inspectToken: 'Inspect this token and its warnings',
   continue: 'Decode this result further',
   related: 'Tools to use next',
   charset: 'Original character encoding',
@@ -19,6 +20,7 @@ const en = {
   noGuess: 'Compare the results yourself. We do not guess which cipher was used or recover a key.',
 }
 const ko: typeof en = {
+  inspectToken: '이 토큰의 근거와 주의점 보기',
   unknown: '뭔지 모르는 값이면 그냥 붙여넣기',
   paste: '붙여넣기',
   pasteFailed: '붙여넣기를 쓸 수 없어요. 키보드로 붙여넣으세요.',

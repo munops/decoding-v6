@@ -440,22 +440,22 @@ Google 소유 확인/사이트맵 완료는 11월 15일 오너 인계의 보고�
 
 ### 현재 요청과 작업계획
 
-- 요청: DECODING-COMPLETE-20261116-OWNER-01 · 계획 revision: 4 · 범위: complete_product
-- 목표: Improve service readiness through first-use, discovery and repeat-use gaps; implement, verify and release existing web preserving privacy/provider gates.
+- 요청: DECODING-MARKET-REBUILD-20261116-01 · 계획 revision: 6 · 범위: complete_product
+- 목표: Review overseas alternatives and actual user situations thoroughly, select defensible improvements, implement and verify existing web release.
 - 증거 경계: 계획 동기화이며 구현·검증·배포·사용자 가치 완료 선언이 아님
 
-- DIRECTION: Bind evidence-led direction and preserve gates — required_request_acceptance/planned; 작업 ID: [COMPLETE-FB-FEB64171066A45A8](<../prd-work-state.json>)
-- DEC-RETURN-001: DEC-RETURN-001 acceptance in product-card — required_request_acceptance/planned; 작업 ID: [DEC-RETURN-001](<../prd-work-state.json>)
-- DEC-FIRST-001: DEC-FIRST-001 acceptance in product-card — required_request_acceptance/planned; 작업 ID: [DEC-FIRST-001](<../prd-work-state.json>)
-- DEC-DISCOVERY-001: DEC-DISCOVERY-001 acceptance in product-card — required_request_acceptance/planned; 작업 ID: [DEC-DISCOVERY-001](<../prd-work-state.json>)
-- 품질 scope: Preserve universal decode/tools and original external gates; close first-use/reuse/discovery gaps
-- 품질 functional: Favorites survive13+; recent direct entries; blocked storage cannot break tools
-- 품질 design: Settled A direction, contextual links and44px targets
-- 품질 ux: Reliable first click, explicit examples, one-tap return to tools
-- 품질 content: Connect8 existing EN/KO guides to real decoder results
-- 품질 recovery: Malformed metadata and unavailable storage recover without payload loss
-- 품질 delivery: Existing web release with immutable source/native read-back/public smoke
-- 품질 value: Measure task reachability and preserve data_pending for natural growth/retention/revenue
+- DIRECTION: Bind actual foreign benchmarks and three distinct directions — required_request_acceptance/planned; 작업 ID: [COMPLETE-FB-245ECDE5756B2160](<../prd-work-state.json>)
+- DEC-MARKET-001: Competitor candidate census with official/user-source scope and identical-task receipts — required_request_acceptance/planned; 작업 ID: [DEC-MARKET-001](<../prd-work-state.json>)
+- DEC-RESULT-001: Fix confirmed result/copy/layer control quality gaps against actual competing outcomes — required_request_acceptance/planned; 작업 ID: [DEC-RESULT-001](<../prd-work-state.json>)
+- DEC-WORKFLOW-001: Implement confirmed task arrival/recovery/reuse gaps and production release — required_request_acceptance/planned; 작업 ID: [DEC-WORKFLOW-001](<../prd-work-state.json>)
+- 품질 scope: Full product job review with explicit exclusions; no unsupported feature-count expansion
+- 품질 functional: Identical input correctness, readable results, binary preservation and selected copy parity
+- 품질 design: Existing settled direction, actual competitor task context and readable mobile/200% states
+- 품질 ux: First result and explicit alternative selection without losing input or adding uncertainty
+- 품질 content: Specific task intent, source-backed explanations and honest limits
+- 품질 recovery: Malformed, unsupported, protected and uncertain inputs retain useful next actions
+- 품질 delivery: Native tests, immutable existing-web release, public smoke and independent review
+- 품질 value: Evidence-backed selection reasons, discovery/reuse/revenue hypotheses distinct from observed facts
 
 <!-- prettier-ignore-end -->
 

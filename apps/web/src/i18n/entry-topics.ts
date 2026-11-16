@@ -86,7 +86,7 @@ const en: Record<EntryTopicId, Topic> = {
   'how-to-tell-if-a-string-is-base64': {
     title: 'How to tell if a string is Base64',
     lead: 'Try a sample or paste the value below. Inspect the alphabet, padding and decoded bytes instead of relying on its appearance alone.',
-    why: 'Base64 uses a constrained alphabet and groups bytes into text characters. Those letters can also form ordinary words or identifiers. Successful byte decoding and readable text strengthen the candidate; they do not establish the sender or safety.',
+    why: 'Base64 uses a constrained alphabet and groups bytes into text characters. Those letters can also form ordinary words or identifiers. Successful byte decoding and readable text strengthen the candidate; they do not establish the sender or safety. Readable text is preferred over another uncertain byte guess; select a different step to inspect it.',
     faq: 'Is Base64 encryption?',
     answer:
       'No. Base64 is reversible wrapping, not secrecy. Anyone with the value can decode it. A token or private document remains sensitive even when wrapped in Base64.',
@@ -172,7 +172,7 @@ const ko: Record<EntryTopicId, Topic> = {
   'how-to-tell-if-a-string-is-base64': {
     title: 'Base64인지 어떻게 알 수 있나요?',
     lead: '예시를 눌러 보거나 아래에 값을 붙여넣으세요. 생김새만 보지 않고 쓰인 문자·끝의 채움과 풀린 바이트를 살펴봐요.',
-    why: 'Base64는 정해진 문자로 바이트를 묶어 적는 방식이에요. 같은 문자로 보통의 단어나 식별 번호도 만들 수 있어요. 바이트로 풀리고 글자로 읽히면 근거가 강해지지만 보낸 사람이나 안전성을 증명하지는 않아요.',
+    why: 'Base64는 정해진 문자로 바이트를 묶어 적는 방식이에요. 같은 문자로 보통의 단어나 식별 번호도 만들 수 있어요. 바이트로 풀리고 글자로 읽히면 근거가 강해지지만 보낸 사람이나 안전성을 증명하지는 않아요. 추가로 추측한 바이트보다 읽히는 글을 먼저 보여 드려요. 다른 단계를 눌러 비교할 수도 있어요.',
     faq: 'Base64는 암호화인가요?',
     answer:
       '아니요. 누구나 되돌릴 수 있는 포장 방식이에요. 값이 있으면 누구나 풀 수 있어요. 토큰이나 비공개 문서는 Base64로 감싸도 여전히 민감해요.',

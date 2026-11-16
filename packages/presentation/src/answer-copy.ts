@@ -50,8 +50,10 @@ const en = {
   saved: 'Saved',
   tools: 'Tools',
   summary: 'Paste an unfamiliar value here.',
-  lead: 'Unknown text, garbled letters, long links or a QR photo. Find out what it is and decode every layer on this device.',
+  lead: 'Unknown text, garbled letters, long links or a QR photo. Read possible meanings and choose what to copy, on this device.',
   examples: 'Does one of these look familiar? Try an example.',
+  readableSelection:
+    'Readable text is selected first. You can inspect another step; copy and save use your selected result.',
   local: 'Only on this device',
   placeholder: 'Tap here and paste',
   sampleBroken: 'Garbled text',
@@ -117,8 +119,10 @@ const ko: typeof en = {
   saved: '넣어 둔 것',
   tools: '도구',
   summary: '이게 뭔지 모르겠다면 여기에 붙여넣으세요',
-  lead: '알 수 없는 글자, 깨진 한글, 긴 주소, QR 사진. 무엇인지 알려 드리고 끝까지 풀어 드려요.',
+  lead: '알 수 없는 글자, 깨진 한글, 긴 주소, QR 사진. 이 기기 안에서 뜻을 살펴보고, 읽힌 결과를 골라 복사하세요.',
   examples: '이런 걸 들고 오셨나요? 눌러서 미리 보기',
+  readableSelection:
+    '읽을 수 있는 글을 먼저 골랐어요. 다른 단계도 눌러 확인할 수 있으며, 복사·저장은 선택한 결과를 사용해요.',
   local: '내 기기 안에서만',
   placeholder: '여기를 눌러 붙여넣기',
   sampleBroken: '깨진 글자',
@@ -397,8 +401,15 @@ export function primaryLayers(root: ChainNode): ChainNode[] {
   }
   return layers
 }
-export function answerSentence(root: ChainNode, locale: WorkbenchLocale, source: string): string {
-  const layers = primaryLayers(root),
+export function answerSentence(
+  root: ChainNode,
+  locale: WorkbenchLocale,
+  source: string,
+  throughId?: string,
+): string {
+  const observed = primaryLayers(root),
+    stop = throughId ? observed.findIndex((node) => node.id === throughId) : -1,
+    layers = stop >= 0 ? observed.slice(0, stop + 1) : observed,
     first = root.selected ?? root.candidates[0]
   if (!first)
     return /\s|[가-힣]/.test(source)

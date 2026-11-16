@@ -23,6 +23,7 @@ export function NextStep({
     tools = nearbyTools(source, result)
   return (
     <section class="next-step">
+      <p>{copy.noNext}</p>
       {tools.length ? (
         <div class="input-actions">
           {tools.map((id) => (
@@ -41,9 +42,7 @@ export function NextStep({
             </a>
           ))}
         </div>
-      ) : (
-        <p>{copy.noNext}</p>
-      )}
+      ) : null}
       <button
         type="button"
         class="button secondary"

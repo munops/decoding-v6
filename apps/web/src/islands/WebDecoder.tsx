@@ -304,6 +304,7 @@ export default function WebDecoder({
           <DecoderWorkbench
             key={boundaryAttempt}
             inputAddon={inputAddon}
+            isExampleInput={() => pendingSampleValue.current !== undefined}
             restoreInput={restoreInput.current}
             onFileStart={(file) => {
               if (file !== generatedExampleFile.current) {

@@ -1,3 +1,4 @@
+import { JwtVerify } from './JwtVerify'
 import { toolCopy } from './tool-copy'
 import { uiMessage } from './ui-copy'
 import type {
@@ -610,10 +611,17 @@ export function ToolWorkbench({
         </div>
       </div>
       {operation.id === 'classical-cipher' ? <p class="notice info">{copy.noGuess}</p> : null}
+      {result && operation.id === 'jwt-debugger' ? (
+        <JwtVerify token={source} locale={messages.locale} />
+      ) : null}
       {result && onDecode ? (
         <div class="tool-next">
-          <button class="button primary" type="button" onClick={() => onDecode(output)}>
-            {copy.continue}
+          <button
+            class="button primary"
+            type="button"
+            onClick={() => onDecode(operation.id === 'jwt-debugger' ? source : output)}
+          >
+            {operation.id === 'jwt-debugger' ? copy.inspectToken : copy.continue}
           </button>
           <h3>{copy.related}</h3>
           {related.map((item) => (

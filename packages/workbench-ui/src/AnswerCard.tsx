@@ -1,7 +1,7 @@
 import { formatEngineMessage } from '@decoding/presentation'
 import { NextStep } from './NextStep'
 import { ClassicalCandidates } from './ClassicalCandidates'
-import type { DecodeResult } from '@decoding/engine'
+import type { DecodeResult, Detection } from '@decoding/engine'
 import type { DecoderMessages } from './messages'
 import {
   answerMessages,
@@ -10,7 +10,13 @@ import {
   warningTitle,
   answerFacts,
 } from './answer-copy'
-import { displayValue, finalSelection, outputText, privateKeyDetection } from './result-text'
+import {
+  displayValue,
+  finalSelection,
+  outputText,
+  privateKeyDetection,
+  selectionNode,
+} from './result-text'
 
 export function AnswerCard({
   result,
@@ -19,8 +25,12 @@ export function AnswerCard({
   onCopy,
   onManual,
   onTool,
+  selected,
+  onSelectLayer,
 }: {
   result: DecodeResult
+  selected: Detection | null
+  onSelectLayer: (nodeId: string) => void
   source: string
   messages: DecoderMessages
   onCopy: () => void
@@ -28,7 +38,7 @@ export function AnswerCard({
   onTool?: ((tool: string, text: string) => void) | undefined
 }) {
   const copy = answerMessages(messages.locale),
-    final = finalSelection(result.root),
+    final = privateKeyDetection(result.root) ?? selected ?? finalSelection(result.root),
     layers = primaryLayers(result.root),
     protectedContent = privateKeyDetection(result.root)
   const allNodes = (node: DecodeResult['root']): DecodeResult['root'][] => [
@@ -52,7 +62,14 @@ export function AnswerCard({
   const facts = answerFacts(result.root.selected, messages.locale)
   return (
     <section class="answer-card" aria-label={messages.localResult}>
-      <h2 class="answer-verdict">{answerSentence(result.root, messages.locale, source)}</h2>
+      <h2 class="answer-verdict">
+        {answerSentence(
+          result.root,
+          messages.locale,
+          source,
+          selectionNode(result.root, final)?.id,
+        )}
+      </h2>
       {warnings.length ? (
         <section class="answer-concerns">
           <h3>
@@ -121,6 +138,27 @@ export function AnswerCard({
               {messages.copy}
             </button>
           </div>
+          {layers.length > 1 && !protectedContent ? (
+            <div class="result-layer-choices" role="group" aria-label={copy.layers}>
+              {layers.map((node, index) => (
+                <button
+                  class="button secondary"
+                  type="button"
+                  key={node.id}
+                  aria-pressed={node.selected === final}
+                  onClick={() => onSelectLayer(node.id)}
+                >
+                  {index + 1} · {node.selected?.label}
+                  {node.status === 'ambiguous' ? ` · ${copy.uncertain}` : ''}
+                </button>
+              ))}
+            </div>
+          ) : null}
+          {final === finalSelection(result.root) &&
+          layers.at(-1)?.selected !== final &&
+          !protectedContent ? (
+            <p class="result-selection-note">{copy.readableSelection}</p>
+          ) : null}
           <pre class="output-view">
             <code>{outputText(displayValue(final))}</code>
           </pre>

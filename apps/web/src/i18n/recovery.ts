@@ -41,7 +41,7 @@ const en = {
   },
   'decode-mail-subject': {
     title: 'Decode a garbled mail subject',
-    lead: 'Read a subject starting with =?UTF-8?B? or another MIME encoded word. Paste it below without uploading the mail.',
+    lead: 'Read a subject starting with =?UTF-8?B? or another MIME encoded word. Paste the whole subject below, including its =?…?= wrapper. Copy the readable result without uploading the mail.',
     why: 'Mail systems wrap non-ASCII subject text as MIME encoded words. Normally the mail app decodes them. This page performs that same decoding locally.',
     faq: 'Does this verify the sender?',
     answer:
@@ -76,7 +76,7 @@ const ko: typeof en = {
   },
   'decode-mail-subject': {
     title: '메일 제목 깨짐 풀기',
-    lead: '=?UTF-8?B?로 시작하는 메일 제목을 읽을 수 있게 풀어요. 메일을 업로드하지 않고 아래에 제목만 붙여넣으세요.',
+    lead: '=?UTF-8?B?로 시작하는 메일 제목을 읽을 수 있게 풀어요. =?…?= 부분을 지우지 말고 제목 전체를 붙여넣은 뒤 읽힌 결과를 복사하세요. 메일을 업로드하지 않아요.',
     why: '메일은 영문이 아닌 제목을 MIME 전송 표기로 감싸기도 해요. 보통 메일 앱이 풀어 주지만 그대로 도착했다면 여기서 같은 방식으로 풀 수 있어요.',
     faq: '보낸 사람이 진짜인지도 확인하나요?',
     answer:

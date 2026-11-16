@@ -1,22 +1,32 @@
 import { uiMessage } from './ui-copy'
-import { useEffect, useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 import { completionMessages } from './completion-messages'
 import type { WorkbenchLocale } from './messages'
 import { KeyFormatError, verifyJwt } from './jwt-verify'
 export function JwtVerify({ token, locale }: { token: string; locale: WorkbenchLocale }) {
+  const generation = useRef(0)
   const [key, setKey] = useState(''),
     [status, setStatus] = useState(''),
     [busy, setBusy] = useState(false),
     copy = completionMessages[locale]
   useEffect(() => {
     const clear = () => {
+      generation.current += 1
+      setBusy(false)
       setKey('')
       setStatus('')
     }
     addEventListener('pagehide', clear)
-    return () => removeEventListener('pagehide', clear)
+    return () => {
+      generation.current += 1
+      removeEventListener('pagehide', clear)
+    }
   }, [])
-  useEffect(() => setStatus(''), [token, key])
+  useEffect(() => {
+    generation.current += 1
+    setStatus('')
+    setBusy(false)
+  }, [token])
   return (
     <details class="jwt-verifier">
       <summary>{copy.verify}</summary>
@@ -25,7 +35,12 @@ export function JwtVerify({ token, locale }: { token: string; locale: WorkbenchL
         {copy.key}
         <textarea
           value={key}
-          onInput={(event) => setKey(event.currentTarget.value)}
+          onInput={(event) => {
+            generation.current += 1
+            setKey(event.currentTarget.value)
+            setStatus('')
+            setBusy(false)
+          }}
           spellcheck={false}
           autocomplete="off"
         />
@@ -35,11 +50,16 @@ export function JwtVerify({ token, locale }: { token: string; locale: WorkbenchL
         class="button secondary"
         disabled={!key || busy}
         onClick={() => {
+          const current = ++generation.current
           setBusy(true)
           void verifyJwt(token, key)
             .then(
-              (ok) => setStatus(ok ? copy.signatureValid : copy.signatureInvalid),
-              (error: unknown) =>
+              (ok) => {
+                if (current === generation.current)
+                  setStatus(ok ? copy.signatureValid : copy.signatureInvalid)
+              },
+              (error: unknown) => {
+                if (current !== generation.current) return
                 setStatus(
                   error instanceof KeyFormatError
                     ? locale === 'ko'
@@ -49,9 +69,12 @@ export function JwtVerify({ token, locale }: { token: string; locale: WorkbenchL
                         locale,
                         'check_the_key_format_and_algorithm_use_a_public_spki_pem_or_jwk',
                       ),
-                ),
+                )
+              },
             )
-            .finally(() => setBusy(false))
+            .finally(() => {
+              if (current === generation.current) setBusy(false)
+            })
         }}
       >
         {copy.verify}

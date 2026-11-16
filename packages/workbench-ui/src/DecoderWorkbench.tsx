@@ -39,6 +39,7 @@ export type DecoderWorkbenchProps = {
         file: File,
       ) => Promise<{ text: string; format: string; width: number; height: number } | null>)
     | undefined
+  isExampleInput?: (() => boolean) | undefined
   inputAddon?: ComponentChildren
   decodeInput: (input: DecodeInput, overrides?: Record<string, string>) => Promise<DecodeResult>
   externalFile?: { id: number; file: File } | undefined
@@ -59,6 +60,7 @@ export type DecoderWorkbenchProps = {
 export function DecoderWorkbench({
   readPhoto,
   inputAddon,
+  isExampleInput,
   decodeInput,
   externalInput,
   externalFile,
@@ -103,6 +105,7 @@ export function DecoderWorkbench({
 
   const run = useCallback(
     async (input: DecodeInput, photo?: { format: string; width: number; height: number }) => {
+      const exampleInput = isExampleInput?.() ?? false
       lastInput.current = input
       const current = ++requestId.current
       setStatus('processing')
@@ -132,8 +135,10 @@ export function DecoderWorkbench({
               ...previous.filter((entry) => entry.input !== input),
             ].slice(0, 10),
           )
-        if (next.root.status === 'confident') onEvent?.('decode_completed')
-        else if (next.root.status === 'unsupported') onEvent?.('decode_unsupported')
+        if (!exampleInput) {
+          if (next.root.status === 'confident') onEvent?.('decode_completed')
+          else if (next.root.status === 'unsupported') onEvent?.('decode_unsupported')
+        }
         setMessage(
           next.root.status === 'unsupported'
             ? typeof input === 'string' && /\s/.test(input)
@@ -534,16 +539,15 @@ export function DecoderWorkbench({
           <AnswerCard
             result={result}
             source={source}
+            selected={selected}
+            onSelectLayer={activateLayer}
             messages={messages}
             onTool={onTool}
             onManual={() => {
               setShowCandidates(false)
               if (advancedRef.current) advancedRef.current.open = true
             }}
-            onCopy={() => {
-              const final = finalSelection(result.root)
-              if (final) void copySelected(final)
-            }}
+            onCopy={() => void copySelected()}
           />
         </div>
       ) : null}

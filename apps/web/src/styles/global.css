@@ -3028,3 +3028,24 @@ html[data-text-size='large'] :where(p, label, button, summary, a, dt, dd, input,
     white-space: nowrap;
   }
 }
+
+.result-layer-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block: 12px;
+}
+.result-layer-choices .button {
+  min-height: 44px;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.result-layer-choices [aria-pressed='true'] {
+  border-color: var(--accent);
+  font-weight: 700;
+  background: var(--accent-soft);
+}
+.result-selection-note {
+  margin-block: 12px;
+}

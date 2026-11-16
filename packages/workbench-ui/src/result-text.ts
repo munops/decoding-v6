@@ -71,8 +71,23 @@ export function finalSelection(
   const privateKey = privateKeyDetection(root)
   if (privateKey) return privateKey
   let node = root
-  while (node.children[0] && !node.children[0].sourcePath && node.children[0].selected)
-    node = node.children[0]
+  const hasConfidentResult = (branch: import('@decoding/engine').ChainNode): boolean =>
+    (branch.status === 'confident' && Boolean(branch.selected)) ||
+    branch.children.some((child) => !child.sourcePath && hasConfidentResult(child))
+  for (;;) {
+    const child = node.children.find((item) => !item.sourcePath && item.selected)
+    if (!child) break
+    // A readable result is preferable to an extra, unconfirmed byte interpretation.
+    // Recognized binary containers and their decoded descendants still take precedence.
+    if (
+      typeof node.selected?.decoded === 'string' &&
+      child.status === 'ambiguous' &&
+      child.selected?.decoded instanceof Uint8Array &&
+      !hasConfidentResult(child)
+    )
+      break
+    node = child
+  }
   return node.selected ?? node.candidates[0]
 }
 
@@ -89,4 +104,16 @@ export function selectionNode(
   return root.selected === selected || root.candidates.includes(selected!)
     ? root
     : root.children.map((child) => selectionNode(child, selected)).find(Boolean)
+}
+
+/** A reproducible primary prefix ends at the chosen result, never an embedded field. */
+export function selectedPrimaryRoot(
+  root: import('@decoding/engine').ChainNode,
+  selected: import('@decoding/engine').Detection | null,
+): import('@decoding/engine').ChainNode | undefined {
+  if (!selected || privateKeyDetection(root)) return undefined
+  if (root.selected === selected) return { ...root, children: [] }
+  const child = root.children.find((node) => !node.sourcePath)
+  const prefix = child ? selectedPrimaryRoot(child, selected) : undefined
+  return prefix ? { ...root, children: [prefix] } : undefined
 }

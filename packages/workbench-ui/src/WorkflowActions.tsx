@@ -8,8 +8,8 @@ import { identifyMagic, redactSecrets, type DecodeResult, type Detection } from 
 import { useEffect, useState } from 'preact/hooks'
 import type { DecoderMessages } from './messages'
 import { completionMessages } from './completion-messages'
-import { outputText, privateKeyDetection } from './result-text'
-import { linearChain, reproduceCommands } from './reproduce-commands'
+import { outputText, privateKeyDetection, displayValue, selectedPrimaryRoot } from './result-text'
+import { reproduceCommands } from './reproduce-commands'
 import { canReencode, reencode, maskSensitiveFields } from './re-encode'
 type Ttl = 'session' | '24h' | '7d' | 'keep'
 export function WorkflowActions({
@@ -86,6 +86,11 @@ export function WorkflowActions({
     addEventListener('keydown', key)
     return () => removeEventListener('keydown', key)
   }, [open])
+  useEffect(() => {
+    setEditing(false)
+    setEdited('')
+    setMessage('')
+  }, [selected])
   const close = () => {
     setOpen(false)
     if (history.state?.decodingSheet) history.back()
@@ -121,8 +126,15 @@ export function WorkflowActions({
     setTimeout(() => URL.revokeObjectURL(href), 0)
   }
   const privateKey = privateKeyDetection(result.root)
-  const gate = privateKey ? { allowed: false, reason: copy.private } : canReencode(result.root),
-    last = linearChain(result.root).at(-1)?.selected
+  const chosenRoot = selectedPrimaryRoot(result.root, selected)
+  const gate = privateKey
+    ? { allowed: false, reason: copy.private }
+    : chosenRoot
+      ? canReencode(chosenRoot)
+      : {
+          allowed: false,
+          reason: copy.noReproduction,
+        }
   return (
     <>
       {selected && onSave && !open ? (
@@ -217,17 +229,20 @@ export function WorkflowActions({
               </button>
               <details>
                 <summary>{copy.command}</summary>
-                {Object.entries(reproduceCommands(result.root)).map(([language, command]) => (
-                  <div key={language}>
-                    <strong>{language}</strong>
-                    <pre>
-                      <code>{command}</code>
-                    </pre>
-                    <button class="button ghost" type="button" onClick={() => copyText(command)}>
-                      {messages.copy} · {language}
-                    </button>
-                  </div>
-                ))}
+                {!chosenRoot ? <p>{gate.reason}</p> : null}
+                {Object.entries(chosenRoot ? reproduceCommands(chosenRoot) : {}).map(
+                  ([language, command]) => (
+                    <div key={language}>
+                      <strong>{language}</strong>
+                      <pre>
+                        <code>{command}</code>
+                      </pre>
+                      <button class="button ghost" type="button" onClick={() => copyText(command)}>
+                        {messages.copy} · {language}
+                      </button>
+                    </div>
+                  ),
+                )}
               </details>
               {onTool && !privateKey ? (
                 <div class="input-actions">
@@ -236,7 +251,7 @@ export function WorkflowActions({
                       class="button secondary"
                       key={id}
                       type="button"
-                      onClick={() => onTool(id, outputText(last?.value ?? selected.value))}
+                      onClick={() => onTool(id, outputText(displayValue(selected)))}
                     >
                       {operationName(
                         id,
@@ -263,7 +278,7 @@ export function WorkflowActions({
                 disabled={!gate.allowed}
                 onClick={() => {
                   setEditing(true)
-                  setEdited(outputText(last?.value ?? selected.value))
+                  setEdited(outputText(displayValue(selected)))
                 }}
               >
                 {copy.edit}
@@ -282,7 +297,7 @@ export function WorkflowActions({
                     type="button"
                     onClick={() => {
                       try {
-                        const next = reencode(result.root, edited)
+                        const next = reencode(chosenRoot!, edited)
                         if (next.unsignedJwt)
                           setMessage(
                             uiMessage(
