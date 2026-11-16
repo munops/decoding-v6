@@ -10,6 +10,9 @@ docs/research
 # Non-shipped, read-only design exploration
 prototypes
 
+# Local original release archives are private, immutable evidence, never source formatting inputs.
+.local-release-artifacts/
+
 # Immutable pre-migration JSON compatibility evidence; preserve original bytes.
 docs/evidence/decoding-improve-20261115/a13/legacy-json-baseline.json
 

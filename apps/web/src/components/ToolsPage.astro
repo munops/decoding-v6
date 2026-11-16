@@ -31,6 +31,12 @@ const tools = localizeOperations(locale, operations)
     <p>{messages.lead}</p>
   </section>
   <div class="container">
-    <ToolSearch tools={tools} messages={messages} pathPrefix={pathPrefix} locale={locale} client:load />
+    <ToolSearch
+      tools={tools}
+      messages={messages}
+      pathPrefix={pathPrefix}
+      locale={locale}
+      client:load
+    />
   </div>
 </Layout>
