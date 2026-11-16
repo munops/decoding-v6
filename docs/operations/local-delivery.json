@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "sourceRevision": "e0afc68ab79a8ce0618e49071090e59778be678e",
-  "declarationScope": "Bounded owner-requested footer/input visual repair; existing zero-cost Worker only and FF source synchronization. No identity/terms/permission/telemetry/native/store/npm/sponsor changes.",
+  "sourceRevision": "a18cdf93c10c91000af056c48d095d3b4b4eca43",
+  "declarationScope": "Bounded first-use, ID-only tool reuse and existing situational guide improvement; existing Worker and FF source sync only.",
   "infrastructure": {
     "inventoryRef": "docs/operations/product-operations-manifest.json",
     "runtimeResources": [
       {
         "provider": "Cloudflare",
         "service": "Workers with Static Assets",
-        "resourceRef": "account:69abd904cab5ffd103e569e7e050a884;worker:decoding-v6;assets:apps/web/dist;routes:decod.ing/*,www.decod.ing/*;rollback version:c0075d8d-b5b1-4996-8124-3f07ff01141a;artifact:dbb94f4b1b36e7512394fb460bb1aeb6e4b2f88670a1fd45a925d006c53a8d2f",
+        "resourceRef": "account:69abd904cab5ffd103e569e7e050a884;worker:decoding-v6;assets:apps/web/dist;routes:decod.ing/*,www.decod.ing/*;rollback version:4778d4e5-3acc-407c-aa27-9c0ba9894e30;artifact:f4a62aa144cde717c390697921c9ba4edc17d534199bd60e64176ad33a520ee4",
         "environment": "owner_lane_public_web_production",
         "destination": "https://decod.ing, https://www.decod.ing and technical fallback https://decoding-v6.wjstks3474.workers.dev",
         "mutationBoundary": "Only an exact current owner-lane Web wave may deploy the existing Worker. Domain/DNS/routes, new Worker/binding/secret/resource/cost, indexing, sponsor activation, desktop release and public channel changes are excluded."
@@ -41,13 +41,13 @@
     "externalApis": []
   },
   "release": {
-    "waveRef": "docs/operations/release-wave-decoding-footer-20261116.yaml",
+    "waveRef": "docs/operations/release-wave-decoding-return-20261116.yaml",
     "approvalBoundary": "Owner exact complete-service implementation and existing zero-cost Worker deploy/rollback plus existing branch FF push. Preserve ASSETS/EVENTS bindings, routes, DNS, secrets and plan. Seven names-only aggregate events and exact /share/ no-body redirect are approved product code; actual cost remains null."
   },
   "commands": {
     "preflight": "test -z \"$(git status --porcelain=v1 --untracked-files=all)\" && git diff --check && pnpm install --frozen-lockfile && pnpm verify && pnpm test:e2e && pnpm test:privacy && pnpm test:a11y",
     "deploy": "test -n \"$DECODING_RELEASE_WAVE\" && test -n \"$DECODING_DELIVERY_TARGET\" && pnpm delivery:web:deploy -- --execute",
-    "verify": "DECODING_RELEASE_WAVE=docs/operations/release-wave-decoding-footer-20261116.yaml DECODING_DELIVERY_TARGET=production DECODING_EXPECTED_BUILD_SHA=e0afc68ab79a8ce0618e49071090e59778be678e pnpm delivery:web:verify"
+    "verify": "DECODING_RELEASE_WAVE=docs/operations/release-wave-decoding-return-20261116.yaml DECODING_DELIVERY_TARGET=production DECODING_EXPECTED_BUILD_SHA=a18cdf93c10c91000af056c48d095d3b4b4eca43 pnpm delivery:web:verify"
   },
   "receipts": {
     "directory": "docs/evidence/releases/local-owner-wave"
